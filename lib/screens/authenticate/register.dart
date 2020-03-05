@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/shared/constants.dart';
+import 'package:travellory/shared/loading.dart';
 
 class Register extends StatefulWidget {
 
@@ -15,6 +16,7 @@ class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   // text field state
   String email = '';
@@ -23,7 +25,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -67,9 +69,13 @@ class _RegisterState extends State<Register> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
+                      setState(() => loading = true);
                       dynamic result = await _auth.registerWithEmailAndPassword(email, password);
                       if(result == null){
-                        setState(() => error = 'Please supply a valid email and password.');
+                        setState(() {
+                          error = 'Please supply a valid email and password.';
+                          loading = false;
+                        });
                       }
                     }
                   }
