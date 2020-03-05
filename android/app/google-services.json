@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "283777499304",
+    "firebase_url": "https://travellory-9b789.firebaseio.com",
+    "project_id": "travellory-9b789",
+    "storage_bucket": "travellory-9b789.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283777499304:android:25851b5176dd2e2cc8029d",
+        "android_client_info": {
+          "package_name": "com.psit4.travellory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "283777499304-tvv44ojolk9mc22n6gklt4c8ll16vbji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzp3gfVhsQwkAf0Lkw2S_H_LTXyuumGsk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "283777499304-tvv44ojolk9mc22n6gklt4c8ll16vbji.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
