@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/shared/constants.dart';
+import 'package:travellory/utils/input_validator.dart';
 
 class Register extends StatefulWidget {
 
@@ -48,14 +49,14 @@ class _RegisterState extends State<Register> {
               SizedBox(height: 20.0),
               TextFormField(
                 decoration: textInputDecoration.copyWith(hintText: 'Email'),
-                validator: (val) => val.isEmpty ? 'Enter an email' : null, // todo: validate if its an email
+                validator: (val) => InputValidator.validateEmail(val),
                 onChanged: (val) => email = val,
               ),
               SizedBox(height: 20.0),
               TextFormField(
                 decoration: textInputDecoration.copyWith(hintText: 'Password'),
                 obscureText: true,
-                validator: (val) => val.length < 6 ? 'Enter a password with at least 6 characters' : null,
+                validator: (val) => InputValidator.validatePassword(val),
                 onChanged: (val) => password = val,
               ),
               SizedBox(height: 20.0),
