@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/user.dart';
 import 'package:travellory/screens/wrapper.dart';
 import 'package:travellory/services/auth.dart';
+import 'package:travellory/providers/auth_provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
-      value: AuthService().user,
+      value: AuthProvider(
+        auth: AuthService(),
+      ).auth.user,
       child: MaterialApp(
         title: 'Travellory',
         debugShowCheckedModeBanner: false,
