@@ -5,9 +5,6 @@ import 'package:travellory/screens/wrapper.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/providers/auth_provider.dart';
 
-import 'services/auth.dart';
-import 'services/auth.dart';
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
