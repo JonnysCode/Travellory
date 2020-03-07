@@ -24,11 +24,9 @@ class _SignInState extends State<SignIn> {
 
   Future _signIn(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    if (_formKey.currentState.validate()) {
-      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-      if(result == null){
-        setState(() => error = 'Could not sign in with those credentials.');
-      }
+    dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+    if(result == null){
+      setState(() => error = 'Could not sign in with those credentials.');
     }
   }
 
@@ -79,7 +77,17 @@ class _SignInState extends State<SignIn> {
                       'Sign in',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () => _signIn(context),
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Center(child: CircularProgressIndicator(),);
+                            });
+                        await _signIn(context);
+                        Navigator.pop(context);
+                      }
+                    },
                 ),
                 SizedBox(height: 12.0),
                 Text(

@@ -24,11 +24,9 @@ class _RegisterState extends State<Register> {
 
   Future _register(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    if (_formKey.currentState.validate()) {
-      dynamic result = await _auth.registerWithEmailAndPassword(email, password);
-      if(result == null){
-        setState(() => error = 'Please supply a valid email and password.');
-      }
+    dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+    if(result == null){
+      setState(() => error = 'Please supply a valid email and password.');
     }
   }
 
@@ -79,7 +77,17 @@ class _RegisterState extends State<Register> {
                   'Register',
                   style: TextStyle(color: Colors.white),
                 ),
-                onPressed: () => _register(context),
+                onPressed: () async {
+                  if (_formKey.currentState.validate()) {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Center(child: CircularProgressIndicator(),);
+                        });
+                    await _register(context);
+                    Navigator.pop(context);
+                  }
+                },
               ),
               SizedBox(height: 12.0),
               Text(
