@@ -17,6 +17,17 @@ void main() {
         ));
   }
 
+  prepareSignIn(String email, String password, WidgetTester tester) async {
+    // Enter text into the fields and tap the sign in button
+    Finder emailField = find.byKey(Key('emailField'));
+    await tester.enterText(emailField, email);
+
+    Finder passwordField = find.byKey(Key('passwordField'));
+    await tester.enterText(passwordField, password);
+
+    await tester.tap(find.byKey(Key('signInButton')));
+  }
+
   testWidgets('test if widgets are present', (WidgetTester tester) async {
     SignIn page = SignIn();
 
@@ -43,6 +54,46 @@ void main() {
     verifyNever(mockAuth.signInWithEmailAndPassword('', ''));
   });
 
+  testWidgets('non-empty non-valid email and password, does not call sign in',
+      (WidgetTester tester) async {
+    MockAuth mockAuth = MockAuth();
+    SignIn page = SignIn();
+
+    // Invalid email address
+    String email = 'sample@mail';
+    String password = 'sampl3P8assword!';
+
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
+
+    await prepareSignIn(email, password, tester);
+
+    await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
+
+    // Verify that register does not get called
+    verifyNever(mockAuth.signInWithEmailAndPassword(email, password));
+  });
+
+  testWidgets('non-empty email and non-valid password, does not call sign in',
+      (WidgetTester tester) async {
+    MockAuth mockAuth = MockAuth();
+    SignIn page = SignIn();
+
+    // invalid email address
+    String email = 'sample.email@bluewin.ch';
+    String password = '123';
+
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
+
+    await prepareSignIn(email, password, tester);
+
+    await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
+
+    // Verify that register does not get called
+    verifyNever(mockAuth.registerWithEmailAndPassword(email, password));
+  });
+
   testWidgets('non-empty email and password, call sign in',
       (WidgetTester tester) async {
     MockAuth mockAuth = MockAuth();
@@ -54,14 +105,7 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
-    // Enter text into the fields and tap the sign in button
-    Finder emailField = find.byKey(Key('emailField'));
-    await tester.enterText(emailField, email);
-
-    Finder passwordField = find.byKey(Key('passwordField'));
-    await tester.enterText(passwordField, password);
-
-    await tester.tap(find.byKey(Key('signInButton')));
+    await prepareSignIn(email, password, tester);
 
     // Verify that the sign in was called once
     verify(mockAuth.signInWithEmailAndPassword(email, password)).called(1);
