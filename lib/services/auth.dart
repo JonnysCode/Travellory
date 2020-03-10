@@ -1,7 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travellory/models/user.dart';
 
-class AuthService {
+abstract class BaseAuthService {
+  Future signInAnonymously();
+  Future signInWithEmailAndPassword(String email, String password);
+  Future registerWithEmailAndPassword(String email, String password);
+  Future signOut();
+  Stream<User> get user;
+}
+
+class AuthService implements BaseAuthService {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
