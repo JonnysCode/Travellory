@@ -1,0 +1,42 @@
+image: ubuntu-18.04-amd64
+
+environment:
+  FLUTTER_VERSION: flutter_linux_v1.12.13+hotfix.8-stable
+  SONAR_CLI_VERSION: sonar-scanner-cli-4.2.0.1873-linux
+  SONAR_VERSION: sonar-scanner-4.2.0.1873-linux
+  BUILD_PARAMS: -Dsonar.projectKey=psti4-travellory -Dsonar.sources=. -Dsonar.host.url=http://160.85.252.103:9000 -Dsonar.login=d73568e98754700b87b133ecdbcfd63f43af03cbf -Dsonar.password=
+
+install:
+  # Install of Flutter SDK (needed for build and test)
+  - sh: wget https://storage.googleapis.com/flutter_infra/releases/stable/linux/$FLUTTER_VERSION.tar.xz
+  - sh: tar xf $FLUTTER_VERSION.tar.xz && export PATH="$PATH:`pwd`/flutter/bin"
+  # Install of Dart SDK (needed for dartanalyzer)
+  - sh: sudo apt-get update && sudo apt-get install apt-transport-https
+  - sh: sudo sh -c 'wget -qO- https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
+  - sh: sudo sh -c 'wget -qO- https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list'
+  - sh: sudo apt-get update && sudo apt-get install dart && export PATH="$PATH:/usr/lib/dart/bin"
+  # Install of sonar
+  - sh: wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/$SONAR_CLI_VERSION.zip
+  - sh: unzip -q $SONAR_CLI_VERSION.zip && export PATH="$PATH:`pwd`/$SONAR_VERSION/bin"
+
+build:
+  verbosity: detailed
+
+artifacts:
+  - path: "build/app/outputs/apk/release/app-release.apk"
+
+before_build:
+  - sh: flutter pub get
+
+build_script:
+  - sh: flutter build apk
+
+test_script:
+  - sh: flutter test --machine > tests.output
+  - sh: flutter test --coverage
+
+after_test:
+  - sh: sonar-scanner -X -Dsonar.projectKey=psti4-travellory -Dsonar.sources=. -Dsonar.host.url=http://160.85.252.103:9000 -Dsonar.login=d73568e98754700b87b133ecdbcfd63f43af03cb -Dsonar.password=
+
+on_finish:
+  - sh: echo "finish part here"
