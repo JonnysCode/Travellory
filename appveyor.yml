@@ -7,6 +7,9 @@ environment:
   SONAR_PARAMS: -Dsonar.sources=. -Dsonar.host.url=http://160.85.252.103:9000 -Dsonar.password=
   SONAR_BUILD_PARAMS: -Dsonar.projectKey=psit4-travellory-dev -Dsonar.login=411962272eb2865d3fbb143bca4d094be2f1ac7f $SONAR_PARAMS
 
+# here we are going to override common configuration
+for:
+# override settings for `master` branch
 -
   branches:
     only:
@@ -44,8 +47,6 @@ build_script:
 test_script:
   - sh: flutter test --machine > tests.output
   - sh: flutter test --coverage
-
-for:
 
 after_test:
   - sh: sonar-scanner SONAR_BUILD_PARAMS
