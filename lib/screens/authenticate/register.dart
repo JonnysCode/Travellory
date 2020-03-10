@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/shared/constants.dart';
+import 'package:travellory/utils/input_validator.dart';
 
 class Register extends StatefulWidget {
 
@@ -13,13 +15,20 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
 
-  final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
   // text field state
   String email = '';
   String password = '';
   String error = '';
+
+  Future _register(BuildContext context) async {
+    final BaseAuthService _auth = AuthProvider.of(context).auth;
+    dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+    if(result == null){
+      setState(() => error = 'Please supply a valid email and password.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,32 +56,38 @@ class _RegisterState extends State<Register> {
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
+                key: Key('emailField'),
                 decoration: textInputDecoration.copyWith(hintText: 'Email'),
-                validator: (val) => val.isEmpty ? 'Enter an email' : null, // todo: validate if its an email
+                validator: (val) => InputValidator.validateEmail(val),
                 onChanged: (val) => email = val,
               ),
               SizedBox(height: 20.0),
               TextFormField(
+                key: Key('passwordField'),
                 decoration: textInputDecoration.copyWith(hintText: 'Password'),
                 obscureText: true,
-                validator: (val) => val.length < 6 ? 'Enter a password with at least 6 characters' : null,
+                validator: (val) => InputValidator.validatePassword(val),
                 onChanged: (val) => password = val,
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                  color: Theme.of(context).primaryColor,
-                  child: Text(
-                    'Register',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () async {
-                    if (_formKey.currentState.validate()) {
-                      dynamic result = await _auth.registerWithEmailAndPassword(email, password);
-                      if(result == null){
-                        setState(() => error = 'Please supply a valid email and password.');
-                      }
-                    }
+                key: Key('registerButton'),
+                color: Theme.of(context).primaryColor,
+                child: Text(
+                  'Register',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () async {
+                  if (_formKey.currentState.validate()) {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Center(child: CircularProgressIndicator(),);
+                        });
+                    await _register(context);
+                    Navigator.pop(context);
                   }
+                },
               ),
               SizedBox(height: 12.0),
               Text(
