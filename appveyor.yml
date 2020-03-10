@@ -49,7 +49,7 @@ test_script:
   - sh: flutter test --coverage
 
 after_test:
-  - sh: sonar-scanner SONAR_BUILD_PARAMS
+  - sh: sonar-scanner $SONAR_BUILD_PARAMS
 
 on_finish:
   - sh: echo "finish part here"
