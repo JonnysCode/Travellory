@@ -3,6 +3,7 @@ import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/shared/constants.dart';
 import 'package:travellory/utils/input_validator.dart';
+import 'package:travellory/shared/loading.dart';
 
 class Register extends StatefulWidget {
 
@@ -16,6 +17,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
 
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   // text field state
   String email = '';
@@ -32,7 +34,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -79,13 +81,14 @@ class _RegisterState extends State<Register> {
                 ),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Center(child: CircularProgressIndicator(),);
-                        });
-                    await _register(context);
-                    Navigator.pop(context);
+                    setState(() => loading = true);
+                    dynamic result = await _register(context);
+                    if (result == null) {
+                      setState(() {
+                        error = 'Please supply a valid email and password.';
+                        loading = false;
+                      });
+                    }
                   }
                 },
               ),
