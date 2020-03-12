@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>283777499304-6u76sl74m98pk8prv5ph1idb3uff8i6g.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.283777499304-6u76sl74m98pk8prv5ph1idb3uff8i6g</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBTerG6FzsWzMxLZGxkz8KAXqUNCNtwsE0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>283777499304</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.psit4.travellory</string>
+	<key>PROJECT_ID</key>
+	<string>travellory-9b789</string>
+	<key>STORAGE_BUCKET</key>
+	<string>travellory-9b789.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:283777499304:ios:6fc796afd5add4fac8029d</string>
+	<key>DATABASE_URL</key>
+	<string>https://travellory-9b789.firebaseio.com</string>
+</dict>
+</plist>
