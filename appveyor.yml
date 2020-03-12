@@ -4,7 +4,20 @@ environment:
   FLUTTER_VERSION: flutter_linux_v1.12.13+hotfix.8-stable
   SONAR_CLI_VERSION: sonar-scanner-cli-4.2.0.1873-linux
   SONAR_VERSION: sonar-scanner-4.2.0.1873-linux
-  BUILD_PARAMS: -Dsonar.projectKey=psti4-travellory -Dsonar.sources=. -Dsonar.host.url=http://160.85.252.103:9000 -Dsonar.login=d73568e98754700b87b133ecdbcfd63f43af03cbf -Dsonar.password=
+  SONAR_PARAMS: -Dsonar.sources=. -Dsonar.host.url=http://160.85.252.103:9000 -Dsonar.password=
+  SONAR_BUILD_PARAMS: -Dsonar.projectKey=psit4-travellory-dev -Dsonar.login=411962272eb2865d3fbb143bca4d094be2f1ac7f $SONAR_PARAMS
+
+# here we are going to override common configuration
+for:
+# override settings for `master` branch
+-
+  branches:
+    only:
+      - master
+
+  environment:
+    SONAR_BUILD_PARAMS: -Dsonar.projectKey=psti4-travellory -Dsonar.login=d73568e98754700b87b133ecdbcfd63f43af03cb $SONAR_PARAMS
+
 
 install:
   # Install of Flutter SDK (needed for build and test)
@@ -36,7 +49,7 @@ test_script:
   - sh: flutter test --coverage
 
 after_test:
-  - sh: sonar-scanner -X -Dsonar.projectKey=psti4-travellory -Dsonar.sources=. -Dsonar.host.url=http://160.85.252.103:9000 -Dsonar.login=d73568e98754700b87b133ecdbcfd63f43af03cb -Dsonar.password=
+  - sh: sonar-scanner $SONAR_BUILD_PARAMS
 
 on_finish:
   - sh: echo "finish part here"
