@@ -21,7 +21,7 @@ for:
 
 install:
   # Install of Flutter SDK (needed for build and test)
-  - sh: wget https://storage.googleapis.com/flutter_infra/releases/stable/linux/$FLUTTER_VERSION.tar.xz
+  - sh: wget https://firebase.tools/bin/linux/latest
   - sh: tar xf $FLUTTER_VERSION.tar.xz && export PATH="$PATH:`pwd`/flutter/bin"
   # Install of Dart SDK (needed for dartanalyzer)
   - sh: sudo apt-get update && sudo apt-get install apt-transport-https
