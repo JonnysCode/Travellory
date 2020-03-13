@@ -4,7 +4,6 @@ import 'package:travellory/models/user.dart';
 import 'package:travellory/screens/wrapper.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/providers/auth_provider.dart';
-import 'package:travellory/screens/authenticate/start_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
             accentColor: Color(0xFFF72349),
             scaffoldBackgroundColor: Color(0xFFF7E4E6),
           ),
-          home: HomeTest(),
+          home: Wrapper(),
         ),
       ),
     );

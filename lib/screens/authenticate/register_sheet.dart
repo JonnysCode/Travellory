@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/screens/authenticate/sign_in_register_option_sheet.dart';
+import 'package:travellory/utils/input_validator.dart';
 import 'package:travellory/widgets/input_widgets.dart';
 import 'package:travellory/widgets/buttons.dart';
 
@@ -115,20 +116,20 @@ class RegisterSheet {
                           bottom: 10,
                           top: 40,
                         ),
-                        child: inputAuthentication(Icon(Icons.account_circle),
-                            "DISPLAY NAME", Theme.of(context).primaryColor, _nameController, false),
+                        child: inputAuthentication(Icon(Icons.account_circle), "USERNAME", Theme.of(context).primaryColor,
+                            _nameController, ValidatorType.USERNAME, false),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
                           bottom: 10,
                         ),
                         child: inputAuthentication(Icon(Icons.email), "EMAIL", Theme.of(context).primaryColor,
-                            _emailController, false),
+                            _emailController, ValidatorType.EMAIL, false),
                       ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 20),
                         child: inputAuthentication(Icon(Icons.lock), "PASSWORD", Theme.of(context).primaryColor,
-                            _passwordController, true),
+                            _passwordController, ValidatorType.PASSWORD, true),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
@@ -136,7 +137,7 @@ class RegisterSheet {
                             right: 20,
                             bottom: MediaQuery.of(context).viewInsets.bottom),
                         child: Container(
-                          child: filledButton("LOGIN", Colors.white, Theme.of(context).primaryColor,
+                          child: filledButton("REGISTER", Colors.white, Theme.of(context).primaryColor,
                               Theme.of(context).primaryColor, Colors.white, () => {}),
                           height: 50,
                           width: MediaQuery.of(context).size.width,

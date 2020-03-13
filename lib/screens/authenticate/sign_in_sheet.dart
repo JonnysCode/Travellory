@@ -1,19 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/screens/authenticate/sign_in_register_option_sheet.dart';
+import 'package:travellory/shared/loading.dart';
+import 'package:travellory/utils/input_validator.dart';
 import 'package:travellory/widgets/input_widgets.dart';
 import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/providers/auth_provider.dart';
+import 'package:travellory/services/auth.dart';
 
 class SignInSheet {
+  final _formKey = GlobalKey<FormState>();
+
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   String _email;
   String _password;
+  String _error = '';
 
   SignInSheet(GlobalKey<ScaffoldState> scaffoldKey){
     _scaffoldKey = scaffoldKey;
   }
 
+  _signIn(BuildContext context) async {
+    if (_formKey.currentState.validate()) {
+      LoadingState.makeLoading(true);
+      final BaseAuthService _auth = AuthProvider.of(context).auth;
+      _email = _emailController.text;
+      _password = _passwordController.text;
+      print(_email + _password);
+      dynamic result = await _auth.signInWithEmailAndPassword(_email, _password);
+      print("----------------------------------------------");
+      print("Result = " + result);
+      if(result == null){
+          _error = 'Could not sign in with those credentials.';
+          LoadingState.makeLoading(false);
+      }
+    }
+  }
 
   signInSheet() {
     _scaffoldKey.currentState.showBottomSheet<void>((BuildContext context) {
@@ -92,31 +115,44 @@ class SignInSheet {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 10, top: 40),
-                        child: inputAuthentication(Icon(Icons.email), "EMAIL", Theme.of(context).primaryColor,
-                            _emailController, false),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 20),
-                        child: inputAuthentication(Icon(Icons.lock), "PASSWORD", Theme.of(context).primaryColor,
-                            _passwordController, true),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 20,
-                            right: 20,
-                            bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: Container(
-                          child: filledButton("LOGIN", Colors.white, Theme.of(context).primaryColor,
-                              Theme.of(context).primaryColor, Colors.white, () => {}),
-                          height: 50,
-                          width: MediaQuery.of(context).size.width,
+                      Container(
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 10, top: 40),
+                                child: inputAuthentication(Icon(Icons.email), "EMAIL", Theme.of(context).primaryColor,
+                                    _emailController, ValidatorType.EMAIL, false),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: inputAuthentication(Icon(Icons.lock), "PASSWORD", Theme.of(context).primaryColor,
+                                    _passwordController, ValidatorType.PASSWORD, true),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 20,
+                                    right: 20,
+                                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                                child: Container(
+                                  child: filledButton("LOGIN", Colors.white, Theme.of(context).primaryColor,
+                                      Theme.of(context).primaryColor, Colors.white, () => _signIn(context)),
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
+                      Text(
+                        _error,
+                        style: TextStyle(color: Colors.red, fontSize: 14.0),
+                      )
                     ],
                   ),
                 ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons.dart';
-import 'package:travellory/widgets/input_widgets.dart';
 import 'package:travellory/screens/authenticate/sign_in_register_option_sheet.dart';
 
 class HomeTest extends StatefulWidget {
@@ -13,12 +13,11 @@ class _HomeTestState extends State<HomeTest> {
 
   @override
   Widget build(BuildContext context) {
-    Color primary = Theme.of(context).primaryColor;
     void initState() {
       super.initState();
     }
 
-    return Scaffold(
+    return LoadingState.isLoading() ? Loading() : Scaffold(
         resizeToAvoidBottomPadding: false,
         key: _scaffoldKey,
         backgroundColor: Theme.of(context).primaryColor,
@@ -40,7 +39,7 @@ class _HomeTestState extends State<HomeTest> {
             ),
             Padding(
               child: Container(
-                child: filledButton("YES", Colors.white, Colors.deepOrange, Theme.of(context).accentColor,
+                child: filledButton("LORY", Colors.white, Colors.deepOrange, Theme.of(context).accentColor,
                     Colors.white, () => SignInRegisterOption(_scaffoldKey).optionSheet()),
                 height: 50,
               ),

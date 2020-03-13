@@ -89,7 +89,7 @@ class SignInRegisterOption {
                             right: 20,
                             bottom: MediaQuery.of(context).viewInsets.bottom),
                         child: Container(
-                          child: filledButton("login", Colors.white, Theme.of(context).primaryColor,
+                          child: filledButton("LOGIN", Colors.white, Theme.of(context).primaryColor,
                               Theme.of(context).primaryColor, Colors.white, () => SignInSheet(_scaffoldKey).signInSheet()),
                           height: 50,
                           width: MediaQuery.of(context).size.width,
@@ -104,7 +104,7 @@ class SignInRegisterOption {
                             right: 20,
                             bottom: MediaQuery.of(context).viewInsets.bottom),
                         child: Container(
-                          child: filledButton("register", Colors.white, Theme.of(context).primaryColor,
+                          child: filledButton("REGISTER", Colors.white, Theme.of(context).primaryColor,
                               Theme.of(context).primaryColor, Colors.white, () => RegisterSheet(_scaffoldKey).registerSheet()),
                           height: 50,
                           width: MediaQuery.of(context).size.width,

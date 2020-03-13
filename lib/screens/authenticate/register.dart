@@ -60,7 +60,7 @@ class _RegisterState extends State<Register> {
               TextFormField(
                 key: Key('emailField'),
                 decoration: textInputDecoration.copyWith(hintText: 'Email'),
-                validator: (val) => InputValidator.validateEmail(val),
+                validator: (val) => InputValidator.validate(val, ValidatorType.EMAIL),
                 onChanged: (val) => email = val,
               ),
               SizedBox(height: 20.0),
@@ -68,7 +68,7 @@ class _RegisterState extends State<Register> {
                 key: Key('passwordField'),
                 decoration: textInputDecoration.copyWith(hintText: 'Password'),
                 obscureText: true,
-                validator: (val) => InputValidator.validatePassword(val),
+                validator: (val) => InputValidator.validate(val, ValidatorType.PASSWORD),
                 onChanged: (val) => password = val,
               ),
               SizedBox(height: 20.0),

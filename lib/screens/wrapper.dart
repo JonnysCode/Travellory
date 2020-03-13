@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
+import 'package:travellory/screens/authenticate/start_screen.dart';
 import 'package:travellory/screens/home/home.dart';
 
 class Wrapper extends StatelessWidget {
@@ -13,7 +14,7 @@ class Wrapper extends StatelessWidget {
 
     // return either home or authenticate widget
     if(user == null){
-      return Authenticate();
+      return HomeTest();
     } else {
       return Home();
     }
