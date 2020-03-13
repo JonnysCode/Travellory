@@ -4,6 +4,7 @@ import 'package:travellory/services/auth.dart';
 import 'package:travellory/shared/constants.dart';
 import 'package:travellory/utils/input_validator.dart';
 import 'package:travellory/shared/loading.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -93,6 +94,19 @@ class _SignInState extends State<SignIn> {
                     },
                 ),
                 SizedBox(height: 12.0),
+                // this button is only for test purposes TODO: remove
+                RaisedButton(
+                  key: Key('testFunctionCall'),
+                  color: Theme.of(context).primaryColor,
+                  child: Text(
+                    'call function',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () async {
+                    _testFunCall();
+                  },
+                ),
+                SizedBox(height: 12.0),
                 Text(
                   error,
                   style: TextStyle(color: Colors.red, fontSize: 14.0),
@@ -102,5 +116,29 @@ class _SignInState extends State<SignIn> {
         ),
       ),
     );
+  }
+}
+
+/**
+ * This is a test function call of a firebase cloud function. It will print the
+ * result to the console
+ * TODO: remove
+ */
+void _testFunCall() async {
+  HttpsCallable callable = CloudFunctions.instance
+      .getHttpsCallable(functionName: 'payment-makePayment');
+
+  try {
+    final HttpsCallableResult result = await callable.call();
+    print(result.data);
+
+  } on CloudFunctionsException catch (e) {
+    print('caught firebase functions exception');
+    print(e.code);
+    print(e.message);
+    print(e.details);
+  } catch (e) {
+    print('caught generic exception');
+    print(e);
   }
 }
