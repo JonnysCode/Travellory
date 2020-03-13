@@ -9,7 +9,7 @@ Widget filledButton(String text, Color splashColor, Color highlightColor,
     elevation: 0.0,
     color: fillColor,
     shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(30.0)),
+        borderRadius: BorderRadius.circular(30.0)),
     child: Text(
       text,
       style: TextStyle(
@@ -20,4 +20,3 @@ Widget filledButton(String text, Color splashColor, Color highlightColor,
     },
   );
 }
-

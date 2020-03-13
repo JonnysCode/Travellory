@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/utils/input_validator.dart';
 
 Widget inputAuthentication(Icon icon, String hint, Color decorationColor, TextEditingController controller,
-    bool obscure) {
+    ValidatorType validatorType, bool obscure) {
   return Container(
     padding: EdgeInsets.only(left: 20, right: 20),
-    child: TextField(
+    child: TextFormField(
+      key: Key(hint.toLowerCase() + "Field"),
       controller: controller,
       obscureText: obscure,
+      validator: (val) => InputValidator.validate(val, validatorType),
       style: TextStyle(
         fontSize: 20,
       ),
