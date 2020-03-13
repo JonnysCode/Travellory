@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/screens/authenticate/register_sheet.dart';
 import 'package:travellory/screens/authenticate/sign_in_sheet.dart';
 import 'package:travellory/widgets/buttons.dart';
 
@@ -7,12 +8,6 @@ class SignInRegisterOption {
 
   SignInRegisterOption(GlobalKey<ScaffoldState> scaffoldKey){
     _scaffoldKey = scaffoldKey;
-  }
-
-  // pop sheet and call function
-  _switchSheet(BuildContext context, void function()){
-    Navigator.of(context).pop();
-    function();
   }
 
   optionSheet() {
@@ -32,6 +27,17 @@ class SignInRegisterOption {
                   child: Stack(
                     children: <Widget>[
                       Positioned(
+                        left: 18,
+                        top: 18,
+                        child: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Theme.of(context).primaryColor),
+                        ),
+                      ),
+                      Positioned(
                         left: 10,
                         top: 10,
                         child: IconButton(
@@ -39,9 +45,9 @@ class SignInRegisterOption {
                             Navigator.of(context).pop();
                           },
                           icon: Icon(
-                            Icons.close,
-                            size: 30.0,
-                            color: Theme.of(context).primaryColor,
+                            Icons.clear,
+                            size: 26.0,
+                            color: Colors.white,
                           ),
                         ),
                       )
@@ -55,7 +61,7 @@ class SignInRegisterOption {
                     children: <Widget>[
                       Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 180,
+                        height: 220,
                         child: Stack(
                           children: <Widget>[
                             Positioned(
@@ -84,7 +90,7 @@ class SignInRegisterOption {
                             bottom: MediaQuery.of(context).viewInsets.bottom),
                         child: Container(
                           child: filledButton("login", Colors.white, Theme.of(context).primaryColor,
-                              Theme.of(context).primaryColor, Colors.white, () => SignIn(_scaffoldKey).signInSheet()),
+                              Theme.of(context).primaryColor, Colors.white, () => SignInSheet(_scaffoldKey).signInSheet()),
                           height: 50,
                           width: MediaQuery.of(context).size.width,
                         ),
@@ -99,7 +105,7 @@ class SignInRegisterOption {
                             bottom: MediaQuery.of(context).viewInsets.bottom),
                         child: Container(
                           child: filledButton("register", Colors.white, Theme.of(context).primaryColor,
-                              Theme.of(context).primaryColor, Colors.white, () => _switchSheet(context, SignIn(_scaffoldKey).signInSheet())),
+                              Theme.of(context).primaryColor, Colors.white, () => RegisterSheet(_scaffoldKey).registerSheet()),
                           height: 50,
                           width: MediaQuery.of(context).size.width,
                         ),

@@ -3,19 +3,21 @@ import 'package:travellory/screens/authenticate/sign_in_register_option_sheet.da
 import 'package:travellory/widgets/input_widgets.dart';
 import 'package:travellory/widgets/buttons.dart';
 
-class SignInSheet {
+class RegisterSheet {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
   String _email;
   String _password;
+  String _displayName;
 
-  SignInSheet(GlobalKey<ScaffoldState> scaffoldKey){
+  RegisterSheet(GlobalKey<ScaffoldState> scaffoldKey){
     _scaffoldKey = scaffoldKey;
   }
 
 
-  signInSheet() {
+  registerSheet() {
     _scaffoldKey.currentState.showBottomSheet<void>((BuildContext context) {
       return DecoratedBox(
         decoration: BoxDecoration(
@@ -39,6 +41,7 @@ class SignInSheet {
                             Navigator.of(context).pop();
                             _emailController.clear();
                             _passwordController.clear();
+                            _nameController.clear();
                             SignInRegisterOption(_scaffoldKey).optionSheet();
                           },
                           icon: Icon(
@@ -67,23 +70,38 @@ class SignInSheet {
                                   width: 130,
                                   height: 130,
                                   decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage("assets/images/login/world.png"),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
+                                      shape: BoxShape.circle,
+                                      color: Theme.of(context).primaryColor),
                                 ),
                                 alignment: Alignment.center,
                               ),
                             ),
                             Positioned(
                               child: Container(
+                                padding: EdgeInsets.only(bottom: 25, right: 40),
                                 child: Text(
-                                  "LOGIN",
+                                  "REGI",
                                   style: TextStyle(
-                                    fontSize: 48,
+                                    fontSize: 44,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
+                                  ),
+                                ),
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                            Positioned(
+                              child: Align(
+                                child: Container(
+                                  padding: EdgeInsets.only(top: 40, left: 28),
+                                  width: 130,
+                                  child: Text(
+                                    "STER",
+                                    style: TextStyle(
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                                 alignment: Alignment.center,
@@ -93,7 +111,17 @@ class SignInSheet {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 10, top: 40),
+                        padding: EdgeInsets.only(
+                          bottom: 10,
+                          top: 40,
+                        ),
+                        child: inputAuthentication(Icon(Icons.account_circle),
+                            "DISPLAY NAME", Theme.of(context).primaryColor, _nameController, false),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          bottom: 10,
+                        ),
                         child: inputAuthentication(Icon(Icons.email), "EMAIL", Theme.of(context).primaryColor,
                             _emailController, false),
                       ),
