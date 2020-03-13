@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 Widget inputAuthentication(Icon icon, String hint, Color decorationColor, TextEditingController controller,
-    bool obsecure) {
+    bool obscure) {
   return Container(
     padding: EdgeInsets.only(left: 20, right: 20),
     child: TextField(
       controller: controller,
-      obscureText: obsecure,
+      obscureText: obscure,
       style: TextStyle(
         fontSize: 20,
       ),
       decoration: InputDecoration(
+          fillColor: Colors.white,
+          filled: true,
           hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           hintText: hint,
           enabledBorder: OutlineInputBorder(
