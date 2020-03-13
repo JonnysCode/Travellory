@@ -16,15 +16,11 @@ class SignIn {
   }
 
 
-  loginSheet() {
+  signInSheet() {
     _scaffoldKey.currentState.showBottomSheet<void>((BuildContext context) {
       return DecoratedBox(
         decoration: BoxDecoration(
           color: Theme.of(context).canvasColor,
-          image: DecorationImage(
-            image: AssetImage("assets/images/login/gradient_bg.png"),
-            fit: BoxFit.cover,
-          ),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.only(
@@ -41,7 +37,9 @@ class SignIn {
                         top: 10,
                         child: IconButton(
                           onPressed: () {
-
+                            Navigator.of(context).pop();
+                            _emailController.clear();
+                            _passwordController.clear();
                           },
                           icon: Icon(
                             Icons.close,
@@ -124,9 +122,15 @@ class SignIn {
                 ),
               ],
             ),
-            height: MediaQuery.of(context).size.height / 1.1,
+            height: MediaQuery.of(context).size.height / 1.05,
             width: MediaQuery.of(context).size.width,
-            color: Colors.white,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/login/beach.png"),
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.bottomCenter,
+              ),
+            ),
           ),
         ),
       );
