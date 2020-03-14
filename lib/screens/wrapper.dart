@@ -16,6 +16,10 @@ class Wrapper extends StatelessWidget {
     if(user == null){
       return HomeTest();
     } else {
+      Navigator.popUntil(
+        context,
+        ModalRoute.withName('/'),
+      );
       return Home();
     }
   }
