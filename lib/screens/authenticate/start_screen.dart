@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
-import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons.dart';
-import 'package:travellory/screens/authenticate/sign_in_register_option_sheet.dart';
 
 class HomeTest extends StatefulWidget {
   @override
