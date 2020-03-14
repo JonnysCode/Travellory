@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/screens/authenticate/register.dart';
-import 'package:travellory/screens/authenticate/register_sheet.dart';
-import 'package:travellory/screens/authenticate/sign_in.dart';
-import 'package:travellory/screens/authenticate/sign_in_sheet.dart';
 import 'package:travellory/widgets/buttons.dart';
 
 class Authenticate extends StatefulWidget {
