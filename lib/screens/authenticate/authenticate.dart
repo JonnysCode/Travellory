@@ -103,10 +103,7 @@ class _AuthenticateState extends State<Authenticate> {
                                 child: Container(
                                   child: filledButton("LOGIN", Colors.white, Theme.of(context).primaryColor,
                                       Theme.of(context).primaryColor, Colors.white, () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => SignIn()),
-                                        );
+                                        Navigator.pushNamed(context, '/login');
                                       }),
                                   height: 50,
                                   width: MediaQuery.of(context).size.width,
@@ -123,10 +120,7 @@ class _AuthenticateState extends State<Authenticate> {
                                 child: Container(
                                   child: filledButton("REGISTER", Colors.white, Theme.of(context).primaryColor,
                                       Theme.of(context).primaryColor, Colors.white, () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => SignIn()),
-                                        );
+                                        Navigator.pushNamed(context, '/register');
                                       }),
                                   height: 50,
                                   width: MediaQuery.of(context).size.width,
