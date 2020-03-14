@@ -15,17 +15,3 @@ class Loading extends StatelessWidget {
     );
   }
 }
-
-// Provides a static bool to update whether your page is loading or not.
-// If isLoading() is true, display the Loading() Widget instead of a Scaffold()
-class LoadingState{
-  static var _isLoading = false;
-
-  static makeLoading(bool val){
-    _isLoading = val;
-  }
-
-  static bool isLoading(){
-    return _isLoading;
-  }
-}

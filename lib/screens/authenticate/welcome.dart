@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/widgets/buttons.dart';
 
-class HomeTest extends StatefulWidget {
+class Welcome extends StatefulWidget {
   @override
-  HomeTestState createState() => HomeTestState();
+  WelcomeState createState() => WelcomeState();
 }
 
-class HomeTestState extends State<HomeTest> {
+class WelcomeState extends State<Welcome> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
