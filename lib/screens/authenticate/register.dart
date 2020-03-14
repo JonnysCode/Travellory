@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
-import 'package:travellory/shared/constants.dart';
 import 'package:travellory/utils/input_validator.dart';
-import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 Widget filledButton(String text, Color splashColor, Color highlightColor,
     Color fillColor, Color textColor, void function() ) {
   return RaisedButton(
+    key: Key(text.toLowerCase().trim() + 'Button'),
     highlightElevation: 0.0,
     splashColor: splashColor,
     highlightColor: highlightColor,
