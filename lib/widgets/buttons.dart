@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Widget filledButton(String text, Color splashColor, Color highlightColor,
-    Color fillColor, Color textColor, void function()) {
+    Color fillColor, Color textColor, void function() ) {
   return RaisedButton(
     highlightElevation: 0.0,
     splashColor: splashColor,

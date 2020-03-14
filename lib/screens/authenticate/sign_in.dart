@@ -36,21 +36,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 0.0,
-        title: Text('Sign in to travellory'),
-        actions: <Widget>[
-          FlatButton.icon(
-              onPressed: () {
-                widget.toggleView();
-              },
-              icon: Icon(Icons.person),
-              label: Text('Register')
-          )
-        ],
-      ),
+      backgroundColor: Theme.of(context).canvasColor,
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         child: Form(
