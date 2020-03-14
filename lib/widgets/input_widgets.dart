@@ -6,7 +6,7 @@ Widget inputAuthentication(Icon icon, String hint, Color decorationColor, TextEd
   return Container(
     padding: EdgeInsets.only(left: 20, right: 20),
     child: TextFormField(
-      key: Key(hint.toLowerCase() + "Field"),
+      key: Key(hint.toLowerCase().trim() + 'Field'),
       controller: controller,
       obscureText: obscure,
       validator: (val) => InputValidator.validate(val, validatorType),
