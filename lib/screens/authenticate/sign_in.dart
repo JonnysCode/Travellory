@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
-import 'package:travellory/shared/constants.dart';
 import 'package:travellory/utils/input_validator.dart';
-import 'package:travellory/shared/loading.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
@@ -24,11 +22,6 @@ class _SignInState extends State<SignIn> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  bool loading = false;
-
-  // text field state
-  String email = '';
-  String password = '';
   String _error = '';
 
   Future _signIn(BuildContext context) async {
@@ -41,7 +34,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading() : Scaffold(
+    return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Theme.of(context).primaryColor,
       body: Column(
@@ -148,13 +141,13 @@ class _SignInState extends State<SignIn> {
                                         child: filledButton("LOGIN", Colors.white, Theme.of(context).primaryColor,
                                             Theme.of(context).primaryColor, Colors.white, () async {
                                               if (_formKey.currentState.validate()) {
-                                                setState(() => loading = true);
+                                                Navigator.pushNamed(context, '/loading');
                                                 dynamic result = await _signIn(context);
                                                 if(result == null){
                                                   setState(() {
                                                     _error = 'Could not sign in with those credentials.';
-                                                    loading = false;
                                                   });
+                                                  Navigator.pop(context);
                                                 }
                                               }
                                             }),
