@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travellory/screens/authenticate/sign_in_register_option_sheet.dart';
+import 'package:travellory/screens/authenticate/start_screen.dart';
 import 'package:travellory/shared/loading.dart';
 import 'package:travellory/utils/input_validator.dart';
 import 'package:travellory/widgets/input_widgets.dart';
@@ -7,7 +9,9 @@ import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 
-class SignInSheet {
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
+class SignInSheet{
   final _formKey = GlobalKey<FormState>();
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -24,15 +28,15 @@ class SignInSheet {
   _signIn(BuildContext context) async {
     if (_formKey.currentState.validate()) {
       LoadingState.makeLoading(true);
-      final BaseAuthService _auth = AuthProvider.of(context).auth;
-      _email = _emailController.text;
-      _password = _passwordController.text;
-      print(_email + _password);
-      dynamic result = await _auth.signInWithEmailAndPassword(_email, _password);
-      print("----------------------------------------------");
-      print("Result = " + result);
-      if(result == null){
+
+      final FirebaseUser user = (await _auth.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      )).user;
+      //dynamic result = await _auth.signInWithEmailAndPassword(_email, _password);
+      if(user == null){
           _error = 'Could not sign in with those credentials.';
+          print(_error);
           LoadingState.makeLoading(false);
       }
     }
