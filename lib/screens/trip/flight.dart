@@ -80,7 +80,7 @@ class Flight extends StatelessWidget {
               ),
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(hintText: "Time"),
+                  decoration: InputDecoration(hintText: "Date / Time"),
                 ),
               ),
               SizedBox(
@@ -112,7 +112,7 @@ class Flight extends StatelessWidget {
               ),
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(hintText: "Time"),
+                  decoration: InputDecoration(hintText: "Date / Time"),
                 ),
               ),
               SizedBox(

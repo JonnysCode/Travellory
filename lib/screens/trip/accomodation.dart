@@ -29,7 +29,7 @@ class Accomodation extends StatelessWidget {
       ),
     );
 
-    Widget flight = Container(
+    Widget accomodation = Container(
       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
       child: Form(
         child: Column(
@@ -38,21 +38,21 @@ class Accomodation extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Airline',
+                labelText: 'Hotel Name',
               ),
             ),
             SizedBox(height: 20.0),
             TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Flight Nr.',
+                labelText: 'Address',
               ),
             ),
             SizedBox(height: 20.0),
             TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Seat',
+                labelText: 'Nights',
               ),
             ),
           ],
@@ -60,19 +60,19 @@ class Accomodation extends StatelessWidget {
       ),
     );
 
-    Widget departure = Container(
+    Widget checkin = Container(
       padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
       child: Form(
         child: Column(
           children: [
             Text(
-              'Departure',
+              'Check-In',
               style: TextStyle(fontSize: 20),
             ),
             Row(children: [
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(hintText: "Location"),
+                  decoration: InputDecoration(hintText: "Date"),
                 ),
               ),
               SizedBox(
@@ -92,13 +92,13 @@ class Accomodation extends StatelessWidget {
       ),
     );
 
-    Widget arrival = Container(
+    Widget checkout = Container(
       padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
       child: Form(
         child: Column(
           children: [
             Text(
-              'Arrival',
+              'Check-Out',
               style: TextStyle(fontSize: 20),
             ),
             Row(children: [
@@ -129,6 +129,13 @@ class Accomodation extends StatelessWidget {
       child: Form(
         child: Column(
           children: [
+            SizedBox(height: 40.0),
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Room Type',
+              ),
+            ),
             // TODO: adapt height
             SizedBox(height: 40.0),
             TextField(
@@ -157,7 +164,7 @@ class Accomodation extends StatelessWidget {
           ],
         ),
         body: ListView(
-          children: [buttonSection, flight, departure, arrival, notes],
+          children: [buttonSection, accomodation, checkin, checkout, notes],
         ));
   }
 }
