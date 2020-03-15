@@ -1,0 +1,43 @@
+{
+  "brands": [
+    {
+      "keyword": "Alamo",
+      "id": "1",
+      "autocompleteTerm": "Alamo"
+    },
+    {
+      "keyword": "AVIS",
+      "id": "2",
+      "autocompleteTerm": "AVIS"
+    },
+    {
+      "keyword": "Budget",
+      "id": "3",
+      "autocompleteTerm": "Budget"
+    },
+    {
+      "keyword": "Enterprise",
+      "id": "4",
+      "autocompleteTerm": "Enterprise"
+    },{
+      "keyword": "Europcar",
+      "id": "5",
+      "autocompleteTerm": "Europcar"
+    },
+    {
+      "keyword": "Firefly",
+      "id": "6",
+      "autocompleteTerm": "Firefly"
+    },
+    {
+      "keyword": "Hertz",
+      "id": "7",
+      "autocompleteTerm": "Hertz"
+    },
+    {
+      "keyword": "Interrent",
+      "id": "8",
+      "autocompleteTerm": "Interrent"
+    }
+  ]
+}

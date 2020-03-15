@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/providers/auth_provider.dart';
-import 'package:travellory/screens/trip/accomodation.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/screens/trip/flight.dart';
 import 'package:travellory/screens/trip/accomodation.dart';
+import 'package:travellory/screens/trip/rentalCar.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
 class Booking extends StatefulWidget {
   final Function toggleView;
@@ -28,14 +29,17 @@ class _BookingState extends State<Booking> {
         context,
         MaterialPageRoute(builder: (context) => Flight()),
       );
-    } else if(value == 'Accomodation') {
+    } else if (value == 'Accomodation') {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Accomodation()),
       );
-    } else if(value == 'Rental Car') {
-      // TODO
-    } else if(value == 'Events') {
+    } else if (value == 'Rental Car') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RentalCar()),
+      );
+    } else if (value == 'Events') {
       // TODO
     }
   }
@@ -110,5 +114,22 @@ class _BookingState extends State<Booking> {
         body: ListView(
           children: [buttonSection, typeDropdown],
         ));
+  }
+
+  void _testFunCall() async {
+    HttpsCallable callable = CloudFunctions.instance
+        .getHttpsCallable(functionName: 'booking-lowercaseBio');
+    try {
+      final HttpsCallableResult result = await callable.call();
+      print(result.data);
+    } on CloudFunctionsException catch (e) {
+      print('caught firebase functions exception');
+      print(e.code);
+      print(e.message);
+      print(e.details);
+    } catch (e) {
+      print('caught generic exception');
+      print(e);
+    }
   }
 }
