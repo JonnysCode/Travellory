@@ -30,6 +30,7 @@ dependencies:
   flutter_spinkit: ^4.1.2
   firebase_core: 0.4.4 # new
   cloud_functions: ^0.4.2+2
+  google_nav_bar: ^2.0.1
 
 dev_dependencies:
   flutter_test:

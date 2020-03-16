@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class UpcomingTrips extends StatefulWidget {
   @override
@@ -7,6 +8,28 @@ class UpcomingTrips extends StatefulWidget {
 
 class _UpcomingTripsState extends State<UpcomingTrips> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  static final _heightOfNavbar = 60;
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF61BAA9)); // TODO: primary color declare as const
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Likes',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: Search',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 3: Profile',
+      style: optionStyle,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +39,7 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
       body: Column(
         children: <Widget>[
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
+            height: (MediaQuery.of(context).size.height - _heightOfNavbar) * 0.05,
           ),
           Container(
             child: DecoratedBox(
@@ -30,16 +53,57 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
                 child: Container(
                   child: Column(
                     children: <Widget>[
-
                     ],
                   ),
-                  height: MediaQuery.of(context).size.height * 0.95,
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  height: (MediaQuery.of(context).size.height - _heightOfNavbar) * 0.95,
                   width: MediaQuery.of(context).size.width,
                 ),
               ),
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(color: Colors.white, boxShadow: [
+          BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+        ]),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            child: GNav(
+                gap: 8,
+                activeColor: Colors.white,
+                iconSize: 24,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                duration: Duration(milliseconds: 800),
+                tabBackgroundColor: Colors.grey[800],
+                tabs: [
+                  GButton(
+                    icon: Icons.home,
+                    text: 'Home',
+                  ),
+                  GButton(
+                    icon: Icons.calendar_today,
+                    text: 'Calendar',
+                  ),
+                  GButton(
+                    icon: Icons.map,
+                    text: 'Map',
+                  ),
+                  GButton(
+                    icon: Icons.person,
+                    text: 'Profile',
+                  ),
+                ],
+                selectedIndex: _selectedIndex,
+                onTabChange: (index) {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                }),
+          ),
+        ),
       ),
     );
   }
