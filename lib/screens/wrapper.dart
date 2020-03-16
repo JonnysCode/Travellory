@@ -4,6 +4,7 @@ import 'package:travellory/models/user.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/screens/authenticate/welcome.dart';
 import 'package:travellory/screens/home/home.dart';
+import 'package:travellory/screens/home/upcoming_trips.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -20,7 +21,7 @@ class Wrapper extends StatelessWidget {
         context,
         ModalRoute.withName('/'),
       );
-      return Home();
+      return UpcomingTrips();
     }
   }
 }
