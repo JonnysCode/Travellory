@@ -29,7 +29,7 @@ class Home extends StatelessWidget {
                 );
               }
           ),
-          Text('Add Booking Information')
+          Text('Add Booking Information'),
         ],
       ),
     );

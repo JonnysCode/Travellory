@@ -4,6 +4,7 @@ import 'package:travellory/services/auth.dart';
 import 'package:travellory/screens/trip/flight.dart';
 import 'package:travellory/screens/trip/accomodation.dart';
 import 'package:travellory/screens/trip/rentalCar.dart';
+import 'package:travellory/screens/trip/activity.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
 class Booking extends StatefulWidget {
@@ -39,8 +40,11 @@ class _BookingState extends State<Booking> {
         context,
         MaterialPageRoute(builder: (context) => RentalCar()),
       );
-    } else if (value == 'Events') {
-      // TODO
+    } else if (value == 'Activity') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Activity()),
+      );
     }
   }
 
@@ -86,7 +90,7 @@ class _BookingState extends State<Booking> {
             'Flight',
             'Accomodation',
             'Rental Car',
-            'Event'
+            'Activity'
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
