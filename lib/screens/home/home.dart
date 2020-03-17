@@ -29,7 +29,7 @@ class Home extends StatelessWidget {
                 );
               }
           ),
-          Text('Add Booking Information'),
+          Text('Plan and manage trip itinerary'),
         ],
       ),
     );

@@ -19,20 +19,6 @@ class _ActivityState extends State<Activity> {
     await _auth.signOut();
   }
 
-  Future _showView(String value) async {
-    if (value == 'Historic') {
-
-    } else if (value == 'Sports') {
-
-    } else if (value == 'Cultural') {
-
-    } else if (value == 'Social') {
-
-    } else if (value == 'Other') {
-
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Color color = Theme.of(context).primaryColor;
@@ -58,7 +44,7 @@ class _ActivityState extends State<Activity> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            'What type describes your activity best? ',
+            'How would you categorize your activity? ',
             style: TextStyle(fontSize: 16),
           ),
         ],
@@ -83,14 +69,15 @@ class _ActivityState extends State<Activity> {
             setState(() {
               dropdownValue = newValue;
             });
-            _showView(newValue);
           },
           items: <String>[
-            'Select the type of activity',
+            'Select',
             'Historic',
-            'Sports',
+            'Outdoors',
             'Culture',
             'Social',
+            'Relaxing',
+            'Adventure',
             'Other'
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
