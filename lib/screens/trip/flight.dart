@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 
-class Flight extends StatelessWidget {
+class Flight extends StatefulWidget {
   final Function toggleView;
 
   Flight({this.toggleView});
+
+  @override
+  _FlightState createState() => new _FlightState();
+}
+
+class _FlightState extends State<Flight> {
+  bool _valueBaggage = false;
+  bool _valueExcessBaggage = false;
+
+  void _valueBaggageChanged(bool value) => setState(() => _valueBaggage = value);
+  void _valueExcessBaggageChanged(bool value) => setState(() => _valueExcessBaggage = value);
 
   Future _signOut(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
@@ -34,6 +45,13 @@ class Flight extends StatelessWidget {
       child: Form(
         child: Column(
           children: [
+            SizedBox(height: 20.0),
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Booking Reference',
+              ),
+            ),
             SizedBox(height: 20.0),
             TextField(
               decoration: InputDecoration(
@@ -124,6 +142,33 @@ class Flight extends StatelessWidget {
       ),
     );
 
+    Widget baggage = Container(
+      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
+      child: new Column(
+        children: <Widget>[
+//          new Checkbox(value: _valueBaggage, onChanged: _valueBaggageChanged),
+          new CheckboxListTile(
+                value: _valueBaggage,
+                onChanged: _valueBaggageChanged,
+                title: new Text(
+                  'Checked baggage included in ticket?',
+                  style: TextStyle(fontSize: 16),
+                ),
+              controlAffinity: ListTileControlAffinity.leading
+              ),
+          new CheckboxListTile(
+              value: _valueExcessBaggage,
+              onChanged: _valueExcessBaggageChanged,
+              title: new Text(
+                'Excess baggage included in ticket?',
+                style: TextStyle(fontSize: 16),
+          ),
+              controlAffinity: ListTileControlAffinity.leading
+          ),
+            ],
+          ),
+    );
+
     Widget notes = Container(
       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
       child: Form(
@@ -157,7 +202,7 @@ class Flight extends StatelessWidget {
           ],
         ),
         body: ListView(
-          children: [buttonSection, flight, departure, arrival, notes],
+          children: [buttonSection, flight, departure, arrival, baggage, notes],
         ));
   }
 }
