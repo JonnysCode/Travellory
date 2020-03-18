@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:travellory/screens/home/home.dart';
 
 class UpcomingTrips extends StatefulWidget {
   @override
@@ -7,64 +8,71 @@ class UpcomingTrips extends StatefulWidget {
 }
 
 class _UpcomingTripsState extends State<UpcomingTrips> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   static final _heightOfNavbar = 68;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  static final _pageController = PageController(
+    initialPage: 0,
+  );
+  
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF61BAA9)); // TODO: primary color declare as const
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Likes',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Search',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Profile',
-      style: optionStyle,
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
+    _pageController.animateToPage(
+        _selectedIndex,
+        duration: Duration(milliseconds: 1000),
+        curve: Curves.linear
+    );
+
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Theme.of(context).primaryColor,
-      body: Container(
-        child: Column(
+      body: PageView(
+          controller: _pageController,
+          scrollDirection: Axis.horizontal,
           children: <Widget>[
-            SizedBox(
-              height: (MediaQuery.of(context).size.height - _heightOfNavbar) * 0.05,
-            ),
             Container(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).canvasColor,
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40.0),
-                      topRight: Radius.circular(40.0)),
-                  child: Container(
-                    child: Column(
-                      children: <Widget>[
-                      ],
-                    ),
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    height: (MediaQuery.of(context).size.height - _heightOfNavbar) * 0.95,
-                    width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: (MediaQuery.of(context).size.height - _heightOfNavbar) * 0.05,
                   ),
-                ),
+                  Container(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).canvasColor,
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(40.0),
+                            topRight: Radius.circular(40.0)),
+                        child: Container(
+                          child: Column(
+                            children: <Widget>[
+                              // TODO: Add data
+                            ],
+                          ),
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          height: (MediaQuery.of(context).size.height - _heightOfNavbar) * 0.95,
+                          width: MediaQuery.of(context).size.width,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
+            Container(
+              color: Colors.blue,
+            ),
+            Container(
+              color: Colors.red,
+            ),
+            Container(
+              color: Colors.green,
+            )
           ],
-        ),
       ),
       bottomNavigationBar: DecoratedBox(
         decoration: BoxDecoration(
@@ -76,7 +84,7 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
               topRight: Radius.circular(40.0)),
           child: Container(
             decoration: BoxDecoration(color: Colors.white, boxShadow: [
-              BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+              BoxShadow(blurRadius: 30, color: Colors.black.withOpacity(.25))
             ]),
             child: SafeArea(
               child: Padding(
@@ -112,6 +120,7 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
                       setState(() {
                         _selectedIndex = index;
                       });
+
                     }),
               ),
             ),
