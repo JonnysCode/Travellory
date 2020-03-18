@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:travellory/screens/home/home.dart';
+import 'package:travellory/screens/home/pages/calendar_page.dart';
+import 'package:travellory/screens/home/pages/home_page.dart';
+import 'package:travellory/screens/home/pages/map_page.dart';
+import 'package:travellory/screens/home/pages/profile_page.dart';
+import 'package:travellory/widgets/layout.dart';
 
 class UpcomingTrips extends StatefulWidget {
   @override
@@ -8,14 +12,29 @@ class UpcomingTrips extends StatefulWidget {
 }
 
 class _UpcomingTripsState extends State<UpcomingTrips> {
-  static final _heightOfNavbar = 68;
+  static final _heightOfNavBar = 68;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   static final _pageController = PageController(
     initialPage: 0,
   );
-  
+
   int _selectedIndex = 0;
+
+  List<List<Widget>> _pages = [
+    homePage(),
+    calendarPage(),
+    mapPage(),
+    profilePage()
+  ];
+
+  List<Widget> _layoutPages(){
+    List<Widget> layoutPages = List();
+    for(List<Widget> page in _pages){
+      layoutPages.add(mainPageLayout(context, (MediaQuery.of(context).size.height - _heightOfNavBar), page));
+    }
+    return layoutPages;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,48 +50,7 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
       body: PageView(
           controller: _pageController,
           scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            Container(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: (MediaQuery.of(context).size.height - _heightOfNavbar) * 0.05,
-                  ),
-                  Container(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).canvasColor,
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(40.0),
-                            topRight: Radius.circular(40.0)),
-                        child: Container(
-                          child: Column(
-                            children: <Widget>[
-                              // TODO: Add data
-                            ],
-                          ),
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          height: (MediaQuery.of(context).size.height - _heightOfNavbar) * 0.95,
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              color: Colors.blue,
-            ),
-            Container(
-              color: Colors.red,
-            ),
-            Container(
-              color: Colors.green,
-            )
-          ],
+          children: _layoutPages(),
       ),
       bottomNavigationBar: DecoratedBox(
         decoration: BoxDecoration(
