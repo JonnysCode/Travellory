@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/providers/auth_provider.dart';
+import 'package:travellory/screens/trip/publicTransport.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/screens/trip/flight.dart';
 import 'package:travellory/screens/trip/accommodation.dart';
@@ -39,6 +40,11 @@ class _BookingState extends State<Booking> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => RentalCar()),
+      );
+    } else if (value == 'Public Transport') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PublicTransport()),
       );
     } else if (value == 'Activity') {
       Navigator.push(
@@ -90,6 +96,7 @@ class _BookingState extends State<Booking> {
             'Flight',
             'Accommodation',
             'Rental Car',
+            'Public Transport',
             'Activity'
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
