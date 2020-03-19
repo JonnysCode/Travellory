@@ -123,10 +123,16 @@ class _ActivityState extends State<Activity> {
               'Schedule activity ',
               style: TextStyle(fontSize: 20),
             ),
+            TextField(
+                decoration: InputDecoration(hintText: "Location"),
+              ),
+            SizedBox(
+              width: 10,
+            ),
             Row(children: [
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(hintText: "Location"),
+                  decoration: InputDecoration(hintText: "Start Date"),
                 ),
               ),
               SizedBox(
@@ -134,7 +140,17 @@ class _ActivityState extends State<Activity> {
               ),
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(hintText: "Start Date / Time"),
+                  decoration: InputDecoration(hintText: "Start Time"),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+            ]),
+            Row(children: [
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(hintText: "End Date"),
                 ),
               ),
               SizedBox(
@@ -142,7 +158,7 @@ class _ActivityState extends State<Activity> {
               ),
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(hintText: "End Date / Time"),
+                  decoration: InputDecoration(hintText: "End Time"),
                 ),
               ),
               SizedBox(
