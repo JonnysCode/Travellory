@@ -146,7 +146,6 @@ class _FlightState extends State<Flight> {
       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
       child: new Column(
         children: <Widget>[
-//          new Checkbox(value: _valueBaggage, onChanged: _valueBaggageChanged),
           new CheckboxListTile(
                 value: _valueBaggage,
                 onChanged: _valueBaggageChanged,

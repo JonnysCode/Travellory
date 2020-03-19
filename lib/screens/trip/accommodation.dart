@@ -2,10 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 
-class Accomodation extends StatelessWidget {
+class Accommodation extends StatefulWidget {
   final Function toggleView;
 
-  Accomodation({this.toggleView});
+  Accommodation({this.toggleView});
+
+  @override
+  _AccommodationState createState() => new _AccommodationState();
+}
+
+class _AccommodationState extends State<Accommodation> {
+  bool _valueBreakfast = false;
+
+  void _valueBreakfastChanged(bool value) => setState(() => _valueBreakfast = value);
 
   Future _signOut(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
@@ -22,14 +31,14 @@ class Accomodation extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            'Add Accomodation',
+            'Add Accommodation',
             style: TextStyle(fontSize: 20),
           ),
         ],
       ),
     );
 
-    Widget accomodation = Container(
+    Widget accommodation = Container(
       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
       child: Form(
         child: Column(
@@ -39,6 +48,13 @@ class Accomodation extends StatelessWidget {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Hotel Name',
+              ),
+            ),
+            SizedBox(height: 20.0),
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Confirmation Number',
               ),
             ),
             SizedBox(height: 20.0),
@@ -104,7 +120,8 @@ class Accomodation extends StatelessWidget {
             Row(children: [
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(hintText: "Location"),
+                  // TODO automatically calculate this date with nr of nights and checkin date
+                  decoration: InputDecoration(hintText: "*Checkout Date*"),
                 ),
               ),
               SizedBox(
@@ -121,6 +138,23 @@ class Accomodation extends StatelessWidget {
             ])
           ],
         ),
+      ),
+    );
+
+    Widget breakfast = Container(
+      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
+      child: new Column(
+        children: <Widget>[
+          new CheckboxListTile(
+              value: _valueBreakfast,
+              onChanged: _valueBreakfastChanged,
+              title: new Text(
+                'Is breakfast included in your stay?',
+                style: TextStyle(fontSize: 16),
+              ),
+              controlAffinity: ListTileControlAffinity.leading
+          ),
+        ],
       ),
     );
 
@@ -164,7 +198,7 @@ class Accomodation extends StatelessWidget {
           ],
         ),
         body: ListView(
-          children: [buttonSection, accomodation, checkin, checkout, notes],
+          children: [buttonSection, accommodation, checkin, checkout, breakfast, notes],
         ));
   }
 }
