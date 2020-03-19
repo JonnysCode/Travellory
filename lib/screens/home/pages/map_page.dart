@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-List<Widget> mapPage(){
+List<Widget> mapPage(BuildContext context){
   return [
 
   ];
