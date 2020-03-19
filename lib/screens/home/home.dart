@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/providers/auth_provider.dart';
+import 'package:travellory/screens/schedule/dailySchedule.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/screens/trip/booking.dart';
 
@@ -16,7 +17,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     Color color = Theme.of(context).primaryColor;
 
-    Widget buttonSection = Container(
+    Widget buttonSectionBooking = Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -30,6 +31,24 @@ class Home extends StatelessWidget {
               }
           ),
           Text('Plan and manage trip itinerary'),
+        ],
+      ),
+    );
+
+    Widget buttonSectionDailySchedule = Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DailySchedule()),
+                );
+              }
+          ),
+          Text('See Daily Schedule for Trip'),
         ],
       ),
     );
@@ -50,7 +69,7 @@ class Home extends StatelessWidget {
         ),
         body: ListView(
           children: [
-            buttonSection
+            buttonSectionBooking, buttonSectionDailySchedule
           ],
         )
     );
