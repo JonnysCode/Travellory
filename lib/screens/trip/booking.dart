@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/screens/trip/flight.dart';
-import 'package:travellory/screens/trip/accomodation.dart';
+import 'package:travellory/screens/trip/accommodation.dart';
 import 'package:travellory/screens/trip/rentalCar.dart';
 import 'package:travellory/screens/trip/activity.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -30,10 +30,10 @@ class _BookingState extends State<Booking> {
         context,
         MaterialPageRoute(builder: (context) => Flight()),
       );
-    } else if (value == 'Accomodation') {
+    } else if (value == 'Accommodation') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Accomodation()),
+        MaterialPageRoute(builder: (context) => Accommodation()),
       );
     } else if (value == 'Rental Car') {
       Navigator.push(
@@ -88,7 +88,7 @@ class _BookingState extends State<Booking> {
           items: <String>[
             'Select',
             'Flight',
-            'Accomodation',
+            'Accommodation',
             'Rental Car',
             'Activity'
           ].map<DropdownMenuItem<String>>((String value) {
