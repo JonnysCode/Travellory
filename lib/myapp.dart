@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
@@ -14,7 +15,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return AuthProvider(
       auth: AuthService(),
       child: StreamProvider<User>.value(
@@ -37,7 +37,6 @@ class MyApp extends StatelessWidget {
             '/loading': (BuildContext context) => Loading(),
             '/home': (BuildContext context) => Home()
           },
-          home: Wrapper(),
         ),
       ),
     );
