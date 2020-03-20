@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/screens/trip/publicTransport.dart';
 import 'package:travellory/services/auth.dart';
-import 'package:travellory/screens/trip/flight.dart';
+import 'package:travellory/screens/trip/flight1.dart';
 import 'package:travellory/screens/trip/accommodation.dart';
 import 'package:travellory/screens/trip/rentalCar.dart';
 import 'package:travellory/screens/trip/activity.dart';
@@ -140,7 +140,8 @@ class _BookingState extends State<Booking> {
       print(e.details);
     } catch (e) {
       print('caught generic exception');
-      print(e);
+      print(e.code);
+      print(e.toString());
     }
   }
 }
