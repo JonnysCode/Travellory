@@ -13,7 +13,7 @@ class Wrapper extends StatelessWidget {
 
     // return either home or authenticate widget
     if(user == null){
-      return Home(); //TODO: add Welcome() screen for auth
+      return Welcome();
     } else {
       Navigator.popUntil(
         context,

@@ -19,7 +19,6 @@ void main(){
     expect(find.byKey(Key('home_page')), findsOneWidget);
   });
 
-
   testWidgets('test if navigation is present', (WidgetTester tester) async {
     Widget page = Home();
 
@@ -35,5 +34,4 @@ void main(){
     expect(find.byIcon(Icons.map), findsNWidgets(2));
     expect(find.byIcon(Icons.person), findsNWidgets(2));
   });
-
 }
