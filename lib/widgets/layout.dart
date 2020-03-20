@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget mainPageLayout(BuildContext context, double layoutHeight, List<Widget> page){
+Widget mainPageLayout(BuildContext context, double layoutHeight, Widget page){
 
   return Container(
     child: Column(
@@ -18,9 +18,8 @@ Widget mainPageLayout(BuildContext context, double layoutHeight, List<Widget> pa
                   topLeft: Radius.circular(40.0),
                   topRight: Radius.circular(40.0)),
               child: Container(
-                child: Column(
-                  children: page,
-                ),
+                child: page,
+                //TODO: travellory icon
                 color: Theme.of(context).scaffoldBackgroundColor,
                 height:layoutHeight * 0.95,
                 width: MediaQuery.of(context).size.width,
