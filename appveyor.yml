@@ -45,7 +45,7 @@ build_script:
   - sh: flutter build apk
 
 test_script:
-  - sh: flutter test --machine > tests.output
+  - sh: flutter test && flutter test --machine > tests.output
   - sh: flutter test --coverage
 
 after_test:
