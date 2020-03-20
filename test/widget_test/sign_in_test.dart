@@ -5,6 +5,7 @@ import 'package:travellory/providers/auth_provider.dart';
 
 import 'package:travellory/screens/authenticate/sign_in.dart';
 import 'package:travellory/services/auth.dart';
+import 'package:travellory/shared/loading.dart';
 
 class MockAuth extends Mock implements BaseAuthService {}
 
@@ -14,6 +15,7 @@ void main() {
         auth: auth,
         child: MaterialApp(
           home: child,
+          routes: {'/loading': (BuildContext context) => Loading()},
         ));
   }
 
@@ -25,7 +27,7 @@ void main() {
     Finder passwordField = find.byKey(Key('passwordField'));
     await tester.enterText(passwordField, password);
 
-    await tester.tap(find.byKey(Key('signInButton')));
+    await tester.tap(find.byKey(Key('loginButton')));
   }
 
   testWidgets('test if widgets are present', (WidgetTester tester) async {
@@ -41,7 +43,7 @@ void main() {
     expect(find.byKey(Key('passwordField')), findsOneWidget);
 
     // Verify that sign in button is present.
-    expect(find.byKey(Key('signInButton')), findsOneWidget);
+    expect(find.byKey(Key('loginButton')), findsOneWidget);
   });
 
   testWidgets('email or password is empty, does not call sign in',

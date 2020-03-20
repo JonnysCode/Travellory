@@ -5,6 +5,7 @@ import 'package:travellory/providers/auth_provider.dart';
 
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/services/auth.dart';
+import 'package:travellory/shared/loading.dart';
 
 class MockAuth extends Mock implements BaseAuthService {}
 
@@ -14,6 +15,7 @@ void main() {
         auth: auth,
         child: MaterialApp(
           home: child,
+          routes: {'/loading': (BuildContext context) => Loading()},
         ));
   }
 
