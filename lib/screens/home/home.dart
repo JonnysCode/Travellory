@@ -24,14 +24,14 @@ class _HomeState extends State<Home> {
 
   List<Widget> _layoutPages(){
     List<Widget> layoutPages = List();
-    List<List<Widget>> _pages = [
-      homePage(context),
-      calendarPage(context),
-      mapPage(context),
-      profilePage(context)
+    List<Widget> _pages = [
+      HomePage(),
+      CalendarPage(),
+      MapPage(),
+      ProfilePage()
     ];
 
-    for(List<Widget> page in _pages){
+    for(Widget page in _pages){
       layoutPages.add(mainPageLayout(context, (MediaQuery.of(context).size.height - _heightOfNavBar), page));
     }
     return layoutPages;
@@ -63,18 +63,22 @@ class _HomeState extends State<Home> {
                     color: Theme.of(context).primaryColor,
                     tabs: [
                       GButton(
+                        key: Key('nav_home_button'),
                         icon: Icons.home,
                         text: 'Home',
                       ),
                       GButton(
+                        key: Key('nav_calendar_button'),
                         icon: Icons.calendar_today,
                         text: 'Calendar',
                       ),
                       GButton(
+                        key: Key('nav_map_button'),
                         icon: Icons.map,
                         text: 'Map',
                       ),
                       GButton(
+                        key: Key('nav_profile_button'),
                         icon: Icons.person,
                         text: 'Profile',
                       ),
