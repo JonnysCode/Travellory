@@ -9,7 +9,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-
+      key: Key('home_page'),
     );
   }
 }

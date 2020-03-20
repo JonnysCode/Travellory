@@ -17,6 +17,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: Key('profile_page'),
       child: Column(
         children: <Widget>[
           FlatButton.icon(

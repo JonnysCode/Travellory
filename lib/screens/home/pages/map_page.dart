@@ -9,7 +9,7 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-
+      key: Key('map_page'),
     );
   }
 }

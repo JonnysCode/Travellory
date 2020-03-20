@@ -39,6 +39,7 @@ class _HomeState extends State<Home> {
 
   Widget _navigationBar(){
       return DecoratedBox(
+        key: Key('nav_bar'),
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
         ),
