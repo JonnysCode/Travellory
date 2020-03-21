@@ -10,16 +10,16 @@ class FlightPage extends StatefulWidget {
 
 class _FlightPageState extends State<FlightPage> {
   final TextEditingController _bookingReferenceController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _airlineController = TextEditingController();
   final TextEditingController _flightNrController = TextEditingController();
   final TextEditingController _seatController = TextEditingController();
   final TextEditingController _departureLocationController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _departureTimeController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _arrivalLocationController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _arrivalTimeController = TextEditingController();
   final TextEditingController _notesController = TextEditingController();
   bool _valueBaggage = false;
@@ -196,9 +196,7 @@ class _FlightPageState extends State<FlightPage> {
             ),
             RaisedButton(
               key: Key('testFunctionCall'),
-              color: Theme
-                  .of(context)
-                  .primaryColor,
+              color: Theme.of(context).primaryColor,
               child: Text(
                 'Add Flight',
                 style: TextStyle(color: Colors.white),
@@ -228,18 +226,29 @@ class _FlightPageState extends State<FlightPage> {
         key: Key('flight_page'),
         child: ListView(
           children: [buttonSection, flight, departure, arrival, baggage, notes],
-        )
-    );
+        ));
   }
 }
 
 void _addFlight(FlightModel flight) async {
   //final CloudFunctions firebaseFunctions = new CloudFunctions(app: FirebaseApp.instance, region: 'asia-northeast1');
-  HttpsCallable callable =
-  CloudFunctions.instance.getHttpsCallable(functionName: 'payment-makePayment');
+  HttpsCallable callable = CloudFunctions.instance
+      .getHttpsCallable(functionName: 'booking-addFlight');
+
   try {
-    final HttpsCallableResult result =
-    await callable.call(<String, dynamic>{"bookingReference": "123123"});
+    final HttpsCallableResult result = await callable.call(<String, dynamic>{
+      "bookingReference": flight.bookingReference,
+      "airline": flight.airline,
+      "flightNr": flight.flightNr,
+      "seat": flight.seat,
+      "departureLocation": flight.departureLocation,
+      "departureTime": flight.departureTime,
+      "arrivalLocation": flight.arrivalLocation,
+      "arrivalTime": flight.arrivalTime,
+      "checkedBaggage": flight.checkedBaggage,
+      "excessBaggage": flight.excessBaggage,
+      "notes": flight.notes
+    });
     print(result.data);
   } on CloudFunctionsException catch (e) {
     print('caught firebase functions exception');
