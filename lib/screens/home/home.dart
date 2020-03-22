@@ -31,8 +31,7 @@ class _HomeState extends State<Home> {
       CalendarPage(),
       MapPage(),
       ProfilePage(),
-      //FlightPage(),
-      RentalCar()
+      FlightPage(),
     ];
 
     for (Widget page in _pages) {
@@ -88,16 +87,16 @@ class _HomeState extends State<Home> {
                       icon: Icons.person,
                       text: 'Profile',
                     ),
-//                    GButton(
-//                      key: Key('nav_flight_button'),
-//                      icon: Icons.airline_seat_flat,
-//                      text: 'Flight',
-//                    ),
                     GButton(
-                      key: Key('nav_car_button'),
-                      icon: Icons.directions_car,
-                      text: 'Car',
+                      key: Key('nav_flight_button'),
+                      icon: Icons.airline_seat_flat,
+                      text: 'Flight',
                     ),
+//                    GButton(
+//                      key: Key('nav_car_button'),
+//                      icon: Icons.directions_car,
+//                      text: 'Car',
+//                    ),
                   ],
                   selectedIndex: _navBarIndex,
                   onTabChange: (index) {
