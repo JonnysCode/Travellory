@@ -12,7 +12,7 @@ class FlightModel {
   final String notes;
 
   FlightModel(
-      { this.bookingReference,
+      {this.bookingReference,
       this.airline,
       this.flightNr,
       this.seat,
@@ -22,5 +22,5 @@ class FlightModel {
       this.arrivalTime,
       this.checkedBaggage,
       this.excessBaggage,
-      this.notes });
+      this.notes});
 }

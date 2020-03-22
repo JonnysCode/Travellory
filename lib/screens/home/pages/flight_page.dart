@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/flightModel.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
 class FlightPage extends StatefulWidget {
@@ -221,7 +220,6 @@ class _FlightPageState extends State<FlightPage> {
         ),
       ),
     );
-
     return Container(
         key: Key('flight_page'),
         child: ListView(
@@ -231,10 +229,8 @@ class _FlightPageState extends State<FlightPage> {
 }
 
 void _addFlight(FlightModel flight) async {
-  //final CloudFunctions firebaseFunctions = new CloudFunctions(app: FirebaseApp.instance, region: 'asia-northeast1');
   HttpsCallable callable = CloudFunctions.instance
       .getHttpsCallable(functionName: 'booking-addFlight');
-
   try {
     final HttpsCallableResult result = await callable.call(<String, dynamic>{
       "bookingReference": flight.bookingReference,
