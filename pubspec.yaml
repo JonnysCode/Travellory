@@ -17,6 +17,9 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  flutter_localizations:
+    sdk: flutter
+
   flutter:
     sdk: flutter
 
@@ -31,7 +34,8 @@ dependencies:
   firebase_core: 0.4.4 # new
   cloud_functions: 0.4.2+3
   google_nav_bar: ^2.0.1
-  scrolling_day_calendar: 2.0.1
+  # scrolling_day_calendar: 2.0.1
+  flutter_rounded_date_picker: 1.0.0
 
 dev_dependencies:
   flutter_test:

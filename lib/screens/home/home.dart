@@ -5,6 +5,7 @@ import 'package:travellory/screens/home/pages/home_page.dart';
 import 'package:travellory/screens/home/pages/map_page.dart';
 import 'package:travellory/screens/home/pages/profile_page.dart';
 import 'package:travellory/screens/home/pages/flight_page.dart';
+import 'package:travellory/screens/trip/rentalCar.dart';
 import 'package:travellory/widgets/layout.dart';
 
 class Home extends StatefulWidget {
@@ -30,7 +31,8 @@ class _HomeState extends State<Home> {
       CalendarPage(),
       MapPage(),
       ProfilePage(),
-      FlightPage()
+      //FlightPage(),
+      RentalCar()
     ];
 
     for (Widget page in _pages) {
@@ -70,7 +72,6 @@ class _HomeState extends State<Home> {
                       key: Key('nav_home_button'),
                       icon: Icons.home,
                       text: 'Home',
-
                     ),
                     GButton(
                       key: Key('nav_calendar_button'),
@@ -87,10 +88,15 @@ class _HomeState extends State<Home> {
                       icon: Icons.person,
                       text: 'Profile',
                     ),
+//                    GButton(
+//                      key: Key('nav_flight_button'),
+//                      icon: Icons.airline_seat_flat,
+//                      text: 'Flight',
+//                    ),
                     GButton(
-                      key: Key('nav_flight_button'),
-                      icon: Icons.airline_seat_flat,
-                      text: 'Flight',
+                      key: Key('nav_car_button'),
+                      icon: Icons.directions_car,
+                      text: 'Car',
                     ),
                   ],
                   selectedIndex: _navBarIndex,

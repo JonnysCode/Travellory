@@ -181,6 +181,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.4"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_native_splash:
     dependency: "direct dev"
     description:
@@ -188,6 +193,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.9"
+  flutter_rounded_date_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_rounded_date_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -239,7 +251,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.15.8"
+    version: "0.16.0"
   js:
     dependency: transitive
     description:
@@ -317,13 +329,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
-  scrolling_day_calendar:
-    dependency: "direct main"
-    description:
-      name: scrolling_day_calendar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
