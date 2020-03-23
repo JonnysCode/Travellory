@@ -15,26 +15,8 @@ class _RentalCarState extends State<RentalCar> {
   String selectedDate = '';
   TextEditingController _date = new TextEditingController();
 
-  // this is the datepicker that will be called
-  // I'll look at the styling some more after it finally all works - Y
-  Future _selectDate(BuildContext context) async {
-    DateTime picked = await showRoundedDatePicker(
-      context: context,
-      theme: ThemeData.dark(),
-      initialDate: DateTime.now(),
-      firstDate: DateTime(DateTime.now().year - 1),
-      lastDate: DateTime(DateTime.now().year + 1),
-      borderRadius: 16,
-    );
-    if (picked != null) setState(() => selectedDate = picked.toString());
-    // or
-    // if (picked != null && picked != selectedDate) selectDate(picked);
-  }
-
   @override
   Widget build(BuildContext context) {
-    Color color = Theme.of(context).primaryColor;
-
     Widget buttonSection = Container(
       padding: const EdgeInsets.only(top: 20),
       child: Row(
@@ -48,12 +30,10 @@ class _RentalCarState extends State<RentalCar> {
       ),
     );
 
-    // ha usegfunde dass mit gesturedetector theoretisch das ghandlet söt werde für e textfield
-    // source: https://stackoverflow.com/questions/51907936/how-to-show-date-picker-on-the-onclick-of-text-field-instead-of-keyboard-in-flut
-    // example with light bulb: https://api.flutter.dev/flutter/widgets/GestureDetector-class.html
+    // TODO start Date is no date
+    // TODO padd the showRoundedDatePicker smaller into app
     Widget datePicker = Container(
       child: GestureDetector(
-        onTap: () => _selectDate(context),
         child: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -64,65 +44,32 @@ class _RentalCarState extends State<RentalCar> {
                   SizedBox(height: 20.0),
                   TextField(
                     onTap: () async {
-                      DateTime date = DateTime(1900);
+                      DateTime pickedDate = DateTime(1900);
                       FocusScope.of(context).requestFocus(new FocusNode());
 
-                      date = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime(2100));
-
-                      _date.text = date.toIso8601String();
+                      pickedDate = await showRoundedDatePicker(
+                        context: context,
+                        theme: ThemeData.dark(),
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(DateTime.now().year - 1),
+                        lastDate: DateTime(DateTime.now().year + 1),
+                        borderRadius: 16,
+                      );
+                      if (pickedDate != null)
+                        setState(() => selectedDate = pickedDate.toString());
+                      _date.text = pickedDate.toIso8601String();
                     },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Date',
                       labelText: "$selectedDate".split(' ')[0],
+                      labelStyle: new TextStyle(color: Colors.black),
                     ),
                   ),
                 ]),
               ),
             ],
           ),
-        ),
-      ),
-    );
-
-    // here I tried to create the input box for the date similar to the we already had
-    // the weird thing is it only works with the box
-    // I don't want the datepicker to be opened when clicking the RaisedButton
-    // it should appear as soon as we press into the textfield
-    Widget date = Container(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
-      child: new Center(
-        child: new Column(
-          children: <Widget>[
-            SizedBox(height: 20.0),
-            TextField(
-              onTap: () async {
-                DateTime date = DateTime(1900);
-                FocusScope.of(context).requestFocus(new FocusNode());
-
-                date = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime(2100));
-
-                _date.text = date.toIso8601String();
-              },
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Date',
-                labelText: "$selectedDate".split(' ')[0],
-              ),
-            ),
-            new RaisedButton(
-              onPressed: () => _selectDate(context),
-              child: Text('Select date'),
-            ),
-          ],
         ),
       ),
     );
@@ -182,7 +129,7 @@ class _RentalCarState extends State<RentalCar> {
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: ListView(
-          children: [buttonSection, datePicker, date, rentalCar],
+          children: [buttonSection, datePicker, rentalCar],
         ));
   }
 }
