@@ -34,14 +34,17 @@ class _ViewTripState extends State<ViewTrip> {
                   Positioned(
                     top: -30,
                     left: -40,
-                    child: Container(
-                      height: 220,
-                      width: 220,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/home/trip/trip_01.png"),
-                          fit: BoxFit.fitWidth,
-                          alignment: Alignment.bottomCenter,
+                    child: Hero(
+                      tag: 'trip_image',
+                      child: Container(
+                        height: 220,
+                        width: 220,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/home/trip/trip_01.png"),
+                            fit: BoxFit.fitWidth,
+                            alignment: Alignment.bottomCenter,
+                          ),
                         ),
                       ),
                     ),
