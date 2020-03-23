@@ -34,7 +34,7 @@ class _TripCardState extends State<TripCard> {
                     width: 80,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/images/home/trip/trip_01.png"),
+                        image: AssetImage("assets/images/home/trip/trip_1.png"),
                         fit: BoxFit.fitWidth,
                         alignment: Alignment.bottomCenter,
                       ),
