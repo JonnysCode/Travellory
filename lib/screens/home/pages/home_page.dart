@@ -34,14 +34,17 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: Row(
                     children: <Widget>[
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/home/trip/trip_01.png"),
-                            fit: BoxFit.fitWidth,
-                            alignment: Alignment.bottomCenter,
+                      Hero(
+                        tag: 'trip_image',
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/home/trip/trip_01.png"),
+                              fit: BoxFit.fitWidth,
+                              alignment: Alignment.bottomCenter,
+                            ),
                           ),
                         ),
                       ),
@@ -56,13 +59,13 @@ class _HomePageState extends State<HomePage> {
                               style: TextStyle(
                                   fontFamily: 'FashionFetish',
                                   fontWeight: FontWeight.w900,
-                                  fontSize: 24,
+                                  fontSize: 22,
                                   letterSpacing: -2.0,
                               ),
                               textAlign: TextAlign.left,
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 11,
                             ),
                             Text(
                               '03.04.2020 - 17.04.2020',
@@ -70,13 +73,13 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black54,
                                 fontFamily: 'FashionFetish',
                                 fontWeight: FontWeight.w600,
-                                fontSize: 16,
+                                fontSize: 15,
                                 letterSpacing: -2.0,
                               ),
                               textAlign: TextAlign.left,
                             ),
                             SizedBox(
-                              height: 6,
+                              height: 5,
                             ),
                             Row(
                               children: <Widget>[
