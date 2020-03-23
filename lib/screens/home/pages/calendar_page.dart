@@ -9,8 +9,7 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   final Color calendarBackgroundColor = Colors.green[100];
-  static DateTime today = DateTime.now();
-  static DateTime firstOfMonth = new DateTime(today.year, today.month, 1);
+  final DateTime today = DateTime.now();
 
   // TODO this will have to be linked with the backend
   List<Meeting> _getDataSource() {
@@ -25,9 +24,8 @@ class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     // this registers the license for the calendar
-    // activate license here https://help.syncfusion.com/common/essential-studio/licensing/license-key?cs-save-lang=1&cs-lang=csharp
-    // TODO get license
-    SyncfusionLicense.registerLicense(null);
+    // trial period until April 22, 2020
+    SyncfusionLicense.registerLicense("NT8mJyc2IWhiZH1nfWN9Z2VoZ3xhYXxhY2Fjc2JhaWBiaWZicwMeaDI9Jzo/KjIgEyAnJjc2PScgfSk7MiR9MDs=");
 
     return Container(
       key: Key('calendar_page'),
@@ -35,7 +33,7 @@ class _CalendarPageState extends State<CalendarPage> {
       child: SfCalendar(
         view: CalendarView.month,
         todayHighlightColor: Colors.black,
-        initialDisplayDate: firstOfMonth,
+        initialDisplayDate:  DateTime.utc(today.year, today.month, 1),
         dataSource: MeetingDataSource(_getDataSource()),
         selectionDecoration: BoxDecoration(
           color: Theme.of(context).primaryColor.withOpacity(0.3),
@@ -49,7 +47,7 @@ class _CalendarPageState extends State<CalendarPage> {
           agendaViewHeight: 100,
           agendaItemHeight: 80,
           navigationDirection: MonthNavigationDirection.vertical,
-          numberOfWeeksInView: 4,
+          numberOfWeeksInView: 6,
           dayFormat: 'EEE',
           agendaStyle: AgendaStyle(
             appointmentTextStyle: TextStyle(
