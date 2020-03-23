@@ -63,6 +63,18 @@ class _RentalCarState extends State<RentalCar> {
                 child: new Column(children: <Widget>[
                   SizedBox(height: 20.0),
                   TextField(
+                    onTap: () async {
+                      DateTime date = DateTime(1900);
+                      FocusScope.of(context).requestFocus(new FocusNode());
+
+                      date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100));
+
+                      _date.text = date.toIso8601String();
+                    },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Date',
@@ -88,6 +100,18 @@ class _RentalCarState extends State<RentalCar> {
           children: <Widget>[
             SizedBox(height: 20.0),
             TextField(
+              onTap: () async {
+                DateTime date = DateTime(1900);
+                FocusScope.of(context).requestFocus(new FocusNode());
+
+                date = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2100));
+
+                _date.text = date.toIso8601String();
+              },
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Date',
