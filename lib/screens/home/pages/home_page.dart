@@ -46,8 +46,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+                        padding: const EdgeInsets.only(left: 8.0, top: 8.0, right: 30.0),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Text(
                               'Beach Relaxation',
@@ -57,20 +59,62 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 24,
                                   letterSpacing: -2.0,
                               ),
+                              textAlign: TextAlign.left,
+                            ),
+                            SizedBox(
+                              height: 10,
                             ),
                             Text(
-                              'Beach Relaxation',
+                              '03.04.2020 - 17.04.2020',
                               style: TextStyle(
+                                color: Colors.black54,
                                 fontFamily: 'FashionFetish',
                                 fontWeight: FontWeight.w600,
-                                fontSize: 24,
+                                fontSize: 16,
                                 letterSpacing: -2.0,
                               ),
+                              textAlign: TextAlign.left,
+                            ),
+                            SizedBox(
+                              height: 6,
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.location_on,
+                                  size: 16,
+                                  color: Colors.redAccent,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 6),
+                                  child: Text(
+                                    'Maledives',
+                                    style: TextStyle(
+                                      color: Colors.black54,
+                                      fontFamily: 'FashionFetish',
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 14,
+                                      letterSpacing: -1.0,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       )
                     ],
+                  ),
+                ),
+                Container(
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: FlatButton.icon(
+                        onPressed: () => { Navigator.pushReplacementNamed(context, '/auth') },
+                        icon: Icon(Icons.open_in_new, color: Colors.black54,),
+                        label: Text('')
+                    ),
                   ),
                 )
               ],
