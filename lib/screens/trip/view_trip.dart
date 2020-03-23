@@ -56,10 +56,8 @@ class _ViewTripState extends State<ViewTrip> {
                       alignment: Alignment.topLeft,
                       width: MediaQuery.of(context).size.width,
                       constraints: BoxConstraints(
-                          maxHeight: 300.0,
-                          maxWidth: MediaQuery.of(context).size.width - 200,
-                          minWidth: 150.0,
-                          minHeight: 150.0
+                          maxHeight: 100.0,
+                          maxWidth: MediaQuery.of(context).size.width - 200
                       ),
                       child: Text(
                         'Beach Relaxation',
