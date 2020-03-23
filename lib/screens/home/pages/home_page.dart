@@ -8,7 +8,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,10 +19,7 @@ class _HomePageState extends State<HomePage> {
             Theme.of(context).primaryColor,
             Theme.of(context).primaryColor,
             Colors.white, () async {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Booking()),
-          );
+          Navigator.pushReplacementNamed(context, '/booking');
         }),
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -40,33 +36,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-//  @override
-//  Widget build(BuildContext context) {
-//    return Scaffold(
-//        key: Key('home_page'),
-//        backgroundColor: Theme.of(context).primaryColor,
-//        body: Column(
-//          children: <Widget>[
-//            Padding(
-//              child: Container(
-//                child: Center(
-//                  child: filledButton(
-//                      "ADD BOOKING",
-//                      Colors.white,
-//                      Theme.of(context).primaryColor,
-//                      Theme.of(context).primaryColor,
-//                      Colors.white, () async {
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute(builder: (context) => Booking()),
-//                    );
-//                  }),
-//                ),
-//              ),
-//              padding: const EdgeInsets.only(top: 60, left: 120, right: 120),
-//            ),
-//          ],
-//        ));
-//  }
 }
