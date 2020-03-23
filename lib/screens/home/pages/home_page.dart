@@ -44,6 +44,31 @@ class _HomePageState extends State<HomePage> {
                             alignment: Alignment.bottomCenter,
                           ),
                         ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              'Beach Relaxation',
+                              style: TextStyle(
+                                  fontFamily: 'FashionFetish',
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 24,
+                                  letterSpacing: -2.0,
+                              ),
+                            ),
+                            Text(
+                              'Beach Relaxation',
+                              style: TextStyle(
+                                fontFamily: 'FashionFetish',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 24,
+                                letterSpacing: -2.0,
+                              ),
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   ),
