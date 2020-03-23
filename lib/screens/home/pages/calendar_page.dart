@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_core/core.dart';
@@ -25,7 +26,8 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget build(BuildContext context) {
     // this registers the license for the calendar
     // trial period until April 22, 2020
-    SyncfusionLicense.registerLicense("NT8mJyc2IWhiZH1nfWN9Z2VoZ3xhYXxhY2Fjc2JhaWBiaWZicwMeaDI9Jzo/KjIgEyAnJjc2PScgfSk7MiR9MDs=");
+    SyncfusionLicense.registerLicense(
+        "NT8mJyc2IWhiZH1nfWN9Z2VoZ3xhYXxhY2Fjc2JhaWBiaWZicwMeaDI9Jzo/KjIgEyAnJjc2PScgfSk7MiR9MDs=");
 
     return Container(
       key: Key('calendar_page'),
@@ -33,7 +35,7 @@ class _CalendarPageState extends State<CalendarPage> {
       child: SfCalendar(
         view: CalendarView.month,
         todayHighlightColor: Colors.black,
-        initialDisplayDate:  DateTime.utc(today.year, today.month, 1),
+        initialDisplayDate: DateTime.utc(today.year, today.month, 1),
         dataSource: MeetingDataSource(_getDataSource()),
         selectionDecoration: BoxDecoration(
           color: Theme.of(context).primaryColor.withOpacity(0.3),
@@ -41,6 +43,15 @@ class _CalendarPageState extends State<CalendarPage> {
           borderRadius: const BorderRadius.all(Radius.circular(4)),
           shape: BoxShape.rectangle,
         ),
+        headerStyle: CalendarHeaderStyle(
+            textAlign: TextAlign.center,
+            backgroundColor: Theme.of(context).primaryColor,
+            textStyle: TextStyle(
+                fontSize: 25,
+                fontStyle: FontStyle.normal,
+                letterSpacing: 5,
+                color: Colors.white,
+                fontWeight: FontWeight.w500)),
         monthViewSettings: MonthViewSettings(
           showAgenda: true,
           appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
