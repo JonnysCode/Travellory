@@ -107,19 +107,19 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                Container(
+                Expanded(
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: FlatButton.icon(
-                        onPressed: () => { Navigator.pushReplacementNamed(context, '/auth') },
-                        icon: Icon(Icons.open_in_new, color: Colors.black54,),
+                        onPressed: () => { Navigator.pushReplacementNamed(context, '/viewtrip') },
+                        icon: Icon(Icons.open_in_new, color: Colors.black54),
                         label: Text('')
                     ),
                   ),
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
     );
