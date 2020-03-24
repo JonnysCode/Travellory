@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/widgets/font_widgets.dart';
 
 class TripCard extends StatefulWidget {
   final TripModel tripModel;
@@ -61,31 +62,21 @@ class _TripCardState extends State<TripCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Text(
-                        _tripModel.name,
-                        style: TextStyle(
-                          fontFamily: 'FashionFetish',
-                          fontWeight: FontWeight.w900,
-                          fontSize: 22,
-                          letterSpacing: -2.0,
-                        ),
-                        textAlign: TextAlign.left,
+                      FashionFetishText(
+                        text: _tripModel.name,
+                        size: 22.0,
+                        fontWeight: FashionFontWeight.HEAVY,
                       ),
                       SizedBox(
                         height: 11,
                       ),
-                      Text(
-                        _tripModel.startDate.toString().substring(0, 10)
-                            + ' - '
-                            + _tripModel.endDate.toString().substring(0, 10),
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontFamily: 'FashionFetish',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15,
-                          letterSpacing: -2.0,
-                        ),
-                        textAlign: TextAlign.left,
+                      FashionFetishText(
+                        text: _tripModel.startDate.toString().substring(0, 10)
+                          + ' - '
+                          + _tripModel.endDate.toString().substring(0, 10),
+                        size: 15.0,
+                        fontWeight: FashionFontWeight.BOLD,
+                        color: Colors.black54
                       ),
                       SizedBox(
                         height: 5,
@@ -99,16 +90,11 @@ class _TripCardState extends State<TripCard> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 6),
-                            child: Text(
-                              _tripModel.destination,
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontFamily: 'FashionFetish',
-                                fontWeight: FontWeight.w900,
-                                fontSize: 14,
-                                letterSpacing: -1.0,
-                              ),
-                              textAlign: TextAlign.left,
+                            child: FashionFetishText(
+                              text: _tripModel.destination,
+                              size: 14.0,
+                              fontWeight: FashionFontWeight.HEAVY,
+                              color: Colors.black54,
                             ),
                           ),
                         ],
