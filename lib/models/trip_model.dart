@@ -16,7 +16,7 @@ class TripModel {
     this.imageNr,
     this.index
   }){
-    this.imagePath = 'assets/images/home/trip/trip_' + imageNr.toString();
+    this.imagePath = 'assets/images/home/trip/trip_' + imageNr.toString() + '.png';
   }
 }
 
