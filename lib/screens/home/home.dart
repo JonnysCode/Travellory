@@ -48,9 +48,10 @@ class _HomeState extends State<Home> {
               topLeft: Radius.circular(40.0),
               topRight: Radius.circular(40.0)),
           child: Container(
-            decoration: BoxDecoration(color: Colors.white, boxShadow: [
-              BoxShadow(blurRadius: 30, color: Colors.black.withOpacity(.25))
-            ]),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [BoxShadow(blurRadius: 30, color: Colors.black.withOpacity(.25))]
+            ),
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),
