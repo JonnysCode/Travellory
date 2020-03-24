@@ -20,7 +20,7 @@ class _TripScreenState extends State<TripScreen> {
           children: <Widget>[
             Positioned(
               top: 16,
-              width: 200,
+              width: 240,
               child: FashionFetishText(
                 text: title,
                 size: 24,
@@ -197,7 +197,7 @@ class _TripScreenState extends State<TripScreen> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Transportation'),
+                    child: _subsection('Flight'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -205,7 +205,7 @@ class _TripScreenState extends State<TripScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Hotel'),
+                    child: _subsection('Accommodation'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -226,6 +226,17 @@ class _TripScreenState extends State<TripScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                     child: _cardCarousel(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                    child: _subsection('Transportation'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                    child: _cardCarousel(),
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                 ],
               )
