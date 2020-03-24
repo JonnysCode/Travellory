@@ -53,8 +53,8 @@ class _HomeState extends State<Home> {
             topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
         child: Container(
           decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(blurRadius: 30, color: Colors.black.withOpacity(.25))
-          ]),
+            BoxShadow(blurRadius: 30, color: Colors.black.withOpacity(.25))]
+          ),
           child: SafeArea(
             child: Padding(
               padding:
@@ -114,9 +114,12 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    if (_pageController.hasClients) {
-      _pageController.animateToPage(_navBarIndex,
-          duration: Duration(milliseconds: 1000), curve: Curves.ease);
+    if(_pageController.hasClients){
+      _pageController.animateToPage(
+          _navBarIndex,
+          duration: Duration(milliseconds: 1000),
+          curve: Curves.ease
+      );
     }
 
     return Scaffold(
