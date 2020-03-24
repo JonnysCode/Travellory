@@ -34,7 +34,7 @@ class _CalendarPageState extends State<CalendarPage> {
       margin: new EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
       child: SfCalendar(
         view: CalendarView.month,
-        todayHighlightColor: Colors.black,
+        todayHighlightColor: Colors.black.withOpacity(0.5),
         initialDisplayDate: DateTime.utc(today.year, today.month, 1),
         dataSource: MeetingDataSource(_getDataSource()),
         selectionDecoration: BoxDecoration(
@@ -76,8 +76,6 @@ class _CalendarPageState extends State<CalendarPage> {
           ),
           monthCellStyle: MonthCellStyle(
               trailingDatesBackgroundColor: Colors.white30,
-              todayBackgroundColor:
-                  Theme.of(context).primaryColor.withOpacity(0.5),
               todayTextStyle: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
