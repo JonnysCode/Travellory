@@ -40,9 +40,9 @@ class WelcomeState extends State<Welcome> {
               child: Container(
                 child: filledButton("LORY", Colors.white, Colors.deepOrange, Theme.of(context).accentColor,
                     Colors.white, () {
-                      Navigator.push(
+                      Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(builder: (context) => Authenticate()),
+                        'auth'
                       );
                     }),
                 height: 50,
