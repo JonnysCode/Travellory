@@ -82,7 +82,9 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(10),
               itemCount: tripModels.length,
               itemBuilder: (BuildContext context, int index) {
-                return TripCard(tripModel: tripModels[index]);
+                TripModel tripModel = tripModels[index];
+                tripModel.index = index;
+                return TripCard(tripModel: tripModel);
               },
               separatorBuilder: (BuildContext context, int index) => const Divider(),
             ),

@@ -42,7 +42,7 @@ class _TripCardState extends State<TripCard> {
             child: Row(
               children: <Widget>[
                 Hero(
-                  tag: 'trip_image',
+                  tag: 'trip_image' + _tripModel.index.toString(),
                   child: Container(
                     height: 80,
                     width: 80,
@@ -123,7 +123,9 @@ class _TripCardState extends State<TripCard> {
             child: Align(
               alignment: Alignment.bottomRight,
               child: FlatButton.icon(
-                  onPressed: () => { Navigator.pushReplacementNamed(context, '/viewtrip') },
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/viewtrip', arguments: _tripModel);
+                  },
                   icon: Icon(Icons.open_in_new, color: Colors.black54),
                   label: Text('')
               ),

@@ -6,7 +6,7 @@ import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
 import 'package:travellory/screens/home/home.dart';
-import 'package:travellory/screens/trip/view_trip.dart';
+import 'package:travellory/screens/trip/trip_screen.dart';
 import 'package:travellory/screens/wrapper.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/providers/auth_provider.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             '/register': (BuildContext context) => Register(),
             '/loading': (BuildContext context) => Loading(),
             '/home': (BuildContext context) => Home(),
-            '/viewtrip': (BuildContext context) => ViewTrip(),
+            '/viewtrip': (BuildContext context) => TripScreen(),
           },
         ),
       ),
