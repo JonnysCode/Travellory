@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/widgets/font_widgets.dart';
 
 class TripScreen extends StatefulWidget {
   @override
@@ -64,15 +65,11 @@ class _TripScreenState extends State<TripScreen> {
                           maxHeight: 100.0,
                           maxWidth: MediaQuery.of(context).size.width - 200
                       ),
-                      child: Text(
-                        _tripModel.name,
-                        style: TextStyle(
-                          fontFamily: 'FashionFetish',
-                          fontWeight: FontWeight.w900,
-                          fontSize: 24,
-                          letterSpacing: -2.0,
-                          height: 1.05
-                        ),
+                      child: FashionFetishText(
+                        text: _tripModel.name,
+                        size: 24,
+                        fontWeight: FashionFontWeight.HEAVY,
+                        height: 1.05,
                       ),
                     ),
                   ),
@@ -83,19 +80,14 @@ class _TripScreenState extends State<TripScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text(
-                          _tripModel.startDate.toString().substring(0, 10)
+                        FashionFetishText(
+                         text:  _tripModel.startDate.toString().substring(0, 10)
                               + ' - '
                               + _tripModel.endDate.toString().substring(0, 10),
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontFamily: 'FashionFetish',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
-                            letterSpacing: -2.0,
-                            height: 1.25
-                          ),
-                          textAlign: TextAlign.left,
+                          color: Colors.black54,
+                          fontWeight: FashionFontWeight.BOLD,
+                          size: 14,
+                          height: 1.25
                         ),
                         SizedBox(
                           height: 20,
@@ -109,16 +101,11 @@ class _TripScreenState extends State<TripScreen> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 6),
-                              child: Text(
-                                _tripModel.destination,
-                                style: TextStyle(
-                                  color: Colors.black54,
-                                  fontFamily: 'FashionFetish',
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 14,
-                                  letterSpacing: -1.0,
-                                ),
-                                textAlign: TextAlign.left,
+                              child: FashionFetishText(
+                                text: _tripModel.destination,
+                                size: 14,
+                                fontWeight: FashionFontWeight.HEAVY,
+                                color: Colors.black54,
                               ),
                             ),
                           ],
