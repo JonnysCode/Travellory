@@ -57,7 +57,7 @@ class _TripCardState extends State<TripCard> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 8.0, top: 8.0, right: 30.0),
+                  padding: const EdgeInsets.only(left: 8.0, top: 12.0, right: 30.0, bottom: 7.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -68,7 +68,7 @@ class _TripCardState extends State<TripCard> {
                         fontWeight: FashionFontWeight.HEAVY,
                       ),
                       SizedBox(
-                        height: 11,
+                        height: 13,
                       ),
                       FashionFetishText(
                         text: _tripModel.startDate.toString().substring(0, 10)
@@ -81,23 +81,25 @@ class _TripCardState extends State<TripCard> {
                       SizedBox(
                         height: 5,
                       ),
-                      Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.location_on,
-                            size: 16,
-                            color: Colors.redAccent,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 6),
-                            child: FashionFetishText(
-                              text: _tripModel.destination,
-                              size: 14.0,
-                              fontWeight: FashionFontWeight.HEAVY,
-                              color: Colors.black54,
+                      Expanded(
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.location_on,
+                              size: 16,
+                              color: Colors.redAccent,
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6),
+                              child: FashionFetishText(
+                                text: _tripModel.destination,
+                                size: 14.0,
+                                fontWeight: FashionFontWeight.HEAVY,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -116,7 +118,7 @@ class _TripCardState extends State<TripCard> {
                   label: Text('')
               ),
             ),
-          )
+          ),
         ],
       ),
     );
