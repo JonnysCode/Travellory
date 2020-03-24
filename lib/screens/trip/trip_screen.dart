@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/models/trip_model.dart';
 
-class ViewTrip extends StatefulWidget {
+class TripScreen extends StatefulWidget {
   @override
-  _ViewTripState createState() => _ViewTripState();
+  _TripScreenState createState() => _TripScreenState();
 }
 
-class _ViewTripState extends State<ViewTrip> {
+class _TripScreenState extends State<TripScreen> {
   @override
   Widget build(BuildContext context) {
+    final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       body: Container(
         color: Colors.white,
@@ -26,7 +29,9 @@ class _ViewTripState extends State<ViewTrip> {
                     top: 0,
                     right: -30,
                     child: FlatButton.icon(
-                        onPressed: () => { Navigator.pushReplacementNamed(context, '/home') },
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/home');
+                          },
                         icon: Icon(Icons.clear, color: Colors.red, size: 32),
                         label: Text('')
                     ),
@@ -35,13 +40,13 @@ class _ViewTripState extends State<ViewTrip> {
                     top: -30,
                     left: -40,
                     child: Hero(
-                      tag: 'trip_image',
+                      tag: 'trip_image' + _tripModel.index.toString(),
                       child: Container(
                         height: 220,
                         width: 220,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage("assets/images/home/trip/trip_1.png"),
+                            image: AssetImage(_tripModel.imagePath),
                             fit: BoxFit.fitWidth,
                             alignment: Alignment.bottomCenter,
                           ),
@@ -60,7 +65,7 @@ class _ViewTripState extends State<ViewTrip> {
                           maxWidth: MediaQuery.of(context).size.width - 200
                       ),
                       child: Text(
-                        'Beach Relaxation',
+                        _tripModel.name,
                         style: TextStyle(
                           fontFamily: 'FashionFetish',
                           fontWeight: FontWeight.w900,
@@ -79,7 +84,9 @@ class _ViewTripState extends State<ViewTrip> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Text(
-                          '03.04.2020 - 17.04.2020',
+                          _tripModel.startDate.toString().substring(0, 10)
+                              + ' - '
+                              + _tripModel.endDate.toString().substring(0, 10),
                           style: TextStyle(
                             color: Colors.black54,
                             fontFamily: 'FashionFetish',
@@ -103,7 +110,7 @@ class _ViewTripState extends State<ViewTrip> {
                             Padding(
                               padding: const EdgeInsets.only(top: 6),
                               child: Text(
-                                'Maledives',
+                                _tripModel.destination,
                                 style: TextStyle(
                                   color: Colors.black54,
                                   fontFamily: 'FashionFetish',
