@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/models/trip_model.dart';
 
 class TripCard extends StatefulWidget {
+  final TripModel tripModel;
+
+  const TripCard({
+    Key key,
+    @required this.tripModel
+  }) : super(key: key);
+
   @override
-  _TripCardState createState() => _TripCardState();
+  _TripCardState createState() => _TripCardState(tripModel);
 }
 
 class _TripCardState extends State<TripCard> {
+  TripModel _tripModel;
+
+  _TripCardState(TripModel tripModel){
+    _tripModel = tripModel;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,7 +48,7 @@ class _TripCardState extends State<TripCard> {
                     width: 80,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/images/home/trip/trip_1.png"),
+                        image: AssetImage(_tripModel.imagePath),
                         fit: BoxFit.fitWidth,
                         alignment: Alignment.bottomCenter,
                       ),
@@ -48,7 +62,7 @@ class _TripCardState extends State<TripCard> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text(
-                        'Beach Relaxation',
+                        _tripModel.name,
                         style: TextStyle(
                           fontFamily: 'FashionFetish',
                           fontWeight: FontWeight.w900,
@@ -61,7 +75,9 @@ class _TripCardState extends State<TripCard> {
                         height: 11,
                       ),
                       Text(
-                        '03.04.2020 - 17.04.2020',
+                        _tripModel.startDate.toString().substring(0, 10)
+                            + ' - '
+                            + _tripModel.endDate.toString().substring(0, 10),
                         style: TextStyle(
                           color: Colors.black54,
                           fontFamily: 'FashionFetish',
@@ -84,7 +100,7 @@ class _TripCardState extends State<TripCard> {
                           Padding(
                             padding: const EdgeInsets.only(top: 6),
                             child: Text(
-                              'Maledives',
+                              _tripModel.destination,
                               style: TextStyle(
                                 color: Colors.black54,
                                 fontFamily: 'FashionFetish',

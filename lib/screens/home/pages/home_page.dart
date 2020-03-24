@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/screens/trip/trip_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -79,9 +80,9 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: ListView.separated(
               padding: const EdgeInsets.all(10),
-              itemCount: 5,
+              itemCount: tripModels.length,
               itemBuilder: (BuildContext context, int index) {
-                return TripCard();
+                return TripCard(tripModel: tripModels[index]);
               },
               separatorBuilder: (BuildContext context, int index) => const Divider(),
             ),
