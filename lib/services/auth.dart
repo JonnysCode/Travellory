@@ -5,6 +5,7 @@ abstract class BaseAuthService {
   Future signInAnonymously();
   Future signInWithEmailAndPassword(String email, String password);
   Future registerWithEmailAndPassword(String email, String password);
+  Future updatePassword(String newPassword);
   Future signOut();
   Stream<User> get user;
 }
@@ -79,6 +80,17 @@ class AuthService implements BaseAuthService {
       print(e.toString()); // todo: exeption handling, logging
       return null;
     }
+  }
+
+  Future updatePassword(String password) async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+
+    user.updatePassword(password).then((_){
+      print("Succesfull changed password");
+    }).catchError((error){
+      print("Password can't be changed" + error.toString());
+      //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
+    });
   }
 
 }
