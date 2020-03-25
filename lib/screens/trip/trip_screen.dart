@@ -43,7 +43,9 @@ class _TripScreenState extends State<TripScreen> {
               top: 6,
               right: 0,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, '/booking/rentalCar');
+                },
                 child: Container(
                   height: 28,
                   width: 28,
