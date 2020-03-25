@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
-import 'package:travellory/widgets/font_widgets.dart';
+
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -15,6 +15,17 @@ class _ProfilePageState extends State<ProfilePage> {
     await _auth.signOut();
   }
 
+//  void _changePassword(String password) async{
+//    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+//
+//    user.updatePassword(password).then((_){
+//      print("Succesfull changed password");
+//    }).catchError((error){
+//      print("Password can't be changed" + error.toString());
+//      //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
+//    });
+//  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
             icon: Icon(Icons.person),
             label: Text('logout'),
           ),
-          SizedBox(
+          SizedBox( //TODO: fluetfab remove if profile view is available
             height: 350,
             width: 250,
             child: const Card(
@@ -41,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           RaisedButton(
-            onPressed: () {},
+            onPressed: () => {},
             child: const Text(
                 'change password',
                 style: TextStyle(
@@ -50,16 +61,16 @@ class _ProfilePageState extends State<ProfilePage> {
             )
             ),
           ),
-          RaisedButton(
+          RaisedButton( //TODO: fluetfab remove if logout above profile view works
             onPressed: () {},
             child: const Text(
-                'change profile picture',
+                'Logout',
                 style: TextStyle(
                   fontSize: 16,
                   fontFamily: 'Arial',
                 )
             ),
-          )
+          ),
         ],
       ),
     );
