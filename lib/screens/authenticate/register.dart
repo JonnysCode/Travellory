@@ -181,7 +181,10 @@ class _RegisterState extends State<Register> {
                                                   setState(() {
                                                     _error = 'Please supply a valid email and password.';
                                                   });
-                                                  Navigator.pop(context);
+                                                  Navigator.popUntil(
+                                                    context,
+                                                    ModalRoute.withName('/'),
+                                                  );
                                                 }
                                               }
                                             }),
