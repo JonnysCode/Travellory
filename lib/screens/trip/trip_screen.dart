@@ -16,6 +16,10 @@ class _TripScreenState extends State<TripScreen> {
       Navigator.pushReplacementNamed(context, '/home');
     }
 
+    void _openBooking(String bookingSite){
+      Navigator.pushReplacementNamed(context, bookingSite, arguments: _tripModel);
+    }
+
     Widget _subsection(String title, String route){
       return Container(
         height: 40,
@@ -47,10 +51,7 @@ class _TripScreenState extends State<TripScreen> {
               top: 6,
               right: 0,
               child: GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, route, arguments: _tripModel);
-                },
-                onTap: () => {},
+                onTap: () => _openBooking(route),
                 child: Container(
                   height: 28,
                   width: 28,
