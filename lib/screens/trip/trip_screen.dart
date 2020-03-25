@@ -12,6 +12,10 @@ class _TripScreenState extends State<TripScreen> {
   Widget build(BuildContext context) {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
+    void _openHomeScreen(){
+      Navigator.pushReplacementNamed(context, '/home');
+    }
+
     Widget _subsection(String title, String route){
       return Container(
         height: 40,
@@ -20,7 +24,7 @@ class _TripScreenState extends State<TripScreen> {
           children: <Widget>[
             Positioned(
               top: 16,
-              width: 200,
+              width: 240,
               child: FashionFetishText(
                 text: title,
                 size: 24,
@@ -46,6 +50,7 @@ class _TripScreenState extends State<TripScreen> {
                 onTap: () {
                   Navigator.pushReplacementNamed(context, route, arguments: _tripModel);
                 },
+                onTap: () => {},
                 child: Container(
                   height: 28,
                   width: 28,
@@ -108,9 +113,7 @@ class _TripScreenState extends State<TripScreen> {
                     top: 0,
                     right: -30,
                     child: FlatButton.icon(
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(context, '/home');
-                          },
+                        onPressed: () => _openHomeScreen(),
                         icon: Icon(Icons.clear, color: Colors.red, size: 32),
                         label: Text('')
                     ),
@@ -236,6 +239,9 @@ class _TripScreenState extends State<TripScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                     child: _cardCarousel(),
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                 ],
               )
