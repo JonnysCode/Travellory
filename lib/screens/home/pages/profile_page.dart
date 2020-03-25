@@ -15,16 +15,12 @@ class _ProfilePageState extends State<ProfilePage> {
     await _auth.signOut();
   }
 
-//  void _changePassword(String password) async{
-//    FirebaseUser user = await FirebaseAuth.instance.currentUser();
-//
-//    user.updatePassword(password).then((_){
-//      print("Succesfull changed password");
-//    }).catchError((error){
-//      print("Password can't be changed" + error.toString());
-//      //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
-//    });
-//  }
+  Future _updatePassword(BuildContext context) async {
+    TextEditingController _passwordController = TextEditingController();
+
+    final BaseAuthService _auth = AuthProvider.of(context).auth;
+    await _auth.updatePassword(_passwordController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           RaisedButton(
-            onPressed: () => {},
+            onPressed: () => _updatePassword(context),
             child: const Text(
                 'change password',
                 style: TextStyle(
@@ -62,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           RaisedButton( //TODO: fluetfab remove if logout above profile view works
-            onPressed: () {},
+            onPressed: () => _signOut(context),
             child: const Text(
                 'Logout',
                 style: TextStyle(
