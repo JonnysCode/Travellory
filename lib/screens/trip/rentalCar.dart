@@ -4,6 +4,7 @@ import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:travellory/models/RentalCarModel.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/font_widgets.dart';
 
 class RentalCar extends StatefulWidget {
   @override
@@ -64,6 +65,32 @@ class _RentalCarState extends State<RentalCar> {
               ],
             ),
           ),
+          Container(
+            height: 40,
+            width: MediaQuery.of(context).size.width - 20,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(40),
+              color: Color(0xFFCCD7DD),
+            ),
+            child: Row(children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 8.0, top: 12.0, right: 30.0, bottom: 7.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+
+                    FashionFetishText(
+                        text: "General Information",
+                        size: 15.0,
+                        fontWeight: FashionFontWeight.BOLD,
+                        color: Colors.black54),
+                  ],
+                ),
+              ),
+            ]),
+          ),
           ListTile(
             leading: const Icon(Icons.confirmation_number),
             title: TextField(
@@ -85,6 +112,33 @@ class _RentalCarState extends State<RentalCar> {
                 hintStyle: TextStyle(color: Colors.black),
               ),
             ),
+          ),
+          SizedBox(height: 20),
+          Container(
+            height: 40,
+            width: MediaQuery.of(context).size.width - 20,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(40),
+              color: Color(0xFFCCD7DD),
+            ),
+            child: Row(children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 8.0, top: 12.0, right: 30.0, bottom: 7.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+
+                    FashionFetishText(
+                        text: "Pick Up Information",
+                        size: 15.0,
+                        fontWeight: FashionFontWeight.BOLD,
+                        color: Colors.black54),
+                  ],
+                ),
+              ),
+            ]),
           ),
           ListTile(
             leading: const Icon(Icons.location_on),
@@ -177,7 +231,8 @@ class _RentalCarState extends State<RentalCar> {
                         if (pickedReturnDate != null)
                           setState(() =>
                               selectedReturnDate = pickedReturnDate.toString());
-                        _returnDateController.text = pickedReturnDate.toIso8601String();
+                        _returnDateController.text =
+                            pickedReturnDate.toIso8601String();
                       },
                       decoration: InputDecoration(
                         hintText: 'Return Date',
@@ -192,6 +247,7 @@ class _RentalCarState extends State<RentalCar> {
           ListTile(
             leading: const Icon(Icons.access_time),
             title: TextField(
+              controller: _returnTimeController,
               style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
                 hintText: "Return Time",
@@ -202,6 +258,7 @@ class _RentalCarState extends State<RentalCar> {
           ListTile(
             leading: const Icon(Icons.directions_car),
             title: TextField(
+              controller: _carDescriptionController,
               style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
                 hintText: "Car Description",
@@ -212,6 +269,7 @@ class _RentalCarState extends State<RentalCar> {
           ListTile(
             leading: const Icon(Icons.directions_car),
             title: TextField(
+              controller: _carNumberPlateController,
               style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
                 hintText: "Car Number Plate",
@@ -222,6 +280,7 @@ class _RentalCarState extends State<RentalCar> {
           ListTile(
             leading: const Icon(Icons.speaker_notes),
             title: TextField(
+              controller: _notesController ,
               style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
                 hintText: "Notes",
@@ -249,7 +308,7 @@ class _RentalCarState extends State<RentalCar> {
                   carDescription: _carDescriptionController.text,
                   carNumberPlate: _carNumberPlateController.text,
                   notes: _notesController.text);
-               _addRentalCar(rentalCar);
+              _addRentalCar(rentalCar);
             }),
           )
         ],
