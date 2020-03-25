@@ -42,7 +42,7 @@ class WelcomeState extends State<Welcome> {
                     Colors.white, () {
                       Navigator.pushNamed(
                         context,
-                        'auth'
+                        '/auth'
                       );
                     }),
                 height: 50,

@@ -21,6 +21,10 @@ class _TripCardState extends State<TripCard> {
     _tripModel = tripModel;
   }
 
+  void _openTrip(){
+    Navigator.pushReplacementNamed(context, '/viewtrip', arguments: _tripModel);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -111,9 +115,7 @@ class _TripCardState extends State<TripCard> {
             child: Align(
               alignment: Alignment.bottomRight,
               child: FlatButton.icon(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/viewtrip', arguments: _tripModel);
-                  },
+                  onPressed: () => _openTrip(),
                   icon: Icon(Icons.open_in_new, color: Colors.black54),
                   label: Text('')
               ),
