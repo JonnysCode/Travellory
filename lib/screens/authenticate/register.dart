@@ -33,6 +33,14 @@ class _RegisterState extends State<Register> {
   }
 
   @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -173,7 +181,10 @@ class _RegisterState extends State<Register> {
                                                   setState(() {
                                                     _error = 'Please supply a valid email and password.';
                                                   });
-                                                  Navigator.pop(context);
+                                                  Navigator.popUntil(
+                                                    context,
+                                                    ModalRoute.withName('/'),
+                                                  );
                                                 }
                                               }
                                             }),

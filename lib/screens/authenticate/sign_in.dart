@@ -33,6 +33,13 @@ class _SignInState extends State<SignIn> {
   }
 
   @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -147,7 +154,10 @@ class _SignInState extends State<SignIn> {
                                                   setState(() {
                                                     _error = 'Could not sign in with those credentials.';
                                                   });
-                                                  Navigator.pop(context);
+                                                  Navigator.popUntil(
+                                                    context,
+                                                    ModalRoute.withName('/'),
+                                                  );
                                                 }
                                               }
                                             }),
