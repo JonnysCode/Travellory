@@ -12,123 +12,159 @@ class RentalCar extends StatefulWidget {
 
 class _RentalCarState extends State<RentalCar> {
   String selectedDate = '';
-  TextEditingController _date = new TextEditingController();
+  String siteTitle = 'Add Rental Car';
+  TextEditingController _date = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    Widget buttonSection = Container(
-      padding: const EdgeInsets.only(top: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text(
-            'Add Rental Car',
-            style: TextStyle(fontSize: 20),
+    // TODO padd the showRoundedDatePicker smaller into app
+//    Widget datePicker = Container(
+//      child: GestureDetector(
+//        child: Container(
+//          child: Column(
+//            mainAxisAlignment: MainAxisAlignment.center,
+//            children: <Widget>[
+//              Padding(
+//                padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
+//                child: new Column(children: <Widget>[
+//                  SizedBox(height: 20.0),
+//                  TextField(
+//                    onTap: () async {
+//                      DateTime pickedDate = DateTime(1900);
+//                      FocusScope.of(context).requestFocus(new FocusNode());
+//
+//                      pickedDate = await showRoundedDatePicker(
+//                        context: context,
+//                        theme: ThemeData.dark(),
+//                        initialDate: DateTime.now(),
+//                        firstDate: DateTime(DateTime.now().year - 1),
+//                        lastDate: DateTime(DateTime.now().year + 1),
+//                        borderRadius: 16,
+//                      );
+//                      if (pickedDate != null)
+//                        setState(() => selectedDate = pickedDate.toString());
+//                      _date.text = pickedDate.toIso8601String();
+//                    },
+//                    decoration: InputDecoration(
+//                      border: OutlineInputBorder(),
+//                      hintText: 'Date',
+//                      labelText: "$selectedDate".split(' ')[0],
+//                      labelStyle: new TextStyle(color: Colors.black),
+//                    ),
+//                  ),
+//                ]),
+//              ),
+//            ],
+//          ),
+//        ),
+
+//      ),
+//    );
+
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: Column(
+        children: <Widget>[
+          AppBar(
+            backgroundColor: Colors.white,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.time_to_leave,
+                  color: Theme.of(context).primaryColor,
+                ),
+                Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Add Booking of Rental Car'))
+              ],
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.supervised_user_circle),
+            title: TextField(
+              style: TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                hintText: "Company",
+                hintStyle: TextStyle(color: Colors.black),
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.location_on),
+            title: TextField(
+              style: TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                hintText: "Pick Up Location",
+                hintStyle: TextStyle(color: Colors.black),
+              ),
+            ),
+          ),
+          // TODO show Text "Date" before a date has been chosen
+          GestureDetector(
+            child: Container(
+              child: Column(children: <Widget>[
+                ListTile(
+                    leading: const Icon(Icons.date_range),
+                    title: TextField(
+                      onTap: () async {
+                        DateTime pickedDate = DateTime(1900);
+                        FocusScope.of(context).requestFocus(FocusNode());
+
+                        pickedDate = await showRoundedDatePicker(
+                          context: context,
+                          theme: ThemeData.dark(),
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(DateTime.now().year - 1),
+                          lastDate: DateTime(DateTime.now().year + 1),
+                          borderRadius: 16,
+                        );
+                        if (pickedDate != null)
+                          setState(() => selectedDate = pickedDate.toString());
+                        _date.text = pickedDate.toIso8601String();
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Date',
+                        hintStyle: TextStyle(color: Colors.black),
+                        labelText: "$selectedDate".split(' ')[0],
+                        labelStyle: TextStyle(color: Colors.black),
+                      ),
+                    )),
+              ]),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.access_time),
+            title: TextField(
+              style: TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                hintText: "Pick Up Time",
+                hintStyle: TextStyle(color: Colors.black),
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.directions_car),
+            title: TextField(
+              style: TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                hintText: "Car Description",
+                hintStyle: TextStyle(color: Colors.black),
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.speaker_notes),
+            title: TextField(
+              style: TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                hintText: "Notes",
+                hintStyle: TextStyle(color: Colors.black),
+              ),
+            ),
           ),
         ],
       ),
     );
-
-    // TODO start Date is no date
-    // TODO padd the showRoundedDatePicker smaller into app
-    Widget datePicker = Container(
-      child: GestureDetector(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
-                child: new Column(children: <Widget>[
-                  SizedBox(height: 20.0),
-                  TextField(
-                    onTap: () async {
-                      DateTime pickedDate = DateTime(1900);
-                      FocusScope.of(context).requestFocus(new FocusNode());
-
-                      pickedDate = await showRoundedDatePicker(
-                        context: context,
-                        theme: ThemeData.dark(),
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(DateTime.now().year - 1),
-                        lastDate: DateTime(DateTime.now().year + 1),
-                        borderRadius: 16,
-                      );
-                      if (pickedDate != null)
-                        setState(() => selectedDate = pickedDate.toString());
-                      _date.text = pickedDate.toIso8601String();
-                    },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Date',
-                      labelText: "$selectedDate".split(' ')[0],
-                      labelStyle: new TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ]),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-
-    Widget rentalCar = Container(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
-      child: Form(
-        child: Column(
-          children: [
-            SizedBox(height: 20.0),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Company',
-              ),
-            ),
-            SizedBox(height: 20.0),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Pick up Location',
-              ),
-            ),
-            SizedBox(height: 20.0),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Date',
-              ),
-            ),
-            SizedBox(height: 20.0),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Pick Up Time',
-              ),
-            ),
-            SizedBox(height: 20.0),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Car Type',
-              ),
-            ),
-            SizedBox(height: 20.0),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Notes',
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-
-    return Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: ListView(
-          children: [buttonSection, datePicker, rentalCar],
-        ));
   }
 }
