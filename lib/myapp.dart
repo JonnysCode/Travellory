@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
