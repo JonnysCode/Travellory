@@ -109,7 +109,7 @@ class _HomeState extends State<Home> {
                         icon: Icons.person,
                         text: 'Profile',
                       ),
-                GButton(
+//                GButton(
 //                      key: Key('nav_flight_button'),
 //                      icon: Icons.airline_seat_flat,
 //                      text: 'Flight',
