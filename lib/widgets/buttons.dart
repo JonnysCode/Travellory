@@ -16,8 +16,6 @@ Widget filledButton(String text, Color splashColor, Color highlightColor,
       style: TextStyle(
           fontWeight: FontWeight.bold, color: textColor, fontSize: 20),
     ),
-    onPressed: () {
-      function();
-    },
+    onPressed: () => function(),
   );
 }
