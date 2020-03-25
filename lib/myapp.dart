@@ -7,6 +7,10 @@ import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
 import 'package:travellory/screens/home/home.dart';
+import 'package:travellory/screens/trip/accommodation.dart';
+import 'package:travellory/screens/trip/activity.dart';
+import 'package:travellory/screens/trip/flight.dart';
+import 'package:travellory/screens/trip/publicTransport.dart';
 import 'package:travellory/screens/trip/rentalCar.dart';
 import 'package:travellory/screens/trip/trip_screen.dart';
 import 'package:travellory/screens/wrapper.dart';
@@ -51,6 +55,10 @@ class MyApp extends StatelessWidget {
             '/home': (BuildContext context) => Home(),
             '/viewtrip': (BuildContext context) => TripScreen(),
             '/booking/rentalCar': (BuildContext context) => RentalCar(),
+            '/booking/accommodation': (BuildContext context) => Accommodation(),
+            '/booking/flight': (BuildContext context) => Flight(),
+            '/booking/publicTransport': (BuildContext context) => PublicTransport(),
+            '/booking/activity': (BuildContext context) => Activity(),
           },
         ),
       ),
