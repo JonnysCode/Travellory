@@ -4,7 +4,8 @@ import 'package:travellory/screens/home/pages/calendar_page.dart';
 import 'package:travellory/screens/home/pages/home_page.dart';
 import 'package:travellory/screens/home/pages/map_page.dart';
 import 'package:travellory/screens/home/pages/profile_page.dart';
-import 'package:travellory/screens/home/pages/flight_page.dart';
+import 'package:travellory/screens/trip/accommodation.dart';
+import 'package:travellory/screens/trip/flight.dart';
 import 'package:travellory/screens/trip/rentalCar.dart';
 import 'package:travellory/widgets/layout.dart';
 
@@ -31,8 +32,9 @@ class _HomeState extends State<Home> {
       CalendarPage(),
       MapPage(),
       ProfilePage(),
-      //FlightPage(),
-      RentalCar()
+      //Flight(),
+      //RentalCar()
+      Accommodation(),
     ];
 
     for (Widget page in _pages) {
@@ -94,10 +96,15 @@ class _HomeState extends State<Home> {
 //                      text: 'Flight',
 //                    ),
                     GButton(
-                      key: Key('nav_car_button'),
-                      icon: Icons.directions_car,
-                      text: 'Car',
+                      key: Key('nav_accommodation_button'),
+                      icon: Icons.airline_seat_flat,
+                      text: 'Accommodation',
                     ),
+//                    GButton(
+//                      key: Key('nav_car_button'),
+//                      icon: Icons.directions_car,
+//                      text: 'Car',
+//                    ),
                   ],
                   selectedIndex: _navBarIndex,
                   onTabChange: (index) {

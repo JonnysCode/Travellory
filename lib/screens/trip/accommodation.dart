@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/providers/auth_provider.dart';
-import 'package:travellory/services/auth.dart';
+import 'package:dropdownfield/dropdownfield.dart';
 
 class Accommodation extends StatefulWidget {
-  final Function toggleView;
-
-  Accommodation({this.toggleView});
-
   @override
   _AccommodationState createState() => new _AccommodationState();
 }
 
 class _AccommodationState extends State<Accommodation> {
   bool _valueBreakfast = false;
+  static String accommodationType = '';
+  static List<String> types = ["Hotel", "Airbnb", "Hostel", "Motel", "Bed&Breakfast", "Other"];
 
   void _valueBreakfastChanged(bool value) => setState(() => _valueBreakfast = value);
 
-  Future _signOut(BuildContext context) async {
-    final BaseAuthService _auth = AuthProvider.of(context).auth;
-    await _auth.signOut();
-  }
+  Widget dropdown = DropDownField(
+      value: accommodationType,
+      required: true,
+      strict: true,
+      labelText: 'Type of accommodation',
+      // icon: Icon(Icons.account_balance),
+      items: types,
+      setter: (dynamic newValue) {
+        accommodationType = newValue;
+      }
+  );
 
   @override
   Widget build(BuildContext context) {
-    Color color = Theme.of(context).primaryColor;
 
     Widget buttonSection = Container(
       padding: const EdgeInsets.only(top: 20),
@@ -47,14 +50,14 @@ class _AccommodationState extends State<Accommodation> {
             TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Hotel Name',
+                labelText: 'Confirmation Number',
               ),
             ),
             SizedBox(height: 20.0),
             TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Confirmation Number',
+                labelText: 'Name',
               ),
             ),
             SizedBox(height: 20.0),
@@ -64,6 +67,7 @@ class _AccommodationState extends State<Accommodation> {
                 labelText: 'Address',
               ),
             ),
+            // TODO this will be after check in info
             SizedBox(height: 20.0),
             TextField(
               decoration: InputDecoration(
@@ -76,6 +80,7 @@ class _AccommodationState extends State<Accommodation> {
       ),
     );
 
+    // TODO date and timepickers
     Widget checkin = Container(
       padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
       child: Form(
@@ -108,6 +113,7 @@ class _AccommodationState extends State<Accommodation> {
       ),
     );
 
+    // TODO date and timepickers
     Widget checkout = Container(
       padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
       child: Form(
@@ -141,6 +147,26 @@ class _AccommodationState extends State<Accommodation> {
       ),
     );
 
+    // TODO this only appears when type is hotel
+    Widget roomType = Container(
+      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
+      child: Form(
+        child: Column(
+          children: [
+            SizedBox(height: 20.0),
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Room Type',
+              ),
+            ),
+
+          ],
+        ),
+      ),
+    );
+
+    // TODO this only appears when type is hotel
     Widget breakfast = Container(
       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
       child: new Column(
@@ -158,18 +184,30 @@ class _AccommodationState extends State<Accommodation> {
       ),
     );
 
+    // TODO this only appears if type is Airbnb
+    Widget airbnbType = Container(
+      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
+      child: Form(
+        child: Column(
+          children: [
+            SizedBox(height: 20.0),
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Accommodation Type',
+              ),
+            ),
+
+          ],
+        ),
+      ),
+    );
+
     Widget notes = Container(
       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
       child: Form(
         child: Column(
           children: [
-            SizedBox(height: 40.0),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Room Type',
-              ),
-            ),
             // TODO: adapt height
             SizedBox(height: 40.0),
             TextField(
@@ -178,6 +216,7 @@ class _AccommodationState extends State<Accommodation> {
                 labelText: 'Notes',
               ),
             ),
+            SizedBox(height: 20.0),
           ],
         ),
       ),
@@ -185,20 +224,8 @@ class _AccommodationState extends State<Accommodation> {
 
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        appBar: AppBar(
-          title: Text('travellory'),
-          backgroundColor: Theme.of(context).primaryColor,
-          elevation: 0.0,
-          actions: <Widget>[
-            FlatButton.icon(
-              onPressed: () => _signOut(context),
-              icon: Icon(Icons.person),
-              label: Text('logout'),
-            )
-          ],
-        ),
         body: ListView(
-          children: [buttonSection, accommodation, checkin, checkout, breakfast, notes],
+          children: [buttonSection, dropdown, accommodation, checkin, checkout, roomType, breakfast, airbnbType, notes],
         ));
   }
 }
