@@ -110,6 +110,7 @@ class _PublicTransportState extends State<PublicTransport> {
             ),
             SizedBox(height: 20.0),
             TextField(
+              // TODO This should only appear if user chooses 'Other'
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Specific Type Of Transport',
