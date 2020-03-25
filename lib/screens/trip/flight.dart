@@ -1,17 +1,10 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:travellory/providers/auth_provider.dart';
-import 'package:travellory/services/auth.dart';
 import 'package:travellory/models/flightModel.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
 class Flight extends StatefulWidget {
-  final Function toggleView;
-
-  Flight({this.toggleView});
-
   @override
-  _FlightState createState() => new _FlightState();
+  _FlightState createState() => _FlightState();
 }
 
 class _FlightState extends State<Flight> {
@@ -37,15 +30,8 @@ class _FlightState extends State<Flight> {
   void _valueExcessBaggageChanged(bool value) =>
       setState(() => _valueExcessBaggage = value);
 
-  Future _signOut(BuildContext context) async {
-    final BaseAuthService _auth = AuthProvider.of(context).auth;
-    await _auth.signOut();
-  }
-
   @override
   Widget build(BuildContext context) {
-    Color color = Theme.of(context).primaryColor;
-
     Widget buttonSection = Container(
       padding: const EdgeInsets.only(top: 20),
       child: Row(
@@ -234,35 +220,31 @@ class _FlightState extends State<Flight> {
         ),
       ),
     );
-
-    return Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        appBar: AppBar(
-          title: Text('travellory'),
-          backgroundColor: Theme.of(context).primaryColor,
-          elevation: 0.0,
-          actions: <Widget>[
-            FlatButton.icon(
-              onPressed: () => _signOut(context),
-              icon: Icon(Icons.person),
-              label: Text('logout'),
-            )
-          ],
-        ),
-        body: ListView(
+    return Container(
+        key: Key('flight_page'),
+        child: ListView(
           children: [buttonSection, flight, departure, arrival, baggage, notes],
         ));
   }
 }
 
 void _addFlight(FlightModel flight) async {
-  //final CloudFunctions firebaseFunctions = new CloudFunctions(app: FirebaseApp.instance, region: 'asia-northeast1');
-  HttpsCallable callable =
-      CloudFunctions(app: FirebaseApp.instance, region: 'europe-west2')
-          .getHttpsCallable(functionName: 'payment-makePayment');
+  HttpsCallable callable = CloudFunctions.instance
+      .getHttpsCallable(functionName: 'booking-addFlight');
   try {
-    final HttpsCallableResult result =
-        await callable.call(<String, dynamic>{"bookingReference": "123123"});
+    final HttpsCallableResult result = await callable.call(<String, dynamic>{
+      "bookingReference": flight.bookingReference,
+      "airline": flight.airline,
+      "flightNr": flight.flightNr,
+      "seat": flight.seat,
+      "departureLocation": flight.departureLocation,
+      "departureTime": flight.departureTime,
+      "arrivalLocation": flight.arrivalLocation,
+      "arrivalTime": flight.arrivalTime,
+      "checkedBaggage": flight.checkedBaggage,
+      "excessBaggage": flight.excessBaggage,
+      "notes": flight.notes
+    });
     print(result.data);
   } on CloudFunctionsException catch (e) {
     print('caught firebase functions exception');
