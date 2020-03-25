@@ -12,10 +12,6 @@ class WelcomeState extends State<Welcome> {
 
   @override
   Widget build(BuildContext context) {
-    void initState() {
-      super.initState();
-    }
-
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         key: _scaffoldKey,
