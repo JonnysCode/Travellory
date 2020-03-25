@@ -13,24 +13,34 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   static final _heightOfNavBar = 68;
-
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  static final _pageController = PageController(
-    initialPage: 0,
-  );
+  final List<Widget> _pages = [
+    HomePage(),
+    CalendarPage(),
+    MapPage(),
+    ProfilePage()
+  ];
 
+  PageController _pageController;
   int _prevSelectedIndex = 0;
   int _navBarIndex = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(
+      initialPage: 0,
+    );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   List<Widget> _layoutPages(){
     List<Widget> layoutPages = List();
-    List<Widget> _pages = [
-      HomePage(),
-      CalendarPage(),
-      MapPage(),
-      ProfilePage()
-    ];
-
     for(Widget page in _pages){
       layoutPages.add(mainPageLayout(context, (MediaQuery.of(context).size.height - _heightOfNavBar), page));
     }
@@ -41,6 +51,7 @@ class _HomeState extends State<Home> {
     setState(() {
       _navBarIndex = index;
     });
+    _animateToPage();
   }
 
   void _setNavIndices(int index){
@@ -53,6 +64,17 @@ class _HomeState extends State<Home> {
         _prevSelectedIndex = index;
         _navBarIndex = index;
       });
+      _animateToPage();
+    }
+  }
+
+  void _animateToPage(){
+    if(_pageController.hasClients){
+      _pageController.animateToPage(
+          _navBarIndex,
+          duration: const Duration(milliseconds: 1000),
+          curve: Curves.ease
+      );
     }
   }
 
@@ -116,14 +138,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    if(_pageController.hasClients){
-      _pageController.animateToPage(
-          _navBarIndex,
-          duration: Duration(milliseconds: 1000),
-          curve: Curves.ease
-      );
-    }
-
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Theme.of(context).primaryColor,
