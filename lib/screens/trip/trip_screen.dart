@@ -12,6 +12,10 @@ class _TripScreenState extends State<TripScreen> {
   Widget build(BuildContext context) {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
+    void _openHomeScreen(){
+      Navigator.pushReplacementNamed(context, '/home');
+    }
+
     Widget _subsection(String title){
       return Container(
         height: 40,
@@ -43,7 +47,7 @@ class _TripScreenState extends State<TripScreen> {
               top: 6,
               right: 0,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () => {},
                 child: Container(
                   height: 28,
                   width: 28,
@@ -106,9 +110,7 @@ class _TripScreenState extends State<TripScreen> {
                     top: 0,
                     right: -30,
                     child: FlatButton.icon(
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(context, '/home');
-                          },
+                        onPressed: () => _openHomeScreen(),
                         icon: Icon(Icons.clear, color: Colors.red, size: 32),
                         label: Text('')
                     ),

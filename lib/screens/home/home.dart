@@ -37,6 +37,25 @@ class _HomeState extends State<Home> {
     return layoutPages;
   }
 
+  void _setNavBarIndex(int index){
+    setState(() {
+      _navBarIndex = index;
+    });
+  }
+
+  void _setNavIndices(int index){
+    if(_navBarIndex > _prevSelectedIndex){
+      _prevSelectedIndex++;
+    } else if (_navBarIndex < _prevSelectedIndex){
+      _prevSelectedIndex--;
+    } else {
+      setState(() {
+        _prevSelectedIndex = index;
+        _navBarIndex = index;
+      });
+    }
+  }
+
   Widget _navigationBar(){
       return DecoratedBox(
         key: Key('nav_bar'),
@@ -86,11 +105,8 @@ class _HomeState extends State<Home> {
                       ),
                     ],
                     selectedIndex: _navBarIndex,
-                    onTabChange: (index) {
-                      setState(() {
-                        _navBarIndex = index;
-                      });
-                    }),
+                    onTabChange: (index) => _setNavBarIndex(index),
+                ),
               ),
             ),
           ),
@@ -115,21 +131,9 @@ class _HomeState extends State<Home> {
         controller: _pageController,
         scrollDirection: Axis.horizontal,
         children: _layoutPages(),
-        onPageChanged: (index) {
-          if(_navBarIndex > _prevSelectedIndex){
-            _prevSelectedIndex++;
-          } else if (_navBarIndex < _prevSelectedIndex){
-            _prevSelectedIndex--;
-          } else {
-            setState(() {
-              _prevSelectedIndex = index;
-              _navBarIndex = index;
-            });
-          }
-        },
+        onPageChanged: (index) => _setNavIndices(index),
       ),
       bottomNavigationBar: _navigationBar(),
     );
   }
-
 }
