@@ -11,14 +11,10 @@ class Wrapper extends StatelessWidget {
     final user = Provider.of<User>(context);
     print(user);
 
-    // return either home or authenticate widget
+    // return either home or authentication
     if(user == null){
       return Welcome();
     } else {
-      Navigator.popUntil(
-        context,
-        ModalRoute.withName('/'),
-      );
       return Home();
     }
   }

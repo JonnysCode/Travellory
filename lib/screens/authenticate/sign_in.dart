@@ -154,7 +154,10 @@ class _SignInState extends State<SignIn> {
                                                   setState(() {
                                                     _error = 'Could not sign in with those credentials.';
                                                   });
-                                                  Navigator.pop(context);
+                                                  Navigator.popUntil(
+                                                    context,
+                                                    ModalRoute.withName('/'),
+                                                  );
                                                 }
                                               }
                                             }),
