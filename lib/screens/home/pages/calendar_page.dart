@@ -30,7 +30,7 @@ class _CalendarPageState extends State<CalendarPage> {
         "NT8mJyc2IWhiZH1nfWN9Z2VoZ3xhYXxhY2Fjc2JhaWBiaWZicwMeaDI9Jzo/KjIgEyAnJjc2PScgfSk7MiR9MDs=");
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30.0),
+      padding: const EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 90.0),
       child: Column(
         children: <Widget>[
           Container(
