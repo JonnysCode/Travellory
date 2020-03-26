@@ -18,10 +18,37 @@ void showSubmittedBookingDialog(
         ),
         content: new Text(alertText),
         actions: <Widget>[
-          alertButton("Home", Theme.of(context).canvasColor, context, () async {
+          alertButton("Home", Colors.transparent, context, () async {
             Navigator.pushReplacementNamed(context, '/home');
           }),
           alertButton("Back to Trip", Theme.of(context).hintColor, context, () async {
+            function();
+          }),
+        ],
+      );
+    },
+  );
+}
+
+void cancellingDialog(BuildContext context, void function()) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        title: FashionFetishText(
+          text: "Are you sure about this?",
+          size: 18,
+          fontWeight: FashionFontWeight.HEAVY,
+          height: 1.05,
+        ),
+        content: new Text(
+            "You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?"),
+        actions: <Widget>[
+          alertButton("No", Colors.transparent, context, () async {
+            Navigator.pop(context);
+          }),
+          alertButton("Yes", Theme.of(context).accentColor, context, () async {
             function();
           }),
         ],

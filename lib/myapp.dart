@@ -33,7 +33,8 @@ class MyApp extends StatelessWidget {
             canvasColor: Colors.transparent,
             hintColor: Color(0xFFC0F0E8),
             primaryColor: Color(0xFF61BAA9),
-            accentColor: Color(0xFFF72349),
+            // accentColor: Color(0xFFF72349),
+            accentColor: Color(0xFFF48FB1),
             scaffoldBackgroundColor: Color(0xFFE6E6E6),
           ),
           localizationsDelegates: [
