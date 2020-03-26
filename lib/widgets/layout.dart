@@ -10,22 +10,14 @@ Widget mainPageLayout(BuildContext context, double layoutHeight, Widget page){
             height: layoutHeight * 0.05,
           ),
           Container(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: Theme.of(context).canvasColor,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40.0),
-                    topRight: Radius.circular(40.0)),
-                child: Container(
-                  child: page,
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  height:layoutHeight * 0.95,
-                  width: MediaQuery.of(context).size.width,
-                ),
-              ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
+              boxShadow: [BoxShadow(blurRadius: 10, color: Colors.black.withOpacity(.1), offset: Offset(0.0, -6.0))],
             ),
+            child: page,
+            height:layoutHeight * 0.95,
+            width: MediaQuery.of(context).size.width,
           ),
         ],
       ),
