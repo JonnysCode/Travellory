@@ -5,6 +5,8 @@ import 'package:travellory/models/RentalCarModel.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'package:travellory/widgets/section_titles.dart';
+import 'package:travellory/widgets/show_dialog.dart';
 
 class RentalCar extends StatefulWidget {
   @override
@@ -15,6 +17,9 @@ class _RentalCarState extends State<RentalCar> {
   String selectedPickupDate = '';
   String selectedReturnDate = '';
   String siteTitle = 'Add Rental Car';
+  final String alertTitle = "Submit Successful!";
+  final String alertText =
+      "You've just submitted the booking information for your rental car booking. You can see all the information in the trip overview";
 
   @override
   Widget build(BuildContext context) {
@@ -31,35 +36,8 @@ class _RentalCarState extends State<RentalCar> {
     final TextEditingController _pickupDateController = TextEditingController();
     final TextEditingController _returnDateController = TextEditingController();
 
-    void _returnToTripScreen() {
+    void returnToTripScreen() {
       Navigator.pushReplacementNamed(context, '/viewtrip', arguments: _tripModel);
-    }
-
-    Widget _sectionTitle(String sectionTitle) {
-      return Container(
-        height: 40,
-        width: MediaQuery.of(context).size.width - 20,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(40),
-          color: Color(0xFFCCD7DD),
-        ),
-        child: Row(children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, top: 12.0, right: 30.0, bottom: 7.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                FashionFetishText(
-                    text: sectionTitle,
-                    size: 15.0,
-                    fontWeight: FashionFontWeight.BOLD,
-                    color: Colors.black54),
-              ],
-            ),
-          ),
-        ]),
-      );
     }
 
     return Scaffold(
@@ -80,7 +58,7 @@ class _RentalCarState extends State<RentalCar> {
                   top: 0,
                   right: -30,
                   child: FlatButton.icon(
-                      onPressed: () => _returnToTripScreen(),
+                      onPressed: () => returnToTripScreen(),
                       icon: Icon(Icons.clear, color: Colors.red, size: 32),
                       label: Text('')),
                 ),
@@ -184,7 +162,7 @@ class _RentalCarState extends State<RentalCar> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _sectionTitle("General Information"),
+                    child: sectionTitle(context, "General Information"),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -216,7 +194,7 @@ class _RentalCarState extends State<RentalCar> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _sectionTitle("Pick Up Information"),
+                    child: sectionTitle(context, "Pick Up Information"),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -286,7 +264,7 @@ class _RentalCarState extends State<RentalCar> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _sectionTitle("Return Information"),
+                    child: sectionTitle(context, "Return Information"),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -356,7 +334,7 @@ class _RentalCarState extends State<RentalCar> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _sectionTitle("Car Details Information"),
+                    child: sectionTitle(context, "Car Details"),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -380,7 +358,7 @@ class _RentalCarState extends State<RentalCar> {
                         controller: _carNumberPlateController,
                         style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
-                          hintText: "Car Number Plate",
+                          hintText: "Car Plate",
                           hintStyle: TextStyle(color: Colors.black),
                         ),
                       ),
@@ -418,8 +396,18 @@ class _RentalCarState extends State<RentalCar> {
                             carNumberPlate: _carNumberPlateController.text,
                             notes: _notesController.text);
                         _addRentalCar(rentalCar);
-                        // TODO after submitting route back to trip with success message to user
+                        showSubmittedBookingDialog(
+                            context, alertTitle, alertText, returnToTripScreen);
                       }),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
+                    child: Container(
+                      child: cancelButton("CANCEL", context, () {
+                          cancellingDialog(context, returnToTripScreen);
+                        },
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),
