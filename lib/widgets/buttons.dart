@@ -18,14 +18,31 @@ Widget filledButton(String text, Color splashColor, Color highlightColor, Color 
   );
 }
 
-Widget alertButton(String text, Color fillcolor, BuildContext context, void function()) {
+Widget alertButton(String text, Color fillColor, BuildContext context, void function()) {
   return RaisedButton(
     key: Key(text.toLowerCase().trim() + 'Button'),
     highlightElevation: 0.0,
     splashColor: Colors.white,
     highlightColor: Theme.of(context).primaryColor,
     elevation: 0.0,
-    color: fillcolor,
+    color: fillColor,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+    child: Text(
+      text,
+      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 20),
+    ),
+    onPressed: () => function(),
+  );
+}
+
+Widget cancelButton(String text, BuildContext context, void function()) {
+  return RaisedButton(
+    key: Key(text.toLowerCase().trim() + 'Button'),
+    highlightElevation: 0.0,
+    splashColor: Colors.white,
+    highlightColor: Theme.of(context).primaryColor,
+    elevation: 0.0,
+    color: Theme.of(context).accentColor,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
     child: Text(
       text,
