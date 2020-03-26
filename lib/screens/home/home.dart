@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
   List<Widget> _layoutPages(){
     List<Widget> layoutPages = List();
     for(Widget page in _pages){
-      layoutPages.add(mainPageLayout(context, (MediaQuery.of(context).size.height - _heightOfNavBar), page));
+      layoutPages.add(mainPageLayout(context, (MediaQuery.of(context).size.height), page));
     }
     return layoutPages;
   }
@@ -82,7 +82,9 @@ class _HomeState extends State<Home> {
       return DecoratedBox(
         key: Key('nav_bar'),
         decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(40.0),
+          boxShadow: [BoxShadow(blurRadius: 12, color: Colors.black.withOpacity(.1), offset: Offset(0.0, -3.0))],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.only(
@@ -91,8 +93,7 @@ class _HomeState extends State<Home> {
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.white,
-                boxShadow: [BoxShadow(blurRadius: 30, color: Colors.black.withOpacity(.25))]
-            ),
+                ),
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),
@@ -141,13 +142,20 @@ class _HomeState extends State<Home> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Theme.of(context).primaryColor,
-      body: PageView(
-        controller: _pageController,
-        scrollDirection: Axis.horizontal,
-        children: _layoutPages(),
-        onPageChanged: (index) => _setNavIndices(index),
+      body: Stack(
+        children: <Widget>[
+          PageView(
+            controller: _pageController,
+            scrollDirection: Axis.horizontal,
+            children: _layoutPages(),
+            onPageChanged: (index) => _setNavIndices(index),
+          ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: _navigationBar()
+          ),
+        ],
       ),
-      bottomNavigationBar: _navigationBar(),
     );
   }
 }
