@@ -25,7 +25,7 @@ class _TripCardState extends State<TripCard> {
   }
 
   void _openTrip(){
-    Navigator.pushReplacementNamed(context, '/viewtrip', arguments: _tripModel);
+    Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
   }
 
   @override
