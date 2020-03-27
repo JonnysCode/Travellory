@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:travellory/screens/home/pages/calendar_page.dart';
 import 'package:travellory/screens/home/pages/home_page.dart';
@@ -100,7 +101,7 @@ class _HomeState extends State<Home> {
                 child: GNav(
                     gap: 8,
                     activeColor: Colors.white,
-                    iconSize: 24,
+                    iconSize: 22,
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     duration: Duration(milliseconds: 1000),
                     tabBackgroundColor: Theme.of(context).primaryColor,
@@ -108,22 +109,22 @@ class _HomeState extends State<Home> {
                     tabs: [
                       GButton(
                         key: Key('nav_home_button'),
-                        icon: Icons.home,
+                        icon: FontAwesomeIcons.suitcaseRolling,
                         text: 'Home',
                       ),
                       GButton(
                         key: Key('nav_calendar_button'),
-                        icon: Icons.calendar_today,
+                        icon: FontAwesomeIcons.calendarAlt,
                         text: 'Calendar',
                       ),
                       GButton(
                         key: Key('nav_map_button'),
-                        icon: Icons.map,
+                        icon: FontAwesomeIcons.globeAfrica,
                         text: 'Map',
                       ),
                       GButton(
                         key: Key('nav_profile_button'),
-                        icon: Icons.person,
+                        icon: FontAwesomeIcons.userAlt,
                         text: 'Profile',
                       ),
                     ],
