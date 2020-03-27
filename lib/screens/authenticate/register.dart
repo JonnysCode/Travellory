@@ -67,8 +67,19 @@ class _RegisterState extends State<Register> {
                         child: Stack(
                           children: <Widget>[
                             Positioned(
-                              left: 10,
-                              top: 10,
+                              left: 18,
+                              top: 18,
+                              child: Container(
+                                width: 32,
+                                height: 32,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                            ),
+                            Positioned(
+                              left: 8,
+                              top: 8,
                               child: IconButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
@@ -77,9 +88,9 @@ class _RegisterState extends State<Register> {
                                   _nameController.clear();
                                 },
                                 icon: Icon(
-                                  Icons.arrow_back_ios,
+                                  FontAwesomeIcons.angleLeft,
                                   size: 30.0,
-                                  color: Theme.of(context).primaryColor,
+                                  color: Colors.white,
                                 ),
                               ),
                             )
@@ -116,7 +127,7 @@ class _RegisterState extends State<Register> {
                                         style: TextStyle(
                                           fontSize: 44,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.white,
+                                          color: Color(0xFFF7EDEE),
                                         ),
                                       ),
                                       alignment: Alignment.center,
@@ -132,7 +143,7 @@ class _RegisterState extends State<Register> {
                                           style: TextStyle(
                                             fontSize: 40,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.white,
+                                            color: Color(0xFFF7EDEE),
                                           ),
                                         ),
                                       ),
