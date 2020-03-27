@@ -66,8 +66,19 @@ class _SignInState extends State<SignIn> {
                         child: Stack(
                           children: <Widget>[
                             Positioned(
-                              left: 10,
-                              top: 10,
+                              left: 18,
+                              top: 18,
+                              child: Container(
+                                width: 32,
+                                height: 32,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                            ),
+                            Positioned(
+                              left: 8,
+                              top: 8,
                               child: IconButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
@@ -75,9 +86,9 @@ class _SignInState extends State<SignIn> {
                                   _passwordController.clear();
                                 },
                                 icon: Icon(
-                                  Icons.arrow_back_ios,
+                                  FontAwesomeIcons.angleLeft,
                                   size: 30.0,
-                                  color: Theme.of(context).primaryColor,
+                                  color: Colors.white,
                                 ),
                               ),
                             )
@@ -100,10 +111,8 @@ class _SignInState extends State<SignIn> {
                                         width: 130,
                                         height: 130,
                                         decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: AssetImage("assets/images/login/world.png"),
-                                            fit: BoxFit.fill,
-                                          ),
+                                          shape: BoxShape.circle,
+                                          color: Theme.of(context).primaryColor,
                                         ),
                                       ),
                                       alignment: Alignment.center,
@@ -116,7 +125,7 @@ class _SignInState extends State<SignIn> {
                                         style: TextStyle(
                                           fontSize: 48,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.white,
+                                          color: Color(0xFFF7EDEE),
                                         ),
                                       ),
                                       alignment: Alignment.center,
