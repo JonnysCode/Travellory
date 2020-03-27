@@ -13,7 +13,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static final _heightOfNavBar = 68;
+  static const _animationSpeed = 800;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final List<Widget> _pages = [
     HomePage(),
@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
     if(_pageController.hasClients){
       _pageController.animateToPage(
           _navBarIndex,
-          duration: const Duration(milliseconds: 1000),
+          duration: const Duration(milliseconds: _animationSpeed),
           curve: Curves.ease
       );
     }
@@ -103,7 +103,7 @@ class _HomeState extends State<Home> {
                     activeColor: Colors.white,
                     iconSize: 22,
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    duration: Duration(milliseconds: 1000),
+                    duration: Duration(milliseconds: _animationSpeed),
                     tabBackgroundColor: Theme.of(context).primaryColor,
                     color: Theme.of(context).primaryColor,
                     tabs: [

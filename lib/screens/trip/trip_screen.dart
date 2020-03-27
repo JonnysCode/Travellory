@@ -15,7 +15,7 @@ class _TripScreenState extends State<TripScreen> {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void _openHomeScreen(){
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pop(context);
     }
 
     Widget _subsection(String title){
