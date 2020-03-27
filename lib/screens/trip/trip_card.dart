@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/fa_icon.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class TripCard extends StatefulWidget {
@@ -79,9 +80,9 @@ class _TripCardState extends State<TripCard> {
                           height: 14,
                         ),
                         FashionFetishText(
-                          text: _tripModel.startDate.toString().substring(0, 10)
+                          text: DateConverter.toShortenedMonthString( _tripModel.startDate)
                             + ' - '
-                            + _tripModel.endDate.toString().substring(0, 10),
+                            + DateConverter.toShortenedMonthString( _tripModel.endDate),
                           size: 14.0,
                           fontWeight: FashionFontWeight.BOLD,
                           color: Colors.black54,
