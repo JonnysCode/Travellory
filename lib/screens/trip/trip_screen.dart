@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class TripScreen extends StatefulWidget {
@@ -161,9 +162,9 @@ class _TripScreenState extends State<TripScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         FashionFetishText(
-                         text: 'From: ' + _tripModel.startDate.toString().substring(0, 10)
+                         text: 'From: ' + DateConverter.toShortenedMonthString( _tripModel.startDate)
                               + '\n'
-                              + 'To: ' + _tripModel.endDate.toString().substring(0, 10),
+                              + 'To: ' + DateConverter.toShortenedMonthString( _tripModel.endDate),
                           color: Colors.black54,
                           fontWeight: FashionFontWeight.BOLD,
                           size: 14,
