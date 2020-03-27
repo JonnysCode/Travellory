@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/fa_icon.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
@@ -80,7 +82,7 @@ class _TripCardState extends State<TripCard> {
                           + _tripModel.endDate.toString().substring(0, 10),
                         size: 15.0,
                         fontWeight: FashionFontWeight.BOLD,
-                        color: Colors.black54
+                        color: Colors.black54,
                       ),
                       SizedBox(
                         height: 5,
@@ -111,13 +113,15 @@ class _TripCardState extends State<TripCard> {
               ],
             ),
           ),
+          Container(
+            height: 90,
+          ),
           Expanded(
             child: Align(
-              alignment: Alignment.bottomRight,
-              child: FlatButton.icon(
+              alignment: Alignment.bottomCenter,
+              child: IconButton(
                   onPressed: () => _openTrip(),
-                  icon: Icon(Icons.open_in_new, color: Colors.black54),
-                  label: Text('')
+                  icon: FaIcon(FontAwesomeIcons.angleDown, color: Colors.black54),
               ),
             ),
           ),
