@@ -1,21 +1,28 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:travellory/models/RentalCarModel.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/utils/Wrapper.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/section_titles.dart';
 import 'package:travellory/widgets/show_dialog.dart';
+import 'package:travellory/widgets/date_picker.dart';
 
 class RentalCar extends StatefulWidget {
   @override
-  _RentalCarState createState() => _RentalCarState();
+  RentalCarState createState() => RentalCarState();
 }
 
-class _RentalCarState extends State<RentalCar> {
-  String selectedPickupDate = '';
-  String selectedReturnDate = '';
+class RentalCarState extends State<RentalCar> {
+  static final String selectedPickupDateKey = "selectedPickupDate";
+  static final String selectedReturnDateKey = "selectedReturnDate";
+
+  Map _datesToSet = {
+    selectedPickupDateKey: MyControllerWrapper(""),
+    selectedReturnDateKey: MyControllerWrapper(""),
+  };
+
   String siteTitle = 'Add Rental Car';
   final String alertTitle = "Submit Successful!";
   final String alertText =
@@ -33,8 +40,6 @@ class _RentalCarState extends State<RentalCar> {
     final TextEditingController _carDescriptionController = TextEditingController();
     final TextEditingController _carNumberPlateController = TextEditingController();
     final TextEditingController _notesController = TextEditingController();
-    final TextEditingController _pickupDateController = TextEditingController();
-    final TextEditingController _returnDateController = TextEditingController();
 
     void returnToTripScreen() {
       Navigator.pushReplacementNamed(context, '/viewtrip', arguments: _tripModel);
@@ -218,31 +223,17 @@ class _RentalCarState extends State<RentalCar> {
                         child: Container(
                           child: Column(children: <Widget>[
                             ListTile(
-                                leading: const Icon(Icons.date_range),
-                                title: TextField(
-                                  onTap: () async {
-                                    DateTime pickedDate = DateTime(1900);
-                                    FocusScope.of(context).requestFocus(FocusNode());
-
-                                    pickedDate = await showRoundedDatePicker(
-                                      context: context,
-                                      theme: ThemeData.dark(),
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(DateTime.now().year - 1),
-                                      lastDate: DateTime(DateTime.now().year + 1),
-                                      borderRadius: 16,
-                                    );
-                                    if (pickedDate != null)
-                                      setState(() => selectedPickupDate = pickedDate.toString());
-                                    _pickupDateController.text = pickedDate.toIso8601String();
-                                  },
+                              leading: const Icon(Icons.date_range),
+                              title: TextField(
+                                  onTap: () =>
+                                      selectDate(context, selectedPickupDateKey, _datesToSet),
                                   decoration: InputDecoration(
-                                    hintText: 'Pick Up Date',
+                                    hintText: "Pick Up Date",
                                     hintStyle: TextStyle(color: Colors.black),
-                                    labelText: "$selectedPickupDate".split(' ')[0],
+                                    labelText: _datesToSet[selectedPickupDateKey].text,
                                     labelStyle: TextStyle(color: Colors.black),
-                                  ),
-                                )),
+                                  )),
+                            ),
                           ]),
                         ),
                       ),
@@ -287,33 +278,17 @@ class _RentalCarState extends State<RentalCar> {
                       child: Container(
                         child: Column(children: <Widget>[
                           ListTile(
-                              leading: const Icon(Icons.date_range),
-                              title: TextField(
+                            leading: const Icon(Icons.date_range),
+                            title: TextField(
                                 // TODO add constraint that this cannot be before pickup date
-                                onTap: () async {
-                                  DateTime pickedReturnDate = DateTime(1900);
-                                  FocusScope.of(context).requestFocus(FocusNode());
-
-                                  pickedReturnDate = await showRoundedDatePicker(
-                                    context: context,
-                                    theme: ThemeData.dark(),
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(DateTime.now().year - 1),
-                                    lastDate: DateTime(DateTime.now().year + 1),
-                                    borderRadius: 16,
-                                  );
-                                  if (pickedReturnDate != null)
-                                    setState(
-                                        () => selectedReturnDate = pickedReturnDate.toString());
-                                  _returnDateController.text = pickedReturnDate.toIso8601String();
-                                },
+                                onTap: () => selectDate(context, selectedReturnDateKey, _datesToSet),
                                 decoration: InputDecoration(
-                                  hintText: 'Return Date',
+                                  hintText: "Pick Up Date",
                                   hintStyle: TextStyle(color: Colors.black),
-                                  labelText: "$selectedReturnDate".split(' ')[0],
+                                  labelText: _datesToSet[selectedReturnDateKey].text,
                                   labelStyle: TextStyle(color: Colors.black),
-                                ),
-                              )),
+                                )),
+                          ),
                         ]),
                       ),
                     ),
@@ -387,10 +362,10 @@ class _RentalCarState extends State<RentalCar> {
                             bookingReference: _bookingReferenceController.text,
                             company: _companyController.text,
                             pickupLocation: _pickupLocationController.text,
-                            pickupDate: _pickupDateController.text,
+                            pickupDate: _datesToSet[selectedPickupDateKey].controller.text,
                             pickupTime: _pickupTimeController.text,
                             returnLocation: _returnLocationController.text,
-                            returnDate: _returnDateController.text,
+                            returnDate: _datesToSet[selectedReturnDateKey].controller.text,
                             returnTime: _returnTimeController.text,
                             carDescription: _carDescriptionController.text,
                             carNumberPlate: _carNumberPlateController.text,
@@ -404,7 +379,10 @@ class _RentalCarState extends State<RentalCar> {
                   Padding(
                     padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                     child: Container(
-                      child: cancelButton("CANCEL", context, () {
+                      child: cancelButton(
+                        "CANCEL",
+                        context,
+                        () {
                           cancellingDialog(context, returnToTripScreen);
                         },
                       ),
