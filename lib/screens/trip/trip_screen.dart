@@ -219,7 +219,7 @@ class _TripScreenState extends State<TripScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Activities', '/booking/activities'),
+                    child: _subsection('Activities', '/booking/activity'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
