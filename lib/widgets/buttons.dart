@@ -51,3 +51,28 @@ Widget cancelButton(String text, BuildContext context, void function()) {
     onPressed: () => function(),
   );
 }
+
+Widget submitButton(BuildContext context, Color highlightColor, Color fillColor, bool validatedFunction(), void function()) {
+  return RaisedButton(
+    key: Key('SubmitButton'),
+    highlightElevation: 0.0,
+    splashColor: Colors.white,
+    highlightColor: highlightColor,
+    elevation: 0.0,
+    color: fillColor,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+    child: Text(
+      "SUBMIT",
+      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
+    ),
+    onPressed: () {
+      if (validatedFunction()) {
+        function();
+      }
+      else {
+        cancelButton("CANCEL", context, () {
+          });
+      }
+    }
+  );
+}
