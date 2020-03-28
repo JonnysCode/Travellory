@@ -19,9 +19,11 @@ class RentalCarState extends State<RentalCar> {
   static final String selectedReturnDateKey = "selectedReturnDate";
 
   Map _datesToSet = {
-    selectedPickupDateKey: MyControllerWrapper(""),
-    selectedReturnDateKey: MyControllerWrapper(""),
+    selectedPickupDateKey: MyControllerWrapper(),
+    selectedReturnDateKey: MyControllerWrapper(),
   };
+
+  final rentalCarFormKey = GlobalKey<FormState>();
 
   String siteTitle = 'Add Rental Car';
   final String alertTitle = "Submit Successful!";
@@ -43,6 +45,10 @@ class RentalCarState extends State<RentalCar> {
 
     void returnToTripScreen() {
       Navigator.pushReplacementNamed(context, '/viewtrip', arguments: _tripModel);
+    }
+
+    bool validateForm() {
+      return (rentalCarFormKey.currentState.validate());
     }
 
     return Scaffold(
@@ -143,253 +149,254 @@ class RentalCarState extends State<RentalCar> {
               ]),
             ),
             Expanded(
-              child: ListView(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.time_to_leave,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        Container(
-                            padding: const EdgeInsets.all(8.0),
-                            child: FashionFetishText(
-                              text: "Add Rental Car Booking",
-                              size: 24,
-                              fontWeight: FashionFontWeight.HEAVY,
-                              height: 1.05,
-                            )),
-                      ],
+              //child: Form(
+              child: SingleChildScrollView(
+                child: Form(
+                  key: rentalCarFormKey,
+                  child: Column(children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.time_to_leave,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          Container(
+                              padding: const EdgeInsets.all(8.0),
+                              child: FashionFetishText(
+                                text: "Add Rental Car Booking",
+                                size: 24,
+                                fontWeight: FashionFontWeight.HEAVY,
+                                height: 1.05,
+                              )),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: sectionTitle(context, "General Information"),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: ListTile(
-                      leading: const Icon(Icons.confirmation_number),
-                      title: TextField(
-                        controller: _bookingReferenceController,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          hintText: "Booking Reference",
-                          hintStyle: TextStyle(color: Colors.black),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: sectionTitle(context, "General Information"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: ListTile(
+                        leading: const Icon(Icons.confirmation_number),
+                        title: TextFormField(
+                          controller: _bookingReferenceController,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter a booking reference';
+                            }
+                            return null;
+                          },
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            labelText: "Booking Reference",
+                            hintStyle: TextStyle(color: Colors.black),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: ListTile(
-                      leading: const Icon(Icons.supervised_user_circle),
-                      title: TextField(
-                        controller: _companyController,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          hintText: "Company",
-                          hintStyle: TextStyle(color: Colors.black),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: ListTile(
+                        leading: const Icon(Icons.supervised_user_circle),
+                        title: TextField(
+                          controller: _companyController,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            hintText: "Company",
+                            hintStyle: TextStyle(color: Colors.black),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: sectionTitle(context, "Pick Up Information"),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: ListTile(
-                      leading: const Icon(Icons.location_on),
-                      title: TextField(
-                        controller: _pickupLocationController,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          hintText: "Pick Up Location",
-                          hintStyle: TextStyle(color: Colors.black),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: sectionTitle(context, "Pick Up Information"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: ListTile(
+                        leading: const Icon(Icons.location_on),
+                        title: TextField(
+                          controller: _pickupLocationController,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            hintText: "Pick Up Location",
+                            hintStyle: TextStyle(color: Colors.black),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    // TODO show Text "Date" before a date has been chosen
-                    child: Column(children: <Widget>[
-                      GestureDetector(
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      // TODO show Text "Date" before a date has been chosen
+                      child: Column(children: <Widget>[
+                        GestureDetector(
+                          child: ListTile(
+                                leading: const Icon(Icons.date_range),
+                                title: TextFormField(
+                                  controller: _datesToSet[selectedPickupDateKey].displayController,
+                                    onTap: () =>
+                                        selectDate(context, selectedPickupDateKey, _datesToSet),
+                                    decoration: InputDecoration(
+                                      labelText: "Pick Up Date",
+                                      labelStyle: TextStyle(color: Colors.black),
+                                    )
+                                ),
+                          ),
+                        ),
+                      ]),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: ListTile(
+                        leading: const Icon(Icons.access_time),
+                        title: TextField(
+                          controller: _pickupTimeController,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            hintText: "Pick Up Time",
+                            hintStyle: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: sectionTitle(context, "Return Information"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: ListTile(
+                        leading: const Icon(Icons.location_on),
+                        title: TextField(
+                          controller: _returnLocationController,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            hintText: "Return Location",
+                            hintStyle: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: GestureDetector(
                         child: Container(
                           child: Column(children: <Widget>[
                             ListTile(
                               leading: const Icon(Icons.date_range),
                               title: TextField(
+                                  // TODO add constraint that this cannot be before pickup date
+                                  controller: _datesToSet[selectedReturnDateKey].displayController,
                                   onTap: () =>
-                                      selectDate(context, selectedPickupDateKey, _datesToSet),
+                                      selectDate(context, selectedReturnDateKey, _datesToSet),
                                   decoration: InputDecoration(
-                                    hintText: "Pick Up Date",
-                                    hintStyle: TextStyle(color: Colors.black),
-                                    labelText: _datesToSet[selectedPickupDateKey].text,
+                                    labelText: "Return Date",
                                     labelStyle: TextStyle(color: Colors.black),
                                   )),
                             ),
                           ]),
                         ),
                       ),
-                    ]),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: ListTile(
-                      leading: const Icon(Icons.access_time),
-                      title: TextField(
-                        controller: _pickupTimeController,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          hintText: "Pick Up Time",
-                          hintStyle: TextStyle(color: Colors.black),
-                        ),
-                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: sectionTitle(context, "Return Information"),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: ListTile(
-                      leading: const Icon(Icons.location_on),
-                      title: TextField(
-                        controller: _returnLocationController,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          hintText: "Return Location",
-                          hintStyle: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    // TODO show Text "Date" before a date has been chosen
-                    child: GestureDetector(
-                      child: Container(
-                        child: Column(children: <Widget>[
-                          ListTile(
-                            leading: const Icon(Icons.date_range),
-                            title: TextField(
-                                // TODO add constraint that this cannot be before pickup date
-                                onTap: () => selectDate(context, selectedReturnDateKey, _datesToSet),
-                                decoration: InputDecoration(
-                                  hintText: "Pick Up Date",
-                                  hintStyle: TextStyle(color: Colors.black),
-                                  labelText: _datesToSet[selectedReturnDateKey].text,
-                                  labelStyle: TextStyle(color: Colors.black),
-                                )),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: ListTile(
+                        leading: const Icon(Icons.access_time),
+                        title: TextField(
+                          controller: _returnTimeController,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            hintText: "Return Time",
+                            hintStyle: TextStyle(color: Colors.black),
                           ),
-                        ]),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: ListTile(
-                      leading: const Icon(Icons.access_time),
-                      title: TextField(
-                        controller: _returnTimeController,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          hintText: "Return Time",
-                          hintStyle: TextStyle(color: Colors.black),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: sectionTitle(context, "Car Details"),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: ListTile(
-                      leading: const Icon(Icons.directions_car),
-                      title: TextField(
-                        controller: _carDescriptionController,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          hintText: "Car Description",
-                          hintStyle: TextStyle(color: Colors.black),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: sectionTitle(context, "Car Details"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: ListTile(
+                        leading: const Icon(Icons.directions_car),
+                        title: TextField(
+                          controller: _carDescriptionController,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            hintText: "Car Description",
+                            hintStyle: TextStyle(color: Colors.black),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: ListTile(
-                      leading: const Icon(Icons.directions_car),
-                      title: TextField(
-                        controller: _carNumberPlateController,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          hintText: "Car Plate",
-                          hintStyle: TextStyle(color: Colors.black),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: ListTile(
+                        leading: const Icon(Icons.directions_car),
+                        title: TextField(
+                          controller: _carNumberPlateController,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            hintText: "Car Plate",
+                            hintStyle: TextStyle(color: Colors.black),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: ListTile(
-                      leading: const Icon(Icons.speaker_notes),
-                      title: TextField(
-                        controller: _notesController,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          hintText: "Notes",
-                          hintStyle: TextStyle(color: Colors.black),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: ListTile(
+                        leading: const Icon(Icons.speaker_notes),
+                        title: TextField(
+                          controller: _notesController,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            hintText: "Notes",
+                            hintStyle: TextStyle(color: Colors.black),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: Container(
-                      child: filledButton("SUBMIT", Colors.white, Theme.of(context).primaryColor,
-                          Theme.of(context).primaryColor, Colors.white, () async {
-                        RentalCarModel rentalCar = new RentalCarModel(
-                            bookingReference: _bookingReferenceController.text,
-                            company: _companyController.text,
-                            pickupLocation: _pickupLocationController.text,
-                            pickupDate: _datesToSet[selectedPickupDateKey].controller.text,
-                            pickupTime: _pickupTimeController.text,
-                            returnLocation: _returnLocationController.text,
-                            returnDate: _datesToSet[selectedReturnDateKey].controller.text,
-                            returnTime: _returnTimeController.text,
-                            carDescription: _carDescriptionController.text,
-                            carNumberPlate: _carNumberPlateController.text,
-                            notes: _notesController.text);
-                        _addRentalCar(rentalCar);
-                        showSubmittedBookingDialog(
-                            context, alertTitle, alertText, returnToTripScreen);
-                      }),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: Container(
+                        child: submitButton(context, Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor, validateForm, () async {
+                          RentalCarModel rentalCar = new RentalCarModel(
+                              bookingReference: _bookingReferenceController.text,
+                              company: _companyController.text,
+                              pickupLocation: _pickupLocationController.text,
+                              pickupDate: _datesToSet[selectedPickupDateKey].controller.text,
+                              pickupTime: _pickupTimeController.text,
+                              returnLocation: _returnLocationController.text,
+                              returnDate: _datesToSet[selectedReturnDateKey].controller.text,
+                              returnTime: _returnTimeController.text,
+                              carDescription: _carDescriptionController.text,
+                              carNumberPlate: _carNumberPlateController.text,
+                              notes: _notesController.text);
+                          _addRentalCar(rentalCar);
+                          showSubmittedBookingDialog(
+                              context, alertTitle, alertText, returnToTripScreen);
+                        }),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                    child: Container(
-                      child: cancelButton(
-                        "CANCEL",
-                        context,
-                        () {
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
+                      child: Container(
+                        child: cancelButton("CANCEL", context, () {
                           cancellingDialog(context, returnToTripScreen);
-                        },
+                        }),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                ],
+                    SizedBox(height: 20),
+                  ]),
+                ),
               ),
             ),
           ],

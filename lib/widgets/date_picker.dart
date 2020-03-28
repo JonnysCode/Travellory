@@ -15,16 +15,7 @@ void selectDate(BuildContext context, String key, Map dateToSet) async {
   if (pickedDate != null) {
     String pickedDateString = pickedDate.toString();
     MyControllerWrapper wrapper = dateToSet[key];
-    wrapper.text = "$pickedDateString".split(' ')[0];
+    wrapper.displayController.text = "$pickedDateString".split(' ')[0];
     wrapper.controller.text = pickedDate.toIso8601String();
-
-//    dateToSet[key] = "$pickedDateString".split(' ')[0])
-//    if (dateToSet[key]) {
-//      setState(() => key = "$pickedDateString".split(' ')[0]);
-//      _pickupDateController.text = pickedDate.toIso8601String();
-//    } else if (dateToSet == _selectedReturnDate) {
-//      setState(() => _selectedReturnDate = "$pickedDateString".split(' ')[0]);
-//      _returnDateController.text = pickedDate.toIso8601String();
-//    }
   }
 }
