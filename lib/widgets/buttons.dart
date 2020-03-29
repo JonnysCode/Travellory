@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/widgets/show_dialog.dart';
 
 Widget filledButton(String text, Color splashColor, Color highlightColor, Color fillColor,
     Color textColor, void function()) {
@@ -68,10 +69,8 @@ Widget submitButton(BuildContext context, Color highlightColor, Color fillColor,
     onPressed: () {
       if (validatedFunction()) {
         function();
-      }
-      else {
-        cancelButton("CANCEL", context, () {
-          });
+      } else {
+        missingFormFieldInformationDialog(context);
       }
     }
   );
