@@ -56,3 +56,27 @@ void cancellingDialog(BuildContext context, void function()) {
     },
   );
 }
+
+void missingFormFieldInformationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        title: FashionFetishText(
+          text: "Oops! Looks like something's missing...",
+          size: 18,
+          fontWeight: FashionFontWeight.HEAVY,
+          height: 1.05,
+        ),
+        content: new Text(
+            "The form is not complete. Please look at the marked fields and add the required information."),
+        actions: <Widget>[
+          alertButton("Edit Booking", Theme.of(context).primaryColor, context, () async {
+            Navigator.pop(context);
+          }),
+        ],
+      );
+    },
+  );
+}
