@@ -39,6 +39,7 @@ dependencies:
     git: git://github.com/brtln/scrolling-day-calendar.git
   syncfusion_flutter_calendar: ^17.4.40-beta
   dropdownfield: 1.0.0
+  font_awesome_flutter: ^8.7.0
 
 dev_dependencies:
   flutter_test:

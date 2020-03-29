@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/widgets/buttons.dart';
 
 class Authenticate extends StatefulWidget {
@@ -47,14 +48,14 @@ class _AuthenticateState extends State<Authenticate> {
                               ),
                               Positioned(
                                 left: 10,
-                                top: 10,
+                                top: 9,
                                 child: IconButton(
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
                                   icon: Icon(
-                                    Icons.clear,
-                                    size: 26.0,
+                                    FontAwesomeIcons.times,
+                                    size: 24.0,
                                     color: Colors.white,
                                   ),
                                 ),
