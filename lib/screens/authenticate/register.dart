@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/utils/input_validator.dart';
@@ -66,8 +67,19 @@ class _RegisterState extends State<Register> {
                         child: Stack(
                           children: <Widget>[
                             Positioned(
-                              left: 10,
-                              top: 10,
+                              left: 18,
+                              top: 18,
+                              child: Container(
+                                width: 32,
+                                height: 32,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                            ),
+                            Positioned(
+                              left: 8,
+                              top: 8,
                               child: IconButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
@@ -76,9 +88,9 @@ class _RegisterState extends State<Register> {
                                   _nameController.clear();
                                 },
                                 icon: Icon(
-                                  Icons.arrow_back_ios,
+                                  FontAwesomeIcons.angleLeft,
                                   size: 30.0,
-                                  color: Theme.of(context).primaryColor,
+                                  color: Colors.white,
                                 ),
                               ),
                             )
@@ -115,7 +127,7 @@ class _RegisterState extends State<Register> {
                                         style: TextStyle(
                                           fontSize: 44,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.white,
+                                          color: Color(0xFFF7EDEE),
                                         ),
                                       ),
                                       alignment: Alignment.center,
@@ -131,7 +143,7 @@ class _RegisterState extends State<Register> {
                                           style: TextStyle(
                                             fontSize: 40,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.white,
+                                            color: Color(0xFFF7EDEE),
                                           ),
                                         ),
                                       ),
@@ -151,19 +163,19 @@ class _RegisterState extends State<Register> {
                                         bottom: 10,
                                         top: 40,
                                       ),
-                                      child: inputAuthentication(Icon(Icons.account_circle), "USERNAME", Theme.of(context).primaryColor,
+                                      child: inputAuthentication(Icon(FontAwesomeIcons.userAlt), "USERNAME", Theme.of(context).primaryColor,
                                           _nameController, ValidatorType.USERNAME, false),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
                                         bottom: 10,
                                       ),
-                                      child: inputAuthentication(Icon(Icons.email), "EMAIL", Theme.of(context).primaryColor,
+                                      child: inputAuthentication(Icon(FontAwesomeIcons.solidEnvelope), "EMAIL", Theme.of(context).primaryColor,
                                           _emailController, ValidatorType.EMAIL, false),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
-                                      child: inputAuthentication(Icon(Icons.lock), "PASSWORD", Theme.of(context).primaryColor,
+                                      child: inputAuthentication(Icon(FontAwesomeIcons.unlockAlt), "PASSWORD", Theme.of(context).primaryColor,
                                           _passwordController, ValidatorType.PASSWORD, true),
                                     ),
                                     Padding(

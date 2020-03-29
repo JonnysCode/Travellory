@@ -34,7 +34,7 @@ class WelcomeState extends State<Welcome> {
             ),
             Padding(
               child: Container(
-                child: filledButton("LORY", Colors.white, Colors.deepOrange, Theme.of(context).accentColor,
+                child: filledButton("easy", Colors.white, Colors.deepOrange, Theme.of(context).accentColor,
                     Colors.white, () {
                       Navigator.pushNamed(
                         context,
