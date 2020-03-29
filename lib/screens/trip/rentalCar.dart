@@ -12,26 +12,26 @@ import 'package:travellory/widgets/form_fields.dart';
 
 class RentalCar extends StatefulWidget {
   @override
-  RentalCarState createState() => RentalCarState();
+  _RentalCarState createState() => _RentalCarState();
 }
 
-class RentalCarState extends State<RentalCar> {
+class _RentalCarState extends State<RentalCar> {
   final FormFieldWidget _bookingReferenceFormField =
       FormFieldWidget("Booking Reference", Icon(Icons.confirmation_number));
   final FormFieldWidget _companyFormField =
-      FormFieldWidget("Company", Icon(Icons.supervised_user_circle));
+      FormFieldWidget("Company *", Icon(Icons.supervised_user_circle));
   final FormFieldWidget _pickupLocationFormField =
       FormFieldWidget("Pick Up Location", Icon(Icons.location_on));
   final FormFieldDateWidget _pickupDateFormField =
-      FormFieldDateWidget("Pick Up Date", Icon(Icons.date_range));
-  final FormFieldWidget _pickupTimeFormField =
-      FormFieldWidget("Pick Up Time", Icon(Icons.access_time));
+      FormFieldDateWidget("Pick Up Date *", Icon(Icons.date_range));
+  final FormFieldTimeWidget _pickupTimeFormField =
+      FormFieldTimeWidget("Pick Up Time", Icon(Icons.access_time));
   final FormFieldWidget _returnLocationFormField =
       FormFieldWidget("Return Location", Icon(Icons.location_on));
   final FormFieldDateWidget _returnDateFormField = FormFieldDateWidget(
       "Return Date", Icon(Icons.date_range), "Second date cannot be before first date.");
-  final FormFieldWidget _returnTimeFormField =
-      FormFieldWidget("Return Time", Icon(Icons.access_time));
+  final FormFieldTimeWidget _returnTimeFormField =
+      FormFieldTimeWidget("Return Time", Icon(Icons.access_time));
   final FormFieldWidget _carDescriptionFormField =
       FormFieldWidget("Car Description", Icon(Icons.directions_car));
   final FormFieldWidget _carPlateFormField =
@@ -40,8 +40,6 @@ class RentalCarState extends State<RentalCar> {
 
   final rentalCarFormKey = GlobalKey<FormState>();
 
-  String siteTitle = 'Add Rental Car';
-  final String alertTitle = "Submit Successful!";
   final String alertText =
       "You've just submitted the booking information for your rental car booking. You can see all the information in the trip overview";
 
@@ -186,23 +184,7 @@ class RentalCarState extends State<RentalCar> {
                   child: Column(children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.time_to_leave,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          Container(
-                              padding: const EdgeInsets.all(8.0),
-                              child: FashionFetishText(
-                                text: "Add Rental Car Booking",
-                                size: 24,
-                                fontWeight: FashionFontWeight.HEAVY,
-                                height: 1.05,
-                              )),
-                        ],
-                      ),
+                      child: bookingSiteTitle(context, "Add Rental Car Booking", Icons.time_to_leave),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -228,20 +210,10 @@ class RentalCarState extends State<RentalCar> {
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: _pickupDateFormField.firstDate(context),
                     ),
-//                    Padding(
-//                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-//                      child: ListTile(
-//                        leading: const Icon(Icons.access_time),
-//                        title: TextField(
-//                          controller: _pickupTimeController,
-//                          style: TextStyle(color: Colors.black),
-//                          decoration: InputDecoration(
-//                            hintText: "Pick Up Time",
-//                            hintStyle: TextStyle(color: Colors.black),
-//                          ),
-//                        ),
-//                      ),
-//                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: _pickupTimeFormField.time(context),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: sectionTitle(context, "Return Information"),
@@ -252,22 +224,12 @@ class RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _returnDateFormField.secondDate(context, _pickupDateFormField),
+                      child: _returnDateFormField.secondDateRequired(context, _pickupDateFormField),
                     ),
-//                    Padding(
-//                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-//                      child: ListTile(
-//                        leading: const Icon(Icons.access_time),
-//                        title: TextField(
-//                          controller: _returnTimeController,
-//                          style: TextStyle(color: Colors.black),
-//                          decoration: InputDecoration(
-//                            hintText: "Return Time",
-//                            hintStyle: TextStyle(color: Colors.black),
-//                          ),
-//                        ),
-//                      ),
-//                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: _returnTimeFormField.time(context),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: sectionTitle(context, "Car Details"),
@@ -303,7 +265,7 @@ class RentalCarState extends State<RentalCar> {
                               notes: _notesFormField.controller.text);
                           _addRentalCar(rentalCar);
                           showSubmittedBookingDialog(
-                              context, alertTitle, alertText, returnToTripScreen);
+                              context, alertText, returnToTripScreen);
                         }),
                       ),
                     ),

@@ -17,28 +17,28 @@ class Flight extends StatefulWidget {
 
 class _FlightState extends State<Flight> {
   final FormFieldWidget _bookingReferenceFormField =
-  FormFieldWidget("Booking Reference", Icon(Icons.confirmation_number));
+      FormFieldWidget("Booking Reference", Icon(Icons.confirmation_number));
   final FormFieldWidget _airlineFormField = FormFieldWidget("Airline *", Icon(Icons.flight));
   final FormFieldWidget _flightNrFormField =
-  FormFieldWidget("Flight Number", Icon(Icons.confirmation_number));
+      FormFieldWidget("Flight Number", Icon(Icons.confirmation_number));
   final FormFieldWidget _seatFormField =
-  FormFieldWidget("Seat", Icon(Icons.airline_seat_recline_normal));
+      FormFieldWidget("Seat", Icon(Icons.airline_seat_recline_normal));
   final FormFieldWidget _depLocationFormField =
-  FormFieldWidget("Departure Location *", Icon(Icons.location_on));
+      FormFieldWidget("Departure Location *", Icon(Icons.location_on));
   final FormFieldDateWidget _depDateFormField =
-  FormFieldDateWidget("Departure Date *", Icon(Icons.date_range));
+      FormFieldDateWidget("Departure Date *", Icon(Icons.date_range));
   final FormFieldTimeWidget _depTimeFormField =
-  FormFieldTimeWidget("Departure Time *", Icon(Icons.access_time));
+      FormFieldTimeWidget("Departure Time *", Icon(Icons.access_time));
   final FormFieldWidget _arrLocationFormField =
-  FormFieldWidget("Arrival Location *", Icon(Icons.location_on));
+      FormFieldWidget("Arrival Location *", Icon(Icons.location_on));
   final FormFieldDateWidget _arrDateFormField = FormFieldDateWidget(
       "Arrival Date", Icon(Icons.date_range), "Arrival date cannot be before departure date.");
   final FormFieldTimeWidget _arrTimeFormField =
-  FormFieldTimeWidget("Arrival Time", Icon(Icons.access_time));
+      FormFieldTimeWidget("Arrival Time", Icon(Icons.access_time));
   final FormFieldWidget _checkedBagFormField =
-  FormFieldWidget("Checked Baggage", Icon(Icons.filter_1));
+      FormFieldWidget("Checked Baggage", Icon(Icons.filter_1));
   final FormFieldWidget _excessBagFormField =
-  FormFieldWidget("Excess Baggage", Icon(Icons.filter_2));
+      FormFieldWidget("Excess Baggage", Icon(Icons.filter_2));
   final FormFieldWidget _notesFormField = FormFieldWidget("Notes", Icon(Icons.speaker_notes));
 
   final flightFormKey = GlobalKey<FormState>();
@@ -306,8 +306,8 @@ class _FlightState extends State<Flight> {
 }
 
 void _addFlight(FlightModel flight) async {
-  HttpsCallable callable = CloudFunctions.instance
-      .getHttpsCallable(functionName: 'booking-addFlight');
+  HttpsCallable callable =
+      CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addFlight');
   try {
     final HttpsCallableResult result = await callable.call(<String, dynamic>{
       "bookingReference": flight.bookingReference,

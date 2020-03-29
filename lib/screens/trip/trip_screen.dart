@@ -19,7 +19,7 @@ class _TripScreenState extends State<TripScreen> {
     }
 
     void _openBooking(String bookingSite){
-      Navigator.pushReplacementNamed(context, bookingSite, arguments: _tripModel);
+      Navigator.pushNamed(context, bookingSite, arguments: _tripModel);
     }
 
     Widget _subsection(String title, String route){
