@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/screens/home/home.dart';
 
 void main(){
@@ -29,9 +30,9 @@ void main(){
     expect(find.byKey(Key('nav_bar')), findsOneWidget);
 
     // Verify that all button are present.
-    expect(find.byIcon(Icons.home), findsNWidgets(2));
-    expect(find.byIcon(Icons.calendar_today), findsNWidgets(2));
-    expect(find.byIcon(Icons.map), findsNWidgets(2));
-    expect(find.byIcon(Icons.person), findsNWidgets(2));
+    expect(find.byIcon(FontAwesomeIcons.suitcaseRolling), findsNWidgets(2));
+    expect(find.byIcon(FontAwesomeIcons.calendarAlt), findsNWidgets(2));
+    expect(find.byIcon(FontAwesomeIcons.globeAfrica), findsNWidgets(2));
+    expect(find.byIcon(FontAwesomeIcons.userAlt), findsNWidgets(2));
   });
 }
