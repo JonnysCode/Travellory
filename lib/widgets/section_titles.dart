@@ -28,3 +28,23 @@ Widget sectionTitle(BuildContext context, String sectionTitle) {
     ]),
   );
 }
+
+Row bookingSiteTitle(BuildContext context, String siteTitle, IconData icon) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Icon(
+        icon,
+        color: Theme.of(context).primaryColor,
+      ),
+      Container(
+          padding: const EdgeInsets.all(8.0),
+          child: FashionFetishText(
+            text: siteTitle,
+            size: 24,
+            fontWeight: FashionFontWeight.HEAVY,
+            height: 1.05,
+          )),
+    ],
+  );
+}

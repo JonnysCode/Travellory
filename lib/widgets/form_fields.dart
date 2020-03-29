@@ -52,6 +52,55 @@ class FormFieldWidget {
   }
 }
 
+class FormFieldTimeWidget extends FormFieldWidget {
+  FormFieldTimeWidget(String labelText, Icon icon) : super(labelText, icon);
+
+  TextEditingController displayController = TextEditingController();
+  TimeOfDay selectedTime;
+
+  @override
+  void dispose() {
+    displayController.dispose();
+    super.dispose();
+  }
+
+  GestureDetector timeRequired(BuildContext context) {
+    return GestureDetector(
+      child: ListTile(
+        leading: icon,
+        title: TextFormField(
+            controller: displayController,
+            validator: (value) {
+              if (value.isEmpty) {
+                return validatorText;
+              }
+              return null;
+            },
+            onTap: () => selectTime(context, this),
+            decoration: InputDecoration(
+              labelText: labelText,
+              labelStyle: TextStyle(color: Colors.black),
+            )),
+      ),
+    );
+  }
+
+  GestureDetector time(BuildContext context) {
+    return GestureDetector(
+      child: ListTile(
+        leading: icon,
+        title: TextFormField(
+            controller: displayController,
+            onTap: () => selectTime(context, this),
+            decoration: InputDecoration(
+              labelText: labelText,
+              labelStyle: TextStyle(color: Colors.black),
+            )),
+      ),
+    );
+  }
+}
+
 class FormFieldDateWidget extends FormFieldWidget {
   FormFieldDateWidget(String labelText, Icon icon, [String validateMessage = ""])
       : super(labelText, icon) {
@@ -89,8 +138,7 @@ class FormFieldDateWidget extends FormFieldWidget {
     );
   }
 
-  GestureDetector secondDate(
-      BuildContext context, FormFieldDateWidget mustBeAfter) {
+  GestureDetector secondDateRequired(BuildContext context, FormFieldDateWidget mustBeAfter) {
     return GestureDetector(
       child: ListTile(
         leading: icon,
@@ -100,6 +148,27 @@ class FormFieldDateWidget extends FormFieldWidget {
               if (value.isEmpty) {
                 return validatorText;
               } else if (this.selectedDate.isBefore(mustBeAfter.selectedDate)) {
+                return dateValidationMessage;
+              }
+              return null;
+            },
+            onTap: () => selectDate(context, this),
+            decoration: InputDecoration(
+              labelText: labelText,
+              labelStyle: TextStyle(color: Colors.black),
+            )),
+      ),
+    );
+  }
+
+  GestureDetector secondDate(BuildContext context, FormFieldDateWidget mustBeAfter) {
+    return GestureDetector(
+      child: ListTile(
+        leading: icon,
+        title: TextFormField(
+            controller: displayController,
+            validator: (value) {
+              if (this.selectedDate.isBefore(mustBeAfter.selectedDate)) {
                 return dateValidationMessage;
               }
               return null;
