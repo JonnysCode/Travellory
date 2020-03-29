@@ -2,7 +2,6 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:travellory/models/RentalCarModel.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/utils/controller_wrapper.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/section_titles.dart';
@@ -15,23 +14,27 @@ class RentalCar extends StatefulWidget {
 }
 
 class RentalCarState extends State<RentalCar> {
-  static final String selectedPickupDateKey = "selectedPickupDate";
-  static final String selectedReturnDateKey = "selectedReturnDate";
-
-  final TextEditingController _bookingReferenceController = TextEditingController();
-  final TextEditingController _companyController = TextEditingController();
-  final TextEditingController _pickupLocationController = TextEditingController();
-  final TextEditingController _pickupTimeController = TextEditingController();
-  final TextEditingController _returnLocationController = TextEditingController();
-  final TextEditingController _returnTimeController = TextEditingController();
-  final TextEditingController _carDescriptionController = TextEditingController();
-  final TextEditingController _carNumberPlateController = TextEditingController();
-  final TextEditingController _notesController = TextEditingController();
-
-  Map datesToSet = {
-    selectedPickupDateKey: MyControllerWrapper(),
-    selectedReturnDateKey: MyControllerWrapper(),
-  };
+  final FormFieldWidget _bookingReferenceFormField =
+      FormFieldWidget("Booking Reference", Icon(Icons.confirmation_number));
+  final FormFieldWidget _companyFormField =
+      FormFieldWidget("Company", Icon(Icons.supervised_user_circle));
+  final FormFieldWidget _pickupLocationFormField =
+      FormFieldWidget("Pick Up Location", Icon(Icons.location_on));
+  final FormFieldDateWidget _pickupDateFormField =
+      FormFieldDateWidget("Pick Up Date", Icon(Icons.date_range));
+  final FormFieldWidget _pickupTimeFormField =
+      FormFieldWidget("Pick Up Time", Icon(Icons.access_time));
+  final FormFieldWidget _returnLocationFormField =
+      FormFieldWidget("Return Location", Icon(Icons.location_on));
+  final FormFieldDateWidget _returnDateFormField = FormFieldDateWidget(
+      "Return Date", Icon(Icons.date_range), "Second date cannot be before first date.");
+  final FormFieldWidget _returnTimeFormField =
+      FormFieldWidget("Return Time", Icon(Icons.access_time));
+  final FormFieldWidget _carDescriptionFormField =
+      FormFieldWidget("Car Description", Icon(Icons.directions_car));
+  final FormFieldWidget _carPlateFormField =
+      FormFieldWidget("Car Plate", Icon(Icons.directions_car));
+  final FormFieldWidget _notesFormField = FormFieldWidget("Notes", Icon(Icons.speaker_notes));
 
   final rentalCarFormKey = GlobalKey<FormState>();
 
@@ -43,19 +46,17 @@ class RentalCarState extends State<RentalCar> {
   @override
   void dispose() {
     // Clean up the controller when the widget is removed from the widget tree.
-    _bookingReferenceController.dispose();
-    _companyController.dispose();
-    _pickupLocationController.dispose();
-    _pickupTimeController.dispose();
-    _returnLocationController.dispose();
-    _returnTimeController.dispose();
-    _carDescriptionController.dispose();
-    _carNumberPlateController.dispose();
-    _notesController.dispose();
-    datesToSet[selectedPickupDateKey].displayController.dispose();
-    datesToSet[selectedReturnDateKey].displayController.dispose();
-    datesToSet[selectedPickupDateKey].controller.dispose();
-    datesToSet[selectedReturnDateKey].controller.dispose();
+    _bookingReferenceFormField.dispose();
+    _companyFormField.dispose();
+    _pickupLocationFormField.dispose();
+    _pickupTimeFormField.dispose();
+    _returnLocationFormField.dispose();
+    _returnTimeFormField.dispose();
+    _carDescriptionFormField.dispose();
+    _carPlateFormField.dispose();
+    _notesFormField.dispose();
+    _pickupDateFormField.dispose();
+    _returnDateFormField.dispose();
     super.dispose();
   }
 
@@ -200,13 +201,11 @@ class RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: optionalFormField(_bookingReferenceController, Icon(Icons.confirmation_number),
-                          "Booking Reference"),
+                      child: _bookingReferenceFormField.optional(),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: requiredFormField(_companyController, Icon(Icons.supervised_user_circle),
-                          "Company"),
+                      child: _companyFormField.required(),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -214,75 +213,67 @@ class RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: optionalFormField(_pickupLocationController, Icon(Icons.location_on),
-                          "Pick Up Location"),
+                      child: _pickupLocationFormField.optional(),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: dateFormField(datesToSet[selectedPickupDateKey].displayController, Icon(Icons.date_range),
-                          "Pick Up Date", context, selectedPickupDateKey, datesToSet),
+                      child: _pickupDateFormField.firstDate(context),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: ListTile(
-                        leading: const Icon(Icons.access_time),
-                        title: TextField(
-                          controller: _pickupTimeController,
-                          style: TextStyle(color: Colors.black),
-                          decoration: InputDecoration(
-                            hintText: "Pick Up Time",
-                            hintStyle: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                      ),
-                    ),
+//                    Padding(
+//                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+//                      child: ListTile(
+//                        leading: const Icon(Icons.access_time),
+//                        title: TextField(
+//                          controller: _pickupTimeController,
+//                          style: TextStyle(color: Colors.black),
+//                          decoration: InputDecoration(
+//                            hintText: "Pick Up Time",
+//                            hintStyle: TextStyle(color: Colors.black),
+//                          ),
+//                        ),
+//                      ),
+//                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: sectionTitle(context, "Return Information"),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: optionalFormField(_returnLocationController, Icon(Icons.location_on),
-                          "Return Location"),
+                      child: _returnLocationFormField.optional(),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      // TODO add constraint that this cannot be before pickup date
-                      child: dateFormField(datesToSet[selectedReturnDateKey].displayController, Icon(Icons.date_range),
-                          "Return Date", context, selectedReturnDateKey, datesToSet),
+                      child: _returnDateFormField.secondDate(context, _pickupDateFormField),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: ListTile(
-                        leading: const Icon(Icons.access_time),
-                        title: TextField(
-                          controller: _returnTimeController,
-                          style: TextStyle(color: Colors.black),
-                          decoration: InputDecoration(
-                            hintText: "Return Time",
-                            hintStyle: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                      ),
-                    ),
+//                    Padding(
+//                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+//                      child: ListTile(
+//                        leading: const Icon(Icons.access_time),
+//                        title: TextField(
+//                          controller: _returnTimeController,
+//                          style: TextStyle(color: Colors.black),
+//                          decoration: InputDecoration(
+//                            hintText: "Return Time",
+//                            hintStyle: TextStyle(color: Colors.black),
+//                          ),
+//                        ),
+//                      ),
+//                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: sectionTitle(context, "Car Details"),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: optionalFormField(_carDescriptionController, Icon(Icons.directions_car),
-                          "Car Description"),
+                      child: _carDescriptionFormField.optional(),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: optionalFormField(_carNumberPlateController, Icon(Icons.directions_car),
-                          "Car Plate"),
+                      child: _carPlateFormField.optional(),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: optionalFormField(_notesController, Icon(Icons.speaker_notes),
-                          "Notes"),
+                      child: _notesFormField.optional(),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -290,17 +281,17 @@ class RentalCarState extends State<RentalCar> {
                         child: submitButton(context, Theme.of(context).primaryColor,
                             Theme.of(context).primaryColor, validateForm, () async {
                           RentalCarModel rentalCar = new RentalCarModel(
-                              bookingReference: _bookingReferenceController.text,
-                              company: _companyController.text,
-                              pickupLocation: _pickupLocationController.text,
-                              pickupDate: datesToSet[selectedPickupDateKey].controller.text,
-                              pickupTime: _pickupTimeController.text,
-                              returnLocation: _returnLocationController.text,
-                              returnDate: datesToSet[selectedReturnDateKey].controller.text,
-                              returnTime: _returnTimeController.text,
-                              carDescription: _carDescriptionController.text,
-                              carNumberPlate: _carNumberPlateController.text,
-                              notes: _notesController.text);
+                              bookingReference: _bookingReferenceFormField.controller.text,
+                              company: _companyFormField.controller.text,
+                              pickupLocation: _pickupLocationFormField.controller.text,
+                              pickupDate: _pickupDateFormField.controller.text,
+                              pickupTime: _pickupTimeFormField.controller.text,
+                              returnLocation: _returnLocationFormField.controller.text,
+                              returnDate: _returnDateFormField.controller.text,
+                              returnTime: _returnTimeFormField.controller.text,
+                              carDescription: _carDescriptionFormField.controller.text,
+                              carNumberPlate: _carPlateFormField.controller.text,
+                              notes: _notesFormField.controller.text);
                           _addRentalCar(rentalCar);
                           showSubmittedBookingDialog(
                               context, alertTitle, alertText, returnToTripScreen);

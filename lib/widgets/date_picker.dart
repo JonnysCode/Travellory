@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
-import 'package:travellory/utils/controller_wrapper.dart';
+import 'package:travellory/widgets/form_fields.dart';
 
-void selectDate(BuildContext context, String key, Map dateToSet) async {
+void selectDate(BuildContext context, FormFieldDateWidget formFieldDateWidget) async {
   FocusScope.of(context).requestFocus(FocusNode());
   final DateTime pickedDate = await showRoundedDatePicker(
     context: context,
@@ -13,9 +13,9 @@ void selectDate(BuildContext context, String key, Map dateToSet) async {
     borderRadius: 16,
   );
   if (pickedDate != null) {
+    formFieldDateWidget.selectedDate = pickedDate;
     String pickedDateString = pickedDate.toString();
-    MyControllerWrapper wrapper = dateToSet[key];
-    wrapper.displayController.text = "$pickedDateString".split(' ')[0];
-    wrapper.controller.text = pickedDate.toIso8601String();
+    formFieldDateWidget.displayController.text = "$pickedDateString".split(' ')[0];
+    formFieldDateWidget.controller.text = pickedDate.toIso8601String();
   }
 }
