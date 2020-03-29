@@ -30,7 +30,7 @@ class _CalendarPageState extends State<CalendarPage> {
         "NT8mJyc2IWhiZH1nfWN9Z2VoZ3xhYXxhY2Fjc2JhaWBiaWZicwMeaDI9Jzo/KjIgEyAnJjc2PScgfSk7MiR9MDs=");
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30.0),
+      padding: const EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 90.0),
       child: Column(
         children: <Widget>[
           Container(
@@ -46,7 +46,7 @@ class _CalendarPageState extends State<CalendarPage> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(bottom: Radius.circular(40.0)),
                 color: Colors.white,
-                boxShadow: [BoxShadow(blurRadius: 3, color: Colors.black.withOpacity(.15), offset: Offset(3.0, 3.0))],
+                boxShadow: [BoxShadow(blurRadius: 3, color: Colors.black.withOpacity(.15), offset: Offset(4.0, 4.0))],
               ),
               child: SfCalendar(
                 key: Key('yearly_calendar'),
