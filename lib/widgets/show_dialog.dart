@@ -4,14 +4,14 @@ import 'package:travellory/widgets/buttons.dart';
 import 'font_widgets.dart';
 
 void showSubmittedBookingDialog(
-    BuildContext context, String alertTitle, String alertText, void function()) {
+    BuildContext context, String alertText, void function()) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
-          text: alertTitle,
+          text: "Submit Successful!",
           size: 18,
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,
