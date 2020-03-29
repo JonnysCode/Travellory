@@ -46,7 +46,7 @@ class _CalendarPageState extends State<CalendarPage> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(bottom: Radius.circular(40.0)),
                 color: Colors.white,
-                boxShadow: [BoxShadow(blurRadius: 3, color: Colors.black.withOpacity(.15), offset: Offset(3.0, 3.0))],
+                boxShadow: [BoxShadow(blurRadius: 3, color: Colors.black.withOpacity(.15), offset: Offset(4.0, 4.0))],
               ),
               child: SfCalendar(
                 key: Key('yearly_calendar'),
