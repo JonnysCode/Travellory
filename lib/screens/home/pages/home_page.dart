@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                     top: 10,
                     right: 0,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () => _openCreateTripScreen(),
                       child: Container(
                         height: 36,
                         width: 36,
@@ -103,5 +103,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  _openCreateTripScreen() {
+    Navigator.pushNamed(context, '/createtrip');
   }
 }
