@@ -35,11 +35,18 @@ class _FlightState extends State<Flight> {
       "Arrival Date", Icon(Icons.date_range), "Arrival date cannot be before departure date.");
   final FormFieldTimeWidget _arrTimeFormField =
       FormFieldTimeWidget("Arrival Time", Icon(Icons.access_time));
-  final FormFieldWidget _checkedBagFormField =
-      FormFieldWidget("Checked Baggage", Icon(Icons.filter_1));
-  final FormFieldWidget _excessBagFormField =
-      FormFieldWidget("Excess Baggage", Icon(Icons.filter_2));
   final FormFieldWidget _notesFormField = FormFieldWidget("Notes", Icon(Icons.speaker_notes));
+
+  bool checkedBagBool = false;
+  bool excessBagBool = false;
+
+  void checkedBagCheckbox(bool value) {
+    setState(() => checkedBagBool = value);
+  }
+
+  void excessBagCheckbox(bool value) {
+    setState(() => excessBagBool = value);
+  }
 
   final flightFormKey = GlobalKey<FormState>();
 
@@ -57,8 +64,6 @@ class _FlightState extends State<Flight> {
     _arrLocationFormField.dispose();
     _arrDateFormField.dispose();
     _arrTimeFormField.dispose();
-    _checkedBagFormField.dispose();
-    _excessBagFormField.dispose();
     _notesFormField.dispose();
     super.dispose();
   }
@@ -244,14 +249,19 @@ class _FlightState extends State<Flight> {
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: sectionTitle(context, "Baggage Details"),
                     ),
-                    // TODO change these to checkboxes
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _checkedBagFormField.optional(),
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 0),
+                      child: checkbox(checkedBagBool, 'Checked baggage included in ticket?',
+                          checkedBagCheckbox),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 0, left: 15, right: 15),
+                      child: checkbox(
+                          excessBagBool, 'Excess baggage included in ticket?', excessBagCheckbox),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _excessBagFormField.optional(),
+                      child: sectionTitle(context, "Notes"),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -277,8 +287,8 @@ class _FlightState extends State<Flight> {
                               arrivalLocation: _arrLocationFormField.controller.text,
                               arrivalDate: _arrDateFormField.controller.text,
                               arrivalTime: _arrTimeFormField.controller.text,
-                              //checkedBaggage: _checkedBagFormField.controller.text,
-                              //excessBaggage: _excessBagFormField.controller.text,
+                              checkedBaggage: checkedBagBool,
+                              excessBaggage: excessBagBool,
                               notes: _notesFormField.controller.text);
                           _addFlight(flight);
                           showSubmittedBookingDialog(context, alertText, returnToTripScreen);

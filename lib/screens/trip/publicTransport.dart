@@ -23,10 +23,6 @@ class _PublicTransportState extends State<PublicTransport> {
       FormFieldWidget("Company", Icon(Icons.supervised_user_circle));
   final FormFieldWidget _specificTypeFormField =
       FormFieldWidget("Specific Type of Transportation", Icon(Icons.train));
-  final FormFieldWidget _checkboxBookingFormField =
-      FormFieldWidget("Checkbox Booking", Icon(Icons.confirmation_number));
-  final FormFieldWidget _checkboxSeatFormField =
-      FormFieldWidget("Checkbox Seat", Icon(Icons.airline_seat_recline_normal));
   final FormFieldWidget _bookingReferenceFormField =
       FormFieldWidget("Booking Reference", Icon(Icons.confirmation_number));
   final FormFieldWidget _bookingCompanyFormField =
@@ -49,6 +45,17 @@ class _PublicTransportState extends State<PublicTransport> {
 
   final publicTransportFormKey = GlobalKey<FormState>();
 
+  bool bookingBool = false;
+  bool seatBool = false;
+
+  void bookingCheckbox(bool value) {
+    setState(() => bookingBool = value);
+  }
+
+  void seatCheckbox(bool value) {
+    setState(() => seatBool = value);
+  }
+
   final String alertText =
       "You've just submitted the booking information for your public transportation booking. You can see all the information in the trip overview";
 
@@ -58,8 +65,6 @@ class _PublicTransportState extends State<PublicTransport> {
     _typeFormField.dispose();
     _companyFormField.dispose();
     _specificTypeFormField.dispose();
-    _checkboxBookingFormField.dispose();
-    _checkboxSeatFormField.dispose();
     _bookingReferenceFormField.dispose();
     _bookingCompanyFormField.dispose();
     _seatFormField.dispose();
@@ -253,15 +258,19 @@ class _PublicTransportState extends State<PublicTransport> {
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: sectionTitle(context, "Booking Details"),
                     ),
-                    // TODO checkbox for booking
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _checkboxBookingFormField.optional(),
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 0),
+                      child: checkbox(
+                          bookingBool, 'Did you book this public transport?', bookingCheckbox),
                     ),
-                    // TODO checkbox for seat
+                    Padding(
+                      padding: const EdgeInsets.only(top: 0, left: 15, right: 15),
+                      child: checkbox(seatBool, 'Did you make a seat reservation?', seatCheckbox),
+                    ),
+                    // TODO this will only be shown if checkboxes are checked
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _checkboxSeatFormField.optional(),
+                      child: sectionTitle(context, "Further Booking Details"),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -274,6 +283,10 @@ class _PublicTransportState extends State<PublicTransport> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: _seatFormField.optional(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: sectionTitle(context, "Notes"),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -292,8 +305,8 @@ class _PublicTransportState extends State<PublicTransport> {
                               transportationType: _typeFormField.controller.text,
                               company: _companyFormField.controller.text,
                               specificType: _specificTypeFormField.controller.text,
-                              //booked: _checkboxBookedFormField.controller.text,
-                              //seatReservation: _CheckboxSeatFormField.controller.text,
+                              booked: bookingBool,
+                              seatReservation: seatBool,
                               reference: _bookingReferenceFormField.controller.text,
                               companyReservation: _bookingCompanyFormField.controller.text,
                               seat: _seatFormField.controller.text,
