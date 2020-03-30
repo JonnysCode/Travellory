@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
             hintColor: Color(0xFFC0F0E8),
             primaryColor: Color(0xFF61BAA9),
             accentColor: Color(0xFFF72349),
-            scaffoldBackgroundColor: Color(0xFFE6E6E6),
+            scaffoldBackgroundColor: Color(0xFFF0F4F4),
           ),
           routes: {
             '/': (BuildContext context) => Wrapper(),
