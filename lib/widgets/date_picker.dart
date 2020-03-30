@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:travellory/widgets/form_fields.dart';
 
