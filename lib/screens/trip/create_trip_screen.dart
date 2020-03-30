@@ -6,6 +6,7 @@ class CreateTripScreen extends StatefulWidget {
 }
 
 class _CreateTripScreenState extends State<CreateTripScreen> {
+  final int _imageItemCount = 11;
   int _selectedImage = 0;
 
   @override
@@ -20,21 +21,9 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
-                itemCount: 11,
+                itemCount: _imageItemCount,
                 itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () => _selectImage(),
-                    child: Container(
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/home/trip/trip_' + (index + 1).toString() + '.png'),
-                          fit: BoxFit.fitWidth
-                        ),
-                      ),
-                    ),
-                  );
+                  return _imageItem(index);
                 },
                 separatorBuilder: (BuildContext context, int index) => const SizedBox(),
               ),
@@ -50,9 +39,33 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
     );
   }
 
-  _selectImage() {
+  _selectImage(index) {
     setState(() {
-
+      _selectedImage = index;
     });
+  }
+
+  Widget _imageItem(int index){
+    return GestureDetector(
+      onTap: () => _selectImage(index),
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
+        height: _selectedImage == index ? 80 : 72,
+        width: _selectedImage == index ? 80 : 72,
+        padding: _selectedImage == index ? const EdgeInsets.all(6.0) : const EdgeInsets.all(3.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40.0),
+          color: _selectedImage == index ? Theme.of(context).primaryColor : Colors.transparent,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/home/trip/trip_' + (index + 1).toString() + '.png'),
+                fit: BoxFit.fitWidth
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
