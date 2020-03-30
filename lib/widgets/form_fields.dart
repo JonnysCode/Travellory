@@ -182,3 +182,15 @@ class FormFieldDateWidget extends FormFieldWidget {
     );
   }
 }
+
+CheckboxListTile checkbox(bool checkboxBool, String checkboxText, void function(bool valueBool)) {
+  return CheckboxListTile(
+          value: checkboxBool,
+          onChanged: (bool value) => function(value),
+          title: new Text(
+            checkboxText,
+            style: TextStyle(fontSize: 16),
+          ),
+          controlAffinity: ListTileControlAffinity.leading
+  );
+}

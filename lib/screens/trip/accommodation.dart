@@ -1,6 +1,5 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:dropdownfield/dropdownfield.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/accommodationModel.dart';
 import 'package:travellory/models/trip_model.dart';
@@ -18,29 +17,33 @@ class Accommodation extends StatefulWidget {
 
 class _AccommodationState extends State<Accommodation> {
   final FormFieldWidget _typeFormField =
-  FormFieldWidget("Type of Accommodation *", Icon(Icons.hotel));
+      FormFieldWidget("Type of Accommodation *", Icon(Icons.hotel));
   final FormFieldWidget _confirmationFormField =
-  FormFieldWidget("Confirmation Number", Icon(Icons.confirmation_number));
+      FormFieldWidget("Confirmation Number", Icon(Icons.confirmation_number));
   final FormFieldWidget _nameFormField =
-  FormFieldWidget("Name *", Icon(Icons.supervised_user_circle));
+      FormFieldWidget("Name *", Icon(Icons.supervised_user_circle));
   final FormFieldWidget _addressFormField = FormFieldWidget("Address *", Icon(Icons.location_on));
   final FormFieldDateWidget _checkinDateFormField =
-  FormFieldDateWidget("Check-In Date *", Icon(Icons.date_range));
+      FormFieldDateWidget("Check-In Date *", Icon(Icons.date_range));
   final FormFieldTimeWidget _checkinTimeFormField =
-  FormFieldTimeWidget("Check-In Time", Icon(Icons.access_time));
+      FormFieldTimeWidget("Check-In Time", Icon(Icons.access_time));
   final FormFieldWidget _nightsFormField = FormFieldWidget("Nights *", Icon(Icons.hotel));
   final FormFieldDateWidget _checkoutDateFormField =
-  FormFieldDateWidget("Check-Out Date *", Icon(Icons.date_range));
+      FormFieldDateWidget("Check-Out Date *", Icon(Icons.date_range));
   final FormFieldTimeWidget _checkoutTimeFormField =
-  FormFieldTimeWidget("Check-Out Time", Icon(Icons.access_time));
+      FormFieldTimeWidget("Check-Out Time", Icon(Icons.access_time));
   final FormFieldWidget _hotelRoomTypeFormField = FormFieldWidget("Room Type", Icon(Icons.hotel));
-  final FormFieldWidget _checkboxHotelBreakfastFormField =
-  FormFieldWidget("Breakfast", Icon(Icons.local_dining));
   final FormFieldWidget _airbnbTypeFormField =
-  FormFieldWidget("Accommodation Type", Icon(Icons.hotel));
+      FormFieldWidget("Accommodation Type", Icon(Icons.hotel));
   final FormFieldWidget _notesFormField = FormFieldWidget("Notes", Icon(Icons.speaker_notes));
 
   final accommodationFormKey = GlobalKey<FormState>();
+
+  bool breakfastBool = false;
+
+  void breakfastCheckbox(bool value) {
+    setState(() => breakfastBool = value);
+  }
 
   final String alertText =
       "You've just submitted the booking information for your public transportation booking. You can see all the information in the trip overview";
@@ -58,7 +61,6 @@ class _AccommodationState extends State<Accommodation> {
     _checkoutDateFormField.dispose();
     _checkoutTimeFormField.dispose();
     _hotelRoomTypeFormField.dispose();
-    _checkboxHotelBreakfastFormField.dispose();
     _airbnbTypeFormField.dispose();
     _notesFormField.dispose();
     super.dispose();
@@ -249,13 +251,18 @@ class _AccommodationState extends State<Accommodation> {
                     ),
                     // TODO this only appears when type is hotel
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _checkboxHotelBreakfastFormField.optional(),
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 0),
+                      child: checkbox(
+                          breakfastBool, 'Does your stay include breakfast?', breakfastCheckbox),
                     ),
                     // TODO this only appears when type is airbnb
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: _airbnbTypeFormField.optional(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: sectionTitle(context, "Notes"),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -280,7 +287,7 @@ class _AccommodationState extends State<Accommodation> {
                               checkinTime: _checkinTimeFormField.controller.text,
                               checkoutDate: _checkoutDateFormField.controller.text,
                               checkoutTime: _checkoutTimeFormField.controller.text,
-                              //breakfast: _checkboxHotelBreakfastFormField.controller.text,
+                              breakfast: breakfastBool,
                               roomType: _hotelRoomTypeFormField.controller.text,
                               accommodationType: _airbnbTypeFormField.controller.text,
                               notes: _notesFormField.controller.text);
@@ -311,7 +318,7 @@ class _AccommodationState extends State<Accommodation> {
 
 void _addAccommodation(AccommodationModel accommodation) async {
   HttpsCallable callable =
-  CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addPublicTransport');
+      CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addPublicTransport');
   try {
     final HttpsCallableResult result = await callable.call(<String, dynamic>{
       "type": accommodation.type,
