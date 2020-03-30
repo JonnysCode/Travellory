@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/widgets/font_widgets.dart';
 
 class CreateTripScreen extends StatefulWidget {
   @override
@@ -7,16 +10,50 @@ class CreateTripScreen extends StatefulWidget {
 
 class _CreateTripScreenState extends State<CreateTripScreen> {
   final int _imageItemCount = 11;
-  int _selectedImage = 0;
+  int _selectedIndex = 0;
+
+  TripModel _tripModel;
+
+  @override
+  void initState() {
+    _tripModel = TripModel(
+        name: '',
+        startDate: DateTime(2000, 1, 1),
+        endDate: DateTime(2000, 1, 1),
+        destination: '',
+        imageNr: _selectedIndex+1
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: <Widget>[
-            Container(
+      appBar: AppBar(
+        title: FashionFetishText(
+          text: 'Create a Trip',
+          size: 26,
+          fontWeight: FashionFontWeight.HEAVY,
+          height: 1.2,
+          color: Theme.of(context).primaryColor,
+        ),
+        backgroundColor: Colors.white,
+        leading: IconButton(
+            icon: Icon(
+              FontAwesomeIcons.angleLeft,
+              color: Colors.black26,
+              size: 38,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }
+        ),
+      ),
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
               height: 96,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
@@ -28,20 +65,21 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                 separatorBuilder: (BuildContext context, int index) => const SizedBox(),
               ),
             ),
-            Expanded(
-              child: Container(
+          ),
+          Expanded(
+            child: Container(
 
-              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
   _selectImage(index) {
     setState(() {
-      _selectedImage = index;
+      _selectedIndex = index;
+      _tripModel.imageNr = _selectedIndex+1;
     });
   }
 
@@ -51,12 +89,12 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
         onTap: () => _selectImage(index),
         child: AnimatedContainer(
           duration: Duration(milliseconds: 200),
-          height: _selectedImage == index ? 80 : 72,
-          width: _selectedImage == index ? 80 : 72,
-          padding: _selectedImage == index ? const EdgeInsets.all(8.0) : const EdgeInsets.all(3.0),
+          height: _selectedIndex == index ? 80 : 72,
+          width: _selectedIndex == index ? 80 : 72,
+          padding: _selectedIndex == index ? const EdgeInsets.all(8.0) : const EdgeInsets.all(3.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(40.0),
-            color: _selectedImage == index ? Colors.black26 : Colors.transparent,
+            color: _selectedIndex == index ? Colors.black26 : Colors.transparent,
           ),
           child: Container(
             decoration: BoxDecoration(
