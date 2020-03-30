@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
   List<Widget> _layoutPages(){
     List<Widget> layoutPages = List();
     for(Widget page in _pages){
-      layoutPages.add(mainPageLayout(context, (MediaQuery.of(context).size.height), page));
+      layoutPages.add(page);
     }
     return layoutPages;
   }

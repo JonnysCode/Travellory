@@ -9,7 +9,7 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  final Color calendarBackgroundColor = Colors.green[100];
+  final Color calendarBackgroundColor = Colors.red;
   final DateTime today = DateTime.now();
 
   // TODO this will have to be linked with the backend
@@ -18,7 +18,7 @@ class _CalendarPageState extends State<CalendarPage> {
     final DateTime startDate = today.add(const Duration(days: -3));
     final DateTime endDate = startDate.add(const Duration(days: 6));
     meetings.add(
-        Meeting('TestTrip', startDate, endDate, calendarBackgroundColor, true));
+        Meeting('TestTrip', startDate, endDate, calendarBackgroundColor, false));
     return meetings;
   }
 
@@ -30,38 +30,34 @@ class _CalendarPageState extends State<CalendarPage> {
         "NT8mJyc2IWhiZH1nfWN9Z2VoZ3xhYXxhY2Fjc2JhaWBiaWZicwMeaDI9Jzo/KjIgEyAnJjc2PScgfSk7MiR9MDs=");
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 90.0),
+      padding: const EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
       child: Column(
         children: <Widget>[
-          Container(
-            height: 10,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
-              color: Color(0xFFF7C852),
-              ),
-          ),
-          Expanded(
+          Center(
             child: Container(
               key: Key('calendar_page'),
+              height: 320,
+              width: 300,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(bottom: Radius.circular(40.0)),
-                color: Colors.white,
-                boxShadow: [BoxShadow(blurRadius: 3, color: Colors.black.withOpacity(.15), offset: Offset(4.0, 4.0))],
+                color: Colors.transparent,
+                //boxShadow: [BoxShadow(blurRadius: 3, color: Colors.black.withOpacity(.15), offset: Offset(4.0, 4.0))],
               ),
               child: SfCalendar(
                 view: CalendarView.month,
-                todayHighlightColor: Colors.black.withOpacity(0.5),
+                cellBorderColor: Colors.transparent,
+                todayHighlightColor: Colors.white70,
                 initialDisplayDate: DateTime.utc(today.year, today.month, 1),
                 dataSource: MeetingDataSource(_getDataSource()),
                 selectionDecoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.3),
+                  color: Colors.black26,
                   border: Border.all(color: Colors.transparent, width: 1),
-                  borderRadius: const BorderRadius.all(Radius.circular(4)),
+                  borderRadius: const BorderRadius.all(Radius.circular(25)),
                   shape: BoxShape.rectangle,
                 ),
                 headerStyle: CalendarHeaderStyle(
-                    textAlign: TextAlign.center,
-                    backgroundColor: Color(0xFFF7C852),
+                    textAlign: TextAlign.left,
+                    backgroundColor: Colors.transparent,//Color(0xFFF7C852),
                     textStyle: TextStyle(
                         fontFamily: 'FashionFetish',
                         fontSize: 25,
@@ -71,41 +67,47 @@ class _CalendarPageState extends State<CalendarPage> {
                     ),
                 ),
                 monthViewSettings: MonthViewSettings(
-                  showAgenda: true,
-                  appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
-                  agendaViewHeight: 100,
+                  showAgenda: false,
+                  appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
+                  agendaViewHeight: 120,
                   agendaItemHeight: 80,
                   navigationDirection: MonthNavigationDirection.vertical,
                   numberOfWeeksInView: 6,
                   dayFormat: 'EEE',
-                  agendaStyle: AgendaStyle(
-                    appointmentTextStyle: TextStyle(
-                        fontFamily: 'FashionFetish',
-                        fontSize: 14,
-                        height: 1.2,
-                        color: Colors.black
-                    ),
-                    dateTextStyle: TextStyle(
-                        fontFamily: 'FashionFetish',
-                        fontSize: 15,
-                        height: 1.3,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black),
-                    dayTextStyle: TextStyle(
-                        fontFamily: 'FashionFetish',
-                        fontStyle: FontStyle.normal,
-                        fontSize: 18,
-                        height: 1.2,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black),
-                  ),
                   monthCellStyle: MonthCellStyle(
-                      trailingDatesBackgroundColor: Colors.white30,
-                      todayTextStyle: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Arial'
-                      )
+                    todayTextStyle: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'FashionFetish',
+                      height: 1.3,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontFamily: 'FashionFetish',
+                      height: 1.3,
+                    ),
+                    trailingDatesTextStyle: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white70,
+                      fontFamily: 'FashionFetish',
+                      height: 1.3,
+                    ),
+                    leadingDatesTextStyle: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white70,
+                      fontFamily: 'FashionFetish',
+                      height: 1.3,
+                    ),
+                  ),
+                ),
+                viewHeaderStyle: ViewHeaderStyle(
+                  dayTextStyle: TextStyle(
+                    fontSize: 10,
+                    color: Colors.white,
+                    fontFamily: 'FashionFetish',
+                    fontWeight: FontWeight.bold,
+                    height: 1.3,
                   ),
                 ),
                 firstDayOfWeek: 1, // first day of the week should be monday
