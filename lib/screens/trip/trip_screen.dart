@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 
@@ -14,10 +12,6 @@ class _TripScreenState extends State<TripScreen> {
   @override
   Widget build(BuildContext context) {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
-
-    void _openHomeScreen(){
-      Navigator.pop(context);
-    }
 
     Widget _subsection(String title){
       return Container(
