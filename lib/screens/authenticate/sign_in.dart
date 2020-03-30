@@ -141,13 +141,13 @@ class _SignInState extends State<SignIn> {
                                   children: <Widget>[
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 10, top: 40),
-                                      child: inputAuthentication(Icon(FontAwesomeIcons.solidEnvelope), "EMAIL", Theme.of(context).primaryColor,
-                                          _emailController, ValidatorType.EMAIL, false),
+                                      child: inputAuthentication(Icon(Icons.email), "EMAIL", Theme.of(context).primaryColor,
+                                          _emailController, ValidatorType.EMAIL, false, null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
-                                      child: inputAuthentication(Icon(FontAwesomeIcons.unlockAlt), "PASSWORD", Theme.of(context).primaryColor,
-                                          _passwordController, ValidatorType.PASSWORD, true),
+                                      child: inputAuthentication(Icon(Icons.lock), "PASSWORD", Theme.of(context).primaryColor,
+                                          _passwordController, ValidatorType.PASSWORD, true, null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
