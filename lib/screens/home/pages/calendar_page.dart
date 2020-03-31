@@ -46,11 +46,11 @@ class _CalendarPageState extends State<CalendarPage> {
               child: SfCalendar(
                 view: CalendarView.month,
                 cellBorderColor: Colors.transparent,
-                todayHighlightColor: Colors.white70,
+                todayHighlightColor: Colors.blueGrey,
                 initialDisplayDate: DateTime.utc(today.year, today.month, 1),
                 dataSource: MeetingDataSource(_getDataSource()),
                 selectionDecoration: BoxDecoration(
-                  color: Colors.black26,
+                  color: Colors.black12,
                   border: Border.all(color: Colors.transparent, width: 1),
                   borderRadius: const BorderRadius.all(Radius.circular(25)),
                   shape: BoxShape.rectangle,
@@ -60,7 +60,7 @@ class _CalendarPageState extends State<CalendarPage> {
                     backgroundColor: Colors.transparent,//Color(0xFFF7C852),
                     textStyle: TextStyle(
                         fontFamily: 'FashionFetish',
-                        fontSize: 25,
+                        fontSize: 24,
                         fontStyle: FontStyle.normal,
                         color: Colors.white,
                         fontWeight: FontWeight.w600
@@ -69,9 +69,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 monthViewSettings: MonthViewSettings(
                   showAgenda: false,
                   appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
-                  agendaViewHeight: 120,
-                  agendaItemHeight: 80,
-                  navigationDirection: MonthNavigationDirection.vertical,
+                  navigationDirection: MonthNavigationDirection.horizontal,
                   numberOfWeeksInView: 6,
                   dayFormat: 'EEE',
                   monthCellStyle: MonthCellStyle(
@@ -79,25 +77,25 @@ class _CalendarPageState extends State<CalendarPage> {
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'FashionFetish',
-                      height: 1.3,
+                      height: 1.2,
                     ),
                     textStyle: TextStyle(
                       fontSize: 14,
                       color: Colors.white,
                       fontFamily: 'FashionFetish',
-                      height: 1.3,
+                      height: 1.2,
                     ),
                     trailingDatesTextStyle: TextStyle(
                       fontSize: 14,
                       color: Colors.white70,
                       fontFamily: 'FashionFetish',
-                      height: 1.3,
+                      height: 1.2,
                     ),
                     leadingDatesTextStyle: TextStyle(
                       fontSize: 14,
                       color: Colors.white70,
                       fontFamily: 'FashionFetish',
-                      height: 1.3,
+                      height: 1.2,
                     ),
                   ),
                 ),
