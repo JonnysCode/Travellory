@@ -65,7 +65,7 @@ class _RentalCarState extends State<RentalCar> {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void returnToTripScreen() {
-      Navigator.pushReplacementNamed(context, '/viewtrip', arguments: _tripModel);
+      Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
     }
 
     bool validateForm() {
@@ -73,6 +73,7 @@ class _RentalCarState extends State<RentalCar> {
     }
 
     return Scaffold(
+      key: Key('Rental Car'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
@@ -91,7 +92,7 @@ class _RentalCarState extends State<RentalCar> {
                     top: 0,
                     right: 0,
                     child: IconButton(
-                      onPressed: () => returnToTripScreen(),
+                      onPressed: () => returnToTripScreen,
                       icon: FaIcon(FontAwesomeIcons.times),
                       iconSize: 26,
                       color: Colors.red,
