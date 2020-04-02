@@ -81,6 +81,7 @@ class _FlightState extends State<Flight> {
     }
 
     return Scaffold(
+      key: Key('Flight'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,

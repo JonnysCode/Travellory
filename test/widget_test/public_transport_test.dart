@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/screens/trip/rentalCar.dart';
+import 'package:travellory/screens/trip/publicTransport.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({ Key key }) : super(key: key);
@@ -16,7 +16,7 @@ class Wrapper extends StatelessWidget {
     );
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/booking/rentalCar', arguments: tripModel);
+        Navigator.pushNamed(context, '/booking/publicTransport', arguments: tripModel);
       },
       child: Container(
         color: const Color(0xFFFFFF00),
@@ -31,25 +31,25 @@ void main() {
     return MaterialApp(
       routes: <String, WidgetBuilder>{
         '/': (context) => const Wrapper(),
-        '/booking/rentalCar': (context) => RentalCar()
+        '/booking/publicTransport': (context) => PublicTransport()
       },
     );
   }
 
-  Future<void> pumpRentalCar(WidgetTester tester) async {
+  Future<void> pumpPublicTransport(WidgetTester tester) async {
     await tester.tap(find.text('X'));
     await tester.pump();
   }
 
-  testWidgets('test if Rental Car page is loaded', (WidgetTester tester) async {
-    final testKey = Key('Rental Car');
+  testWidgets('test if Public Transport page is loaded', (WidgetTester tester) async {
+    final testKey = Key('Public Transport');
 
     await tester.pumpWidget(makeTestableWidget());
 
     expect(find.text('X'), findsOneWidget);
     expect(find.byKey(testKey, skipOffstage: false), findsNothing);
 
-    await pumpRentalCar(tester);
+    await pumpPublicTransport(tester);
     expect(find.text('X'), findsOneWidget);
     expect(find.byKey(testKey, skipOffstage: false), isOffstage);
   });
@@ -58,7 +58,7 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget());
 
-    await pumpRentalCar(tester);
+    await pumpPublicTransport(tester);
     // verify that form is present
     expect(find.byType(Form, skipOffstage: false), isOffstage);
   });
@@ -66,21 +66,21 @@ void main() {
   testWidgets('test if form is present', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget());
-    await pumpRentalCar(tester);
+    await pumpPublicTransport(tester);
 
     // Verify that form is present.
     expect(find.byType(Form, skipOffstage: false), isOffstage);
 
     // Verify that form fields are present.
     expect(find.byIcon(Icons.confirmation_number, skipOffstage: false), isOffstage);
-    expect(find.byIcon(Icons.supervised_user_circle, skipOffstage: false), isOffstage);
+    expect(find.byIcon(Icons.airline_seat_recline_normal, skipOffstage: false), isOffstage);
     expect(find.byIcon(Icons.speaker_notes, skipOffstage: false), isOffstage);
   });
 
   testWidgets('test if submit button is present', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget());
-    await pumpRentalCar(tester);
+    await pumpPublicTransport(tester);
     // Verify that form is present.
     expect(find.byKey(Key('SubmitButton'), skipOffstage: false), isOffstage);
   });
@@ -88,7 +88,7 @@ void main() {
   testWidgets('test if cancel button is present', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget());
-    await pumpRentalCar(tester);
+    await pumpPublicTransport(tester);
 
     // Verify that form is present.
     expect(find.byKey(Key('CancelButton'), skipOffstage: false), isOffstage);
