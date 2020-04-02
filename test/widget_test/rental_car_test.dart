@@ -2,20 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:travellory/screens/trip/rentalCar.dart';
 
+import 'test_wrapper.dart';
+
 void main() {
-  Widget makeTestableWidget({Widget child}){
+  Widget makeTestableWidget(){
     return MaterialApp(
       //key: Key('RentalCar'),
-      home: child,
+      routes: {
+        '/': (context) => TestWrapper(),
+        '/booking/rentalCar': (context) => RentalCar()
+      },
     );
   }
 
   testWidgets('test if Rental Car page is loaded', (WidgetTester tester) async {
-   final testKey = Key('Rental Car');
-    Widget page = RentalCar();
+    final testKey = Key('Rental Car');
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(makeTestableWidget(child: page));
+    await tester.pumpWidget(makeTestableWidget());
 
     //expect(find.byType(Scaffold), findsOneWidget);
     // Verify that the RentalCar form is present.
@@ -24,10 +28,10 @@ void main() {
   });
 
   testWidgets('test if form instance is found', (WidgetTester tester) async {
-    Widget page = RentalCar();
+   // Widget page = RentalCar();
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(makeTestableWidget(child: page));
+    await tester.pumpWidget(makeTestableWidget());
 
     // verify that form is present
     expect(find.byType(Form), findsOneWidget);
@@ -37,7 +41,7 @@ void main() {
     Widget page = RentalCar();
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(makeTestableWidget(child: page));
+    await tester.pumpWidget(makeTestableWidget());
 
     // Verify that form is present.
     expect(find.byType(Form), findsOneWidget);
@@ -56,7 +60,7 @@ void main() {
     Widget page = RentalCar();
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(makeTestableWidget(child: page));
+    await tester.pumpWidget(makeTestableWidget());
 
     // Verify that form is present.
     expect(find.byKey(Key('SubmitButton')), findsOneWidget);
@@ -66,7 +70,7 @@ void main() {
     Widget page = RentalCar();
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(makeTestableWidget(child: page));
+    await tester.pumpWidget(makeTestableWidget());
 
     // Verify that form is present.
     expect(find.byKey(Key('CancelButton')), findsOneWidget);
