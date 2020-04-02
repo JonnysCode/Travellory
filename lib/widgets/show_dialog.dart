@@ -19,7 +19,7 @@ void showSubmittedBookingDialog(
         content: new Text(alertText),
         actions: <Widget>[
           alertButton("Home", Colors.transparent, context, () async {
-            Navigator.pushReplacementNamed(context, '/home');
+            Navigator.pushNamed(context, '/home');
           }),
           alertButton("Back to Trip", Theme.of(context).hintColor, context, () async {
             function();
@@ -48,7 +48,7 @@ void cancellingDialog(BuildContext context, void function()) {
           alertButton("No", Colors.transparent, context, () async {
             Navigator.pop(context);
           }),
-          alertButton("Yes", Theme.of(context).accentColor, context, () async {
+          alertButton("Yes", Color(0xFFF48FB1), context, () async {
             function();
           }),
         ],

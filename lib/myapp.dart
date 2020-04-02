@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
@@ -34,8 +31,7 @@ class MyApp extends StatelessWidget {
             canvasColor: Colors.transparent,
             hintColor: Color(0xFFC0F0E8),
             primaryColor: Color(0xFF61BAA9),
-            // accentColor: Color(0xFFF72349),
-            accentColor: Color(0xFFF48FB1),
+            accentColor: Color(0xFFF72349),
             scaffoldBackgroundColor: Color(0xFFE6E6E6),
           ),
           routes: {

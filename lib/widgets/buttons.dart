@@ -43,7 +43,7 @@ Widget cancelButton(String text, BuildContext context, void function()) {
     splashColor: Colors.white,
     highlightColor: Theme.of(context).primaryColor,
     elevation: 0.0,
-    color: Theme.of(context).accentColor,
+    color: Color(0xFFF48FB1),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
     child: Text(
       text,

@@ -1,7 +1,7 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/models/accommodationModel.dart';
+import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/buttons.dart';
@@ -75,7 +75,7 @@ class _AccommodationState extends State<Accommodation> {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void returnToTripScreen() {
-      Navigator.pushReplacementNamed(context, '/viewtrip', arguments: _tripModel);
+      Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
     }
 
     return Scaffold(
