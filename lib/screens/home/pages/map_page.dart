@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+String _mapStyle;
 
 class MapPage extends StatefulWidget {
   @override
@@ -10,10 +12,20 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   @override
+  void initState() {
+    super.initState();
+
+    rootBundle.loadString('assets/g_map/map_style.json').then((string) {
+      _mapStyle = string;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       key: Key('map_page'),
-      child: MapSample(),
+      child: new MapSample(),
+      margin: const EdgeInsets.only(bottom: 50),
     );
   }
 }
@@ -41,9 +53,10 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     return new Scaffold(
       body: GoogleMap(
-        mapType: MapType.hybrid,
+        mapType: MapType.normal,
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
+          controller.setMapStyle(_mapStyle);
           _controller.complete(controller);
         },
       ),
