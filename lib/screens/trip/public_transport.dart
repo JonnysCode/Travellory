@@ -84,6 +84,7 @@ class _PublicTransportState extends State<PublicTransport> {
 
     void returnToTripScreen() {
       Navigator.pop(context);
+      Navigator.pop(context);
     }
 
     bool validateForm() {
