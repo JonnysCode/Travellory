@@ -132,7 +132,7 @@ class _HomeState extends State<Home> {
                       ),
                     ],
                     selectedIndex: _navBarIndex,
-                    onTabChange: (index) => _setNavBarIndex,
+                    onTabChange: (index) => _setNavBarIndex(index),
                 ),
               ),
             ),
@@ -151,7 +151,7 @@ class _HomeState extends State<Home> {
           PageView(
             controller: _pageController,
             scrollDirection: Axis.horizontal,
-            onPageChanged: (index) => _setNavIndices,
+            onPageChanged: (index) => _setNavIndices(index),
             children: _layoutPages(),
           ),
           Container(
