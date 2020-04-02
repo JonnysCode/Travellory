@@ -131,7 +131,7 @@ class _TripCardState extends State<TripCard> {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: IconButton(
-                  onPressed: () => _openTrip,
+                  onPressed: () => _openTrip(),
                   icon: FaIcon(FontAwesomeIcons.angleDown, color: Colors.black54),
               ),
             ),
