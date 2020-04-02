@@ -34,6 +34,8 @@ dependencies:
   syncfusion_flutter_calendar: ^17.4.40-beta
   font_awesome_flutter: ^8.7.0
   google_maps_flutter: ^0.5.25+3
+  http: ^0.12.0+1
+  json_serializable: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -41,6 +43,8 @@ dev_dependencies:
   mockito: 4.1.1
   flutter_native_splash: ^0.1.9
   flutter_launcher_icons: ^0.7.4
+  pedantic: ^1.4.0
+  build_runner: ^1.2.7
 
 
 flutter_native_splash:
