@@ -75,7 +75,7 @@ class _AccommodationState extends State<Accommodation> {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void returnToTripScreen() {
-      Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
+      Navigator.pop(context);
     }
 
     return Scaffold(

@@ -19,7 +19,7 @@ void showSubmittedBookingDialog(
         content: new Text(alertText),
         actions: <Widget>[
           alertButton("Home", Colors.transparent, context, () async {
-            Navigator.pushNamed(context, '/home');
+            Navigator.popUntil(context, ModalRoute.withName('/home'));
           }),
           alertButton("Back to Trip", Theme.of(context).hintColor, context, () async {
             function();
