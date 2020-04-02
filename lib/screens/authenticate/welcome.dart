@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/widgets/buttons.dart';
 
 class Welcome extends StatefulWidget {
   @override
-  WelcomeState createState() => WelcomeState();
+  _WelcomeState createState() => _WelcomeState();
 }
 
-class WelcomeState extends State<Welcome> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+class _WelcomeState extends State<Welcome> {
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -17,36 +16,35 @@ class WelcomeState extends State<Welcome> {
         key: _scaffoldKey,
         backgroundColor: Theme.of(context).primaryColor,
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Padding(
-              child: Container(
-                child: Center(
-                  child: Text(
-                      'Travel?',
-                    style: TextStyle(
-                      fontSize: 64,
-                      color: Colors.white,
-                    ),
+              padding: const EdgeInsets.only(top: 300),
+              child: Center(
+                child: Text(
+                    'Travel?',
+                  style: TextStyle(
+                    fontSize: 64,
+                    color: Colors.white,
                   ),
                 ),
               ),
-              padding: const EdgeInsets.only(top: 300),
             ),
             Padding(
+              padding: const EdgeInsets.only(top: 60, left: 120, right: 120),
               child: Container(
-                child: filledButton("easy", Colors.white, Colors.deepOrange, Theme.of(context).accentColor,
+                height: 50,
+                child: filledButton('easy', Colors.white, Colors.deepOrange, Theme.of(context).accentColor,
                     Colors.white, () {
                       Navigator.pushNamed(
                         context,
                         '/auth'
                       );
                     }),
-                height: 50,
               ),
-              padding: const EdgeInsets.only(top: 60, left: 120, right: 120),
             ),
           ],
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-        ));
+        )
+    );
   }
 }
