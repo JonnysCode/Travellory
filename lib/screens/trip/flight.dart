@@ -74,6 +74,7 @@ class _FlightState extends State<Flight> {
 
     void returnToTripScreen() {
       Navigator.pop(context);
+      Navigator.pop(context);
     }
 
     bool validateForm() {

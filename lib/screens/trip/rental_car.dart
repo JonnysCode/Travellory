@@ -66,6 +66,7 @@ class _RentalCarState extends State<RentalCar> {
 
     void returnToTripScreen() {
       Navigator.pop(context);
+      Navigator.pop(context);
     }
 
     bool validateForm() {

@@ -76,6 +76,7 @@ class _AccommodationState extends State<Accommodation> {
 
     void returnToTripScreen() {
       Navigator.pop(context);
+      Navigator.pop(context);
     }
 
     return Scaffold(
