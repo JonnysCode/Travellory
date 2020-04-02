@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/user.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return AuthProvider(
       auth: AuthService(),
-      child: StreamProvider<User>.value(
+      child: StreamProvider<UserModel>.value(
         value: AuthService().user,
         child: MaterialApp(
           title: 'Travellory',
@@ -31,15 +30,15 @@ class MyApp extends StatelessWidget {
             accentColor: Color(0xFFF72349),
             scaffoldBackgroundColor: Color(0xFFF0F4F4),
           ),
-          routes: {
-            '/': (BuildContext context) => Wrapper(),
-            '/auth': (BuildContext context) => Authenticate(),
-            '/login': (BuildContext context) => SignIn(),
-            '/register': (BuildContext context) => Register(),
-            '/loading': (BuildContext context) => Loading(),
-            '/home': (BuildContext context) => Home(),
-            '/viewtrip': (BuildContext context) => TripScreen(),
-            '/createtrip': (BuildContext context) => CreateTripScreen(),
+          routes: <String, Widget Function(BuildContext)>{
+            '/': (context) => Wrapper(),
+            '/auth': (context) => Authenticate(),
+            '/login': (context) => SignIn(),
+            '/register': (context) => Register(),
+            '/loading': (context) => Loading(),
+            '/home': (context) => Home(),
+            '/viewtrip': (context) => TripScreen(),
+            '/createtrip': (context) => CreateTripScreen(),
           },
         ),
       ),
