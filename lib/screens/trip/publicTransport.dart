@@ -1,8 +1,8 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/models/RentalCarModel.dart';
-import 'package:travellory/models/publicTransportModel.dart';
+import 'package:travellory/models/rental_car_model.dart';
+import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/buttons.dart';
@@ -83,7 +83,7 @@ class _PublicTransportState extends State<PublicTransport> {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void returnToTripScreen() {
-      Navigator.pushReplacementNamed(context, '/viewtrip', arguments: _tripModel);
+      Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
     }
 
     bool validateForm() {
