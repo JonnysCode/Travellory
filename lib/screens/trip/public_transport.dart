@@ -88,7 +88,7 @@ class _PublicTransportState extends State<PublicTransport> {
     }
 
     bool validateForm() {
-      return (publicTransportFormKey.currentState.validate());
+      return publicTransportFormKey.currentState.validate();
     }
 
     return Scaffold(
@@ -111,7 +111,7 @@ class _PublicTransportState extends State<PublicTransport> {
                     top: 0,
                     right: 0,
                     child: IconButton(
-                      onPressed: () => returnToTripScreen(),
+                      onPressed: () => returnToTripScreen,
                       icon: FaIcon(FontAwesomeIcons.times),
                       iconSize: 26,
                       color: Colors.red,
@@ -210,7 +210,6 @@ class _PublicTransportState extends State<PublicTransport> {
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: sectionTitle(context, "Type of Transportation"),
                     ),
-                    // TODO add type dropdown
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: _typeFormField.required(),
@@ -219,7 +218,6 @@ class _PublicTransportState extends State<PublicTransport> {
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: _companyFormField.required(),
                     ),
-                    // TODO specific type only when type is other
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: _specificTypeFormField.optional(),
@@ -269,7 +267,6 @@ class _PublicTransportState extends State<PublicTransport> {
                       padding: const EdgeInsets.only(top: 0, left: 15, right: 15),
                       child: checkbox(seatBool, 'Did you make a seat reservation?', seatCheckbox),
                     ),
-                    // TODO this will only be shown if checkboxes are checked
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: sectionTitle(context, "Further Booking Details"),
@@ -300,10 +297,9 @@ class _PublicTransportState extends State<PublicTransport> {
                         child: submitButton(
                             context,
                             Theme.of(context).primaryColor,
-                            // TODO handle bool from checkboxes
                             Theme.of(context).primaryColor,
                             validateForm, () async {
-                          PublicTransportModel publicTransport = new PublicTransportModel(
+                          final PublicTransportModel publicTransport = new PublicTransportModel(
                               transportationType: _typeFormField.controller.text,
                               company: _companyFormField.controller.text,
                               specificType: _specificTypeFormField.controller.text,
@@ -345,7 +341,7 @@ class _PublicTransportState extends State<PublicTransport> {
 }
 
 void _addPublicTransport(PublicTransportModel publicTransport) async {
-  HttpsCallable callable =
+  final HttpsCallable callable =
       CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addPublicTransport');
   try {
     final HttpsCallableResult result = await callable.call(<String, dynamic>{
@@ -376,77 +372,3 @@ void _addPublicTransport(PublicTransportModel publicTransport) async {
     print(e);
   }
 }
-
-//old code
-//
-//String dropdownValue = 'Select';
-//bool _valueBooking = false;
-//bool _valueSeatReservation = false;
-//
-//void _valueBookingChanged(bool value) =>
-//    setState(() => _valueBooking = value);
-//
-//void _valueSeatReservationChanged(bool value) =>
-//    setState(() => _valueSeatReservation = value);
-//
-//Widget typeDropdown = Container(
-//  padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-//  child: ButtonTheme(
-//    alignedDropdown: true,
-//    child: DropdownButton<String>(
-//      value: dropdownValue,
-//      icon: Icon(Icons.arrow_downward),
-//      iconSize: 24,
-//      elevation: 16,
-//      style: TextStyle(color: Theme.of(context).primaryColor),
-//      underline: Container(
-//        height: 2,
-//        color: Theme.of(context).primaryColor,
-//      ),
-//      onChanged: (String newValue) {
-//        setState(() {
-//          dropdownValue = newValue;
-//        });
-//      },
-//      items: <String>[
-//        'Select',
-//        'Rail',
-//        'Bus',
-//        'Metro',
-//        'Ferry',
-//        'Taxi',
-//        'Uber',
-//        'Other'
-//      ].map<DropdownMenuItem<String>>((String value) {
-//        return DropdownMenuItem<String>(
-//          value: value,
-//          child: Text(value),
-//        );
-//      }).toList(),
-//    ),
-//  ),
-//);
-//
-//Widget reservations = Container(
-//  padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
-//  child: new Column(
-//    children: <Widget>[
-//      new CheckboxListTile(
-//          value: _valueBooking,
-//          onChanged: _valueBookingChanged,
-//          title: new Text(
-//            'Did you book this public transport?',
-//            style: TextStyle(fontSize: 16),
-//          ),
-//          controlAffinity: ListTileControlAffinity.leading),
-//      new CheckboxListTile(
-//          value: _valueSeatReservation,
-//          onChanged: _valueSeatReservationChanged,
-//          title: new Text(
-//            'Did you make a seat reservation?',
-//            style: TextStyle(fontSize: 16),
-//          ),
-//          controlAffinity: ListTileControlAffinity.leading),
-//    ],
-//  ),
-//);

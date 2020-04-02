@@ -67,7 +67,7 @@ class _AccommodationState extends State<Accommodation> {
   }
 
   bool validateForm() {
-    return (accommodationFormKey.currentState.validate());
+    return accommodationFormKey.currentState.validate();
   }
 
   @override
@@ -99,7 +99,7 @@ class _AccommodationState extends State<Accommodation> {
                     top: 0,
                     right: 0,
                     child: IconButton(
-                      onPressed: () => returnToTripScreen(),
+                      onPressed: () => returnToTripScreen,
                       icon: FaIcon(FontAwesomeIcons.times),
                       iconSize: 26,
                       color: Colors.red,
@@ -234,7 +234,6 @@ class _AccommodationState extends State<Accommodation> {
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: sectionTitle(context, "Check-Out Information"),
                     ),
-                    // TODO automatically calculate this date with nr of nights and checkin date
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: _checkoutDateFormField.secondDate(context, _checkinDateFormField),
@@ -247,18 +246,15 @@ class _AccommodationState extends State<Accommodation> {
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: sectionTitle(context, "Booking Information"),
                     ),
-                    // TODO this only appears when type is hotel
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: _hotelRoomTypeFormField.optional(),
                     ),
-                    // TODO this only appears when type is hotel
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 0),
                       child: checkbox(
                           breakfastBool, 'Does your stay include breakfast?', breakfastCheckbox),
                     ),
-                    // TODO this only appears when type is airbnb
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: _airbnbTypeFormField.optional(),
@@ -277,10 +273,9 @@ class _AccommodationState extends State<Accommodation> {
                         child: submitButton(
                             context,
                             Theme.of(context).primaryColor,
-                            // TODO handle bool from checkboxes
                             Theme.of(context).primaryColor,
                             validateForm, () async {
-                          AccommodationModel accommodation = new AccommodationModel(
+                         final AccommodationModel accommodation = new AccommodationModel(
                               type: _typeFormField.controller.text,
                               hotelName: _nameFormField.controller.text,
                               confirmationNr: _confirmationFormField.controller.text,
@@ -320,7 +315,7 @@ class _AccommodationState extends State<Accommodation> {
 }
 
 void _addAccommodation(AccommodationModel accommodation) async {
-  HttpsCallable callable =
+  final HttpsCallable callable =
       CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addPublicTransport');
   try {
     final HttpsCallableResult result = await callable.call(<String, dynamic>{
@@ -349,40 +344,3 @@ void _addAccommodation(AccommodationModel accommodation) async {
     print(e);
   }
 }
-
-// old code
-
-//bool _valueBreakfast = false;
-//static String accommodationType = '';
-//static List<String> types = ["Hotel", "Airbnb", "Hostel", "Motel", "Bed&Breakfast", "Other"];
-//
-//void _valueBreakfastChanged(bool value) => setState(() => _valueBreakfast = value);
-//
-//Widget dropdown = DropDownField(
-//    value: accommodationType,
-//    required: true,
-//    strict: true,
-//    labelText: 'Type of accommodation',
-//    // icon: Icon(Icons.account_balance),
-//    items: types,
-//    setter: (dynamic newValue) {
-//      accommodationType = newValue;
-//    }
-//);
-//
-//Widget breakfast = Container(
-//  padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
-//  child: new Column(
-//    children: <Widget>[
-//      new CheckboxListTile(
-//          value: _valueBreakfast,
-//          onChanged: _valueBreakfastChanged,
-//          title: new Text(
-//            'Is breakfast included in your stay?',
-//            style: TextStyle(fontSize: 16),
-//          ),
-//          controlAffinity: ListTileControlAffinity.leading
-//      ),
-//    ],
-//  ),
-//);
