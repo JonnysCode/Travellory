@@ -79,6 +79,7 @@ class _AccommodationState extends State<Accommodation> {
     }
 
     return Scaffold(
+      key: Key('Accommodation'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,

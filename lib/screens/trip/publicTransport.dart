@@ -68,7 +68,6 @@ class _PublicTransportState extends State<PublicTransport> {
     _bookingReferenceFormField.dispose();
     _bookingCompanyFormField.dispose();
     _seatFormField.dispose();
-    _notesFormField.dispose();
     _depLocationFormField.dispose();
     _depDateFormField.dispose();
     _depTimeFormField.dispose();
@@ -92,6 +91,7 @@ class _PublicTransportState extends State<PublicTransport> {
     }
 
     return Scaffold(
+      key: Key('Public Transport'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
