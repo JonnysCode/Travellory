@@ -12,7 +12,7 @@ class TripScreen extends StatefulWidget {
 class _TripScreenState extends State<TripScreen> {
   @override
   Widget build(BuildContext context) {
-    final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
+    TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void _openHomeScreen(){
       Navigator.pop(context);
@@ -40,13 +40,11 @@ class _TripScreenState extends State<TripScreen> {
             Positioned(
               top: 17,
               right: 34,
-              child: Container(
-                child: FashionFetishText(
-                  text: 'Add',
-                  size: 16,
-                  fontWeight: FashionFontWeight.BOLD,
-                  color: Colors.black45,
-                ),
+              child: FashionFetishText(
+                text: 'Add',
+                size: 16,
+                fontWeight: FashionFontWeight.BOLD,
+                color: Colors.black45,
               ),
             ),
             Positioned(
@@ -60,7 +58,7 @@ class _TripScreenState extends State<TripScreen> {
                   padding: EdgeInsets.only(top: 20, right: 10),
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/images/home/trip/add.png"),
+                      image: AssetImage('assets/images/home/trip/add.png'),
                       fit: BoxFit.fitWidth,
                       alignment: Alignment.bottomCenter,
                     ),
@@ -79,8 +77,8 @@ class _TripScreenState extends State<TripScreen> {
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemCount: 3,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
+          itemBuilder: (context, index) =>
+            Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Container(
                 height: 50,
@@ -91,9 +89,8 @@ class _TripScreenState extends State<TripScreen> {
                   ),
                 child: Center(child: Text('Entry')),
               ),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) => const Divider(),
+            ),
+          separatorBuilder: (context, index) => const Divider(),
         ),
       );
     }
@@ -126,7 +123,7 @@ class _TripScreenState extends State<TripScreen> {
                     top: -30,
                     left: -40,
                     child: Hero(
-                      tag: 'trip_image' + _tripModel.index.toString(),
+                      tag: 'trip_image${_tripModel.index.toString()}',
                       child: Container(
                         height: 220,
                         width: 220,
@@ -166,9 +163,9 @@ class _TripScreenState extends State<TripScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         FashionFetishText(
-                         text: 'From: ' + DateConverter.toShortenedMonthString( _tripModel.startDate)
+                         text: 'From: ${DateConverter.format( _tripModel.startDate)}'
                               + '\n'
-                              + 'To: ' + DateConverter.toShortenedMonthString( _tripModel.endDate),
+                              + 'To: ${DateConverter.format( _tripModel.endDate)}',
                           color: Colors.black54,
                           fontWeight: FashionFontWeight.BOLD,
                           size: 14,

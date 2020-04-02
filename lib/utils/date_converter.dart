@@ -4,7 +4,7 @@ class DateConverter{
     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
   ];
 
-  static String toShortenedMonthString(DateTime date){
+  static String format(DateTime date){
     StringBuffer dateBuffer = StringBuffer();
     dateBuffer.write(date.day);
     dateBuffer.write(' ');
