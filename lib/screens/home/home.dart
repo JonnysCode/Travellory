@@ -13,9 +13,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static const _animationSpeed = 800;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final List<Widget> _pages = [
+  static const int _animationSpeed = 800;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<Widget> _pages = <Widget>[
     HomePage(),
     CalendarPage(),
     MapPage(),
@@ -41,9 +41,9 @@ class _HomeState extends State<Home> {
   }
 
   List<Widget> _layoutPages(){
-    List<Widget> layoutPages = List();
-    for(Widget page in _pages){
-      layoutPages.add(mainPageLayout(context, (MediaQuery.of(context).size.height), page));
+    final layoutPages = <Widget>[];
+    for(final page in _pages){
+      layoutPages.add(mainPageLayout(context, MediaQuery.of(context).size.height, page));
     }
     return layoutPages;
   }
@@ -79,13 +79,15 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Widget _navigationBar(){
+  Widget _navigationBar() {
       return DecoratedBox(
         key: Key('nav_bar'),
         decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(40.0),
-          boxShadow: [BoxShadow(blurRadius: 12, color: Colors.black.withOpacity(.1), offset: Offset(0.0, -3.0))],
+          boxShadow: <BoxShadow>[
+            BoxShadow(blurRadius: 12, color: Colors.black.withOpacity(.1), offset: Offset(0.0, -3.0))
+          ],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.only(
@@ -106,7 +108,7 @@ class _HomeState extends State<Home> {
                     duration: Duration(milliseconds: _animationSpeed),
                     tabBackgroundColor: Theme.of(context).primaryColor,
                     color: Theme.of(context).primaryColor,
-                    tabs: [
+                    tabs: <GButton>[
                       GButton(
                         key: Key('nav_home_button'),
                         icon: FontAwesomeIcons.suitcaseRolling,
@@ -129,7 +131,7 @@ class _HomeState extends State<Home> {
                       ),
                     ],
                     selectedIndex: _navBarIndex,
-                    onTabChange: (index) => _setNavBarIndex(index),
+                    onTabChange: (index) => _setNavBarIndex,
                 ),
               ),
             ),
@@ -148,8 +150,8 @@ class _HomeState extends State<Home> {
           PageView(
             controller: _pageController,
             scrollDirection: Axis.horizontal,
+            onPageChanged: (index) => _setNavIndices,
             children: _layoutPages(),
-            onPageChanged: (index) => _setNavIndices(index),
           ),
           Container(
             alignment: Alignment.bottomCenter,
