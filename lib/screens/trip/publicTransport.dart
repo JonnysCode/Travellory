@@ -203,7 +203,7 @@ class _PublicTransportState extends State<PublicTransport> {
                   child: Column(children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: bookingSiteTitle(context, "Add Public Transport Booking", Icons.train),
+                      child: bookingSiteTitle(context, "Add Public Transport", Icons.train),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),

@@ -190,7 +190,7 @@ class _FlightState extends State<Flight> {
                   child: Column(children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: bookingSiteTitle(context, "Add Flight Booking", Icons.flight),
+                      child: bookingSiteTitle(context, "Add Flight", Icons.flight),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
