@@ -109,7 +109,7 @@ class _TripScreenState extends State<TripScreen> {
                     top: 0,
                     right: 0,
                     child: IconButton(
-                      onPressed: () => _openHomeScreen,
+                      onPressed: () => _openHomeScreen(),
                       icon: FaIcon(FontAwesomeIcons.times),
                       iconSize: 26,
                       color: Colors.red,
