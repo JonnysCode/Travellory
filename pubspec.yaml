@@ -33,6 +33,7 @@ dependencies:
   google_nav_bar: ^2.0.1
   syncfusion_flutter_calendar: ^17.4.40-beta
   font_awesome_flutter: ^8.7.0
+  google_maps_flutter: ^0.5.25+3
 
 dev_dependencies:
   flutter_test:
