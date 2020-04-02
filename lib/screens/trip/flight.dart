@@ -110,7 +110,7 @@ class _FlightState extends State<Flight> {
                     top: -30,
                     left: -40,
                     child: Hero(
-                      tag: 'trip_image' + _tripModel.index.toString(),
+                      tag: 'trip_image${_tripModel.index.toString()}',
                       child: Container(
                         height: 220,
                         width: 220,
@@ -148,11 +148,9 @@ class _FlightState extends State<Flight> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         FashionFetishText(
-                            text: 'From: ' +
-                                DateConverter.toShortenedMonthString(_tripModel.startDate) +
+                            text: 'From: ${DateConverter.format(_tripModel.startDate)}' +
                                 '\n' +
-                                'To: ' +
-                                DateConverter.toShortenedMonthString(_tripModel.endDate),
+                                'To: ${DateConverter.format(_tripModel.endDate)}',
                             color: Colors.black54,
                             fontWeight: FashionFontWeight.BOLD,
                             size: 14,
