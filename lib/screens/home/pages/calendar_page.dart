@@ -29,11 +29,12 @@ class _CalendarPageState extends State<CalendarPage> {
     SyncfusionLicense.registerLicense(
         "NT8mJyc2IWhiZH1nfWN9Z2VoZ3xhYXxhY2Fjc2JhaWBiaWZicwMeaDI9Jzo/KjIgEyAnJjc2PScgfSk7MiR9MDs=");
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
-      child: Column(
-        children: <Widget>[
-          Center(
+    return Stack(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Align(
+            alignment: Alignment.topCenter,
             child: Container(
               key: Key('calendar_page'),
               height: 320,
@@ -112,8 +113,20 @@ class _CalendarPageState extends State<CalendarPage> {
               ),
             ),
           ),
-        ],
-      ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
+              boxShadow: [BoxShadow(blurRadius: 10, color: Colors.black.withOpacity(.1), offset: Offset(0.0, -6.0))],
+            ),
+            height: MediaQuery.of(context).size.height*0.95,
+            width: MediaQuery.of(context).size.width,
+          ),
+        ),
+      ],
     );
   }
 }
