@@ -38,7 +38,7 @@ Widget alertButton(String text, Color fillColor, BuildContext context, void func
 
 Widget cancelButton(String text, BuildContext context, void function()) {
   return RaisedButton(
-    key: Key(text.toLowerCase().trim() + 'Button'),
+    key: Key('CancelButton'),
     highlightElevation: 0.0,
     splashColor: Colors.white,
     highlightColor: Theme.of(context).primaryColor,
