@@ -73,7 +73,7 @@ class _FlightState extends State<Flight> {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void returnToTripScreen() {
-      Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
+      Navigator.pop(context);
     }
 
     bool validateForm() {

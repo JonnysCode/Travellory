@@ -83,7 +83,7 @@ class _PublicTransportState extends State<PublicTransport> {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void returnToTripScreen() {
-      Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
+      Navigator.pop(context);
     }
 
     bool validateForm() {
