@@ -191,7 +191,7 @@ class _AccommodationState extends State<Accommodation> {
                   child: Column(children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: bookingSiteTitle(context, "Add Accommodation Booking", Icons.hotel),
+                      child: bookingSiteTitle(context, "Add Accommodation", Icons.hotel),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),

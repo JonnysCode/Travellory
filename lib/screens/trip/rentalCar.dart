@@ -185,7 +185,7 @@ class _RentalCarState extends State<RentalCar> {
                   child: Column(children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: bookingSiteTitle(context, "Add Rental Car Booking", Icons.time_to_leave),
+                      child: bookingSiteTitle(context, "Add Rental Car", Icons.time_to_leave),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
