@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:travellory/models/user.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return AuthProvider(
       auth: AuthService(),
-      child: StreamProvider<User>.value(
+      child: StreamProvider<UserModel>.value(
         value: AuthService().user,
         child: MaterialApp(
           title: 'Travellory',
@@ -38,16 +39,6 @@ class MyApp extends StatelessWidget {
             accentColor: Color(0xFFF48FB1),
             scaffoldBackgroundColor: Color(0xFFE6E6E6),
           ),
-          localizationsDelegates: [
-            // the localizationsDelegates is used for the datepicker
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          supportedLocales: [
-            // used for the datepicker
-            const Locale('en', 'US'), // English
-            const Locale('de', 'CH'), // German Switzerland
-          ],
           routes: {
             '/': (BuildContext context) => Wrapper(),
             '/auth': (BuildContext context) => Authenticate(),

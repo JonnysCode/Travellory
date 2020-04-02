@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
@@ -5,15 +6,21 @@ import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class TripCard extends StatefulWidget {
-  final TripModel tripModel;
-
   const TripCard({
+    @required this.tripModel,
     Key key,
-    @required this.tripModel
   }) : super(key: key);
+
+  final TripModel tripModel;
 
   @override
   _TripCardState createState() => _TripCardState(tripModel);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties){
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<TripModel>('tripModel', tripModel));
+  }
 }
 
 class _TripCardState extends State<TripCard> {
@@ -35,7 +42,9 @@ class _TripCardState extends State<TripCard> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(40),
         color: Colors.white,
-        boxShadow: [BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.15), offset: Offset(3.0, 3.0))],
+        boxShadow: <BoxShadow>[
+          BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.15), offset: Offset(3.0, 3.0))
+        ],
       ),
       child: Column(
         children: <Widget>[
@@ -51,7 +60,7 @@ class _TripCardState extends State<TripCard> {
               child: Row(
                 children: <Widget>[
                   Hero(
-                    tag: 'trip_image' + _tripModel.index.toString(),
+                    tag: 'trip_image${_tripModel.index.toString()}',
                     child: Container(
                       height: 80,
                       width: 80,
@@ -79,9 +88,8 @@ class _TripCardState extends State<TripCard> {
                           height: 14,
                         ),
                         FashionFetishText(
-                          text: DateConverter.toShortenedMonthString( _tripModel.startDate)
-                            + ' - '
-                            + DateConverter.toShortenedMonthString( _tripModel.endDate),
+                          text: '${DateConverter.format( _tripModel.startDate)} - '
+                            + '${DateConverter.format( _tripModel.endDate)}',
                           size: 14.0,
                           fontWeight: FashionFontWeight.BOLD,
                           color: Colors.black54,
