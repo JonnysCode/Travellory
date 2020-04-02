@@ -1,13 +1,5 @@
 
 class TripModel {
-  String name;
-  DateTime startDate;
-  DateTime endDate;
-  String destination;
-  String imagePath;
-  int imageNr;
-  int index;
-
   TripModel({
     this.name,
     this.startDate,
@@ -16,11 +8,19 @@ class TripModel {
     this.imageNr,
     this.index
   }){
-    this.imagePath = 'assets/images/home/trip/trip_' + imageNr.toString() + '.png';
+    imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
   }
+
+  String name;
+  DateTime startDate;
+  DateTime endDate;
+  String destination;
+  String imagePath;
+  int imageNr;
+  int index;
 }
 
-List<TripModel> tripModels = [
+List<TripModel> tripModels = <TripModel>[
   TripModel(
     name: 'Castle Discovery',
     startDate: DateTime(2020, 5, 12),
