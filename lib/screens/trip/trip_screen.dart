@@ -11,7 +11,7 @@ class TripScreen extends StatefulWidget {
 class _TripScreenState extends State<TripScreen> {
   @override
   Widget build(BuildContext context) {
-    final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
+    TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     Widget _subsection(String title){
       return Container(
@@ -31,13 +31,11 @@ class _TripScreenState extends State<TripScreen> {
             Positioned(
               top: 17,
               right: 34,
-              child: Container(
-                child: FashionFetishText(
-                  text: 'Add',
-                  size: 16,
-                  fontWeight: FashionFontWeight.BOLD,
-                  color: Colors.black45,
-                ),
+              child: FashionFetishText(
+                text: 'Add',
+                size: 16,
+                fontWeight: FashionFontWeight.BOLD,
+                color: Colors.black45,
               ),
             ),
             Positioned(
@@ -51,7 +49,7 @@ class _TripScreenState extends State<TripScreen> {
                   padding: EdgeInsets.only(top: 20, right: 10),
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/images/home/trip/add.png"),
+                      image: AssetImage('assets/images/home/trip/add.png'),
                       fit: BoxFit.fitWidth,
                       alignment: Alignment.bottomCenter,
                     ),
@@ -70,8 +68,8 @@ class _TripScreenState extends State<TripScreen> {
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemCount: 3,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
+          itemBuilder: (context, index) =>
+            Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Container(
                 height: 50,
@@ -82,9 +80,8 @@ class _TripScreenState extends State<TripScreen> {
                   ),
                 child: Center(child: Text('Entry')),
               ),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) => const Divider(),
+            ),
+          separatorBuilder: (context, index) => const Divider(),
         ),
       );
     }

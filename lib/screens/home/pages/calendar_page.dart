@@ -45,6 +45,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 //boxShadow: [BoxShadow(blurRadius: 3, color: Colors.black.withOpacity(.15), offset: Offset(4.0, 4.0))],
               ),
               child: SfCalendar(
+                key: Key('yearly_calendar'),
                 view: CalendarView.month,
                 cellBorderColor: Colors.transparent,
                 todayHighlightColor: Colors.blueGrey,
