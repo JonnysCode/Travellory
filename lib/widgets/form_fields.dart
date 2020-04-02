@@ -66,6 +66,7 @@ class FormFieldTimeWidget extends FormFieldWidget {
 
   GestureDetector timeRequired(BuildContext context) {
     return GestureDetector(
+      key: Key('Time Field Required'),
       child: ListTile(
         leading: icon,
         title: TextFormField(
@@ -87,6 +88,7 @@ class FormFieldTimeWidget extends FormFieldWidget {
 
   GestureDetector time(BuildContext context) {
     return GestureDetector(
+      key: Key('Time Field'),
       child: ListTile(
         leading: icon,
         title: TextFormField(
@@ -119,6 +121,7 @@ class FormFieldDateWidget extends FormFieldWidget {
 
   GestureDetector firstDate(BuildContext context) {
     return GestureDetector(
+      key: Key('First Date Field'),
       child: ListTile(
         leading: icon,
         title: TextFormField(
@@ -140,6 +143,7 @@ class FormFieldDateWidget extends FormFieldWidget {
 
   GestureDetector secondDateRequired(BuildContext context, FormFieldDateWidget mustBeAfter) {
     return GestureDetector(
+      key: Key('Second Date Field Required'),
       child: ListTile(
         leading: icon,
         title: TextFormField(
