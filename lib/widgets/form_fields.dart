@@ -1,3 +1,4 @@
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:travellory/widgets/date_picker.dart';
 
@@ -189,12 +190,24 @@ class FormFieldDateWidget extends FormFieldWidget {
 
 CheckboxListTile checkbox(bool checkboxBool, String checkboxText, void function(bool valueBool)) {
   return CheckboxListTile(
-          value: checkboxBool,
-          onChanged: (bool value) => function(value),
-          title: new Text(
-            checkboxText,
-            style: TextStyle(fontSize: 16),
-          ),
-          controlAffinity: ListTileControlAffinity.leading
-  );
+      value: checkboxBool,
+      onChanged: (bool value) => function(value),
+      title: new Text(
+        checkboxText,
+        style: TextStyle(fontSize: 16),
+      ),
+      controlAffinity: ListTileControlAffinity.leading);
+}
+
+DropDownField dropdown(String type, List<String> types) {
+  return DropDownField(
+      value: type,
+      required: true,
+      strict: true,
+      labelText: 'Type of accommodation',
+      // icon: Icon(Icons.account_balance),
+      items: types,
+      setter: (dynamic newValue) {
+        type = newValue;
+      });
 }

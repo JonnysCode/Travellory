@@ -6,6 +6,7 @@ import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/dropdown.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/section_titles.dart';
 import 'package:travellory/widgets/show_dialog.dart';
@@ -78,12 +79,26 @@ class _PublicTransportState extends State<PublicTransport> {
     super.dispose();
   }
 
+  Item selectedType;
+  List<Item> types = <Item>[
+    const Item('Rail', Icon(Icons.directions_railway, color: const Color(0xFF167F67))),
+    const Item('Bus', Icon(Icons.directions_bus, color: const Color(0xFF167F67))),
+    const Item('Metro', Icon(Icons.train, color: const Color(0xFF167F67))),
+    const Item('Ferry', Icon(Icons.directions_boat, color: const Color(0xFF167F67))),
+    const Item('Taxi', Icon(Icons.directions_car, color: const Color(0xFF167F67))),
+    const Item('Uber', Icon(Icons.directions_car, color: const Color(0xFF167F67))),
+    const Item('Other', Icon(Icons.directions_walk, color: const Color(0xFF167F67))),
+  ];
+
+  void updateDropdown(Item newValue) {
+    setState(() => selectedType = newValue);
+  }
+
   @override
   Widget build(BuildContext context) {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void returnToTripScreen() {
-      Navigator.pop(context);
       Navigator.pop(context);
     }
 
@@ -212,7 +227,8 @@ class _PublicTransportState extends State<PublicTransport> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _typeFormField.required(),
+                      child: dropdownField('Select Transport Type', selectedType, types,
+                          context, 'Please enter the required information', updateDropdown),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -324,7 +340,7 @@ class _PublicTransportState extends State<PublicTransport> {
                       padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                       child: Container(
                         child: cancelButton("CANCEL", context, () {
-                          cancellingDialog(context, returnToTripScreen);
+                          cancellingDialog(context);
                         }),
                       ),
                     ),

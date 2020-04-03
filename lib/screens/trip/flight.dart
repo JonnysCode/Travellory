@@ -74,7 +74,6 @@ class _FlightState extends State<Flight> {
 
     void returnToTripScreen() {
       Navigator.pop(context);
-      Navigator.pop(context);
     }
 
     bool validateForm() {
@@ -295,7 +294,7 @@ class _FlightState extends State<Flight> {
                       padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                       child: Container(
                         child: cancelButton("CANCEL", context, () {
-                          cancellingDialog(context, returnToTripScreen);
+                          cancellingDialog(context);
                         }),
                       ),
                     ),

@@ -30,7 +30,7 @@ void showSubmittedBookingDialog(
   );
 }
 
-void cancellingDialog(BuildContext context, void function()) {
+void cancellingDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -49,7 +49,8 @@ void cancellingDialog(BuildContext context, void function()) {
             Navigator.pop(context);
           }),
           alertButton("Yes", Color(0xFFF48FB1), context, () async {
-            function();
+            Navigator.pop(context);
+            Navigator.pop(context);
           }),
         ],
       );
