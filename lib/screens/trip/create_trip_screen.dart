@@ -1,3 +1,4 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/rental_car_model.dart';
@@ -134,7 +135,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                                     endDate: _returnDateFormField.controller.text,
                                     destination: _destinationFormField.controller.text,
                                 );
-                                //_addRentalCar(rentalCar);
+                                //_addTrip(tripModel);
                                 showSubmittedBookingDialog(
                                     context, alertText, _returnToHomeScreen);
                               }),
@@ -220,8 +221,30 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
   }
 
   _returnToHomeScreen() {
-    //Navigator.popUntil(context, ModalRoute.withName('/home'));
     Navigator.pop(context);
     Navigator.pop(context);
+  }
+
+  void _addTrip(TripModel trip) async {
+    HttpsCallable callable =
+    CloudFunctions.instance.getHttpsCallable(functionName: '...');
+    try {
+      final HttpsCallableResult result = await callable.call(<String, dynamic>{
+        "name": trip.name,
+        "startDate": trip.startDate,
+        "endDate": trip.endDate,
+        "destination": trip.destination,
+        "imageNr": trip.imageNr
+      });
+      print(result.data);
+    } on CloudFunctionsException catch (e) {
+      print('caught firebase functions exception');
+      print(e.code);
+      print(e.message);
+      print(e.details);
+    } catch (e) {
+      print('caught generic exception');
+      print(e);
+    }
   }
 }
