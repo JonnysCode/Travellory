@@ -13,7 +13,11 @@ class _TripScreenState extends State<TripScreen> {
   Widget build(BuildContext context) {
     TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
-    Widget _subsection(String title){
+    void _openBooking(String bookingSite){
+      Navigator.pushNamed(context, bookingSite, arguments: _tripModel);
+    }
+
+    Widget _subsection(String title, String route){
       return Container(
         height: 40,
         width: MediaQuery.of(context).size.width,
@@ -42,7 +46,7 @@ class _TripScreenState extends State<TripScreen> {
               top: 6,
               right: 0,
               child: GestureDetector(
-                onTap: () => {},
+                onTap: () => _openBooking(route),
                 child: Container(
                   height: 28,
                   width: 28,
@@ -97,7 +101,7 @@ class _TripScreenState extends State<TripScreen> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Flight'),
+                    child: _subsection('Flight', '/booking/flight'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -105,7 +109,7 @@ class _TripScreenState extends State<TripScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Accommodation'),
+                    child: _subsection('Accommodation', '/booking/accommodation'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -113,7 +117,7 @@ class _TripScreenState extends State<TripScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Attractions'),
+                    child: _subsection('Activities', '/booking/activity'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -121,7 +125,7 @@ class _TripScreenState extends State<TripScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Car rental'),
+                    child: _subsection('Car rental', '/booking/rentalCar'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -129,7 +133,7 @@ class _TripScreenState extends State<TripScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Transportation'),
+                    child: _subsection('Transportation', '/booking/publicTransport'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
