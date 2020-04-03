@@ -83,13 +83,13 @@ class _HomeState extends State<Home> {
     return Container(
       height: 48,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(20.0),
         boxShadow: <BoxShadow>[
-          BoxShadow(blurRadius: 50, color: Colors.black.withOpacity(.2), offset: Offset(0.0, -0.0))
+          BoxShadow(blurRadius: 50, color: Colors.black.withOpacity(.3), offset: Offset(0.0, -0.0))
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
         child: CustomNavigationBar(
           iconSize: 22.0,
           selectedColor: Color(0xff040307),
