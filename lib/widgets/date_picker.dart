@@ -14,7 +14,7 @@ void selectDate(BuildContext context, FormFieldDateWidget formFieldDateWidget) a
   );
   if (pickedDate != null) {
     formFieldDateWidget.selectedDate = pickedDate;
-    String pickedDateString = pickedDate.toString();
+    final String pickedDateString = pickedDate.toString();
     formFieldDateWidget.displayController.text = "$pickedDateString".split(' ')[0];
     formFieldDateWidget.controller.text = pickedDate.toIso8601String();
   }
@@ -27,7 +27,7 @@ void selectTime(BuildContext context, FormFieldTimeWidget formFieldTimeWidget) a
       initialTime: TimeOfDay.now());
   if (pickedTime != null && pickedTime != formFieldTimeWidget.selectedTime)  {
     formFieldTimeWidget.displayController.text = pickedTime.format(context);
-    String pickedTimeString = pickedTime.format(context).toString();
+    final String pickedTimeString = pickedTime.format(context).toString();
     formFieldTimeWidget.controller.text = pickedTimeString;
   }
 }

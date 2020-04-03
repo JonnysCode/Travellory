@@ -78,7 +78,7 @@ class _FlightState extends State<Flight> {
     }
 
     bool validateForm() {
-      return (flightFormKey.currentState.validate());
+      return flightFormKey.currentState.validate();
     }
 
     return Scaffold(
@@ -270,13 +270,9 @@ class _FlightState extends State<Flight> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: Container(
-                        child: submitButton(
-                            context,
-                            Theme.of(context).primaryColor,
-                            // TODO handle bool from checkboxes
-                            Theme.of(context).primaryColor,
-                            validateForm, () async {
-                          FlightModel flight = new FlightModel(
+                        child: submitButton(context, Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor, validateForm, () async {
+                          final FlightModel flight = new FlightModel(
                               bookingReference: _bookingReferenceFormField.controller.text,
                               airline: _airlineFormField.controller.text,
                               flightNr: _flightNrFormField.controller.text,
@@ -316,7 +312,7 @@ class _FlightState extends State<Flight> {
 }
 
 void _addFlight(FlightModel flight) async {
-  HttpsCallable callable =
+  final HttpsCallable callable =
       CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addFlight');
   try {
     final HttpsCallableResult result = await callable.call(<String, dynamic>{
