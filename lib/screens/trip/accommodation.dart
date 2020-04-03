@@ -5,6 +5,7 @@ import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/dropdown.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/form_fields.dart';
 import 'package:travellory/widgets/section_titles.dart';
@@ -41,6 +42,20 @@ class _AccommodationState extends State<Accommodation> {
 
   bool breakfastBool = false;
 
+  Item selectedType;
+  List<Item> types = <Item>[
+    const Item('Hotel', Icon(Icons.hotel, color: const Color(0xFF167F67))),
+    const Item('Airbnb', Icon(Icons.hotel, color: const Color(0xFF167F67))),
+    const Item('Hostel', Icon(Icons.hotel, color: const Color(0xFF167F67))),
+    const Item('Motel', Icon(Icons.hotel, color: const Color(0xFF167F67))),
+    const Item('Bed & Breakfast', Icon(Icons.hotel, color: const Color(0xFF167F67))),
+    const Item('Other', Icon(Icons.hotel, color: const Color(0xFF167F67))),
+  ];
+
+  void updateDropdown(Item newValue) {
+    setState(() => selectedType = newValue);
+  }
+
   void breakfastCheckbox(bool value) {
     setState(() => breakfastBool = value);
   }
@@ -75,7 +90,6 @@ class _AccommodationState extends State<Accommodation> {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void returnToTripScreen() {
-      Navigator.pop(context);
       Navigator.pop(context);
     }
 
@@ -130,9 +144,7 @@ class _AccommodationState extends State<Accommodation> {
                       alignment: Alignment.topLeft,
                       width: MediaQuery.of(context).size.width,
                       constraints: BoxConstraints(
-                          maxHeight: 100.0,
-                          maxWidth: MediaQuery.of(context).size.width - 200
-                      ),
+                          maxHeight: 100.0, maxWidth: MediaQuery.of(context).size.width - 200),
                       child: FashionFetishText(
                         text: _tripModel.name,
                         size: 24,
@@ -149,14 +161,13 @@ class _AccommodationState extends State<Accommodation> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         FashionFetishText(
-                            text: 'From: ${DateConverter.format( _tripModel.startDate)}'
-                                + '\n'
-                                + 'To: ${DateConverter.format( _tripModel.endDate)}',
+                            text: 'From: ${DateConverter.format(_tripModel.startDate)}' +
+                                '\n' +
+                                'To: ${DateConverter.format(_tripModel.endDate)}',
                             color: Colors.black54,
                             fontWeight: FashionFontWeight.BOLD,
                             size: 14,
-                            height: 1.25
-                        ),
+                            height: 1.25),
                         SizedBox(
                           height: 12,
                         ),
@@ -200,7 +211,8 @@ class _AccommodationState extends State<Accommodation> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _typeFormField.required(),
+                      child: dropdownField('Select Accommodation Type', selectedType, types,
+                          context, 'Please enter the required information', updateDropdown),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -270,12 +282,9 @@ class _AccommodationState extends State<Accommodation> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: Container(
-                        child: submitButton(
-                            context,
-                            Theme.of(context).primaryColor,
-                            Theme.of(context).primaryColor,
-                            validateForm, () async {
-                         final AccommodationModel accommodation = new AccommodationModel(
+                        child: submitButton(context, Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor, validateForm, () async {
+                          final AccommodationModel accommodation = new AccommodationModel(
                               type: _typeFormField.controller.text,
                               hotelName: _nameFormField.controller.text,
                               confirmationNr: _confirmationFormField.controller.text,
@@ -298,7 +307,7 @@ class _AccommodationState extends State<Accommodation> {
                       padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                       child: Container(
                         child: cancelButton("CANCEL", context, () {
-                          cancellingDialog(context, returnToTripScreen);
+                          cancellingDialog(context);
                         }),
                       ),
                     ),
