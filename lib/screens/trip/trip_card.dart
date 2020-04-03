@@ -30,109 +30,80 @@ class _TripCardState extends State<TripCard> {
     _tripModel = tripModel;
   }
 
-  void _openTrip(){
-    Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
-      width: MediaQuery.of(context).size.width - 20,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40),
-        color: Colors.white,
-        boxShadow: <BoxShadow>[
-          BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.2), offset: Offset(3.0, 3.0))
-        ],
-      ),
-      child: Column(
+      height: 100,
+      child: Stack(
         children: <Widget>[
-          GestureDetector(
-            onTap: () => _openTrip(),
-            child: Container(
-              height: 80,
-              width: MediaQuery.of(context).size.width - 20,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                color: Color(0xFFCCD7DD),
-              ),
-              child: Row(
-                children: <Widget>[
-                  Hero(
-                    tag: 'trip_image${_tripModel.index.toString()}',
-                    child: Container(
-                      height: 80,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(_tripModel.imagePath),
-                          fit: BoxFit.fitWidth,
-                          alignment: Alignment.bottomCenter,
-                        ),
-                      ),
+          Positioned(
+            left: 40,
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel),
+              child: Container(
+                height: 100,
+                width: 300,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color(0xFFCCD7DD),
+                ),
+                padding: const EdgeInsets.only(left: 50.0, top: 16.0, bottom: 16.0, right: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    FashionFetishText(
+                      text: _tripModel.name,
+                      size: 20.0,
+                      fontWeight: FashionFontWeight.HEAVY,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0, top: 12.0, right: 30.0, bottom: 7.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
+                    Spacer(),
+                    FashionFetishText(
+                      text: '${DateConverter.format( _tripModel.startDate)} - '
+                          + '${DateConverter.format( _tripModel.endDate)}',
+                      size: 14.0,
+                      fontWeight: FashionFontWeight.BOLD,
+                      color: Colors.black54,
+                      height: 1.3,
+                    ),
+                    Spacer(),
+                    Row(
                       children: <Widget>[
-                        FashionFetishText(
-                          text: _tripModel.name,
-                          size: 20.0,
-                          fontWeight: FashionFontWeight.HEAVY,
+                        Icon(
+                          FontAwesomeIcons.locationArrow,
+                          size: 15,
+                          color: Colors.redAccent,
                         ),
-                        SizedBox(
-                          height: 14,
-                        ),
-                        FashionFetishText(
-                          text: '${DateConverter.format( _tripModel.startDate)} - '
-                            + '${DateConverter.format( _tripModel.endDate)}',
-                          size: 14.0,
-                          fontWeight: FashionFontWeight.BOLD,
-                          color: Colors.black54,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                FontAwesomeIcons.locationArrow,
-                                size: 15,
-                                color: Colors.redAccent,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 6, left: 3),
-                                child: FashionFetishText(
-                                  text: _tripModel.destination,
-                                  size: 14.0,
-                                  fontWeight: FashionFontWeight.HEAVY,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6, left: 3),
+                          child: FashionFetishText(
+                            text: _tripModel.destination,
+                            size: 14.0,
+                            fontWeight: FashionFontWeight.HEAVY,
+                            color: Colors.black54,
                           ),
                         ),
                       ],
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-          Container(
-            height: 90,
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: IconButton(
-                  onPressed: () => _openTrip(),
-                  icon: FaIcon(FontAwesomeIcons.angleDown, color: Colors.black54),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Hero(
+              tag: 'trip_image${_tripModel.index.toString()}',
+              child: Container(
+                height: 80,
+                width: 80,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(_tripModel.imagePath),
+                    fit: BoxFit.fitWidth,
+                    alignment: Alignment.bottomCenter,
+                  ),
+                ),
               ),
             ),
           ),
