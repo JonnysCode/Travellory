@@ -1,14 +1,11 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/widgets/buttons.dart';
-import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/form_fields.dart';
 import 'package:travellory/widgets/section_titles.dart';
 import 'package:travellory/widgets/show_dialog.dart';
-import 'package:travellory/widgets/trip/trip_header.dart';
 
 class CreateTripScreen extends StatefulWidget {
   @override
@@ -130,10 +127,11 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                           child: submitButton(context, Theme.of(context).primaryColor,
                               Theme.of(context).primaryColor, validateForm, () async {
                                 TripModel tripModel = TripModel(
-                                    name: _titleFormField.controller.text,
-                                    startDate: _startDateFormField.controller.text,
-                                    endDate: _returnDateFormField.controller.text,
-                                    destination: _destinationFormField.controller.text,
+                                  name: _titleFormField.controller.text,
+                                  startDate: _startDateFormField.controller.text,
+                                  endDate: _returnDateFormField.controller.text,
+                                  destination: _destinationFormField.controller.text,
+                                  imageNr: _selectedIndex+1,
                                 );
                                 //_addTrip(tripModel);
                                 showSubmittedBookingDialog(
