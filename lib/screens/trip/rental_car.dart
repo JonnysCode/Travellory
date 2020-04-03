@@ -70,7 +70,7 @@ class _RentalCarState extends State<RentalCar> {
     }
 
     bool validateForm() {
-      return (rentalCarFormKey.currentState.validate());
+      return rentalCarFormKey.currentState.validate();
     }
 
     return Scaffold(
@@ -253,7 +253,7 @@ class _RentalCarState extends State<RentalCar> {
                       child: Container(
                         child: submitButton(context, Theme.of(context).primaryColor,
                             Theme.of(context).primaryColor, validateForm, () async {
-                          RentalCarModel rentalCar = new RentalCarModel(
+                          final RentalCarModel rentalCar = new RentalCarModel(
                               bookingReference: _bookingReferenceFormField.controller.text,
                               company: _companyFormField.controller.text,
                               pickupLocation: _pickupLocationFormField.controller.text,
@@ -292,7 +292,7 @@ class _RentalCarState extends State<RentalCar> {
 }
 
 void _addRentalCar(RentalCarModel rentalCar) async {
-  HttpsCallable callable =
+  final HttpsCallable callable =
       CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addRentalCar');
   try {
     final HttpsCallableResult result = await callable.call(<String, dynamic>{
