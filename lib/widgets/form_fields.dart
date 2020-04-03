@@ -198,16 +198,3 @@ CheckboxListTile checkbox(bool checkboxBool, String checkboxText, void function(
       ),
       controlAffinity: ListTileControlAffinity.leading);
 }
-
-DropDownField dropdown(String type, List<String> types) {
-  return DropDownField(
-      value: type,
-      required: true,
-      strict: true,
-      labelText: 'Type of accommodation',
-      // icon: Icon(Icons.account_balance),
-      items: types,
-      setter: (dynamic newValue) {
-        type = newValue;
-      });
-}
