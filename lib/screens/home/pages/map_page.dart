@@ -26,7 +26,6 @@ class _MapPageState extends State<MapPage> {
     return Container(
       key: Key('map_page'),
       child: MapSample(),
-      margin: const EdgeInsets.only(bottom: 53),
     );
   }
 }
@@ -73,20 +72,28 @@ class MapSampleState extends State<MapSample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          controller.setMapStyle(_mapStyle);
-          _onMapCreated(controller);
-          _controller.complete(controller);
-        },
-        markers: _markers.values.toSet(),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: Text('To the lake!'),
-        icon: Icon(Icons.directions_boat),
+      body: Stack(
+        children: <Widget>[
+          GoogleMap(
+            mapType: MapType.normal,
+            initialCameraPosition: _kGooglePlex,
+            onMapCreated: (GoogleMapController controller) {
+              controller.setMapStyle(_mapStyle);
+              _onMapCreated(controller);
+              _controller.complete(controller);
+            },
+            markers: _markers.values.toSet(),
+          ),
+          Positioned(
+            right: 10,
+            bottom: 70,
+            child: FloatingActionButton.extended(
+              onPressed: _goToTheLake,
+              label: Text('To the lake!'),
+              icon: Icon(Icons.directions_boat),
+            ),
+          ),
+        ],
       ),
     );
   }
