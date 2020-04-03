@@ -86,7 +86,7 @@ class MapSampleState extends State<MapSample> {
           ),
           Positioned(
             right: 10,
-            bottom: 70,
+            bottom: 150,
             child: FloatingActionButton.extended(
               onPressed: _goToTheLake,
               label: Text('To the lake!'),
