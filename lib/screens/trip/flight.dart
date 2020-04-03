@@ -101,7 +101,7 @@ class _FlightState extends State<Flight> {
                     top: 0,
                     right: 0,
                     child: IconButton(
-                      onPressed: () => returnToTripScreen,
+                      onPressed: () => returnToTripScreen(),
                       icon: FaIcon(FontAwesomeIcons.times),
                       iconSize: 26,
                       color: Colors.red,
