@@ -43,7 +43,7 @@ class _TripCardState extends State<TripCard> {
         borderRadius: BorderRadius.circular(40),
         color: Colors.white,
         boxShadow: <BoxShadow>[
-          BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.15), offset: Offset(3.0, 3.0))
+          BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.2), offset: Offset(3.0, 3.0))
         ],
       ),
       child: Column(

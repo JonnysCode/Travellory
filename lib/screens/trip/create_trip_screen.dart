@@ -128,15 +128,15 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                           width: 120,
                           child: submitButton(context, Theme.of(context).primaryColor,
                               Theme.of(context).primaryColor, validateForm, () async {
-                                RentalCarModel rentalCar = new RentalCarModel(
-                                    company: _titleFormField.controller.text,
-                                    pickupDate: _startDateFormField.controller.text,
-                                    returnDate: _returnDateFormField.controller.text,
-                                    carDescription: _destinationFormField.controller.text,
+                                TripModel tripModel = TripModel(
+                                    name: _titleFormField.controller.text,
+                                    startDate: _startDateFormField.controller.text,
+                                    endDate: _returnDateFormField.controller.text,
+                                    destination: _destinationFormField.controller.text,
                                 );
                                 //_addRentalCar(rentalCar);
                                 showSubmittedBookingDialog(
-                                    context, alertText, _pop());
+                                    context, alertText, _returnToHomeScreen);
                               }),
                         ),
                       ),
@@ -148,7 +148,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                           height: 32,
                           width: 120,
                           child: cancelButton("CANCEL", context, () {
-                            cancellingDialog(context, _pop());
+                            cancellingDialog(context, _returnToHomeScreen);
                           }),
                         ),
                       ),
@@ -219,7 +219,9 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
     );
   }
 
-  _pop() {
+  _returnToHomeScreen() {
+    //Navigator.popUntil(context, ModalRoute.withName('/home'));
+    Navigator.pop(context);
     Navigator.pop(context);
   }
 }
