@@ -93,7 +93,7 @@ class _RentalCarState extends State<RentalCar> {
                     top: 0,
                     right: 0,
                     child: IconButton(
-                      onPressed: () => returnToTripScreen,
+                      onPressed: () => returnToTripScreen(),
                       icon: FaIcon(FontAwesomeIcons.times),
                       iconSize: 26,
                       color: Colors.red,
