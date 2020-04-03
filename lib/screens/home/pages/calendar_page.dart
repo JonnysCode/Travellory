@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_core/core.dart';
+import 'package:travellory/screens/trip/trip_list.dart';
 
 class CalendarPage extends StatefulWidget {
   @override
@@ -29,105 +30,113 @@ class _CalendarPageState extends State<CalendarPage> {
     SyncfusionLicense.registerLicense(
         "NT8mJyc2IWhiZH1nfWN9Z2VoZ3xhYXxhY2Fjc2JhaWBiaWZicwMeaDI9Jzo/KjIgEyAnJjc2PScgfSk7MiR9MDs=");
 
-    return Stack(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              key: Key('calendar_page'),
-              height: 320,
-              width: 300,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(bottom: Radius.circular(40.0)),
-                color: Colors.transparent,
-                //boxShadow: [BoxShadow(blurRadius: 3, color: Colors.black.withOpacity(.15), offset: Offset(4.0, 4.0))],
-              ),
-              child: SfCalendar(
-                key: Key('yearly_calendar'),
-                view: CalendarView.month,
-                cellBorderColor: Colors.transparent,
-                todayHighlightColor: Colors.blueGrey,
-                initialDisplayDate: DateTime.utc(today.year, today.month, 1),
-                dataSource: MeetingDataSource(_getDataSource()),
-                selectionDecoration: BoxDecoration(
-                  color: Colors.black12,
-                  border: Border.all(color: Colors.transparent, width: 1),
-                  borderRadius: const BorderRadius.all(Radius.circular(25)),
-                  shape: BoxShape.rectangle,
+    return SafeArea(
+      child: Stack(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                key: Key('calendar_page'),
+                height: MediaQuery.of(context).size.height/10*4,
+                width: 300,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(40.0)),
+                  color: Colors.transparent,
                 ),
-                headerStyle: CalendarHeaderStyle(
-                    textAlign: TextAlign.left,
-                    backgroundColor: Colors.transparent,//Color(0xFFF7C852),
-                    textStyle: TextStyle(
+                child: SfCalendar(
+                  key: Key('yearly_calendar'),
+                  view: CalendarView.month,
+                  cellBorderColor: Colors.transparent,
+                  todayHighlightColor: Colors.black54,
+                  initialDisplayDate: DateTime.utc(today.year, today.month, 1),
+                  dataSource: MeetingDataSource(_getDataSource()),
+                  initialSelectedDate: today,
+                  selectionDecoration: BoxDecoration(
+                    color: Colors.black12,
+                    border: Border.all(color: Colors.transparent, width: 1),
+                    borderRadius: const BorderRadius.all(Radius.circular(25)),
+                    shape: BoxShape.rectangle,
+                  ),
+                  headerStyle: CalendarHeaderStyle(
+                      textAlign: TextAlign.left,
+                      backgroundColor: Colors.transparent,//Color(0xFFF7C852),
+                      textStyle: TextStyle(
+                          fontFamily: 'FashionFetish',
+                          fontSize: 24,
+                          fontStyle: FontStyle.normal,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600
+                      ),
+                  ),
+                  monthViewSettings: MonthViewSettings(
+                    showAgenda: false,
+                    appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
+                    navigationDirection: MonthNavigationDirection.horizontal,
+                    numberOfWeeksInView: 6,
+                    dayFormat: 'EEE',
+                    monthCellStyle: MonthCellStyle(
+                      todayTextStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
                         fontFamily: 'FashionFetish',
-                        fontSize: 24,
-                        fontStyle: FontStyle.normal,
+                        height: 1.2,
+                      ),
+                      textStyle: TextStyle(
+                        fontSize: 14,
                         color: Colors.white,
-                        fontWeight: FontWeight.w600
+                        fontFamily: 'FashionFetish',
+                        height: 1.2,
+                      ),
+                      trailingDatesTextStyle: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white70,
+                        fontFamily: 'FashionFetish',
+                        height: 1.2,
+                      ),
+                      leadingDatesTextStyle: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white70,
+                        fontFamily: 'FashionFetish',
+                        height: 1.2,
+                      ),
                     ),
-                ),
-                monthViewSettings: MonthViewSettings(
-                  showAgenda: false,
-                  appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
-                  navigationDirection: MonthNavigationDirection.horizontal,
-                  numberOfWeeksInView: 6,
-                  dayFormat: 'EEE',
-                  monthCellStyle: MonthCellStyle(
-                    todayTextStyle: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'FashionFetish',
-                      height: 1.2,
-                    ),
-                    textStyle: TextStyle(
-                      fontSize: 14,
+                  ),
+                  viewHeaderStyle: ViewHeaderStyle(
+                    dayTextStyle: TextStyle(
+                      fontSize: 10,
                       color: Colors.white,
                       fontFamily: 'FashionFetish',
-                      height: 1.2,
-                    ),
-                    trailingDatesTextStyle: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white70,
-                      fontFamily: 'FashionFetish',
-                      height: 1.2,
-                    ),
-                    leadingDatesTextStyle: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white70,
-                      fontFamily: 'FashionFetish',
-                      height: 1.2,
+                      fontWeight: FontWeight.bold,
+                      height: 1.3,
                     ),
                   ),
+                  firstDayOfWeek: 1, // first day of the week should be monday
                 ),
-                viewHeaderStyle: ViewHeaderStyle(
-                  dayTextStyle: TextStyle(
-                    fontSize: 10,
-                    color: Colors.white,
-                    fontFamily: 'FashionFetish',
-                    fontWeight: FontWeight.bold,
-                    height: 1.3,
-                  ),
-                ),
-                firstDayOfWeek: 1, // first day of the week should be monday
               ),
             ),
           ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
-              boxShadow: [BoxShadow(blurRadius: 10, color: Colors.black.withOpacity(.1), offset: Offset(0.0, -6.0))],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: AnimatedContainer(
+                height: MediaQuery.of(context).size.height/10*6-20,
+                duration: Duration(milliseconds: 300),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
+                  boxShadow: [
+                    BoxShadow(blurRadius: 10, color: Colors.black.withOpacity(.1), offset: Offset(0.0, -6.0))
+                  ],
+                ),
+                child: TripList(),
+              ),
             ),
-            height: MediaQuery.of(context).size.height*0.95,
-            width: MediaQuery.of(context).size.width,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
