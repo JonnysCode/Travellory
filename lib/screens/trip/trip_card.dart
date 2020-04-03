@@ -38,24 +38,28 @@ class _TripCardState extends State<TripCard> {
         children: <Widget>[
           Positioned(
             left: 40,
+            right: 0,
             child: GestureDetector(
               onTap: () => Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel),
               child: Container(
                 height: 100,
-                width: 300,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Color(0xFFCCD7DD),
+                  color: Color(0xBBCCD7DD),
+                  boxShadow: <BoxShadow>[
+                    //BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.2), offset: Offset(3.0, 3.0))
+                  ]
                 ),
-                padding: const EdgeInsets.only(left: 50.0, top: 16.0, bottom: 16.0, right: 16.0),
+                padding: const EdgeInsets.only(left: 50.0, top: 14.0, bottom: 14.0, right: 14.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     FashionFetishText(
                       text: _tripModel.name,
-                      size: 20.0,
+                      size: 18.0,
                       fontWeight: FashionFontWeight.HEAVY,
+                      height: 1.1,
                     ),
                     Spacer(),
                     FashionFetishText(
@@ -71,14 +75,14 @@ class _TripCardState extends State<TripCard> {
                       children: <Widget>[
                         Icon(
                           FontAwesomeIcons.locationArrow,
-                          size: 15,
+                          size: 14,
                           color: Colors.redAccent,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 6, left: 3),
                           child: FashionFetishText(
                             text: _tripModel.destination,
-                            size: 14.0,
+                            size: 13.0,
                             fontWeight: FashionFontWeight.HEAVY,
                             color: Colors.black54,
                           ),
@@ -98,6 +102,10 @@ class _TripCardState extends State<TripCard> {
                 height: 80,
                 width: 80,
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.3), offset: Offset(3.0, 3.0))
+                  ],
                   image: DecorationImage(
                     image: AssetImage(_tripModel.imagePath),
                     fit: BoxFit.fitWidth,
