@@ -20,11 +20,6 @@ class _TripHeaderState extends State<TripHeader> {
 
   @override
   Widget build(BuildContext context) {
-
-    void _pop(){
-      Navigator.pop(context);
-    }
-
     return Container(
       height: 190,
       width: MediaQuery.of(context).size.width,
@@ -38,7 +33,7 @@ class _TripHeaderState extends State<TripHeader> {
             top: 0,
             right: 0,
             child: IconButton(
-              onPressed: () => _pop,
+              onPressed: () => Navigator.pop(context),
               icon: FaIcon(FontAwesomeIcons.times),
               iconSize: 26,
               color: Colors.red,
