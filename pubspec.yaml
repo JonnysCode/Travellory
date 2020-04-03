@@ -33,11 +33,11 @@ dependencies:
   flutter_spinkit: ^4.1.2
   firebase_core: 0.4.4 # new
   cloud_functions: 0.4.2+3
-  google_nav_bar: ^2.0.1
   syncfusion_flutter_calendar: ^17.4.40-beta
   font_awesome_flutter: ^8.7.0
   flutter_rounded_date_picker: 1.0.0
   dropdownfield: 1.0.0
+  custom_navigation_bar: ^0.2.4
 
 dev_dependencies:
   flutter_test:
