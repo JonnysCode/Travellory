@@ -5,7 +5,6 @@ import 'package:travellory/screens/home/pages/calendar_page.dart';
 import 'package:travellory/screens/home/pages/home_page.dart';
 import 'package:travellory/screens/home/pages/map_page.dart';
 import 'package:travellory/screens/home/pages/profile_page.dart';
-import 'package:travellory/widgets/layout.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -84,57 +83,46 @@ class _HomeState extends State<Home> {
       return DecoratedBox(
         key: Key('nav_bar'),
         decoration: BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(40.0),
+          color: Colors.white,
           boxShadow: <BoxShadow>[
             BoxShadow(blurRadius: 12, color: Colors.black.withOpacity(.1), offset: Offset(0.0, -3.0))
           ],
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(40.0),
-              topRight: Radius.circular(40.0)),
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                ),
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),
-                child: GNav(
-                    gap: 8,
-                    activeColor: Colors.white,
-                    iconSize: 22,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    duration: Duration(milliseconds: _animationSpeed),
-                    tabBackgroundColor: Theme.of(context).primaryColor,
-                    color: Theme.of(context).primaryColor,
-                    tabs: <GButton>[
-                      GButton(
-                        key: Key('nav_home_button'),
-                        icon: FontAwesomeIcons.suitcaseRolling,
-                        text: 'Home',
-                      ),
-                      GButton(
-                        key: Key('nav_calendar_button'),
-                        icon: FontAwesomeIcons.calendarAlt,
-                        text: 'Calendar',
-                      ),
-                      GButton(
-                        key: Key('nav_map_button'),
-                        icon: FontAwesomeIcons.globeAfrica,
-                        text: 'Map',
-                      ),
-                      GButton(
-                        key: Key('nav_profile_button'),
-                        icon: FontAwesomeIcons.userAlt,
-                        text: 'Profile',
-                      ),
-                    ],
-                    selectedIndex: _navBarIndex,
-                    onTabChange: (index) => _setNavBarIndex(index),
-                ),
-              ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 6),
+            child: GNav(
+                gap: 8,
+                activeColor: Colors.white,
+                iconSize: 22,
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+                duration: Duration(milliseconds: _animationSpeed),
+                tabBackgroundColor: Theme.of(context).primaryColor,
+                color: Theme.of(context).primaryColor,
+                tabs: <GButton>[
+                  GButton(
+                    key: Key('nav_home_button'),
+                    icon: FontAwesomeIcons.suitcaseRolling,
+                    text: 'Home',
+                  ),
+                  GButton(
+                    key: Key('nav_calendar_button'),
+                    icon: FontAwesomeIcons.calendarAlt,
+                    text: 'Calendar',
+                  ),
+                  GButton(
+                    key: Key('nav_map_button'),
+                    icon: FontAwesomeIcons.globeAfrica,
+                    text: 'Map',
+                  ),
+                  GButton(
+                    key: Key('nav_profile_button'),
+                    icon: FontAwesomeIcons.userAlt,
+                    text: 'Profile',
+                  ),
+                ],
+                selectedIndex: _navBarIndex,
+                onTabChange: (index) => _setNavBarIndex(index),
             ),
           ),
         ),
@@ -146,6 +134,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Theme.of(context).primaryColor,
+      bottomNavigationBar: _navigationBar(),
       body: Stack(
         children: <Widget>[
           PageView(
@@ -153,10 +142,6 @@ class _HomeState extends State<Home> {
             scrollDirection: Axis.horizontal,
             onPageChanged: (index) => _setNavIndices(index),
             children: _layoutPages(),
-          ),
-          Container(
-            alignment: Alignment.bottomCenter,
-            child: _navigationBar()
           ),
         ],
       ),
