@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -65,6 +66,7 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.symmetric(horizontal: 6.0),
                 child: Container(
                   height: MediaQuery.of(context).size.height*0.8,
+                  width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
@@ -72,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                       BoxShadow(blurRadius: 18, color: Colors.black.withOpacity(.2), offset: Offset(0.0, -6.0))
                     ],
                   ),
-                  child: Container(),
+                  child: Schedule(),
                 ),
               ),
             ),
