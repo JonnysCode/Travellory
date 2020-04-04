@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/models/day_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class DaySchedule extends StatefulWidget {
   const DaySchedule({
     Key key,
     @required this.expanded,
+    @required this.day,
   }) : super(key: key);
 
   final bool expanded;
+  final Day day;
 
   @override
   _DayScheduleState createState() => _DayScheduleState();
