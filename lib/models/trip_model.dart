@@ -1,4 +1,6 @@
 
+import 'package:travellory/models/day_model.dart';
+
 class TripModel {
   TripModel({
     this.name,
@@ -9,6 +11,7 @@ class TripModel {
     this.index
   }){
     imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
+    _initDays();
   }
 
   String name;
@@ -18,6 +21,26 @@ class TripModel {
   String imagePath;
   int imageNr;
   int index;
+  List<Day> days;
+
+  void _initDays() {
+    var dateTime = _getDateTimeFrom(startDate);
+    var endDateTime = _getDateTimeFrom(endDate);
+
+    do{
+      days.add(Day(
+        date: dateTime
+      ));
+    } while(dateTime.add(Duration(days: 1)).isBefore(endDateTime));
+    days.add(Day(
+        date: endDateTime
+    ));
+  }
+  
+  DateTime _getDateTimeFrom(String date){
+    List<String> dates = startDate.split('-');
+    return DateTime(int.parse(dates[0]));
+  }
 }
 
 List<TripModel> tripModels = <TripModel>[
