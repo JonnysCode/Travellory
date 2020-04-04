@@ -3,14 +3,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/utils/input_validator.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
 
 class SignIn extends StatefulWidget {
 
   final Function toggleView;
-  SignIn({ this.toggleView });
+  const SignIn({ this.toggleView });
 
   @override
   _SignInState createState() => _SignInState();
@@ -20,14 +19,14 @@ class _SignInState extends State<SignIn> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   String _error = '';
 
   Future _signIn(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    dynamic result = await _auth.signInWithEmailAndPassword(_emailController.text, _passwordController.text);
+    final result = await _auth.signInWithEmailAndPassword(_emailController.text, _passwordController.text);
     if(result == null){
       setState(() => _error = 'Could not sign in with those credentials.');
     }
@@ -159,7 +158,7 @@ class _SignInState extends State<SignIn> {
                                             Theme.of(context).primaryColor, Colors.white, () async {
                                               if (_formKey.currentState.validate()) {
                                                 Navigator.pushNamed(context, '/loading');
-                                                dynamic result = await _signIn(context);
+                                                final result = await _signIn(context);
                                                 if(result == null){
                                                   setState(() {
                                                     _error = 'Could not sign in with those credentials.';
@@ -207,29 +206,5 @@ class _SignInState extends State<SignIn> {
         ],
       ),
     );
-  }
-}
-
-/**
- * This is a test function call of a firebase cloud function. It will print the
- * result to the console
- * TODO: remove
- */
-void _testFunCall() async {
-  HttpsCallable callable = CloudFunctions.instance
-      .getHttpsCallable(functionName: 'payment-makePayment');
-
-  try {
-    final HttpsCallableResult result = await callable.call();
-    print(result.data);
-
-  } on CloudFunctionsException catch (e) {
-    print('caught firebase functions exception');
-    print(e.code);
-    print(e.message);
-    print(e.details);
-  } catch (e) {
-    print('caught generic exception');
-    print(e);
   }
 }

@@ -10,7 +10,7 @@ import 'package:travellory/widgets/input_widgets.dart';
 class Register extends StatefulWidget {
   final Function toggleView;
 
-  Register({this.toggleView});
+  const Register({this.toggleView});
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -20,11 +20,12 @@ class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
 
   String _error;
+  String _errorUsername;
   bool _isUsernameAvailable = true;
 
   @override
@@ -36,7 +37,7 @@ class _RegisterState extends State<Register> {
 
   Future _register(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    dynamic result = await _auth.registerWithEmailAndPassword(
+    final result = await _auth.registerWithEmailAndPassword(
         _emailController.text, _passwordController.text, _nameController.text);
     if (result == null) {
       setState(() => _error = 'Please supply a valid email and password.');
@@ -49,11 +50,11 @@ class _RegisterState extends State<Register> {
     setState(() {
       _isUsernameAvailable = isUsernameAvailable;
       _isUsernameAvailable
-          ? _error = null
-          : _error = 'Username is already used';
+          ? _errorUsername = null
+          : _errorUsername = 'Username is already used';
     });
   }
-  
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -196,7 +197,7 @@ class _RegisterState extends State<Register> {
                                           _nameController,
                                           ValidatorType.USERNAME,
                                           false,
-                                          _error),
+                                          _errorUsername),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
@@ -220,7 +221,7 @@ class _RegisterState extends State<Register> {
                                           _passwordController,
                                           ValidatorType.PASSWORD,
                                           true,
-                                          null),
+                                          _error),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
@@ -241,7 +242,7 @@ class _RegisterState extends State<Register> {
                                               _isUsernameAvailable) {
                                             Navigator.pushNamed(
                                                 context, '/loading');
-                                            dynamic result =
+                                            final result =
                                                 await _register(context);
                                             if (result == null) {
                                               setState(() {
