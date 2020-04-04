@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:travellory/utils/date_converter.dart';
 
 void main(){
-  test('dateTime gets converted to the right String', () {
+  test('yyyy-mm-dd String gets converted to a String (d)d mmm yyyy', () {
     final String date1 = '2020-01-01';
     final result1 = DateConverter.format(date1);
 
@@ -51,5 +51,20 @@ void main(){
     expect(result10, '11 Oct 2020');
     expect(result11, '7 Nov 2021');
     expect(result12, '31 Dec 2020');
+  });
+
+  test('dateTime gets converted to a String yyyy-mm-dd', () {
+    final DateTime dateTime1 = DateTime(2020, 8, 5);
+    final dateString1 = DateConverter.toDateStringFrom(dateTime1);
+
+    final DateTime dateTime2 = DateTime(2020, 12, 1);
+    final dateString2 = DateConverter.toDateStringFrom(dateTime2);
+
+    final DateTime dateTime3 = DateTime(2020, 1, 31);
+    final dateString3 = DateConverter.toDateStringFrom(dateTime3);
+
+    expect(dateString1, '2020-08-05');
+    expect(dateString2, '2020-12-01');
+    expect(dateString3, '2020-01-31');
   });
 }

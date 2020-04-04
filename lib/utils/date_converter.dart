@@ -16,4 +16,8 @@ class DateConverter{
 
     return dateBuffer.toString();
   }
+
+  static String toDateStringFrom(DateTime dateTime){
+    return dateTime.toString().substring(0, 10);
+  }
 }
