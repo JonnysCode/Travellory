@@ -20,4 +20,9 @@ class DateConverter{
   static String toDateStringFrom(DateTime dateTime){
     return dateTime.toString().substring(0, 10);
   }
+
+  static DateTime getDateTimeFrom(String date){
+    List<String> dates = date.split('-');
+    return DateTime(int.parse(dates[0]), int.parse(dates[1]), int.parse(dates[2]));
+  }
 }
