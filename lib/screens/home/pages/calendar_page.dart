@@ -56,7 +56,7 @@ class _CalendarPageState extends State<CalendarPage> {
             ),
           ),
           Positioned(
-            left: 5,
+            left: 0,
             top: MediaQuery.of(context).size.height*0.22,
             child: IconButton(
               iconSize: 32,
@@ -66,7 +66,7 @@ class _CalendarPageState extends State<CalendarPage> {
             ),
           ),
           Positioned(
-            right: 5,
+            right: 0,
             top: MediaQuery.of(context).size.height*0.22,
             child: IconButton(
               iconSize: 32,
@@ -154,11 +154,7 @@ class _CalendarPageState extends State<CalendarPage> {
     return Container(
       key: Key('calendar_page'),
       height: MediaQuery.of(context).size.height*0.4,
-      width: 300,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(40.0)),
-        color: Colors.transparent,
-      ),
+      width: MediaQuery.of(context).size.width - 60,
       child: SfCalendar(
         key: Key('yearly_calendar'),
         view: CalendarView.month,
@@ -166,12 +162,12 @@ class _CalendarPageState extends State<CalendarPage> {
         todayHighlightColor: Colors.black54,
         initialDisplayDate: DateTime.utc(today.year, today.month, 1),
         dataSource: MeetingDataSource(_getDataSource()),
-        initialSelectedDate: today,
         selectionDecoration: BoxDecoration(
           color: Colors.black12,
-          border: Border.all(color: Colors.transparent, width: 1),
-          borderRadius: const BorderRadius.all(Radius.circular(25)),
-          shape: BoxShape.rectangle,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(blurRadius: 2, color: Colors.black.withOpacity(.1), offset: Offset(0.0, 0.0))
+          ],
         ),
         headerStyle: CalendarHeaderStyle(
           textAlign: TextAlign.left,
