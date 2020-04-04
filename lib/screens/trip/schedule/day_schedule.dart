@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/day_model.dart';
+import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class DaySchedule extends StatefulWidget {
   const DaySchedule({
     Key key,
-    @required this.expanded,
+    @required this.isExpanded,
     @required this.day,
   }) : super(key: key);
 
-  final bool expanded;
+  final bool isExpanded;
   final Day day;
 
   @override
@@ -17,18 +18,18 @@ class DaySchedule extends StatefulWidget {
 }
 
 class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStateMixin{
-  bool _expanded;
+  bool _isExpanded;
   AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _expanded = widget.expanded;
+    _isExpanded = widget.isExpanded;
     _controller = AnimationController(
       vsync: this, // the SingleTickerProviderStateMixin
       duration: Duration(milliseconds: 200),
     );
-    if(_expanded) _controller.forward();
+    if(_isExpanded) _controller.forward();
   }
 
   @override
@@ -55,6 +56,17 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
                 ),
               ),
               Positioned(
+                left: 20,
+                right: 0,
+                top: 22,
+                child: FashionFetishText(
+                  text: DateConverter.format(widget.day.dateString),
+                  size: 14,
+                  color: Colors.black38,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Positioned(
                 right: 8,
                 top: 0,
                 bottom: 0,
@@ -70,13 +82,12 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
                   ),
                 ),
               ),
-              DayCircle(day: 'MO'),
+              DayCircle(day: widget.day.date.weekday),
             ],
           ),
         ),
-        !_expanded
-            ? SizedBox()
-            : Container(
+        if (_isExpanded)
+            Container(
               color: Colors.blue,
               height: 300,
               child: Row(
@@ -105,8 +116,8 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
 
   _toggleExpanded() {
     setState(() {
-      _expanded = !_expanded;
-      _expanded
+      _isExpanded = !_isExpanded;
+      _isExpanded
           ? _controller.forward()
           : _controller.reverse();
     });
@@ -114,15 +125,18 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
 }
 
 class DayCircle extends StatefulWidget {
+
   const DayCircle({Key key, @required this.day}) : super(key: key);
 
-  final String day;
+  final int day;
 
   @override
   _DayCircleState createState() => _DayCircleState();
 }
 
 class _DayCircleState extends State<DayCircle> {
+  var _days = <String>['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -138,9 +152,9 @@ class _DayCircleState extends State<DayCircle> {
       child: Align(
         alignment: Alignment.topCenter,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 14, 10, 0),
+          padding: const EdgeInsets.fromLTRB(11, 14, 11, 0),
           child: FashionFetishText(
-            text: widget.day,
+            text: _days[widget.day-1],
             color: Colors.white,
             textAlign: TextAlign.center,
             size: 22,
