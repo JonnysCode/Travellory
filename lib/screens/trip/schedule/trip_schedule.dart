@@ -11,8 +11,8 @@ class Schedule extends StatefulWidget {
 class _ScheduleState extends State<Schedule> {
   static TripModel _tripModel = TripModel(
       name: 'Castle Discovery',
-      startDate: '2020-05-12',
-      endDate: '2020-05-25',
+      startDate: '2020-05-11',
+      endDate: '2020-05-19',
       destination: 'Munich',
       imageNr: 3
   );
@@ -33,7 +33,7 @@ class _ScheduleState extends State<Schedule> {
       itemCount: _tripModel.days.length,
       itemBuilder: (context, index) {
         return DaySchedule(
-          expanded: _expandedDays[index],
+          isExpanded: _expandedDays[index],
           day: _tripModel.days[index],
         );
       },
