@@ -45,7 +45,7 @@ class InputValidator {
   static String _validateUsername(String value) {
     if (value.isEmpty) {
       // the form is empty
-      return "Enter a username";
+      return 'Enter a username';
     }
 
     Pattern pattern =
