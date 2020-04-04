@@ -67,4 +67,19 @@ void main(){
     expect(dateString2, '2020-12-01');
     expect(dateString3, '2020-01-31');
   });
+
+  test('String yyyy-mm-dd gets converted to DateTime', () {
+    final String date1 = '2020-08-05';
+    final DateTime dateTime1 = DateConverter.getDateTimeFrom(date1);
+
+    final String date2 = '2020-12-01';
+    final DateTime dateTime2 = DateConverter.getDateTimeFrom(date2);
+
+    final String date3 = '2020-01-31';
+    final DateTime dateTime3 = DateConverter.getDateTimeFrom(date3);
+
+    expect(dateTime1, DateTime(2020, 8, 5));
+    expect(dateTime2, DateTime(2020, 12, 1));
+    expect(dateTime3, DateTime(2020, 1, 31));
+  });
 }
