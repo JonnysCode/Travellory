@@ -12,7 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static const int _animationSpeed = 800;
+  static const int _animationSpeed = 200;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<Widget> _pages = <Widget>[
     HomePage(),

@@ -11,8 +11,6 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  static const _expandedListHeight = 0.95;
-  static const _unexpandedListHeight = 0.58;
   final Color calendarBackgroundColor = Colors.red;
   final DateTime today = DateTime.now();
 
@@ -97,7 +95,7 @@ class _CalendarPageState extends State<CalendarPage> {
                           color: Colors.transparent,
                           borderRadius: BorderRadius.circular(18.0),
                           boxShadow: [
-                            BoxShadow(blurRadius: 10, color: Colors.black.withOpacity(.1), offset: Offset(0.0, -5.0))
+                            BoxShadow(blurRadius: 18, color: Colors.black.withOpacity(.2), offset: Offset(0.0, -5.0))
                           ],
                         ),
                       ),
@@ -110,7 +108,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         color: Colors.white,
                         borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
                         boxShadow: [
-                          BoxShadow(blurRadius: 10, color: Colors.black.withOpacity(.1), offset: Offset(0.0, -6.0))
+                          BoxShadow(blurRadius: 18, color: Colors.black.withOpacity(.2), offset: Offset(0.0, -6.0))
                         ],
                       ),
                       child: TripList(),
