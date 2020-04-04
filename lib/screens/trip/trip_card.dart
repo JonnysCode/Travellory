@@ -46,9 +46,6 @@ class _TripCardState extends State<TripCard> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Color(0xBBCCD7DD),
-                  boxShadow: <BoxShadow>[
-                    //BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.2), offset: Offset(3.0, 3.0))
-                  ]
                 ),
                 padding: const EdgeInsets.only(left: 50.0, top: 14.0, bottom: 14.0, right: 14.0),
                 child: Column(
