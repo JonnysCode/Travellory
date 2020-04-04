@@ -25,44 +25,77 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
       vsync: this, // the SingleTickerProviderStateMixin
       duration: Duration(milliseconds: 200),
     );
+    if(_expanded) _controller.forward();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: <Widget>[
-        Positioned(
-          left: 24,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          child: Center(
-            child: Container(
-              height: 26,
-              decoration: BoxDecoration(
-                color: Color(0xBBCCD7DD),
-                borderRadius: BorderRadius.circular(13.0),
+        Container(
+          width: double.infinity,
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                left: 24,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: Container(
+                    height: 26,
+                    decoration: BoxDecoration(
+                      color: Color(0xBBCCD7DD),
+                      borderRadius: BorderRadius.circular(13.0),
+                    ),
+                  ),
+                ),
               ),
-            ),
+              Positioned(
+                right: 8,
+                top: 0,
+                bottom: 0,
+                child: GestureDetector(
+                  onTap: () => _toggleExpanded(),
+                  child: Center(
+                    child: AnimatedIcon(
+                      progress: _controller,
+                      color: Colors.black54,
+                      size: 20,
+                      icon: AnimatedIcons.menu_close,
+                    ),
+                  ),
+                ),
+              ),
+              DayCircle(day: 'MO'),
+            ],
           ),
         ),
-        Positioned(
-          right: 8,
-          top: 0,
-          bottom: 0,
-          child: GestureDetector(
-            onTap: () => _toggleExpanded(),
-            child: Center(
-              child: AnimatedIcon(
-                progress: _controller,
-                color: Colors.black54,
-                size: 20,
-                icon: AnimatedIcons.menu_close,
+        !_expanded
+            ? SizedBox()
+            : Container(
+              color: Colors.blue,
+              height: 300,
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 40,
+                  ),
+                  Expanded(
+                    child: ListView.separated(
+                      itemCount: 6,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          height: 50,
+                          color: Colors.red,
+                        );
+                      },
+                      separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ),
-        DayCircle(day: 'MO'),
       ],
     );
   }
