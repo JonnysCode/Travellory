@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/screens/trip/schedule/day_schedule.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
@@ -8,16 +9,33 @@ class Schedule extends StatefulWidget {
 }
 
 class _ScheduleState extends State<Schedule> {
-  List<bool> _expandedDays = [true, false, false, false, false, false];
+  static TripModel _tripModel = TripModel(
+      name: 'Castle Discovery',
+      startDate: '2020-05-12',
+      endDate: '2020-05-25',
+      destination: 'Munich',
+      imageNr: 3
+  );
+
+  List<bool> _expandedDays = _tripModel.days.map((day) => false).toList();
+
+  @override
+  void initState() {
+    _expandedDays[0] = true;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       padding: const EdgeInsets.all(10),
       shrinkWrap: false,
-      itemCount: 6,
+      itemCount: _tripModel.days.length,
       itemBuilder: (context, index) {
-        return DaySchedule(expanded: _expandedDays[index]);
+        return DaySchedule(
+          expanded: _expandedDays[index],
+          day: _tripModel.days[index],
+        );
       },
       separatorBuilder: (context, index) => const SizedBox(height: 12),
     );
