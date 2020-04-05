@@ -1,8 +1,9 @@
 import 'dart:io';
-import 'package:intl/intl.dart';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:travellory/providers/auth_provider.dart';
-import 'package:travellory/utils//image_picker_handler.dart';
+import 'package:travellory/utils/image_picker_handler.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -11,14 +12,6 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage>
     with TickerProviderStateMixin, ImagePickerListener {
-  //TODO Logout Button
-/*  Future _signOut(BuildContext context) async {
-    final BaseAuthService _auth = AuthProvider
-        .of(context)
-        .auth;
-    await _auth.signOut();
-*/
-
   File _image;
   AnimationController _controller;
   ImagePickerHandler imagePicker;
@@ -91,17 +84,12 @@ class _ProfilePageState extends State<ProfilePage>
                     return CircularProgressIndicator();
                   }
                 }),
-            // TODO Logout
-            /* FlatButton.icon(
-              onPressed: () => _signOut(context),
-              icon: Icon(Icons.person),
-              label: Text('logout'),
-            ),*/
           ],
         ),
       ),
     );
   }
+
   @override
   userImage(File _image) {
     setState(() {
@@ -112,18 +100,18 @@ class _ProfilePageState extends State<ProfilePage>
 
 Widget displayUserInformation(context, snapshot) {
   final user = snapshot.data;
-  return Column(children: [
+  return Column(key: Key('display_user'), children: [
     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
       SizedBox(width: 50),
       Icon(
         Icons.person,
         color: Theme.of(context).primaryColor,
-        size: 50,
+        size: 40,
       ),
       SizedBox(width: 20),
       Text(
         "${user.displayName}",
-        style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
       ),
     ]),
     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -131,13 +119,12 @@ Widget displayUserInformation(context, snapshot) {
       Icon(
         Icons.email,
         color: Theme.of(context).primaryColor,
-        size: 50,
+        size: 40,
       ),
       SizedBox(width: 20),
-
       Text(
         "${user.email}",
-        style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
       ),
     ]),
     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -145,12 +132,12 @@ Widget displayUserInformation(context, snapshot) {
       Icon(
         Icons.date_range,
         color: Theme.of(context).primaryColor,
-        size: 50,
+        size: 40,
       ),
       SizedBox(width: 20),
       Text(
         "${DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)}",
-        style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
       ),
     ]),
   ]);
