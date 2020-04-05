@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/day_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'package:travellory/widgets/item_fader.dart';
 import 'package:travellory/widgets/trip/schedule/accommodation_schedule.dart';
+import 'package:travellory/widgets/trip/schedule/day_circle.dart';
 import 'package:travellory/widgets/trip/schedule/flight_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/rental_car_schedule.dart';
 
@@ -23,7 +25,7 @@ class DaySchedule extends StatefulWidget {
 class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStateMixin{
   bool _isExpanded;
   AnimationController _controller;
-  List<GlobalKey<_ItemFaderState>> keys;
+  List<GlobalKey<ItemFaderState>> keys;
 
   List<Widget> bookings = <Widget>[FlightSchedule(), RentalCarSchedule(), AccommodationSchedule()];
 
@@ -33,7 +35,7 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
 
     keys = List.generate(
       bookings.length,
-      (_) => GlobalKey<_ItemFaderState>(),
+      (_) => GlobalKey<ItemFaderState>(),
     );
 
     _isExpanded = widget.isExpanded;
@@ -158,134 +160,18 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
   }
 
   Future _hideBookings() async {
-    for (GlobalKey<_ItemFaderState> key in keys) {
+    for (GlobalKey<ItemFaderState> key in keys) {
       await Future.delayed(Duration(milliseconds: 40));
       key.currentState.hide();
     }
   }
 
   void _showBookings() async {
-    for (GlobalKey<_ItemFaderState> key in keys) {
+    for (GlobalKey<ItemFaderState> key in keys) {
       await Future.delayed(Duration(milliseconds: 40));
       key.currentState.show();
     }
   }
-
 }
 
-class DayCircle extends StatefulWidget {
 
-  const DayCircle({
-    Key key,
-    @required this.day
-  }) : super(key: key);
-
-  final int day;
-
-  @override
-  _DayCircleState createState() => _DayCircleState();
-}
-
-class _DayCircleState extends State<DayCircle> {
-  static const days = <String>['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'];
-  static const colors = <Color>[
-    Colors.amber,
-    Colors.orange,
-    Colors.redAccent,
-    Colors.pink,
-    Colors.deepPurpleAccent,
-    Colors.blueAccent,
-    Colors.green
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 48,
-      width: 48,
-      decoration: BoxDecoration(
-        color: colors[0],
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(blurRadius: 4, color: Colors.black.withOpacity(.3), offset: Offset(2.0, 2.0))
-        ],
-      ),
-      child: Align(
-        alignment: Alignment.topCenter,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(11, 14, 11, 0),
-          child: FashionFetishText(
-            text: days[widget.day-1],
-            color: Colors.white,
-            textAlign: TextAlign.center,
-            size: 22,
-            fontWeight: FashionFontWeight.BOLD,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ItemFader extends StatefulWidget {
-  final Widget child;
-
-  const ItemFader({Key key, @required this.child}) : super(key: key);
-
-  @override
-  _ItemFaderState createState() => _ItemFaderState();
-}
-
-class _ItemFaderState extends State<ItemFader>
-    with SingleTickerProviderStateMixin {
-  //1 means its below, -1 means its above
-  int position = 1;
-  AnimationController _animationController;
-  Animation _animation;
-
-  void show() {
-    setState(() => position = -1);
-    _animationController.forward();
-  }
-
-  void hide() {
-    setState(() => position = -1);
-    _animationController.reverse();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 200),
-    );
-    _animation = CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    );
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(0, 32 * position * (1 - _animation.value)),
-          child: Opacity(
-            opacity: _animation.value,
-            child: child,
-          ),
-        );
-      },
-      child: widget.child,
-    );
-  }
-}
