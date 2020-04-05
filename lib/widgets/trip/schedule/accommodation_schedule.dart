@@ -23,7 +23,7 @@ class AccommodationSchedule extends StatelessWidget {
               child: FaIcon(
                 FontAwesomeIcons.bed,
                 size: 28,
-                color: Colors.blueGrey,
+                color: Colors.lightGreen,
               ),
             ),
             Column(

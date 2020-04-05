@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Positioned(
-              top: 45,
+              top: 40,
               left: 175,
               right: 20,
               child: Container(
@@ -47,16 +47,16 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Positioned(
-              top: 80,
+              top: 75,
               left: 175,
               right: 40,
               child: Container(
-                child: FashionFetishText(
-                  text: "You're about to take off.",
-                  size: 18,
-                  color: Colors.black54,
-                  fontWeight: FashionFontWeight.BOLD,
-                  height: 1.2,
+                child: Text(
+                  "Your trip to Los Angeles starts in 1 day. Pack your luggage now.",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ),
@@ -67,6 +67,7 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   height: MediaQuery.of(context).size.height*0.8,
                   width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
                   decoration: BoxDecoration(
                     color: Colors.white,//Color(0xFFeff5f7),
                     borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
