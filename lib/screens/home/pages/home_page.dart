@@ -10,13 +10,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
-  static const List<IconData> icons = <IconData>[
+  static const List<IconData> _icons = <IconData>[
     FontAwesomeIcons.theaterMasks,
     FontAwesomeIcons.car,
     FontAwesomeIcons.bed,
     FontAwesomeIcons.plane,
   ];
   AnimationController _controller;
+  bool _isPressed = false;
 
   @override
   void initState() {
@@ -24,6 +25,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       vsync: this, // the SingleTickerProviderStateMixin
       duration: Duration(milliseconds: 200),
     );
+    //_isPressed = false;
     super.initState();
   }
 
@@ -99,11 +101,24 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ),
             ),
             Positioned(
-              right: 6,
+              left: 0,
+              bottom: 0,
+              child: GestureDetector(
+                onTap: () => _toggleFloatingButton(),
+                child: AnimatedContainer(
+                  width: MediaQuery.of(context).size.width,
+                  height: _isPressed ? MediaQuery.of(context).size.height : 0,
+                  duration: Duration(milliseconds: 100),
+                  color: Colors.black54,
+                ),
+              ),
+            ),
+            Positioned(
+              right: 8,
               bottom: 52,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: List.generate(icons.length, (int index) {
+                children: List.generate(_icons.length, (int index) {
                   Widget child = Container(
                     height: 66.0,
                     width: 56.0,
@@ -113,7 +128,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         parent: _controller,
                         curve: Interval(
                             0.0,
-                            1.0 - index / icons.length / 2.0,
+                            1.0 - index / _icons.length / 2.0,
                             curve: Curves.easeOut
                         ),
                       ),
@@ -121,9 +136,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         backgroundColor: Colors.white,
                         mini: true,
                         child: FaIcon(
-                            icons[index],
-                            color: Colors.black54),
-                        onPressed: () {},
+                            _icons[index],
+                            color: Colors.black54
+                        ),
+                        onPressed: () {}, // TODO: Open Add bookings for current trip
                       ),
                     ),
                   );
@@ -140,13 +156,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         );
                       },
                     ),
-                    onPressed: () {
-                      if (_controller.isDismissed) {
-                        _controller.forward();
-                      } else {
-                        _controller.reverse();
-                      }
-                    },
+                    onPressed: () => _toggleFloatingButton(),
                   ),
                 ),
               ),
@@ -155,5 +165,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         ),
       ),
     );
+  }
+
+  _toggleFloatingButton() {
+    _controller.isDismissed
+        ? _controller.forward()
+        : _controller.reverse();
+    setState(() {
+      _isPressed = !_isPressed;
+    });
   }
 }
