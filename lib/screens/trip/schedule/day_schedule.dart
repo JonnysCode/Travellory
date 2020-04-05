@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/day_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'package:travellory/widgets/trip/schedule/accommodation_schedule.dart';
+import 'package:travellory/widgets/trip/schedule/flight_schedule.dart';
+import 'package:travellory/widgets/trip/schedule/rental_car_schedule.dart';
 
 class DaySchedule extends StatefulWidget {
   const DaySchedule({
@@ -88,25 +91,29 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
         ),
         if (_isExpanded)
             Container(
-              color: Colors.blue,
-              height: 300,
               child: Row(
                 children: <Widget>[
-                  Container(
-                    width: 40,
-                  ),
-                  Expanded(
-                    child: ListView.separated(
-                      itemCount: 6,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          height: 50,
-                          color: Colors.red,
-                        );
-                      },
-                      separatorBuilder: (context, index) => const SizedBox(height: 12),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(23.5, 6, 12.5, 0),
+                    child: Container(
+                      width: 1,
+                      color: Colors.black54,
                     ),
                   ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: Column(
+                        children: <Widget>[
+                          FlightSchedule(),
+                          const Divider(),
+                          RentalCarSchedule(),
+                          const Divider(),
+                          AccommodationSchedule(),
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -122,7 +129,14 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
           : _controller.reverse();
     });
   }
+
+  List<Widget> _getBookings() {
+    return [
+
+    ];
+  }
 }
+
 
 class DayCircle extends StatefulWidget {
 
