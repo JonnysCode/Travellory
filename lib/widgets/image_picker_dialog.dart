@@ -1,10 +1,9 @@
-
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:travellory/utils//image_picker_handler.dart';
+import 'package:travellory/utils/image_picker_handler.dart';
 
 class ImagePickerDialog extends StatelessWidget {
-
   ImagePickerHandler _listener;
   AnimationController _controller;
   BuildContext context;
@@ -69,6 +68,7 @@ class ImagePickerDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     this.context = context;
     return new Material(
+        key: Key('selection_menu'),
         type: MaterialType.transparency,
         child: new Opacity(
           opacity: 1.0,
@@ -83,9 +83,7 @@ class ImagePickerDialog extends StatelessWidget {
                   child: roundedButton(
                       "Camera",
                       EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
-                      Theme
-                          .of(context)
-                          .primaryColor,
+                      Theme.of(context).primaryColor,
                       const Color(0xFFFFFFFF)),
                 ),
                 new GestureDetector(
@@ -93,9 +91,7 @@ class ImagePickerDialog extends StatelessWidget {
                   child: roundedButton(
                       "Gallery",
                       EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
-                      Theme
-                          .of(context)
-                          .primaryColor,
+                      Theme.of(context).primaryColor,
                       const Color(0xFFFFFFFF)),
                 ),
                 const SizedBox(height: 15.0),
@@ -106,9 +102,7 @@ class ImagePickerDialog extends StatelessWidget {
                     child: roundedButton(
                         "Cancel",
                         EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                        Theme
-                            .of(context)
-                            .primaryColor,
+                        Theme.of(context).primaryColor,
                         const Color(0xFFFFFFFF)),
                   ),
                 ),
@@ -143,5 +137,4 @@ class ImagePickerDialog extends StatelessWidget {
     );
     return loginBtn;
   }
-
 }
