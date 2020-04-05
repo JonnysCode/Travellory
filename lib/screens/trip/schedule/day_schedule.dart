@@ -23,16 +23,28 @@ class DaySchedule extends StatefulWidget {
 class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStateMixin{
   bool _isExpanded;
   AnimationController _controller;
+  List<GlobalKey<_ItemFaderState>> keys;
+
+  List<Widget> bookings = <Widget>[FlightSchedule(), RentalCarSchedule(), AccommodationSchedule()];
 
   @override
   void initState() {
     super.initState();
+
+    keys = List.generate(
+      bookings.length,
+      (_) => GlobalKey<_ItemFaderState>(),
+    );
+
     _isExpanded = widget.isExpanded;
     _controller = AnimationController(
       vsync: this, // the SingleTickerProviderStateMixin
       duration: Duration(milliseconds: 200),
     );
-    if(_isExpanded) _controller.forward();
+    if(_isExpanded){
+      _controller.forward();
+      _showBookings();
+    }
   }
 
   @override
@@ -104,13 +116,8 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
                     child: Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: Column(
-                        children: <Widget>[
-                          FlightSchedule(),
-                          const Divider(),
-                          RentalCarSchedule(),
-                          const Divider(),
-                          AccommodationSchedule(),
-                        ],
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                        children: fadingBookings(),
                       ),
                     ),
                   )
@@ -121,26 +128,58 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
     );
   }
 
-  _toggleExpanded() {
+  List<Widget> fadingBookings(){
+    int index = 0;
+    var fadingBookings = <Widget>[];
+
+    for(Widget widget in bookings){
+      fadingBookings.add(ItemFader(child: widget, key: keys[index]));
+      if(index+1 < bookings.length){
+        fadingBookings.add(const Divider());
+      }
+      index++;
+    }
+    return fadingBookings;
+  }
+
+  _toggleExpanded() async {
+    if(_isExpanded){
+      _hideBookings();
+      _controller.reverse();
+    }
+    await Future.delayed(Duration(milliseconds: 260));
     setState(() {
       _isExpanded = !_isExpanded;
-      _isExpanded
-          ? _controller.forward()
-          : _controller.reverse();
+      if(_isExpanded){
+        _controller.forward();
+        _showBookings();
+      }
     });
   }
 
-  List<Widget> _getBookings() {
-    return [
-
-    ];
+  Future _hideBookings() async {
+    for (GlobalKey<_ItemFaderState> key in keys) {
+      await Future.delayed(Duration(milliseconds: 40));
+      key.currentState.hide();
+    }
   }
+
+  void _showBookings() async {
+    for (GlobalKey<_ItemFaderState> key in keys) {
+      await Future.delayed(Duration(milliseconds: 40));
+      key.currentState.show();
+    }
+  }
+
 }
 
 
 class DayCircle extends StatefulWidget {
 
-  const DayCircle({Key key, @required this.day}) : super(key: key);
+  const DayCircle({
+    Key key,
+    @required this.day
+  }) : super(key: key);
 
   final int day;
 
@@ -176,6 +215,69 @@ class _DayCircleState extends State<DayCircle> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ItemFader extends StatefulWidget {
+  final Widget child;
+
+  const ItemFader({Key key, @required this.child}) : super(key: key);
+
+  @override
+  _ItemFaderState createState() => _ItemFaderState();
+}
+
+class _ItemFaderState extends State<ItemFader>
+    with SingleTickerProviderStateMixin {
+  //1 means its below, -1 means its above
+  int position = 1;
+  AnimationController _animationController;
+  Animation _animation;
+
+  void show() {
+    setState(() => position = -1);
+    _animationController.forward();
+  }
+
+  void hide() {
+    setState(() => position = -1);
+    _animationController.reverse();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+    );
+    _animation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(0, 32 * position * (1 - _animation.value)),
+          child: Opacity(
+            opacity: _animation.value,
+            child: child,
+          ),
+        );
+      },
+      child: widget.child,
     );
   }
 }
