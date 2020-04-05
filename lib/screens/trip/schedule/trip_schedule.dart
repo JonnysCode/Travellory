@@ -37,7 +37,7 @@ class _ScheduleState extends State<Schedule> {
           day: _tripModel.days[index],
         );
       },
-      separatorBuilder: (context, index) => const SizedBox(height: 12),
+      separatorBuilder: (context, index) => const SizedBox(height: 8),
     );
   }
 }

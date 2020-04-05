@@ -8,8 +8,11 @@ class FlightSchedule extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(6.0),
       decoration: BoxDecoration(
-        color: Colors.blueGrey.withOpacity(0.4),
+        color: Colors.blueGrey,
         borderRadius: BorderRadius.circular(16.0),
+        boxShadow: [
+          BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.2), offset: Offset(0.0, 6.0))
+        ],
       ),
       child: Row(
         children: <Widget>[
@@ -23,12 +26,12 @@ class FlightSchedule extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Center(
-                child: Text(
-                  '9:30',
-                  style: TextStyle(
-                      color: Colors.black54
-                  ),
-                )
+              child: Text(
+                '9:30',
+                style: TextStyle(
+                    color: Colors.white54,
+                ),
+              ),
             ),
           ),
           Expanded(
@@ -50,7 +53,7 @@ class FlightSchedule extends StatelessWidget {
               child: Text(
                 '12:20',
                 style: TextStyle(
-                  color: Colors.black54
+                  color: Colors.white54,
                 ),
               )
             ),
@@ -87,11 +90,13 @@ class Airport extends StatelessWidget {
           size: 24,
           fontWeight: FashionFontWeight.BOLD,
           height: 1.1,
+          color: Colors.black54,
         ),
         Text(
           name,
           style: TextStyle(
             fontSize: 11,
+            color: Colors.white54
           ),
         ),
       ],
