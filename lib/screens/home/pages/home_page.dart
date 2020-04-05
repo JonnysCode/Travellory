@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'dart:math' as math;
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
+  static const List<IconData> icons = <IconData>[
+    FontAwesomeIcons.theaterMasks,
+    FontAwesomeIcons.car,
+    FontAwesomeIcons.bed,
+    FontAwesomeIcons.plane,
+  ];
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      vsync: this, // the SingleTickerProviderStateMixin
+      duration: Duration(milliseconds: 200),
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -76,6 +95,59 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   child: Schedule(),
+                ),
+              ),
+            ),
+            Positioned(
+              right: 6,
+              bottom: 52,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: List.generate(icons.length, (int index) {
+                  Widget child = Container(
+                    height: 66.0,
+                    width: 56.0,
+                    alignment: FractionalOffset.topCenter,
+                    child: ScaleTransition(
+                      scale: CurvedAnimation(
+                        parent: _controller,
+                        curve: Interval(
+                            0.0,
+                            1.0 - index / icons.length / 2.0,
+                            curve: Curves.easeOut
+                        ),
+                      ),
+                      child: FloatingActionButton(
+                        backgroundColor: Colors.white,
+                        mini: true,
+                        child: FaIcon(
+                            icons[index],
+                            color: Colors.black54),
+                        onPressed: () {},
+                      ),
+                    ),
+                  );
+                  return child;
+                }).toList()..add(
+                  FloatingActionButton(
+                    child: AnimatedBuilder(
+                      animation: _controller,
+                      builder: (BuildContext context, Widget child) {
+                        return Transform(
+                          transform: Matrix4.rotationZ(_controller.value * 0.75 * math.pi),
+                          alignment: FractionalOffset.center,
+                          child: FaIcon(FontAwesomeIcons.plus),
+                        );
+                      },
+                    ),
+                    onPressed: () {
+                      if (_controller.isDismissed) {
+                        _controller.forward();
+                      } else {
+                        _controller.reverse();
+                      }
+                    },
+                  ),
                 ),
               ),
             ),
