@@ -1,4 +1,6 @@
-class AccommodationModel {
+import 'package:travellory/models/booking_model.dart';
+
+class AccommodationModel extends Booking{
   final String type;
   final String hotelName;
   final String confirmationNr;
@@ -26,5 +28,5 @@ class AccommodationModel {
         this.breakfast,
         this.roomType,
         this.accommodationType,
-        this.notes});
+        this.notes}): super();
 }

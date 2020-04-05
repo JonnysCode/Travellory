@@ -1,4 +1,6 @@
-class FlightModel {
+import 'booking_model.dart';
+
+class FlightModel extends Booking{
   final String bookingReference;
   final String airline;
   final String flightNr;
@@ -26,5 +28,5 @@ class FlightModel {
       this.arrivalTime,
       this.checkedBaggage,
       this.excessBaggage,
-      this.notes});
+      this.notes}) : super();
 }

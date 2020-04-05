@@ -1,4 +1,6 @@
-class RentalCarModel {
+import 'booking_model.dart';
+
+class RentalCarModel  extends Booking{
   final String bookingReference;
   final String company;
   final String pickupLocation;
@@ -22,5 +24,5 @@ class RentalCarModel {
         this.returnTime,
         this.carDescription,
         this.carNumberPlate,
-        this.notes});
+        this.notes}) : super();
 }
