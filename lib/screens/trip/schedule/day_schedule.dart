@@ -173,7 +173,6 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
 
 }
 
-
 class DayCircle extends StatefulWidget {
 
   const DayCircle({
@@ -188,7 +187,16 @@ class DayCircle extends StatefulWidget {
 }
 
 class _DayCircleState extends State<DayCircle> {
-  var _days = <String>['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'];
+  static const days = <String>['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'];
+  static const colors = <Color>[
+    Colors.amber,
+    Colors.orange,
+    Colors.redAccent,
+    Colors.pink,
+    Colors.deepPurpleAccent,
+    Colors.blueAccent,
+    Colors.green
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +204,7 @@ class _DayCircleState extends State<DayCircle> {
       height: 48,
       width: 48,
       decoration: BoxDecoration(
-        color: Colors.amber,
+        color: colors[0],
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(blurRadius: 4, color: Colors.black.withOpacity(.3), offset: Offset(2.0, 2.0))
@@ -207,7 +215,7 @@ class _DayCircleState extends State<DayCircle> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(11, 14, 11, 0),
           child: FashionFetishText(
-            text: _days[widget.day-1],
+            text: days[widget.day-1],
             color: Colors.white,
             textAlign: TextAlign.center,
             size: 22,

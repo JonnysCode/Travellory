@@ -1,4 +1,6 @@
-class PublicTransportModel {
+import 'booking_model.dart';
+
+class PublicTransportModel  extends Booking{
   final String transportationType;
   final String company;
   final String specificType;
@@ -30,5 +32,5 @@ class PublicTransportModel {
         this.arrivalLocation,
         this.arrivalDate,
         this.arrivalTime,
-        this.notes});
+        this.notes}) : super();
 }
