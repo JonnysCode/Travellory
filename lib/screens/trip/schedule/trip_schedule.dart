@@ -28,14 +28,18 @@ class _ScheduleState extends State<Schedule> {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       shrinkWrap: false,
-      itemCount: _tripModel.days.length,
+      itemCount: _tripModel.days.length+1,
       itemBuilder: (context, index) {
-        return DaySchedule(
-          isExpanded: _expandedDays[index],
-          day: _tripModel.days[index],
-        );
+        if(index < _tripModel.days.length){
+          return DaySchedule(
+            isExpanded: _expandedDays[index],
+            day: _tripModel.days[index],
+          );
+        } else {
+          return  SizedBox(height: 100);
+        }
       },
       separatorBuilder: (context, index) => const SizedBox(height: 8),
     );

@@ -88,15 +88,31 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 child: Container(
                   height: MediaQuery.of(context).size.height*0.8,
                   width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
                   decoration: BoxDecoration(
-                    color: Colors.white,//Color(0xFFeff5f7),
+                    color: Colors.white,
                     borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
                     boxShadow: [
                       BoxShadow(blurRadius: 18, color: Colors.black.withOpacity(.2), offset: Offset(0.0, -6.0))
                     ],
                   ),
-                  child: Schedule(),
+                  child: Column(
+                    children: <Widget>[
+                      FashionFetishText(
+                        text: 'California Camper Tour',
+                        size: 20,
+                        height: 1.6,
+                        fontWeight: FashionFontWeight.HEAVY,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                        child: Container(
+                          height: 1,
+                          color: Colors.black12,
+                        ),
+                      ),
+                      Expanded(child: Schedule()),
+                    ],
+                  ),
                 ),
               ),
             ),
