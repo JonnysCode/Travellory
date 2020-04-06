@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/utils/input_validator.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
 
 class SignIn extends StatefulWidget {
 
   final Function toggleView;
-  SignIn({ this.toggleView });
+  const SignIn({ this.toggleView });
 
   @override
   _SignInState createState() => _SignInState();
@@ -19,14 +19,14 @@ class _SignInState extends State<SignIn> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   String _error = '';
 
   Future _signIn(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    dynamic result = await _auth.signInWithEmailAndPassword(_emailController.text, _passwordController.text);
+    final result = await _auth.signInWithEmailAndPassword(_emailController.text, _passwordController.text);
     if(result == null){
       setState(() => _error = 'Could not sign in with those credentials.');
     }
@@ -65,8 +65,19 @@ class _SignInState extends State<SignIn> {
                         child: Stack(
                           children: <Widget>[
                             Positioned(
-                              left: 10,
-                              top: 10,
+                              left: 18,
+                              top: 18,
+                              child: Container(
+                                width: 32,
+                                height: 32,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                            ),
+                            Positioned(
+                              left: 8,
+                              top: 8,
                               child: IconButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
@@ -74,9 +85,9 @@ class _SignInState extends State<SignIn> {
                                   _passwordController.clear();
                                 },
                                 icon: Icon(
-                                  Icons.arrow_back_ios,
+                                  FontAwesomeIcons.angleLeft,
                                   size: 30.0,
-                                  color: Theme.of(context).primaryColor,
+                                  color: Colors.white,
                                 ),
                               ),
                             )
@@ -99,10 +110,8 @@ class _SignInState extends State<SignIn> {
                                         width: 130,
                                         height: 130,
                                         decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: AssetImage("assets/images/login/world.png"),
-                                            fit: BoxFit.fill,
-                                          ),
+                                          shape: BoxShape.circle,
+                                          color: Theme.of(context).primaryColor,
                                         ),
                                       ),
                                       alignment: Alignment.center,
@@ -115,7 +124,7 @@ class _SignInState extends State<SignIn> {
                                         style: TextStyle(
                                           fontSize: 48,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.white,
+                                          color: Color(0xFFF7EDEE),
                                         ),
                                       ),
                                       alignment: Alignment.center,
@@ -132,12 +141,12 @@ class _SignInState extends State<SignIn> {
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 10, top: 40),
                                       child: inputAuthentication(Icon(Icons.email), "EMAIL", Theme.of(context).primaryColor,
-                                          _emailController, ValidatorType.EMAIL, false),
+                                          _emailController, ValidatorType.EMAIL, false, null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
                                       child: inputAuthentication(Icon(Icons.lock), "PASSWORD", Theme.of(context).primaryColor,
-                                          _passwordController, ValidatorType.PASSWORD, true),
+                                          _passwordController, ValidatorType.PASSWORD, true, null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
@@ -149,7 +158,7 @@ class _SignInState extends State<SignIn> {
                                             Theme.of(context).primaryColor, Colors.white, () async {
                                               if (_formKey.currentState.validate()) {
                                                 Navigator.pushNamed(context, '/loading');
-                                                dynamic result = await _signIn(context);
+                                                final result = await _signIn(context);
                                                 if(result == null){
                                                   setState(() {
                                                     _error = 'Could not sign in with those credentials.';
@@ -197,29 +206,5 @@ class _SignInState extends State<SignIn> {
         ],
       ),
     );
-  }
-}
-
-/**
- * This is a test function call of a firebase cloud function. It will print the
- * result to the console
- * TODO: remove
- */
-void _testFunCall() async {
-  HttpsCallable callable = CloudFunctions.instance
-      .getHttpsCallable(functionName: 'payment-makePayment');
-
-  try {
-    final HttpsCallableResult result = await callable.call();
-    print(result.data);
-
-  } on CloudFunctionsException catch (e) {
-    print('caught firebase functions exception');
-    print(e.code);
-    print(e.message);
-    print(e.details);
-  } catch (e) {
-    print('caught generic exception');
-    print(e);
   }
 }

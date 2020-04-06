@@ -92,8 +92,8 @@ void main() {
 
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
-    // Verify that register does not get called
-    verifyNever(mockAuth.registerWithEmailAndPassword(email, password));
+    // Verify that sign in does not get called
+    verifyNever(mockAuth.signInWithEmailAndPassword(email, password));
   });
 
   testWidgets('non-empty email and password, call sign in',

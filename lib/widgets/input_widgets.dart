@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/utils/input_validator.dart';
 
 Widget inputAuthentication(Icon icon, String hint, Color decorationColor, TextEditingController controller,
-    ValidatorType validatorType, bool obscure) {
+    ValidatorType validatorType, bool obscure, String errorText) {
   return Container(
     padding: EdgeInsets.only(left: 20, right: 20),
     child: TextFormField(
@@ -18,6 +18,7 @@ Widget inputAuthentication(Icon icon, String hint, Color decorationColor, TextEd
           filled: true,
           hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           hintText: hint,
+          errorText: errorText,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide(

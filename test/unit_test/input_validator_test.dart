@@ -121,4 +121,43 @@ void main() {
     final result = InputValidator.validate('123456', ValidatorType.PASSWORD);
     expect(result, null);
   });
+
+  test('empty username returns error string', () {
+    final result = InputValidator.validate('', ValidatorType.USERNAME);
+    expect(result, 'Enter a username');
+  });
+
+  test('non-empty non-valid username returns error string', () {
+    final error = 'Invalid username';
+    String result;
+
+    result = InputValidator.validate('user*name', ValidatorType.USERNAME);
+    expect(result, error);
+
+    result = InputValidator.validate('/username', ValidatorType.USERNAME);
+    expect(result, error);
+
+    result = InputValidator.validate('username?', ValidatorType.USERNAME);
+    expect(result, error);
+
+    result = InputValidator.validate('/&*(ç=', ValidatorType.USERNAME);
+    expect(result, error);
+
+    result = InputValidator.validate('_username', ValidatorType.USERNAME);
+    expect(result, error);
+
+    result = InputValidator.validate('-username?', ValidatorType.USERNAME);
+    expect(result, error);
+  });
+
+  test('valid username returns null', () {
+    String result = InputValidator.validate('donaldduck', ValidatorType.USERNAME);
+    expect(result, null);
+
+    result = InputValidator.validate('donald-duck', ValidatorType.USERNAME);
+    expect(result, null);
+
+    result = InputValidator.validate('donald_duck', ValidatorType.USERNAME);
+    expect(result, null);
+  });
 }
