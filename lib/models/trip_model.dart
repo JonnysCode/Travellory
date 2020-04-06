@@ -2,6 +2,7 @@ import 'abstract_model.dart';
 
 class TripModel extends Model {
   TripModel({
+    this.userUID,
     this.name,
     this.startDate,
     this.endDate,
@@ -12,6 +13,7 @@ class TripModel extends Model {
     imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
   }
 
+  String userUID;
   String name;
   String startDate;
   String endDate;
@@ -23,6 +25,7 @@ class TripModel extends Model {
   @override
   Map<String, dynamic> toMap(){
     return {
+      'userUID': userUID,
       'name': name,
       'startDate': startDate,
       'endDate': endDate,

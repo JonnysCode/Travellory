@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/screens/trip/trip_card.dart';
+import 'package:travellory/widgets/trip/trip_card.dart';
 
 class HomePage extends StatefulWidget {
   @override

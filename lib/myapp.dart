@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
             '/loading': (context) => Loading(),
             '/home': (context) => Home(),
             '/viewtrip': (context) => TripScreen(),
-            '/createtrip': (context) => CreateTripScreen(),
+            '/createtrip': (context) => CreateTrip(),
             '/booking/rentalCar': (context) => RentalCar(),
             '/booking/accommodation': (context) => Accommodation(),
             '/booking/flight': (context) => Flight(),
