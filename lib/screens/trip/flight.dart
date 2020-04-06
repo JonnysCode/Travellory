@@ -1,10 +1,9 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/services/add_database.dart';
 import 'package:travellory/utils/date_converter.dart';
-import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/form_field.dart';
@@ -19,9 +18,9 @@ class Flight extends StatefulWidget {
 }
 
 class _FlightState extends State<Flight> {
-  ListModel<Widget> flightList;
   final flightFormKey = GlobalKey<FormState>();
   final FlightModel flightModel = FlightModel();
+  final DatabaseAdder databaseAdder = DatabaseAdder();
 
   final _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
@@ -266,7 +265,7 @@ class _FlightState extends State<Flight> {
                             fillColor: Theme.of(context).primaryColor,
                             validationFunction: validateForm,
                             onSubmit: () async {
-                              _addFlight(flightModel);
+                              databaseAdder.addModel(flightModel, 'booking-addFlight');
                               showSubmittedBookingDialog(context, alertText, returnToTripScreen);
                             }),
                       ),
@@ -291,22 +290,5 @@ class _FlightState extends State<Flight> {
         ),
       ),
     );
-  }
-}
-
-void _addFlight(FlightModel flightModel) async {
-  final HttpsCallable callable =
-      CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addFlight');
-  try {
-    final HttpsCallableResult result = await callable.call(flightModel.toMap());
-    print(result.data);
-  } on CloudFunctionsException catch (e) {
-    print('caught firebase functions exception');
-    print(e.code);
-    print(e.message);
-    print(e.details);
-  } catch (e) {
-    print('caught generic exception');
-    print(e);
   }
 }

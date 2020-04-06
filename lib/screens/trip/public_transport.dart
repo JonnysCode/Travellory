@@ -1,8 +1,8 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/services/add_database.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/buttons.dart';
@@ -25,10 +25,11 @@ class _PublicTransportState extends State<PublicTransport> {
   ListModel<Widget> publicTransportList;
   final publicTransportFormKey = GlobalKey<FormState>();
   final PublicTransportModel publicTransportModel = PublicTransportModel();
+  final DatabaseAdder databaseAdder = DatabaseAdder();
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
-  YDropdownField transportTypeDropdown;
+  TravelloryDropdownField transportTypeDropdown;
   CheckboxFormField bookingMadeCheckbox;
   CheckboxFormField seatReservedCheckbox;
 
@@ -44,7 +45,7 @@ class _PublicTransportState extends State<PublicTransport> {
   void initState() {
     super.initState();
 
-    transportTypeDropdown = YDropdownField(
+    transportTypeDropdown = TravelloryDropdownField(
         title: 'Select Transport Type',
         types: types,
         onChanged: (value) {
@@ -218,7 +219,7 @@ class _PublicTransportState extends State<PublicTransport> {
         fillColor: Theme.of(context).primaryColor,
         validationFunction: validateForm,
         onSubmit: () async {
-          _addPublicTransport(publicTransportModel);
+          databaseAdder.addModel(publicTransportModel, 'booking-addPublicTransport');
           showSubmittedBookingDialog(context, alertText, returnToTripScreen);
         });
 
@@ -354,22 +355,5 @@ class _PublicTransportState extends State<PublicTransport> {
         ),
       ),
     );
-  }
-}
-
-void _addPublicTransport(PublicTransportModel publicTransport) async {
-  final HttpsCallable callable =
-      CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addPublicTransport');
-  try {
-    final HttpsCallableResult result = await callable.call(publicTransport.toMap());
-    print(result.data);
-  } on CloudFunctionsException catch (e) {
-    print('caught firebase functions exception');
-    print(e.code);
-    print(e.message);
-    print(e.details);
-  } catch (e) {
-    print('caught generic exception');
-    print(e);
   }
 }
