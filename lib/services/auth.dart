@@ -5,7 +5,7 @@ abstract class BaseAuthService {
   Future signInAnonymously();
   Future signInWithEmailAndPassword(String email, String password);
   Future registerWithEmailAndPassword(String email, String password);
-  Future updatePassword(String password);
+  Future changePassword(String password);
   Future signOut();
   Stream<UserModel> get user;
 }
@@ -72,9 +72,9 @@ class AuthService implements BaseAuthService {
 
   // register with facebook
 
-  //update password
-  Future updatePassword(String password) async {
-    //TODO: call firebase updatePassword function
+  //change password
+  Future changePassword(String password) async {
+    //TODO: call firebase function
   }
 
 
