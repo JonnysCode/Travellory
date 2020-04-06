@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
+import 'package:travellory/screens/authenticate/password.dart';
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
 import 'package:travellory/screens/home/home.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
             '/auth': (context) => Authenticate(),
             '/login': (context) => SignIn(),
             '/register': (context) => Register(),
+            '/password': (context) => ChangePassword(),
             '/loading': (context) => Loading(),
             '/home': (context) => Home(),
             '/viewtrip': (context) => TripScreen(),
