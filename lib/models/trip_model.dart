@@ -1,5 +1,6 @@
+import 'abstract_model.dart';
 
-class TripModel {
+class TripModel extends Model {
   TripModel({
     this.name,
     this.startDate,
@@ -19,6 +20,7 @@ class TripModel {
   int imageNr;
   int index;
 
+  @override
   Map<String, dynamic> toMap(){
     return {
       'name': name,
