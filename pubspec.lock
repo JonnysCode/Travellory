@@ -382,14 +382,14 @@ packages:
       name: syncfusion_flutter_calendar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "17.4.51-beta"
+    version: "18.1.42-beta"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "17.4.51"
+    version: "18.1.42"
   term_glyph:
     dependency: transitive
     description:
