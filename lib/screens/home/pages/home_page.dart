@@ -11,10 +11,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
   static const List<IconData> _icons = <IconData>[
+    FontAwesomeIcons.envelope,
     FontAwesomeIcons.theaterMasks,
     FontAwesomeIcons.car,
     FontAwesomeIcons.bed,
     FontAwesomeIcons.plane,
+    FontAwesomeIcons.subway,
   ];
   AnimationController _controller;
   bool _isPressed = false;
@@ -25,7 +27,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       vsync: this, // the SingleTickerProviderStateMixin
       duration: Duration(milliseconds: 200),
     );
-    //_isPressed = false;
     super.initState();
   }
 
@@ -73,7 +74,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               right: 40,
               child: Container(
                 child: Text(
-                  "Your trip to Los Angeles starts in 1 day. Pack your luggage now.",
+                  "Your trip to Los Angeles starts in 1 day. Pack your bag now.",
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.black54,
