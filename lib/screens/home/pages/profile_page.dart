@@ -12,22 +12,11 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  TextEditingController _passwordController = TextEditingController();
-
-  String _error = '';
 
   Future _signOut(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     await _auth.signOut();
     await Navigator.pushReplacementNamed(context, '/');
-  }
-
-  Future _updatePassword(BuildContext context) async {
-    final BaseAuthService _auth = AuthProvider.of(context).auth;
-    dynamic result = await _auth.updatePassword(_passwordController.text);
-    if(result == null){
-      setState(() => _error = 'Please supply a valid password.');
-    }
   }
 
 
@@ -94,39 +83,56 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-}
 
-Route _createRoutePassword() {
-  return PageRouteBuilder<SlideTransition>(
-    pageBuilder: (context, animation, secondaryAnimation) => _UpdatePassword(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var tween = Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset.zero);
-      var curveTween = CurveTween(curve: Curves.ease);
 
-      return SlideTransition(
-        position: animation.drive(curveTween).drive(tween),
-        child: child,
-      );
-    },
-  );
-}
+  Route _createRoutePassword() {
+    return PageRouteBuilder<SlideTransition>(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          _UpdatePassword(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var tween = Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset.zero);
+        var curveTween = CurveTween(curve: Curves.ease);
 
-Route _createRouteFriends() {
-  return PageRouteBuilder<SlideTransition>(
-    pageBuilder: (context, animation, secondaryAnimation) => _ShowFriends(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var tween = Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset.zero);
-      var curveTween = CurveTween(curve: Curves.ease);
+        return SlideTransition(
+          position: animation.drive(curveTween).drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 
-      return SlideTransition(
-        position: animation.drive(curveTween).drive(tween),
-        child: child,
-      );
-    },
-  );
+  Route _createRouteFriends() {
+    return PageRouteBuilder<SlideTransition>(
+      pageBuilder: (context, animation, secondaryAnimation) => _ShowFriends(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var tween = Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset.zero);
+        var curveTween = CurveTween(curve: Curves.ease);
+
+        return SlideTransition(
+          position: animation.drive(curveTween).drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 }
 
 class _UpdatePassword extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController _passwordController = TextEditingController();
+
+  String _error = '';
+
+  Future _updatePassword(BuildContext context) async {
+    final BaseAuthService _auth = AuthProvider
+        .of(context)
+        .auth;
+    dynamic result = await _auth.updatePassword(_passwordController.text);
+    if (result == null) {
+      setState(() => _error = 'Please supply a valid password.');
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
@@ -152,7 +158,7 @@ class _UpdatePassword extends StatelessWidget {
                       dynamic result = await _updatePassword(context);
                       if (result == null) {
                         setState(() {
-                          _error = 'Please supply a valid email and password.';
+                          _error = 'Please supply a valid password.';
                         });
                         Navigator.popUntil(
                           context,
@@ -169,6 +175,8 @@ class _UpdatePassword extends StatelessWidget {
       ),
     );
   }
+
+  void setState(String Function() param0) {}
 }
 
 class _ShowFriends extends StatelessWidget {
