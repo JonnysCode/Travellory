@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/date_converter.dart';
-import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/form_field.dart';
@@ -19,7 +18,6 @@ class Flight extends StatefulWidget {
 }
 
 class _FlightState extends State<Flight> {
-  ListModel<Widget> flightList;
   final flightFormKey = GlobalKey<FormState>();
   final FlightModel flightModel = FlightModel();
 

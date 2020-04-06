@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/date_converter.dart';
-import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/date_form_field.dart';
 import 'package:travellory/widgets/font_widgets.dart';
@@ -19,7 +18,6 @@ class RentalCar extends StatefulWidget {
 }
 
 class _RentalCarState extends State<RentalCar> {
-  ListModel<Widget> rentalCarList;
   final rentalCarFormKey = GlobalKey<FormState>();
   final RentalCarModel rentalCarModel = RentalCarModel();
 
