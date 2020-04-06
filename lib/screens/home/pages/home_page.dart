@@ -8,6 +8,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  Widget _bottomMargin(){
+    return SizedBox(
+      height: 62,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -80,15 +87,19 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: ListView.separated(
               padding: const EdgeInsets.all(10),
-              itemCount: tripModels.length,
+              itemCount: tripModels.length + 1,
               itemBuilder: (BuildContext context, int index) {
-                TripModel tripModel = tripModels[index];
-                tripModel.index = index;
-                return TripCard(tripModel: tripModel);
+                if(index < tripModels.length){
+                  TripModel tripModel = tripModels[index];
+                  tripModel.index = index;
+                  return TripCard(tripModel: tripModel);
+                } else {
+                  return  _bottomMargin();
+                }
               },
               separatorBuilder: (BuildContext context, int index) => const Divider(),
             ),
-          )
+          ),
         ],
       ),
     );

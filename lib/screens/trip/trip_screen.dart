@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class TripScreen extends StatefulWidget {
@@ -13,7 +15,7 @@ class _TripScreenState extends State<TripScreen> {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void _openHomeScreen(){
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pop(context);
     }
 
     Widget _subsection(String title){
@@ -108,11 +110,12 @@ class _TripScreenState extends State<TripScreen> {
                 children: <Widget>[
                   Positioned(
                     top: 0,
-                    right: -30,
-                    child: FlatButton.icon(
-                        onPressed: () => _openHomeScreen(),
-                        icon: Icon(Icons.clear, color: Colors.red, size: 32),
-                        label: Text('')
+                    right: 0,
+                    child: IconButton(
+                      onPressed: () => _openHomeScreen(),
+                      icon: FaIcon(FontAwesomeIcons.times),
+                      iconSize: 26,
+                      color: Colors.red,
                     ),
                   ),
                   Positioned(
@@ -159,26 +162,26 @@ class _TripScreenState extends State<TripScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         FashionFetishText(
-                         text:  _tripModel.startDate.toString().substring(0, 10)
-                              + ' - '
-                              + _tripModel.endDate.toString().substring(0, 10),
+                         text: 'From: ' + DateConverter.toShortenedMonthString( _tripModel.startDate)
+                              + '\n'
+                              + 'To: ' + DateConverter.toShortenedMonthString( _tripModel.endDate),
                           color: Colors.black54,
                           fontWeight: FashionFontWeight.BOLD,
                           size: 14,
                           height: 1.25
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 12,
                         ),
                         Row(
                           children: <Widget>[
                             Icon(
-                              Icons.location_on,
-                              size: 16,
+                              FontAwesomeIcons.locationArrow,
+                              size: 15,
                               color: Colors.redAccent,
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 6),
+                              padding: const EdgeInsets.only(top: 6, left: 3),
                               child: FashionFetishText(
                                 text: _tripModel.destination,
                                 size: 14,
