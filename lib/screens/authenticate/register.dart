@@ -24,6 +24,8 @@ class _RegisterState extends State<Register> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
 
+  final FocusNode _nameFocus = FocusNode();
+
   String _error;
   String _errorUsername;
   bool _isUsernameAvailable = true;
@@ -32,16 +34,14 @@ class _RegisterState extends State<Register> {
   void initState() {
     super.initState();
 
-    _nameController.addListener(_checkUsernameAvailability);
+    _nameFocus.addListener(_checkUsernameAvailability);
   }
 
   Future _register(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     final result = await _auth.registerWithEmailAndPassword(
         _emailController.text, _passwordController.text, _nameController.text);
-    if (result == null) {
-      setState(() => _error = 'Please supply a valid email and password.');
-    }
+    return result;
   }
 
   _checkUsernameAvailability() async {
@@ -195,6 +195,7 @@ class _RegisterState extends State<Register> {
                                               ? Theme.of(context).primaryColor
                                               : Colors.redAccent,
                                           _nameController,
+                                          _nameFocus,
                                           ValidatorType.USERNAME,
                                           false,
                                           _errorUsername),
@@ -208,6 +209,7 @@ class _RegisterState extends State<Register> {
                                           "EMAIL",
                                           Theme.of(context).primaryColor,
                                           _emailController,
+                                          null,
                                           ValidatorType.EMAIL,
                                           false,
                                           null),
@@ -219,6 +221,7 @@ class _RegisterState extends State<Register> {
                                           "PASSWORD",
                                           Theme.of(context).primaryColor,
                                           _passwordController,
+                                          null,
                                           ValidatorType.PASSWORD,
                                           true,
                                           _error),
