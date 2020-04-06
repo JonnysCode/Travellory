@@ -5,6 +5,7 @@ import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/screens/authenticate/password.dart';
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
+import 'package:travellory/screens/friends/friends_page.dart';
 import 'package:travellory/screens/home/home.dart';
 import 'package:travellory/screens/trip/accommodation.dart';
 import 'package:travellory/screens/trip/activity.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
             '/booking/flight': (context) => Flight(),
             '/booking/publicTransport': (context) => PublicTransport(),
             '/booking/activity': (context) => Activity(),
+            '/friends/friends_page': (context) => FriendsPage(),
           },
         ),
       ),
