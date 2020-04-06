@@ -6,12 +6,15 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/checkbox_form_field.dart';
 import 'package:travellory/widgets/dropdown.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/form_fields_new.dart';
+import 'package:travellory/widgets/form_field.dart';
 import 'package:travellory/widgets/form_widgets.dart';
 import 'package:travellory/widgets/section_titles.dart';
 import 'package:travellory/widgets/show_dialog.dart';
+import 'package:travellory/widgets/date_form_field.dart';
+import 'package:travellory/widgets/time_form_field.dart';
 
 class Accommodation extends StatefulWidget {
   @override
@@ -24,7 +27,7 @@ class _AccommodationState extends State<Accommodation> {
   final AccommodationModel accommodationModel = AccommodationModel();
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  final _checkinDateFormFieldKey = GlobalKey<YDateFormFieldState>();
+  final _checkinDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
   YDropdownField accommodationTypeDropdown;
   Widget hotelAdditional;
@@ -57,44 +60,44 @@ class _AccommodationState extends State<Accommodation> {
       SectionTitle("Accommodation Type"),
       accommodationTypeDropdown,
       SectionTitle('General Information'),
-      YFormField(
+      TravelloryFormField(
           labelText: "Confirmation Number",
           icon: Icon(Icons.confirmation_number),
           optional: true,
           onChanged: (value) => accommodationModel.confirmationNr = value),
-      YFormField(
+      TravelloryFormField(
           labelText: "Name *",
           icon: Icon(Icons.supervised_user_circle),
           optional: false,
           onChanged: (value) => accommodationModel.hotelName = value),
-      YFormField(
+      TravelloryFormField(
         labelText: "Address *",
         icon: Icon(Icons.location_on),
         optional: false,
         onChanged: (value) => accommodationModel.address = value,
       ),
       SectionTitle('Check-In Details'),
-      YDateFormField(
+      DateFormField(
         key: _checkinDateFormFieldKey,
         labelText: "Check-In Date *",
         icon: Icon(Icons.date_range),
         optional: false,
         chosenDateString: (value) => accommodationModel.checkinDate = value,
       ),
-      YTimeFormField(
+      TimeFormField(
         labelText: "Check-In Time",
         icon: Icon(Icons.access_time),
         optional: true,
         chosenTimeString: (value) => accommodationModel.checkinTime = value,
       ),
-      YFormField(
+      TravelloryFormField(
         labelText: "Nights *",
         icon: Icon(Icons.hotel),
         optional: false,
         onChanged: (value) => accommodationModel.nights = value,
       ),
       SectionTitle('Check-Out Details'),
-      YDateFormField(
+      DateFormField(
         labelText: "Check-Out Date *",
         icon: Icon(Icons.date_range),
         beforeDateKey: _checkinDateFormFieldKey,
@@ -102,14 +105,14 @@ class _AccommodationState extends State<Accommodation> {
         dateValidationMessage: "Check-out Date cannot be before Check-in Date",
         chosenDateString: (value) => accommodationModel.checkoutDate = value,
       ),
-      YTimeFormField(
+      TimeFormField(
         labelText: "Check-Out Time",
         icon: Icon(Icons.access_time),
         optional: true,
         chosenTimeString: (value) => accommodationModel.checkoutTime = value,
       ),
       SectionTitle("Notes"),
-      YFormField(
+      TravelloryFormField(
         labelText: "Notes",
         icon: Icon(Icons.speaker_notes),
         optional: true,
@@ -129,7 +132,7 @@ class _AccommodationState extends State<Accommodation> {
 
     airbnbAdditional = Column(
       children: <Widget>[
-        YFormField(
+        TravelloryFormField(
           labelText: "Specific type of airbnb",
           icon: Icon(Icons.hotel),
           optional: true,
@@ -141,13 +144,13 @@ class _AccommodationState extends State<Accommodation> {
     hotelAdditional = Column(
       children: <Widget>[
         SectionTitle("Further Hotel Details"),
-        YFormField(
+        TravelloryFormField(
           labelText: "Room Type",
           icon: Icon(Icons.hotel),
           optional: true,
           onChanged: (value) => accommodationModel.roomType = value,
         ),
-        YCheckboxFormField(
+        CheckboxFormField(
           initialValue: false,
           label: 'Does your stay include breakfast??',
           onChanged: (value) {

@@ -7,9 +7,11 @@ import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/form_fields_new.dart';
+import 'package:travellory/widgets/form_field.dart';
 import 'package:travellory/widgets/section_titles.dart';
 import 'package:travellory/widgets/show_dialog.dart';
+import 'package:travellory/widgets/date_form_field.dart';
+import 'package:travellory/widgets/time_form_field.dart';
 
 class Flight extends StatefulWidget {
   @override
@@ -21,7 +23,7 @@ class _FlightState extends State<Flight> {
   final flightFormKey = GlobalKey<FormState>();
   final FlightModel flightModel = FlightModel();
 
-  final _depDateFormFieldKey = GlobalKey<YDateFormFieldState>();
+  final _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
   bool validateForm() {
     return flightFormKey.currentState.validate();
@@ -156,7 +158,7 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                           labelText: 'Booking Reference',
                           icon: Icon(Icons.confirmation_number),
                           optional: true,
@@ -164,7 +166,7 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                           labelText: 'Airline *',
                           icon: Icon(Icons.flight),
                           optional: false,
@@ -172,7 +174,7 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                           labelText: 'Flight Number',
                           icon: Icon(Icons.confirmation_number),
                           optional: true,
@@ -180,7 +182,7 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                           labelText: 'Seat',
                           icon: Icon(Icons.airline_seat_recline_normal),
                           optional: true,
@@ -192,7 +194,7 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                           labelText: 'Departure Location *',
                           icon: Icon(Icons.location_on),
                           optional: false,
@@ -200,7 +202,7 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YDateFormField(
+                      child: DateFormField(
                         key: _depDateFormFieldKey,
                         labelText: "Departure Date *",
                         icon: Icon(Icons.date_range),
@@ -210,7 +212,7 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YTimeFormField(
+                      child: TimeFormField(
                           labelText: "Departure Time *",
                           icon: Icon(Icons.access_time),
                           optional: false,
@@ -222,7 +224,7 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                           labelText: 'Arrival Location *',
                           icon: Icon(Icons.location_on),
                           optional: false,
@@ -230,7 +232,7 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YDateFormField(
+                      child: DateFormField(
                         labelText: "Arrival Date",
                         icon: Icon(Icons.date_range),
                         beforeDateKey: _depDateFormFieldKey,
@@ -241,7 +243,7 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YTimeFormField(
+                      child: TimeFormField(
                           labelText: "Arrival Time",
                           icon: Icon(Icons.access_time),
                           optional: true,
@@ -249,7 +251,7 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                         labelText: "Notes",
                         icon: Icon(Icons.speaker_notes),
                         optional: true,
