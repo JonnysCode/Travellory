@@ -21,7 +21,7 @@ class RentalCar extends StatefulWidget {
 class _RentalCarState extends State<RentalCar> {
   ListModel<Widget> rentalCarList;
   final rentalCarFormKey = GlobalKey<FormState>();
-  final FlightModel rentalCarModel = FlightModel();
+  final RentalCarModel rentalCarModel = RentalCarModel();
 
   final _pickUpDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
@@ -296,7 +296,7 @@ class _RentalCarState extends State<RentalCar> {
   }
 }
 
-void _addRentalCar(FlightModel rentalCarModel) async {
+void _addRentalCar(RentalCarModel rentalCarModel) async {
   final HttpsCallable callable =
       CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addRentalCar');
   try {

@@ -1,4 +1,4 @@
-class FlightModel {
+class RentalCarModel {
   String bookingReference;
   String company;
   String pickupLocation;

@@ -207,7 +207,7 @@ class _AccommodationState extends State<Accommodation> {
     );
 
     return Scaffold(
-      key: Key('Public Transport'),
+      key: Key('Accommodation'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
