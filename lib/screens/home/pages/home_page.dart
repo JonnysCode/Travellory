@@ -14,6 +14,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     FontAwesomeIcons.envelope,
     FontAwesomeIcons.theaterMasks,
     FontAwesomeIcons.car,
+    FontAwesomeIcons.bus,
     FontAwesomeIcons.bed,
     FontAwesomeIcons.plane,
     FontAwesomeIcons.subway,
@@ -74,7 +75,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               right: 40,
               child: Container(
                 child: Text(
-                  "Your trip to Los Angeles starts in 1 day. Pack your bag now.",
+                  "Your trip to Los Angeles starts in 1 day. Pack your bags now.",
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.black54,
