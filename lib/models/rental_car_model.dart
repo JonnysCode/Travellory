@@ -1,4 +1,6 @@
-class RentalCarModel {
+import 'package:travellory/models/abstract_model.dart';
+
+class RentalCarModel extends Model {
   String bookingReference;
   String company;
   String pickupLocation;

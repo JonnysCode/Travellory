@@ -1,8 +1,8 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/services/add_database.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/buttons.dart';
@@ -25,11 +25,12 @@ class _AccommodationState extends State<Accommodation> {
   ListModel<Widget> accommodationList;
   final accommodationFormKey = GlobalKey<FormState>();
   final AccommodationModel accommodationModel = AccommodationModel();
+  final DatabaseAdder databaseAdder = DatabaseAdder();
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final _checkinDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
-  YDropdownField accommodationTypeDropdown;
+  TravelloryDropdownField accommodationTypeDropdown;
   Widget hotelAdditional;
   Widget airbnbAdditional;
 
@@ -41,7 +42,7 @@ class _AccommodationState extends State<Accommodation> {
   void initState() {
     super.initState();
 
-    accommodationTypeDropdown = YDropdownField(
+    accommodationTypeDropdown = TravelloryDropdownField(
         title: 'Select Accommodation Type',
         types: types,
         onChanged: (value) {
@@ -195,7 +196,7 @@ class _AccommodationState extends State<Accommodation> {
         fillColor: Theme.of(context).primaryColor,
         validationFunction: validateForm,
         onSubmit: () async {
-          _addAccommodation(accommodationModel);
+          databaseAdder.addModel(accommodationModel, 'booking-addAccommodation');
           showSubmittedBookingDialog(context, alertText, returnToTripScreen);
         });
 
@@ -331,22 +332,5 @@ class _AccommodationState extends State<Accommodation> {
         ),
       ),
     );
-  }
-}
-
-void _addAccommodation(AccommodationModel accommodationModel) async {
-  final HttpsCallable callable =
-      CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addAccommodation');
-  try {
-    final HttpsCallableResult result = await callable.call(accommodationModel.toMap());
-    print(result.data);
-  } on CloudFunctionsException catch (e) {
-    print('caught firebase functions exception');
-    print(e.code);
-    print(e.message);
-    print(e.details);
-  } catch (e) {
-    print('caught generic exception');
-    print(e);
   }
 }

@@ -1,4 +1,6 @@
-class PublicTransportModel {
+import 'package:travellory/models/abstract_model.dart';
+
+class PublicTransportModel extends Model {
   String transportationType;
   String company;
   String specificType;

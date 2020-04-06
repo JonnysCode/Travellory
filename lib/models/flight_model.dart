@@ -1,4 +1,6 @@
-class FlightModel {
+import 'package:travellory/models/abstract_model.dart';
+
+class FlightModel extends Model {
   String bookingReference;
   String airline;
   String flightNr;
