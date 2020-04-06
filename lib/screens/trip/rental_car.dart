@@ -1,8 +1,8 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/services/add_database.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/date_form_field.dart';
@@ -20,6 +20,7 @@ class RentalCar extends StatefulWidget {
 class _RentalCarState extends State<RentalCar> {
   final rentalCarFormKey = GlobalKey<FormState>();
   final RentalCarModel rentalCarModel = RentalCarModel();
+  final DatabaseAdder databaseAdder = DatabaseAdder();
 
   final _pickUpDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
@@ -266,7 +267,7 @@ class _RentalCarState extends State<RentalCar> {
                             fillColor: Theme.of(context).primaryColor,
                             validationFunction: validateForm,
                             onSubmit: () async {
-                              _addRentalCar(rentalCarModel);
+                              databaseAdder.addModel(rentalCarModel, 'booking-addRentalCar');
                               showSubmittedBookingDialog(context, alertText, returnToTripScreen);
                             }),
                       ),
@@ -291,22 +292,5 @@ class _RentalCarState extends State<RentalCar> {
         ),
       ),
     );
-  }
-}
-
-void _addRentalCar(RentalCarModel rentalCarModel) async {
-  final HttpsCallable callable =
-      CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addRentalCar');
-  try {
-    final HttpsCallableResult result = await callable.call(rentalCarModel.toMap());
-    print(result.data);
-  } on CloudFunctionsException catch (e) {
-    print('caught firebase functions exception');
-    print(e.code);
-    print(e.message);
-    print(e.details);
-  } catch (e) {
-    print('caught generic exception');
-    print(e);
   }
 }

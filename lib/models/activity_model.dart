@@ -1,4 +1,6 @@
-class ActivityModel {
+import 'package:travellory/models/abstract_model.dart';
+
+class ActivityModel extends Model {
   String category;
   String title;
   String description;
@@ -9,6 +11,7 @@ class ActivityModel {
   String endTime;
   String notes;
 
+  @override
   Map<String, dynamic> toMap(){
     return {
       'category': category,

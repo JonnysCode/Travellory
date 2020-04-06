@@ -1,8 +1,8 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/services/add_database.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/dropdown.dart';
@@ -21,6 +21,7 @@ class Activity extends StatefulWidget {
 class _ActivityState extends State<Activity> {
   final activityFormKey = GlobalKey<FormState>();
   final ActivityModel activityModel = ActivityModel();
+  final DatabaseAdder databaseAdder = DatabaseAdder();
 
   final _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
@@ -169,7 +170,7 @@ class _ActivityState extends State<Activity> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YDropdownField(
+                      child: TravelloryDropdownField(
                           title: 'Select Category',
                           types: types,
                           onChanged: (value) {
@@ -264,7 +265,7 @@ class _ActivityState extends State<Activity> {
                             fillColor: Theme.of(context).primaryColor,
                             validationFunction: validateForm,
                             onSubmit: () async {
-                              _addActivity(activityModel);
+                              databaseAdder.addModel(activityModel, 'booking-addActivity');
                               showSubmittedBookingDialog(context, alertText, returnToTripScreen);
                             }),
                       ),
@@ -289,22 +290,5 @@ class _ActivityState extends State<Activity> {
         ),
       ),
     );
-  }
-}
-
-void _addActivity(ActivityModel activityModel) async {
-  final HttpsCallable callable =
-  CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addActivity');
-  try {
-    final HttpsCallableResult result = await callable.call(activityModel.toMap());
-    print(result.data);
-  } on CloudFunctionsException catch (e) {
-    print('caught firebase functions exception');
-    print(e.code);
-    print(e.message);
-    print(e.details);
-  } catch (e) {
-    print('caught generic exception');
-    print(e);
   }
 }

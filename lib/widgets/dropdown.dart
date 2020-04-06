@@ -7,8 +7,8 @@ class Item {
   final Icon icon;
 }
 
-class YDropdownField extends StatefulWidget {
-  const YDropdownField(
+class TravelloryDropdownField extends StatefulWidget {
+  const TravelloryDropdownField(
       {Key key, this.title, this.selectedType, this.types, this.validatorText, this.onChanged})
       : super(key: key);
 
@@ -18,10 +18,11 @@ class YDropdownField extends StatefulWidget {
   final void Function(Item) onChanged;
   final String validatorText;
 
-  YDropdownFieldState createState() => YDropdownFieldState();
+  TravelloryDropdownFieldState createState() => TravelloryDropdownFieldState();
 }
 
-class YDropdownFieldState extends State<YDropdownField> with AutomaticKeepAliveClientMixin {
+class TravelloryDropdownFieldState extends State<TravelloryDropdownField>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -81,45 +82,4 @@ class YDropdownFieldState extends State<YDropdownField> with AutomaticKeepAliveC
       ),
     );
   }
-}
-
-ListTile dropdownField(String dropdownTitle, Item selectedType, List<Item> types,
-    BuildContext context, String validatorText, void function(Item newValue)) {
-  return ListTile(
-    key: Key('Dropdown Menu'),
-    leading: Icon(Icons.menu),
-    title: Container(
-      child: Theme(
-        data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,
-        ),
-        child: DropdownButtonFormField<Item>(
-          value: selectedType,
-          hint: Text(dropdownTitle, style: TextStyle(color: Colors.black)),
-          onChanged: (Item newValue) => function(newValue),
-          validator: (value) {
-            if (value == null) {
-              return validatorText;
-            }
-            return null;
-          },
-          items: types.map((Item type) {
-            return DropdownMenuItem<Item>(
-              value: type,
-              child: Row(
-                children: <Widget>[
-                  type.icon,
-                  SizedBox(width: 10),
-                  Text(
-                    type.name,
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
-        ),
-      ),
-    ),
-  );
 }
