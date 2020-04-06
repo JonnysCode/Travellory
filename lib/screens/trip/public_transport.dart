@@ -1,16 +1,17 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/date_converter.dart';
+import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/dropdown.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'package:travellory/widgets/form_fields_new.dart';
+import 'package:travellory/widgets/form_widgets.dart';
 import 'package:travellory/widgets/section_titles.dart';
 import 'package:travellory/widgets/show_dialog.dart';
-import 'package:travellory/widgets/form_fields.dart';
 
 class PublicTransport extends StatefulWidget {
   @override
@@ -18,68 +19,170 @@ class PublicTransport extends StatefulWidget {
 }
 
 class _PublicTransportState extends State<PublicTransport> {
-  final FormFieldWidget _typeFormField =
-      FormFieldWidget("Type of Transportation *", Icon(Icons.train));
-  final FormFieldWidget _companyFormField =
-      FormFieldWidget("Company", Icon(Icons.supervised_user_circle));
-  final FormFieldWidget _specificTypeFormField =
-      FormFieldWidget("Specific Type of Transportation", Icon(Icons.train));
-  final FormFieldWidget _bookingReferenceFormField =
-      FormFieldWidget("Booking Reference", Icon(Icons.confirmation_number));
-  final FormFieldWidget _bookingCompanyFormField =
-      FormFieldWidget("Company", Icon(Icons.supervised_user_circle));
-  final FormFieldWidget _seatFormField =
-      FormFieldWidget("Seat", Icon(Icons.airline_seat_recline_normal));
-  final FormFieldWidget _depLocationFormField =
-      FormFieldWidget("Departure Location *", Icon(Icons.location_on));
-  final FormFieldDateWidget _depDateFormField =
-      FormFieldDateWidget("Departure Date *", Icon(Icons.date_range));
-  final FormFieldTimeWidget _depTimeFormField =
-      FormFieldTimeWidget("Departure Time *", Icon(Icons.access_time));
-  final FormFieldWidget _arrLocationFormField =
-      FormFieldWidget("Arrival Location *", Icon(Icons.location_on));
-  final FormFieldDateWidget _arrDateFormField = FormFieldDateWidget(
-      "Arrival Date", Icon(Icons.date_range), "Arrival date cannot be before departure date.");
-  final FormFieldTimeWidget _arrTimeFormField =
-      FormFieldTimeWidget("Arrival Time", Icon(Icons.access_time));
-  final FormFieldWidget _notesFormField = FormFieldWidget("Notes", Icon(Icons.speaker_notes));
-
+  ListModel<Widget> publicTransportList;
   final publicTransportFormKey = GlobalKey<FormState>();
+  final PublicTransportModel publicTransportModel = PublicTransportModel();
 
-  bool bookingBool = false;
-  bool seatBool = false;
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  final _depDateFormFieldKey = GlobalKey<YDateFormFieldState>();
+  YDropdownField transportTypeDropdown;
+  YCheckboxFormField bookingMadeCheckbox;
+  YCheckboxFormField seatReservedCheckbox;
 
-  void bookingCheckbox(bool value) {
-    setState(() => bookingBool = value);
+  Widget typeSpecificationAdditional;
+  Widget bookingMadeAdditional;
+  Widget seatReservationAdditional;
+
+  bool validateForm() {
+    return publicTransportFormKey.currentState.validate();
   }
 
-  void seatCheckbox(bool value) {
-    setState(() => seatBool = value);
+  @override
+  void initState() {
+    super.initState();
+
+    transportTypeDropdown = YDropdownField(
+        title: 'Select Transport Type',
+        types: types,
+        onChanged: (value) {
+          publicTransportModel.transportationType = value.name;
+          showAdditional(publicTransportList, value.name == 'Other', transportTypeDropdown,
+              typeSpecificationAdditional);
+        },
+        validatorText: 'Please enter the required information');
+
+    bookingMadeCheckbox = YCheckboxFormField(
+      initialValue: false,
+      label: 'Did you book this public transport?',
+      onChanged: (value) {
+        publicTransportModel.booked = value;
+        showAdditional(publicTransportList, value, bookingMadeCheckbox, bookingMadeAdditional);
+      },
+    );
+
+    seatReservedCheckbox = YCheckboxFormField(
+        initialValue: false,
+        label: 'Did you make a seat reservation?',
+        onChanged: (value) {
+          publicTransportModel.seatReservation = value;
+          showAdditional(
+              publicTransportList, value, seatReservedCheckbox, seatReservationAdditional);
+        });
+
+    // don't put in build because it will be recreated on every build
+    // with state changes this is not appreciated
+    List<Widget> shown = [
+      BookingSiteTitle("Add Public Transport", Icons.train),
+      SectionTitle("Type of Transportation"),
+      transportTypeDropdown,
+      YFormField(
+          labelText: "Company",
+          icon: Icon(Icons.supervised_user_circle),
+          optional: true,
+          onChanged: (value) => publicTransportModel.company = value),
+      SectionTitle("Departure Information"),
+      YFormField(
+        labelText: "Departure Location *",
+        icon: Icon(Icons.location_on),
+        optional: false,
+        onChanged: (value) => publicTransportModel.departureLocation = value,
+      ),
+      YDateFormField(
+        key: _depDateFormFieldKey,
+        labelText: "Departure Date *",
+        icon: Icon(Icons.date_range),
+        chosenDateString: (value) => publicTransportModel.departureDate = value,
+      ),
+      YTimeFormField(
+        labelText: "Departure Time *",
+        icon: Icon(Icons.access_time),
+        chosenTimeString: (value) => publicTransportModel.departureTime = value,
+      ),
+      SectionTitle("Arrival Information"),
+      YFormField(
+        labelText: "Arrival Location *",
+        icon: Icon(Icons.location_on),
+        optional: false,
+        onChanged: (value) => publicTransportModel.arrivalLocation = value,
+      ),
+      YDateFormField(
+        labelText: "Arrival Date *",
+        icon: Icon(Icons.date_range),
+        beforeDateKey: _depDateFormFieldKey,
+        dateValidationMessage: "Departure Date cannot be before Arrival Date",
+        chosenDateString: (value) => publicTransportModel.arrivalDate = value,
+      ),
+      YTimeFormField(
+        labelText: "Arrival Time",
+        icon: Icon(Icons.access_time),
+        optional: true,
+        chosenTimeString: (value) => publicTransportModel.arrivalTime = value,
+      ),
+      SectionTitle("Booking Details"),
+      bookingMadeCheckbox,
+      seatReservedCheckbox,
+      SectionTitle("Notes"),
+      YFormField(
+        labelText: "Notes",
+        icon: Icon(Icons.speaker_notes),
+        optional: true,
+        onChanged: (value) => publicTransportModel.notes = value,
+      ),
+      SubmitButton(),
+      CancelButton(),
+      SizedBox(height: 20),
+    ];
+
+    // this builds the animated list
+    publicTransportList = ListModel<Widget>(
+      listKey: _listKey,
+      initialItems: shown,
+      removedItemBuilder: _removedItemBuilder,
+    );
+
+    typeSpecificationAdditional = Column(
+      children: <Widget>[
+        YFormField(
+          labelText: "Specific Type of Transportation",
+          icon: Icon(Icons.train),
+          optional: true,
+          onChanged: (value) => publicTransportModel.specificType = value,
+        ),
+      ],
+    );
+
+    bookingMadeAdditional = Column(
+      children: <Widget>[
+        YFormField(
+          labelText: "Booking Reference",
+          icon: Icon(Icons.confirmation_number),
+          optional: true,
+          onChanged: (value) => publicTransportModel.reference = value,
+        ),
+        YFormField(
+          labelText: "Booking Company",
+          icon: Icon(Icons.supervised_user_circle),
+          optional: true,
+          onChanged: (value) => publicTransportModel.companyReservation = value,
+        ),
+      ],
+    );
+
+    seatReservationAdditional = Column(
+      children: <Widget>[
+        YFormField(
+          labelText: "Seat",
+          icon: Icon(Icons.airline_seat_recline_normal),
+          optional: true,
+          onChanged: (value) => publicTransportModel.seat = value,
+        ),
+      ],
+    );
   }
 
   final String alertText =
       "You've just submitted the booking information for your public transportation booking. You can see all the information in the trip overview";
 
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    _typeFormField.dispose();
-    _companyFormField.dispose();
-    _specificTypeFormField.dispose();
-    _bookingReferenceFormField.dispose();
-    _bookingCompanyFormField.dispose();
-    _seatFormField.dispose();
-    _depLocationFormField.dispose();
-    _depDateFormField.dispose();
-    _depTimeFormField.dispose();
-    _arrLocationFormField.dispose();
-    _arrDateFormField.dispose();
-    _arrTimeFormField.dispose();
-    _notesFormField.dispose();
-    super.dispose();
-  }
-
-  Item selectedType;
   List<Item> types = <Item>[
     const Item('Rail', Icon(Icons.directions_railway, color: const Color(0xFF167F67))),
     const Item('Bus', Icon(Icons.directions_bus, color: const Color(0xFF167F67))),
@@ -90,8 +193,12 @@ class _PublicTransportState extends State<PublicTransport> {
     const Item('Other', Icon(Icons.directions_walk, color: const Color(0xFF167F67))),
   ];
 
-  void updateDropdown(Item newValue) {
-    setState(() => selectedType = newValue);
+  Widget _itemBuilder(BuildContext context, int index, Animation<double> animation) {
+    return FormItem(animation: animation, child: publicTransportList[index]);
+  }
+
+  Widget _removedItemBuilder(BuildContext context, Widget item, Animation<double> animation) {
+    return FormItem(animation: animation, child: item);
   }
 
   @override
@@ -102,9 +209,22 @@ class _PublicTransportState extends State<PublicTransport> {
       Navigator.pop(context);
     }
 
-    bool validateForm() {
-      return publicTransportFormKey.currentState.validate();
-    }
+    // replace widget to get the context
+    publicTransportList[publicTransportList.length - 3] = SubmitButton(
+        highlightColor: Theme.of(context).primaryColor,
+        fillColor: Theme.of(context).primaryColor,
+        validationFunction: validateForm,
+        onSubmit: () async {
+          _addPublicTransport(publicTransportModel);
+          showSubmittedBookingDialog(context, alertText, returnToTripScreen);
+        });
+
+    publicTransportList[publicTransportList.length - 2] = CancelButton(
+      text: "CANCEL",
+      onCancel: () {
+        cancellingDialog(context);
+      },
+    );
 
     return Scaffold(
       key: Key('Public Transport'),
@@ -157,9 +277,7 @@ class _PublicTransportState extends State<PublicTransport> {
                       alignment: Alignment.topLeft,
                       width: MediaQuery.of(context).size.width,
                       constraints: BoxConstraints(
-                          maxHeight: 100.0,
-                          maxWidth: MediaQuery.of(context).size.width - 200
-                      ),
+                          maxHeight: 100.0, maxWidth: MediaQuery.of(context).size.width - 200),
                       child: FashionFetishText(
                         text: _tripModel.name,
                         size: 24,
@@ -176,14 +294,13 @@ class _PublicTransportState extends State<PublicTransport> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         FashionFetishText(
-                            text: 'From: ${DateConverter.format( _tripModel.startDate)}'
-                                + '\n'
-                                + 'To: ${DateConverter.format( _tripModel.endDate)}',
+                            text: 'From: ${DateConverter.format(_tripModel.startDate)}' +
+                                '\n' +
+                                'To: ${DateConverter.format(_tripModel.endDate)}',
                             color: Colors.black54,
                             fontWeight: FashionFontWeight.BOLD,
                             size: 14,
-                            height: 1.25
-                        ),
+                            height: 1.25),
                         SizedBox(
                           height: 12,
                         ),
@@ -212,143 +329,24 @@ class _PublicTransportState extends State<PublicTransport> {
               ),
             ),
             Expanded(
-              //child: Form(
-              child: SingleChildScrollView(
-                child: Form(
-                  key: publicTransportFormKey,
-                  child: Column(children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: bookingSiteTitle(context, "Add Public Transport", Icons.train),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Type of Transportation"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: dropdownField('Select Transport Type', selectedType, types,
-                          context, 'Please enter the required information', updateDropdown),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _companyFormField.required(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _specificTypeFormField.optional(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Departure Information"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _depLocationFormField.required(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _depDateFormField.firstDate(context),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _depTimeFormField.timeRequired(context),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Arrival Information"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _arrLocationFormField.required(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _arrDateFormField.secondDate(context, _depDateFormField),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _arrTimeFormField.time(context),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Booking Details"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 0),
-                      child: checkbox(
-                          bookingBool, 'Did you book this public transport?', bookingCheckbox),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 0, left: 15, right: 15),
-                      child: checkbox(seatBool, 'Did you make a seat reservation?', seatCheckbox),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Further Booking Details"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _bookingReferenceFormField.optional(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _bookingCompanyFormField.optional(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _seatFormField.optional(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Notes"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _notesFormField.optional(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: Container(
-                        child: submitButton(
-                            context,
-                            Theme.of(context).primaryColor,
-                            Theme.of(context).primaryColor,
-                            validateForm, () async {
-                          final PublicTransportModel publicTransport = new PublicTransportModel(
-                              transportationType: _typeFormField.controller.text,
-                              company: _companyFormField.controller.text,
-                              specificType: _specificTypeFormField.controller.text,
-                              booked: bookingBool,
-                              seatReservation: seatBool,
-                              reference: _bookingReferenceFormField.controller.text,
-                              companyReservation: _bookingCompanyFormField.controller.text,
-                              seat: _seatFormField.controller.text,
-                              departureLocation: _depLocationFormField.controller.text,
-                              departureDate: _depDateFormField.controller.text,
-                              departureTime: _depTimeFormField.controller.text,
-                              arrivalLocation: _arrLocationFormField.controller.text,
-                              arrivalDate: _arrDateFormField.controller.text,
-                              arrivalTime: _arrTimeFormField.controller.text,
-                              notes: _notesFormField.controller.text);
-                          _addPublicTransport(publicTransport);
-                          showSubmittedBookingDialog(context, alertText, returnToTripScreen);
-                        }),
+                //child: Form(
+                child: Container(
+              height: double.infinity,
+              child: Form(
+                key: publicTransportFormKey,
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: AnimatedList(
+                        key: _listKey,
+                        initialItemCount: publicTransportList.length,
+                        itemBuilder: _itemBuilder,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                      child: Container(
-                        child: cancelButton("CANCEL", context, () {
-                          cancellingDialog(context);
-                        }),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                  ]),
+                  ],
                 ),
               ),
-            ),
+            )),
           ],
         ),
       ),
@@ -360,23 +358,7 @@ void _addPublicTransport(PublicTransportModel publicTransport) async {
   final HttpsCallable callable =
       CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addPublicTransport');
   try {
-    final HttpsCallableResult result = await callable.call(<String, dynamic>{
-      "transportationType": publicTransport.transportationType,
-      "company": publicTransport.company,
-      "specificType": publicTransport.specificType,
-      "booked": publicTransport.booked,
-      "seatReservation": publicTransport.seatReservation,
-      "reference": publicTransport.reference,
-      "companyReservation": publicTransport.companyReservation,
-      "seat": publicTransport.seat,
-      "departureLocation": publicTransport.departureLocation,
-      "departureDate": publicTransport.departureDate,
-      "departureTime": publicTransport.departureTime,
-      "arrivalLocation": publicTransport.arrivalLocation,
-      "arrivalDate": publicTransport.arrivalDate,
-      "arrivalTime": publicTransport.arrivalTime,
-      "notes": publicTransport.notes
-    });
+    final HttpsCallableResult result = await callable.call(publicTransport.toMap());
     print(result.data);
   } on CloudFunctionsException catch (e) {
     print('caught firebase functions exception');

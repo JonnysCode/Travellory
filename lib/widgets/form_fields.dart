@@ -1,6 +1,9 @@
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
-import 'package:travellory/widgets/date_picker.dart';
+import 'date_picker.dart';
+
+// everything after this line is old unused code
+// check with jonathan if can be deleted
 
 class FormFieldWidget {
   TextEditingController controller = TextEditingController();
