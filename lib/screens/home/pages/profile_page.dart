@@ -18,7 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
 //  Future _changePassword(BuildContext context) async {
 //    //final BaseAuthService _auth = AuthProvider.of(context).auth;
 //    //await _auth.signOut();
-//    await Navigator.pushReplacementNamed(context, '/profile_page_passwod.dart');
+//    await Navigator.pushReplacementNamed(context, '/profile_page_password.dart');
 //  }
 
   @override
@@ -94,15 +94,37 @@ class _Page2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: TextFormField(
-          decoration: InputDecoration(
-            labelStyle: TextStyle(color: Colors.black,fontSize: 20.0),
-            border: InputBorder.none,
-            hintText: '*********',
-            hintStyle: TextStyle(color: Colors.black),
+      body: Column(
+        children: <Widget>[
+          TextFormField(
+            decoration: InputDecoration(
+              labelStyle: TextStyle(color: Colors.black,fontSize: 20.0),
+              border: UnderlineInputBorder(),
+              hintText: '*********',
+              hintStyle: TextStyle(color: Colors.black),
+              labelText: "Old password",
+            ),
           ),
-        ),
+          TextFormField(
+            decoration: InputDecoration(
+              labelStyle: TextStyle(color: Colors.black,fontSize: 20.0),
+              border: UnderlineInputBorder(),
+              hintText: '*********',
+              hintStyle: TextStyle(color: Colors.black),
+              labelText: "New password"
+            ),
+          ),
+          RaisedButton(
+            onPressed: () => null,
+            child: const Text(
+                'Save',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Arial',
+                )
+            ),
+          ),
+        ],
       ),
     );
   }
