@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/widgets/buttons.dart';
-import 'package:travellory/widgets/form_fields.dart';
+import 'package:travellory/widgets/date_form_field.dart';
+import 'package:travellory/widgets/form_field.dart';
 import 'package:travellory/widgets/section_titles.dart';
 import 'package:travellory/widgets/show_dialog.dart';
 
@@ -13,33 +14,17 @@ class CreateTripScreen extends StatefulWidget {
 }
 
 class _CreateTripScreenState extends State<CreateTripScreen> {
+  final _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final TripModel tripModel = TripModel();
+
   static const  int _imageItemCount = 11;
   int _selectedIndex = 0;
-
-  final FormFieldDateWidget _startDateFormField =
-  FormFieldDateWidget('Start Date *', Icon(Icons.date_range));
-  final FormFieldDateWidget _returnDateFormField = FormFieldDateWidget(
-      'Return Date *', Icon(Icons.date_range), 'Second date cannot be before first date.');
-  final FormFieldWidget _destinationFormField =
-  FormFieldWidget('Destination/s *', Icon(Icons.directions_car));
-  final FormFieldWidget _titleFormField =
-  FormFieldWidget('Trip Title *', Icon(Icons.supervised_user_circle));
 
   final createTripFormKey = GlobalKey<FormState>();
 
   final String alertText =
       "You've just created a new trip. You can see all the information in the home screen. "
       "Add bookings and costumize your trip with a click on it";
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    _titleFormField.dispose();
-    _destinationFormField.dispose();
-    _startDateFormField.dispose();
-    _returnDateFormField.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,27 +76,50 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: sectionTitle(context, 'Trip Details'),
+                        child: SectionTitle('Trip Details'),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: _startDateFormField.firstDate(context),
+                        child: DateFormField(
+                          key: _startDateFormFieldKey,
+                          labelText: "Start Date *",
+                          icon: Icon(Icons.date_range),
+                          optional: false,
+                          chosenDateString: (value) => tripModel.startDate = value,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: _returnDateFormField.secondDateRequired(context, _startDateFormField),
+                        child: DateFormField(
+                          labelText: "End Date *",
+                          icon: Icon(Icons.date_range),
+                          beforeDateKey: _startDateFormFieldKey,
+                          optional: false,
+                          dateValidationMessage: "End Date cannot be before Start Date",
+                          chosenDateString: (value) => tripModel.endDate = value,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: _destinationFormField.required(),
+                        child: TravelloryFormField(
+                          labelText: "Destination(s) *",
+                          icon: Icon(Icons.directions_car),
+                          optional: false,
+                          onChanged: (value) => tripModel.destination = value,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: sectionTitle(context, 'General Information'),
+                        child: SectionTitle('General Information'),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: _titleFormField.required(),
+                        child: TravelloryFormField(
+                          labelText: "Trip Title *",
+                          icon: Icon(Icons.supervised_user_circle),
+                          optional: false,
+                          onChanged: (value) => tripModel.name = value,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -124,18 +132,13 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                         child: Container(
                           height: 32,
                           width: 120,
-                          child: submitButton(context, Theme.of(context).primaryColor,
-                              Theme.of(context).primaryColor, validateForm, () async {
-                                TripModel tripModel = TripModel(
-                                  name: _titleFormField.controller.text,
-                                  startDate: _startDateFormField.controller.text,
-                                  endDate: _returnDateFormField.controller.text,
-                                  destination: _destinationFormField.controller.text,
-                                  imageNr: _selectedIndex+1,
-                                );
-                                //_addTrip(tripModel);
-                                showSubmittedBookingDialog(
-                                    context, alertText, _returnToHomeScreen);
+                          child: SubmitButton(
+                              highlightColor: Theme.of(context).primaryColor,
+                              fillColor: Theme.of(context).primaryColor,
+                              validationFunction: validateForm,
+                              onSubmit: () async {
+                                _addTrip(tripModel);
+                                showSubmittedBookingDialog(context, alertText, _returnToHomeScreen);
                               }),
                         ),
                       ),
@@ -147,7 +150,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                           height: 32,
                           width: 120,
                           child: cancelButton("CANCEL", context, () {
-                            cancellingDialog(context, _returnToHomeScreen);
+                            cancellingDialog(context);
                           }),
                         ),
                       ),
@@ -227,13 +230,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
     HttpsCallable callable =
     CloudFunctions.instance.getHttpsCallable(functionName: '...');
     try {
-      final HttpsCallableResult result = await callable.call(<String, dynamic>{
-        "name": trip.name,
-        "startDate": trip.startDate,
-        "endDate": trip.endDate,
-        "destination": trip.destination,
-        "imageNr": trip.imageNr
-      });
+      final HttpsCallableResult result = await callable.call(tripModel.toMap());
       print(result.data);
     } on CloudFunctionsException catch (e) {
       print('caught firebase functions exception');
