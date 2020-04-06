@@ -74,7 +74,7 @@ class AuthService implements BaseAuthService {
 
   //change password
   Future changePassword(String password) async {
-    //TODO: call firebase function
+    //TODO: fluetfab/hessgia call firebase function
   }
 
 
