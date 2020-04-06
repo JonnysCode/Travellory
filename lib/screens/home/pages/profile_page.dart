@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
+import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/input_widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/utils/input_validator.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -8,6 +12,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  TextEditingController _passwordController = TextEditingController();
+
+  String _error = '';
 
   Future _signOut(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
@@ -15,11 +22,14 @@ class _ProfilePageState extends State<ProfilePage> {
     await Navigator.pushReplacementNamed(context, '/');
   }
 
-//  Future _changePassword(BuildContext context) async {
-//    //final BaseAuthService _auth = AuthProvider.of(context).auth;
-//    //await _auth.signOut();
-//    await Navigator.pushReplacementNamed(context, '/profile_page_password.dart');
-//  }
+  Future _updatePassword(BuildContext context) async {
+    final BaseAuthService _auth = AuthProvider.of(context).auth;
+    dynamic result = await _auth.updatePassword(_passwordController.text);
+    if(result == null){
+      setState(() => _error = 'Please supply a valid password.');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +58,22 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           RaisedButton(
             onPressed: () {
-              Navigator.of(context).push<void>(_createRoute());
-            }, //TODO: link new site profile_page_password
+              Navigator.of(context).push<void>(_createRoutePassword());
+            },
             child: const Text(
-                'change password',
+                'Change password',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Arial',
+                )
+            ),
+          ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.of(context).push<void>(_createRouteFriends());
+            },
+            child: const Text(
+                'Friends',
                 style: TextStyle(
                   fontSize: 16,
                   fontFamily: 'Arial',
@@ -68,16 +90,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 )
             ),
           ),
-
         ],
       ),
     );
   }
 }
 
-Route _createRoute() {
+Route _createRoutePassword() {
   return PageRouteBuilder<SlideTransition>(
-    pageBuilder: (context, animation, secondaryAnimation) => _Page2(),
+    pageBuilder: (context, animation, secondaryAnimation) => _UpdatePassword(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       var tween = Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset.zero);
       var curveTween = CurveTween(curve: Curves.ease);
@@ -90,38 +111,58 @@ Route _createRoute() {
   );
 }
 
-class _Page2 extends StatelessWidget {
+Route _createRouteFriends() {
+  return PageRouteBuilder<SlideTransition>(
+    pageBuilder: (context, animation, secondaryAnimation) => _ShowFriends(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var tween = Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset.zero);
+      var curveTween = CurveTween(curve: Curves.ease);
+
+      return SlideTransition(
+        position: animation.drive(curveTween).drive(tween),
+        child: child,
+      );
+    },
+  );
+}
+
+class _UpdatePassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Column(
         children: <Widget>[
-          TextFormField(
-            decoration: InputDecoration(
-              labelStyle: TextStyle(color: Colors.black,fontSize: 20.0),
-              border: UnderlineInputBorder(),
-              hintText: '*********',
-              hintStyle: TextStyle(color: Colors.black),
-              labelText: "Old password",
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: 10,
+              top: 40,
             ),
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-              labelStyle: TextStyle(color: Colors.black,fontSize: 20.0),
-              border: UnderlineInputBorder(),
-              hintText: '*********',
-              hintStyle: TextStyle(color: Colors.black),
-              labelText: "New password"
-            ),
-          ),
-          RaisedButton(
-            onPressed: () => null,
-            child: const Text(
-                'Save',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'Arial',
-                )
+            child: inputAuthentication(Icon(FontAwesomeIcons.unlockAlt), "PASSWORD", Theme.of(context).primaryColor,
+                _passwordController, ValidatorType.PASSWORD, true)),
+          Padding(
+            padding: EdgeInsets.only(
+                left: 20,
+                right: 20,
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              child: filledButton("SAVE", Colors.white, Theme.of(context).primaryColor,
+                  Theme.of(context).primaryColor, Colors.white, () async {
+                    if (_formKey.currentState.validate()) {
+                      Navigator.pushNamed(context, '/loading');
+                      dynamic result = await _updatePassword(context);
+                      if (result == null) {
+                        setState(() {
+                          _error = 'Please supply a valid email and password.';
+                        });
+                        Navigator.popUntil(
+                          context,
+                          ModalRoute.withName('/'),
+                        );
+                      }
+                    }
+                  }),
+              height: 50,
+              width: MediaQuery.of(context).size.width,
             ),
           ),
         ],
@@ -129,4 +170,25 @@ class _Page2 extends StatelessWidget {
     );
   }
 }
+
+class _ShowFriends extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Column(
+        children: <Widget>[
+          Text(
+            'friendslist',
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 
