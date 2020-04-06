@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/widgets/form_fields.dart';
 
 void main() {
   testWidgets('form test: onSaved callback is called', (WidgetTester tester) async {

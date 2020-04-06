@@ -6,10 +6,12 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/date_form_field.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/form_fields_new.dart';
+import 'package:travellory/widgets/form_field.dart';
 import 'package:travellory/widgets/section_titles.dart';
 import 'package:travellory/widgets/show_dialog.dart';
+import 'package:travellory/widgets/time_form_field.dart';
 
 class RentalCar extends StatefulWidget {
   @override
@@ -21,7 +23,7 @@ class _RentalCarState extends State<RentalCar> {
   final rentalCarFormKey = GlobalKey<FormState>();
   final FlightModel rentalCarModel = FlightModel();
 
-  final _pickUpDateFormFieldKey = GlobalKey<YDateFormFieldState>();
+  final _pickUpDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
   bool validateForm() {
     return rentalCarFormKey.currentState.validate();
@@ -156,7 +158,7 @@ class _RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                           labelText: 'Booking Reference',
                           icon: Icon(Icons.confirmation_number),
                           optional: true,
@@ -164,7 +166,7 @@ class _RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                           labelText: 'Company *',
                           icon: Icon(Icons.supervised_user_circle),
                           optional: false,
@@ -176,7 +178,7 @@ class _RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                           labelText: 'Pick Up Location',
                           icon: Icon(Icons.location_on),
                           optional: true,
@@ -184,7 +186,7 @@ class _RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YDateFormField(
+                      child: DateFormField(
                         key: _pickUpDateFormFieldKey,
                         labelText: "Pick Up Date *",
                         icon: Icon(Icons.date_range),
@@ -193,7 +195,7 @@ class _RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YTimeFormField(
+                      child: TimeFormField(
                           labelText: "Pick Up Time",
                           icon: Icon(Icons.access_time),
                           optional: true,
@@ -205,7 +207,7 @@ class _RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                           labelText: 'Return Location',
                           icon: Icon(Icons.location_on),
                           optional: true,
@@ -213,7 +215,7 @@ class _RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YDateFormField(
+                      child: DateFormField(
                         labelText: "Return Date *",
                         icon: Icon(Icons.date_range),
                         beforeDateKey: _pickUpDateFormFieldKey,
@@ -223,7 +225,7 @@ class _RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YTimeFormField(
+                      child: TimeFormField(
                           labelText: "Return Time",
                           icon: Icon(Icons.access_time),
                           optional: true,
@@ -235,7 +237,7 @@ class _RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                           labelText: 'Car Description',
                           icon: Icon(Icons.directions_car),
                           optional: true,
@@ -243,7 +245,7 @@ class _RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                           labelText: 'Car Plate',
                           icon: Icon(Icons.directions_car),
                           optional: true,
@@ -251,7 +253,7 @@ class _RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: YFormField(
+                      child: TravelloryFormField(
                         labelText: "Notes",
                         icon: Icon(Icons.speaker_notes),
                         optional: true,
