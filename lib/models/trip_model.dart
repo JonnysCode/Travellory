@@ -18,6 +18,18 @@ class TripModel {
   String imagePath;
   int imageNr;
   int index;
+
+  Map<String, dynamic> toMap(){
+    return {
+      'name': name,
+      'startDate': startDate,
+      'endDate': endDate,
+      'destination': destination,
+      'imagePath': imagePath,
+      'imageNr': imageNr,
+      'index': index,
+    };
+  }
 }
 
 List<TripModel> tripModels = <TripModel>[
