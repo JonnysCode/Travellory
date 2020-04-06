@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:syncfusion_flutter_core/core.dart';
 import 'package:travellory/screens/trip/trip_list.dart';
+import 'package:syncfusion_flutter_core/core.dart';
 
 class CalendarPage extends StatefulWidget {
   @override
@@ -13,6 +13,8 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage> {
   final Color calendarBackgroundColor = Colors.red;
   final DateTime today = DateTime.now();
+
+  CalendarController _calendarController;
 
   bool _tripToggle;
 
@@ -28,6 +30,8 @@ class _CalendarPageState extends State<CalendarPage> {
 
   @override
   void initState() {
+    _calendarController = CalendarController();
+    _calendarController.displayDate = DateTime(2022, 02, 05);
     _tripToggle = false;
     super.initState();
   }
@@ -39,11 +43,17 @@ class _CalendarPageState extends State<CalendarPage> {
   }
 
   @override
+  void dispose() {
+    _calendarController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // this registers the license for the calendar
     // trial period until April 22, 2020
     SyncfusionLicense.registerLicense(
-        "NT8mJyc2IWhiZH1nfWN9Z2VoZ3xhYXxhY2Fjc2JhaWBiaWZicwMeaDI9Jzo/KjIgEyAnJjc2PScgfSk7MiR9MDs=");
+        "NT8mJyc2IWhia31ifWN9Z2FoYmF8YGJ8ampqanNiYmlmamlmanMDHmg5PD0yJzsyPTQhJiAgEzs8Jz4yOj99MDw+");
 
     return SafeArea(
       child: Stack(
@@ -62,7 +72,7 @@ class _CalendarPageState extends State<CalendarPage> {
               iconSize: 32,
               color: Colors.black12,
               icon: FaIcon(FontAwesomeIcons.chevronLeft),
-              onPressed: () => {},// TODO: Change month in calendar
+              onPressed: () => _calendarController.backward(),
             ),
           ),
           Positioned(
@@ -72,7 +82,7 @@ class _CalendarPageState extends State<CalendarPage> {
               iconSize: 32,
               color: Colors.black12,
               icon: FaIcon(FontAwesomeIcons.chevronRight),
-              onPressed: () => {},// TODO: Change month in calendar
+              onPressed: () => _calendarController.forward(),
             ),
           ),
           Align(
@@ -150,15 +160,17 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 
-  _calendar() {
+  Widget _calendar() {
     return Container(
       key: Key('calendar_page'),
       height: MediaQuery.of(context).size.height*0.4,
       width: MediaQuery.of(context).size.width - 60,
       child: SfCalendar(
         key: Key('yearly_calendar'),
+        controller: _calendarController,
         view: CalendarView.month,
         cellBorderColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         todayHighlightColor: Colors.black54,
         initialDisplayDate: DateTime.utc(today.year, today.month, 1),
         dataSource: MeetingDataSource(_getDataSource()),
@@ -171,7 +183,7 @@ class _CalendarPageState extends State<CalendarPage> {
         ),
         headerStyle: CalendarHeaderStyle(
           textAlign: TextAlign.left,
-          backgroundColor: Colors.transparent,//Color(0xFFF7C852),
+          backgroundColor: Colors.transparent,
           textStyle: TextStyle(
               fontFamily: 'FashionFetish',
               fontSize: 24,
