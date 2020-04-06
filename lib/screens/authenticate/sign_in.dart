@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/utils/input_validator.dart';
@@ -33,6 +34,13 @@ class _SignInState extends State<SignIn> {
   }
 
   @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -58,8 +66,19 @@ class _SignInState extends State<SignIn> {
                         child: Stack(
                           children: <Widget>[
                             Positioned(
-                              left: 10,
-                              top: 10,
+                              left: 18,
+                              top: 18,
+                              child: Container(
+                                width: 32,
+                                height: 32,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                            ),
+                            Positioned(
+                              left: 8,
+                              top: 8,
                               child: IconButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
@@ -67,9 +86,9 @@ class _SignInState extends State<SignIn> {
                                   _passwordController.clear();
                                 },
                                 icon: Icon(
-                                  Icons.arrow_back_ios,
+                                  FontAwesomeIcons.angleLeft,
                                   size: 30.0,
-                                  color: Theme.of(context).primaryColor,
+                                  color: Colors.white,
                                 ),
                               ),
                             )
@@ -92,10 +111,8 @@ class _SignInState extends State<SignIn> {
                                         width: 130,
                                         height: 130,
                                         decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: AssetImage("assets/images/login/world.png"),
-                                            fit: BoxFit.fill,
-                                          ),
+                                          shape: BoxShape.circle,
+                                          color: Theme.of(context).primaryColor,
                                         ),
                                       ),
                                       alignment: Alignment.center,
@@ -108,7 +125,7 @@ class _SignInState extends State<SignIn> {
                                         style: TextStyle(
                                           fontSize: 48,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.white,
+                                          color: Color(0xFFF7EDEE),
                                         ),
                                       ),
                                       alignment: Alignment.center,
@@ -124,12 +141,12 @@ class _SignInState extends State<SignIn> {
                                   children: <Widget>[
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 10, top: 40),
-                                      child: inputAuthentication(Icon(Icons.email), "EMAIL", Theme.of(context).primaryColor,
+                                      child: inputAuthentication(Icon(FontAwesomeIcons.solidEnvelope), "EMAIL", Theme.of(context).primaryColor,
                                           _emailController, ValidatorType.EMAIL, false),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
-                                      child: inputAuthentication(Icon(Icons.lock), "PASSWORD", Theme.of(context).primaryColor,
+                                      child: inputAuthentication(Icon(FontAwesomeIcons.unlockAlt), "PASSWORD", Theme.of(context).primaryColor,
                                           _passwordController, ValidatorType.PASSWORD, true),
                                     ),
                                     Padding(
@@ -147,7 +164,10 @@ class _SignInState extends State<SignIn> {
                                                   setState(() {
                                                     _error = 'Could not sign in with those credentials.';
                                                   });
-                                                  Navigator.pop(context);
+                                                  Navigator.popUntil(
+                                                    context,
+                                                    ModalRoute.withName('/'),
+                                                  );
                                                 }
                                               }
                                             }),

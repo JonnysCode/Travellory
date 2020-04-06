@@ -25,6 +25,12 @@ class _ProfilePageState extends State<ProfilePage>
     );
     imagePicker = new ImagePickerHandler(this, _controller);
     imagePicker.init();
+    //TODO
+/*
+  Future _signOut(BuildContext context) async {
+    final BaseAuthService _auth = AuthProvider.of(context).auth;
+    await _auth.signOut();
+    Navigator.pushReplacementNamed(context, '/');*/
   }
 
   @override
@@ -84,6 +90,14 @@ class _ProfilePageState extends State<ProfilePage>
                     return CircularProgressIndicator();
                   }
                 }),
+
+            // TODO
+            /*
+            FlatButton.icon(
+              onPressed: () => _signOut(context),
+              icon: Icon(Icons.person),
+              label: Text('logout'),
+            )*/
           ],
         ),
       ),
