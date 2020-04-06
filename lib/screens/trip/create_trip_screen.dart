@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/add_database.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/date_form_field.dart';
@@ -8,12 +10,12 @@ import 'package:travellory/widgets/form_field.dart';
 import 'package:travellory/widgets/section_titles.dart';
 import 'package:travellory/widgets/show_dialog.dart';
 
-class CreateTripScreen extends StatefulWidget {
+class CreateTrip extends StatefulWidget {
   @override
-  _CreateTripScreenState createState() => _CreateTripScreenState();
+  _CreateTripState createState() => _CreateTripState();
 }
 
-class _CreateTripScreenState extends State<CreateTripScreen> {
+class _CreateTripState extends State<CreateTrip> {
   final _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final TripModel tripModel = TripModel();
   final DatabaseAdder databaseAdder = DatabaseAdder();
@@ -27,8 +29,10 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
       "You've just created a new trip. You can see all the information in the home screen. "
       "Add bookings and costumize your trip with a click on it";
 
+
   @override
   Widget build(BuildContext context) {
+    tripModel.userUID = Provider.of<UserModel>(context).uid;
     bool validateForm() {
       return (createTripFormKey.currentState.validate());
     }
@@ -82,7 +86,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
                         key: _startDateFormFieldKey,
-                        labelText: "Start Date *",
+                        labelText: 'Start Date *',
                         icon: Icon(Icons.date_range),
                         optional: false,
                         chosenDateString: (value) => tripModel.startDate = value,
@@ -91,18 +95,18 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
-                        labelText: "End Date *",
+                        labelText: 'End Date *',
                         icon: Icon(Icons.date_range),
                         beforeDateKey: _startDateFormFieldKey,
                         optional: false,
-                        dateValidationMessage: "End Date cannot be before Start Date",
+                        dateValidationMessage: 'End Date cannot be before Start Date',
                         chosenDateString: (value) => tripModel.endDate = value,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
-                        labelText: "Destination(s) *",
+                        labelText: 'Destination(s) *',
                         icon: Icon(Icons.directions_car),
                         optional: false,
                         onChanged: (value) => tripModel.destination = value,
@@ -115,7 +119,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
-                        labelText: "Trip Title *",
+                        labelText: 'Trip Title *',
                         icon: Icon(Icons.supervised_user_circle),
                         optional: false,
                         onChanged: (value) => tripModel.name = value,
@@ -149,7 +153,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                       child: Container(
                         height: 32,
                         width: 120,
-                        child: cancelButton("CANCEL", context, () {
+                        child: cancelButton('CANCEL', context, () {
                           cancellingDialog(context);
                         }),
                       ),
