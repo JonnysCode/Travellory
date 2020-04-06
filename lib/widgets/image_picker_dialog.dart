@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 
+import 'font_widgets.dart';
+
 class ImagePickerDialog extends StatelessWidget {
   ImagePickerHandler _listener;
   AnimationController _controller;
@@ -81,7 +83,7 @@ class ImagePickerDialog extends StatelessWidget {
                 new GestureDetector(
                   onTap: () => _listener.openCamera(),
                   child: roundedButton(
-                      "Camera",
+                      "Take Photo",
                       EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
                       Theme.of(context).primaryColor,
                       const Color(0xFFFFFFFF)),
@@ -89,7 +91,7 @@ class ImagePickerDialog extends StatelessWidget {
                 new GestureDetector(
                   onTap: () => _listener.openGallery(),
                   child: roundedButton(
-                      "Gallery",
+                      "Choose from Library",
                       EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
                       Theme.of(context).primaryColor,
                       const Color(0xFFFFFFFF)),
@@ -129,11 +131,15 @@ class ImagePickerDialog extends StatelessWidget {
           ),
         ],
       ),
-      child: Text(
-        buttonLabel,
-        style: new TextStyle(
-            color: textColor, fontSize: 20.0, fontWeight: FontWeight.bold),
+      child:
+      FashionFetishText(
+        text:  buttonLabel,
+        size: 20,
+        color: Colors.white,
+        fontWeight: FashionFontWeight.NORMAL,
+        height: 1.05,
       ),
+
     );
     return loginBtn;
   }
