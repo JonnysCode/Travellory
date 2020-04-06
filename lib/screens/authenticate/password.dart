@@ -23,9 +23,9 @@ class _RegisterState extends State<ChangePassword> {
 
   String _error = '';
 
-  Future _updatePassword(BuildContext context) async {
+  Future _changePassword(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    dynamic result = await _auth.updatePassword(_passwordController.text);
+    dynamic result = await _auth.changePassword(_passwordController.text);
     if(result == null){
       setState(() => _error = 'Please supply a valid password.');
     }
@@ -132,7 +132,7 @@ class _RegisterState extends State<ChangePassword> {
                                             Theme.of(context).primaryColor, Colors.white, () async {
                                               if (_formKey.currentState.validate()) {
                                                 Navigator.pushNamed(context, '/loading');
-                                                dynamic result = await _updatePassword(context);
+                                                dynamic result = await _changePassword(context);
                                                 if (result == null) {
                                                   setState(() {
                                                     _error = 'Please supply a valid password.';
