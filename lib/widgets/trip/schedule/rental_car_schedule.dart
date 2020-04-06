@@ -30,7 +30,7 @@ class RentalCarSchedule extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 FashionFetishText(
-                  text: 'Pick your car here:',
+                  text: 'Pick up your car here:',
                   size: 16,
                   fontWeight: FashionFontWeight.HEAVY,
                   height: 1.2,
