@@ -9,8 +9,8 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     TripModel tripModel = TripModel(
         name: 'Castle Discovery',
-        startDate: DateTime(2020, 5, 12),
-        endDate: DateTime(2020, 5, 25),
+        startDate: '2020-05-12',
+        endDate: '2020-05-25',
         destination: 'Munich',
         imageNr: 3
     );
