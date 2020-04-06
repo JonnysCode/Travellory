@@ -43,23 +43,17 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          filledButton("change password", Colors.white, Theme
-              .of(context)
-              .primaryColor,
-              Theme
-                  .of(context)
-                  .primaryColor, Colors.white, () async {
+          filledButton("change password", Colors.white,
+              Theme.of(context).primaryColor,
+              Theme.of(context).primaryColor, Colors.white, () async {
                 Navigator.pushNamed(context, '/password');
               }
           ),
           //TODO: fluetfab add filled button for friends
-          filledButton("friends", Colors.white, Theme
-              .of(context)
-              .primaryColor,
-              Theme
-                  .of(context)
-                  .primaryColor, Colors.white, () async {
-                Navigator.pushNamed(context, '/friends');
+          filledButton("friends", Colors.white,
+              Theme.of(context).primaryColor,
+              Theme.of(context).primaryColor, Colors.white, () async {
+                Navigator.pushNamed(context, '/friends/friends_page');
               }
           ),
           //TODO: fluetfab add filled button for logout
