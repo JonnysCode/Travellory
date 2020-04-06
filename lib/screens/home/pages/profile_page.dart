@@ -24,40 +24,58 @@ class _ProfilePageState extends State<ProfilePage> {
       key: Key('profile_page'),
       child: Column(
         children: <Widget>[
-          FlatButton.icon(
-            onPressed: () => _signOut(context),
-            icon: Icon(Icons.person),
-            label: Text('logout'),
-          ),
-          SizedBox( //TODO: fluetfab remove if profile view is available
-            height: 350,
-            width: 250,
-            child: const Card(
-              color: Colors.white60,
-              child: Text(
-                  'ProfileView\n',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: 'Arial',
-                  )
-              ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: 60,
+                left: 90,
+                right: 90,
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              child: filledButton("Change password", Colors.white, Theme.of(context).primaryColor,
+                  Theme.of(context).primaryColor, Colors.white, () {
+                    Navigator.pushNamed(context, '/password');
+                  }),
+              height: 40,
+              width: MediaQuery.of(context).size.width,
             ),
           ),
-          filledButton("change password", Colors.white,
-              Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor, Colors.white, () async {
-                Navigator.pushNamed(context, '/password');
-              }
+          SizedBox(
+            height: 10,
           ),
-          //TODO: fluetfab add filled button for friends
-          filledButton("friends", Colors.white,
-              Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor, Colors.white, () async {
-                Navigator.pushNamed(context, '/friends/friends_page');
-              }
+          Padding(
+            padding: EdgeInsets.only(
+                left: 90,
+                right: 90,
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              child: filledButton("Friends", Colors.white, Theme.of(context).primaryColor,
+                  Theme.of(context).primaryColor, Colors.white, () {
+                    Navigator.pushNamed(context, '/friends/friends_page');
+                  }),
+              height: 40,
+              width: MediaQuery.of(context).size.width,
+            ),
           ),
-          //TODO: fluetfab add filled button for logout
-
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                left: 90,
+                right: 90,
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              child: filledButton("Logout", Colors.white, Theme.of(context).primaryColor,
+                  Theme.of(context).primaryColor, Colors.white, () async {
+                    _signOut(context);
+                  }),
+              height: 40,
+              width: MediaQuery.of(context).size.width,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
         ],
       ),
     );
