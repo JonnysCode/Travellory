@@ -13,6 +13,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   static const List<IconData> _icons = <IconData>[
     FontAwesomeIcons.theaterMasks,
     FontAwesomeIcons.car,
+    FontAwesomeIcons.bus,
     FontAwesomeIcons.bed,
     FontAwesomeIcons.plane,
   ];
@@ -73,7 +74,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               right: 40,
               child: Container(
                 child: Text(
-                  "Your trip to Los Angeles starts in 1 day. Pack your luggage now.",
+                  "Your trip to Los Angeles starts in 1 day. Pack your bags now.",
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.black54,
