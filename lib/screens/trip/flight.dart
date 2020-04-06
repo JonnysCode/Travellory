@@ -1,12 +1,13 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/flight_model.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/date_converter.dart';
+import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/form_fields.dart';
+import 'package:travellory/widgets/form_fields_new.dart';
 import 'package:travellory/widgets/section_titles.dart';
 import 'package:travellory/widgets/show_dialog.dart';
 
@@ -16,57 +17,18 @@ class Flight extends StatefulWidget {
 }
 
 class _FlightState extends State<Flight> {
-  final FormFieldWidget _bookingReferenceFormField =
-      FormFieldWidget("Booking Reference", Icon(Icons.confirmation_number));
-  final FormFieldWidget _airlineFormField = FormFieldWidget("Airline *", Icon(Icons.flight));
-  final FormFieldWidget _flightNrFormField =
-      FormFieldWidget("Flight Number", Icon(Icons.confirmation_number));
-  final FormFieldWidget _seatFormField =
-      FormFieldWidget("Seat", Icon(Icons.airline_seat_recline_normal));
-  final FormFieldWidget _depLocationFormField =
-      FormFieldWidget("Departure Location *", Icon(Icons.location_on));
-  final FormFieldDateWidget _depDateFormField =
-      FormFieldDateWidget("Departure Date *", Icon(Icons.date_range));
-  final FormFieldTimeWidget _depTimeFormField =
-      FormFieldTimeWidget("Departure Time *", Icon(Icons.access_time));
-  final FormFieldWidget _arrLocationFormField =
-      FormFieldWidget("Arrival Location *", Icon(Icons.location_on));
-  final FormFieldDateWidget _arrDateFormField = FormFieldDateWidget(
-      "Arrival Date", Icon(Icons.date_range), "Arrival date cannot be before departure date.");
-  final FormFieldTimeWidget _arrTimeFormField =
-      FormFieldTimeWidget("Arrival Time", Icon(Icons.access_time));
-  final FormFieldWidget _notesFormField = FormFieldWidget("Notes", Icon(Icons.speaker_notes));
-
-  bool checkedBagBool = false;
-  bool excessBagBool = false;
-
-  void checkedBagCheckbox(bool value) {
-    setState(() => checkedBagBool = value);
-  }
-
-  void excessBagCheckbox(bool value) {
-    setState(() => excessBagBool = value);
-  }
-
+  ListModel<Widget> flightList;
   final flightFormKey = GlobalKey<FormState>();
+  final FlightModel flightModel = FlightModel();
+
+  final _depDateFormFieldKey = GlobalKey<YDateFormFieldState>();
+
+  bool validateForm() {
+    return flightFormKey.currentState.validate();
+  }
 
   final String alertText =
       "You've just submitted the booking information for your flight booking. You can see all the information in the trip overview";
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    _bookingReferenceFormField.dispose();
-    _airlineFormField.dispose();
-    _depLocationFormField.dispose();
-    _depDateFormField.dispose();
-    _depTimeFormField.dispose();
-    _arrLocationFormField.dispose();
-    _arrDateFormField.dispose();
-    _arrTimeFormField.dispose();
-    _notesFormField.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,10 +36,6 @@ class _FlightState extends State<Flight> {
 
     void returnToTripScreen() {
       Navigator.pop(context);
-    }
-
-    bool validateForm() {
-      return flightFormKey.currentState.validate();
     }
 
     return Scaffold(
@@ -190,112 +148,136 @@ class _FlightState extends State<Flight> {
                   child: Column(children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: bookingSiteTitle(context, "Add Flight", Icons.flight),
+                      child: BookingSiteTitle('Add Flight', Icons.time_to_leave),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "General Information"),
+                      child: SectionTitle('General Information'),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _bookingReferenceFormField.optional(),
+                      child: YFormField(
+                          labelText: 'Booking Reference',
+                          icon: Icon(Icons.confirmation_number),
+                          optional: true,
+                          onChanged: (value) => flightModel.bookingReference = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _airlineFormField.required(),
+                      child: YFormField(
+                          labelText: 'Airline *',
+                          icon: Icon(Icons.flight),
+                          optional: false,
+                          onChanged: (value) => flightModel.airline = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _flightNrFormField.optional(),
+                      child: YFormField(
+                          labelText: 'Flight Number',
+                          icon: Icon(Icons.confirmation_number),
+                          optional: true,
+                          onChanged: (value) => flightModel.flightNr = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _seatFormField.optional(),
+                      child: YFormField(
+                          labelText: 'Seat',
+                          icon: Icon(Icons.airline_seat_recline_normal),
+                          optional: true,
+                          onChanged: (value) => flightModel.seat = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Departure Information"),
+                      child: SectionTitle('Pick Up Information'),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _depLocationFormField.required(),
+                      child: YFormField(
+                          labelText: 'Departure Location *',
+                          icon: Icon(Icons.location_on),
+                          optional: false,
+                          onChanged: (value) => flightModel.departureLocation = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _depDateFormField.firstDate(context),
+                      child: YDateFormField(
+                        key: _depDateFormFieldKey,
+                        labelText: "Departure Date *",
+                        icon: Icon(Icons.date_range),
+                        optional: false,
+                        chosenDateString: (value) => flightModel.departureDate = value,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _depTimeFormField.timeRequired(context),
+                      child: YTimeFormField(
+                          labelText: "Departure Time *",
+                          icon: Icon(Icons.access_time),
+                          optional: false,
+                          chosenTimeString: (value) => flightModel.departureTime = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Arrival Information"),
+                      child: SectionTitle("Arrival Information"),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _arrLocationFormField.required(),
+                      child: YFormField(
+                          labelText: 'Arrival Location *',
+                          icon: Icon(Icons.location_on),
+                          optional: false,
+                          onChanged: (value) => flightModel.arrivalLocation = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _arrDateFormField.secondDate(context, _depDateFormField),
+                      child: YDateFormField(
+                        labelText: "Arrival Date",
+                        icon: Icon(Icons.date_range),
+                        beforeDateKey: _depDateFormFieldKey,
+                        optional: true,
+                        dateValidationMessage: "Arrival Date cannot be before Departure Date",
+                        chosenDateString: (value) => flightModel.arrivalDate = value,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _arrTimeFormField.time(context),
+                      child: YTimeFormField(
+                          labelText: "Arrival Time",
+                          icon: Icon(Icons.access_time),
+                          optional: true,
+                          chosenTimeString: (value) => flightModel.arrivalTime = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Baggage Details"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 0),
-                      child: checkbox(checkedBagBool, 'Checked baggage included in ticket?',
-                          checkedBagCheckbox),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 0, left: 15, right: 15),
-                      child: checkbox(
-                          excessBagBool, 'Excess baggage included in ticket?', excessBagCheckbox),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Notes"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _notesFormField.optional(),
+                      child: YFormField(
+                        labelText: "Notes",
+                        icon: Icon(Icons.speaker_notes),
+                        optional: true,
+                        onChanged: (value) => flightModel.notes = value,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: Container(
-                        child: submitButton(context, Theme.of(context).primaryColor,
-                            Theme.of(context).primaryColor, validateForm, () async {
-                          final FlightModel flight = new FlightModel(
-                              bookingReference: _bookingReferenceFormField.controller.text,
-                              airline: _airlineFormField.controller.text,
-                              flightNr: _flightNrFormField.controller.text,
-                              seat: _seatFormField.controller.text,
-                              departureLocation: _depLocationFormField.controller.text,
-                              departureDate: _depDateFormField.controller.text,
-                              departureTime: _depTimeFormField.controller.text,
-                              arrivalLocation: _arrLocationFormField.controller.text,
-                              arrivalDate: _arrDateFormField.controller.text,
-                              arrivalTime: _arrTimeFormField.controller.text,
-                              checkedBaggage: checkedBagBool,
-                              excessBaggage: excessBagBool,
-                              notes: _notesFormField.controller.text);
-                          _addFlight(flight);
-                          showSubmittedBookingDialog(context, alertText, returnToTripScreen);
-                        }),
+                        child: SubmitButton(
+                            highlightColor: Theme.of(context).primaryColor,
+                            fillColor: Theme.of(context).primaryColor,
+                            validationFunction: validateForm,
+                            onSubmit: () async {
+                              _addFlight(flightModel);
+                              showSubmittedBookingDialog(context, alertText, returnToTripScreen);
+                            }),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                       child: Container(
-                        child: cancelButton("CANCEL", context, () {
-                          cancellingDialog(context);
-                        }),
+                        child: CancelButton(
+                          text: "CANCEL",
+                          onCancel: () {
+                            cancellingDialog(context);
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -310,25 +292,11 @@ class _FlightState extends State<Flight> {
   }
 }
 
-void _addFlight(FlightModel flight) async {
+void _addFlight(FlightModel flightModel) async {
   final HttpsCallable callable =
       CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addFlight');
   try {
-    final HttpsCallableResult result = await callable.call(<String, dynamic>{
-      "bookingReference": flight.bookingReference,
-      "airline": flight.airline,
-      "flightNr": flight.flightNr,
-      "seat": flight.seat,
-      "departureLocation": flight.departureLocation,
-      "departureDate": flight.departureDate,
-      "departureTime": flight.departureTime,
-      "arrivalLocation": flight.arrivalLocation,
-      "arrivalDate": flight.arrivalDate,
-      "arrivalTime": flight.arrivalTime,
-      "checkedBaggage": flight.checkedBaggage,
-      "excessBaggage": flight.excessBaggage,
-      "notes": flight.notes
-    });
+    final HttpsCallableResult result = await callable.call(flightModel.toMap());
     print(result.data);
   } on CloudFunctionsException catch (e) {
     print('caught firebase functions exception');

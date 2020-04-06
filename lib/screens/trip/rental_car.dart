@@ -4,11 +4,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/date_converter.dart';
+import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'package:travellory/widgets/form_fields_new.dart';
 import 'package:travellory/widgets/section_titles.dart';
 import 'package:travellory/widgets/show_dialog.dart';
-import 'package:travellory/widgets/form_fields.dart';
 
 class RentalCar extends StatefulWidget {
   @override
@@ -16,49 +17,18 @@ class RentalCar extends StatefulWidget {
 }
 
 class _RentalCarState extends State<RentalCar> {
-  final FormFieldWidget _bookingReferenceFormField =
-      FormFieldWidget("Booking Reference", Icon(Icons.confirmation_number));
-  final FormFieldWidget _companyFormField =
-      FormFieldWidget("Company *", Icon(Icons.supervised_user_circle));
-  final FormFieldWidget _pickupLocationFormField =
-      FormFieldWidget("Pick Up Location", Icon(Icons.location_on));
-  final FormFieldDateWidget _pickupDateFormField =
-      FormFieldDateWidget("Pick Up Date *", Icon(Icons.date_range));
-  final FormFieldTimeWidget _pickupTimeFormField =
-      FormFieldTimeWidget("Pick Up Time", Icon(Icons.access_time));
-  final FormFieldWidget _returnLocationFormField =
-      FormFieldWidget("Return Location", Icon(Icons.location_on));
-  final FormFieldDateWidget _returnDateFormField = FormFieldDateWidget(
-      "Return Date", Icon(Icons.date_range), "Second date cannot be before first date.");
-  final FormFieldTimeWidget _returnTimeFormField =
-      FormFieldTimeWidget("Return Time", Icon(Icons.access_time));
-  final FormFieldWidget _carDescriptionFormField =
-      FormFieldWidget("Car Description", Icon(Icons.directions_car));
-  final FormFieldWidget _carPlateFormField =
-      FormFieldWidget("Car Plate", Icon(Icons.directions_car));
-  final FormFieldWidget _notesFormField = FormFieldWidget("Notes", Icon(Icons.speaker_notes));
-
+  ListModel<Widget> rentalCarList;
   final rentalCarFormKey = GlobalKey<FormState>();
+  final FlightModel rentalCarModel = FlightModel();
+
+  final _pickUpDateFormFieldKey = GlobalKey<YDateFormFieldState>();
+
+  bool validateForm() {
+    return rentalCarFormKey.currentState.validate();
+  }
 
   final String alertText =
       "You've just submitted the booking information for your rental car booking. You can see all the information in the trip overview";
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    _bookingReferenceFormField.dispose();
-    _companyFormField.dispose();
-    _pickupLocationFormField.dispose();
-    _pickupTimeFormField.dispose();
-    _returnLocationFormField.dispose();
-    _returnTimeFormField.dispose();
-    _carDescriptionFormField.dispose();
-    _carPlateFormField.dispose();
-    _notesFormField.dispose();
-    _pickupDateFormField.dispose();
-    _returnDateFormField.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +36,6 @@ class _RentalCarState extends State<RentalCar> {
 
     void returnToTripScreen() {
       Navigator.pop(context);
-    }
-
-    bool validateForm() {
-      return rentalCarFormKey.currentState.validate();
     }
 
     return Scaffold(
@@ -123,9 +89,7 @@ class _RentalCarState extends State<RentalCar> {
                       alignment: Alignment.topLeft,
                       width: MediaQuery.of(context).size.width,
                       constraints: BoxConstraints(
-                          maxHeight: 100.0,
-                          maxWidth: MediaQuery.of(context).size.width - 200
-                      ),
+                          maxHeight: 100.0, maxWidth: MediaQuery.of(context).size.width - 200),
                       child: FashionFetishText(
                         text: _tripModel.name,
                         size: 24,
@@ -142,14 +106,13 @@ class _RentalCarState extends State<RentalCar> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         FashionFetishText(
-                            text: 'From: ${DateConverter.format( _tripModel.startDate)}'
-                                + '\n'
-                                + 'To: ${DateConverter.format( _tripModel.endDate)}',
+                            text: 'From: ${DateConverter.format(_tripModel.startDate)}' +
+                                '\n' +
+                                'To: ${DateConverter.format(_tripModel.endDate)}',
                             color: Colors.black54,
                             fontWeight: FashionFontWeight.BOLD,
                             size: 14,
-                            height: 1.25
-                        ),
+                            height: 1.25),
                         SizedBox(
                           height: 12,
                         ),
@@ -185,97 +148,138 @@ class _RentalCarState extends State<RentalCar> {
                   child: Column(children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: bookingSiteTitle(context, "Add Rental Car", Icons.time_to_leave),
+                      child: BookingSiteTitle('Add Rental Car', Icons.time_to_leave),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "General Information"),
+                      child: SectionTitle('General Information'),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _bookingReferenceFormField.optional(),
+                      child: YFormField(
+                          labelText: 'Booking Reference',
+                          icon: Icon(Icons.confirmation_number),
+                          optional: true,
+                          onChanged: (value) => rentalCarModel.bookingReference = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _companyFormField.required(),
+                      child: YFormField(
+                          labelText: 'Company *',
+                          icon: Icon(Icons.supervised_user_circle),
+                          optional: false,
+                          onChanged: (value) => rentalCarModel.company = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Pick Up Information"),
+                      child: SectionTitle('Pick Up Information'),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _pickupLocationFormField.optional(),
+                      child: YFormField(
+                          labelText: 'Pick Up Location',
+                          icon: Icon(Icons.location_on),
+                          optional: true,
+                          onChanged: (value) => rentalCarModel.pickupLocation = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _pickupDateFormField.firstDate(context),
+                      child: YDateFormField(
+                        key: _pickUpDateFormFieldKey,
+                        labelText: "Pick Up Date *",
+                        icon: Icon(Icons.date_range),
+                        chosenDateString: (value) => rentalCarModel.pickupDate = value,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _pickupTimeFormField.time(context),
+                      child: YTimeFormField(
+                          labelText: "Pick Up Time",
+                          icon: Icon(Icons.access_time),
+                          optional: true,
+                          chosenTimeString: (value) => rentalCarModel.pickupTime = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Return Information"),
+                      child: SectionTitle("Return Information"),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _returnLocationFormField.optional(),
+                      child: YFormField(
+                          labelText: 'Return Location',
+                          icon: Icon(Icons.location_on),
+                          optional: true,
+                          onChanged: (value) => rentalCarModel.returnLocation = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _returnDateFormField.secondDateRequired(context, _pickupDateFormField),
+                      child: YDateFormField(
+                        labelText: "Return Date *",
+                        icon: Icon(Icons.date_range),
+                        beforeDateKey: _pickUpDateFormFieldKey,
+                        dateValidationMessage: "Return Date cannot be before Pick Up Date",
+                        chosenDateString: (value) => rentalCarModel.returnDate = value,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _returnTimeFormField.time(context),
+                      child: YTimeFormField(
+                          labelText: "Return Time",
+                          icon: Icon(Icons.access_time),
+                          optional: true,
+                          chosenTimeString: (value) => rentalCarModel.returnTime = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Car Details"),
+                      child: SectionTitle("Car Details"),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _carDescriptionFormField.optional(),
+                      child: YFormField(
+                          labelText: 'Car Description',
+                          icon: Icon(Icons.directions_car),
+                          optional: true,
+                          onChanged: (value) => rentalCarModel.carDescription = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _carPlateFormField.optional(),
+                      child: YFormField(
+                          labelText: 'Car Plate',
+                          icon: Icon(Icons.directions_car),
+                          optional: true,
+                          onChanged: (value) => rentalCarModel.carNumberPlate = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _notesFormField.optional(),
+                      child: YFormField(
+                        labelText: "Notes",
+                        icon: Icon(Icons.speaker_notes),
+                        optional: true,
+                        onChanged: (value) => rentalCarModel.notes = value,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: Container(
-                        child: submitButton(context, Theme.of(context).primaryColor,
-                            Theme.of(context).primaryColor, validateForm, () async {
-                          final RentalCarModel rentalCar = new RentalCarModel(
-                              bookingReference: _bookingReferenceFormField.controller.text,
-                              company: _companyFormField.controller.text,
-                              pickupLocation: _pickupLocationFormField.controller.text,
-                              pickupDate: _pickupDateFormField.controller.text,
-                              pickupTime: _pickupTimeFormField.controller.text,
-                              returnLocation: _returnLocationFormField.controller.text,
-                              returnDate: _returnDateFormField.controller.text,
-                              returnTime: _returnTimeFormField.controller.text,
-                              carDescription: _carDescriptionFormField.controller.text,
-                              carNumberPlate: _carPlateFormField.controller.text,
-                              notes: _notesFormField.controller.text);
-                          _addRentalCar(rentalCar);
-                          showSubmittedBookingDialog(
-                              context, alertText, returnToTripScreen);
-                        }),
+                        child: SubmitButton(
+                            highlightColor: Theme.of(context).primaryColor,
+                            fillColor: Theme.of(context).primaryColor,
+                            validationFunction: validateForm,
+                            onSubmit: () async {
+                              _addRentalCar(rentalCarModel);
+                              showSubmittedBookingDialog(context, alertText, returnToTripScreen);
+                            }),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                       child: Container(
-                        child: cancelButton("CANCEL", context, () {
-                          cancellingDialog(context);
-                        }),
+                        child: CancelButton(
+                          text: "CANCEL",
+                          onCancel: () {
+                            cancellingDialog(context);
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -290,23 +294,11 @@ class _RentalCarState extends State<RentalCar> {
   }
 }
 
-void _addRentalCar(RentalCarModel rentalCar) async {
+void _addRentalCar(FlightModel rentalCarModel) async {
   final HttpsCallable callable =
       CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addRentalCar');
   try {
-    final HttpsCallableResult result = await callable.call(<String, dynamic>{
-      "bookingReference": rentalCar.bookingReference,
-      "company": rentalCar.company,
-      "pickupLocation": rentalCar.pickupLocation,
-      "pickupDate": rentalCar.pickupDate,
-      "pickupTime": rentalCar.pickupTime,
-      "returnLocation": rentalCar.returnLocation,
-      "returnDate": rentalCar.returnDate,
-      "returnTime": rentalCar.returnTime,
-      "carDescription": rentalCar.carDescription,
-      "carNumberPlate": rentalCar.carNumberPlate,
-      "notes": rentalCar.notes
-    });
+    final HttpsCallableResult result = await callable.call(rentalCarModel.toMap());
     print(result.data);
   } on CloudFunctionsException catch (e) {
     print('caught firebase functions exception');
