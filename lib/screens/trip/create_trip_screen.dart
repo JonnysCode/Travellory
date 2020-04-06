@@ -1,7 +1,7 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/services/add_database.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/date_form_field.dart';
 import 'package:travellory/widgets/form_field.dart';
@@ -16,8 +16,9 @@ class CreateTripScreen extends StatefulWidget {
 class _CreateTripScreenState extends State<CreateTripScreen> {
   final _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final TripModel tripModel = TripModel();
+  final DatabaseAdder databaseAdder = DatabaseAdder();
 
-  static const  int _imageItemCount = 11;
+  static const int _imageItemCount = 11;
   int _selectedIndex = 0;
 
   final createTripFormKey = GlobalKey<FormState>();
@@ -28,7 +29,6 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     bool validateForm() {
       return (createTripFormKey.currentState.validate());
     }
@@ -44,7 +44,8 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
             borderRadius: BorderRadius.circular(20),
             color: Colors.white,
             boxShadow: <BoxShadow>[
-              BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.15), offset: Offset(3.0, 3.0))
+              BoxShadow(
+                  blurRadius: 6, color: Colors.black.withOpacity(.15), offset: Offset(3.0, 3.0))
             ],
           ),
           child: Column(
@@ -54,8 +55,8 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                 child: Stack(
                   children: <Widget>[
                     Center(
-                      child: bookingSiteTitle(context, 'Create Trip', FontAwesomeIcons.suitcaseRolling)
-                    ),
+                        child: bookingSiteTitle(
+                            context, 'Create Trip', FontAwesomeIcons.suitcaseRolling)),
                     Positioned(
                       top: 0,
                       right: 0,
@@ -72,91 +73,89 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
               Expanded(
                 child: Form(
                   key: createTripFormKey,
-                  child: ListView(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: SectionTitle('Trip Details'),
+                  child: ListView(children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: SectionTitle('Trip Details'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: DateFormField(
+                        key: _startDateFormFieldKey,
+                        labelText: "Start Date *",
+                        icon: Icon(Icons.date_range),
+                        optional: false,
+                        chosenDateString: (value) => tripModel.startDate = value,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: DateFormField(
-                          key: _startDateFormFieldKey,
-                          labelText: "Start Date *",
-                          icon: Icon(Icons.date_range),
-                          optional: false,
-                          chosenDateString: (value) => tripModel.startDate = value,
-                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: DateFormField(
+                        labelText: "End Date *",
+                        icon: Icon(Icons.date_range),
+                        beforeDateKey: _startDateFormFieldKey,
+                        optional: false,
+                        dateValidationMessage: "End Date cannot be before Start Date",
+                        chosenDateString: (value) => tripModel.endDate = value,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: DateFormField(
-                          labelText: "End Date *",
-                          icon: Icon(Icons.date_range),
-                          beforeDateKey: _startDateFormFieldKey,
-                          optional: false,
-                          dateValidationMessage: "End Date cannot be before Start Date",
-                          chosenDateString: (value) => tripModel.endDate = value,
-                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: TravelloryFormField(
+                        labelText: "Destination(s) *",
+                        icon: Icon(Icons.directions_car),
+                        optional: false,
+                        onChanged: (value) => tripModel.destination = value,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: TravelloryFormField(
-                          labelText: "Destination(s) *",
-                          icon: Icon(Icons.directions_car),
-                          optional: false,
-                          onChanged: (value) => tripModel.destination = value,
-                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: SectionTitle('General Information'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: TravelloryFormField(
+                        labelText: "Trip Title *",
+                        icon: Icon(Icons.supervised_user_circle),
+                        optional: false,
+                        onChanged: (value) => tripModel.name = value,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: SectionTitle('General Information'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: _imageSelection(),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Center(
+                      child: Container(
+                        height: 32,
+                        width: 120,
+                        child: SubmitButton(
+                            highlightColor: Theme.of(context).primaryColor,
+                            fillColor: Theme.of(context).primaryColor,
+                            validationFunction: validateForm,
+                            onSubmit: () async {
+                              databaseAdder.addModel(tripModel, '...');
+                              showSubmittedBookingDialog(context, alertText, _returnToHomeScreen);
+                            }),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: TravelloryFormField(
-                          labelText: "Trip Title *",
-                          icon: Icon(Icons.supervised_user_circle),
-                          optional: false,
-                          onChanged: (value) => tripModel.name = value,
-                        ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                      child: Container(
+                        height: 32,
+                        width: 120,
+                        child: cancelButton("CANCEL", context, () {
+                          cancellingDialog(context);
+                        }),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: _imageSelection(),
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      Center(
-                        child: Container(
-                          height: 32,
-                          width: 120,
-                          child: SubmitButton(
-                              highlightColor: Theme.of(context).primaryColor,
-                              fillColor: Theme.of(context).primaryColor,
-                              validationFunction: validateForm,
-                              onSubmit: () async {
-                                _addTrip(tripModel);
-                                showSubmittedBookingDialog(context, alertText, _returnToHomeScreen);
-                              }),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Center(
-                        child: Container(
-                          height: 32,
-                          width: 120,
-                          child: cancelButton("CANCEL", context, () {
-                            cancellingDialog(context);
-                          }),
-                        ),
-                      ),
-                      SizedBox(height: 12),
-                    ]
-                  ),
+                    ),
+                    SizedBox(height: 12),
+                  ]),
                 ),
               ),
             ],
@@ -166,7 +165,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
     );
   }
 
-  Widget _imageSelection(){
+  Widget _imageSelection() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -191,7 +190,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
     });
   }
 
-  Widget _imageItem(int index){
+  Widget _imageItem(int index) {
     return Center(
       child: GestureDetector(
         onTap: () => _selectImage(index),
@@ -212,7 +211,8 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
               ),
               borderRadius: BorderRadius.circular(33.0),
               boxShadow: <BoxShadow>[
-                BoxShadow(blurRadius: 4, color: Colors.black.withOpacity(.25), offset: Offset(2.0, 2.0))
+                BoxShadow(
+                    blurRadius: 4, color: Colors.black.withOpacity(.25), offset: Offset(2.0, 2.0))
               ],
             ),
           ),
@@ -224,22 +224,5 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
   _returnToHomeScreen() {
     Navigator.pop(context);
     Navigator.pop(context);
-  }
-
-  void _addTrip(TripModel trip) async {
-    HttpsCallable callable =
-    CloudFunctions.instance.getHttpsCallable(functionName: '...');
-    try {
-      final HttpsCallableResult result = await callable.call(tripModel.toMap());
-      print(result.data);
-    } on CloudFunctionsException catch (e) {
-      print('caught firebase functions exception');
-      print(e.code);
-      print(e.message);
-      print(e.details);
-    } catch (e) {
-      print('caught generic exception');
-      print(e);
-    }
   }
 }
