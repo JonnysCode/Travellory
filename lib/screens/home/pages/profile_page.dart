@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:travellory/providers/auth_provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/services/auth.dart';
+import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -25,13 +28,8 @@ class _ProfilePageState extends State<ProfilePage>
     );
     imagePicker = new ImagePickerHandler(this, _controller);
     imagePicker.init();
-    //TODO
-/*
-  Future _signOut(BuildContext context) async {
-    final BaseAuthService _auth = AuthProvider.of(context).auth;
-    await _auth.signOut();
-    Navigator.pushReplacementNamed(context, '/');*/
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,44 +43,53 @@ class _ProfilePageState extends State<ProfilePage>
             new Center(
               child: _image == null
                   ? new Stack(
-                      children: <Widget>[
-                        new Center(
-                          child: new CircleAvatar(
-                            radius: 150.0,
-                            backgroundColor: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        new SizedBox(
-                          height: 290,
-                          child: Center(
-                            child: new Image.asset(
-                              "assets/photo_camera.png",
-                              height: 100,
-                              width: 100,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  : new Container(
-                      height: 300.0,
-                      width: 300.0,
-                      decoration: new BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        image: new DecorationImage(
-                          image: new ExactAssetImage(_image.path),
-                          fit: BoxFit.cover,
-                        ),
-                        border: Border.all(
-                            color: Theme.of(context).primaryColor, width: 2.0),
-                        borderRadius:
-                            new BorderRadius.all(const Radius.circular(300.0)),
+                children: <Widget>[
+                  new Center(
+                    child: new CircleAvatar(
+                      radius: 130.0,
+                      backgroundColor: Theme
+                          .of(context)
+                          .primaryColor,
+                    ),
+                  ),
+                  new SizedBox(
+                    height: 260,
+                    child: Center(
+                      child: new Image.asset(
+                        "assets/photo_camera.png",
+                        height: 100,
+                        width: 100,
                       ),
                     ),
+                  ),
+                ],
+              )
+                  : new Container(
+                height: 260.0,
+                width: 260.0,
+                decoration: new BoxDecoration(
+                  color: Theme
+                      .of(context)
+                      .primaryColor,
+                  image: new DecorationImage(
+                    image: new ExactAssetImage(_image.path),
+                    fit: BoxFit.cover,
+                  ),
+                  border: Border.all(
+                      color: Theme
+                          .of(context)
+                          .primaryColor, width: 2.0),
+                  borderRadius:
+                  new BorderRadius.all(const Radius.circular(300.0)),
+                ),
+              ),
             ),
             SizedBox(height: 50),
             FutureBuilder(
-                future: AuthProvider.of(context).auth.getCurrentUser(),
+                future: AuthProvider
+                    .of(context)
+                    .auth
+                    .getCurrentUser(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return displayUserInformation(context, snapshot);
@@ -90,14 +97,17 @@ class _ProfilePageState extends State<ProfilePage>
                     return CircularProgressIndicator();
                   }
                 }),
-
-            // TODO
-            /*
+            SizedBox(height: 100),
             FlatButton.icon(
-              onPressed: () => _signOut(context),
-              icon: Icon(Icons.person),
-              label: Text('logout'),
-            )*/
+              onPressed: () => _signOut(),
+              icon: Icon(Icons.exit_to_app),
+              label: FashionFetishText(
+                text: "Log out",
+                size: 20,
+                fontWeight: FashionFontWeight.NORMAL,
+                height: 1.05,
+              ),
+            )
           ],
         ),
       ),
@@ -110,49 +120,70 @@ class _ProfilePageState extends State<ProfilePage>
       this._image = _image;
     });
   }
-}
 
-Widget displayUserInformation(context, snapshot) {
-  final user = snapshot.data;
-  return Column(key: Key('display_user'), children: [
-    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-      SizedBox(width: 50),
-      Icon(
-        Icons.person,
-        color: Theme.of(context).primaryColor,
-        size: 40,
-      ),
-      SizedBox(width: 20),
-      Text(
-        "${user.displayName}",
-        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-      ),
-    ]),
-    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-      SizedBox(width: 50),
-      Icon(
-        Icons.email,
-        color: Theme.of(context).primaryColor,
-        size: 40,
-      ),
-      SizedBox(width: 20),
-      Text(
-        "${user.email}",
-        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-      ),
-    ]),
-    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-      SizedBox(width: 50),
-      Icon(
-        Icons.date_range,
-        color: Theme.of(context).primaryColor,
-        size: 40,
-      ),
-      SizedBox(width: 20),
-      Text(
-        "${DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)}",
-        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-      ),
-    ]),
-  ]);
+  Future _signOut() async {
+    final BaseAuthService _auth = AuthProvider
+        .of(context)
+        .auth;
+    await _auth.signOut();
+    Navigator.pushReplacementNamed(context, '/');
+  }
+
+  Widget displayUserInformation(context, snapshot) {
+    final user = snapshot.data;
+    return Column(key: Key('display_user'), children: [
+      Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        SizedBox(width: 50),
+        Icon(
+          Icons.person,
+          color: Theme
+              .of(context)
+              .primaryColor,
+          size: 40,
+        ),
+        SizedBox(width: 20),
+        FashionFetishText(
+          text: "${user.displayName}",
+          size: 20,
+          fontWeight: FashionFontWeight.NORMAL,
+          height: 1.05,
+        ),
+      ]),
+      Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        SizedBox(width: 50),
+        Icon(
+          Icons.email,
+          color: Theme
+              .of(context)
+              .primaryColor,
+          size: 40,
+        ),
+        SizedBox(width: 20),
+        FashionFetishText(
+          text: "${user.email}",
+          size: 20,
+          fontWeight: FashionFontWeight.NORMAL,
+          height: 1.05,
+        ),
+      ]),
+      Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        SizedBox(width: 50),
+        Icon(
+          Icons.date_range,
+          color: Theme
+              .of(context)
+              .primaryColor,
+          size: 40,
+        ),
+        SizedBox(width: 20),
+        FashionFetishText(
+          text: "${DateFormat('dd.MM.yyyy').format(
+              user.metadata.creationTime)}",
+          size: 20,
+          fontWeight: FashionFontWeight.NORMAL,
+          height: 1.05,
+        ),
+      ]),
+    ]);
+  }
 }
