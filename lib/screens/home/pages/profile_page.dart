@@ -3,10 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:travellory/providers/auth_provider.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/services/auth.dart';
-import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
+import 'package:travellory/widgets/font_widgets.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -30,7 +29,6 @@ class _ProfilePageState extends State<ProfilePage>
     imagePicker.init();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,53 +41,44 @@ class _ProfilePageState extends State<ProfilePage>
             new Center(
               child: _image == null
                   ? new Stack(
-                children: <Widget>[
-                  new Center(
-                    child: new CircleAvatar(
-                      radius: 130.0,
-                      backgroundColor: Theme
-                          .of(context)
-                          .primaryColor,
-                    ),
-                  ),
-                  new SizedBox(
-                    height: 260,
-                    child: Center(
-                      child: new Image.asset(
-                        "assets/photo_camera.png",
-                        height: 100,
-                        width: 100,
+                      children: <Widget>[
+                        new Center(
+                          child: new CircleAvatar(
+                            radius: 130.0,
+                            backgroundColor: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        new SizedBox(
+                          height: 260,
+                          child: Center(
+                            child: new Image.asset(
+                              "assets/photo_camera.png",
+                              height: 100,
+                              width: 100,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : new Container(
+                      height: 260.0,
+                      width: 260.0,
+                      decoration: new BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        image: new DecorationImage(
+                          image: new ExactAssetImage(_image.path),
+                          fit: BoxFit.cover,
+                        ),
+                        border: Border.all(
+                            color: Theme.of(context).primaryColor, width: 2.0),
+                        borderRadius:
+                            new BorderRadius.all(const Radius.circular(300.0)),
                       ),
                     ),
-                  ),
-                ],
-              )
-                  : new Container(
-                height: 260.0,
-                width: 260.0,
-                decoration: new BoxDecoration(
-                  color: Theme
-                      .of(context)
-                      .primaryColor,
-                  image: new DecorationImage(
-                    image: new ExactAssetImage(_image.path),
-                    fit: BoxFit.cover,
-                  ),
-                  border: Border.all(
-                      color: Theme
-                          .of(context)
-                          .primaryColor, width: 2.0),
-                  borderRadius:
-                  new BorderRadius.all(const Radius.circular(300.0)),
-                ),
-              ),
             ),
             SizedBox(height: 50),
             FutureBuilder(
-                future: AuthProvider
-                    .of(context)
-                    .auth
-                    .getCurrentUser(),
+                future: AuthProvider.of(context).auth.getCurrentUser(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return displayUserInformation(context, snapshot);
@@ -122,9 +111,7 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   Future _signOut() async {
-    final BaseAuthService _auth = AuthProvider
-        .of(context)
-        .auth;
+    final BaseAuthService _auth = AuthProvider.of(context).auth;
     await _auth.signOut();
     Navigator.pushReplacementNamed(context, '/');
   }
@@ -136,9 +123,7 @@ class _ProfilePageState extends State<ProfilePage>
         SizedBox(width: 50),
         Icon(
           Icons.person,
-          color: Theme
-              .of(context)
-              .primaryColor,
+          color: Theme.of(context).primaryColor,
           size: 40,
         ),
         SizedBox(width: 20),
@@ -153,9 +138,7 @@ class _ProfilePageState extends State<ProfilePage>
         SizedBox(width: 50),
         Icon(
           Icons.email,
-          color: Theme
-              .of(context)
-              .primaryColor,
+          color: Theme.of(context).primaryColor,
           size: 40,
         ),
         SizedBox(width: 20),
@@ -170,15 +153,13 @@ class _ProfilePageState extends State<ProfilePage>
         SizedBox(width: 50),
         Icon(
           Icons.date_range,
-          color: Theme
-              .of(context)
-              .primaryColor,
+          color: Theme.of(context).primaryColor,
           size: 40,
         ),
         SizedBox(width: 20),
         FashionFetishText(
-          text: "${DateFormat('dd.MM.yyyy').format(
-              user.metadata.creationTime)}",
+          text:
+              "${DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)}",
           size: 20,
           fontWeight: FashionFontWeight.NORMAL,
           height: 1.05,

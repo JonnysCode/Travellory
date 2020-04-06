@@ -131,15 +131,13 @@ class ImagePickerDialog extends StatelessWidget {
           ),
         ],
       ),
-      child:
-      FashionFetishText(
-        text:  buttonLabel,
+      child: FashionFetishText(
+        text: buttonLabel,
         size: 20,
         color: Colors.white,
         fontWeight: FashionFontWeight.NORMAL,
         height: 1.05,
       ),
-
     );
     return loginBtn;
   }
