@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -77,6 +79,11 @@ class MapSampleState extends State<MapSample> {
           GoogleMap(
             mapType: MapType.normal,
             initialCameraPosition: _kGooglePlex,
+            gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+              Factory<OneSequenceGestureRecognizer>(
+                () => EagerGestureRecognizer(),
+              ),
+            ].toSet(),
             onMapCreated: (GoogleMapController controller) {
               controller.setMapStyle(_mapStyle);
               _onMapCreated(controller);
