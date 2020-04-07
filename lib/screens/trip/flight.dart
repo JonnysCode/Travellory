@@ -206,7 +206,7 @@ class _FlightState extends State<Flight> {
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
                         key: _depDateFormFieldKey,
-                        labelText: "Departure Date *",
+                        labelText: 'Departure Date *',
                         icon: Icon(Icons.date_range),
                         optional: false,
                         chosenDateString: (value) => flightModel.departureDate = value,
@@ -215,14 +215,14 @@ class _FlightState extends State<Flight> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
-                          labelText: "Departure Time *",
+                          labelText: 'Departure Time *',
                           icon: Icon(Icons.access_time),
                           optional: false,
                           chosenTimeString: (value) => flightModel.departureTime = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: SectionTitle("Arrival Information"),
+                      child: SectionTitle('Arrival Information'),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -235,18 +235,18 @@ class _FlightState extends State<Flight> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
-                        labelText: "Arrival Date",
+                        labelText: 'Arrival Date',
                         icon: Icon(Icons.date_range),
                         beforeDateKey: _depDateFormFieldKey,
                         optional: true,
-                        dateValidationMessage: "Arrival Date cannot be before Departure Date",
+                        dateValidationMessage: 'Arrival Date cannot be before Departure Date',
                         chosenDateString: (value) => flightModel.arrivalDate = value,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
-                          labelText: "Arrival Time",
+                          labelText: 'Arrival Time',
                           icon: Icon(Icons.access_time),
                           optional: true,
                           chosenTimeString: (value) => flightModel.arrivalTime = value),
@@ -254,7 +254,7 @@ class _FlightState extends State<Flight> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
-                        labelText: "Notes",
+                        labelText: 'Notes',
                         icon: Icon(Icons.speaker_notes),
                         optional: true,
                         onChanged: (value) => flightModel.notes = value,
@@ -277,7 +277,7 @@ class _FlightState extends State<Flight> {
                       padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                       child: Container(
                         child: CancelButton(
-                          text: "CANCEL",
+                          text: 'CANCEL',
                           onCancel: () {
                             cancellingDialog(context, cancelText);
                           },
