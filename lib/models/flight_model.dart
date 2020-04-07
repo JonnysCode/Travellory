@@ -1,30 +1,35 @@
-class FlightModel {
-  FlightModel(
-      {this.bookingReference,
-        this.airline,
-        this.flightNr,
-        this.seat,
-        this.departureLocation,
-        this.departureDate,
-        this.departureTime,
-        this.arrivalLocation,
-        this.arrivalDate,
-        this.arrivalTime,
-        this.checkedBaggage,
-        this.excessBaggage,
-        this.notes});
+import 'package:travellory/models/abstract_model.dart';
 
-  final String bookingReference;
-  final String airline;
-  final String flightNr;
-  final String seat;
-  final String departureLocation;
-  final String departureDate;
-  final String departureTime;
-  final String arrivalLocation;
-  final String arrivalDate;
-  final String arrivalTime;
-  final bool checkedBaggage;
-  final bool excessBaggage;
-  final String notes;
+class FlightModel extends Model {
+  String bookingReference;
+  String airline;
+  String flightNr;
+  String seat;
+  String departureLocation;
+  String departureDate;
+  String departureTime;
+  String arrivalLocation;
+  String arrivalDate;
+  String arrivalTime;
+  bool checkedBaggage;
+  bool excessBaggage;
+  String notes;
+
+  Map<String, dynamic> toMap(){
+    return {
+      'bookingReference': bookingReference,
+      'airline': airline,
+      'flightNr': flightNr,
+      'seat': seat,
+      'departureLocation': departureLocation,
+      'departureDate': departureDate,
+      'departureTime': departureTime,
+      'arrivalLocation': arrivalLocation,
+      'arrivalDate': arrivalDate,
+      'arrivalTime': arrivalTime,
+      'checkedBaggage': checkedBaggage,
+      'excessBaggage': excessBaggage,
+      'notes': notes
+    };
+  }
 }

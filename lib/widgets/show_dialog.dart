@@ -30,26 +30,27 @@ void showSubmittedBookingDialog(
   );
 }
 
-void cancellingDialog(BuildContext context, void function()) {
+void cancellingDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
-          text: "Are you sure about this?",
+          text: 'Are you sure about this?',
           size: 18,
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,
         ),
         content: new Text(
-            "You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?"),
+            'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?'),
         actions: <Widget>[
-          alertButton("No", Colors.transparent, context, () async {
+          alertButton('No', Colors.transparent, context, () async {
             Navigator.pop(context);
           }),
-          alertButton("Yes", Color(0xFFF48FB1), context, () async {
-            function();
+          alertButton('Yes', Color(0xFFF48FB1), context, () async {
+            Navigator.pop(context);
+            Navigator.pop(context);
           }),
         ],
       );
@@ -70,9 +71,9 @@ void missingFormFieldInformationDialog(BuildContext context) {
           height: 1.05,
         ),
         content: new Text(
-            "The form is not complete. Please look at the marked fields and add the required information."),
+            'The form is not complete. Please look at the marked fields and add the required information.'),
         actions: <Widget>[
-          alertButton("Edit Booking", Theme.of(context).primaryColor, context, () async {
+          alertButton('Edit Booking', Theme.of(context).primaryColor, context, () async {
             Navigator.pop(context);
           }),
         ],
