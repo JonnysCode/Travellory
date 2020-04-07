@@ -15,17 +15,17 @@ class RentalCarModel extends Model {
 
   Map<String, dynamic> toMap(){
     return {
-      "bookingReference": bookingReference,
-      "company": company,
-      "pickupLocation": pickupLocation,
-      "pickupDate": pickupDate,
-      "pickupTime": pickupTime,
-      "returnLocation": returnLocation,
-      "returnDate": returnDate,
-      "returnTime": returnTime,
-      "carDescription": carDescription,
-      "carNumberPlate": carNumberPlate,
-      "notes": notes
+      'bookingReference': bookingReference,
+      'company': company,
+      'pickupLocation': pickupLocation,
+      'pickupDate': pickupDate,
+      'pickupTime': pickupTime,
+      'returnLocation': returnLocation,
+      'returnDate': returnDate,
+      'returnTime': returnTime,
+      'carDescription': carDescription,
+      'carNumberPlate': carNumberPlate,
+      'notes': notes
     };
   }
 }
