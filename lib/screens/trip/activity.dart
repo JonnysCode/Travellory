@@ -175,7 +175,6 @@ class _ActivityState extends State<Activity> {
                           types: types,
                           onChanged: (value) {
                             activityModel.category = value.name;
-                            ;
                           },
                           validatorText: 'Please enter the required information'),
                     ),
@@ -215,7 +214,7 @@ class _ActivityState extends State<Activity> {
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
                         key: _startDateFormFieldKey,
-                        labelText: "Start Date *",
+                        labelText: 'Start Date *',
                         icon: Icon(Icons.date_range),
                         optional: false,
                         chosenDateString: (value) => activityModel.startDate = value,
@@ -224,7 +223,7 @@ class _ActivityState extends State<Activity> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
-                          labelText: "Start Time",
+                          labelText: 'Start Time',
                           icon: Icon(Icons.access_time),
                           optional: true,
                           chosenTimeString: (value) => activityModel.startTime = value),
@@ -232,26 +231,30 @@ class _ActivityState extends State<Activity> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
-                        labelText: "End Date *",
+                        labelText: 'End Date *',
                         icon: Icon(Icons.date_range),
                         beforeDateKey: _startDateFormFieldKey,
                         optional: false,
-                        dateValidationMessage: "End Date cannot be before Start Date",
+                        dateValidationMessage: 'End Date cannot be before Start Date',
                         chosenDateString: (value) => activityModel.endDate = value,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
-                          labelText: "End Time",
+                          labelText: 'End Time',
                           icon: Icon(Icons.access_time),
                           optional: true,
                           chosenTimeString: (value) => activityModel.endTime = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: SectionTitle('Notes'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
-                        labelText: "Notes",
+                        labelText: 'Notes',
                         icon: Icon(Icons.speaker_notes),
                         optional: true,
                         onChanged: (value) => activityModel.notes = value,
@@ -274,7 +277,7 @@ class _ActivityState extends State<Activity> {
                       padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                       child: Container(
                         child: CancelButton(
-                          text: "CANCEL",
+                          text: 'CANCEL',
                           onCancel: () {
                             cancellingDialog(context);
                           },

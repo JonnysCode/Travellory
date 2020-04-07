@@ -187,7 +187,7 @@ class _RentalCarState extends State<RentalCar> {
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
                         key: _pickUpDateFormFieldKey,
-                        labelText: "Pick Up Date *",
+                        labelText: 'Pick Up Date *',
                         icon: Icon(Icons.date_range),
                         chosenDateString: (value) => rentalCarModel.pickupDate = value,
                       ),
@@ -195,14 +195,14 @@ class _RentalCarState extends State<RentalCar> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
-                          labelText: "Pick Up Time",
+                          labelText: 'Pick Up Time',
                           icon: Icon(Icons.access_time),
                           optional: true,
                           chosenTimeString: (value) => rentalCarModel.pickupTime = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: SectionTitle("Return Information"),
+                      child: SectionTitle('Return Information'),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -215,24 +215,24 @@ class _RentalCarState extends State<RentalCar> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
-                        labelText: "Return Date *",
+                        labelText: 'Return Date *',
                         icon: Icon(Icons.date_range),
                         beforeDateKey: _pickUpDateFormFieldKey,
-                        dateValidationMessage: "Return Date cannot be before Pick Up Date",
+                        dateValidationMessage: 'Return Date cannot be before Pick Up Date',
                         chosenDateString: (value) => rentalCarModel.returnDate = value,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
-                          labelText: "Return Time",
+                          labelText: 'Return Time',
                           icon: Icon(Icons.access_time),
                           optional: true,
                           chosenTimeString: (value) => rentalCarModel.returnTime = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: SectionTitle("Car Details"),
+                      child: SectionTitle('Car Details'),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -252,8 +252,12 @@ class _RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: SectionTitle('Notes'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
-                        labelText: "Notes",
+                        labelText: 'Notes',
                         icon: Icon(Icons.speaker_notes),
                         optional: true,
                         onChanged: (value) => rentalCarModel.notes = value,
@@ -276,7 +280,7 @@ class _RentalCarState extends State<RentalCar> {
                       padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                       child: Container(
                         child: CancelButton(
-                          text: "CANCEL",
+                          text: 'CANCEL',
                           onCancel: () {
                             cancellingDialog(context);
                           },

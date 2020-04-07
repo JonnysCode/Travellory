@@ -24,9 +24,7 @@ Widget alertButton(String text, Color fillColor, BuildContext context, void func
     key: Key(text.toLowerCase().trim() + 'Button'),
     highlightElevation: 0.0,
     splashColor: Colors.white,
-    highlightColor: Theme
-        .of(context)
-        .primaryColor,
+    highlightColor: Theme.of(context).primaryColor,
     elevation: 0.0,
     color: fillColor,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
@@ -43,9 +41,7 @@ Widget cancelButton(String text, BuildContext context, void function()) {
     key: Key('CancelButton'),
     highlightElevation: 0.0,
     splashColor: Colors.white,
-    highlightColor: Theme
-        .of(context)
-        .primaryColor,
+    highlightColor: Theme.of(context).primaryColor,
     elevation: 0.0,
     color: Color(0xFFF48FB1),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
@@ -58,7 +54,6 @@ Widget cancelButton(String text, BuildContext context, void function()) {
 }
 
 class CancelButton extends StatelessWidget {
-
   final String text;
   final void Function() onCancel;
 
@@ -72,9 +67,7 @@ class CancelButton extends StatelessWidget {
         key: Key('CancelButton'),
         highlightElevation: 0.0,
         splashColor: Colors.white,
-        highlightColor: Theme
-            .of(context)
-            .primaryColor,
+        highlightColor: Theme.of(context).primaryColor,
         elevation: 0.0,
         color: Color(0xFFF48FB1),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
@@ -89,7 +82,6 @@ class CancelButton extends StatelessWidget {
 }
 
 class SubmitButton extends StatelessWidget {
-
   final Color highlightColor;
   final Color fillColor;
   final bool Function() validationFunction;
@@ -104,25 +96,24 @@ class SubmitButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(
-            key: Key('SubmitButton'),
-            highlightElevation: 0.0,
-            splashColor: Colors.white,
-            highlightColor: highlightColor,
-            elevation: 0.0,
-            color: fillColor,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-            child: Text(
-              "SUBMIT",
-              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
-            ),
-            onPressed: () {
-              if (validationFunction()) {
-                onSubmit();
-              } else {
-                missingFormFieldInformationDialog(context);
-              }
+          key: Key('SubmitButton'),
+          highlightElevation: 0.0,
+          splashColor: Colors.white,
+          highlightColor: highlightColor,
+          elevation: 0.0,
+          color: fillColor,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+          child: Text(
+            'SUBMIT',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () {
+            if (validationFunction()) {
+              onSubmit();
+            } else {
+              missingFormFieldInformationDialog(context);
             }
-        ),
+          }),
     );
   }
 }
@@ -147,6 +138,5 @@ Widget submitButton(BuildContext context, Color highlightColor, Color fillColor,
         } else {
           missingFormFieldInformationDialog(context);
         }
-      }
-  );
+      });
 }
