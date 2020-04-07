@@ -40,7 +40,7 @@ class _RegisterState extends State<Register> {
   Future _validateRegister() async {
     if (_formKey.currentState.validate() && _isUsernameAvailable) {
       Navigator.pushNamed(context, '/loading');
-      final user = await _register(context);
+      final user = await _register();
 
       if(user == null){
         Navigator.pop(context);
@@ -54,7 +54,7 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  Future _register(BuildContext context) async {
+  Future _register() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     final user = await _auth.registerWithEmailAndPassword(
         _emailController.text, _passwordController.text, _nameController.text);

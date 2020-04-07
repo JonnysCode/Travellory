@@ -24,12 +24,28 @@ class _SignInState extends State<SignIn> {
 
   String _error = '';
 
-  Future _signIn(BuildContext context) async {
-    final BaseAuthService _auth = AuthProvider.of(context).auth;
-    final result = await _auth.signInWithEmailAndPassword(_emailController.text, _passwordController.text);
-    if(result == null){
-      setState(() => _error = 'Could not sign in with those credentials.');
+  Future _validateSignIn() async {
+    if (_formKey.currentState.validate()) {
+      Navigator.pushNamed(context, '/loading');
+      final user = await _signIn();
+
+      if(user == null){
+        Navigator.pop(context);
+        setState(() {
+          _error = 'Could not sign in with those credentials.';
+        });
+      } else {
+        Navigator.popUntil(context, ModalRoute.withName('/'),
+        );
+      }
     }
+  }
+
+  Future _signIn() async {
+    final BaseAuthService _auth = AuthProvider.of(context).auth;
+    final user = await _auth.signInWithEmailAndPassword(_emailController.text, _passwordController.text);
+
+    return user;
   }
 
   @override
@@ -154,22 +170,14 @@ class _SignInState extends State<SignIn> {
                                           right: 20,
                                           bottom: MediaQuery.of(context).viewInsets.bottom),
                                       child: Container(
-                                        child: filledButton("LOGIN", Colors.white, Theme.of(context).primaryColor,
-                                            Theme.of(context).primaryColor, Colors.white, () async {
-                                              if (_formKey.currentState.validate()) {
-                                                Navigator.pushNamed(context, '/loading');
-                                                final result = await _signIn(context);
-                                                if(result == null){
-                                                  setState(() {
-                                                    _error = 'Could not sign in with those credentials.';
-                                                  });
-                                                  Navigator.popUntil(
-                                                    context,
-                                                    ModalRoute.withName('/'),
-                                                  );
-                                                }
-                                              }
-                                            }),
+                                        child: filledButton(
+                                          "LOGIN",
+                                          Colors.white,
+                                          Theme.of(context).primaryColor,
+                                          Theme.of(context).primaryColor,
+                                          Colors.white,
+                                          _validateSignIn
+                                        ),
                                         height: 50,
                                         width: MediaQuery.of(context).size.width,
                                       ),
