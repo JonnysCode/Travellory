@@ -16,19 +16,30 @@ class CreateTrip extends StatefulWidget {
 }
 
 class _CreateTripState extends State<CreateTrip> {
-  final _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
-  final TripModel tripModel = TripModel();
-  final DatabaseAdder databaseAdder = DatabaseAdder();
-
   static const int _imageItemCount = 11;
-  int _selectedIndex = 0;
 
+  final _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final DatabaseAdder databaseAdder = DatabaseAdder();
   final createTripFormKey = GlobalKey<FormState>();
 
   final String alertText =
       "You've just created a new trip. You can see all the information in the home screen. "
       "Add bookings and costumize your trip with a click on it";
 
+  final String cancelText =
+      'You are about to abort this new trip entry. '
+      'Do you want to go back to the previous site and discard your changes?';
+
+  TripModel tripModel;
+  int _selectedIndex;
+
+  @override
+  void initState() {
+    tripModel = TripModel();
+    _selectedIndex = 0;
+    tripModel.imageNr = 1;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,8 +152,9 @@ class _CreateTripState extends State<CreateTrip> {
                             fillColor: Theme.of(context).primaryColor,
                             validationFunction: validateForm,
                             onSubmit: () async {
+                              // TODO (johnny / nadine): add addtrip function name
                               databaseAdder.addModel(tripModel, '...');
-                              showSubmittedBookingDialog(context, alertText, _returnToHomeScreen);
+                              showSubmittedTripDialog(context, alertText);
                             }),
                       ),
                     ),
@@ -153,9 +165,11 @@ class _CreateTripState extends State<CreateTrip> {
                       child: Container(
                         height: 32,
                         width: 120,
-                        child: cancelButton('CANCEL', context, () {
-                          cancellingDialog(context);
-                        }),
+                        child: CancelButton(
+                            text: 'CANCEL',
+                            onCancel: () {
+                              cancellingDialog(context, cancelText);
+                            }),
                       ),
                     ),
                     SizedBox(height: 12),
@@ -190,7 +204,7 @@ class _CreateTripState extends State<CreateTrip> {
   _selectImage(index) {
     setState(() {
       _selectedIndex = index;
-      //_tripModel.imageNr = _selectedIndex+1;
+      tripModel.imageNr = _selectedIndex+1;
     });
   }
 
@@ -223,10 +237,5 @@ class _CreateTripState extends State<CreateTrip> {
         ),
       ),
     );
-  }
-
-  _returnToHomeScreen() {
-    Navigator.pop(context);
-    Navigator.pop(context);
   }
 }

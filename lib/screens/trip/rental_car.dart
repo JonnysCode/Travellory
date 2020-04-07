@@ -31,6 +31,9 @@ class _RentalCarState extends State<RentalCar> {
   final String alertText =
       "You've just submitted the booking information for your rental car booking. You can see all the information in the trip overview";
 
+  final String cancelText =
+      'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
+
   @override
   Widget build(BuildContext context) {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
@@ -278,7 +281,7 @@ class _RentalCarState extends State<RentalCar> {
                         child: CancelButton(
                           text: "CANCEL",
                           onCancel: () {
-                            cancellingDialog(context);
+                            cancellingDialog(context, cancelText);
                           },
                         ),
                       ),
