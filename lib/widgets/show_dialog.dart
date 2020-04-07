@@ -41,7 +41,7 @@ void showSubmittedTripDialog(BuildContext context, String alertText) {
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,
         ),
-        content: new Text(alertText),
+        content: Text(alertText),
         actions: <Widget>[
           alertButton('Home', Colors.transparent, context, () async {
             Navigator.of(context).popUntil((route) => route.isFirst);
@@ -64,7 +64,7 @@ void cancellingDialog(BuildContext context, String cancelDialog) {
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,
         ),
-        content: new Text(cancelDialog),
+        content: Text(cancelDialog),
         actions: <Widget>[
           alertButton('No', Colors.transparent, context, () async {
             Navigator.pop(context);
@@ -94,7 +94,7 @@ void missingFormFieldInformationDialog(BuildContext context) {
         content: new Text(
             'The form is not complete. Please look at the marked fields and add the required information.'),
         actions: <Widget>[
-          alertButton('Edit Form', Theme.of(context).primaryColor, context, () async {
+          alertButton('Edit Booking', Theme.of(context).primaryColor, context, () async {
             Navigator.pop(context);
           }),
         ],

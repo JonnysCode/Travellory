@@ -10,7 +10,6 @@ import 'package:travellory/widgets/checkbox_form_field.dart';
 import 'package:travellory/widgets/dropdown.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/form_field.dart';
-import 'package:travellory/widgets/form_widgets.dart';
 import 'package:travellory/widgets/section_titles.dart';
 import 'package:travellory/widgets/show_dialog.dart';
 import 'package:travellory/widgets/date_form_field.dart';
@@ -76,58 +75,58 @@ class _PublicTransportState extends State<PublicTransport> {
     // don't put in build because it will be recreated on every build
     // with state changes this is not appreciated
     List<Widget> shown = [
-      BookingSiteTitle("Add Public Transport", Icons.train),
-      SectionTitle("Type of Transportation"),
+      BookingSiteTitle('Add Public Transport', Icons.train),
+      SectionTitle('Type of Transportation'),
       transportTypeDropdown,
       TravelloryFormField(
-          labelText: "Company",
+          labelText: 'Company',
           icon: Icon(Icons.supervised_user_circle),
           optional: true,
           onChanged: (value) => publicTransportModel.company = value),
-      SectionTitle("Departure Information"),
+      SectionTitle('Departure Information'),
       TravelloryFormField(
-        labelText: "Departure Location *",
+        labelText: 'Departure Location *',
         icon: Icon(Icons.location_on),
         optional: false,
         onChanged: (value) => publicTransportModel.departureLocation = value,
       ),
       DateFormField(
         key: _depDateFormFieldKey,
-        labelText: "Departure Date *",
+        labelText: 'Departure Date *',
         icon: Icon(Icons.date_range),
         chosenDateString: (value) => publicTransportModel.departureDate = value,
       ),
       TimeFormField(
-        labelText: "Departure Time *",
+        labelText: 'Departure Time *',
         icon: Icon(Icons.access_time),
         chosenTimeString: (value) => publicTransportModel.departureTime = value,
       ),
-      SectionTitle("Arrival Information"),
+      SectionTitle('Arrival Information'),
       TravelloryFormField(
-        labelText: "Arrival Location *",
+        labelText: 'Arrival Location *',
         icon: Icon(Icons.location_on),
         optional: false,
         onChanged: (value) => publicTransportModel.arrivalLocation = value,
       ),
       DateFormField(
-        labelText: "Arrival Date *",
+        labelText: 'Arrival Date *',
         icon: Icon(Icons.date_range),
         beforeDateKey: _depDateFormFieldKey,
-        dateValidationMessage: "Departure Date cannot be before Arrival Date",
+        dateValidationMessage: 'Departure Date cannot be before Arrival Date',
         chosenDateString: (value) => publicTransportModel.arrivalDate = value,
       ),
       TimeFormField(
-        labelText: "Arrival Time",
+        labelText: 'Arrival Time',
         icon: Icon(Icons.access_time),
         optional: true,
         chosenTimeString: (value) => publicTransportModel.arrivalTime = value,
       ),
-      SectionTitle("Booking Details"),
+      SectionTitle('Booking Details'),
       bookingMadeCheckbox,
       seatReservedCheckbox,
-      SectionTitle("Notes"),
+      SectionTitle('Notes'),
       TravelloryFormField(
-        labelText: "Notes",
+        labelText: 'Notes',
         icon: Icon(Icons.speaker_notes),
         optional: true,
         onChanged: (value) => publicTransportModel.notes = value,
@@ -147,7 +146,7 @@ class _PublicTransportState extends State<PublicTransport> {
     typeSpecificationAdditional = Column(
       children: <Widget>[
         TravelloryFormField(
-          labelText: "Specific Type of Transportation",
+          labelText: 'Specific Type of Transportation',
           icon: Icon(Icons.train),
           optional: true,
           onChanged: (value) => publicTransportModel.specificType = value,
@@ -158,13 +157,13 @@ class _PublicTransportState extends State<PublicTransport> {
     bookingMadeAdditional = Column(
       children: <Widget>[
         TravelloryFormField(
-          labelText: "Booking Reference",
+          labelText: 'Booking Reference',
           icon: Icon(Icons.confirmation_number),
           optional: true,
           onChanged: (value) => publicTransportModel.reference = value,
         ),
         TravelloryFormField(
-          labelText: "Booking Company",
+          labelText: 'Booking Company',
           icon: Icon(Icons.supervised_user_circle),
           optional: true,
           onChanged: (value) => publicTransportModel.companyReservation = value,
@@ -175,7 +174,7 @@ class _PublicTransportState extends State<PublicTransport> {
     seatReservationAdditional = Column(
       children: <Widget>[
         TravelloryFormField(
-          labelText: "Seat",
+          labelText: 'Seat',
           icon: Icon(Icons.airline_seat_recline_normal),
           optional: true,
           onChanged: (value) => publicTransportModel.seat = value,
@@ -227,7 +226,7 @@ class _PublicTransportState extends State<PublicTransport> {
         });
 
     publicTransportList[publicTransportList.length - 2] = CancelButton(
-      text: "CANCEL",
+      text: 'CANCEL',
       onCancel: () {
         cancellingDialog(context, cancelText);
       },

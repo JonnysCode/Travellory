@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/utils/list_models.dart';
 
 class TravelloryFormField extends StatefulWidget {
   const TravelloryFormField(
@@ -38,6 +39,7 @@ class TravelloryFormFieldState extends State<TravelloryFormField> with Automatic
   Widget build(BuildContext context) {
     super.build(context);
     return ListTile(
+      key: Key('Form Field'),
       leading: widget.icon,
       title: TextFormField(
         controller: controller,
@@ -57,5 +59,14 @@ class TravelloryFormFieldState extends State<TravelloryFormField> with Automatic
         ),
       ),
     );
+  }
+}
+
+void showAdditional (ListModel<Widget> list, bool show, Widget parent, Widget additionalField) {
+  if (show) {
+    list.insert(list.indexOf(parent) + 1, additionalField);
+  } else {
+    int idx = list.indexOf(additionalField);
+    if (idx > -1) list.removeAt(idx);
   }
 }
