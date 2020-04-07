@@ -1,32 +1,37 @@
-import 'package:travellory/models/booking_model.dart';
+import 'package:travellory/models/abstract_model.dart';
 
-class AccommodationModel extends Booking{
-  final String type;
-  final String hotelName;
-  final String confirmationNr;
-  final String address;
-  final String nights;
-  final String checkinDate;
-  final String checkinTime;
-  final String checkoutDate;
-  final String checkoutTime;
-  final bool breakfast;
-  final String roomType;
-  final String accommodationType;
-  final String notes;
+class AccommodationModel extends Model{
 
-  AccommodationModel(
-      {this.type,
-        this.hotelName,
-        this.confirmationNr,
-        this.address,
-        this.nights,
-        this.checkinDate,
-        this.checkinTime,
-        this.checkoutDate,
-        this.checkoutTime,
-        this.breakfast,
-        this.roomType,
-        this.accommodationType,
-        this.notes}): super();
+  String type;
+  String hotelName;
+  String confirmationNr;
+  String address;
+  String nights;
+  String checkinDate;
+  String checkinTime;
+  String checkoutDate;
+  String checkoutTime;
+  bool breakfast;
+  String roomType;
+  String accommodationType;
+  String notes;
+
+  @override
+  Map<String, dynamic> toMap(){
+    return {
+      'type': type,
+      'hotelName': hotelName,
+      'confirmationNr': confirmationNr,
+      'address': address,
+      'nights': nights,
+      'checkinDate': checkinDate,
+      'checkinTime': checkinTime,
+      'checkoutDate': checkoutDate,
+      'checkoutTime': checkoutTime,
+      'breakfast': breakfast,
+      'roomType': roomType,
+      'accommodationType': accommodationType,
+      'notes': notes
+    };
+  }
 }

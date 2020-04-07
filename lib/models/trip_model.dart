@@ -1,21 +1,24 @@
-
-import 'package:flutter/cupertino.dart';
+import 'abstract_model.dart';
 import 'package:travellory/models/day_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 
-class TripModel {
+class TripModel extends Model {
   TripModel({
-    @required this.name,
-    @required this.startDate,
-    @required this.endDate,
-    @required this.destination,
-    @required this.imageNr,
+    this.userUID,
+    this.uid,
+    this.name,
+    this.startDate,
+    this.endDate,
+    this.destination,
+    this.imageNr,
     this.index
   }){
     imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
     _initDays();
   }
 
+  String userUID;
+  String uid;
   String name;
   String startDate;
   String endDate;
@@ -30,12 +33,26 @@ class TripModel {
     var dateTime = DateConverter.getDateTimeFrom(startDate);
     var endDateTime = DateConverter.getDateTimeFrom(endDate);
 
-    do{
+    do {
       days.add(Day(
-        date: dateTime
+          date: dateTime
       ));
       dateTime = dateTime.add(Duration(days: 1));
-    } while(dateTime.compareTo(endDateTime) <= 0);
+    } while (dateTime.compareTo(endDateTime) <= 0);
+  }
+
+  @override
+  Map<String, dynamic> toMap(){
+    return {
+      'userUID': userUID,
+      'name': name,
+      'startDate': startDate,
+      'endDate': endDate,
+      'destination': destination,
+      'imagePath': imagePath,
+      'imageNr': imageNr,
+      'index': index,
+    };
   }
 }
 

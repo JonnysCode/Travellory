@@ -4,6 +4,7 @@ import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'dart:math' as math;
 
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();

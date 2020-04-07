@@ -19,8 +19,9 @@ class _CalendarPageState extends State<CalendarPage> {
   bool _tripToggle;
 
   // TODO this will have to be linked with the backend
+
   List<Meeting> _getDataSource() {
-    var meetings = <Meeting>[];
+    final meetings = <Meeting>[];
     final DateTime startDate = today.add(const Duration(days: -3));
     final DateTime endDate = startDate.add(const Duration(days: 6));
     meetings.add(

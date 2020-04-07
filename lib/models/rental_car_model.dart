@@ -1,28 +1,31 @@
-import 'booking_model.dart';
+import 'package:travellory/models/abstract_model.dart';
 
-class RentalCarModel  extends Booking{
-  final String bookingReference;
-  final String company;
-  final String pickupLocation;
-  final String pickupDate;
-  final String pickupTime;
-  final String returnLocation;
-  final String returnDate;
-  final String returnTime;
-  final String carDescription;
-  final String carNumberPlate;
-  final String notes;
+class RentalCarModel extends Model {
+  String bookingReference;
+  String company;
+  String pickupLocation;
+  String pickupDate;
+  String pickupTime;
+  String returnLocation;
+  String returnDate;
+  String returnTime;
+  String carDescription;
+  String carNumberPlate;
+  String notes;
 
-  RentalCarModel(
-      {this.bookingReference,
-        this.company,
-        this.pickupLocation,
-        this.pickupDate,
-        this.pickupTime,
-        this.returnLocation,
-        this.returnDate,
-        this.returnTime,
-        this.carDescription,
-        this.carNumberPlate,
-        this.notes}) : super();
+  Map<String, dynamic> toMap(){
+    return {
+      "bookingReference": bookingReference,
+      "company": company,
+      "pickupLocation": pickupLocation,
+      "pickupDate": pickupDate,
+      "pickupTime": pickupTime,
+      "returnLocation": returnLocation,
+      "returnDate": returnDate,
+      "returnTime": returnTime,
+      "carDescription": carDescription,
+      "carNumberPlate": carNumberPlate,
+      "notes": notes
+    };
+  }
 }
