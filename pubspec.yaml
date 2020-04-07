@@ -48,6 +48,8 @@ dev_dependencies:
   mockito: 4.1.1
   flutter_native_splash: ^0.1.9
   flutter_launcher_icons: ^0.7.4
+  pedantic: ^1.4.0
+  build_runner: ^1.2.7
 
 
 flutter_native_splash:
@@ -77,6 +79,7 @@ flutter:
     - assets/images/login/
     - assets/images/logo/
     - assets/images/home/trip/
+    - assets/g_map/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
