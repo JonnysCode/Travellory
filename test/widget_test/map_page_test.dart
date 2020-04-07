@@ -9,7 +9,7 @@ void main(){
     );
   }
 
-  testWidgets('test if navigation is present', (WidgetTester tester) async {
+  testWidgets('test if map page is loading correcly', (WidgetTester tester) async {
     Widget page = MapPage();
 
     // Build our app and trigger a frame.
