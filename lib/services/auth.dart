@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travellory/models/user_model.dart';
+import 'package:travellory/widgets/show_dialog.dart';
 
 abstract class BaseAuthService {
   Future signInAnonymously();
@@ -74,7 +75,13 @@ class AuthService implements BaseAuthService {
 
   //change password
   Future changePassword(String password) async {
-    //TODO: fluetfab/hessgia call firebase function
+    //TODO: fluetfab call messages
+    FirebaseUser user = await _auth.currentUser();
+    user.updatePassword(password).then((onValue){
+      print("success");
+    }).catchError((onError){
+      print("error: "+onError.toString());
+    });
   }
 
 
