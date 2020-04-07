@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/add_database.dart';
-import 'package:travellory/widgets/booking_related.dart';
+import 'package:travellory/widgets/bookings.dart';
 import 'package:travellory/widgets/buttons.dart';
-import 'package:travellory/widgets/date_form_field.dart';
-import 'package:travellory/widgets/form_field.dart';
-import 'package:travellory/widgets/section_titles.dart';
-import 'package:travellory/widgets/show_dialog.dart';
-import 'package:travellory/widgets/time_form_field.dart';
+import 'package:travellory/widgets/forms/date_form_field.dart';
+import 'package:travellory/widgets/forms/form_field.dart';
+import 'package:travellory/widgets/forms/section_titles.dart';
+import 'package:travellory/widgets/forms/show_dialog.dart';
+import 'package:travellory/widgets/forms/time_form_field.dart';
 
 import 'header.dart';
 

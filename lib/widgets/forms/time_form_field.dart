@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TimeFormField extends StatefulWidget {
-  TimeFormField(
+  const TimeFormField(
       {Key key,
       this.icon,
       this.labelText,
@@ -20,6 +20,7 @@ class TimeFormField extends StatefulWidget {
 
   final String validatorText = 'Please enter the required information';
 
+  @override
   TimeFormFieldState createState() => TimeFormFieldState();
 }
 
