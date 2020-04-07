@@ -70,10 +70,21 @@ void main() {
 
     // Verify that form is present.
     expect(find.byType(Form, skipOffstage: false), isOffstage);
+  });
 
-    // Verify that form fields are present.
-    expect(find.byIcon(Icons.airline_seat_recline_normal, skipOffstage: false), isOffstage);
-    expect(find.byIcon(Icons.speaker_notes, skipOffstage: false), isOffstage);
+  testWidgets('test if all form fields are present', (WidgetTester tester) async {
+    await tester.pumpWidget(makeTestableWidget());
+    await pumpFlight(tester);
+
+    expect(find.byKey(Key('BookingSiteTitle'), skipOffstage: false), findsOneWidget);
+    expect(find.byKey(Key('SectionTitle'), skipOffstage: false), findsNWidgets(3));
+    expect(find.byIcon(Icons.flight, skipOffstage: false), findsOneWidget);
+    expect(find.byIcon(Icons.confirmation_number, skipOffstage: false), findsNWidgets(2));
+    expect(find.byIcon(Icons.airline_seat_recline_normal, skipOffstage: false), findsOneWidget);
+    expect(find.byIcon(Icons.location_on, skipOffstage: false), findsNWidgets(2));
+    expect(find.byIcon(Icons.date_range, skipOffstage: false), findsNWidgets(2));
+    expect(find.byIcon(Icons.access_time, skipOffstage: false), findsNWidgets(2));
+    expect(find.byIcon(Icons.speaker_notes, skipOffstage: false), findsOneWidget);
   });
 
   testWidgets('test if submit button is present', (WidgetTester tester) async {
