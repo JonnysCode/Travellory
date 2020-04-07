@@ -16,13 +16,10 @@ class CreateTrip extends StatefulWidget {
 }
 
 class _CreateTripState extends State<CreateTrip> {
-  final _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
-  final TripModel tripModel = TripModel();
-  final DatabaseAdder databaseAdder = DatabaseAdder();
-
   static const int _imageItemCount = 11;
-  int _selectedIndex = 0;
 
+  final _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final DatabaseAdder databaseAdder = DatabaseAdder();
   final createTripFormKey = GlobalKey<FormState>();
 
   final String alertText =
@@ -32,6 +29,17 @@ class _CreateTripState extends State<CreateTrip> {
   final String cancelText =
       'You are about to abort this new trip entry. '
       'Do you want to go back to the previous site and discard your changes?';
+
+  TripModel tripModel;
+  int _selectedIndex;
+
+  @override
+  void initState() {
+    tripModel = TripModel();
+    _selectedIndex = 0;
+    tripModel.imageNr = 1;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +204,7 @@ class _CreateTripState extends State<CreateTrip> {
   _selectImage(index) {
     setState(() {
       _selectedIndex = index;
-      //_tripModel.imageNr = _selectedIndex+1;
+      tripModel.imageNr = _selectedIndex+1;
     });
   }
 
