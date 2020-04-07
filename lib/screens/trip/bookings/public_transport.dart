@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/add_database.dart';
 import 'package:travellory/utils/list_models.dart';
+import 'package:travellory/widgets/booking_related.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/checkbox_form_field.dart';
 import 'package:travellory/widgets/dropdown.dart';
@@ -23,7 +26,6 @@ class _PublicTransportState extends State<PublicTransport> {
   ListModel<Widget> publicTransportList;
   final publicTransportFormKey = GlobalKey<FormState>();
   final PublicTransportModel publicTransportModel = PublicTransportModel();
-  final DatabaseAdder databaseAdder = DatabaseAdder();
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
@@ -73,7 +75,7 @@ class _PublicTransportState extends State<PublicTransport> {
 
     // don't put in build because it will be recreated on every build
     // with state changes this is not appreciated
-    List<Widget> shown = [
+    final List<Widget> shown = [
       BookingSiteTitle('Add Public Transport', Icons.train),
       SectionTitle('Type of Transportation'),
       transportTypeDropdown,
@@ -186,13 +188,13 @@ class _PublicTransportState extends State<PublicTransport> {
       "You've just submitted the booking information for your public transportation booking. You can see all the information in the trip overview";
 
   List<Item> types = <Item>[
-    const Item('Rail', Icon(Icons.directions_railway, color: const Color(0xFF167F67))),
-    const Item('Bus', Icon(Icons.directions_bus, color: const Color(0xFF167F67))),
-    const Item('Metro', Icon(Icons.train, color: const Color(0xFF167F67))),
-    const Item('Ferry', Icon(Icons.directions_boat, color: const Color(0xFF167F67))),
-    const Item('Taxi', Icon(Icons.directions_car, color: const Color(0xFF167F67))),
-    const Item('Uber', Icon(Icons.directions_car, color: const Color(0xFF167F67))),
-    const Item('Other', Icon(Icons.directions_walk, color: const Color(0xFF167F67))),
+    const Item('Rail', Icon(Icons.directions_railway, color: Color(0xFF167F67))),
+    const Item('Bus', Icon(Icons.directions_bus, color: Color(0xFF167F67))),
+    const Item('Metro', Icon(Icons.train, color: Color(0xFF167F67))),
+    const Item('Ferry', Icon(Icons.directions_boat, color: Color(0xFF167F67))),
+    const Item('Taxi', Icon(Icons.directions_car, color: Color(0xFF167F67))),
+    const Item('Uber', Icon(Icons.directions_car, color: Color(0xFF167F67))),
+    const Item('Other', Icon(Icons.directions_walk, color: Color(0xFF167F67))),
   ];
 
   Widget _itemBuilder(BuildContext context, int index, Animation<double> animation) {
@@ -207,19 +209,13 @@ class _PublicTransportState extends State<PublicTransport> {
   Widget build(BuildContext context) {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
 
-    void returnToTripScreen() {
-      Navigator.pop(context);
-    }
-
     // replace widget to get the context
     publicTransportList[publicTransportList.length - 3] = SubmitButton(
         highlightColor: Theme.of(context).primaryColor,
         fillColor: Theme.of(context).primaryColor,
         validationFunction: validateForm,
-        onSubmit: () async {
-          databaseAdder.addModel(publicTransportModel, 'booking-addPublicTransport');
-          showSubmittedBookingDialog(context, alertText, returnToTripScreen);
-        });
+        onSubmit: onSubmitBooking(publicTransportModel, 'booking-addPublicTransport', context, alertText),
+        );
 
     publicTransportList[publicTransportList.length - 2] = CancelButton(
       text: 'CANCEL',

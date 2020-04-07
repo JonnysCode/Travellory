@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/add_database.dart';
+import 'package:travellory/widgets/booking_related.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/form_field.dart';
 import 'package:travellory/widgets/section_titles.dart';
@@ -33,10 +34,6 @@ class _FlightState extends State<Flight> {
   @override
   Widget build(BuildContext context) {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
-
-    void returnToTripScreen() {
-      Navigator.pop(context);
-    }
 
     return Scaffold(
       key: Key('Flight'),
@@ -166,13 +163,12 @@ class _FlightState extends State<Flight> {
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: Container(
                         child: SubmitButton(
-                            highlightColor: Theme.of(context).primaryColor,
-                            fillColor: Theme.of(context).primaryColor,
-                            validationFunction: validateForm,
-                            onSubmit: () async {
-                              databaseAdder.addModel(flightModel, 'booking-addFlight');
-                              showSubmittedBookingDialog(context, alertText, returnToTripScreen);
-                            }),
+                          highlightColor: Theme.of(context).primaryColor,
+                          fillColor: Theme.of(context).primaryColor,
+                          validationFunction: validateForm,
+                          onSubmit: onSubmitBooking(flightModel, 'booking-addFlight', context,
+                              alertText),
+                        ),
                       ),
                     ),
                     Padding(
