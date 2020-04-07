@@ -75,7 +75,7 @@ class AuthService implements BaseAuthService {
 
   //change password
   Future changePassword(String password) async {
-    //TODO: fluetfab call messages
+    //TODO: fluetfab call success messages / re-authenticate
     FirebaseUser user = await _auth.currentUser();
     user.updatePassword(password).then((onValue){
       print("success");
