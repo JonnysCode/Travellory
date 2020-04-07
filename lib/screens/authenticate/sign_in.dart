@@ -4,7 +4,7 @@ import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/utils/input_validator.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
 
 class SignIn extends StatefulWidget {

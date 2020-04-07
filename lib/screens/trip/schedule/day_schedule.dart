@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/day_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/item_fader.dart';
+import 'package:travellory/widgets/animations/item_fader.dart';
 import 'package:travellory/widgets/trip/schedule/accommodation_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/day_circle.dart';
 import 'package:travellory/widgets/trip/schedule/flight_schedule.dart';
