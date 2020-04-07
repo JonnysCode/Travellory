@@ -21,20 +21,25 @@ class _RegisterState extends State<ChangePassword> {
   final String alertText =
       "You've successfully changed your password.";
 
+  TextEditingController _oldPasswordController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   String _error = '';
 
   Future _changePassword(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    dynamic result = await _auth.changePassword(_passwordController.text);
-    if(result == null){
-      setState(() => _error = 'Please supply a valid password.');
+    dynamic authResult = await _auth.reauthenticate(_oldPasswordController.text);
+    if(authResult != null){
+      dynamic result = await _auth.changePassword(_passwordController.text);
+      if(result == null){
+        setState(() => _error = 'Please supply a valid password.');
+      }
     }
   }
 
   @override
   void dispose() {
+    _oldPasswordController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -82,6 +87,7 @@ class _RegisterState extends State<ChangePassword> {
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                   _passwordController.clear();
+                                  _oldPasswordController.clear();
                                 },
                                 icon: Icon(
                                   FontAwesomeIcons.angleLeft,
@@ -102,7 +108,7 @@ class _RegisterState extends State<ChangePassword> {
                               child: Padding(
                                 padding: EdgeInsets.only(top: 20, bottom: 8),
                                 child: Text(
-                                  'Please enter your new password',
+                                  'Please first enter the old password',
                                   textAlign: TextAlign.center,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -121,6 +127,11 @@ class _RegisterState extends State<ChangePassword> {
                                   children: <Widget>[
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
+                                      child: inputAuthentication(Icon(FontAwesomeIcons.unlockAlt), "OLD PASSWORD", Theme.of(context).primaryColor,
+                                          _oldPasswordController, ValidatorType.PASSWORD, true),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 20),
                                       child: inputAuthentication(Icon(FontAwesomeIcons.unlockAlt), "NEW PASSWORD", Theme.of(context).primaryColor,
                                           _passwordController, ValidatorType.PASSWORD, true),
                                     ),
@@ -134,6 +145,7 @@ class _RegisterState extends State<ChangePassword> {
                                             Theme.of(context).primaryColor, Colors.white, () async {
                                               if (_formKey.currentState.validate()) {
                                                 Navigator.pushNamed(context, '/loading');
+                                                //TODO: fluetfab call first reauth pass the old password
                                                 dynamic result = await _changePassword(context);
                                                 if (result == null) {
                                                   setState(() {
