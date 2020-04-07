@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/add_database.dart';
+import 'package:travellory/widgets/booking_related.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/dropdown.dart';
 import 'package:travellory/widgets/form_field.dart';
@@ -47,10 +48,6 @@ class _ActivityState extends State<Activity> {
   @override
   Widget build(BuildContext context) {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
-
-    void returnToTripScreen() {
-      Navigator.pop(context);
-    }
 
     return Scaffold(
       key: Key('Activity'),
@@ -170,13 +167,12 @@ class _ActivityState extends State<Activity> {
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: Container(
                         child: SubmitButton(
-                            highlightColor: Theme.of(context).primaryColor,
-                            fillColor: Theme.of(context).primaryColor,
-                            validationFunction: validateForm,
-                            onSubmit: () async {
-                              databaseAdder.addModel(activityModel, 'booking-addActivity');
-                              showSubmittedBookingDialog(context, alertText, returnToTripScreen);
-                            }),
+                          highlightColor: Theme.of(context).primaryColor,
+                          fillColor: Theme.of(context).primaryColor,
+                          validationFunction: validateForm,
+                          onSubmit: onSubmitBooking(
+                              activityModel, 'booking-addActivity', context, alertText),
+                        ),
                       ),
                     ),
                     Padding(

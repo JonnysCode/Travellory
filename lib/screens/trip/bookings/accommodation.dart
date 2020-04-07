@@ -3,6 +3,7 @@ import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/add_database.dart';
 import 'package:travellory/utils/list_models.dart';
+import 'package:travellory/widgets/booking_related.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/checkbox_form_field.dart';
 import 'package:travellory/widgets/dropdown.dart';
@@ -184,19 +185,14 @@ class _AccommodationState extends State<Accommodation> {
   Widget build(BuildContext context) {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
 
-    void returnToTripScreen() {
-      Navigator.pop(context);
-    }
-
     // replace widget to get the context
     accommodationList[accommodationList.length - 3] = SubmitButton(
-        highlightColor: Theme.of(context).primaryColor,
-        fillColor: Theme.of(context).primaryColor,
-        validationFunction: validateForm,
-        onSubmit: () async {
-          databaseAdder.addModel(accommodationModel, 'booking-addAccommodation');
-          showSubmittedBookingDialog(context, alertText, returnToTripScreen);
-        });
+      highlightColor: Theme.of(context).primaryColor,
+      fillColor: Theme.of(context).primaryColor,
+      validationFunction: validateForm,
+      onSubmit: onSubmitBooking(
+          accommodationModel, 'booking-addAccommodation', context, alertText),
+    );
 
     accommodationList[accommodationList.length - 2] = CancelButton(
       text: 'CANCEL',

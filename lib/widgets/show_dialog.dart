@@ -4,7 +4,7 @@ import 'package:travellory/widgets/buttons.dart';
 import 'font_widgets.dart';
 
 void showSubmittedBookingDialog(
-    BuildContext context, String alertText, void function()) {
+    BuildContext context, String alertText) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -16,13 +16,13 @@ void showSubmittedBookingDialog(
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,
         ),
-        content: new Text(alertText),
+        content: Text(alertText),
         actions: <Widget>[
           alertButton("Home", Colors.transparent, context, () async {
             Navigator.popUntil(context, ModalRoute.withName('/home'));
           }),
           alertButton("Back to Trip", Theme.of(context).hintColor, context, () async {
-            function();
+            Navigator.pop(context);
           }),
         ],
       );
