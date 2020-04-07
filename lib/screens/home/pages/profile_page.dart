@@ -12,6 +12,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future _signOut(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     await _auth.signOut();
+    await Navigator.pushReplacementNamed(context, '/');
   }
 
   @override

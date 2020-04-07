@@ -4,7 +4,7 @@ import 'myapp.dart';
 
 void main(){
   // to connect to locally running functions
-  CloudFunctions.instance.useFunctionsEmulator(origin: "http://10.0.2.2:5001");
+  CloudFunctions.instance.useFunctionsEmulator(origin: 'http://10.0.2.2:5001'); // http://localhost:5001 for osx!
   runApp(MyApp());
 }
 

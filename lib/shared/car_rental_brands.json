@@ -38,6 +38,11 @@
       "keyword": "Interrent",
       "id": "8",
       "autocompleteTerm": "Interrent"
+    },
+    {
+      "keyword": "SIXT",
+      "id": "9",
+      "autocompleteTerm": "SIXT"
     }
   ]
 }
