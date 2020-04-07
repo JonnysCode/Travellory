@@ -77,6 +77,7 @@ class MapSampleState extends State<MapSample> {
       body: Stack(
         children: <Widget>[
           GoogleMap(
+            key: Key('google_map_widget'),
             mapType: MapType.normal,
             initialCameraPosition: _kGooglePlex,
             gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
