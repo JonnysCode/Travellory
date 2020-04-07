@@ -37,11 +37,28 @@ class _RegisterState extends State<Register> {
     _nameFocus.addListener(_checkUsernameAvailability);
   }
 
+  Future _validateRegister() async {
+    if (_formKey.currentState.validate() && _isUsernameAvailable) {
+      Navigator.pushNamed(context, '/loading');
+      final user = await _register(context);
+
+      if(user == null){
+        Navigator.pop(context);
+        setState(() {
+          _error = 'Please supply a valid email and password.';
+        });
+      } else {
+        Navigator.popUntil(context, ModalRoute.withName('/'),
+        );
+      }
+    }
+  }
+
   Future _register(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    final result = await _auth.registerWithEmailAndPassword(
+    final user = await _auth.registerWithEmailAndPassword(
         _emailController.text, _passwordController.text, _nameController.text);
-    return result;
+    return user;
   }
 
   _checkUsernameAvailability() async {
@@ -235,27 +252,13 @@ class _RegisterState extends State<Register> {
                                               .bottom),
                                       child: Container(
                                         child: filledButton(
-                                            "REGISTER",
-                                            Colors.white,
-                                            Theme.of(context).primaryColor,
-                                            Theme.of(context).primaryColor,
-                                            Colors.white, () async {
-                                          if (_formKey.currentState
-                                                  .validate() &&
-                                              _isUsernameAvailable) {
-                                            Navigator.pushNamed(
-                                                context, '/loading');
-                                            final result =
-                                                await _register(context);
-                                            if (result == null) {
-                                              setState(() {
-                                                _error =
-                                                    'Please supply a valid email and password.';
-                                              });
-                                              Navigator.pop(context);
-                                            }
-                                          }
-                                        }),
+                                          "REGISTER",
+                                          Colors.white,
+                                          Theme.of(context).primaryColor,
+                                          Theme.of(context).primaryColor,
+                                          Colors.white,
+                                          _validateRegister
+                                        ),
                                         height: 50,
                                         width:
                                             MediaQuery.of(context).size.width,
