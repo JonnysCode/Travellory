@@ -18,6 +18,8 @@ class ChangePassword extends StatefulWidget {
 class _RegisterState extends State<ChangePassword> {
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final String alertText =
+      "You've successfully changed your password.";
 
   TextEditingController _passwordController = TextEditingController();
 
