@@ -4,7 +4,7 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/add_database.dart';
 import 'package:travellory/utils/date_converter.dart';
-import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/form_field.dart';
 import 'package:travellory/widgets/section_titles.dart';

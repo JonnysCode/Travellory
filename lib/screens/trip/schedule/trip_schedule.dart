@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/screens/trip/schedule/day_schedule.dart';
-import 'package:travellory/widgets/font_widgets.dart';
 
 class Schedule extends StatefulWidget {
   @override

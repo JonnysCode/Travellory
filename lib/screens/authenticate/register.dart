@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/utils/input_validator.dart';
-import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
 
 class Register extends StatefulWidget {
