@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/widgets/form_fields.dart';
+import 'package:travellory/models/rental_car_model.dart';
+import 'package:travellory/widgets/form_field.dart';
 
 void main() {
   testWidgets('form test: onSaved callback is called', (WidgetTester tester) async {
@@ -50,8 +51,11 @@ void main() {
   testWidgets('TestFormField optional exists', (WidgetTester tester) async {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-    final FormFieldWidget testFormField =
-        FormFieldWidget("Test Form Field", Icon(Icons.battery_std));
+    final TravelloryFormField testFormField = TravelloryFormField(
+      labelText: 'Test',
+      icon: Icon(Icons.confirmation_number),
+      optional: true,
+    );
 
     Widget makeTestableWidget() {
       return MaterialApp(
@@ -63,7 +67,7 @@ void main() {
               child: Material(
                 child: Form(
                   key: formKey,
-                  child: testFormField.optional(),
+                  child: testFormField,
                 ),
               ),
             ),
@@ -75,14 +79,21 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget());
 
-    expect(find.text('Test Form Field'), findsOneWidget);
+    expect(find.text('Test'), findsOneWidget);
   });
 
   testWidgets('TestFormField required exists', (WidgetTester tester) async {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-    final FormFieldWidget testFormField =
-        FormFieldWidget("Test Form Field", Icon(Icons.battery_std));
+    // for testing purposes we will use a rental car model here
+    final RentalCarModel testModel = RentalCarModel();
+
+    final TravelloryFormField testFormField = TravelloryFormField(
+      labelText: 'Test Booking Company',
+      icon: Icon(Icons.supervised_user_circle),
+      optional: true,
+      onChanged: (value) => testModel.company = value,
+    );
 
     Widget makeTestableWidget() {
       return MaterialApp(
@@ -94,7 +105,7 @@ void main() {
               child: Material(
                 child: Form(
                   key: formKey,
-                  child: testFormField.required(),
+                  child: testFormField,
                 ),
               ),
             ),
@@ -106,23 +117,30 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget());
 
-    expect(find.text('Test Form Field'), findsOneWidget);
+    expect(find.text('Test Booking Company'), findsOneWidget);
 
     Future<void> checkText(String testValue) async {
       await tester.enterText(find.byType(TextField), testValue);
-      expect(testFormField.controller.text, equals(testValue));
+      expect(testModel.company, equals(testValue));
     }
 
     await checkText('Test');
-    await checkText('Hello');
+    await checkText('Company');
   });
 
   testWidgets('TestFormField required has empty Text and validation is false',
       (WidgetTester tester) async {
     final GlobalKey<FormState> requiredFormKey = GlobalKey<FormState>();
 
-    final FormFieldWidget testFormField =
-        FormFieldWidget("Test Form Field", Icon(Icons.battery_std));
+    // for testing purposes we will use a rental car model here
+    final RentalCarModel testModel = RentalCarModel();
+
+    final TravelloryFormField testFormField = TravelloryFormField(
+      labelText: 'Test',
+      icon: Icon(Icons.confirmation_number),
+      optional: false,
+      onChanged: (value) => testModel.company = value,
+    );
 
     Widget makeTestableWidget() {
       return MaterialApp(
@@ -134,7 +152,7 @@ void main() {
               child: Material(
                 child: Form(
                   key: requiredFormKey,
-                  child: testFormField.required(),
+                  child: testFormField,
                 ),
               ),
             ),
@@ -153,10 +171,60 @@ void main() {
     Future<void> checkEmptyText() async {
       await tester.tap(find.byType(TextFormField));
       bool validate = validateForm();
-      expect(testFormField.controller.text, equals(''));
+      expect(testModel.company, equals(null));
       expect(validate, isFalse);
     }
 
     await checkEmptyText();
   });
+
+  testWidgets('TestFormField optional has empty Text and validation is true',
+          (WidgetTester tester) async {
+        final GlobalKey<FormState> requiredFormKey = GlobalKey<FormState>();
+
+        // for testing purposes we will use a rental car model here
+        final RentalCarModel testModel = RentalCarModel();
+
+        final TravelloryFormField testFormField = TravelloryFormField(
+          labelText: 'Test',
+          icon: Icon(Icons.confirmation_number),
+          optional: true,
+          onChanged: (value) => testModel.company = value,
+        );
+
+        Widget makeTestableWidget() {
+          return MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(devicePixelRatio: 1.0),
+              child: Directionality(
+                textDirection: TextDirection.ltr,
+                child: Center(
+                  child: Material(
+                    child: Form(
+                      key: requiredFormKey,
+                      child: testFormField,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+
+        // Build our app and trigger a frame.
+        await tester.pumpWidget(makeTestableWidget());
+
+        bool validateForm() {
+          return (requiredFormKey.currentState.validate());
+        }
+
+        Future<void> checkEmptyText() async {
+          await tester.tap(find.byType(TextFormField));
+          bool validate = validateForm();
+          expect(testModel.company, equals(null));
+          expect(validate, isTrue);
+        }
+
+        await checkEmptyText();
+      });
 }

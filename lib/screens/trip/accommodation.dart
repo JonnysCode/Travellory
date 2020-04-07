@@ -1,14 +1,19 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/services/add_database.dart';
 import 'package:travellory/utils/date_converter.dart';
+import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/checkbox_form_field.dart';
+import 'package:travellory/widgets/dropdown.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/form_fields.dart';
+import 'package:travellory/widgets/form_field.dart';
 import 'package:travellory/widgets/section_titles.dart';
 import 'package:travellory/widgets/show_dialog.dart';
+import 'package:travellory/widgets/date_form_field.dart';
+import 'package:travellory/widgets/time_form_field.dart';
 
 class Accommodation extends StatefulWidget {
   @override
@@ -16,58 +21,164 @@ class Accommodation extends StatefulWidget {
 }
 
 class _AccommodationState extends State<Accommodation> {
-  final FormFieldWidget _typeFormField =
-      FormFieldWidget("Type of Accommodation *", Icon(Icons.hotel));
-  final FormFieldWidget _confirmationFormField =
-      FormFieldWidget("Confirmation Number", Icon(Icons.confirmation_number));
-  final FormFieldWidget _nameFormField =
-      FormFieldWidget("Name *", Icon(Icons.supervised_user_circle));
-  final FormFieldWidget _addressFormField = FormFieldWidget("Address *", Icon(Icons.location_on));
-  final FormFieldDateWidget _checkinDateFormField =
-      FormFieldDateWidget("Check-In Date *", Icon(Icons.date_range));
-  final FormFieldTimeWidget _checkinTimeFormField =
-      FormFieldTimeWidget("Check-In Time", Icon(Icons.access_time));
-  final FormFieldWidget _nightsFormField = FormFieldWidget("Nights *", Icon(Icons.hotel));
-  final FormFieldDateWidget _checkoutDateFormField =
-      FormFieldDateWidget("Check-Out Date *", Icon(Icons.date_range));
-  final FormFieldTimeWidget _checkoutTimeFormField =
-      FormFieldTimeWidget("Check-Out Time", Icon(Icons.access_time));
-  final FormFieldWidget _hotelRoomTypeFormField = FormFieldWidget("Room Type", Icon(Icons.hotel));
-  final FormFieldWidget _airbnbTypeFormField =
-      FormFieldWidget("Accommodation Type", Icon(Icons.hotel));
-  final FormFieldWidget _notesFormField = FormFieldWidget("Notes", Icon(Icons.speaker_notes));
-
+  ListModel<Widget> accommodationList;
   final accommodationFormKey = GlobalKey<FormState>();
+  final AccommodationModel accommodationModel = AccommodationModel();
+  final DatabaseAdder databaseAdder = DatabaseAdder();
 
-  bool breakfastBool = false;
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  final _checkinDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
-  void breakfastCheckbox(bool value) {
-    setState(() => breakfastBool = value);
-  }
-
-  final String alertText =
-      "You've just submitted the booking information for your public transportation booking. You can see all the information in the trip overview";
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    _typeFormField.dispose();
-    _confirmationFormField.dispose();
-    _nameFormField.dispose();
-    _addressFormField.dispose();
-    _checkinDateFormField.dispose();
-    _checkinTimeFormField.dispose();
-    _nightsFormField.dispose();
-    _checkoutDateFormField.dispose();
-    _checkoutTimeFormField.dispose();
-    _hotelRoomTypeFormField.dispose();
-    _airbnbTypeFormField.dispose();
-    _notesFormField.dispose();
-    super.dispose();
-  }
+  TravelloryDropdownField accommodationTypeDropdown;
+  Widget hotelAdditional;
+  Widget airbnbAdditional;
 
   bool validateForm() {
     return accommodationFormKey.currentState.validate();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    accommodationTypeDropdown = TravelloryDropdownField(
+        title: 'Select Accommodation Type',
+        types: types,
+        onChanged: (value) {
+          accommodationModel.accommodationType = value.name;
+          showAdditional(accommodationList, value.name == 'Airbnb', accommodationTypeDropdown,
+              airbnbAdditional);
+          showAdditional(
+              accommodationList, value.name == 'Hotel', accommodationTypeDropdown, hotelAdditional);
+        },
+        validatorText: 'Please enter the required information');
+
+    // don't put in build because it will be recreated on every build
+    // with state changes this is not appreciated
+    List<Widget> shown = [
+      BookingSiteTitle('Add Accommodation', Icons.hotel),
+      SectionTitle('Accommodation Type'),
+      accommodationTypeDropdown,
+      SectionTitle('General Information'),
+      TravelloryFormField(
+          labelText: 'Confirmation Number',
+          icon: Icon(Icons.confirmation_number),
+          optional: true,
+          onChanged: (value) => accommodationModel.confirmationNr = value),
+      TravelloryFormField(
+          labelText: 'Name *',
+          icon: Icon(Icons.supervised_user_circle),
+          optional: false,
+          onChanged: (value) => accommodationModel.hotelName = value),
+      TravelloryFormField(
+        labelText: 'Address *',
+        icon: Icon(Icons.location_on),
+        optional: false,
+        onChanged: (value) => accommodationModel.address = value,
+      ),
+      SectionTitle('Check-In Details'),
+      DateFormField(
+        key: _checkinDateFormFieldKey,
+        labelText: 'Check-In Date *',
+        icon: Icon(Icons.date_range),
+        optional: false,
+        chosenDateString: (value) => accommodationModel.checkinDate = value,
+      ),
+      TimeFormField(
+        labelText: 'Check-In Time',
+        icon: Icon(Icons.access_time),
+        optional: true,
+        chosenTimeString: (value) => accommodationModel.checkinTime = value,
+      ),
+      TravelloryFormField(
+        labelText: 'Nights *',
+        icon: Icon(Icons.hotel),
+        optional: false,
+        onChanged: (value) => accommodationModel.nights = value,
+      ),
+      SectionTitle('Check-Out Details'),
+      DateFormField(
+        labelText: 'Check-Out Date *',
+        icon: Icon(Icons.date_range),
+        beforeDateKey: _checkinDateFormFieldKey,
+        optional: false,
+        dateValidationMessage: 'Check-out Date cannot be before Check-in Date',
+        chosenDateString: (value) => accommodationModel.checkoutDate = value,
+      ),
+      TimeFormField(
+        labelText: 'Check-Out Time',
+        icon: Icon(Icons.access_time),
+        optional: true,
+        chosenTimeString: (value) => accommodationModel.checkoutTime = value,
+      ),
+      SectionTitle('Notes'),
+      TravelloryFormField(
+        labelText: 'Notes',
+        icon: Icon(Icons.speaker_notes),
+        optional: true,
+        onChanged: (value) => accommodationModel.notes = value,
+      ),
+      SubmitButton(),
+      CancelButton(),
+      SizedBox(height: 20),
+    ];
+
+    // this builds the animated list
+    accommodationList = ListModel<Widget>(
+      listKey: _listKey,
+      initialItems: shown,
+      removedItemBuilder: _removedItemBuilder,
+    );
+
+    airbnbAdditional = Column(
+      children: <Widget>[
+        TravelloryFormField(
+          labelText: 'Specific type of airbnb',
+          icon: Icon(Icons.hotel),
+          optional: true,
+          onChanged: (value) => accommodationModel.accommodationType = value,
+        ),
+      ],
+    );
+
+    hotelAdditional = Column(
+      children: <Widget>[
+        SectionTitle('Further Hotel Details'),
+        TravelloryFormField(
+          labelText: 'Room Type',
+          icon: Icon(Icons.hotel),
+          optional: true,
+          onChanged: (value) => accommodationModel.roomType = value,
+        ),
+        CheckboxFormField(
+          initialValue: false,
+          label: 'Does your stay include breakfast?',
+          onChanged: (value) {
+            accommodationModel.breakfast = value;
+          },
+        ),
+      ],
+    );
+  }
+
+  final String alertText =
+      "You've just submitted the booking information for your accommodation booking. You can see all the information in the trip overview";
+
+  List<Item> types = <Item>[
+    const Item('Hotel', Icon(Icons.hotel, color: const Color(0xFF167F67))),
+    const Item('Airbnb', Icon(Icons.hotel, color: const Color(0xFF167F67))),
+    const Item('Hostel', Icon(Icons.hotel, color: const Color(0xFF167F67))),
+    const Item('Motel', Icon(Icons.hotel, color: const Color(0xFF167F67))),
+    const Item('Bed & Breakfast', Icon(Icons.hotel, color: const Color(0xFF167F67))),
+    const Item('Other', Icon(Icons.hotel, color: const Color(0xFF167F67))),
+  ];
+
+  Widget _itemBuilder(BuildContext context, int index, Animation<double> animation) {
+    return FormItem(animation: animation, child: accommodationList[index]);
+  }
+
+  Widget _removedItemBuilder(BuildContext context, Widget item, Animation<double> animation) {
+    return FormItem(animation: animation, child: item);
   }
 
   @override
@@ -76,8 +187,24 @@ class _AccommodationState extends State<Accommodation> {
 
     void returnToTripScreen() {
       Navigator.pop(context);
-      Navigator.pop(context);
     }
+
+    // replace widget to get the context
+    accommodationList[accommodationList.length - 3] = SubmitButton(
+        highlightColor: Theme.of(context).primaryColor,
+        fillColor: Theme.of(context).primaryColor,
+        validationFunction: validateForm,
+        onSubmit: () async {
+          databaseAdder.addModel(accommodationModel, 'booking-addAccommodation');
+          showSubmittedBookingDialog(context, alertText, returnToTripScreen);
+        });
+
+    accommodationList[accommodationList.length - 2] = CancelButton(
+      text: 'CANCEL',
+      onCancel: () {
+        cancellingDialog(context);
+      },
+    );
 
     return Scaffold(
       key: Key('Accommodation'),
@@ -130,9 +257,7 @@ class _AccommodationState extends State<Accommodation> {
                       alignment: Alignment.topLeft,
                       width: MediaQuery.of(context).size.width,
                       constraints: BoxConstraints(
-                          maxHeight: 100.0,
-                          maxWidth: MediaQuery.of(context).size.width - 200
-                      ),
+                          maxHeight: 100.0, maxWidth: MediaQuery.of(context).size.width - 200),
                       child: FashionFetishText(
                         text: _tripModel.name,
                         size: 24,
@@ -149,14 +274,13 @@ class _AccommodationState extends State<Accommodation> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         FashionFetishText(
-                            text: 'From: ${DateConverter.format( _tripModel.startDate)}'
-                                + '\n'
-                                + 'To: ${DateConverter.format( _tripModel.endDate)}',
+                            text: 'From: ${DateConverter.format(_tripModel.startDate)}' +
+                                '\n' +
+                                'To: ${DateConverter.format(_tripModel.endDate)}',
                             color: Colors.black54,
                             fontWeight: FashionFontWeight.BOLD,
                             size: 14,
-                            height: 1.25
-                        ),
+                            height: 1.25),
                         SizedBox(
                           height: 12,
                         ),
@@ -185,162 +309,27 @@ class _AccommodationState extends State<Accommodation> {
               ),
             ),
             Expanded(
-              //child: Form(
-              child: SingleChildScrollView(
-                child: Form(
-                  key: accommodationFormKey,
-                  child: Column(children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: bookingSiteTitle(context, "Add Accommodation", Icons.hotel),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "General Information"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _typeFormField.required(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _confirmationFormField.optional(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _nameFormField.required(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _addressFormField.required(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Check-In Information"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _checkinDateFormField.firstDate(context),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _checkinTimeFormField.time(context),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _nightsFormField.required(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Check-Out Information"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _checkoutDateFormField.secondDate(context, _checkinDateFormField),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _checkoutTimeFormField.time(context),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Booking Information"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _hotelRoomTypeFormField.optional(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 0),
-                      child: checkbox(
-                          breakfastBool, 'Does your stay include breakfast?', breakfastCheckbox),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _airbnbTypeFormField.optional(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: sectionTitle(context, "Notes"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _notesFormField.optional(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: Container(
-                        child: submitButton(
-                            context,
-                            Theme.of(context).primaryColor,
-                            Theme.of(context).primaryColor,
-                            validateForm, () async {
-                         final AccommodationModel accommodation = new AccommodationModel(
-                              type: _typeFormField.controller.text,
-                              hotelName: _nameFormField.controller.text,
-                              confirmationNr: _confirmationFormField.controller.text,
-                              address: _addressFormField.controller.text,
-                              nights: _nightsFormField.controller.text,
-                              checkinDate: _checkinDateFormField.controller.text,
-                              checkinTime: _checkinTimeFormField.controller.text,
-                              checkoutDate: _checkoutDateFormField.controller.text,
-                              checkoutTime: _checkoutTimeFormField.controller.text,
-                              breakfast: breakfastBool,
-                              roomType: _hotelRoomTypeFormField.controller.text,
-                              accommodationType: _airbnbTypeFormField.controller.text,
-                              notes: _notesFormField.controller.text);
-                          _addAccommodation(accommodation);
-                          showSubmittedBookingDialog(context, alertText, returnToTripScreen);
-                        }),
+                //child: Form(
+                child: Container(
+              height: double.infinity,
+              child: Form(
+                key: accommodationFormKey,
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: AnimatedList(
+                        key: _listKey,
+                        initialItemCount: accommodationList.length,
+                        itemBuilder: _itemBuilder,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                      child: Container(
-                        child: cancelButton("CANCEL", context, () {
-                          cancellingDialog(context, returnToTripScreen);
-                        }),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                  ]),
+                  ],
                 ),
               ),
-            ),
+            )),
           ],
         ),
       ),
     );
-  }
-}
-
-void _addAccommodation(AccommodationModel accommodation) async {
-  final HttpsCallable callable =
-      CloudFunctions.instance.getHttpsCallable(functionName: 'booking-addPublicTransport');
-  try {
-    final HttpsCallableResult result = await callable.call(<String, dynamic>{
-      "type": accommodation.type,
-      "hotelName": accommodation.hotelName,
-      "confirmationNr": accommodation.confirmationNr,
-      "address": accommodation.address,
-      "nights": accommodation.nights,
-      "checkinDate": accommodation.checkinDate,
-      "checkinTime": accommodation.checkinTime,
-      "checkoutDate": accommodation.checkoutDate,
-      "checkoutTime": accommodation.checkoutTime,
-      "breakfast": accommodation.breakfast,
-      "roomType": accommodation.roomType,
-      "accommodationType": accommodation.accommodationType,
-      "notes": accommodation.notes
-    });
-    print(result.data);
-  } on CloudFunctionsException catch (e) {
-    print('caught firebase functions exception');
-    print(e.code);
-    print(e.message);
-    print(e.details);
-  } catch (e) {
-    print('caught generic exception');
-    print(e);
   }
 }
