@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:travellory/models/user.dart';
-import 'package:cloud_functions/cloud_functions.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/user_management.dart';
 
 abstract class BaseAuthService {
@@ -9,19 +8,21 @@ abstract class BaseAuthService {
   Future registerWithEmailAndPassword(
       String email, String password, String displayName);
   Future signOut();
-  Stream<User> get user;
+  Stream<UserModel> get user;
 }
 
 class AuthService implements BaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create User object based on firebase user
-  User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid, displayName: user.displayName) : null;
+  UserModel _userFromFirebaseUser(FirebaseUser user) {
+    return user != null
+        ? UserModel(uid: user.uid, displayName: user.displayName)
+        : null;
   }
 
   // auth change user stream
-  Stream<User> get user {
+  Stream<UserModel> get user {
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
