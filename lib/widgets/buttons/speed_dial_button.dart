@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:math' as math;
@@ -18,15 +19,6 @@ class SpeedDialButton extends StatefulWidget {
 class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProviderStateMixin{
   AnimationController _controller;
   bool _isPressed = false;
-
-  _toggleFloatingButton() {
-    _controller.isDismissed
-        ? _controller.forward()
-        : _controller.reverse();
-    setState(() {
-      _isPressed = !_isPressed;
-    });
-  }
 
   @override
   void initState() {
@@ -58,37 +50,16 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
         ),
         Positioned(
           right: 8,
-          bottom: 52,
+          bottom: 54,
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: List.generate(_dials.length, (int index) {
-              Widget child = Container(
-                height: 66.0,
-                width: 56.0,
-                alignment: FractionalOffset.topCenter,
-                child: ScaleTransition(
-                  scale: CurvedAnimation(
-                    parent: _controller,
-                    curve: Interval(
-                        0.0,
-                        1.0 - index / _dials.length / 2.0,
-                        curve: Curves.easeOut
-                    ),
-                  ),
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.white,
-                    mini: true,
-                    child: FaIcon(
-                        _dials[index].icon,
-                        color: Colors.black54
-                    ),
-                    onPressed: () {}, // TODO: Open Add bookings for current trip
-                  ),
-                ),
-              );
-              return child;
+              Widget dial = _dial(index, _dials);
+              return dial;
             }).toList()..add(
               FloatingActionButton(
+                highlightElevation: 3.0,
                 child: AnimatedBuilder(
                   animation: _controller,
                   builder: (BuildContext context, Widget child) {
@@ -107,14 +78,69 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
       ],
     );
   }
+
+  _toggleFloatingButton() {
+    _controller.isDismissed
+        ? _controller.forward()
+        : _controller.reverse();
+    setState(() {
+      _isPressed = !_isPressed;
+    });
+  }
+
+  Widget _dial(int index, List<Dial> dials) => Container(
+    height: 66.0,
+    alignment: FractionalOffset.topCenter,
+    child: ScaleTransition(
+      scale: CurvedAnimation(
+        parent: _controller,
+        curve: Interval(
+            0.0,
+            1.0 - index / dials.length / 2.0,
+            curve: Curves.easeOut
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: Colors.white54,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              dials[index].description,
+              style: TextStyle(
+                color: Colors.black87,
+              ),
+            ),
+          ),
+          const SizedBox(width: 6),
+          FloatingActionButton(
+            backgroundColor: Colors.white,
+            mini: true,
+            child: FaIcon(
+                dials[index].icon,
+                color: Colors.black54
+            ),
+            onPressed: () => dials[index].function,
+          ),
+          const SizedBox(width: 6),
+        ],
+      ),
+    ),
+  );
 }
 
 class Dial {
   const Dial({
     @required this.icon,
-    @required this.description
+    @required this.description,
+    this.function
   });
 
   final IconData icon;
   final String description;
+  final Function function;
 }
