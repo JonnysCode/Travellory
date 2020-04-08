@@ -20,10 +20,13 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  intl: 0.15.7
+  intl: 0.16.1 #0.15.7
   image_picker: ^0.6.1+4
   image_cropper: ^1.2.1
   firebase_auth: 0.15.4 #^0.15.5+2
@@ -32,10 +35,12 @@ dependencies:
   email_validator: ^1.0.4
   flutter_spinkit: ^4.1.2
   firebase_core: 0.4.4 # new
-  cloud_functions: ^0.4.2+2
+  cloud_functions: 0.4.2+3
   google_nav_bar: ^2.0.1
   syncfusion_flutter_calendar: ^17.4.40-beta
   font_awesome_flutter: ^8.7.0
+  flutter_rounded_date_picker: 1.0.0
+  dropdownfield: 1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -86,20 +91,20 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: FashionFetish
-       fonts:
-         - asset: assets/fonts/Fashion_Fetish_Regular.ttf
-         - asset: assets/fonts/Fashion_Fetish_Italic.ttf
-           style: italic
-         - asset: assets/fonts/Fashion_Fetish_Bold.ttf
-           weight: 600
-         - asset: assets/fonts/Fashion_Fetish_Heavy.ttf
-           weight: 800
-         - asset: assets/fonts/Fashion_Fetish_Light.ttf
-           weight: 100
-         - asset: assets/fonts/Fashion_Fetish_Light_Italic.ttf
-           weight: 100
-           style: italic
+    - family: FashionFetish
+      fonts:
+        - asset: assets/fonts/Fashion_Fetish_Regular.ttf
+        - asset: assets/fonts/Fashion_Fetish_Italic.ttf
+          style: italic
+        - asset: assets/fonts/Fashion_Fetish_Bold.ttf
+          weight: 600
+        - asset: assets/fonts/Fashion_Fetish_Heavy.ttf
+          weight: 800
+        - asset: assets/fonts/Fashion_Fetish_Light.ttf
+          weight: 100
+        - asset: assets/fonts/Fashion_Fetish_Light_Italic.ttf
+          weight: 100
+          style: italic
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

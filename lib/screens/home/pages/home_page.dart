@@ -44,18 +44,16 @@ class _HomePageState extends State<HomePage> {
                   Positioned(
                     top: 24,
                     right: 42,
-                    child: Container(
-                      child: Text(
-                        'Add trip',
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontFamily: 'FashionFetish',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          letterSpacing: -2.0,
-                        ),
-                        textAlign: TextAlign.left,
+                    child: Text(
+                      'Add trip',
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontFamily: 'FashionFetish',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                        letterSpacing: -2.0,
                       ),
+                      textAlign: TextAlign.left,
                     ),
                   ),
                   Positioned(
@@ -69,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                         padding: EdgeInsets.only(top: 20, right: 10),
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage("assets/images/home/trip/add.png"),
+                            image: AssetImage('assets/images/home/trip/add.png'),
                             fit: BoxFit.fitWidth,
                             alignment: Alignment.bottomCenter,
                           ),
@@ -88,16 +86,16 @@ class _HomePageState extends State<HomePage> {
             child: ListView.separated(
               padding: const EdgeInsets.all(10),
               itemCount: tripModels.length + 1,
-              itemBuilder: (BuildContext context, int index) {
+              itemBuilder: (context, index) {
                 if(index < tripModels.length){
-                  TripModel tripModel = tripModels[index];
+                  final tripModel = tripModels[index];
                   tripModel.index = index;
                   return TripCard(tripModel: tripModel);
                 } else {
                   return  _bottomMargin();
                 }
               },
-              separatorBuilder: (BuildContext context, int index) => const Divider(),
+              separatorBuilder: (context, index) => const Divider(),
             ),
           ),
         ],
