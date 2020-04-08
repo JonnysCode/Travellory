@@ -152,6 +152,10 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: SectionTitle('Notes'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
                         labelText: 'Notes',
                         icon: Icon(Icons.speaker_notes),
