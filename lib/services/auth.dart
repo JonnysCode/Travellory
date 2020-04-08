@@ -1,21 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travellory/models/user_model.dart';
+import 'package:travellory/services/user_management.dart';
 
 abstract class BaseAuthService {
   Future signInAnonymously();
   Future signInWithEmailAndPassword(String email, String password);
-  Future registerWithEmailAndPassword(String email, String password);
+  Future registerWithEmailAndPassword(
+      String email, String password, String displayName);
   Future signOut();
   Stream<UserModel> get user;
 }
 
 class AuthService implements BaseAuthService {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create User object based on firebase user
-  UserModel _userFromFirebaseUser(FirebaseUser user){
-    return user != null ? UserModel(uid: user.uid) : null;
+  UserModel _userFromFirebaseUser(FirebaseUser user) {
+    return user != null
+        ? UserModel(uid: user.uid, displayName: user.displayName)
+        : null;
   }
 
   // auth change user stream
@@ -38,10 +41,11 @@ class AuthService implements BaseAuthService {
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      AuthResult result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
       FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
-    } catch(e) {
+    } catch (e) {
       print(e.toString()); // todo: logging and error handling
       return null;
     }
@@ -54,12 +58,22 @@ class AuthService implements BaseAuthService {
   // sign in with facebook
 
   // register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(
+      String email, String password, String displayName) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       FirebaseUser firebaseUser = result.user;
+      UserUpdateInfo updateInfo = UserUpdateInfo();
+      updateInfo.displayName = displayName;
+      firebaseUser.updateProfile(updateInfo);
+      await firebaseUser.reload();
+      firebaseUser = await _auth.currentUser();
+
+      UserManagement.setUsername(firebaseUser);
+
       return _userFromFirebaseUser(firebaseUser);
-    } catch(e) {
+    } catch (e) {
       print(e.toString()); // todo: logging and error handling
       return null;
     }
@@ -80,5 +94,4 @@ class AuthService implements BaseAuthService {
       return null;
     }
   }
-
 }
