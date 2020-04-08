@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/screens/trip/accommodation.dart';
+import 'package:travellory/screens/trip/bookings/accommodation.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key key}) : super(key: key);
