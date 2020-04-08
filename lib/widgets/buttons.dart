@@ -4,7 +4,7 @@ import 'package:travellory/widgets/forms/show_dialog.dart';
 Widget filledButton(String text, Color splashColor, Color highlightColor, Color fillColor,
     Color textColor, void Function() onPressed) {
   return RaisedButton(
-    key: Key('${text.toLowerCase().trim()} Button'),
+    key: Key('${text.toLowerCase().trim()}Button'),
     highlightElevation: 0.0,
     splashColor: splashColor,
     highlightColor: highlightColor,
@@ -21,7 +21,7 @@ Widget filledButton(String text, Color splashColor, Color highlightColor, Color 
 
 Widget alertButton(String text, Color fillColor, BuildContext context, void Function() onPressed) {
   return RaisedButton(
-    key: Key('${text.toLowerCase().trim()} Button'),
+    key: Key('${text.toLowerCase().trim()}Button'),
     highlightElevation: 0.0,
     splashColor: Colors.white,
     highlightColor: Theme.of(context).primaryColor,
