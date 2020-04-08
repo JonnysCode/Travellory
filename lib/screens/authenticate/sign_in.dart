@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/utils/input_validator.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
 
@@ -207,29 +206,5 @@ class _SignInState extends State<SignIn> {
         ],
       ),
     );
-  }
-}
-
-/**
- * This is a test function call of a firebase cloud function. It will print the
- * result to the console
- * TODO: remove
- */
-void _testFunCall() async {
-  HttpsCallable callable = CloudFunctions.instance
-      .getHttpsCallable(functionName: 'payment-makePayment');
-
-  try {
-    final HttpsCallableResult result = await callable.call();
-    print(result.data);
-
-  } on CloudFunctionsException catch (e) {
-    print('caught firebase functions exception');
-    print(e.code);
-    print(e.message);
-    print(e.details);
-  } catch (e) {
-    print('caught generic exception');
-    print(e);
   }
 }
