@@ -11,7 +11,7 @@ class FashionFetishText extends StatelessWidget {
   final Color color;
   final double height;
 
-  FashionFetishText({
+  const FashionFetishText({
     @required this.text,
     @required this.size,
     this.fontWeight,
