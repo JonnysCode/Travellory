@@ -23,13 +23,14 @@ class AuthService implements BaseAuthService {
   }
 
   // auth change user stream
+  @override
   Stream<UserModel> get user {
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
   // get current user
   @override
-  Future getCurrentUser() async{
+  Future getCurrentUser() async {
     return _auth.currentUser();
   }
 
@@ -74,8 +75,10 @@ class AuthService implements BaseAuthService {
       final AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser firebaseUser = result.user;
-      final UserUpdateInfo updateInfo = UserUpdateInfo();
-      updateInfo.displayName = displayName;
+
+      final UserUpdateInfo updateInfo = UserUpdateInfo()
+        ..displayName = displayName;
+
       await firebaseUser.updateProfile(updateInfo);
       await firebaseUser.reload();
       firebaseUser = await _auth.currentUser();
