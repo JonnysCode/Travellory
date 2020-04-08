@@ -53,7 +53,7 @@ Container getBookingHeader(BuildContext context, TripModel tripModel) {
             child: FashionFetishText(
               text: tripModel.name,
               size: 24,
-              fontWeight: FashionFontWeight.HEAVY,
+              fontWeight: FashionFontWeight.heavy,
               height: 1.05,
             ),
           ),
@@ -70,7 +70,7 @@ Container getBookingHeader(BuildContext context, TripModel tripModel) {
                       '\n' +
                       'To: ${toShortenedMonthDateFrom(tripModel.endDate)}',
                   color: Colors.black54,
-                  fontWeight: FashionFontWeight.BOLD,
+                  fontWeight: FashionFontWeight.bold,
                   size: 14,
                   height: 1.25),
               SizedBox(
@@ -88,7 +88,7 @@ Container getBookingHeader(BuildContext context, TripModel tripModel) {
                     child: FashionFetishText(
                       text: tripModel.destination,
                       size: 14,
-                      fontWeight: FashionFontWeight.HEAVY,
+                      fontWeight: FashionFontWeight.heavy,
                       color: Colors.black54,
                     ),
                   ),

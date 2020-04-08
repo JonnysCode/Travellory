@@ -29,7 +29,7 @@ class _TripScreenState extends State<TripScreen> {
               child: FashionFetishText(
                 text: title,
                 size: 24,
-                fontWeight: FashionFontWeight.HEAVY,
+                fontWeight: FashionFontWeight.heavy,
               ),
             ),
             Positioned(
@@ -38,7 +38,7 @@ class _TripScreenState extends State<TripScreen> {
               child: FashionFetishText(
                 text: 'Add',
                 size: 16,
-                fontWeight: FashionFontWeight.BOLD,
+                fontWeight: FashionFontWeight.bold,
                 color: Colors.black45,
               ),
             ),

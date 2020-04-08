@@ -1,18 +1,18 @@
 import 'package:email_validator/email_validator.dart';
 
 enum ValidatorType{
-  EMAIL, PASSWORD, USERNAME
+  email, password, username
 }
 
 class InputValidator {
 
   static String validate(String value, ValidatorType type){
     switch(type){
-      case ValidatorType.EMAIL:
+      case ValidatorType.email:
         return _validateEmail(value);
-      case ValidatorType.PASSWORD :
+      case ValidatorType.password :
         return _validatePassword(value);
-      case ValidatorType.USERNAME :
+      case ValidatorType.username :
         return _validateUsername(value);
       default :
         return null;
@@ -50,7 +50,7 @@ class InputValidator {
 
     Pattern pattern =
         r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
-    RegExp regex = new RegExp(pattern);
+    RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value)) {
       return 'Invalid username';
     }
