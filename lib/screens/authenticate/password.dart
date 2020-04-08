@@ -26,6 +26,25 @@ class _RegisterState extends State<ChangePassword> {
 
   String _error = '';
 
+  //TODO: info for hessgia tried to implement it with this method
+//  Future _validateSignIn() async {
+//    if (_formKey.currentState.validate()) {
+//      Navigator.pushNamed(context, '/loading');
+//      final user = await _changePassword(context);
+//
+//      if(user == null){
+//        Navigator.pop(context);
+//        setState(() {
+//          _error = 'Could not sign in with those credentials.';
+//        });
+//      } else {
+//        Navigator.popUntil(context, ModalRoute.withName('/'),
+//        );
+//      }
+//    }
+//  }
+
+
   Future _changePassword(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     dynamic result = await _auth.reauthenticate(_oldPasswordController.text, _passwordController.text);
