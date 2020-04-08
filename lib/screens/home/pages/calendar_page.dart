@@ -12,13 +12,11 @@ class _CalendarPageState extends State<CalendarPage> {
   final Color calendarBackgroundColor = Colors.green[100];
   final DateTime today = DateTime.now();
 
-  // TODO this will have to be linked with the backend
   List<Meeting> _getDataSource() {
-    var meetings = <Meeting>[];
+    final meetings = <Meeting>[];
     final DateTime startDate = today.add(const Duration(days: -3));
     final DateTime endDate = startDate.add(const Duration(days: 6));
-    meetings.add(
-        Meeting('TestTrip', startDate, endDate, calendarBackgroundColor, true));
+    meetings.add(Meeting('TestTrip', startDate, endDate, calendarBackgroundColor, true));
     return meetings;
   }
 
@@ -38,7 +36,7 @@ class _CalendarPageState extends State<CalendarPage> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
               color: Color(0xFFF7C852),
-              ),
+            ),
           ),
           Expanded(
             child: Container(
@@ -46,7 +44,10 @@ class _CalendarPageState extends State<CalendarPage> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(bottom: Radius.circular(40.0)),
                 color: Colors.white,
-                boxShadow: [BoxShadow(blurRadius: 3, color: Colors.black.withOpacity(.15), offset: Offset(4.0, 4.0))],
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 3, color: Colors.black.withOpacity(.15), offset: Offset(4.0, 4.0))
+                ],
               ),
               child: SfCalendar(
                 key: Key('yearly_calendar'),
@@ -61,15 +62,14 @@ class _CalendarPageState extends State<CalendarPage> {
                   shape: BoxShape.rectangle,
                 ),
                 headerStyle: CalendarHeaderStyle(
-                    textAlign: TextAlign.center,
-                    backgroundColor: Color(0xFFF7C852),
-                    textStyle: TextStyle(
-                        fontFamily: 'FashionFetish',
-                        fontSize: 25,
-                        fontStyle: FontStyle.normal,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600
-                    ),
+                  textAlign: TextAlign.center,
+                  backgroundColor: Color(0xFFF7C852),
+                  textStyle: TextStyle(
+                      fontFamily: 'FashionFetish',
+                      fontSize: 25,
+                      fontStyle: FontStyle.normal,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600),
                 ),
                 monthViewSettings: MonthViewSettings(
                   showAgenda: true,
@@ -84,8 +84,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         fontFamily: 'FashionFetish',
                         fontSize: 14,
                         height: 1.2,
-                        color: Colors.black
-                    ),
+                        color: Colors.black),
                     dateTextStyle: TextStyle(
                         fontFamily: 'FashionFetish',
                         fontSize: 15,
@@ -103,11 +102,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   monthCellStyle: MonthCellStyle(
                       trailingDatesBackgroundColor: Colors.white30,
                       todayTextStyle: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Arial'
-                      )
-                  ),
+                          fontSize: 12, fontWeight: FontWeight.bold, fontFamily: 'Arial')),
                 ),
                 firstDayOfWeek: 1, // first day of the week should be monday
               ),
