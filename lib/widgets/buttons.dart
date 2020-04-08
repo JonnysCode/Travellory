@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 
 Widget filledButton(String text, Color splashColor, Color highlightColor, Color fillColor,
-    Color textColor, void Function() onPressed) {
+    Color textColor, void function()) {
   return RaisedButton(
     key: Key('${text.toLowerCase().trim()}Button'),
     highlightElevation: 0.0,
@@ -11,7 +11,7 @@ Widget filledButton(String text, Color splashColor, Color highlightColor, Color 
     elevation: 0.0,
     color: fillColor,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-    onPressed: () => onPressed,
+    onPressed: () => function(),
     child: Text(
       text,
       style: TextStyle(fontWeight: FontWeight.bold, color: textColor, fontSize: 20),
@@ -19,7 +19,7 @@ Widget filledButton(String text, Color splashColor, Color highlightColor, Color 
   );
 }
 
-Widget alertButton(String text, Color fillColor, BuildContext context, void Function() onPressed) {
+Widget alertButton(String text, Color fillColor, BuildContext context, void function()) {
   return RaisedButton(
     key: Key('${text.toLowerCase().trim()}Button'),
     highlightElevation: 0.0,
@@ -28,7 +28,7 @@ Widget alertButton(String text, Color fillColor, BuildContext context, void Func
     elevation: 0.0,
     color: fillColor,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-    onPressed: () => onPressed,
+    onPressed: () => function(),
     child: Text(
       text,
       style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 20),
