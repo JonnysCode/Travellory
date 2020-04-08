@@ -23,19 +23,16 @@ class AuthService implements BaseAuthService {
   }
 
   // auth change user stream
-  @override
   Stream<UserModel> get user {
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
   // get current user
-  @override
   Future getCurrentUser() async{
     return await _auth.currentUser();
   }
 
   // sign in anonymously
-  @override
   Future signInAnonymously() async {
     try {
       AuthResult result = await _auth.signInAnonymously();
@@ -48,7 +45,6 @@ class AuthService implements BaseAuthService {
   }
 
   // sign in with email and password
-  @override
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
       final AuthResult result = await _auth.signInWithEmailAndPassword(
@@ -68,7 +64,6 @@ class AuthService implements BaseAuthService {
   // sign in with facebook
 
   // register with email and password
-  @override
   Future registerWithEmailAndPassword(
       String email, String password, String displayName) async {
     try {
