@@ -51,7 +51,7 @@ class AuthService implements BaseAuthService {
   @override
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
+      final AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
@@ -72,10 +72,10 @@ class AuthService implements BaseAuthService {
   Future registerWithEmailAndPassword(
       String email, String password, String displayName) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(
+      final AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser firebaseUser = result.user;
-      UserUpdateInfo updateInfo = UserUpdateInfo()
+      final UserUpdateInfo updateInfo = UserUpdateInfo()
         ..displayName = displayName;
 
       await firebaseUser.updateProfile(updateInfo);
