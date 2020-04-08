@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/widgets/show_dialog.dart';
+import 'package:travellory/widgets/forms/show_dialog.dart';
 
 Widget filledButton(String text, Color splashColor, Color highlightColor, Color fillColor,
     Color textColor, void function()) {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/widgets/date_form_field.dart';
-import 'package:travellory/widgets/time_form_field.dart';
+import 'package:travellory/widgets/forms/date_form_field.dart';
+import 'package:travellory/widgets/forms/time_form_field.dart';
 
 void main() {
   testWidgets('Test Date Field required exists and validation for empty fails', (WidgetTester tester) async {

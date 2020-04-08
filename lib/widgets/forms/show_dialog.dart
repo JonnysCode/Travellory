@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/widgets/buttons.dart';
 
-import 'font_widgets.dart';
+import '../font_widgets.dart';
 
 void showSubmittedBookingDialog(
-    BuildContext context, String alertText, void function()) {
+    BuildContext context, String alertText) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -16,13 +16,13 @@ void showSubmittedBookingDialog(
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,
         ),
-        content: new Text(alertText),
+        content: Text(alertText),
         actions: <Widget>[
           alertButton("Home", Colors.transparent, context, () async {
             Navigator.popUntil(context, ModalRoute.withName('/home'));
           }),
           alertButton("Back to Trip", Theme.of(context).hintColor, context, () async {
-            function();
+            Navigator.pop(context);
           }),
         ],
       );
@@ -42,7 +42,7 @@ void cancellingDialog(BuildContext context) {
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,
         ),
-        content: new Text(
+        content: Text(
             'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?'),
         actions: <Widget>[
           alertButton('No', Colors.transparent, context, () async {
@@ -70,7 +70,7 @@ void missingFormFieldInformationDialog(BuildContext context) {
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,
         ),
-        content: new Text(
+        content: Text(
             'The form is not complete. Please look at the marked fields and add the required information.'),
         actions: <Widget>[
           alertButton('Edit Booking', Theme.of(context).primaryColor, context, () async {
