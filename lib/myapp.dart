@@ -5,7 +5,6 @@ import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
 import 'package:travellory/screens/home/home.dart';
-
 import 'package:travellory/screens/trip/create_trip_screen.dart';
 import 'package:travellory/screens/trip/accommodation.dart';
 import 'package:travellory/screens/trip/activity.dart';
