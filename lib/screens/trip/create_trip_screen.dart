@@ -4,11 +4,12 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/add_database.dart';
+import 'package:travellory/widgets/bookings.dart';
 import 'package:travellory/widgets/buttons.dart';
-import 'package:travellory/widgets/date_form_field.dart';
-import 'package:travellory/widgets/form_field.dart';
-import 'package:travellory/widgets/section_titles.dart';
-import 'package:travellory/widgets/show_dialog.dart';
+import 'package:travellory/widgets/forms/date_form_field.dart';
+import 'package:travellory/widgets/forms/form_field.dart';
+import 'package:travellory/widgets/forms/section_titles.dart';
+import 'package:travellory/widgets/forms/show_dialog.dart';
 
 class CreateTrip extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class CreateTrip extends StatefulWidget {
 class _CreateTripState extends State<CreateTrip> {
   static const int _imageItemCount = 11;
 
-  final _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final DatabaseAdder databaseAdder = DatabaseAdder();
   final createTripFormKey = GlobalKey<FormState>();
 
@@ -26,8 +27,7 @@ class _CreateTripState extends State<CreateTrip> {
       "You've just created a new trip. You can see all the information in the home screen. "
       "Add bookings and costumize your trip with a click on it";
 
-  final String cancelText =
-      'You are about to abort this new trip entry. '
+  final String cancelText = 'You are about to abort this new trip entry. '
       'Do you want to go back to the previous site and discard your changes?';
 
   TripModel tripModel;
@@ -70,8 +70,7 @@ class _CreateTripState extends State<CreateTrip> {
                 child: Stack(
                   children: <Widget>[
                     Center(
-                        child: bookingSiteTitle(
-                            context, 'Create Trip', FontAwesomeIcons.suitcaseRolling)),
+                        child: BookingSiteTitle('Create Trip', FontAwesomeIcons.suitcaseRolling)),
                     Positioned(
                       top: 0,
                       right: 0,
@@ -148,14 +147,12 @@ class _CreateTripState extends State<CreateTrip> {
                         height: 32,
                         width: 120,
                         child: SubmitButton(
-                            highlightColor: Theme.of(context).primaryColor,
-                            fillColor: Theme.of(context).primaryColor,
-                            validationFunction: validateForm,
-                            onSubmit: () async {
-                              // TODO (johnny / nadine): add addtrip function name
-                              databaseAdder.addModel(tripModel, '...');
-                              showSubmittedTripDialog(context, alertText);
-                            }),
+                          highlightColor: Theme.of(context).primaryColor,
+                          fillColor: Theme.of(context).primaryColor,
+                          validationFunction: validateForm,
+                          // TODO (johnny / nadine): add addtrip function name
+                          onSubmit: onSubmitTrip(tripModel, '...', context, alertText),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -204,7 +201,7 @@ class _CreateTripState extends State<CreateTrip> {
   _selectImage(index) {
     setState(() {
       _selectedIndex = index;
-      tripModel.imageNr = _selectedIndex+1;
+      tripModel.imageNr = _selectedIndex + 1;
     });
   }
 
