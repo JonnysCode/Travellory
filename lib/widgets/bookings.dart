@@ -5,11 +5,14 @@ import 'package:travellory/widgets/forms/show_dialog.dart';
 
 void Function() onSubmitBooking(Model model, String functionName, BuildContext context, alertText) {
   return () async {
-    bool added = await DatabaseAdder.addModel(model, functionName);
+    final bool added = await DatabaseAdder.addModel(model, functionName);
     if (added) {
       showSubmittedBookingDialog(context, alertText);
     } else {
-      // TODO(antilyas): add error message to user
+      addToDataBaseFailedDialog(
+          context,
+          "Seems like there's a connection problem. "
+          "Please check your internet connection and try submitting again.");
     }
   };
 }
