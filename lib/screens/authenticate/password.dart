@@ -28,12 +28,10 @@ class _RegisterState extends State<ChangePassword> {
 
   Future _changePassword(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    dynamic authResult = await _auth.reauthenticate(_oldPasswordController.text);
-    if(authResult != null){
-      dynamic result = await _auth.changePassword(_passwordController.text);
-      if(result == null){
-        setState(() => _error = 'Please supply a valid password.');
-      }
+    dynamic result = await _auth.reauthenticate(_oldPasswordController.text, _passwordController.text);
+    if(result == null){
+      Navigator.pop(context);
+      setState(() => _error = 'Please supply a valid password.');
     }
   }
 
@@ -145,7 +143,6 @@ class _RegisterState extends State<ChangePassword> {
                                             Theme.of(context).primaryColor, Colors.white, () async {
                                               if (_formKey.currentState.validate()) {
                                                 Navigator.pushNamed(context, '/loading');
-                                                //TODO: fluetfab call first reauth pass the old password
                                                 dynamic result = await _changePassword(context);
                                                 if (result == null) {
                                                   setState(() {
