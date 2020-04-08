@@ -7,31 +7,31 @@ import 'package:image_picker/image_picker.dart';
 import 'package:travellory/widgets/image_picker_dialog.dart';
 
 class ImagePickerHandler {
+  ImagePickerDialog imagePicker;
+  AnimationController _controller;
+  ImagePickerListener _listener;
+
   ImagePickerHandler(this._listener, this._controller);
 
-  ImagePickerDialog imagePicker;
-  final AnimationController _controller;
-  final ImagePickerListener _listener;
-
-  void openCamera() async {
+  openCamera() async {
     imagePicker.dismissDialog();
-    final image = await ImagePicker.pickImage(source: ImageSource.camera);
-    await cropImage(image);
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    cropImage(image);
   }
 
-  void openGallery() async {
+  openGallery() async {
     imagePicker.dismissDialog();
-    final image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    await cropImage(image);
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    cropImage(image);
   }
 
   void init() {
-    imagePicker = ImagePickerDialog(this, _controller);
+    imagePicker =  ImagePickerDialog(this, _controller);
     imagePicker.initState();
   }
 
   Future cropImage(File image) async {
-    final File croppedFile = await ImageCropper.cropImage(
+    File croppedFile = await ImageCropper.cropImage(
       sourcePath: image.path,
       aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
       maxWidth: 512,
@@ -40,11 +40,11 @@ class ImagePickerHandler {
     _listener.userImage(croppedFile);
   }
 
-  void showDialog(BuildContext context) {
+  showDialog(BuildContext context) {
     imagePicker.getImage(context);
   }
 }
 
 abstract class ImagePickerListener {
-  void userImage(File _image);
+  userImage(File _image);
 }

@@ -6,10 +6,11 @@ import 'package:travellory/utils/image_picker_handler.dart';
 import 'font_widgets.dart';
 
 class ImagePickerDialog extends StatelessWidget {
-  ImagePickerDialog(this._listener, this._controller);
-  final ImagePickerHandler _listener;
-  final AnimationController _controller;
+  ImagePickerHandler _listener;
+  AnimationController _controller;
   BuildContext context;
+
+  ImagePickerDialog(this._listener, this._controller);
 
   Animation<double> _drawerContentsOpacity;
   Animation<Offset> _drawerDetailsPosition;
@@ -22,13 +23,13 @@ class ImagePickerDialog extends StatelessWidget {
     _drawerDetailsPosition = Tween<Offset>(
       begin: const Offset(0.0, 1.0),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
+    ).animate( CurvedAnimation(
       parent: _controller,
       curve: Curves.fastOutSlowIn,
     ));
   }
 
-  void getImage(BuildContext context) {
+  getImage(BuildContext context) {
     if (_controller == null ||
         _drawerDetailsPosition == null ||
         _drawerContentsOpacity == null) {
@@ -37,7 +38,7 @@ class ImagePickerDialog extends StatelessWidget {
     _controller.forward();
     showDialog(
       context: context,
-      builder: (context) => SlideTransition(
+      builder: (BuildContext context) => SlideTransition(
         position: _drawerDetailsPosition,
         child: FadeTransition(
           opacity: ReverseAnimation(_drawerContentsOpacity),
@@ -51,8 +52,8 @@ class ImagePickerDialog extends StatelessWidget {
     _controller.dispose();
   }
 
-  Future<Timer> startTime() async {
-    final _duration = Duration(milliseconds: 200);
+  startTime() async {
+    var _duration = Duration(milliseconds: 200);
     return Timer(_duration, navigationPage);
   }
 
@@ -97,7 +98,7 @@ class ImagePickerDialog extends StatelessWidget {
                 ),
                 const SizedBox(height: 15.0),
                 GestureDetector(
-                  onTap: dismissDialog(),
+                  onTap: () => dismissDialog(),
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(60.0, 0.0, 60.0, 0.0),
                     child: roundedButton(
@@ -115,7 +116,7 @@ class ImagePickerDialog extends StatelessWidget {
 
   Widget roundedButton(
       String buttonLabel, EdgeInsets margin, Color bgColor, Color textColor) {
-    final loginBtn = Container(
+    var loginBtn = Container(
       margin: margin,
       padding: EdgeInsets.all(15.0),
       alignment: FractionalOffset.center,
