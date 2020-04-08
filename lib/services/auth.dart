@@ -36,19 +36,29 @@ class AuthService implements BaseAuthService {
 
   // get current user
   @override
+<<<<<<< HEAD
   Future getCurrentUser() async {
     return auth.currentUser();
+=======
+  Future getCurrentUser() async{
+    return _auth.currentUser();
+>>>>>>> d3a4d1b... Refactor remove code smells
   }
 
   // sign in anonymously
   @override
   Future signInAnonymously() async {
     try {
+<<<<<<< HEAD
       AuthResult result = await auth.signInAnonymously();
       FirebaseUser user = result.user;
+=======
+      final AuthResult result = await _auth.signInAnonymously();
+      final FirebaseUser user = result.user;
+>>>>>>> d3a4d1b... Refactor remove code smells
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print(e.toString()); // todo: error handling -> logging
+      // todo: error handling -> logging
       return null;
     }
   }
@@ -57,12 +67,16 @@ class AuthService implements BaseAuthService {
   @override
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
+<<<<<<< HEAD
       final AuthResult result = await auth.signInWithEmailAndPassword(
+=======
+      final AuthResult result = await _auth.signInWithEmailAndPassword(
+>>>>>>> d3a4d1b... Refactor remove code smells
           email: email, password: password);
-      FirebaseUser firebaseUser = result.user;
+      final FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
-      print(e.toString()); // todo: logging and error handling
+      // todo: logging and error handling
       return null;
     }
   }
@@ -78,6 +92,7 @@ class AuthService implements BaseAuthService {
   Future registerWithEmailAndPassword(
       String email, String password, String displayName) async {
     try {
+<<<<<<< HEAD
       final AuthResult result = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser firebaseUser = result.user;
@@ -85,6 +100,13 @@ class AuthService implements BaseAuthService {
       final UserUpdateInfo updateInfo = UserUpdateInfo()
         ..displayName = displayName;
 
+=======
+      final AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser firebaseUser = result.user;
+      final UserUpdateInfo updateInfo = UserUpdateInfo();
+      updateInfo.displayName = displayName;
+>>>>>>> d3a4d1b... Refactor remove code smells
       await firebaseUser.updateProfile(updateInfo);
       await firebaseUser.reload();
       firebaseUser = await auth.currentUser();
@@ -93,7 +115,7 @@ class AuthService implements BaseAuthService {
 
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
-      print(e.toString()); // todo: logging and error handling
+      // todo: logging and error handling
       return null;
     }
   }
@@ -105,11 +127,12 @@ class AuthService implements BaseAuthService {
   // register with facebook
 
   // sign out
+  @override
   Future signOut() async {
     try {
       return await auth.signOut();
     } catch (e) {
-      print(e.toString()); // todo: exeption handling, logging
+      // todo: exeption handling, logging
       return null;
     }
   }
