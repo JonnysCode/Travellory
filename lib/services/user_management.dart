@@ -13,7 +13,9 @@ class UserManagement {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'user-isUsernameAvailable',
     );
+
     final result = await callable.call({'displayName': '$username'});
+
     return result.data['isAvailable'];
   }
 }

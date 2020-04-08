@@ -19,7 +19,7 @@ void main() {
         ));
   }
 
-  prepareRegister(String email, String password, String username,
+  Future<void> prepareRegister(String email, String password, String username,
       WidgetTester tester) async {
     // Enter text into the fields and tap the register button
     Finder usernameField = find.byKey(Key('usernameField'));

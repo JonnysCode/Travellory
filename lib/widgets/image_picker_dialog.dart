@@ -6,11 +6,11 @@ import 'package:travellory/utils/image_picker_handler.dart';
 import 'font_widgets.dart';
 
 class ImagePickerDialog extends StatelessWidget {
-  ImagePickerHandler _listener;
-  AnimationController _controller;
-  BuildContext context;
-
   ImagePickerDialog(this._listener, this._controller);
+
+  final ImagePickerHandler _listener;
+  final AnimationController _controller;
+  BuildContext context;
 
   Animation<double> _drawerContentsOpacity;
   Animation<Offset> _drawerDetailsPosition;
@@ -29,7 +29,7 @@ class ImagePickerDialog extends StatelessWidget {
     ));
   }
 
-  getImage(BuildContext context) {
+  void getImage(BuildContext context) {
     if (_controller == null ||
         _drawerDetailsPosition == null ||
         _drawerContentsOpacity == null) {
@@ -53,7 +53,7 @@ class ImagePickerDialog extends StatelessWidget {
   }
 
   startTime() async {
-    var _duration = Duration(milliseconds: 200);
+    final _duration = Duration(milliseconds: 200);
     return Timer(_duration, navigationPage);
   }
 
@@ -61,7 +61,7 @@ class ImagePickerDialog extends StatelessWidget {
     Navigator.pop(context);
   }
 
-  dismissDialog() {
+  void dismissDialog() {
     _controller.reverse();
     startTime();
   }
@@ -116,7 +116,7 @@ class ImagePickerDialog extends StatelessWidget {
 
   Widget roundedButton(
       String buttonLabel, EdgeInsets margin, Color bgColor, Color textColor) {
-    var loginBtn = Container(
+    final loginBtn = Container(
       margin: margin,
       padding: EdgeInsets.all(15.0),
       alignment: FractionalOffset.center,
@@ -135,7 +135,7 @@ class ImagePickerDialog extends StatelessWidget {
         text: buttonLabel,
         size: 20,
         color: Colors.white,
-        fontWeight: FashionFontWeight.NORMAL,
+        fontWeight: FashionFontWeight.normal,
         height: 1.05,
       ),
     );
