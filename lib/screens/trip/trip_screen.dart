@@ -11,7 +11,7 @@ class TripScreen extends StatefulWidget {
 class _TripScreenState extends State<TripScreen> {
   @override
   Widget build(BuildContext context) {
-    TripModel _tripModel = ModalRoute.of(context).settings.arguments;
+    final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void _openBooking(String bookingSite){
       Navigator.pushNamed(context, bookingSite, arguments: _tripModel);
@@ -29,7 +29,7 @@ class _TripScreenState extends State<TripScreen> {
               child: FashionFetishText(
                 text: title,
                 size: 24,
-                fontWeight: FashionFontWeight.HEAVY,
+                fontWeight: FashionFontWeight.heavy,
               ),
             ),
             Positioned(
@@ -38,7 +38,7 @@ class _TripScreenState extends State<TripScreen> {
               child: FashionFetishText(
                 text: 'Add',
                 size: 16,
-                fontWeight: FashionFontWeight.BOLD,
+                fontWeight: FashionFontWeight.bold,
                 color: Colors.black45,
               ),
             ),

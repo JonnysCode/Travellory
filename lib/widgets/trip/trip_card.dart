@@ -24,11 +24,11 @@ class TripCard extends StatefulWidget {
 }
 
 class _TripCardState extends State<TripCard> {
-  TripModel _tripModel;
-
   _TripCardState(TripModel tripModel){
     _tripModel = tripModel;
   }
+
+  TripModel _tripModel;
 
   void _openTrip(){
     Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
@@ -82,16 +82,16 @@ class _TripCardState extends State<TripCard> {
                         FashionFetishText(
                           text: _tripModel.name,
                           size: 20.0,
-                          fontWeight: FashionFontWeight.HEAVY,
+                          fontWeight: FashionFontWeight.heavy,
                         ),
                         SizedBox(
                           height: 14,
                         ),
                         FashionFetishText(
-                          text: '${DateConverter.format( _tripModel.startDate)} - '
-                            + '${DateConverter.format( _tripModel.endDate)}',
+                          text: '${toShortenedMonthDateFrom( _tripModel.startDate)} - '
+                                '${toShortenedMonthDateFrom( _tripModel.endDate)}',
                           size: 14.0,
-                          fontWeight: FashionFontWeight.BOLD,
+                          fontWeight: FashionFontWeight.bold,
                           color: Colors.black54,
                         ),
                         SizedBox(
@@ -110,7 +110,7 @@ class _TripCardState extends State<TripCard> {
                                 child: FashionFetishText(
                                   text: _tripModel.destination,
                                   size: 14.0,
-                                  fontWeight: FashionFontWeight.HEAVY,
+                                  fontWeight: FashionFontWeight.heavy,
                                   color: Colors.black54,
                                 ),
                               ),
