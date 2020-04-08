@@ -28,31 +28,34 @@ class AuthService implements BaseAuthService {
   }
 
   // get current user
+  @override
   Future getCurrentUser() async{
-    return await _auth.currentUser();
+    return _auth.currentUser();
   }
 
   // sign in anonymously
+  @override
   Future signInAnonymously() async {
     try {
-      AuthResult result = await _auth.signInAnonymously();
-      FirebaseUser user = result.user;
+      final AuthResult result = await _auth.signInAnonymously();
+      final FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print(e.toString()); // todo: error handling -> logging
+      // todo: error handling -> logging
       return null;
     }
   }
 
   // sign in with email and password
+  @override
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
+      final AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      FirebaseUser firebaseUser = result.user;
+      final FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
-      print(e.toString()); // todo: logging and error handling
+      // todo: logging and error handling
       return null;
     }
   }
@@ -64,15 +67,16 @@ class AuthService implements BaseAuthService {
   // sign in with facebook
 
   // register with email and password
+  @override
   Future registerWithEmailAndPassword(
       String email, String password, String displayName) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(
+      final AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser firebaseUser = result.user;
-      UserUpdateInfo updateInfo = UserUpdateInfo();
+      final UserUpdateInfo updateInfo = UserUpdateInfo();
       updateInfo.displayName = displayName;
-      firebaseUser.updateProfile(updateInfo);
+      await firebaseUser.updateProfile(updateInfo);
       await firebaseUser.reload();
       firebaseUser = await _auth.currentUser();
 
@@ -80,7 +84,7 @@ class AuthService implements BaseAuthService {
 
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
-      print(e.toString()); // todo: logging and error handling
+      // todo: logging and error handling
       return null;
     }
   }
@@ -92,11 +96,12 @@ class AuthService implements BaseAuthService {
   // register with facebook
 
   // sign out
+  @override
   Future signOut() async {
     try {
       return await _auth.signOut();
     } catch (e) {
-      print(e.toString()); // todo: exeption handling, logging
+      // todo: exeption handling, logging
       return null;
     }
   }
