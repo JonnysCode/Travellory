@@ -11,11 +11,11 @@ Widget filledButton(String text, Color splashColor, Color highlightColor, Color 
     elevation: 0.0,
     color: fillColor,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+    onPressed: () => function(),
     child: Text(
       text,
       style: TextStyle(fontWeight: FontWeight.bold, color: textColor, fontSize: 20),
     ),
-    onPressed: () => function(),
   );
 }
 
@@ -28,11 +28,11 @@ Widget alertButton(String text, Color fillColor, BuildContext context, void func
     elevation: 0.0,
     color: fillColor,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+    onPressed: () => function(),
     child: Text(
       text,
       style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 20),
     ),
-    onPressed: () => function(),
   );
 }
 
@@ -45,19 +45,19 @@ Widget cancelButton(String text, BuildContext context, void function()) {
     elevation: 0.0,
     color: Color(0xFFF48FB1),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+    onPressed: () => function(),
     child: Text(
       text,
       style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 20),
     ),
-    onPressed: () => function(),
   );
 }
 
 class CancelButton extends StatelessWidget {
+  const CancelButton({Key key, this.text, this.onCancel}) : super(key: key);
+
   final String text;
   final void Function() onCancel;
-
-  const CancelButton({Key key, this.text, this.onCancel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,11 +71,11 @@ class CancelButton extends StatelessWidget {
         elevation: 0.0,
         color: Color(0xFFF48FB1),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        onPressed: onCancel,
         child: Text(
           text,
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 20),
         ),
-        onPressed: onCancel,
       ),
     );
   }

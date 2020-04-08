@@ -18,11 +18,11 @@ class RentalCar extends StatefulWidget {
 }
 
 class _RentalCarState extends State<RentalCar> {
-  final rentalCarFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> rentalCarFormKey = GlobalKey<FormState>();
   final RentalCarModel rentalCarModel = RentalCarModel();
   final DatabaseAdder databaseAdder = DatabaseAdder();
 
-  final _pickUpDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _pickUpDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
   bool validateForm() {
     return rentalCarFormKey.currentState.validate();
@@ -167,7 +167,6 @@ class _RentalCarState extends State<RentalCar> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: Container(
                         child: SubmitButton(
                           highlightColor: Theme.of(context).primaryColor,
                           fillColor: Theme.of(context).primaryColor,
@@ -175,17 +174,14 @@ class _RentalCarState extends State<RentalCar> {
                           onSubmit: onSubmitBooking(rentalCarModel, 'booking-addRentalCar', context,
                               alertText),
                         ),
-                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                      child: Container(
                         child: CancelButton(
                           text: 'CANCEL',
                           onCancel: () {
                             cancellingDialog(context);
                           },
-                        ),
                       ),
                     ),
                     SizedBox(height: 20),
