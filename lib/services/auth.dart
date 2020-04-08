@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:travellory/models/user.dart';
+import 'package:travellory/models/user_model.dart';
 
 abstract class BaseAuthService {
   Future signInAnonymously();
@@ -7,7 +7,7 @@ abstract class BaseAuthService {
   Future registerWithEmailAndPassword(String email, String password);
   Future signOut();
   Future getCurrentUser();
-  Stream<User> get user;
+  Stream<UserModel> get user;
 }
 
 class AuthService implements BaseAuthService {
@@ -15,12 +15,12 @@ class AuthService implements BaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create User object based on firebase user
-  User _userFromFirebaseUser(FirebaseUser user){
-    return user != null ? User(uid: user.uid) : null;
+  UserModel _userFromFirebaseUser(FirebaseUser user){
+    return user != null ? UserModel(uid: user.uid) : null;
   }
 
   // auth change user stream
-  Stream<User> get user {
+  Stream<UserModel> get user {
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
