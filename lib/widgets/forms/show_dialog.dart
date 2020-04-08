@@ -10,14 +10,14 @@ void showSubmittedBookingDialog(BuildContext context, String alertText) {
       return AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
-          text: "Submit Successful!",
+          text: 'Submit Successful!',
           size: 18,
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,
         ),
         content: Text(alertText),
         actions: <Widget>[
-          alertButton("Home", Colors.transparent, context, () async {
+          alertButton('Home', Colors.transparent, context, () async {
             Navigator.popUntil(context, ModalRoute.withName('/home'));
           }),
           alertButton("Back to Trip", Theme.of(context).hintColor, context, () async {
@@ -29,7 +29,30 @@ void showSubmittedBookingDialog(BuildContext context, String alertText) {
   );
 }
 
-void cancellingDialog(BuildContext context) {
+void showSubmittedTripDialog(BuildContext context, String alertText) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        title: FashionFetishText(
+          text: 'Submit Successful!',
+          size: 18,
+          fontWeight: FashionFontWeight.HEAVY,
+          height: 1.05,
+        ),
+        content: Text(alertText),
+        actions: <Widget>[
+          alertButton('Home', Colors.transparent, context, () async {
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          }),
+        ],
+      );
+    },
+  );
+}
+
+void cancellingDialog(BuildContext context, String cancelDialog) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -41,8 +64,7 @@ void cancellingDialog(BuildContext context) {
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,
         ),
-        content: Text(
-            'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?'),
+        content: Text(cancelDialog),
         actions: <Widget>[
           alertButton('No', Colors.transparent, context, () async {
             Navigator.pop(context);
@@ -65,7 +87,7 @@ void missingFormFieldInformationDialog(BuildContext context) {
         key: Key('MissingFormFieldInformationDialog'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
-          text: "Oops! Looks like something's missing...",
+          text: "Oops! Looks like something's not right...",
           size: 18,
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,

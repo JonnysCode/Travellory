@@ -164,6 +164,9 @@ class _AccommodationState extends State<Accommodation> {
   final String alertText =
       "You've just submitted the booking information for your accommodation booking. You can see all the information in the trip overview";
 
+  final String cancelText =
+      'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
+
   List<Item> types = <Item>[
     const Item('Hotel', Icon(Icons.hotel, color: Color(0xFF167F67))),
     const Item('Airbnb', Icon(Icons.hotel, color: Color(0xFF167F67))),
@@ -197,7 +200,7 @@ class _AccommodationState extends State<Accommodation> {
     accommodationList[accommodationList.length - 2] = CancelButton(
       text: 'CANCEL',
       onCancel: () {
-        cancellingDialog(context);
+        cancellingDialog(context, cancelText);
       },
     );
 

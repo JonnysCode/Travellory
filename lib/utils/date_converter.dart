@@ -4,13 +4,16 @@ class DateConverter{
     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
   ];
 
-  static String format(DateTime date){
+  static String format(String date){
     StringBuffer dateBuffer = StringBuffer();
-    dateBuffer.write(date.day);
+    List<String> dateItems = date.split("-");
+    String day = dateItems[2];
+    dateBuffer.write(day.startsWith('0') ? day.substring(1) : day);
     dateBuffer.write(' ');
-    dateBuffer.write(monthsShortened[date.month-1]);
+    dateBuffer.write(monthsShortened[int.parse(dateItems[1])-1]);
     dateBuffer.write(' ');
-    dateBuffer.write(date.year);
+    dateBuffer.write(dateItems[0]);
+
     return dateBuffer.toString();
   }
 }
