@@ -6,11 +6,10 @@ import 'package:travellory/utils/image_picker_handler.dart';
 import 'font_widgets.dart';
 
 class ImagePickerDialog extends StatelessWidget {
-  ImagePickerHandler _listener;
-  AnimationController _controller;
-  BuildContext context;
-
   ImagePickerDialog(this._listener, this._controller);
+  final ImagePickerHandler _listener;
+  final AnimationController _controller;
+  BuildContext context;
 
   Animation<double> _drawerContentsOpacity;
   Animation<Offset> _drawerDetailsPosition;
@@ -29,7 +28,7 @@ class ImagePickerDialog extends StatelessWidget {
     ));
   }
 
-  getImage(BuildContext context) {
+  void getImage(BuildContext context) {
     if (_controller == null ||
         _drawerDetailsPosition == null ||
         _drawerContentsOpacity == null) {
@@ -38,7 +37,7 @@ class ImagePickerDialog extends StatelessWidget {
     _controller.forward();
     showDialog(
       context: context,
-      builder: (BuildContext context) => SlideTransition(
+      builder: (context) => SlideTransition(
         position: _drawerDetailsPosition,
         child: FadeTransition(
           opacity: ReverseAnimation(_drawerContentsOpacity),
@@ -52,8 +51,8 @@ class ImagePickerDialog extends StatelessWidget {
     _controller.dispose();
   }
 
-  startTime() async {
-    var _duration = Duration(milliseconds: 200);
+  Future<Timer> startTime() async {
+    final _duration = Duration(milliseconds: 200);
     return Timer(_duration, navigationPage);
   }
 
@@ -98,7 +97,7 @@ class ImagePickerDialog extends StatelessWidget {
                 ),
                 const SizedBox(height: 15.0),
                 GestureDetector(
-                  onTap: () => dismissDialog(),
+                  onTap: dismissDialog(),
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(60.0, 0.0, 60.0, 0.0),
                     child: roundedButton(
@@ -116,7 +115,7 @@ class ImagePickerDialog extends StatelessWidget {
 
   Widget roundedButton(
       String buttonLabel, EdgeInsets margin, Color bgColor, Color textColor) {
-    var loginBtn = Container(
+    final loginBtn = Container(
       margin: margin,
       padding: EdgeInsets.all(15.0),
       alignment: FractionalOffset.center,
