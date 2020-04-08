@@ -11,7 +11,7 @@ class TripScreen extends StatefulWidget {
 class _TripScreenState extends State<TripScreen> {
   @override
   Widget build(BuildContext context) {
-    TripModel _tripModel = ModalRoute.of(context).settings.arguments;
+    final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void _openBooking(String bookingSite){
       Navigator.pushNamed(context, bookingSite, arguments: _tripModel);

@@ -48,9 +48,9 @@ class InputValidator {
       return 'Enter a username';
     }
 
-    Pattern pattern =
+    final Pattern pattern =
         r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
-    RegExp regex = RegExp(pattern);
+    final RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value)) {
       return 'Invalid username';
     }

@@ -113,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   @override
-  userImage(File _image) {
+  void userImage(File _image) {
     setState(() {
       this._image = _image;
     });
@@ -122,7 +122,7 @@ class _ProfilePageState extends State<ProfilePage>
   Future _signOut() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     await _auth.signOut();
-    Navigator.pushReplacementNamed(context, '/');
+    await Navigator.pushReplacementNamed(context, '/');
   }
 }
 
@@ -141,7 +141,7 @@ class UserInformation extends StatefulWidget {
 class _UserInformationState extends State<UserInformation> {
   @override
   Widget build(BuildContext context) {
-    var user = widget.user;
+    final user = widget.user;
 
     return Column(key: Key('display_user'), children: [
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [

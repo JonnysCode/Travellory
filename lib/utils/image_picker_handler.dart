@@ -7,22 +7,22 @@ import 'package:image_picker/image_picker.dart';
 import 'package:travellory/widgets/image_picker_dialog.dart';
 
 class ImagePickerHandler {
-  ImagePickerDialog imagePicker;
-  AnimationController _controller;
-  ImagePickerListener _listener;
-
   ImagePickerHandler(this._listener, this._controller);
 
-  openCamera() async {
+  ImagePickerDialog imagePicker;
+  final AnimationController _controller;
+  final ImagePickerListener _listener;
+
+  void openCamera() async {
     imagePicker.dismissDialog();
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    cropImage(image);
+    final image = await ImagePicker.pickImage(source: ImageSource.camera);
+    await cropImage(image);
   }
 
-  openGallery() async {
+  void openGallery() async {
     imagePicker.dismissDialog();
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    cropImage(image);
+    final image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    await cropImage(image);
   }
 
   void init() {
@@ -31,7 +31,7 @@ class ImagePickerHandler {
   }
 
   Future cropImage(File image) async {
-    File croppedFile = await ImageCropper.cropImage(
+    final File croppedFile = await ImageCropper.cropImage(
       sourcePath: image.path,
       aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
       maxWidth: 512,
