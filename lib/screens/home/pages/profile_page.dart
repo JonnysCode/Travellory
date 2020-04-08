@@ -38,20 +38,20 @@ class _ProfilePageState extends State<ProfilePage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            new Center(
+            Center(
               child: _image == null
-                  ? new Stack(
+                  ? Stack(
                       children: <Widget>[
-                        new Center(
-                          child: new CircleAvatar(
+                        Center(
+                          child: CircleAvatar(
                             radius: 130.0,
                             backgroundColor: Theme.of(context).primaryColor,
                           ),
                         ),
-                        new SizedBox(
+                        SizedBox(
                           height: 260,
                           child: Center(
-                            child: new Image.asset(
+                            child: Image.asset(
                               "assets/photo_camera.png",
                               height: 100,
                               width: 100,
@@ -60,10 +60,10 @@ class _ProfilePageState extends State<ProfilePage>
                         ),
                       ],
                     )
-                  : new Container(
+                  : Container(
                       height: 260.0,
                       width: 260.0,
-                      decoration: new BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
                         image: new DecorationImage(
                           image: new ExactAssetImage(_image.path),
@@ -115,6 +115,9 @@ class _ProfilePageState extends State<ProfilePage>
     await _auth.signOut();
     Navigator.pushReplacementNamed(context, '/');
   }
+
+
+
 
   Widget displayUserInformation(context, snapshot) {
     final user = snapshot.data;

@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
+import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/image_picker_dialog.dart';
 
 import 'profile_page_test.dart';
@@ -31,7 +32,8 @@ void main() {
     expect(find.byKey(Key('selection_menu')), findsOneWidget);
   });
 
-  testWidgets('test if page has gesture detector', (WidgetTester tester) async {
+  testWidgets('test if page has three gesture detector',
+      (WidgetTester tester) async {
     MockAuth mockAuth = MockAuth();
     ImagePickerHandler _listener;
     AnimationController _controller;
@@ -43,5 +45,23 @@ void main() {
 
     // Verify that the profile page has three gesture detectors
     expect(gestureDetector, findsNWidgets(3));
+  });
+
+  testWidgets('test if page has three FashionfetishTexts',
+      (WidgetTester tester) async {
+    MockAuth mockAuth = MockAuth();
+    ImagePickerHandler _listener;
+    AnimationController _controller;
+    ImagePickerDialog page = ImagePickerDialog(_listener, _controller);
+
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
+    var fashionFetishText = find.byType(FashionFetishText);
+
+    // Verify that the profile page has three FashionFetishText
+    expect(fashionFetishText, findsNWidgets(3));
+    expect(find.text("Take Photo"), findsOneWidget);
+    expect(find.text("Choose from Library"), findsOneWidget);
+    expect(find.text("Cancel"), findsOneWidget);
   });
 }
