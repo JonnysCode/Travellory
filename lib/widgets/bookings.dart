@@ -3,7 +3,7 @@ import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/services/add_database.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 
-void Function() onSubmitBooking(Model model, String functionName, BuildContext context, alertText) {
+Function() onSubmitBooking(Model model, String functionName, BuildContext context, alertText) {
   return () async {
     final bool added = await DatabaseAdder.addModel(model, functionName);
     if (added) {
