@@ -19,8 +19,12 @@ void main() {
         ));
   }
 
-  prepareRegister(String email, String password, WidgetTester tester) async {
+  prepareRegister(String email, String password, String username,
+      WidgetTester tester) async {
     // Enter text into the fields and tap the register button
+    Finder usernameField = find.byKey(Key('usernameField'));
+    await tester.enterText(usernameField, username);
+
     Finder emailField = find.byKey(Key('emailField'));
     await tester.enterText(emailField, email);
 
@@ -54,7 +58,7 @@ void main() {
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
     // Verify that register does not get called
-    verifyNever(mockAuth.registerWithEmailAndPassword('', ''));
+    verifyNever(mockAuth.registerWithEmailAndPassword('', '', ''));
   });
 
   testWidgets('non-empty non-valid email and password, does not call register',
@@ -63,18 +67,20 @@ void main() {
     Register page = Register();
 
     // Invalid email address
+    String username = 'username';
     String email = 'sample@mail';
     String password = 'sampl3P8assword!';
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
-    await prepareRegister(email, password, tester);
+    await prepareRegister(email, password, username, tester);
 
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
     // Verify that register does not get called
-    verifyNever(mockAuth.registerWithEmailAndPassword(email, password));
+    verifyNever(
+        mockAuth.registerWithEmailAndPassword(email, password, username));
   });
 
   testWidgets('non-empty email and non-valid password, does not call register',
@@ -83,18 +89,20 @@ void main() {
     Register page = Register();
 
     // invalid email address
+    String username = 'username';
     String email = 'sample.email@bluewin.ch';
     String password = '123';
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
-    await prepareRegister(email, password, tester);
+    await prepareRegister(email, password, username, tester);
 
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
     // Verify that register does not get called
-    verifyNever(mockAuth.registerWithEmailAndPassword(email, password));
+    verifyNever(
+        mockAuth.registerWithEmailAndPassword(email, password, username));
   });
 
   testWidgets('non-empty email and password, call register',
@@ -102,17 +110,40 @@ void main() {
     MockAuth mockAuth = MockAuth();
     Register page = Register();
 
+    String username = 'username';
     String email = 'sample.email@gmail.com';
     String password = 'sampl3P8assword!';
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
-    await prepareRegister(email, password, tester);
+    await prepareRegister(email, password, username, tester);
 
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
     // Verify that register was called once
-    verify(mockAuth.registerWithEmailAndPassword(email, password)).called(1);
+    verify(mockAuth.registerWithEmailAndPassword(email, password, username))
+        .called(1);
+  });
+
+  testWidgets('invalid username, do not call register',
+      (WidgetTester tester) async {
+    MockAuth mockAuth = MockAuth();
+    Register page = Register();
+
+    String username = 'us/ername';
+    String email = 'sample.email@gmail.com';
+    String password = 'sampl3P8assword!';
+
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
+
+    await prepareRegister(email, password, username, tester);
+
+    await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
+
+    // Verify that register was called once
+    verifyNever(
+        mockAuth.registerWithEmailAndPassword(email, password, username));
   });
 }

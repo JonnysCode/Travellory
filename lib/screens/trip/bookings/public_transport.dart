@@ -1,9 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/services/add_database.dart';
 import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/bookings.dart';
 import 'package:travellory/widgets/buttons.dart';
@@ -24,11 +21,11 @@ class PublicTransport extends StatefulWidget {
 
 class _PublicTransportState extends State<PublicTransport> {
   ListModel<Widget> publicTransportList;
-  final publicTransportFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> publicTransportFormKey = GlobalKey<FormState>();
   final PublicTransportModel publicTransportModel = PublicTransportModel();
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  final _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
   TravelloryDropdownField transportTypeDropdown;
   CheckboxFormField bookingMadeCheckbox;
   CheckboxFormField seatReservedCheckbox;

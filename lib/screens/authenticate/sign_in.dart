@@ -9,7 +9,7 @@ import 'package:travellory/widgets/input_widgets.dart';
 class SignIn extends StatefulWidget {
 
   final Function toggleView;
-  SignIn({ this.toggleView });
+  const SignIn({ this.toggleView });
 
   @override
   _SignInState createState() => _SignInState();
@@ -19,17 +19,33 @@ class _SignInState extends State<SignIn> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   String _error = '';
 
-  Future _signIn(BuildContext context) async {
-    final BaseAuthService _auth = AuthProvider.of(context).auth;
-    dynamic result = await _auth.signInWithEmailAndPassword(_emailController.text, _passwordController.text);
-    if(result == null){
-      setState(() => _error = 'Could not sign in with those credentials.');
+  Future _validateSignIn() async {
+    if (_formKey.currentState.validate()) {
+      Navigator.pushNamed(context, '/loading');
+      final user = await _signIn();
+
+      if(user == null){
+        Navigator.pop(context);
+        setState(() {
+          _error = 'Could not sign in with those credentials.';
+        });
+      } else {
+        Navigator.popUntil(context, ModalRoute.withName('/'),
+        );
+      }
     }
+  }
+
+  Future _signIn() async {
+    final BaseAuthService _auth = AuthProvider.of(context).auth;
+    final user = await _auth.signInWithEmailAndPassword(_emailController.text, _passwordController.text);
+
+    return user;
   }
 
   @override
@@ -140,13 +156,13 @@ class _SignInState extends State<SignIn> {
                                   children: <Widget>[
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 10, top: 40),
-                                      child: inputAuthentication(Icon(FontAwesomeIcons.solidEnvelope), "EMAIL", Theme.of(context).primaryColor,
-                                          _emailController, ValidatorType.EMAIL, false),
+                                      child: inputAuthentication(Icon(Icons.email), "EMAIL", Theme.of(context).primaryColor,
+                                          _emailController, null, ValidatorType.EMAIL, false, null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
-                                      child: inputAuthentication(Icon(FontAwesomeIcons.unlockAlt), "PASSWORD", Theme.of(context).primaryColor,
-                                          _passwordController, ValidatorType.PASSWORD, true),
+                                      child: inputAuthentication(Icon(Icons.lock), "PASSWORD", Theme.of(context).primaryColor,
+                                          _passwordController, null, ValidatorType.PASSWORD, true, null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
@@ -154,22 +170,14 @@ class _SignInState extends State<SignIn> {
                                           right: 20,
                                           bottom: MediaQuery.of(context).viewInsets.bottom),
                                       child: Container(
-                                        child: filledButton("LOGIN", Colors.white, Theme.of(context).primaryColor,
-                                            Theme.of(context).primaryColor, Colors.white, () async {
-                                              if (_formKey.currentState.validate()) {
-                                                Navigator.pushNamed(context, '/loading');
-                                                dynamic result = await _signIn(context);
-                                                if(result == null){
-                                                  setState(() {
-                                                    _error = 'Could not sign in with those credentials.';
-                                                  });
-                                                  Navigator.popUntil(
-                                                    context,
-                                                    ModalRoute.withName('/'),
-                                                  );
-                                                }
-                                              }
-                                            }),
+                                        child: filledButton(
+                                          "LOGIN",
+                                          Colors.white,
+                                          Theme.of(context).primaryColor,
+                                          Theme.of(context).primaryColor,
+                                          Colors.white,
+                                          _validateSignIn
+                                        ),
                                         height: 50,
                                         width: MediaQuery.of(context).size.width,
                                       ),
@@ -208,3 +216,4 @@ class _SignInState extends State<SignIn> {
     );
   }
 }
+

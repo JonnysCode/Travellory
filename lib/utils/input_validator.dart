@@ -13,7 +13,7 @@ class InputValidator {
       case ValidatorType.PASSWORD :
         return _validatePassword(value);
       case ValidatorType.USERNAME :
-        return null;
+        return _validateUsername(value);
       default :
         return null;
     }
@@ -38,6 +38,21 @@ class InputValidator {
     // todo: make password validation more strict
     if (value.length < 6 ) {
       return 'Enter a password with at least 6 characters';
+    }
+    return null;
+  }
+
+  static String _validateUsername(String value) {
+    if (value.isEmpty) {
+      // the form is empty
+      return 'Enter a username';
+    }
+
+    Pattern pattern =
+        r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value)) {
+      return 'Invalid username';
     }
     return null;
   }

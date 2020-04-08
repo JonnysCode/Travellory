@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
+import 'package:travellory/services/user_management.dart';
 import 'package:travellory/utils/input_validator.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
 
 class Register extends StatefulWidget {
-
   final Function toggleView;
-  Register({ this.toggleView });
+
+  const Register({this.toggleView});
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -19,18 +20,56 @@ class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
 
-  String _error = '';
+  final FocusNode _nameFocus = FocusNode();
 
-  Future _register(BuildContext context) async {
-    final BaseAuthService _auth = AuthProvider.of(context).auth;
-    dynamic result = await _auth.registerWithEmailAndPassword(_emailController.text, _passwordController.text);
-    if(result == null){
-      setState(() => _error = 'Please supply a valid email and password.');
+  String _error;
+  String _errorUsername;
+  bool _isUsernameAvailable = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _nameFocus.addListener(_checkUsernameAvailability);
+  }
+
+  Future _validateRegister() async {
+    if (_formKey.currentState.validate() && _isUsernameAvailable) {
+      Navigator.pushNamed(context, '/loading');
+      final user = await _register();
+
+      if(user == null){
+        Navigator.pop(context);
+        setState(() {
+          _error = 'Please supply a valid email and password.';
+        });
+      } else {
+        Navigator.popUntil(context, ModalRoute.withName('/'),
+        );
+      }
     }
+  }
+
+  Future _register() async {
+    final BaseAuthService _auth = AuthProvider.of(context).auth;
+    final user = await _auth.registerWithEmailAndPassword(
+        _emailController.text, _passwordController.text, _nameController.text);
+    return user;
+  }
+
+  _checkUsernameAvailability() async {
+    bool isUsernameAvailable =
+        await UserManagement.isUsernameAvailable(_nameController.text);
+    setState(() {
+      _isUsernameAvailable = isUsernameAvailable;
+      _isUsernameAvailable
+          ? _errorUsername = null
+          : _errorUsername = 'Username is already used';
+    });
   }
 
   @override
@@ -114,14 +153,16 @@ class _RegisterState extends State<Register> {
                                         height: 130,
                                         decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color: Theme.of(context).primaryColor),
+                                            color:
+                                                Theme.of(context).primaryColor),
                                       ),
                                       alignment: Alignment.center,
                                     ),
                                   ),
                                   Positioned(
                                     child: Container(
-                                      padding: EdgeInsets.only(bottom: 25, right: 40),
+                                      padding: EdgeInsets.only(
+                                          bottom: 25, right: 40),
                                       child: Text(
                                         "REGI",
                                         style: TextStyle(
@@ -136,7 +177,8 @@ class _RegisterState extends State<Register> {
                                   Positioned(
                                     child: Align(
                                       child: Container(
-                                        padding: EdgeInsets.only(top: 40, left: 28),
+                                        padding:
+                                            EdgeInsets.only(top: 40, left: 28),
                                         width: 130,
                                         child: Text(
                                           "STER",
@@ -163,52 +205,69 @@ class _RegisterState extends State<Register> {
                                         bottom: 10,
                                         top: 40,
                                       ),
-                                      child: inputAuthentication(Icon(FontAwesomeIcons.userAlt), "USERNAME", Theme.of(context).primaryColor,
-                                          _nameController, ValidatorType.USERNAME, false),
+                                      child: inputAuthentication(
+                                          Icon(Icons.account_circle),
+                                          "USERNAME",
+                                          (_isUsernameAvailable)
+                                              ? Theme.of(context).primaryColor
+                                              : Colors.redAccent,
+                                          _nameController,
+                                          _nameFocus,
+                                          ValidatorType.USERNAME,
+                                          false,
+                                          _errorUsername),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
                                         bottom: 10,
                                       ),
-                                      child: inputAuthentication(Icon(FontAwesomeIcons.solidEnvelope), "EMAIL", Theme.of(context).primaryColor,
-                                          _emailController, ValidatorType.EMAIL, false),
+                                      child: inputAuthentication(
+                                          Icon(Icons.email),
+                                          "EMAIL",
+                                          Theme.of(context).primaryColor,
+                                          _emailController,
+                                          null,
+                                          ValidatorType.EMAIL,
+                                          false,
+                                          null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
-                                      child: inputAuthentication(Icon(FontAwesomeIcons.unlockAlt), "PASSWORD", Theme.of(context).primaryColor,
-                                          _passwordController, ValidatorType.PASSWORD, true),
+                                      child: inputAuthentication(
+                                          Icon(Icons.lock),
+                                          "PASSWORD",
+                                          Theme.of(context).primaryColor,
+                                          _passwordController,
+                                          null,
+                                          ValidatorType.PASSWORD,
+                                          true,
+                                          _error),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
                                           left: 20,
                                           right: 20,
-                                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                                          bottom: MediaQuery.of(context)
+                                              .viewInsets
+                                              .bottom),
                                       child: Container(
-                                        child: filledButton("REGISTER", Colors.white, Theme.of(context).primaryColor,
-                                            Theme.of(context).primaryColor, Colors.white, () async {
-                                              if (_formKey.currentState.validate()) {
-                                                Navigator.pushNamed(context, '/loading');
-                                                dynamic result = await _register(context);
-                                                if (result == null) {
-                                                  setState(() {
-                                                    _error = 'Please supply a valid email and password.';
-                                                  });
-                                                  Navigator.popUntil(
-                                                    context,
-                                                    ModalRoute.withName('/'),
-                                                  );
-                                                }
-                                              }
-                                            }),
+                                        child: filledButton(
+                                          "REGISTER",
+                                          Colors.white,
+                                          Theme.of(context).primaryColor,
+                                          Theme.of(context).primaryColor,
+                                          Colors.white,
+                                          _validateRegister
+                                        ),
                                         height: 50,
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-
                             SizedBox(
                               height: 20,
                             ),
