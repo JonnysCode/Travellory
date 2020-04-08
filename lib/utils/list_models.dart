@@ -40,7 +40,7 @@ class ListModel<E> {
 }
 
 class FormItem extends StatelessWidget {
-  const FormItem({Key key, @required this.animation, this.child})
+  const FormItem({Key key, @required this.animation, @required this.child})
       : assert(animation != null),
         assert(child != null),
         super(key: key);

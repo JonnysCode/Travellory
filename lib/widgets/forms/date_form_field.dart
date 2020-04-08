@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 
 class DateFormField extends StatefulWidget {
-  DateFormField(
+  const DateFormField(
       {Key key,
       this.icon,
       this.labelText,
@@ -25,6 +25,7 @@ class DateFormField extends StatefulWidget {
 
   final String validatorText = 'Please enter the required information';
 
+  @override
   DateFormFieldState createState() => DateFormFieldState();
 }
 
