@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'font_widgets.dart';
+import '../font_widgets.dart';
 
 class SectionTitle extends StatelessWidget {
-  final String sectionTitle;
+  const SectionTitle(String sectionTitle) : sectionTitle = sectionTitle;
 
-  SectionTitle(String sectionTitle) : sectionTitle = sectionTitle;
+  final String sectionTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +38,12 @@ class SectionTitle extends StatelessWidget {
 }
 
 class BookingSiteTitle extends StatelessWidget {
-  final String bookingSiteTitle;
-  final IconData icon;
-
-  BookingSiteTitle(String siteTitle, IconData icon)
+  const BookingSiteTitle(String siteTitle, IconData icon)
       : bookingSiteTitle = siteTitle,
         this.icon = icon;
+
+  final String bookingSiteTitle;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {

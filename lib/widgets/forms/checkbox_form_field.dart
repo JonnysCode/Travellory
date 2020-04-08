@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CheckboxFormField extends StatefulWidget {
-  CheckboxFormField({Key key, this.initialValue, this.label, this.onChanged}) : super(key: key);
+  const CheckboxFormField({Key key, this.initialValue, this.label, this.onChanged}) : super(key: key);
 
   final bool initialValue;
   final String label;
   final void Function(bool) onChanged;
 
+  @override
   CheckboxFormFieldState createState() => CheckboxFormFieldState();
 }
 
@@ -33,7 +34,7 @@ class CheckboxFormFieldState extends State<CheckboxFormField> with AutomaticKeep
             if (widget.onChanged != null) widget.onChanged(value);
           });
         },
-        title: new Text(
+        title: Text(
           widget.label,
           style: TextStyle(fontSize: 16),
         ),
