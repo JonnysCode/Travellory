@@ -83,9 +83,9 @@ class _TripHeaderState extends State<TripHeader> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 FashionFetishText(
-                    text: 'From: ${DateConverter.format( _tripModel.startDate)}'
+                    text: 'From: ${toShortenedMonthDateFrom( _tripModel.startDate)}'
                         + '\n'
-                        + 'To: ${DateConverter.format( _tripModel.endDate)}',
+                        + 'To: ${toShortenedMonthDateFrom( _tripModel.endDate)}',
                     color: Colors.black54,
                     fontWeight: FashionFontWeight.BOLD,
                     size: 14,

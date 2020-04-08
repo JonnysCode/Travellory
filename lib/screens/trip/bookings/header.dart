@@ -66,9 +66,9 @@ Container getBookingHeader(BuildContext context, TripModel tripModel) {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               FashionFetishText(
-                  text: 'From: ${DateConverter.format(tripModel.startDate)}' +
+                  text: 'From: ${toShortenedMonthDateFrom(tripModel.startDate)}' +
                       '\n' +
-                      'To: ${DateConverter.format(tripModel.endDate)}',
+                      'To: ${toShortenedMonthDateFrom(tripModel.endDate)}',
                   color: Colors.black54,
                   fontWeight: FashionFontWeight.BOLD,
                   size: 14,

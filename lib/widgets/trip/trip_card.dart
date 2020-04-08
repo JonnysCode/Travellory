@@ -88,8 +88,8 @@ class _TripCardState extends State<TripCard> {
                           height: 14,
                         ),
                         FashionFetishText(
-                          text: '${DateConverter.format( _tripModel.startDate)} - '
-                            + '${DateConverter.format( _tripModel.endDate)}',
+                          text: '${toShortenedMonthDateFrom( _tripModel.startDate)} - '
+                            + '${toShortenedMonthDateFrom( _tripModel.endDate)}',
                           size: 14.0,
                           fontWeight: FashionFontWeight.BOLD,
                           color: Colors.black54,
