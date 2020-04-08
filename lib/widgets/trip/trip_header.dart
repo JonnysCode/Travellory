@@ -5,18 +5,18 @@ import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class TripHeader extends StatefulWidget {
-  final TripModel tripModel;
-
   const TripHeader(this.tripModel, {Key key}) : super(key: key);
+
+  final TripModel tripModel;
 
   @override
   _TripHeaderState createState() => _TripHeaderState(tripModel);
 }
 
 class _TripHeaderState extends State<TripHeader> {
-  final TripModel _tripModel;
-
   _TripHeaderState(this._tripModel);
+
+  final TripModel _tripModel;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class _TripHeaderState extends State<TripHeader> {
               child: FashionFetishText(
                 text: _tripModel.name,
                 size: 24,
-                fontWeight: FashionFontWeight.HEAVY,
+                fontWeight: FashionFontWeight.heavy,
                 height: 1.05,
               ),
             ),
@@ -84,10 +84,10 @@ class _TripHeaderState extends State<TripHeader> {
               children: <Widget>[
                 FashionFetishText(
                     text: 'From: ${toShortenedMonthDateFrom( _tripModel.startDate)}'
-                        + '\n'
-                        + 'To: ${toShortenedMonthDateFrom( _tripModel.endDate)}',
+                          '\n'
+                          'To: ${toShortenedMonthDateFrom( _tripModel.endDate)}',
                     color: Colors.black54,
-                    fontWeight: FashionFontWeight.BOLD,
+                    fontWeight: FashionFontWeight.bold,
                     size: 14,
                     height: 1.25
                 ),
@@ -106,7 +106,7 @@ class _TripHeaderState extends State<TripHeader> {
                       child: FashionFetishText(
                         text: _tripModel.destination,
                         size: 14,
-                        fontWeight: FashionFontWeight.HEAVY,
+                        fontWeight: FashionFontWeight.heavy,
                         color: Colors.black54,
                       ),
                     ),

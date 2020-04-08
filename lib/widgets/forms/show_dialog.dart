@@ -12,7 +12,7 @@ void showSubmittedBookingDialog(BuildContext context, String alertText) {
         title: FashionFetishText(
           text: 'Submit Successful!',
           size: 18,
-          fontWeight: FashionFontWeight.HEAVY,
+          fontWeight: FashionFontWeight.heavy,
           height: 1.05,
         ),
         content: Text(alertText),
@@ -38,7 +38,7 @@ void showSubmittedTripDialog(BuildContext context, String alertText) {
         title: FashionFetishText(
           text: 'Submit Successful!',
           size: 18,
-          fontWeight: FashionFontWeight.HEAVY,
+          fontWeight: FashionFontWeight.heavy,
           height: 1.05,
         ),
         content: Text(alertText),
@@ -61,7 +61,7 @@ void cancellingDialog(BuildContext context, String cancelDialog) {
         title: FashionFetishText(
           text: 'Are you sure about this?',
           size: 18,
-          fontWeight: FashionFontWeight.HEAVY,
+          fontWeight: FashionFontWeight.heavy,
           height: 1.05,
         ),
         content: Text(cancelDialog),
@@ -89,7 +89,7 @@ void missingFormFieldInformationDialog(BuildContext context) {
         title: FashionFetishText(
           text: "Oops! Looks like something's not right...",
           size: 18,
-          fontWeight: FashionFontWeight.HEAVY,
+          fontWeight: FashionFontWeight.heavy,
           height: 1.05,
         ),
         content: Text(
@@ -113,7 +113,7 @@ void addToDataBaseFailedDialog(BuildContext context, String alertText) {
         title: FashionFetishText(
           text: "Oh no! Looks like there's a problem...",
           size: 18,
-          fontWeight: FashionFontWeight.HEAVY,
+          fontWeight: FashionFontWeight.heavy,
           height: 1.05,
         ),
         content: Text(alertText),

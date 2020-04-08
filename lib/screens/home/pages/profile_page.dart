@@ -104,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage>
           label: FashionFetishText(
             text: 'Log out',
             size: 20,
-            fontWeight: FashionFontWeight.NORMAL,
+            fontWeight: FashionFontWeight.normal,
             height: 1.05,
           ),
         )
@@ -155,7 +155,7 @@ class _UserInformationState extends State<UserInformation> {
         FashionFetishText(
           text: user != null ? '${user.displayName}' : '',
           size: 20,
-          fontWeight: FashionFontWeight.NORMAL,
+          fontWeight: FashionFontWeight.normal,
           height: 1.05,
         ),
       ]),
@@ -170,7 +170,7 @@ class _UserInformationState extends State<UserInformation> {
         FashionFetishText(
           text: user != null ? '${user.email}' : '',
           size: 20,
-          fontWeight: FashionFontWeight.NORMAL,
+          fontWeight: FashionFontWeight.normal,
           height: 1.05,
         ),
       ]),
@@ -187,7 +187,7 @@ class _UserInformationState extends State<UserInformation> {
               ? '${DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)}'
               : '',
           size: 20,
-          fontWeight: FashionFontWeight.NORMAL,
+          fontWeight: FashionFontWeight.normal,
           height: 1.05,
         ),
       ]),

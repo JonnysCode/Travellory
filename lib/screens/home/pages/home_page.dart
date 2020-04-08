@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _openCreateTripScreen() {
+  void _openCreateTripScreen() {
     Navigator.pushNamed(context, '/createtrip');
   }
 }

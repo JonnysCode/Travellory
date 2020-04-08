@@ -157,12 +157,12 @@ class _SignInState extends State<SignIn> {
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 10, top: 40),
                                       child: inputAuthentication(Icon(Icons.email), "EMAIL", Theme.of(context).primaryColor,
-                                          _emailController, null, ValidatorType.EMAIL, false, null),
+                                          _emailController, null, ValidatorType.email, false, null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
                                       child: inputAuthentication(Icon(Icons.lock), "PASSWORD", Theme.of(context).primaryColor,
-                                          _passwordController, null, ValidatorType.PASSWORD, true, null),
+                                          _passwordController, null, ValidatorType.password, true, null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(

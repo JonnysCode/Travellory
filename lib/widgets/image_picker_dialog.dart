@@ -135,7 +135,7 @@ class ImagePickerDialog extends StatelessWidget {
         text: buttonLabel,
         size: 20,
         color: Colors.white,
-        fontWeight: FashionFontWeight.NORMAL,
+        fontWeight: FashionFontWeight.normal,
         height: 1.05,
       ),
     );
