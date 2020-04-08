@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/widgets/buttons.dart';
 
-import 'font_widgets.dart';
+import '../font_widgets.dart';
 
-void showSubmittedBookingDialog(
-    BuildContext context, String alertText, void function()) {
+void showSubmittedBookingDialog(BuildContext context, String alertText) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -16,13 +15,13 @@ void showSubmittedBookingDialog(
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,
         ),
-        content: new Text(alertText),
+        content: Text(alertText),
         actions: <Widget>[
           alertButton("Home", Colors.transparent, context, () async {
             Navigator.popUntil(context, ModalRoute.withName('/home'));
           }),
           alertButton("Back to Trip", Theme.of(context).hintColor, context, () async {
-            function();
+            Navigator.pop(context);
           }),
         ],
       );
@@ -30,26 +29,27 @@ void showSubmittedBookingDialog(
   );
 }
 
-void cancellingDialog(BuildContext context, void function()) {
+void cancellingDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
-          text: "Are you sure about this?",
+          text: 'Are you sure about this?',
           size: 18,
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,
         ),
-        content: new Text(
-            "You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?"),
+        content: Text(
+            'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?'),
         actions: <Widget>[
-          alertButton("No", Colors.transparent, context, () async {
+          alertButton('No', Colors.transparent, context, () async {
             Navigator.pop(context);
           }),
-          alertButton("Yes", Color(0xFFF48FB1), context, () async {
-            function();
+          alertButton('Yes', Color(0xFFF48FB1), context, () async {
+            Navigator.pop(context);
+            Navigator.pop(context);
           }),
         ],
       );
@@ -62,6 +62,7 @@ void missingFormFieldInformationDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        key: Key('MissingFormFieldInformationDialog'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
           text: "Oops! Looks like something's missing...",
@@ -69,10 +70,33 @@ void missingFormFieldInformationDialog(BuildContext context) {
           fontWeight: FashionFontWeight.HEAVY,
           height: 1.05,
         ),
-        content: new Text(
-            "The form is not complete. Please look at the marked fields and add the required information."),
+        content: Text(
+            'The form is not complete. Please look at the marked fields and add the required information.'),
         actions: <Widget>[
-          alertButton("Edit Booking", Theme.of(context).primaryColor, context, () async {
+          alertButton('Edit Booking', Theme.of(context).primaryColor, context, () async {
+            Navigator.pop(context);
+          }),
+        ],
+      );
+    },
+  );
+}
+
+void addToDataBaseFailedDialog(BuildContext context, String alertText) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        title: FashionFetishText(
+          text: "Oh no! Looks like there's a problem...",
+          size: 18,
+          fontWeight: FashionFontWeight.HEAVY,
+          height: 1.05,
+        ),
+        content: Text(alertText),
+        actions: <Widget>[
+          alertButton("Try Again", Theme.of(context).hintColor, context, () async {
             Navigator.pop(context);
           }),
         ],
