@@ -13,6 +13,7 @@ class RentalCarModel extends Model {
   String carNumberPlate;
   String notes;
 
+  @override
   Map<String, dynamic> toMap(){
     return {
       'bookingReference': bookingReference,
