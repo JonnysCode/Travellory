@@ -8,6 +8,7 @@ void showSubmittedBookingDialog(BuildContext context, String alertText) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        key: Key('ShowSubmittedBookingDialog'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
           text: 'Submit Successful!',
@@ -34,6 +35,7 @@ void showSubmittedTripDialog(BuildContext context, String alertText) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        key: Key('showSubmittedTripDialog'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
           text: 'Submit Successful!',
@@ -57,6 +59,7 @@ void cancellingDialog(BuildContext context, String cancelDialog) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        key: Key('CancellingDialog'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
           text: 'Are you sure about this?',
@@ -109,6 +112,7 @@ void addToDataBaseFailedDialog(BuildContext context, String alertText) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        key: Key('AddToDataBaseFailedDialog'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
           text: "Oh no! Looks like there's a problem...",
