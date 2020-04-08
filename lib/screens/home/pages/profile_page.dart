@@ -31,77 +31,92 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: Key('profile_page'),
-      body: GestureDetector(
-        onTap: () => imagePicker.showDialog(context),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Center(
+    return Column(
+        key: Key('profile_page'),
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 20,),
+          GestureDetector(
+            key: Key('image_pick'),
+            onTap: () => imagePicker.showDialog(context),
+            child: Center(
               child: _image == null
                   ? Stack(
-                      children: <Widget>[
-                        Center(
-                          child: CircleAvatar(
-                            radius: 130.0,
-                            backgroundColor: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 260,
-                          child: Center(
-                            child: Image.asset(
-                              'assets/photo_camera.png',
-                              height: 100,
-                              width: 100,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(
-                      height: 260.0,
-                      width: 260.0,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        image: DecorationImage(
-                          image: ExactAssetImage(_image.path),
-                          fit: BoxFit.cover,
-                        ),
-                        border: Border.all(
-                            color: Theme.of(context).primaryColor, width: 2.0),
-                        borderRadius:
-                            BorderRadius.all(const Radius.circular(300.0)),
+                children: <Widget>[
+                  Center(
+                    child: CircleAvatar(
+                      radius: 130.0,
+                      backgroundColor: Theme
+                          .of(context)
+                          .primaryColor,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 260,
+                    child: Center(
+                      child: Image.asset(
+                        'assets/photo_camera.png',
+                        height: 100,
+                        width: 100,
                       ),
                     ),
-            ),
-            SizedBox(height: 50),
-            FutureBuilder(
-                future: AuthProvider.of(context).auth.getCurrentUser(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return UserInformation(user : snapshot.data);
-                  } else {
-                    return CircularProgressIndicator();
-                  }
-                }),
-            SizedBox(height: 100),
-            FlatButton.icon(
-              onPressed: () => _signOut(),
-              icon: Icon(Icons.exit_to_app),
-              label: FashionFetishText(
-                text: 'Log out',
-                size: 20,
-                fontWeight: FashionFontWeight.NORMAL,
-                height: 1.05,
+                  ),
+                ],
+              )
+                  : Container(
+                height: 260.0,
+                width: 260.0,
+                decoration: BoxDecoration(
+                  color: Theme
+                      .of(context)
+                      .primaryColor,
+                  image: DecorationImage(
+                    image: ExactAssetImage(_image.path),
+                    fit: BoxFit.cover,
+                  ),
+                  border: Border.all(
+                      color: Theme
+                          .of(context)
+                          .primaryColor, width: 2.0),
+                  borderRadius:
+                  BorderRadius.all(const Radius.circular(300.0)),
+                ),
               ),
-            )
-          ],
-        ),
-      ),
-    );
+            ),
+          ),
+          SizedBox(height: 50),
+          FutureBuilder(
+              future: AuthProvider
+                  .of(context)
+                  .auth
+                  .getCurrentUser(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return UserInformation(user: snapshot.data);
+                } else {
+                  return CircularProgressIndicator();
+                }
+              }),
+          SizedBox(height: 100),
+          FlatButton.icon(
+            onPressed: () => _signOut(),
+            icon: Icon(Icons.exit_to_app),
+            label: FashionFetishText(
+              text: 'Log out',
+              size: 20,
+              fontWeight: FashionFontWeight.NORMAL,
+              height: 1.05,
+            ),
+          )
+        ],
+      );
   }
 
   @override
@@ -111,8 +126,14 @@ class _ProfilePageState extends State<ProfilePage>
     });
   }
 
+
+
+
+
   Future _signOut() async {
-    final BaseAuthService _auth = AuthProvider.of(context).auth;
+    final BaseAuthService _auth = AuthProvider
+        .of(context)
+        .auth;
     await _auth.signOut();
     Navigator.pushReplacementNamed(context, '/');
   }
@@ -121,8 +142,8 @@ class _ProfilePageState extends State<ProfilePage>
 class UserInformation extends StatefulWidget {
   const UserInformation({
     Key key,
-    @required this.user,
-  }) : super(key : key);
+    this.user,
+  }) : super(key: key);
 
   final FirebaseUser user;
 
@@ -142,12 +163,14 @@ class _UserInformationState extends State<UserInformation> {
             SizedBox(width: 50),
             Icon(
               Icons.person,
-              color: Theme.of(context).primaryColor,
+              color: Theme
+                  .of(context)
+                  .primaryColor,
               size: 40,
             ),
             SizedBox(width: 20),
             FashionFetishText(
-              text: "${user.displayName}",
+              text: user != null ? '${user.displayName}' : '',
               size: 20,
               fontWeight: FashionFontWeight.NORMAL,
               height: 1.05,
@@ -157,12 +180,14 @@ class _UserInformationState extends State<UserInformation> {
             SizedBox(width: 50),
             Icon(
               Icons.email,
-              color: Theme.of(context).primaryColor,
+              color: Theme
+                  .of(context)
+                  .primaryColor,
               size: 40,
             ),
             SizedBox(width: 20),
             FashionFetishText(
-              text: "${user.email}",
+              text: user != null ? '${user.email}' : '',
               size: 20,
               fontWeight: FashionFontWeight.NORMAL,
               height: 1.05,
@@ -172,20 +197,22 @@ class _UserInformationState extends State<UserInformation> {
             SizedBox(width: 50),
             Icon(
               Icons.date_range,
-              color: Theme.of(context).primaryColor,
+              color: Theme
+                  .of(context)
+                  .primaryColor,
               size: 40,
             ),
             SizedBox(width: 20),
             FashionFetishText(
-              text:
-              "${DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)}",
+              text: user != null ? '${DateFormat('dd.MM.yyyy').format(
+                  user.metadata.creationTime)}' : '',
               size: 20,
               fontWeight: FashionFontWeight.NORMAL,
               height: 1.05,
             ),
           ]
-        ),
-      ]
+          ),
+        ]
     );
   }
 }
