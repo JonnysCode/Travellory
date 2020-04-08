@@ -35,59 +35,64 @@ class _ProfilePageState extends State<ProfilePage>
   void dispose() {
     _controller.dispose();
     super.dispose();
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      key: Key('profile_page'),
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(
-          height: 20,
-        ),
-        GestureDetector(
-          key: Key('image_pick'),
-          onTap: () => imagePicker.showDialog(context),
-          child: Center(
-            child: _image == null
-                ? Stack(
-                    children: <Widget>[
-                      Center(
-                        child: CircleAvatar(
-                          radius: 130.0,
-                          backgroundColor: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 260,
-                        child: Center(
-                          child: Image.asset(
-                            'assets/photo_camera.png',
-                            height: 100,
-                            width: 100,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                : Container(
-                    height: 260.0,
-                    width: 260.0,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      image: DecorationImage(
-                        image: ExactAssetImage(_image.path),
-                        fit: BoxFit.cover,
-                      ),
-                      border: Border.all(
-                          color: Theme.of(context).primaryColor, width: 2.0),
-                      borderRadius:
-                          BorderRadius.all(const Radius.circular(300.0)),
+        key: Key('profile_page'),
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 20,),
+          GestureDetector(
+            key: Key('image_pick'),
+            onTap: () => imagePicker.showDialog(context),
+            child: Center(
+              child: _image == null
+                  ? Stack(
+                children: <Widget>[
+                  Center(
+                    child: CircleAvatar(
+                      radius: 130.0,
+                      backgroundColor: Theme
+                          .of(context)
+                          .primaryColor,
                     ),
                   ),
+                  SizedBox(
+                    height: 260,
+                    child: Center(
+                      child: Image.asset(
+                        'assets/photo_camera.png',
+                        height: 100,
+                        width: 100,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+                  : Container(
+                height: 260.0,
+                width: 260.0,
+                decoration: BoxDecoration(
+                  color: Theme
+                      .of(context)
+                      .primaryColor,
+                  image: DecorationImage(
+                    image: ExactAssetImage(_image.path),
+                    fit: BoxFit.cover,
+                  ),
+                  border: Border.all(
+                      color: Theme
+                          .of(context)
+                          .primaryColor, width: 2.0),
+                  borderRadius:
+                  BorderRadius.all(const Radius.circular(300.0)),
+                ),
+              ),
+            ),
           ),
-        ),
         SizedBox(height: 50),
         FutureBuilder(
             future: AuthProvider.of(context).auth.getCurrentUser(),
@@ -114,16 +119,22 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   @override
-  void userImage(File _image) {
+  userImage(File _image) {
     setState(() {
       this._image = _image;
     });
   }
 
+
+
+
+
   Future _signOut() async {
-    final BaseAuthService _auth = AuthProvider.of(context).auth;
+    final BaseAuthService _auth = AuthProvider
+        .of(context)
+        .auth;
     await _auth.signOut();
-    await Navigator.pushReplacementNamed(context, '/');
+    Navigator.pushReplacementNamed(context, '/');
   }
 }
 
@@ -196,3 +207,4 @@ class _UserInformationState extends State<UserInformation> {
     ]);
   }
 }
+
