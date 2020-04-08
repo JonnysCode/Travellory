@@ -152,6 +152,10 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: SectionTitle('Notes'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
                         labelText: 'Notes',
                         icon: Icon(Icons.speaker_notes),
@@ -161,7 +165,6 @@ class _FlightState extends State<Flight> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: Container(
                         child: SubmitButton(
                           highlightColor: Theme.of(context).primaryColor,
                           fillColor: Theme.of(context).primaryColor,
@@ -169,17 +172,14 @@ class _FlightState extends State<Flight> {
                           onSubmit: onSubmitBooking(flightModel, 'booking-addFlight', context,
                               alertText),
                         ),
-                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                      child: Container(
                         child: CancelButton(
                           text: 'CANCEL',
                           onCancel: () {
                             cancellingDialog(context);
                           },
-                        ),
                       ),
                     ),
                     SizedBox(height: 20),

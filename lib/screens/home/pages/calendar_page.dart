@@ -13,7 +13,7 @@ class _CalendarPageState extends State<CalendarPage> {
   final DateTime today = DateTime.now();
 
   List<Meeting> _getDataSource() {
-    final meetings = <Meeting>[];
+    final List<Meeting> meetings = <Meeting>[];
     final DateTime startDate = today.add(const Duration(days: -3));
     final DateTime endDate = startDate.add(const Duration(days: 6));
     meetings.add(Meeting('TestTrip', startDate, endDate, calendarBackgroundColor, true));
