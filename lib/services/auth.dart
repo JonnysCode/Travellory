@@ -8,6 +8,7 @@ abstract class BaseAuthService {
   Future registerWithEmailAndPassword(
       String email, String password, String displayName);
   Future signOut();
+  Future getCurrentUser();
   Stream<UserModel> get user;
 }
 
@@ -24,6 +25,11 @@ class AuthService implements BaseAuthService {
   // auth change user stream
   Stream<UserModel> get user {
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+  }
+
+  // get current user
+  Future getCurrentUser() async{
+    return await _auth.currentUser();
   }
 
   // sign in anonymously
