@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:travellory/providers/auth_provider.dart';
@@ -33,26 +34,26 @@ class _ProfilePageState extends State<ProfilePage>
   Widget build(BuildContext context) {
     return Scaffold(
       key: Key('profile_page'),
-      body: new GestureDetector(
+      body: GestureDetector(
         onTap: () => imagePicker.showDialog(context),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            new Center(
+            Center(
               child: _image == null
-                  ? new Stack(
+                  ? Stack(
                       children: <Widget>[
-                        new Center(
-                          child: new CircleAvatar(
+                        Center(
+                          child: CircleAvatar(
                             radius: 130.0,
                             backgroundColor: Theme.of(context).primaryColor,
                           ),
                         ),
-                        new SizedBox(
+                        SizedBox(
                           height: 260,
                           child: Center(
-                            child: new Image.asset(
-                              "assets/photo_camera.png",
+                            child: Image.asset(
+                              'assets/photo_camera.png',
                               height: 100,
                               width: 100,
                             ),
@@ -60,19 +61,19 @@ class _ProfilePageState extends State<ProfilePage>
                         ),
                       ],
                     )
-                  : new Container(
+                  : Container(
                       height: 260.0,
                       width: 260.0,
-                      decoration: new BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
-                        image: new DecorationImage(
-                          image: new ExactAssetImage(_image.path),
+                        image: DecorationImage(
+                          image: ExactAssetImage(_image.path),
                           fit: BoxFit.cover,
                         ),
                         border: Border.all(
                             color: Theme.of(context).primaryColor, width: 2.0),
                         borderRadius:
-                            new BorderRadius.all(const Radius.circular(300.0)),
+                            BorderRadius.all(const Radius.circular(300.0)),
                       ),
                     ),
             ),
@@ -81,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage>
                 future: AuthProvider.of(context).auth.getCurrentUser(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    return displayUserInformation(context, snapshot);
+                    return UserInformation(user : snapshot.data);
                   } else {
                     return CircularProgressIndicator();
                   }
@@ -91,7 +92,7 @@ class _ProfilePageState extends State<ProfilePage>
               onPressed: () => _signOut(),
               icon: Icon(Icons.exit_to_app),
               label: FashionFetishText(
-                text: "Log out",
+                text: 'Log out',
                 size: 20,
                 fontWeight: FashionFontWeight.NORMAL,
                 height: 1.05,
@@ -115,56 +116,77 @@ class _ProfilePageState extends State<ProfilePage>
     await _auth.signOut();
     Navigator.pushReplacementNamed(context, '/');
   }
+}
 
-  Widget displayUserInformation(context, snapshot) {
-    final user = snapshot.data;
-    return Column(key: Key('display_user'), children: [
-      Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        SizedBox(width: 50),
-        Icon(
-          Icons.person,
-          color: Theme.of(context).primaryColor,
-          size: 40,
-        ),
-        SizedBox(width: 20),
-        FashionFetishText(
-          text: "${user.displayName}",
-          size: 20,
-          fontWeight: FashionFontWeight.NORMAL,
-          height: 1.05,
-        ),
-      ]),
-      Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        SizedBox(width: 50),
-        Icon(
-          Icons.email,
-          color: Theme.of(context).primaryColor,
-          size: 40,
-        ),
-        SizedBox(width: 20),
-        FashionFetishText(
-          text: "${user.email}",
-          size: 20,
-          fontWeight: FashionFontWeight.NORMAL,
-          height: 1.05,
-        ),
-      ]),
-      Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        SizedBox(width: 50),
-        Icon(
-          Icons.date_range,
-          color: Theme.of(context).primaryColor,
-          size: 40,
-        ),
-        SizedBox(width: 20),
-        FashionFetishText(
-          text:
+class UserInformation extends StatefulWidget {
+  const UserInformation({
+    Key key,
+    @required this.user,
+  }) : super(key : key);
+
+  final FirebaseUser user;
+
+  @override
+  _UserInformationState createState() => _UserInformationState();
+}
+
+class _UserInformationState extends State<UserInformation> {
+  @override
+  Widget build(BuildContext context) {
+    var user = widget.user;
+
+    return Column(
+        key: Key('display_user'),
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            SizedBox(width: 50),
+            Icon(
+              Icons.person,
+              color: Theme.of(context).primaryColor,
+              size: 40,
+            ),
+            SizedBox(width: 20),
+            FashionFetishText(
+              text: "${user.displayName}",
+              size: 20,
+              fontWeight: FashionFontWeight.NORMAL,
+              height: 1.05,
+            ),
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            SizedBox(width: 50),
+            Icon(
+              Icons.email,
+              color: Theme.of(context).primaryColor,
+              size: 40,
+            ),
+            SizedBox(width: 20),
+            FashionFetishText(
+              text: "${user.email}",
+              size: 20,
+              fontWeight: FashionFontWeight.NORMAL,
+              height: 1.05,
+            ),
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            SizedBox(width: 50),
+            Icon(
+              Icons.date_range,
+              color: Theme.of(context).primaryColor,
+              size: 40,
+            ),
+            SizedBox(width: 20),
+            FashionFetishText(
+              text:
               "${DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)}",
-          size: 20,
-          fontWeight: FashionFontWeight.NORMAL,
-          height: 1.05,
+              size: 20,
+              fontWeight: FashionFontWeight.NORMAL,
+              height: 1.05,
+            ),
+          ]
         ),
-      ]),
-    ]);
+      ]
+    );
   }
 }
+
