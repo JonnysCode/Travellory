@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -29,10 +30,10 @@ void main() {
     expect(find.byKey(Key('profile_page')), findsOneWidget);
   });
 
-  // TODO display_iser key
+
   testWidgets('test if page is the profile page', (WidgetTester tester) async {
     MockAuth mockAuth = MockAuth();
-    ProfilePage page = ProfilePage();
+    UserInformation page = UserInformation();
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
@@ -54,11 +55,11 @@ void main() {
     expect(circleAvatar, findsOneWidget);
   });
 
-  // TODO 3 icons
+
   testWidgets('test if profile page has a three icons',
       (WidgetTester tester) async {
     MockAuth mockAuth = MockAuth();
-    ProfilePage page = ProfilePage();
+    UserInformation page = UserInformation();
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));

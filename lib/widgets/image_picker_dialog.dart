@@ -69,40 +69,40 @@ class ImagePickerDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     this.context = context;
-    return new Material(
+    return Material(
         key: Key('selection_menu'),
         type: MaterialType.transparency,
-        child: new Opacity(
+        child: Opacity(
           opacity: 1.0,
-          child: new Container(
+          child: Container(
             padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 20.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                new GestureDetector(
+                GestureDetector(
                   onTap: () => _listener.openCamera(),
                   child: roundedButton(
-                      "Take Photo",
+                      'Take Photo',
                       EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
                       Theme.of(context).primaryColor,
                       const Color(0xFFFFFFFF)),
                 ),
-                new GestureDetector(
+                GestureDetector(
                   onTap: () => _listener.openGallery(),
                   child: roundedButton(
-                      "Choose from Library",
+                      'Choose from Library',
                       EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
                       Theme.of(context).primaryColor,
                       const Color(0xFFFFFFFF)),
                 ),
                 const SizedBox(height: 15.0),
-                new GestureDetector(
+                GestureDetector(
                   onTap: () => dismissDialog(),
-                  child: new Padding(
+                  child: Padding(
                     padding: EdgeInsets.fromLTRB(60.0, 0.0, 60.0, 0.0),
                     child: roundedButton(
-                        "Cancel",
+                        'Cancel',
                         EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
                         Colors.red,
                         const Color(0xFFFFFFFF)),
@@ -116,13 +116,13 @@ class ImagePickerDialog extends StatelessWidget {
 
   Widget roundedButton(
       String buttonLabel, EdgeInsets margin, Color bgColor, Color textColor) {
-    var loginBtn = new Container(
+    var loginBtn = Container(
       margin: margin,
       padding: EdgeInsets.all(15.0),
       alignment: FractionalOffset.center,
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: new BorderRadius.all(const Radius.circular(100.0)),
+        borderRadius: BorderRadius.all(const Radius.circular(100.0)),
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: const Color(0xFF696969),
