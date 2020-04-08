@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -30,15 +29,15 @@ void main() {
     expect(find.byKey(Key('profile_page')), findsOneWidget);
   });
 
-
-  testWidgets('test if page is the profile page', (WidgetTester tester) async {
+  testWidgets('test if profile page use user information class',
+      (WidgetTester tester) async {
     MockAuth mockAuth = MockAuth();
     UserInformation page = UserInformation();
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
-    // Verify that the profile page is present.
+    // Verify that the profile page use user information class
     expect(find.byKey(Key('display_user')), findsOneWidget);
   });
 
@@ -51,12 +50,11 @@ void main() {
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
     var circleAvatar = find.byType(CircleAvatar);
 
-    // Verify that the ProfilePage has a circleAvatar.
+    // Verify that the profile page has a circleAvatar.
     expect(circleAvatar, findsOneWidget);
   });
 
-
-  testWidgets('test if profile page has a three icons',
+  testWidgets('test if profile page has three icons',
       (WidgetTester tester) async {
     MockAuth mockAuth = MockAuth();
     UserInformation page = UserInformation();
@@ -64,13 +62,11 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
-    // Verify that the ProfilePage has a circleAvatar.
+    // Verify that the profile page has a circleAvatar.
     expect(find.byIcon(Icons.person), findsOneWidget);
     expect(find.byIcon(Icons.email), findsOneWidget);
     expect(find.byIcon(Icons.date_range), findsOneWidget);
   });
-
-
 
   testWidgets('test if profile page has a logout button',
       (WidgetTester tester) async {

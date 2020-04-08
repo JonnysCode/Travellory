@@ -16,14 +16,14 @@ class ImagePickerDialog extends StatelessWidget {
   Animation<Offset> _drawerDetailsPosition;
 
   void initState() {
-    _drawerContentsOpacity = new CurvedAnimation(
-      parent: new ReverseAnimation(_controller),
+    _drawerContentsOpacity = CurvedAnimation(
+      parent: ReverseAnimation(_controller),
       curve: Curves.fastOutSlowIn,
     );
-    _drawerDetailsPosition = new Tween<Offset>(
+    _drawerDetailsPosition = Tween<Offset>(
       begin: const Offset(0.0, 1.0),
       end: Offset.zero,
-    ).animate(new CurvedAnimation(
+    ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.fastOutSlowIn,
     ));
@@ -38,10 +38,10 @@ class ImagePickerDialog extends StatelessWidget {
     _controller.forward();
     showDialog(
       context: context,
-      builder: (BuildContext context) => new SlideTransition(
+      builder: (BuildContext context) => SlideTransition(
         position: _drawerDetailsPosition,
-        child: new FadeTransition(
-          opacity: new ReverseAnimation(_drawerContentsOpacity),
+        child: FadeTransition(
+          opacity: ReverseAnimation(_drawerContentsOpacity),
           child: this,
         ),
       ),
@@ -53,8 +53,8 @@ class ImagePickerDialog extends StatelessWidget {
   }
 
   startTime() async {
-    var _duration = new Duration(milliseconds: 200);
-    return new Timer(_duration, navigationPage);
+    var _duration = Duration(milliseconds: 200);
+    return Timer(_duration, navigationPage);
   }
 
   void navigationPage() {
