@@ -77,7 +77,7 @@ void main() {
     await pumpFlight(tester);
 
     expect(find.byKey(Key('BookingSiteTitle'), skipOffstage: false), findsOneWidget);
-    expect(find.byKey(Key('SectionTitle'), skipOffstage: false), findsNWidgets(3));
+    expect(find.byKey(Key('SectionTitle'), skipOffstage: false), findsNWidgets(4));
     expect(find.byIcon(Icons.flight, skipOffstage: false), findsOneWidget);
     expect(find.byIcon(Icons.confirmation_number, skipOffstage: false), findsNWidgets(2));
     expect(find.byIcon(Icons.airline_seat_recline_normal, skipOffstage: false), findsOneWidget);
@@ -94,6 +94,16 @@ void main() {
     // Verify that form is present.
     expect(find.byKey(Key('SubmitButton'), skipOffstage: false), isOffstage);
   });
+
+  testWidgets('test if submit button is tapped', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(makeTestableWidget());
+    await pumpFlight(tester);
+    // Verify that form is present.
+    expect(find.byKey(Key('SubmitButton'), skipOffstage: false), isOffstage);
+    await tester.tap(find.byKey(Key('SubmitButton'), skipOffstage:false));
+  });
+
 
   testWidgets('test if cancel button is present', (WidgetTester tester) async {
     // Build our app and trigger a frame.
