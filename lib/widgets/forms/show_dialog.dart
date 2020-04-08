@@ -62,6 +62,7 @@ void missingFormFieldInformationDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        key: Key('MissingFormFieldInformationDialog'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
           text: "Oops! Looks like something's missing...",
