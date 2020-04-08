@@ -19,7 +19,7 @@ void main() {
         ));
   }
 
-  prepareSignIn(String email, String password, WidgetTester tester) async {
+  Future<void> prepareSignIn(String email, String password, WidgetTester tester) async {
     // Enter text into the fields and tap the sign in button
     Finder emailField = find.byKey(Key('emailField'));
     await tester.enterText(emailField, email);
