@@ -6,12 +6,11 @@ import 'package:travellory/services/user_management.dart';
 import 'package:travellory/utils/input_validator.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
-import 'package:pedantic/pedantic.dart';
 
 class Register extends StatefulWidget {
-  const Register({this.toggleView});
-
   final Function toggleView;
+
+  const Register({this.toggleView});
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -40,7 +39,7 @@ class _RegisterState extends State<Register> {
 
   Future _validateRegister() async {
     if (_formKey.currentState.validate() && _isUsernameAvailable) {
-      unawaited(Navigator.pushNamed(context, '/loading'));
+      Navigator.pushNamed(context, '/loading');
       final user = await _register();
 
       if(user == null){
@@ -62,8 +61,8 @@ class _RegisterState extends State<Register> {
     return user;
   }
 
-  void _checkUsernameAvailability() async {
-    final isUsernameAvailable =
+  _checkUsernameAvailability() async {
+    bool isUsernameAvailable =
         await UserManagement.isUsernameAvailable(_nameController.text);
     setState(() {
       _isUsernameAvailable = isUsernameAvailable;
@@ -75,7 +74,6 @@ class _RegisterState extends State<Register> {
 
   @override
   void dispose() {
-    _nameFocus.removeListener(_checkUsernameAvailability);
     _emailController.dispose();
     _passwordController.dispose();
     _nameController.dispose();
@@ -102,20 +100,9 @@ class _RegisterState extends State<Register> {
                     topLeft: Radius.circular(40.0),
                     topRight: Radius.circular(40.0)),
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.95,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/login/beach.png"),
-                      fit: BoxFit.fitWidth,
-                      alignment: Alignment.bottomCenter,
-                    ),
-                  ),
                   child: ListView(
                     children: <Widget>[
                       Container(
-                        height: 50,
-                        width: 50,
                         child: Stack(
                           children: <Widget>[
                             Positioned(
@@ -148,6 +135,8 @@ class _RegisterState extends State<Register> {
                             )
                           ],
                         ),
+                        height: 50,
+                        width: 50,
                       ),
                       SingleChildScrollView(
                         child: Column(
@@ -159,22 +148,21 @@ class _RegisterState extends State<Register> {
                                 children: <Widget>[
                                   Positioned(
                                     child: Align(
-                                      alignment: Alignment.center,
                                       child: Container(
                                         width: 130,
                                         height: 130,
                                         decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             color:
-                                            Theme.of(context).primaryColor),
+                                                Theme.of(context).primaryColor),
                                       ),
+                                      alignment: Alignment.center,
                                     ),
                                   ),
                                   Positioned(
                                     child: Container(
                                       padding: EdgeInsets.only(
                                           bottom: 25, right: 40),
-                                      alignment: Alignment.center,
                                       child: Text(
                                         "REGI",
                                         style: TextStyle(
@@ -183,14 +171,14 @@ class _RegisterState extends State<Register> {
                                           color: Color(0xFFF7EDEE),
                                         ),
                                       ),
+                                      alignment: Alignment.center,
                                     ),
                                   ),
                                   Positioned(
                                     child: Align(
-                                      alignment: Alignment.center,
                                       child: Container(
                                         padding:
-                                        EdgeInsets.only(top: 40, left: 28),
+                                            EdgeInsets.only(top: 40, left: 28),
                                         width: 130,
                                         child: Text(
                                           "STER",
@@ -201,6 +189,7 @@ class _RegisterState extends State<Register> {
                                           ),
                                         ),
                                       ),
+                                      alignment: Alignment.center,
                                     ),
                                   ),
                                 ],
@@ -219,7 +208,7 @@ class _RegisterState extends State<Register> {
                                       child: inputAuthentication(
                                           Icon(Icons.account_circle),
                                           "USERNAME",
-                                          _isUsernameAvailable
+                                          (_isUsernameAvailable)
                                               ? Theme.of(context).primaryColor
                                               : Colors.redAccent,
                                           _nameController,
@@ -262,17 +251,17 @@ class _RegisterState extends State<Register> {
                                               .viewInsets
                                               .bottom),
                                       child: Container(
+                                        child: filledButton(
+                                          "REGISTER",
+                                          Colors.white,
+                                          Theme.of(context).primaryColor,
+                                          Theme.of(context).primaryColor,
+                                          Colors.white,
+                                          _validateRegister
+                                        ),
                                         height: 50,
                                         width:
-                                        MediaQuery.of(context).size.width,
-                                        child: filledButton(
-                                            "REGISTER",
-                                            Colors.white,
-                                            Theme.of(context).primaryColor,
-                                            Theme.of(context).primaryColor,
-                                            Colors.white,
-                                            _validateRegister
-                                        ),
+                                            MediaQuery.of(context).size.width,
                                       ),
                                     ),
                                   ],
@@ -286,6 +275,15 @@ class _RegisterState extends State<Register> {
                         ),
                       ),
                     ],
+                  ),
+                  height: MediaQuery.of(context).size.height * 0.95,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/login/beach.png"),
+                      fit: BoxFit.fitWidth,
+                      alignment: Alignment.bottomCenter,
+                    ),
                   ),
                 ),
               ),

@@ -30,20 +30,9 @@ class _AuthenticateState extends State<Authenticate> {
                       topLeft: Radius.circular(40.0),
                       topRight: Radius.circular(40.0)),
                   child: Container(
-                    height: MediaQuery.of(context).size.height * 0.95,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/login/beach.png"),
-                        fit: BoxFit.fitWidth,
-                        alignment: Alignment.bottomCenter,
-                      ),
-                    ),
                     child: ListView(
                       children: <Widget>[
                         Container(
-                          height: 50,
-                          width: 50,
                           child: Stack(
                             children: <Widget>[
                               Positioned(
@@ -73,6 +62,8 @@ class _AuthenticateState extends State<Authenticate> {
                               )
                             ],
                           ),
+                          height: 50,
+                          width: 50,
                         ),
                         SingleChildScrollView(
                           child: Column(
@@ -84,7 +75,6 @@ class _AuthenticateState extends State<Authenticate> {
                                   children: <Widget>[
                                     Positioned(
                                       child: Align(
-                                        alignment: Alignment.center,
                                         child: Container(
                                           width: MediaQuery.of(context).size.width,
                                           height: MediaQuery.of(context).size.height,
@@ -95,6 +85,7 @@ class _AuthenticateState extends State<Authenticate> {
                                             ),
                                           ),
                                         ),
+                                        alignment: Alignment.center,
                                       ),
                                     ),
                                   ],
@@ -107,12 +98,12 @@ class _AuthenticateState extends State<Authenticate> {
                                     right: 20,
                                     bottom: MediaQuery.of(context).viewInsets.bottom),
                                 child: Container(
-                                  height: 50,
-                                  width: MediaQuery.of(context).size.width,
                                   child: filledButton("LOGIN", Colors.white, Theme.of(context).primaryColor,
                                       Theme.of(context).primaryColor, Colors.white, () {
                                         Navigator.pushNamed(context, '/login');
                                       }),
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width,
                                 ),
                               ),
                               SizedBox(
@@ -124,12 +115,12 @@ class _AuthenticateState extends State<Authenticate> {
                                     right: 20,
                                     bottom: MediaQuery.of(context).viewInsets.bottom),
                                 child: Container(
-                                  height: 50,
-                                  width: MediaQuery.of(context).size.width,
                                   child: filledButton("REGISTER", Colors.white, Theme.of(context).primaryColor,
                                       Theme.of(context).primaryColor, Colors.white, () {
                                         Navigator.pushNamed(context, '/register');
                                       }),
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width,
                                 ),
                               ),
                               SizedBox(
@@ -139,6 +130,15 @@ class _AuthenticateState extends State<Authenticate> {
                           ),
                         ),
                       ],
+                    ),
+                    height: MediaQuery.of(context).size.height * 0.95,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/login/beach.png"),
+                        fit: BoxFit.fitWidth,
+                        alignment: Alignment.bottomCenter,
+                      ),
                     ),
                   ),
                 ),

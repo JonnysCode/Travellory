@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
 class UserManagement {
-  static void setUsername(FirebaseUser user) {
+  static setUsername(FirebaseUser user) {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'user-setUsername',
     );
@@ -13,9 +13,7 @@ class UserManagement {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'user-isUsernameAvailable',
     );
-
-    final result = await callable.call({'displayName': '$username'});
-
+    final dynamic result = await callable.call({'displayName': '$username'});
     return result.data['isAvailable'];
   }
 }
