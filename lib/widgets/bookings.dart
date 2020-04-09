@@ -20,7 +20,7 @@ Function() onSubmitBooking(Model model, String functionName, BuildContext contex
 
 void Function() onSubmitTrip(TripModel tripModel, String functionName, BuildContext context, alertText) {
   return () async {
-    bool added = await DatabaseAdder.addModel(tripModel, functionName);
+    final bool added = await DatabaseAdder.addModel(tripModel, functionName);
     if (added) {
       showSubmittedTripDialog(context, alertText);
     } else {
