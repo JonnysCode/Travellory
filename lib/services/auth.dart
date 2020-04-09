@@ -1,32 +1,50 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:travellory/models/user.dart';
+import 'package:travellory/models/user_model.dart';
+import 'package:travellory/services/user_management.dart';
 
 abstract class BaseAuthService {
   Future signInAnonymously();
   Future signInWithEmailAndPassword(String email, String password);
-  Future registerWithEmailAndPassword(String email, String password);
+  Future registerWithEmailAndPassword(
+      String email, String password, String displayName);
   Future signOut();
-  Stream<User> get user;
+  Future getCurrentUser();
+  Stream<UserModel> get user;
 }
 
 class AuthService implements BaseAuthService {
+  AuthService({this.auth}){
+    if(auth == null){
+      auth = FirebaseAuth.instance;
+    }
+  }
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseAuth auth;
 
   // create User object based on firebase user
-  User _userFromFirebaseUser(FirebaseUser user){
-    return user != null ? User(uid: user.uid) : null;
+  UserModel _userFromFirebaseUser(FirebaseUser user) {
+    return user != null
+        ? UserModel(uid: user.uid, displayName: user.displayName)
+        : null;
   }
 
   // auth change user stream
-  Stream<User> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+  @override
+  Stream<UserModel> get user {
+    return auth.onAuthStateChanged.map(_userFromFirebaseUser);
+  }
+
+  // get current user
+  @override
+  Future getCurrentUser() async {
+    return auth.currentUser();
   }
 
   // sign in anonymously
+  @override
   Future signInAnonymously() async {
     try {
-      AuthResult result = await _auth.signInAnonymously();
+      AuthResult result = await auth.signInAnonymously();
       FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
     } catch (e) {
@@ -36,12 +54,14 @@ class AuthService implements BaseAuthService {
   }
 
   // sign in with email and password
+  @override
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      final AuthResult result = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
       FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
-    } catch(e) {
+    } catch (e) {
       print(e.toString()); // todo: logging and error handling
       return null;
     }
@@ -54,12 +74,25 @@ class AuthService implements BaseAuthService {
   // sign in with facebook
 
   // register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  @override
+  Future registerWithEmailAndPassword(
+      String email, String password, String displayName) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      final AuthResult result = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       FirebaseUser firebaseUser = result.user;
+
+      final UserUpdateInfo updateInfo = UserUpdateInfo()
+        ..displayName = displayName;
+
+      await firebaseUser.updateProfile(updateInfo);
+      await firebaseUser.reload();
+      firebaseUser = await auth.currentUser();
+
+      UserManagement.setUsername(firebaseUser);
+
       return _userFromFirebaseUser(firebaseUser);
-    } catch(e) {
+    } catch (e) {
       print(e.toString()); // todo: logging and error handling
       return null;
     }
@@ -74,11 +107,10 @@ class AuthService implements BaseAuthService {
   // sign out
   Future signOut() async {
     try {
-      return await _auth.signOut();
+      return await auth.signOut();
     } catch (e) {
       print(e.toString()); // todo: exeption handling, logging
       return null;
     }
   }
-
 }
