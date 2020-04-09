@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   static const List<Dial> _dials = <Dial>[
     Dial(
       icon: FontAwesomeIcons.envelope,
-      description: 'Manage sent bookings'
+      description: 'Manage forwarded bookings'
     ),
     Dial(
         icon: FontAwesomeIcons.theaterMasks,
