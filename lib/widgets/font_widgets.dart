@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 
 enum FashionFontWeight {
-  LIGHT, NORMAL, BOLD, HEAVY
+  light, normal, bold, heavy
 }
 
 class FashionFetishText extends StatelessWidget {
-  final String text;
-  final double size;
-  final FashionFontWeight fontWeight;
-  final Color color;
-  final double height;
-
-  FashionFetishText({
+  const FashionFetishText({
     @required this.text,
     @required this.size,
     this.fontWeight,
@@ -19,13 +13,19 @@ class FashionFetishText extends StatelessWidget {
     this.height,
   });
 
+  final String text;
+  final double size;
+  final FashionFontWeight fontWeight;
+  final Color color;
+  final double height;
+
   FontWeight _getFontWeight(){
     switch(fontWeight){
-      case FashionFontWeight.LIGHT:
+      case FashionFontWeight.light:
         return FontWeight.w200;
-      case FashionFontWeight.BOLD :
+      case FashionFontWeight.bold :
         return FontWeight.w600;
-      case FashionFontWeight.HEAVY :
+      case FashionFontWeight.heavy :
         return FontWeight.w900;
       default :
         return FontWeight.normal;

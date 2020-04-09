@@ -10,7 +10,7 @@ void main() {
     );
   }
 
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('test if CalendarPage is loaded', (WidgetTester tester) async {
     Widget page = CalendarPage();
 
     // Build our app and trigger a frame.

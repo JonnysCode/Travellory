@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/screens/trip/trip_card.dart';
+import 'package:travellory/widgets/trip/trip_card.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,6 +8,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  Widget _bottomMargin(){
+    return SizedBox(
+      height: 62,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,32 +44,30 @@ class _HomePageState extends State<HomePage> {
                   Positioned(
                     top: 24,
                     right: 42,
-                    child: Container(
-                      child: Text(
-                        'Add trip',
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontFamily: 'FashionFetish',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          letterSpacing: -2.0,
-                        ),
-                        textAlign: TextAlign.left,
+                    child: Text(
+                      'Add trip',
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontFamily: 'FashionFetish',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                        letterSpacing: -2.0,
                       ),
+                      textAlign: TextAlign.left,
                     ),
                   ),
                   Positioned(
                     top: 10,
                     right: 0,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () => _openCreateTripScreen(),
                       child: Container(
                         height: 36,
                         width: 36,
                         padding: EdgeInsets.only(top: 20, right: 10),
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage("assets/images/home/trip/add.png"),
+                            image: AssetImage('assets/images/home/trip/add.png'),
                             fit: BoxFit.fitWidth,
                             alignment: Alignment.bottomCenter,
                           ),
@@ -80,17 +85,25 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: ListView.separated(
               padding: const EdgeInsets.all(10),
-              itemCount: tripModels.length,
-              itemBuilder: (BuildContext context, int index) {
-                TripModel tripModel = tripModels[index];
-                tripModel.index = index;
-                return TripCard(tripModel: tripModel);
+              itemCount: tripModels.length + 1,
+              itemBuilder: (context, index) {
+                if(index < tripModels.length){
+                  final tripModel = tripModels[index];
+                  tripModel.index = index;
+                  return TripCard(tripModel: tripModel);
+                } else {
+                  return  _bottomMargin();
+                }
               },
-              separatorBuilder: (BuildContext context, int index) => const Divider(),
+              separatorBuilder: (context, index) => const Divider(),
             ),
-          )
+          ),
         ],
       ),
     );
+  }
+
+  void _openCreateTripScreen() {
+    Navigator.pushNamed(context, '/createtrip');
   }
 }
