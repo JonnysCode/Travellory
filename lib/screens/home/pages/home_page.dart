@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                 text: '24\u00B0',
                 size: 24,
                 color: Colors.black87,
-                fontWeight: FashionFontWeight.BOLD,
+                fontWeight: FashionFontWeight.bold,
               ),
             ),
             Positioned(
@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                 child: FashionFetishText(
                   text: 'Get ready Bill!',
                   size: 24,
-                  fontWeight: FashionFontWeight.HEAVY,
+                  fontWeight: FashionFontWeight.heavy,
                   height: 1.2,
                 ),
               ),
@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                         text: 'California Camper Tour',
                         size: 20,
                         height: 1.6,
-                        fontWeight: FashionFontWeight.HEAVY,
+                        fontWeight: FashionFontWeight.heavy,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),

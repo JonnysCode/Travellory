@@ -1,28 +1,27 @@
 
-class DateConverter{
-  static final List<String> monthsShortened = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-  ];
+String toDateStringFrom(DateTime dateTime){
+  return dateTime.toString().substring(0, 10);
+}
 
-  static String format(String date){
-    StringBuffer dateBuffer = StringBuffer();
-    List<String> dateItems = date.split("-");
-    String day = dateItems[2];
-    dateBuffer.write(day.startsWith('0') ? day.substring(1) : day);
-    dateBuffer.write(' ');
-    dateBuffer.write(monthsShortened[int.parse(dateItems[1])-1]);
-    dateBuffer.write(' ');
-    dateBuffer.write(dateItems[0]);
+DateTime getDateTimeFrom(String date){
+  List<String> dates = date.split('-');
+  return DateTime(int.parse(dates[0]), int.parse(dates[1]), int.parse(dates[2]));
+}
 
-    return dateBuffer.toString();
-  }
+final List<String> monthsShortened = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+];
 
-  static String toDateStringFrom(DateTime dateTime){
-    return dateTime.toString().substring(0, 10);
-  }
+String toShortenedMonthDateFrom(String date){
+  final List<String> dateItems = date.split("-");
+  final String day = dateItems[2];
 
-  static DateTime getDateTimeFrom(String date){
-    List<String> dates = date.split('-');
-    return DateTime(int.parse(dates[0]), int.parse(dates[1]), int.parse(dates[2]));
-  }
+  final StringBuffer dateBuffer = StringBuffer()
+    ..write(day.startsWith('0') ? day.substring(1) : day)
+    ..write(' ')
+    ..write(monthsShortened[int.parse(dateItems[1])-1])
+    ..write(' ')
+    ..write(dateItems[0]);
+
+  return dateBuffer.toString();
 }
