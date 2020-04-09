@@ -164,19 +164,19 @@ class _RegisterState extends State<Register> {
                                         top: 40,
                                       ),
                                       child: inputAuthentication(Icon(FontAwesomeIcons.userAlt), "USERNAME", Theme.of(context).primaryColor,
-                                          _nameController, ValidatorType.USERNAME, false),
+                                          _nameController, ValidatorType.USERNAME, false, null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
                                         bottom: 10,
                                       ),
                                       child: inputAuthentication(Icon(FontAwesomeIcons.solidEnvelope), "EMAIL", Theme.of(context).primaryColor,
-                                          _emailController, ValidatorType.EMAIL, false),
+                                          _emailController, ValidatorType.EMAIL, false, null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
                                       child: inputAuthentication(Icon(FontAwesomeIcons.unlockAlt), "PASSWORD", Theme.of(context).primaryColor,
-                                          _passwordController, ValidatorType.PASSWORD, true),
+                                          _passwordController, ValidatorType.PASSWORD, true, null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
