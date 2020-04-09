@@ -17,23 +17,24 @@ class PublicTransportModel extends Model {
   String arrivalTime;
   String notes;
 
+  @override
   Map<String, dynamic> toMap(){
     return {
-      "transportationType": transportationType,
-      "company": company,
-      "specificType": specificType,
-      "booked": booked,
-      "seatReservation": seatReservation,
-      "reference": reference,
-      "companyReservation": companyReservation,
-      "seat": seat,
-      "departureLocation": departureLocation,
-      "departureDate": departureDate,
-      "departureTime": departureTime,
-      "arrivalLocation": arrivalLocation,
-      "arrivalDate": arrivalDate,
-      "arrivalTime": arrivalTime,
-      "notes": notes
+      'transportationType': transportationType,
+      'company': company,
+      'specificType': specificType,
+      'booked': booked,
+      'seatReservation': seatReservation,
+      'reference': reference,
+      'companyReservation': companyReservation,
+      'seat': seat,
+      'departureLocation': departureLocation,
+      'departureDate': departureDate,
+      'departureTime': departureTime,
+      'arrivalLocation': arrivalLocation,
+      'arrivalDate': arrivalDate,
+      'arrivalTime': arrivalTime,
+      'notes': notes
     };
   }
 }

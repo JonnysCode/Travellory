@@ -19,7 +19,7 @@ class _CalendarPageState extends State<CalendarPage> {
     super.initState();
   }
 
-  _toggleList() {
+  void _toggleList() {
     setState(() {
       _tripToggle = !_tripToggle;
     });

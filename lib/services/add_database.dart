@@ -3,12 +3,13 @@ import 'package:travellory/models/abstract_model.dart';
 
 class DatabaseAdder {
   // adds Model to the database
-  void addModel(Model model, String correspondingFunctionName) async {
+  static Future<bool> addModel(Model model, String correspondingFunctionName) async {
     final HttpsCallable callable =
         CloudFunctions.instance.getHttpsCallable(functionName: correspondingFunctionName);
     try {
       final HttpsCallableResult result = await callable.call(model.toMap());
       print(result.data);
+      return Future<bool>.value(true);
     } on CloudFunctionsException catch (e) {
       print('caught firebase functions exception');
       print(e.code);
@@ -18,5 +19,6 @@ class DatabaseAdder {
       print('caught generic exception');
       print(e);
     }
+    return Future<bool>.value(true);
   }
 }
