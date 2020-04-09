@@ -32,7 +32,7 @@ class RentalCarSchedule extends StatelessWidget {
                 FashionFetishText(
                   text: 'Pick up your car here:',
                   size: 16,
-                  fontWeight: FashionFontWeight.HEAVY,
+                  fontWeight: FashionFontWeight.heavy,
                   height: 1.2,
                 ),
                 SizedBox(height: 3),

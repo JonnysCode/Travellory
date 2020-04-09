@@ -28,7 +28,7 @@ class _TripListState extends State<TripList> {
                       text: 'Upcoming Trips',
                       size: 22,
                       height: 1.15,
-                      fontWeight: FashionFontWeight.HEAVY,
+                      fontWeight: FashionFontWeight.heavy,
                     ),
                   ),
                   Positioned(
@@ -38,7 +38,7 @@ class _TripListState extends State<TripList> {
                       text: 'Add',
                       size: 16,
                       color: Colors.black54,
-                      fontWeight: FashionFontWeight.BOLD,
+                      fontWeight: FashionFontWeight.bold,
                     ),
                   ),
                   Positioned(

@@ -30,8 +30,8 @@ class TripModel extends Model {
 
   void _initDays() {
     days = <Day>[];
-    var dateTime = DateConverter.getDateTimeFrom(startDate);
-    var endDateTime = DateConverter.getDateTimeFrom(endDate);
+    var dateTime = getDateTimeFrom(startDate);
+    var endDateTime = getDateTimeFrom(endDate);
 
     do {
       days.add(Day(
