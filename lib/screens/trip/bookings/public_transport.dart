@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/list_models.dart';
-import 'package:travellory/widgets/bookings.dart';
+import 'package:travellory/screens/trip/bookings/bookings.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
