@@ -36,8 +36,8 @@ class AuthService implements BaseAuthService {
 
   // get current user
   @override
-  Future getCurrentUser() async{
-    return await auth.currentUser();
+  Future getCurrentUser() async {
+    return auth.currentUser();
   }
 
   // sign in anonymously
@@ -81,6 +81,7 @@ class AuthService implements BaseAuthService {
       final AuthResult result = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser firebaseUser = result.user;
+
       final UserUpdateInfo updateInfo = UserUpdateInfo()
         ..displayName = displayName;
 
