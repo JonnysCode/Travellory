@@ -24,34 +24,33 @@ class _RegisterState extends State<ChangePassword> {
   TextEditingController _oldPasswordController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  String _error = '';
+  String _error;
 
-  //TODO: info for hessgia tried to implement it with this method
-//  Future _validateSignIn() async {
-//    if (_formKey.currentState.validate()) {
-//      Navigator.pushNamed(context, '/loading');
-//      final user = await _changePassword(context);
-//
-//      if(user == null){
-//        Navigator.pop(context);
-//        setState(() {
-//          _error = 'Could not sign in with those credentials.';
-//        });
-//      } else {
-//        Navigator.popUntil(context, ModalRoute.withName('/'),
-//        );
-//      }
-//    }
-//  }
+//TODO: info for hessgia tried to implement it with this method
+  Future _validateSignIn() async {
+    if (_formKey.currentState.validate()) {
+      Navigator.pushNamed(context, '/loading');
+
+     final user = await _changePassword(context);
+
+      if(user == null){
+        Navigator.pop(context);
+        setState(() => _error = 'Please supply a valid password.');
+      } else {
+        Navigator.popUntil(context, ModalRoute.withName('/'),
+        );
+      }
+    }
+  }
 
 
   Future _changePassword(BuildContext context) async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    dynamic result = await _auth.reauthenticate(_oldPasswordController.text, _passwordController.text);
-    if(result == null){
-      Navigator.pop(context);
-      setState(() => _error = 'Please supply a valid password.');
-    }
+    await _auth.reauthenticate(_oldPasswordController.text, _passwordController.text).then((result) {
+      return result;
+    }).catchError((error) {
+      return null;
+    });
   }
 
   @override
@@ -145,12 +144,12 @@ class _RegisterState extends State<ChangePassword> {
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
                                       child: inputAuthentication(Icon(FontAwesomeIcons.unlockAlt), "OLD PASSWORD", Theme.of(context).primaryColor,
-                                          _oldPasswordController, ValidatorType.PASSWORD, true),
+                                          _oldPasswordController, ValidatorType.PASSWORD, true, _error),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
                                       child: inputAuthentication(Icon(FontAwesomeIcons.unlockAlt), "NEW PASSWORD", Theme.of(context).primaryColor,
-                                          _passwordController, ValidatorType.PASSWORD, true),
+                                          _passwordController, ValidatorType.PASSWORD, true, null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
@@ -159,21 +158,7 @@ class _RegisterState extends State<ChangePassword> {
                                           bottom: MediaQuery.of(context).viewInsets.bottom),
                                       child: Container(
                                         child: filledButton("SAVE", Colors.white, Theme.of(context).primaryColor,
-                                            Theme.of(context).primaryColor, Colors.white, () async {
-                                              if (_formKey.currentState.validate()) {
-                                                Navigator.pushNamed(context, '/loading');
-                                                dynamic result = await _changePassword(context);
-                                                if (result == null) {
-                                                  setState(() {
-                                                    _error = 'Please supply a valid password.';
-                                                  });
-                                                  Navigator.popUntil(
-                                                    context,
-                                                    ModalRoute.withName('/'),
-                                                  );
-                                                }
-                                              }
-                                            }),
+                                            Theme.of(context).primaryColor, Colors.white, _validateSignIn),
                                         height: 50,
                                         width: MediaQuery.of(context).size.width,
                                       ),
