@@ -36,26 +36,16 @@ class AuthService implements BaseAuthService {
 
   // get current user
   @override
-<<<<<<< HEAD
   Future getCurrentUser() async {
     return auth.currentUser();
-=======
-  Future getCurrentUser() async{
-    return _auth.currentUser();
->>>>>>> d3a4d1b... Refactor remove code smells
   }
 
   // sign in anonymously
   @override
   Future signInAnonymously() async {
     try {
-<<<<<<< HEAD
-      AuthResult result = await auth.signInAnonymously();
-      FirebaseUser user = result.user;
-=======
-      final AuthResult result = await _auth.signInAnonymously();
+      final AuthResult result = await auth.signInAnonymously();
       final FirebaseUser user = result.user;
->>>>>>> d3a4d1b... Refactor remove code smells
       return _userFromFirebaseUser(user);
     } catch (e) {
       // todo: error handling -> logging
@@ -67,11 +57,7 @@ class AuthService implements BaseAuthService {
   @override
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-<<<<<<< HEAD
       final AuthResult result = await auth.signInWithEmailAndPassword(
-=======
-      final AuthResult result = await _auth.signInWithEmailAndPassword(
->>>>>>> d3a4d1b... Refactor remove code smells
           email: email, password: password);
       final FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
@@ -92,7 +78,6 @@ class AuthService implements BaseAuthService {
   Future registerWithEmailAndPassword(
       String email, String password, String displayName) async {
     try {
-<<<<<<< HEAD
       final AuthResult result = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser firebaseUser = result.user;
@@ -100,13 +85,6 @@ class AuthService implements BaseAuthService {
       final UserUpdateInfo updateInfo = UserUpdateInfo()
         ..displayName = displayName;
 
-=======
-      final AuthResult result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      FirebaseUser firebaseUser = result.user;
-      final UserUpdateInfo updateInfo = UserUpdateInfo();
-      updateInfo.displayName = displayName;
->>>>>>> d3a4d1b... Refactor remove code smells
       await firebaseUser.updateProfile(updateInfo);
       await firebaseUser.reload();
       firebaseUser = await auth.currentUser();
