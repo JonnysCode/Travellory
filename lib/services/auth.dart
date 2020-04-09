@@ -13,7 +13,13 @@ abstract class BaseAuthService {
 }
 
 class AuthService implements BaseAuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  AuthService({this.auth}){
+    if(auth == null){
+      auth = FirebaseAuth.instance;
+    }
+  }
+
+  FirebaseAuth auth;
 
   // create User object based on firebase user
   UserModel _userFromFirebaseUser(FirebaseUser user) {
@@ -25,20 +31,20 @@ class AuthService implements BaseAuthService {
   // auth change user stream
   @override
   Stream<UserModel> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+    return auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
   // get current user
   @override
   Future getCurrentUser() async{
-    return await _auth.currentUser();
+    return await auth.currentUser();
   }
 
   // sign in anonymously
   @override
   Future signInAnonymously() async {
     try {
-      AuthResult result = await _auth.signInAnonymously();
+      AuthResult result = await auth.signInAnonymously();
       FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
     } catch (e) {
@@ -51,7 +57,7 @@ class AuthService implements BaseAuthService {
   @override
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      final AuthResult result = await _auth.signInWithEmailAndPassword(
+      final AuthResult result = await auth.signInWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
@@ -72,7 +78,7 @@ class AuthService implements BaseAuthService {
   Future registerWithEmailAndPassword(
       String email, String password, String displayName) async {
     try {
-      final AuthResult result = await _auth.createUserWithEmailAndPassword(
+      final AuthResult result = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser firebaseUser = result.user;
       final UserUpdateInfo updateInfo = UserUpdateInfo()
@@ -80,7 +86,7 @@ class AuthService implements BaseAuthService {
 
       await firebaseUser.updateProfile(updateInfo);
       await firebaseUser.reload();
-      firebaseUser = await _auth.currentUser();
+      firebaseUser = await auth.currentUser();
 
       UserManagement.setUsername(firebaseUser);
 
@@ -100,7 +106,7 @@ class AuthService implements BaseAuthService {
   // sign out
   Future signOut() async {
     try {
-      return await _auth.signOut();
+      return await auth.signOut();
     } catch (e) {
       print(e.toString()); // todo: exeption handling, logging
       return null;
