@@ -32,7 +32,7 @@ class AccommodationSchedule extends StatelessWidget {
                 FashionFetishText(
                   text: 'Novotel Suites',
                   size: 13,
-                  fontWeight: FashionFontWeight.HEAVY,
+                  fontWeight: FashionFontWeight.heavy,
                   height: 1.2,
                 ),
                 SizedBox(height: 2),

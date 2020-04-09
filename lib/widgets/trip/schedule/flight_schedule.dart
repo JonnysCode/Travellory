@@ -88,7 +88,7 @@ class Airport extends StatelessWidget {
         FashionFetishText(
           text: code,
           size: 24,
-          fontWeight: FashionFontWeight.BOLD,
+          fontWeight: FashionFontWeight.bold,
           height: 1.1,
           color: Colors.black54,
         ),

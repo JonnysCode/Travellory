@@ -6,7 +6,7 @@ class Day {
   Day({
     @required this.date,
   }){
-    dateString = DateConverter.toDateStringFrom(date);
+    dateString = toDateStringFrom(date);
   }
 
   DateTime date;

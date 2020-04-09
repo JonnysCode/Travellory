@@ -47,7 +47,7 @@ class _DayCircleState extends State<DayCircle> {
             color: Colors.white,
             textAlign: TextAlign.center,
             size: 22,
-            fontWeight: FashionFontWeight.BOLD,
+            fontWeight: FashionFontWeight.bold,
           ),
         ),
       ),
