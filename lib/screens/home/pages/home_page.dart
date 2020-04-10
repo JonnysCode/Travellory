@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/widgets/bookings.dart';
 import 'package:travellory/widgets/trip/trip_card.dart';
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:travellory/models/user_model.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,8 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  Widget _bottomMargin(){
+  Widget _bottomMargin() {
     return SizedBox(
       height: 62,
     );
@@ -17,93 +20,125 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      key: Key('home_page'),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 65, left: 25, right: 25),
-            child: Container(
-              height: 56,
-              width: MediaQuery.of(context).size.width,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    width: 200,
-                    child: Text(
-                      'Upcoming trips',
-                      style: TextStyle(
-                          fontFamily: 'FashionFetish',
-                          fontWeight: FontWeight.w900,
-                          fontSize: 24,
-                          letterSpacing: -2.0,
-                          height: 1.15
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 24,
-                    right: 42,
-                    child: Text(
-                      'Add trip',
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontFamily: 'FashionFetish',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                        letterSpacing: -2.0,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  Positioned(
-                    top: 10,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () => _openCreateTripScreen(),
-                      child: Container(
-                        height: 36,
-                        width: 36,
-                        padding: EdgeInsets.only(top: 20, right: 10),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/home/trip/add.png'),
-                            fit: BoxFit.fitWidth,
-                            alignment: Alignment.bottomCenter,
+    Future<List<TripModel>> list =
+        _getTrips(Provider.of<UserModel>(context).uid);
+
+    return FutureBuilder<List<TripModel>>(
+      future: list,
+      builder: (BuildContext context, AsyncSnapshot<List<TripModel>> snapshot) {
+        return Container(
+            key: Key('home_page'),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 65, left: 25, right: 25),
+                  child: Container(
+                    height: 56,
+                    width: MediaQuery.of(context).size.width,
+                    child: Stack(
+                      children: <Widget>[
+                        Container(
+                          width: 200,
+                          child: Text(
+                            'Upcoming trips',
+                            style: TextStyle(
+                                fontFamily: 'FashionFetish',
+                                fontWeight: FontWeight.w900,
+                                fontSize: 24,
+                                letterSpacing: -2.0,
+                                height: 1.15),
                           ),
                         ),
-                      ),
+                        Positioned(
+                          top: 24,
+                          right: 42,
+                          child: Text(
+                            'Add trip',
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontFamily: 'FashionFetish',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              letterSpacing: -2.0,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        Positioned(
+                          top: 10,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () => _openCreateTripScreen(),
+                            child: Container(
+                              height: 36,
+                              width: 36,
+                              padding: EdgeInsets.only(top: 20, right: 10),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/home/trip/add.png'),
+                                  fit: BoxFit.fitWidth,
+                                  alignment: Alignment.bottomCenter,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.all(10),
-              itemCount: tripModels.length + 1,
-              itemBuilder: (context, index) {
-                if(index < tripModels.length){
-                  final tripModel = tripModels[index];
-                  tripModel.index = index;
-                  return TripCard(tripModel: tripModel);
-                } else {
-                  return  _bottomMargin();
-                }
-              },
-              separatorBuilder: (context, index) => const Divider(),
-            ),
-          ),
-        ],
-      ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  child: ListView.separated(
+                    padding: const EdgeInsets.all(10),
+                    itemCount: tripModels.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index < tripModels.length) {
+                        final tripModel = tripModels[index];
+                        tripModel.index = index;
+                        return TripCard(tripModel: tripModel);
+                      } else {
+                        return _bottomMargin();
+                      }
+                    },
+                    separatorBuilder: (context, index) => const Divider(),
+                  ),
+                ),
+              ],
+            ));
+      },
     );
   }
 
   _openCreateTripScreen() {
     Navigator.pushNamed(context, '/createtrip');
   }
+}
+
+Future<List<TripModel>> _getTrips(String userUID) async {
+  final HttpsCallable callable =
+      CloudFunctions.instance.getHttpsCallable(functionName: "trips-getTrips");
+  try {
+    final HttpsCallableResult result = await callable.call(getTrips(userUID));
+    List<dynamic> trips = result.data;
+    List<TripModel> list = createTrips(trips);
+    return list;
+  } on CloudFunctionsException catch (e) {
+    // TODO: error handling
+    print('caught firebase functions exception');
+    print(e.code);
+    print(e.message);
+    print(e.details);
+  } catch (e) {
+    // TODO: error handling
+    print('caught generic exception');
+    print(e);
+  }
+}
+
+Map<String, dynamic> getTrips(String userUID) {
+  return {"userUID": userUID};
 }

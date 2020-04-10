@@ -8,14 +8,15 @@ class DatabaseAdder {
         CloudFunctions.instance.getHttpsCallable(functionName: correspondingFunctionName);
     try {
       final HttpsCallableResult result = await callable.call(model.toMap());
-      print(result.data);
       return Future<bool>.value(true);
     } on CloudFunctionsException catch (e) {
+      // TODO: error handling
       print('caught firebase functions exception');
       print(e.code);
       print(e.message);
       print(e.details);
     } catch (e) {
+      // TODO: error handling
       print('caught generic exception');
       print(e);
     }

@@ -150,8 +150,7 @@ class _CreateTripState extends State<CreateTrip> {
                           highlightColor: Theme.of(context).primaryColor,
                           fillColor: Theme.of(context).primaryColor,
                           validationFunction: validateForm,
-                          // TODO (johnny / nadine): add addtrip function name
-                          onSubmit: onSubmitTrip(tripModel, '...', context, alertText),
+                          onSubmit: onSubmitTrip(tripModel, 'trips-addTrip', context, alertText),
                         ),
                       ),
                     ),
