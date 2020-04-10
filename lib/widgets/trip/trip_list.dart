@@ -1,5 +1,9 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/models/user_model.dart';
+import 'package:travellory/screens/trip/bookings/bookings.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/trip_card.dart';
 
@@ -66,11 +70,14 @@ class _TripListState extends State<TripList> {
           ),
           Expanded(
             child: ListView.separated(
+
+
               padding: const EdgeInsets.all(10),
               itemCount: tripModels.length + 1,
               itemBuilder: (context, index) {
+                _getTrips( Provider.of<UserModel>(context).uid);
                 if(index < tripModels.length){
-                  final tripModel = tripModels[index] // TODO: Load trips from firestore
+                  final tripModel = tripModels[index]
                       ..index = index
                       ..init();
                   return TripCard(tripModel: tripModel);
@@ -91,4 +98,28 @@ class _TripListState extends State<TripList> {
       height: 40,
     );
   }
+}
+
+void _getTrips(String userUID) async {
+  final HttpsCallable callable =
+  CloudFunctions.instance.getHttpsCallable(functionName: "trips-getTrips");
+  try {
+    final HttpsCallableResult result = await callable.call(getTrips(userUID));
+    List<dynamic> trips = result.data;
+    createTrips(trips);
+  } on CloudFunctionsException catch (e) {
+    // TODO: error handling
+    print('caught firebase functions exception');
+    print(e.code);
+    print(e.message);
+    print(e.details);
+  } catch (e) {
+    // TODO: error handling
+    print('caught generic exception');
+    print(e);
+  }
+}
+
+Map<String, dynamic> getTrips(String userUID) {
+  return {"userUID": userUID};
 }
