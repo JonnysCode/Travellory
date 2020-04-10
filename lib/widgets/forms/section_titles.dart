@@ -27,7 +27,7 @@ class SectionTitle extends StatelessWidget {
               FashionFetishText(
                   text: sectionTitle,
                   size: 15.0,
-                  fontWeight: FashionFontWeight.BOLD,
+                  fontWeight: FashionFontWeight.bold,
                   color: Colors.black54),
             ],
           ),
@@ -60,7 +60,7 @@ class BookingSiteTitle extends StatelessWidget {
             child: FashionFetishText(
               text: bookingSiteTitle,
               size: 24,
-              fontWeight: FashionFontWeight.HEAVY,
+              fontWeight: FashionFontWeight.heavy,
               height: 1.05,
             )),
       ],

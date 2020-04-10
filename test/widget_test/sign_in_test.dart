@@ -19,7 +19,7 @@ void main() {
         ));
   }
 
-  prepareSignIn(String email, String password, WidgetTester tester) async {
+  Future<void> prepareSignIn(String email, String password, WidgetTester tester) async {
     // Enter text into the fields and tap the sign in button
     Finder emailField = find.byKey(Key('emailField'));
     await tester.enterText(emailField, email);
@@ -92,8 +92,8 @@ void main() {
 
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
-    // Verify that register does not get called
-    verifyNever(mockAuth.registerWithEmailAndPassword(email, password));
+    // Verify that sign in does not get called
+    verifyNever(mockAuth.signInWithEmailAndPassword(email, password));
   });
 
   testWidgets('non-empty email and password, call sign in',

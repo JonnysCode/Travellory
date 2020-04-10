@@ -3,17 +3,17 @@ import 'package:travellory/widgets/buttons.dart';
 
 import '../font_widgets.dart';
 
-void showSubmittedBookingDialog(
-    BuildContext context, String alertText) {
+void showSubmittedBookingDialog(BuildContext context, String alertText) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        key: Key('ShowSubmittedBookingDialog'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
           text: 'Submit Successful!',
           size: 18,
-          fontWeight: FashionFontWeight.HEAVY,
+          fontWeight: FashionFontWeight.heavy,
           height: 1.05,
         ),
         content: Text(alertText),
@@ -35,11 +35,12 @@ void showSubmittedTripDialog(BuildContext context, String alertText) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        key: Key('showSubmittedTripDialog'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
           text: 'Submit Successful!',
           size: 18,
-          fontWeight: FashionFontWeight.HEAVY,
+          fontWeight: FashionFontWeight.heavy,
           height: 1.05,
         ),
         content: Text(alertText),
@@ -58,11 +59,12 @@ void cancellingDialog(BuildContext context, String cancelDialog) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        key: Key('CancellingDialog'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
           text: 'Are you sure about this?',
           size: 18,
-          fontWeight: FashionFontWeight.HEAVY,
+          fontWeight: FashionFontWeight.heavy,
           height: 1.05,
         ),
         content: Text(cancelDialog),
@@ -85,17 +87,42 @@ void missingFormFieldInformationDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        key: Key('MissingFormFieldInformationDialog'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
           text: "Oops! Looks like something's not right...",
           size: 18,
-          fontWeight: FashionFontWeight.HEAVY,
+          fontWeight: FashionFontWeight.heavy,
           height: 1.05,
         ),
         content: Text(
             'The form is not complete. Please look at the marked fields and add the required information.'),
         actions: <Widget>[
           alertButton('Edit Booking', Theme.of(context).primaryColor, context, () async {
+            Navigator.pop(context);
+          }),
+        ],
+      );
+    },
+  );
+}
+
+void addToDataBaseFailedDialog(BuildContext context, String alertText) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        key: Key('AddToDataBaseFailedDialog'),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        title: FashionFetishText(
+          text: "Oh no! Looks like there's a problem...",
+          size: 18,
+          fontWeight: FashionFontWeight.heavy,
+          height: 1.05,
+        ),
+        content: Text(alertText),
+        actions: <Widget>[
+          alertButton("Try Again", Theme.of(context).hintColor, context, () async {
             Navigator.pop(context);
           }),
         ],
