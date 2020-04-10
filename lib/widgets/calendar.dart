@@ -9,7 +9,7 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  final Color calendarBackgroundColor = Colors.red;
+  final Color calendarBackgroundColor = Colors.orangeAccent;
   final DateTime today = DateTime.now();
 
   CalendarController _calendarController;
@@ -19,14 +19,14 @@ class _CalendarState extends State<Calendar> {
     final DateTime startDate = today.add(const Duration(days: -3));
     final DateTime endDate = startDate.add(const Duration(days: 6));
     meetings.add(
-        Meeting('TestTrip', startDate, endDate, calendarBackgroundColor, false));
+        Meeting('TestTrip', startDate, endDate, calendarBackgroundColor, true));
     return meetings;
   }
 
   @override
   void initState() {
     _calendarController = CalendarController();
-    _calendarController.displayDate = DateTime(2022, 02, 05);
+    _calendarController.displayDate = DateTime.now();
     super.initState();
   }
 

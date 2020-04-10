@@ -70,8 +70,9 @@ class _TripListState extends State<TripList> {
               itemCount: tripModels.length + 1,
               itemBuilder: (context, index) {
                 if(index < tripModels.length){
-                  final tripModel = tripModels[index];
-                  tripModel.index = index;
+                  final tripModel = tripModels[index] // TODO: Load trips from firestore
+                      ..index = index
+                      ..init();
                   return TripCard(tripModel: tripModel);
                 } else {
                   return  _bottomMargin();

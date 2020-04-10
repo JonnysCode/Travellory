@@ -12,10 +12,7 @@ class TripModel extends Model {
     this.destination,
     this.imageNr,
     this.index
-  }){
-    imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
-    _initDays();
-  }
+  });
 
   String userUID;
   String uid;
@@ -27,6 +24,15 @@ class TripModel extends Model {
   int imageNr;
   int index;
   List<Day> days;
+
+  void init(){
+    _initImagePath();
+    _initDays();
+  }
+
+  void _initImagePath(){
+    imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
+  }
 
   void _initDays() {
     days = <Day>[];
