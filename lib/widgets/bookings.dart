@@ -26,13 +26,13 @@ void Function() onSubmitTrip(TripModel tripModel, String functionName, BuildCont
   };
 }
 
-List<TripModel> createTrips(trips) {
+List<TripModel> createTrips(dbTrips) {
   // add to
-  List<TripModel> model = <TripModel>[];
-  for (Object t in trips) {
-    TripModel trip = TripModel.fromData(t);
-    model.add(trip);
+  List<TripModel> trips = <TripModel>[];
+  for (Object dbTrip in dbTrips) {
+    TripModel trip = TripModel.fromData(dbTrip);
+    trips.add(trip);
   }
-  tripModels = model;
+  tripModels = trips;
   return tripModels;
 }
