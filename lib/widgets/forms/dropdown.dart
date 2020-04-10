@@ -18,6 +18,7 @@ class TravelloryDropdownField extends StatefulWidget {
   final void Function(Item) onChanged;
   final String validatorText;
 
+  @override
   TravelloryDropdownFieldState createState() => TravelloryDropdownFieldState();
 }
 

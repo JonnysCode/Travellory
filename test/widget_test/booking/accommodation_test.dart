@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/screens/trip/accommodation.dart';
+import 'package:travellory/screens/trip/bookings/accommodation.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key key}) : super(key: key);
@@ -10,8 +10,8 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     TripModel tripModel = TripModel(
         name: 'Castle Discovery',
-        startDate: DateTime(2020, 5, 12),
-        endDate: DateTime(2020, 5, 25),
+        startDate: '2020-05-12',
+        endDate: '2020-05-25',
         destination: 'Munich',
         imageNr: 3);
     return GestureDetector(

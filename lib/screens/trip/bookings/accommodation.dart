@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/add_database.dart';
-import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/utils/list_models.dart';
+import 'package:travellory/widgets/bookings.dart';
 import 'package:travellory/widgets/buttons.dart';
-import 'package:travellory/widgets/checkbox_form_field.dart';
-import 'package:travellory/widgets/dropdown.dart';
-import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/form_field.dart';
-import 'package:travellory/widgets/section_titles.dart';
-import 'package:travellory/widgets/show_dialog.dart';
-import 'package:travellory/widgets/date_form_field.dart';
-import 'package:travellory/widgets/time_form_field.dart';
+import 'package:travellory/widgets/forms/checkbox_form_field.dart';
+import 'package:travellory/widgets/forms/dropdown.dart';
+import 'package:travellory/widgets/forms/form_field.dart';
+import 'package:travellory/widgets/forms/section_titles.dart';
+import 'package:travellory/widgets/forms/show_dialog.dart';
+import 'package:travellory/widgets/forms/date_form_field.dart';
+import 'package:travellory/widgets/forms/time_form_field.dart';
+
+import 'header.dart';
 
 class Accommodation extends StatefulWidget {
   @override
-  _AccommodationState createState() => new _AccommodationState();
+  _AccommodationState createState() => _AccommodationState();
 }
 
 class _AccommodationState extends State<Accommodation> {
   ListModel<Widget> accommodationList;
-  final accommodationFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> accommodationFormKey = GlobalKey<FormState>();
   final AccommodationModel accommodationModel = AccommodationModel();
   final DatabaseAdder databaseAdder = DatabaseAdder();
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  final _checkinDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _checkinDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
   TravelloryDropdownField accommodationTypeDropdown;
   Widget hotelAdditional;
@@ -55,7 +55,7 @@ class _AccommodationState extends State<Accommodation> {
 
     // don't put in build because it will be recreated on every build
     // with state changes this is not appreciated
-    List<Widget> shown = [
+    final List<Widget> shown = [
       BookingSiteTitle('Add Accommodation', Icons.hotel),
       SectionTitle('Accommodation Type'),
       accommodationTypeDropdown,
@@ -164,13 +164,16 @@ class _AccommodationState extends State<Accommodation> {
   final String alertText =
       "You've just submitted the booking information for your accommodation booking. You can see all the information in the trip overview";
 
+  final String cancelText =
+      'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
+
   List<Item> types = <Item>[
-    const Item('Hotel', Icon(Icons.hotel, color: const Color(0xFF167F67))),
-    const Item('Airbnb', Icon(Icons.hotel, color: const Color(0xFF167F67))),
-    const Item('Hostel', Icon(Icons.hotel, color: const Color(0xFF167F67))),
-    const Item('Motel', Icon(Icons.hotel, color: const Color(0xFF167F67))),
-    const Item('Bed & Breakfast', Icon(Icons.hotel, color: const Color(0xFF167F67))),
-    const Item('Other', Icon(Icons.hotel, color: const Color(0xFF167F67))),
+    const Item('Hotel', Icon(Icons.hotel, color: Color(0xFF167F67))),
+    const Item('Airbnb', Icon(Icons.hotel, color: Color(0xFF167F67))),
+    const Item('Hostel', Icon(Icons.hotel, color: Color(0xFF167F67))),
+    const Item('Motel', Icon(Icons.hotel, color: Color(0xFF167F67))),
+    const Item('Bed & Breakfast', Icon(Icons.hotel, color: Color(0xFF167F67))),
+    const Item('Other', Icon(Icons.hotel, color: Color(0xFF167F67))),
   ];
 
   Widget _itemBuilder(BuildContext context, int index, Animation<double> animation) {
@@ -183,26 +186,21 @@ class _AccommodationState extends State<Accommodation> {
 
   @override
   Widget build(BuildContext context) {
-    final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
-
-    void returnToTripScreen() {
-      Navigator.pop(context);
-    }
+    final TripModel tripModel = ModalRoute.of(context).settings.arguments;
 
     // replace widget to get the context
     accommodationList[accommodationList.length - 3] = SubmitButton(
-        highlightColor: Theme.of(context).primaryColor,
-        fillColor: Theme.of(context).primaryColor,
-        validationFunction: validateForm,
-        onSubmit: () async {
-          databaseAdder.addModel(accommodationModel, 'booking-addAccommodation');
-          showSubmittedBookingDialog(context, alertText, returnToTripScreen);
-        });
+      highlightColor: Theme.of(context).primaryColor,
+      fillColor: Theme.of(context).primaryColor,
+      validationFunction: validateForm,
+      onSubmit: onSubmitBooking(
+          accommodationModel, 'booking-addAccommodation', context, alertText),
+    );
 
     accommodationList[accommodationList.length - 2] = CancelButton(
       text: 'CANCEL',
       onCancel: () {
-        cancellingDialog(context);
+        cancellingDialog(context, cancelText);
       },
     );
 
@@ -213,101 +211,7 @@ class _AccommodationState extends State<Accommodation> {
         color: Colors.white,
         child: Column(
           children: <Widget>[
-            Container(
-              height: 190,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80)),
-                color: Color(0xFFCCD7DD),
-              ),
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: IconButton(
-                      onPressed: () => returnToTripScreen(),
-                      icon: FaIcon(FontAwesomeIcons.times),
-                      iconSize: 26,
-                      color: Colors.red,
-                    ),
-                  ),
-                  Positioned(
-                    top: -30,
-                    left: -40,
-                    child: Hero(
-                      tag: 'trip_image${_tripModel.index.toString()}',
-                      child: Container(
-                        height: 220,
-                        width: 220,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(_tripModel.imagePath),
-                            fit: BoxFit.fitWidth,
-                            alignment: Alignment.bottomCenter,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 180,
-                    child: Container(
-                      padding: EdgeInsets.only(top: 40, left: 10, right: 10),
-                      alignment: Alignment.topLeft,
-                      width: MediaQuery.of(context).size.width,
-                      constraints: BoxConstraints(
-                          maxHeight: 100.0, maxWidth: MediaQuery.of(context).size.width - 200),
-                      child: FashionFetishText(
-                        text: _tripModel.name,
-                        size: 24,
-                        fontWeight: FashionFontWeight.HEAVY,
-                        height: 1.05,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 110,
-                    left: 190,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        FashionFetishText(
-                            text: 'From: ${DateConverter.format(_tripModel.startDate)}' +
-                                '\n' +
-                                'To: ${DateConverter.format(_tripModel.endDate)}',
-                            color: Colors.black54,
-                            fontWeight: FashionFontWeight.BOLD,
-                            size: 14,
-                            height: 1.25),
-                        SizedBox(
-                          height: 12,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Icon(
-                              FontAwesomeIcons.locationArrow,
-                              size: 15,
-                              color: Colors.redAccent,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 6, left: 3),
-                              child: FashionFetishText(
-                                text: _tripModel.destination,
-                                size: 14,
-                                fontWeight: FashionFontWeight.HEAVY,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            getBookingHeader(context, tripModel),
             Expanded(
                 //child: Form(
                 child: Container(
