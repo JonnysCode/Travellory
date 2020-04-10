@@ -47,7 +47,7 @@ class InputValidator {
       // the form is empty
       return 'Enter a username';
     }
-
+    
     const Pattern pattern =
         r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
     final RegExp regex = RegExp(pattern);
