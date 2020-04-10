@@ -5,11 +5,12 @@ import 'package:travellory/services/auth.dart';
 import 'package:travellory/utils/input_validator.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
+import 'package:pedantic/pedantic.dart';
 
 class SignIn extends StatefulWidget {
+  const SignIn({ this.toggleView });
 
   final Function toggleView;
-  const SignIn({ this.toggleView });
 
   @override
   _SignInState createState() => _SignInState();
@@ -26,7 +27,7 @@ class _SignInState extends State<SignIn> {
 
   Future _validateSignIn() async {
     if (_formKey.currentState.validate()) {
-      Navigator.pushNamed(context, '/loading');
+      unawaited(Navigator.pushNamed(context, '/loading'));
       final user = await _signIn();
 
       if(user == null){
@@ -75,9 +76,20 @@ class _SignInState extends State<SignIn> {
                     topLeft: Radius.circular(40.0),
                     topRight: Radius.circular(40.0)),
                 child: Container(
+                  height: MediaQuery.of(context).size.height * 0.95,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/login/beach.png"),
+                      fit: BoxFit.fitWidth,
+                      alignment: Alignment.bottomCenter,
+                    ),
+                  ),
                   child: ListView(
                     children: <Widget>[
                       Container(
+                        height: 50,
+                        width: 50,
                         child: Stack(
                           children: <Widget>[
                             Positioned(
@@ -109,8 +121,6 @@ class _SignInState extends State<SignIn> {
                             )
                           ],
                         ),
-                        height: 50,
-                        width: 50,
                       ),
                       SingleChildScrollView(
                         child: Column(
@@ -122,6 +132,7 @@ class _SignInState extends State<SignIn> {
                                 children: <Widget>[
                                   Positioned(
                                     child: Align(
+                                      alignment: Alignment.center,
                                       child: Container(
                                         width: 130,
                                         height: 130,
@@ -130,11 +141,11 @@ class _SignInState extends State<SignIn> {
                                           color: Theme.of(context).primaryColor,
                                         ),
                                       ),
-                                      alignment: Alignment.center,
                                     ),
                                   ),
                                   Positioned(
                                     child: Container(
+                                      alignment: Alignment.center,
                                       child: Text(
                                         "LOGIN",
                                         style: TextStyle(
@@ -143,7 +154,6 @@ class _SignInState extends State<SignIn> {
                                           color: Color(0xFFF7EDEE),
                                         ),
                                       ),
-                                      alignment: Alignment.center,
                                     ),
                                   ),
                                 ],
@@ -170,16 +180,16 @@ class _SignInState extends State<SignIn> {
                                           right: 20,
                                           bottom: MediaQuery.of(context).viewInsets.bottom),
                                       child: Container(
-                                        child: filledButton(
-                                          "LOGIN",
-                                          Colors.white,
-                                          Theme.of(context).primaryColor,
-                                          Theme.of(context).primaryColor,
-                                          Colors.white,
-                                          _validateSignIn
-                                        ),
                                         height: 50,
                                         width: MediaQuery.of(context).size.width,
+                                        child: filledButton(
+                                            "LOGIN",
+                                            Colors.white,
+                                            Theme.of(context).primaryColor,
+                                            Theme.of(context).primaryColor,
+                                            Colors.white,
+                                            _validateSignIn
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -197,15 +207,6 @@ class _SignInState extends State<SignIn> {
                         ),
                       ),
                     ],
-                  ),
-                  height: MediaQuery.of(context).size.height * 0.95,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/login/beach.png"),
-                      fit: BoxFit.fitWidth,
-                      alignment: Alignment.bottomCenter,
-                    ),
                   ),
                 ),
               ),

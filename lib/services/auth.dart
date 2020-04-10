@@ -44,11 +44,11 @@ class AuthService implements BaseAuthService {
   @override
   Future signInAnonymously() async {
     try {
-      AuthResult result = await auth.signInAnonymously();
-      FirebaseUser user = result.user;
+      final AuthResult result = await auth.signInAnonymously();
+      final FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print(e.toString()); // todo: error handling -> logging
+      // todo: error handling -> logging
       return null;
     }
   }
@@ -59,10 +59,10 @@ class AuthService implements BaseAuthService {
     try {
       final AuthResult result = await auth.signInWithEmailAndPassword(
           email: email, password: password);
-      FirebaseUser firebaseUser = result.user;
+      final FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
-      print(e.toString()); // todo: logging and error handling
+      // todo: logging and error handling
       return null;
     }
   }
@@ -93,7 +93,7 @@ class AuthService implements BaseAuthService {
 
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
-      print(e.toString()); // todo: logging and error handling
+      // todo: logging and error handling
       return null;
     }
   }
@@ -105,11 +105,12 @@ class AuthService implements BaseAuthService {
   // register with facebook
 
   // sign out
+  @override
   Future signOut() async {
     try {
       return await auth.signOut();
     } catch (e) {
-      print(e.toString()); // todo: exeption handling, logging
+      // todo: exeption handling, logging
       return null;
     }
   }
