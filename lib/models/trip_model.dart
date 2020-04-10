@@ -1,6 +1,8 @@
+import 'abstract_model.dart';
 
-class TripModel {
+class TripModel extends Model {
   TripModel({
+    this.userUID,
     this.name,
     this.startDate,
     this.endDate,
@@ -11,34 +13,49 @@ class TripModel {
     imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
   }
 
+  String userUID;
   String name;
-  DateTime startDate;
-  DateTime endDate;
+  String startDate;
+  String endDate;
   String destination;
   String imagePath;
   int imageNr;
   int index;
+
+  @override
+  Map<String, dynamic> toMap(){
+    return {
+      'userUID': userUID,
+      'name': name,
+      'startDate': startDate,
+      'endDate': endDate,
+      'destination': destination,
+      'imagePath': imagePath,
+      'imageNr': imageNr,
+      'index': index,
+    };
+  }
 }
 
 List<TripModel> tripModels = <TripModel>[
   TripModel(
     name: 'Castle Discovery',
-    startDate: DateTime(2020, 5, 12),
-    endDate: DateTime(2020, 5, 25),
+    startDate: '2020-06-23',
+    endDate: '2020-07-12',
     destination: 'Munich',
     imageNr: 3
   ),
   TripModel(
       name: 'Beach Relaxation',
-      startDate: DateTime(2020, 3, 24),
-      endDate: DateTime(2020, 4, 8),
+      startDate: '2020-05-12',
+      endDate: '2020-05-18',
       destination: 'Maledives',
       imageNr: 1
   ),
   TripModel(
       name: 'City Trip',
-      startDate: DateTime(2020, 7, 4),
-      endDate: DateTime(2020, 7, 13),
+      startDate: '2020-08-09',
+      endDate: '2020-08-21',
       destination: 'San Francisco',
       imageNr: 2
   ),

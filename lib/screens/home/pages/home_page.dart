@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/screens/trip/trip_card.dart';
+import 'package:travellory/widgets/trip/trip_card.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                     top: 10,
                     right: 0,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () => _openCreateTripScreen(),
                       child: Container(
                         height: 36,
                         width: 36,
@@ -101,5 +101,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  void _openCreateTripScreen() {
+    Navigator.pushNamed(context, '/createtrip');
   }
 }
