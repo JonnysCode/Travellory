@@ -48,10 +48,10 @@ class _CreateTripState extends State<CreateTrip> {
     }
 
     return SafeArea(
-      child: Container(
+      child: Scaffold(
         key: Key('create_trip'),
-        color: Theme.of(context).primaryColor,
-        child: Padding(
+        backgroundColor: Theme.of(context).primaryColor,
+        body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
           child: Container(
             padding: const EdgeInsets.all(5.0),
@@ -61,7 +61,7 @@ class _CreateTripState extends State<CreateTrip> {
               boxShadow: <BoxShadow>[
                 BoxShadow(
                     blurRadius: 6, color: Colors.black.withOpacity(.15), offset: Offset(3.0, 3.0))
-              ],
+                ],
             ),
             child: Column(
               children: <Widget>[

@@ -16,10 +16,12 @@ class _ScheduleState extends State<Schedule> {
       imageNr: 3
   );
 
-  List<bool> _expandedDays = _tripModel.days.map((day) => false).toList();
+  List<bool> _expandedDays;
 
   @override
   void initState() {
+    _tripModel.init();
+    _expandedDays = _tripModel.days.map((day) => false).toList();
     _expandedDays[0] = true;
     super.initState();
   }
