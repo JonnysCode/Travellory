@@ -116,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage>
                     SizedBox(height: 100),
                     FlatButton.icon(
                       onPressed: () => _signOut(),
-                      icon: FaIcon(
+                      icon: Icon(
                         FontAwesomeIcons.signOutAlt,
                         color: Colors.black54,
                       ),
