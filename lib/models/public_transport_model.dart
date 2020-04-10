@@ -17,6 +17,7 @@ class PublicTransportModel extends Model {
   String arrivalTime;
   String notes;
 
+  @override
   Map<String, dynamic> toMap(){
     return {
       'transportationType': transportationType,

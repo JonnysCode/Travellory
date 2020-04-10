@@ -22,12 +22,12 @@ class Accommodation extends StatefulWidget {
 
 class _AccommodationState extends State<Accommodation> {
   ListModel<Widget> accommodationList;
-  final accommodationFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> accommodationFormKey = GlobalKey<FormState>();
   final AccommodationModel accommodationModel = AccommodationModel();
   final DatabaseAdder databaseAdder = DatabaseAdder();
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  final _checkinDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _checkinDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
   TravelloryDropdownField accommodationTypeDropdown;
   Widget hotelAdditional;

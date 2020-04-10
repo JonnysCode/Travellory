@@ -43,7 +43,7 @@ class _CreateTripState extends State<CreateTrip> {
 
   @override
   Widget build(BuildContext context) {
-    tripModel.userUID = Provider.of<UserModel>(context).uid;
+    //tripModel.userUID = Provider.of<UserModel>(context).uid;
     bool validateForm() {
       return (createTripFormKey.currentState.validate());
     }
@@ -218,6 +218,7 @@ class _CreateTripState extends State<CreateTrip> {
             color: _selectedIndex == index ? Colors.black26 : Colors.transparent,
           ),
           child: Container(
+            key: Key('image_icon'),
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/home/trip/trip_${(index + 1).toString()}.png'),

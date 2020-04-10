@@ -20,11 +20,11 @@ class Activity extends StatefulWidget {
 }
 
 class _ActivityState extends State<Activity> {
-  final activityFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> activityFormKey = GlobalKey<FormState>();
   final ActivityModel activityModel = ActivityModel();
   final DatabaseAdder databaseAdder = DatabaseAdder();
 
-  final _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
   bool validateForm() {
     return activityFormKey.currentState.validate();
@@ -168,7 +168,6 @@ class _ActivityState extends State<Activity> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: Container(
                         child: SubmitButton(
                           highlightColor: Theme.of(context).primaryColor,
                           fillColor: Theme.of(context).primaryColor,
@@ -176,17 +175,14 @@ class _ActivityState extends State<Activity> {
                           onSubmit: onSubmitBooking(
                               activityModel, 'booking-addActivity', context, alertText),
                         ),
-                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                      child: Container(
                         child: CancelButton(
                           text: 'CANCEL',
                           onCancel: () {
                             cancellingDialog(context, cancelText);
                           },
-                        ),
                       ),
                     ),
                     SizedBox(height: 20),

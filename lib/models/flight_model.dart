@@ -15,6 +15,7 @@ class FlightModel extends Model {
   bool excessBaggage;
   String notes;
 
+  @override
   Map<String, dynamic> toMap(){
     return {
       'bookingReference': bookingReference,
