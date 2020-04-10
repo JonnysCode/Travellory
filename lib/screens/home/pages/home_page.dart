@@ -134,28 +134,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-Future<List<TripModel>> _getTrips(String userUID) async {
-  final HttpsCallable callable =
-      CloudFunctions.instance.getHttpsCallable(functionName: "trips-getTrips");
-  try {
-    final HttpsCallableResult result = await callable.call(getTrips(userUID));
-    List<dynamic> trips = result.data;
-    List<TripModel> list = createTrips(trips);
-    return list;
-  } on CloudFunctionsException catch (e) {
-    // TODO: error handling
-    print('caught firebase functions exception');
-    print(e.code);
-    print(e.message);
-    print(e.details);
-  } catch (e) {
-    // TODO: error handling
-    print('caught generic exception');
-    print(e);
-  }
-}
-
-Map<String, dynamic> getTrips(String userUID) {
-  return {"userUID": userUID};
-}
