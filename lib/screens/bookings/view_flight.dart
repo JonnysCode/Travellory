@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/models/abstract_model.dart';
+import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/widgets/booking_header.dart';
 
 class FlightView extends StatefulWidget {
@@ -11,11 +11,33 @@ class _FlightViewState extends State<FlightView> {
   String bannerUrl = 'assets/images/bookings/airline_banner.jpg';
   String headerTitle = 'View Your Flight Bookings';
 
+  Row info(IconData icon, String title, String details) {
+    return Row(children: <Widget>[
+      SizedBox(width: 30.0),
+      Icon(
+        icon,
+        size: 40.0,
+        color: Theme.of(context).primaryColor,
+      ),
+      SizedBox(width: 15.0),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontSize: 16.0),
+          ),
+          Text(
+            details,
+            style: TextStyle(fontSize: 20.0),
+          ),
+        ],
+      ),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO correct this model
-    final Model _model = ModalRoute.of(context).settings.arguments;
-
     return Scaffold(
       key: Key('FlightView'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -36,73 +58,42 @@ class _FlightViewState extends State<FlightView> {
             child: SingleChildScrollView(
               child: Column(children: [
                 BookingHeader(headerTitle, bannerUrl),
-                SizedBox(height: 10),
-                ListTile(
-                  leading: Icon(Icons.confirmation_number),
-                  title: Text('Booking Reference'),
-                  subtitle: Text('Booking Reference'),
-                ),
+                SizedBox(height: 20),
+                // TODO add section titles
+                info(Icons.confirmation_number, 'Booking Reference',
+                    flightModels[0].bookingReference),
                 Divider(),
-                ListTile(
-                  leading: Icon(Icons.today),
-                  title: Text('Airline'),
-                  subtitle: Text('Airline'),
-                ),
+                info(Icons.today, 'Airline',
+                    flightModels[0].airline),
                 Divider(),
-                ListTile(
-                  leading: Icon(Icons.group),
-                  title: Text('Flight Number'),
-                  subtitle: Text('Flight Number'),
-                ),
+                info(Icons.group, 'Flight Number',
+                    flightModels[0].flightNr),
                 Divider(),
-                ListTile(
-                  leading: Icon(Icons.group),
-                  title: Text('Seat'),
-                  subtitle: Text('Seat'),
-                ),
+                info(Icons.group, 'Seat',
+                    flightModels[0].seat),
                 Divider(),
-                ListTile(
-                  leading: Icon(Icons.group),
-                  title: Text('Departure Location'),
-                  subtitle: Text('Departure Location'),
-                ),
+                info(Icons.group, 'Departure Location',
+                    flightModels[0].departureLocation),
                 Divider(),
-                ListTile(
-                  leading: Icon(Icons.group),
-                  title: Text('Departure Date'),
-                  subtitle: Text('Departure Date'),
-                ),
+                info(Icons.group, 'Departure Date',
+                    flightModels[0].departureDate),
                 Divider(),
-                ListTile(
-                  leading: Icon(Icons.today),
-                  title: Text('Departure Time'),
-                  subtitle: Text('Departure Time'),
-                ),
+                info(Icons.today, 'Departure Time',
+                    flightModels[0].departureTime),
                 Divider(),
-                ListTile(
-                  leading: Icon(Icons.today),
-                  title: Text('Arrival Location'),
-                  subtitle: Text('Arrival Location'),
-                ),
+                info(Icons.group, 'Arrival Location',
+                    flightModels[0].arrivalLocation),
                 Divider(),
-                ListTile(
-                  leading: Icon(Icons.today),
-                  title: Text('Arrival Date'),
-                  subtitle: Text('Arrival Date'),
-                ),
+                info(Icons.group, 'Arrival Date',
+                    flightModels[0].arrivalDate),
                 Divider(),
-                ListTile(
-                  leading: Icon(Icons.today),
-                  title: Text('Arrival Time'),
-                  subtitle: Text('Arrival Time'),
-                ),
+                info(Icons.today, 'Arrival Time',
+                    flightModels[0].arrivalTime),
+                // TODO enter checkbox details
                 Divider(),
-                ListTile(
-                  leading: Icon(Icons.today),
-                  title: Text('Notes'),
-                  subtitle: Text('Notes'),
-                ),
-                SizedBox(height: 40),
+                info(Icons.group, 'Notes',
+                    flightModels[0].notes),
+                SizedBox(height: 60),
               ]),
             ),
           ),
