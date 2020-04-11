@@ -81,6 +81,7 @@ flutter:
   assets:
     - assets/images/login/
     - assets/images/logo/
+    - assets/images/bookings/
     - assets/images/home/trip/
     - assets/photo_camera.png
     - assets/g_map/

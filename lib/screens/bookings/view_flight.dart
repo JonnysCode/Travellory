@@ -8,6 +8,7 @@ class FlightView extends StatefulWidget {
 }
 
 class _FlightViewState extends State<FlightView> {
+  String bannerUrl = 'assets/images/bookings/airline_banner.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,10 @@ class _FlightViewState extends State<FlightView> {
               ),
               child: SingleChildScrollView(
                 child: Column(children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 140.0),
+                    child: BannerImage(bannerUrl),
+                  ),
                   ListTile(
                     leading: Icon(Icons.confirmation_number),
                     title: Text('Booking Reference'),
