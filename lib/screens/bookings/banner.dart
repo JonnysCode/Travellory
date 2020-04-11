@@ -13,7 +13,7 @@ class BannerImage extends StatelessWidget {
       child: Image.asset(
         imageUrl,
         width: screenWidth,
-        height: 230.0,
+        height: 200.0,
         fit: BoxFit.cover,
       ),
     );
