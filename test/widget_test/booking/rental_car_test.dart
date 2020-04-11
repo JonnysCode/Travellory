@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/screens/trip/bookings/rental_car.dart';
 
@@ -78,13 +79,13 @@ void main() {
 
     expect(find.byKey(Key('BookingSiteTitle'), skipOffstage: false), findsOneWidget);
     expect(find.byKey(Key('SectionTitle'), skipOffstage: false), findsNWidgets(5));
-    expect(find.byIcon(Icons.confirmation_number, skipOffstage: false), findsOneWidget);
-    expect(find.byIcon(Icons.supervised_user_circle, skipOffstage: false), findsOneWidget);
-    expect(find.byIcon(Icons.location_on, skipOffstage: false), findsNWidgets(2));
-    expect(find.byIcon(Icons.date_range, skipOffstage: false), findsNWidgets(2));
-    expect(find.byIcon(Icons.access_time, skipOffstage: false), findsNWidgets(2));
-    expect(find.byIcon(Icons.directions_car, skipOffstage: false), findsNWidgets(2));
-    expect(find.byIcon(Icons.speaker_notes, skipOffstage: false), findsOneWidget);
+    expect(find.byIcon(FontAwesomeIcons.solidBuilding, skipOffstage: false), findsOneWidget);
+    expect(find.byIcon(FontAwesomeIcons.clock, skipOffstage: false), findsNWidgets(2));
+    expect(find.byIcon(FontAwesomeIcons.calendarAlt, skipOffstage: false), findsNWidgets(2));
+    expect(find.byIcon(FontAwesomeIcons.mapMarkerAlt, skipOffstage: false), findsNWidgets(2));
+    expect(find.byIcon(FontAwesomeIcons.car, skipOffstage: false), findsNWidgets(3));
+    expect(find.byIcon(FontAwesomeIcons.ticketAlt, skipOffstage: false), findsOneWidget);
+    expect(find.byIcon(FontAwesomeIcons.stickyNote, skipOffstage: false), findsOneWidget);
   });
 
   testWidgets('test if submit button is present', (WidgetTester tester) async {
