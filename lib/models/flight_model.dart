@@ -32,7 +32,7 @@ class FlightModel extends Model {
   String notes;
 
   @override
-  Map<String, dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
       'bookingReference': bookingReference,
       'airline': airline,
@@ -51,20 +51,20 @@ class FlightModel extends Model {
   }
 }
 
-List<FlightModel> flightModel = <FlightModel>[
+List<FlightModel> flightModels = <FlightModel> [
   FlightModel(
-      bookingReference: 'A1B',
-      airline: 'Swiss',
-      flightNr: 'LX300',
-      seat: '13F',
-      departureLocation: 'ZRH',
-      departureDate: '2020-05-01',
-      departureTime: '15:07:00',
-      arrivalLocation: 'LDN',
-      arrivalDate: '2020-05-01',
-      arrivalTime: '17:15:00',
-      checkedBaggage: true,
-      excessBaggage: false,
-      notes: '',
+    bookingReference: 'A1B',
+    airline: 'Swiss',
+    flightNr: 'LX300',
+    seat: '13F',
+    departureLocation: 'ZRH',
+    departureDate: '2020-05-01',
+    departureTime: '15:07:00',
+    arrivalLocation: 'LDN',
+    arrivalDate: '2020-05-01',
+    arrivalTime: '17:15:00',
+    checkedBaggage: true,
+    excessBaggage: false,
+    notes: 'Some Notes',
   ),
 ];
