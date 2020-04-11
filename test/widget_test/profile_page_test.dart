@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mockito/mockito.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/screens/home/pages/profile_page.dart';
@@ -63,9 +64,9 @@ void main() {
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
     // Verify that the profile page has a circleAvatar.
-    expect(find.byIcon(Icons.person), findsOneWidget);
-    expect(find.byIcon(Icons.email), findsOneWidget);
-    expect(find.byIcon(Icons.date_range), findsOneWidget);
+    expect(find.byIcon(FontAwesomeIcons.user), findsOneWidget);
+    expect(find.byIcon(FontAwesomeIcons.envelope), findsOneWidget);
+    expect(find.byIcon(FontAwesomeIcons.calendarAlt), findsOneWidget);
   });
 
   testWidgets('test if profile page has a logout button',
@@ -79,6 +80,6 @@ void main() {
 
     // Verify that the ProfilePage has a exit icon and logout text.
     expect(fashionFetishText, findsOneWidget);
-    expect(find.byIcon(Icons.exit_to_app), findsNWidgets(1));
+    expect(find.byIcon(FontAwesomeIcons.signOutAlt), findsOneWidget);
   });
 }
