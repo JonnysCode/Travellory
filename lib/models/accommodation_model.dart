@@ -1,6 +1,7 @@
 import 'package:travellory/models/abstract_model.dart';
 
 class AccommodationModel extends Model{
+
   String type;
   String hotelName;
   String confirmationNr;

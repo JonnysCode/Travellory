@@ -5,12 +5,14 @@ enum FashionFontWeight {
 }
 
 class FashionFetishText extends StatelessWidget {
+
   const FashionFetishText({
     @required this.text,
     @required this.size,
     this.fontWeight,
     this.color,
     this.height,
+    this.textAlign,
   });
 
   final String text;
@@ -18,6 +20,7 @@ class FashionFetishText extends StatelessWidget {
   final FashionFontWeight fontWeight;
   final Color color;
   final double height;
+  final TextAlign textAlign;
 
   FontWeight _getFontWeight(){
     switch(fontWeight){
@@ -36,6 +39,7 @@ class FashionFetishText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      textAlign: textAlign,
       style: TextStyle(
         fontFamily: 'FashionFetish',
         fontWeight: _getFontWeight(),
