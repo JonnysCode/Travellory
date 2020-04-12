@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CheckboxFormField extends StatefulWidget {
-  const CheckboxFormField({Key key, this.initialValue, this.label, this.onChanged}) : super(key: key);
+  const CheckboxFormField({Key key, this.initialValue, this.label, this.onChanged})
+      : super(key: key);
 
   final bool initialValue;
   final String label;
@@ -40,4 +41,15 @@ class CheckboxFormFieldState extends State<CheckboxFormField> with AutomaticKeep
         ),
         controlAffinity: ListTileControlAffinity.leading);
   }
+}
+
+CheckboxListTile checkboxView(String text) {
+  return CheckboxListTile(
+    value: true,
+    onChanged: null,
+    title: Text(
+      text,
+      style: TextStyle(fontSize: 16),
+    ),
+  );
 }

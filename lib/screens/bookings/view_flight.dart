@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/widgets/booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';
+import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
 class FlightView extends StatefulWidget {
@@ -36,7 +37,6 @@ class _FlightViewState extends State<FlightView> {
               child: Column(children: [
                 BookingHeader(headerTitle, bannerUrl),
                 SizedBox(height: 20),
-                // TODO add section titles
                 SectionTitle('Flight Details'),
                 fieldView(Icons.confirmation_number, 'Booking Reference',
                     flightModels[0].bookingReference, context),
@@ -46,16 +46,26 @@ class _FlightViewState extends State<FlightView> {
                 fieldView(Icons.group, 'Flight Number', flightModels[0].flightNr, context),
                 Divider(),
                 fieldView(Icons.group, 'Seat', flightModels[0].seat, context),
+                Divider(),
+                Padding(
+                    padding: const EdgeInsets.only(top: 0, left: 15, right: 15),
+                    child: Column(children: [
+                      checkboxView('Checked Baggage'),
+                      Divider(),
+                      checkboxView('Excess Baggage'),
+                    ])),
                 Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
                 SectionTitle('Departure Details'),
-                fieldView(Icons.group, 'Departure Location', flightModels[0].departureLocation, context),
+                fieldView(
+                    Icons.group, 'Departure Location', flightModels[0].departureLocation, context),
                 Divider(),
                 fieldView(Icons.group, 'Departure Date', flightModels[0].departureDate, context),
                 Divider(),
                 fieldView(Icons.today, 'Departure Time', flightModels[0].departureTime, context),
                 Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
                 SectionTitle('Arrival Details'),
-                fieldView(Icons.group, 'Arrival Location', flightModels[0].arrivalLocation, context),
+                fieldView(
+                    Icons.group, 'Arrival Location', flightModels[0].arrivalLocation, context),
                 Divider(),
                 fieldView(Icons.group, 'Arrival Date', flightModels[0].arrivalDate, context),
                 Divider(),
