@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/widgets/booking_header.dart';
+import 'package:travellory/widgets/buttons.dart';
 
 class FlightView extends StatefulWidget {
   @override
@@ -10,6 +11,10 @@ class FlightView extends StatefulWidget {
 class _FlightViewState extends State<FlightView> {
   String bannerUrl = 'assets/images/bookings/airline_banner.jpg';
   String headerTitle = 'View Your Flight Bookings';
+
+  void _edit() {
+    // TODO
+  }
 
   Row info(IconData icon, String title, String details) {
     return Row(children: <Widget>[
@@ -34,6 +39,27 @@ class _FlightViewState extends State<FlightView> {
         ],
       ),
     ]);
+  }
+
+  Container bottomBar() {
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      height: 100.0,
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.circular(40.0),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          filledButton('EDIT', Colors.white, Theme.of(context).primaryColor,
+              Theme.of(context).primaryColor, Colors.white, _edit),
+          filledButton('DELETE', Colors.white, Theme.of(context).primaryColor,
+              Theme.of(context).primaryColor, Colors.white, _edit),
+        ],
+      ),
+    );
   }
 
   @override
@@ -63,37 +89,28 @@ class _FlightViewState extends State<FlightView> {
                 info(Icons.confirmation_number, 'Booking Reference',
                     flightModels[0].bookingReference),
                 Divider(),
-                info(Icons.today, 'Airline',
-                    flightModels[0].airline),
+                info(Icons.today, 'Airline', flightModels[0].airline),
                 Divider(),
-                info(Icons.group, 'Flight Number',
-                    flightModels[0].flightNr),
+                info(Icons.group, 'Flight Number', flightModels[0].flightNr),
                 Divider(),
-                info(Icons.group, 'Seat',
-                    flightModels[0].seat),
+                info(Icons.group, 'Seat', flightModels[0].seat),
                 Divider(),
-                info(Icons.group, 'Departure Location',
-                    flightModels[0].departureLocation),
+                info(Icons.group, 'Departure Location', flightModels[0].departureLocation),
                 Divider(),
-                info(Icons.group, 'Departure Date',
-                    flightModels[0].departureDate),
+                info(Icons.group, 'Departure Date', flightModels[0].departureDate),
                 Divider(),
-                info(Icons.today, 'Departure Time',
-                    flightModels[0].departureTime),
+                info(Icons.today, 'Departure Time', flightModels[0].departureTime),
                 Divider(),
-                info(Icons.group, 'Arrival Location',
-                    flightModels[0].arrivalLocation),
+                info(Icons.group, 'Arrival Location', flightModels[0].arrivalLocation),
                 Divider(),
-                info(Icons.group, 'Arrival Date',
-                    flightModels[0].arrivalDate),
+                info(Icons.group, 'Arrival Date', flightModels[0].arrivalDate),
                 Divider(),
-                info(Icons.today, 'Arrival Time',
-                    flightModels[0].arrivalTime),
+                info(Icons.today, 'Arrival Time', flightModels[0].arrivalTime),
                 // TODO enter checkbox details
                 Divider(),
-                info(Icons.group, 'Notes',
-                    flightModels[0].notes),
-                SizedBox(height: 60),
+                info(Icons.group, 'Notes', flightModels[0].notes),
+                SizedBox(height: 10),
+                bottomBar(),
               ]),
             ),
           ),
