@@ -4,6 +4,7 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/add_database.dart';
 import 'package:travellory/widgets/bookings.dart';
 import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
@@ -92,6 +93,26 @@ class _FlightState extends State<Flight> {
                           optional: true,
                           onChanged: (value) => flightModel.seat = value),
                     ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: CheckboxFormField(
+                    initialValue: false,
+                    label: 'Does your flight ticket include checked baggage?',
+                    onChanged: (value) {
+                      flightModel.checkedBaggage = value;
+                    },
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                    child: CheckboxFormField(
+                      initialValue: false,
+                      label: 'Does your flight ticket include excess baggage?',
+                      onChanged: (value) {
+                        flightModel.excessBaggage = value;
+                      },
+                    ),
+                ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: SectionTitle('Pick Up Information'),
