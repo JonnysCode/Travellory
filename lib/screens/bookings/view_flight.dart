@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/widgets/booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';
-import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/forms/section_titles.dart';
 
 class FlightView extends StatefulWidget {
   @override
@@ -37,6 +37,7 @@ class _FlightViewState extends State<FlightView> {
                 BookingHeader(headerTitle, bannerUrl),
                 SizedBox(height: 20),
                 // TODO add section titles
+                SectionTitle('Flight Details'),
                 fieldView(Icons.confirmation_number, 'Booking Reference',
                     flightModels[0].bookingReference, context),
                 Divider(),
@@ -45,20 +46,23 @@ class _FlightViewState extends State<FlightView> {
                 fieldView(Icons.group, 'Flight Number', flightModels[0].flightNr, context),
                 Divider(),
                 fieldView(Icons.group, 'Seat', flightModels[0].seat, context),
-                Divider(),
+                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+                SectionTitle('Departure Details'),
                 fieldView(Icons.group, 'Departure Location', flightModels[0].departureLocation, context),
                 Divider(),
                 fieldView(Icons.group, 'Departure Date', flightModels[0].departureDate, context),
                 Divider(),
                 fieldView(Icons.today, 'Departure Time', flightModels[0].departureTime, context),
-                Divider(),
+                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+                SectionTitle('Arrival Details'),
                 fieldView(Icons.group, 'Arrival Location', flightModels[0].arrivalLocation, context),
                 Divider(),
                 fieldView(Icons.group, 'Arrival Date', flightModels[0].arrivalDate, context),
                 Divider(),
                 fieldView(Icons.today, 'Arrival Time', flightModels[0].arrivalTime, context),
                 // TODO enter checkbox details
-                Divider(),
+                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+                SectionTitle('Notes'),
                 fieldView(Icons.group, 'Notes', flightModels[0].notes, context),
                 SizedBox(height: 10),
                 bottomBar(context),

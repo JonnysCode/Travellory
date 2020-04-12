@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/widgets/buttons.dart';
 
-Container bottomBar(BuildContext context, ) {
+import '../font_widgets.dart';
+
+Container bottomBar(
+  BuildContext context,
+) {
   void _edit() {
     // TODO
   }
@@ -30,27 +34,30 @@ Container bottomBar(BuildContext context, ) {
   );
 }
 
-Row fieldView(IconData icon, String title, String details, BuildContext context) {
-  return Row(children: <Widget>[
-    SizedBox(width: 30.0),
-    Icon(
-      icon,
-      size: 40.0,
-      color: Theme.of(context).primaryColor,
-    ),
-    SizedBox(width: 15.0),
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          title,
-          style: TextStyle(fontSize: 16.0),
+Padding fieldView(IconData icon, String title, String details, BuildContext context) {
+  return Padding(
+      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+      child: Row(children: <Widget>[
+        SizedBox(width: 30.0),
+        Icon(
+          icon,
+          size: 40.0,
+          color: Theme.of(context).primaryColor,
         ),
-        Text(
-          details,
-          style: TextStyle(fontSize: 20.0),
+        SizedBox(width: 15.0),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            FashionFetishText(
+                text: title,
+                size: 15.0,
+                fontWeight: FashionFontWeight.bold,
+                color: Colors.black54),
+            Text(
+              details,
+              style: TextStyle(fontSize: 20.0),
+            ),
+          ],
         ),
-      ],
-    ),
-  ]);
+      ]));
 }
