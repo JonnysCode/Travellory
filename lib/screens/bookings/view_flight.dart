@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/widgets/booking_header.dart';
+import 'package:travellory/widgets/bookings/view_bookings.dart';
 import 'package:travellory/widgets/buttons.dart';
 
 class FlightView extends StatefulWidget {
@@ -11,56 +12,6 @@ class FlightView extends StatefulWidget {
 class _FlightViewState extends State<FlightView> {
   String bannerUrl = 'assets/images/bookings/airline_banner.jpg';
   String headerTitle = 'View Your Flight Bookings';
-
-  void _edit() {
-    // TODO
-  }
-
-  Row info(IconData icon, String title, String details) {
-    return Row(children: <Widget>[
-      SizedBox(width: 30.0),
-      Icon(
-        icon,
-        size: 40.0,
-        color: Theme.of(context).primaryColor,
-      ),
-      SizedBox(width: 15.0),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontSize: 16.0),
-          ),
-          Text(
-            details,
-            style: TextStyle(fontSize: 20.0),
-          ),
-        ],
-      ),
-    ]);
-  }
-
-  Container bottomBar() {
-    return Container(
-      padding: EdgeInsets.all(20.0),
-      height: 100.0,
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.circular(40.0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          filledButton('EDIT', Colors.white, Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor, Colors.white, _edit),
-          filledButton('DELETE', Colors.white, Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor, Colors.white, _edit),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,31 +37,31 @@ class _FlightViewState extends State<FlightView> {
                 BookingHeader(headerTitle, bannerUrl),
                 SizedBox(height: 20),
                 // TODO add section titles
-                info(Icons.confirmation_number, 'Booking Reference',
-                    flightModels[0].bookingReference),
+                fieldView(Icons.confirmation_number, 'Booking Reference',
+                    flightModels[0].bookingReference, context),
                 Divider(),
-                info(Icons.today, 'Airline', flightModels[0].airline),
+                fieldView(Icons.today, 'Airline', flightModels[0].airline, context),
                 Divider(),
-                info(Icons.group, 'Flight Number', flightModels[0].flightNr),
+                fieldView(Icons.group, 'Flight Number', flightModels[0].flightNr, context),
                 Divider(),
-                info(Icons.group, 'Seat', flightModels[0].seat),
+                fieldView(Icons.group, 'Seat', flightModels[0].seat, context),
                 Divider(),
-                info(Icons.group, 'Departure Location', flightModels[0].departureLocation),
+                fieldView(Icons.group, 'Departure Location', flightModels[0].departureLocation, context),
                 Divider(),
-                info(Icons.group, 'Departure Date', flightModels[0].departureDate),
+                fieldView(Icons.group, 'Departure Date', flightModels[0].departureDate, context),
                 Divider(),
-                info(Icons.today, 'Departure Time', flightModels[0].departureTime),
+                fieldView(Icons.today, 'Departure Time', flightModels[0].departureTime, context),
                 Divider(),
-                info(Icons.group, 'Arrival Location', flightModels[0].arrivalLocation),
+                fieldView(Icons.group, 'Arrival Location', flightModels[0].arrivalLocation, context),
                 Divider(),
-                info(Icons.group, 'Arrival Date', flightModels[0].arrivalDate),
+                fieldView(Icons.group, 'Arrival Date', flightModels[0].arrivalDate, context),
                 Divider(),
-                info(Icons.today, 'Arrival Time', flightModels[0].arrivalTime),
+                fieldView(Icons.today, 'Arrival Time', flightModels[0].arrivalTime, context),
                 // TODO enter checkbox details
                 Divider(),
-                info(Icons.group, 'Notes', flightModels[0].notes),
+                fieldView(Icons.group, 'Notes', flightModels[0].notes, context),
                 SizedBox(height: 10),
-                bottomBar(),
+                bottomBar(context),
               ]),
             ),
           ),
