@@ -38,6 +38,7 @@ dependencies:
   font_awesome_flutter: ^8.7.0
   flutter_rounded_date_picker: 1.0.0
   dropdownfield: 1.0.0
+  flushbar: 1.8.0
 
 dev_dependencies:
   flutter_test:
