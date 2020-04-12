@@ -5,11 +5,11 @@ import 'package:travellory/services/auth.dart';
 import 'package:travellory/utils/input_validator.dart';
 import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
+import 'package:flushbar/flushbar.dart';
 
 class ChangePassword extends StatefulWidget {
-
   final Function toggleView;
-  ChangePassword({ this.toggleView });
+  ChangePassword({this.toggleView});
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -18,39 +18,53 @@ class ChangePassword extends StatefulWidget {
 class _RegisterState extends State<ChangePassword> {
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final String alertText =
-      "You've successfully changed your password.";
+  final String alertText = "You've successfully changed your password.";
 
   TextEditingController _oldPasswordController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  String _error;
+  String _reauthError;
+  String _changePwError;
 
-//TODO: info for hessgia tried to implement it with this method
-  Future _validateSignIn() async {
+  Future _validateAndChangePW() async {
     if (_formKey.currentState.validate()) {
       Navigator.pushNamed(context, '/loading');
 
-     final user = await _changePassword(context);
-
-      if(user == null){
+      _changePassword().then((value) async {
+        setState(() => _changePwError = null);
+        Navigator.popUntil(context, ModalRoute.withName('/'));
+        _showSnackBar();
+      }).catchError((error) {
+        setState(
+            () => _changePwError = 'Password could not be changed. Try again.');
         Navigator.pop(context);
-        setState(() => _error = 'Please supply a valid password.');
-      } else {
-        Navigator.popUntil(context, ModalRoute.withName('/'),
-        );
-      }
+      });
     }
   }
 
-
-  Future _changePassword(BuildContext context) async {
+  Future _changePassword() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    await _auth.reauthenticate(_oldPasswordController.text, _passwordController.text).then((result) {
-      return result;
+    await _auth.reauthenticate(_oldPasswordController.text).then((result) {
+      setState(() => _reauthError = null);
+      return _auth.changePassword(_passwordController.text);
     }).catchError((error) {
-      return null;
+      setState(() => _reauthError = 'Please supply a valid password.');
+      return Future.error(error);
     });
+  }
+
+  Widget _showSnackBar() {
+    return SnackBar(
+      content: Flushbar(
+        flushbarStyle: FlushbarStyle.FLOATING,
+        title: "Success",
+        message: alertText,
+        backgroundColor: Colors.green,
+        margin: EdgeInsets.all(8),
+        borderRadius: 12,
+        duration: Duration(seconds: 3),
+      )..show(context),
+    );
   }
 
   @override
@@ -121,21 +135,17 @@ class _RegisterState extends State<ChangePassword> {
                         child: Column(
                           children: <Widget>[
                             Container(
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 20, bottom: 8),
-                                child: Text(
-                                  'Please first enter the old password',
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 16,
-
-                                  ),
+                                child: Padding(
+                              padding: EdgeInsets.only(top: 20, bottom: 8),
+                              child: Text(
+                                'Please first enter the old password',
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 16,
                                 ),
-                              )
-
-                            ),
-
+                              ),
+                            )),
                             Container(
                               child: Form(
                                 key: _formKey,
@@ -143,31 +153,50 @@ class _RegisterState extends State<ChangePassword> {
                                   children: <Widget>[
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
-                                      child: inputAuthentication(Icon(FontAwesomeIcons.unlockAlt), "OLD PASSWORD", Theme.of(context).primaryColor,
-                                          _oldPasswordController, ValidatorType.PASSWORD, true, _error),
+                                      child: inputAuthentication(
+                                          Icon(FontAwesomeIcons.unlockAlt),
+                                          "OLD PASSWORD",
+                                          Theme.of(context).primaryColor,
+                                          _oldPasswordController,
+                                          ValidatorType.PASSWORD,
+                                          true,
+                                          _reauthError),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
-                                      child: inputAuthentication(Icon(FontAwesomeIcons.unlockAlt), "NEW PASSWORD", Theme.of(context).primaryColor,
-                                          _passwordController, ValidatorType.PASSWORD, true, null),
+                                      child: inputAuthentication(
+                                          Icon(FontAwesomeIcons.unlockAlt),
+                                          "NEW PASSWORD",
+                                          Theme.of(context).primaryColor,
+                                          _passwordController,
+                                          ValidatorType.PASSWORD,
+                                          true,
+                                          _changePwError),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
                                           left: 20,
                                           right: 20,
-                                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                                          bottom: MediaQuery.of(context)
+                                              .viewInsets
+                                              .bottom),
                                       child: Container(
-                                        child: filledButton("SAVE", Colors.white, Theme.of(context).primaryColor,
-                                            Theme.of(context).primaryColor, Colors.white, _validateSignIn),
+                                        child: filledButton(
+                                            "SAVE",
+                                            Colors.white,
+                                            Theme.of(context).primaryColor,
+                                            Theme.of(context).primaryColor,
+                                            Colors.white,
+                                            _validateAndChangePW),
                                         height: 50,
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-
                             SizedBox(
                               height: 20,
                             ),

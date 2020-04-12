@@ -5,7 +5,7 @@ abstract class BaseAuthService {
   Future signInAnonymously();
   Future signInWithEmailAndPassword(String email, String password);
   Future registerWithEmailAndPassword(String email, String password);
-  Future reauthenticate (String oldPassword, String newPassword);
+  Future reauthenticate (String oldPassword);
   Future changePassword(String password);
   Future signOut();
   Stream<UserModel> get user;
@@ -74,29 +74,18 @@ class AuthService implements BaseAuthService {
   // register with facebook
 
   //reauthenticate before security-sensitive action (f.e. change password)
-  Future reauthenticate (String oldPassword, String newPassword) async {
-    //TODO: fluetfab call success/error messages
+  Future reauthenticate (String oldPassword) async {
     FirebaseUser user = await _auth.currentUser();
     String email = user.email;
     AuthCredential credential = EmailAuthProvider.
     getCredential(email: email, password: oldPassword);
-    user.reauthenticateWithCredential(credential).then((onValue){
-      print("success reauth");
-      changePassword(newPassword);
-    }).catchError((onError){
-      print("error reauth"+onError.toString());
-    });
+    return user.reauthenticateWithCredential(credential);
   }
 
   //change password
   Future changePassword(String password) async {
-    //TODO: fluetfab call success/error messages
     FirebaseUser user = await _auth.currentUser();
-    user.updatePassword(password).then((onValue){
-      print("success pw");
-    }).catchError((onError){
-      print("error pw: "+onError.toString());
-    });
+    return user.updatePassword(password);
   }
 
 
