@@ -6,6 +6,7 @@ import 'package:travellory/models/user_model.dart';
 import 'package:travellory/screens/trip/bookings/bookings.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/trip_card.dart';
+import 'package:travellory/logger.dart';
 
 class TripList extends StatefulWidget {
   @override
@@ -101,22 +102,21 @@ class _TripListState extends State<TripList> {
 }
 
 void _getTrips(String userUID) async {
+  final log = getLogger('_TripListState');
   final HttpsCallable callable =
-  CloudFunctions.instance.getHttpsCallable(functionName: "trips-getTrips");
+  CloudFunctions.instance.getHttpsCallable(functionName: 'trips-getTrips');
   try {
     final HttpsCallableResult result = await callable.call(getTrips(userUID));
     List<dynamic> trips = result.data;
     createTrips(trips);
   } on CloudFunctionsException catch (e) {
-    // TODO: error handling
-    print('caught firebase functions exception');
-    print(e.code);
-    print(e.message);
-    print(e.details);
-  } catch (e) {
-    // TODO: error handling
-    print('caught generic exception');
-    print(e);
+    log.e('caught firebase functions exception');
+    log.e(e.code);
+    log.e(e.message);
+    log.e(e.details);
+  } on Exception catch (e) {
+    log.w('caught generic exception');
+    log.w(e);
   }
 }
 
