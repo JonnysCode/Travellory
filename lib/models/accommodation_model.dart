@@ -1,6 +1,21 @@
 import 'package:travellory/models/abstract_model.dart';
 
-class AccommodationModel extends Model{
+class AccommodationModel extends Model {
+  AccommodationModel(
+      {this.type,
+      this.hotelName,
+      this.confirmationNr,
+      this.address,
+      this.nights,
+      this.checkinDate,
+      this.checkinTime,
+      this.checkoutDate,
+      this.checkoutTime,
+      this.breakfast,
+      this.roomType,
+      this.accommodationType,
+      this.notes});
+
   String type;
   String hotelName;
   String confirmationNr;
@@ -16,7 +31,7 @@ class AccommodationModel extends Model{
   String notes;
 
   @override
-  Map<String, dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
       'type': type,
       'hotelName': hotelName,
@@ -34,3 +49,21 @@ class AccommodationModel extends Model{
     };
   }
 }
+
+List<AccommodationModel> accommodationModels = <AccommodationModel>[
+  AccommodationModel(
+    type: 'Hotel',
+    hotelName: 'Carina',
+    confirmationNr: 'Ra1574e',
+    address: 'Zürcherstrasse 5',
+    nights: '2',
+    checkinDate: '2020-05-11',
+    checkinTime: '12:00:00',
+    checkoutDate: '2020-05-13',
+    checkoutTime: '10:00',
+    breakfast: true,
+    roomType: 'Double',
+    accommodationType: null,
+    notes: 'Some Notes'
+  ),
+];
