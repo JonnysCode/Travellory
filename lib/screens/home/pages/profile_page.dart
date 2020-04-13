@@ -99,6 +99,7 @@ class _ProfilePageState extends State<ProfilePage>
               }
             }),
         Padding(
+          key: Key('change-pw'),
           padding: EdgeInsets.only(
               top: 10,
               left: 90,
@@ -118,6 +119,7 @@ class _ProfilePageState extends State<ProfilePage>
           height: 10,
         ),
         Padding(
+          key: Key('friends'),
           padding: EdgeInsets.only(
               left: 90,
               right: 90,
@@ -135,6 +137,7 @@ class _ProfilePageState extends State<ProfilePage>
           height: 10,
         ),
         Padding(
+          key: Key('logout'),
           padding: EdgeInsets.only(
               left: 90,
               right: 90,
