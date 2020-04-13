@@ -2,6 +2,7 @@ import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/screens/home/pages/calendar_page.dart';
+import 'package:travellory/screens/home/pages/friends_page.dart';
 import 'package:travellory/screens/home/pages/home_page.dart';
 import 'package:travellory/screens/home/pages/map_page.dart';
 import 'package:travellory/screens/home/pages/profile_page.dart';
@@ -13,11 +14,11 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   static const int _animationSpeed = 200;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final List<Widget> _pages = <Widget>[
     HomePage(),
     CalendarPage(),
     MapPage(),
+    FriendsPage(),
     ProfilePage()
   ];
 
@@ -37,15 +38,6 @@ class _HomeState extends State<Home> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
-  }
-
-  List<Widget> _layoutPages(){
-    final layoutPages = <Widget>[];
-    for(final page in _pages){
-      layoutPages.add(page);
-      //layoutPages.add(mainPageLayout(context, MediaQuery.of(context).size.height, page));
-    }
-    return layoutPages;
   }
 
   void _setNavBarIndex(int index){
@@ -79,7 +71,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Widget _costumeNavigationBar(){
+  Widget _customNavigationBar(){
     return Container(
       height: 48,
       decoration: BoxDecoration(
@@ -91,6 +83,7 @@ class _HomeState extends State<Home> {
       child: ClipRRect(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
         child: CustomNavigationBar(
+          key: Key('key_bar'),
           iconSize: 22.0,
           selectedColor: Color(0xff040307),
           strokeColor: Color(0x90040307),
@@ -100,16 +93,19 @@ class _HomeState extends State<Home> {
           onTap: (index) => _setNavBarIndex(index),
           items: [
             CustomNavigationBarItem(
-            icon: FontAwesomeIcons.suitcaseRolling,
+              icon: FontAwesomeIcons.suitcaseRolling,
             ),
             CustomNavigationBarItem(
-            icon: FontAwesomeIcons.calendarAlt,
+              icon: FontAwesomeIcons.calendarAlt,
             ),
             CustomNavigationBarItem(
-            icon: FontAwesomeIcons.globeAfrica,
+              icon: FontAwesomeIcons.globeAfrica,
             ),
             CustomNavigationBarItem(
-            icon: FontAwesomeIcons.user,
+              icon: FontAwesomeIcons.addressBook,
+            ),
+            CustomNavigationBarItem(
+              icon: FontAwesomeIcons.user,
             ),
           ],
         ),
@@ -120,7 +116,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       backgroundColor: Theme.of(context).primaryColor,
       body: Stack(
         children: <Widget>[
@@ -128,11 +123,11 @@ class _HomeState extends State<Home> {
             controller: _pageController,
             scrollDirection: Axis.horizontal,
             onPageChanged: (index) => _setNavIndices(index),
-            children: _layoutPages(),
+            children: _pages,
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: _costumeNavigationBar(),
+            child: _customNavigationBar(),
           ),
         ],
       ),

@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
-import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
@@ -157,7 +156,7 @@ class _ProfilePageState extends State<ProfilePage>
   Future _signOut() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     await _auth.signOut();
-    await Navigator.pushReplacementNamed(context, '/');
+    await Navigator.popUntil(context, ModalRoute.withName('/'));
   }
 }
 
