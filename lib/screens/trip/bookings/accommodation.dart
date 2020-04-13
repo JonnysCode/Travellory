@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/add_database.dart';
@@ -56,23 +57,23 @@ class _AccommodationState extends State<Accommodation> {
     // don't put in build because it will be recreated on every build
     // with state changes this is not appreciated
     final List<Widget> shown = [
-      BookingSiteTitle('Add Accommodation', Icons.hotel),
+      BookingSiteTitle('Add Accommodation', FontAwesomeIcons.bed),
       SectionTitle('Accommodation Type'),
       accommodationTypeDropdown,
       SectionTitle('General Information'),
       TravelloryFormField(
           labelText: 'Confirmation Number',
-          icon: Icon(Icons.confirmation_number),
+          icon: Icon(FontAwesomeIcons.ticketAlt),
           optional: true,
           onChanged: (value) => accommodationModel.confirmationNr = value),
       TravelloryFormField(
           labelText: 'Name *',
-          icon: Icon(Icons.supervised_user_circle),
+          icon: Icon(FontAwesomeIcons.solidBuilding),
           optional: false,
           onChanged: (value) => accommodationModel.hotelName = value),
       TravelloryFormField(
         labelText: 'Address *',
-        icon: Icon(Icons.location_on),
+        icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
         onChanged: (value) => accommodationModel.address = value,
       ),
@@ -80,26 +81,26 @@ class _AccommodationState extends State<Accommodation> {
       DateFormField(
         key: _checkinDateFormFieldKey,
         labelText: 'Check-In Date *',
-        icon: Icon(Icons.date_range),
+        icon: Icon(FontAwesomeIcons.calendarAlt),
         optional: false,
         chosenDateString: (value) => accommodationModel.checkinDate = value,
       ),
       TimeFormField(
         labelText: 'Check-In Time',
-        icon: Icon(Icons.access_time),
+        icon: Icon(FontAwesomeIcons.clock),
         optional: true,
         chosenTimeString: (value) => accommodationModel.checkinTime = value,
       ),
       TravelloryFormField(
         labelText: 'Nights *',
-        icon: Icon(Icons.hotel),
+        icon: Icon(FontAwesomeIcons.solidMoon),
         optional: false,
         onChanged: (value) => accommodationModel.nights = value,
       ),
       SectionTitle('Check-Out Details'),
       DateFormField(
         labelText: 'Check-Out Date *',
-        icon: Icon(Icons.date_range),
+        icon: Icon(FontAwesomeIcons.calendarAlt),
         beforeDateKey: _checkinDateFormFieldKey,
         optional: false,
         dateValidationMessage: 'Check-out Date cannot be before Check-in Date',
@@ -107,14 +108,14 @@ class _AccommodationState extends State<Accommodation> {
       ),
       TimeFormField(
         labelText: 'Check-Out Time',
-        icon: Icon(Icons.access_time),
+        icon: Icon(FontAwesomeIcons.clock),
         optional: true,
         chosenTimeString: (value) => accommodationModel.checkoutTime = value,
       ),
       SectionTitle('Notes'),
       TravelloryFormField(
         labelText: 'Notes',
-        icon: Icon(Icons.speaker_notes),
+        icon: Icon(FontAwesomeIcons.stickyNote),
         optional: true,
         onChanged: (value) => accommodationModel.notes = value,
       ),
@@ -168,12 +169,12 @@ class _AccommodationState extends State<Accommodation> {
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
 
   List<Item> types = <Item>[
-    const Item('Hotel', Icon(Icons.hotel, color: Color(0xFF167F67))),
-    const Item('Airbnb', Icon(Icons.hotel, color: Color(0xFF167F67))),
-    const Item('Hostel', Icon(Icons.hotel, color: Color(0xFF167F67))),
-    const Item('Motel', Icon(Icons.hotel, color: Color(0xFF167F67))),
-    const Item('Bed & Breakfast', Icon(Icons.hotel, color: Color(0xFF167F67))),
-    const Item('Other', Icon(Icons.hotel, color: Color(0xFF167F67))),
+    const Item('Hotel', Icon(FontAwesomeIcons.hotel, color: Color(0xFF167F67))),
+    const Item('Airbnb', Icon(FontAwesomeIcons.suitcase, color: Color(0xFF167F67))),
+    const Item('Hostel', Icon(FontAwesomeIcons.bed, color: Color(0xFF167F67))),
+    const Item('Motel', Icon(FontAwesomeIcons.bed, color: Color(0xFF167F67))),
+    const Item('Bed & Breakfast', Icon(FontAwesomeIcons.coffee, color: Color(0xFF167F67))),
+    const Item('Other', Icon(FontAwesomeIcons.bed, color: Color(0xFF167F67))),
   ];
 
   Widget _itemBuilder(BuildContext context, int index, Animation<double> animation) {
