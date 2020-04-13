@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
+import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/screens/authenticate/password.dart';
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
 import 'package:travellory/screens/friends/friends_page.dart';
 import 'package:travellory/screens/home/home.dart';
-import 'package:travellory/screens/trip/accommodation.dart';
-import 'package:travellory/screens/trip/activity.dart';
-import 'package:travellory/screens/trip/flight.dart';
-import 'package:travellory/screens/trip/public_transport.dart';
-import 'package:travellory/screens/trip/rental_car.dart';
+import 'package:travellory/screens/trip/bookings/accommodation.dart';
+import 'package:travellory/screens/trip/bookings/activity.dart';
+import 'package:travellory/screens/trip/create_trip_screen.dart';
+import 'package:travellory/screens/trip/bookings/flight.dart';
+import 'package:travellory/screens/trip/bookings/public_transport.dart';
+import 'package:travellory/screens/trip/bookings/rental_car.dart';
 import 'package:travellory/screens/trip/trip_screen.dart';
 import 'package:travellory/screens/wrapper.dart';
 import 'package:travellory/services/auth.dart';
-import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/shared/loading.dart';
 
 class MyApp extends StatelessWidget {
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
             '/loading': (context) => Loading(),
             '/home': (context) => Home(),
             '/viewtrip': (context) => TripScreen(),
+            '/createtrip': (context) => CreateTrip(),
             '/booking/rentalCar': (context) => RentalCar(),
             '/booking/accommodation': (context) => Accommodation(),
             '/booking/flight': (context) => Flight(),
