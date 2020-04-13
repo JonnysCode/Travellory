@@ -17,7 +17,7 @@ class _AccommodationViewState extends State<AccommodationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: Key('RentalCarView'),
+      key: Key('AccommodationView'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(children: [
         Padding(
@@ -26,7 +26,7 @@ class _AccommodationViewState extends State<AccommodationView> {
             padding: const EdgeInsets.all(5.0),
             decoration: BoxDecoration(
               borderRadius:
-              BorderRadius.vertical(top: Radius.circular(0), bottom: Radius.circular(20)),
+                  BorderRadius.vertical(top: Radius.circular(0), bottom: Radius.circular(20)),
               color: Colors.white,
               boxShadow: <BoxShadow>[
                 BoxShadow(
@@ -42,27 +42,35 @@ class _AccommodationViewState extends State<AccommodationView> {
                 fieldView(FontAwesomeIcons.ticketAlt, 'Confirmation Number',
                     accommodationModels[0].confirmationNr, context),
                 Divider(),
-                fieldView(FontAwesomeIcons.solidBuilding, 'Name', accommodationModels[0].hotelName, context),
+                fieldView(FontAwesomeIcons.solidBuilding, 'Name', accommodationModels[0].hotelName,
+                    context),
                 Divider(),
-                fieldView(FontAwesomeIcons.mapMarkerAlt, 'Address', accommodationModels[0].address, context),
+                fieldView(FontAwesomeIcons.mapMarkerAlt, 'Address', accommodationModels[0].address,
+                    context),
                 Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
                 SectionTitle('Check-In Details'),
                 Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-                fieldView(FontAwesomeIcons.calendarAlt, 'Check-In Date', accommodationModels[0].checkinDate, context),
+                fieldView(FontAwesomeIcons.calendarAlt, 'Check-In Date',
+                    accommodationModels[0].checkinDate, context),
                 Divider(),
-                fieldView(FontAwesomeIcons.clock, 'Check-In Time', accommodationModels[0].checkinTime, context),
+                fieldView(FontAwesomeIcons.clock, 'Check-In Time',
+                    accommodationModels[0].checkinTime, context),
                 Divider(),
-                fieldView(FontAwesomeIcons.solidMoon, 'Nights', accommodationModels[0].nights, context),
+                fieldView(
+                    FontAwesomeIcons.solidMoon, 'Nights', accommodationModels[0].nights, context),
                 Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
                 SectionTitle('Check-Out Details'),
                 Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-                fieldView(FontAwesomeIcons.calendarAlt, 'Check-out Date', accommodationModels[0].checkoutDate, context),
+                fieldView(FontAwesomeIcons.calendarAlt, 'Check-out Date',
+                    accommodationModels[0].checkoutDate, context),
                 Divider(),
-                fieldView(FontAwesomeIcons.clock, 'Check-out Time', accommodationModels[0].checkoutTime, context),
+                fieldView(FontAwesomeIcons.clock, 'Check-out Time',
+                    accommodationModels[0].checkoutTime, context),
                 Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
                 SectionTitle('Notes'),
                 Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-                fieldView(FontAwesomeIcons.stickyNote, 'Notes', accommodationModels[0].notes, context),
+                fieldView(
+                    FontAwesomeIcons.stickyNote, 'Notes', accommodationModels[0].notes, context),
                 Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
                 SizedBox(height: 10),
                 bottomBar(context),
