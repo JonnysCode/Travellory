@@ -15,6 +15,7 @@ class Wrapper extends StatelessWidget {
         endDate: '2020-05-25',
         destination: 'Munich',
         imageNr: 3);
+    tripModel.init();
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, '/booking/activity', arguments: tripModel);
