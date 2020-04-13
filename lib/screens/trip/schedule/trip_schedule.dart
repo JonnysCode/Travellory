@@ -3,6 +3,8 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/screens/trip/schedule/day_schedule.dart';
 
 class Schedule extends StatefulWidget {
+  const Schedule({Key key}) : super(key : key);
+
   @override
   _ScheduleState createState() => _ScheduleState();
 }
