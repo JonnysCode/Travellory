@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
+import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
@@ -125,6 +126,7 @@ class _ProfilePageState extends State<ProfilePage>
     await Navigator.pushReplacementNamed(context, '/');
   }
 }
+
 
 class UserInformation extends StatefulWidget {
   const UserInformation({
