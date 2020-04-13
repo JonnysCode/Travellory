@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/widgets/booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';
@@ -12,7 +13,7 @@ class FlightView extends StatefulWidget {
 
 class _FlightViewState extends State<FlightView> {
   String bannerUrl = 'assets/images/bookings/airline_banner.jpg';
-  String headerTitle = 'View Your Flight Bookings';
+  String headerTitle = 'View Your Flight Booking';
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +39,16 @@ class _FlightViewState extends State<FlightView> {
                 BookingHeader(headerTitle, bannerUrl),
                 SizedBox(height: 20),
                 SectionTitle('Flight Details'),
-                fieldView(Icons.confirmation_number, 'Booking Reference',
+                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+                fieldView(FontAwesomeIcons.ticketAlt, 'Booking Reference',
                     flightModels[0].bookingReference, context),
                 Divider(),
-                fieldView(Icons.today, 'Airline', flightModels[0].airline, context),
+                fieldView(FontAwesomeIcons.plane, 'Airline', flightModels[0].airline, context),
                 Divider(),
-                fieldView(Icons.group, 'Flight Number', flightModels[0].flightNr, context),
+                fieldView(
+                    FontAwesomeIcons.ticketAlt, 'Flight Number', flightModels[0].flightNr, context),
                 Divider(),
-                fieldView(Icons.group, 'Seat', flightModels[0].seat, context),
+                fieldView(FontAwesomeIcons.chair, 'Seat', flightModels[0].seat, context),
                 Divider(),
                 Padding(
                     padding: const EdgeInsets.only(top: 0, left: 15, right: 15),
@@ -56,24 +59,31 @@ class _FlightViewState extends State<FlightView> {
                     ])),
                 Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
                 SectionTitle('Departure Details'),
-                fieldView(
-                    Icons.group, 'Departure Location', flightModels[0].departureLocation, context),
+                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+                fieldView(FontAwesomeIcons.planeDeparture, 'Departure Location',
+                    flightModels[0].departureLocation, context),
                 Divider(),
-                fieldView(Icons.group, 'Departure Date', flightModels[0].departureDate, context),
+                fieldView(FontAwesomeIcons.calendarAlt, 'Departure Date',
+                    flightModels[0].departureDate, context),
                 Divider(),
-                fieldView(Icons.today, 'Departure Time', flightModels[0].departureTime, context),
+                fieldView(FontAwesomeIcons.clock, 'Departure Time', flightModels[0].departureTime,
+                    context),
                 Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
                 SectionTitle('Arrival Details'),
+                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+                fieldView(FontAwesomeIcons.planeArrival, 'Arrival Location',
+                    flightModels[0].arrivalLocation, context),
+                Divider(),
+                fieldView(FontAwesomeIcons.calendarAlt, 'Arrival Date', flightModels[0].arrivalDate,
+                    context),
+                Divider(),
                 fieldView(
-                    Icons.group, 'Arrival Location', flightModels[0].arrivalLocation, context),
-                Divider(),
-                fieldView(Icons.group, 'Arrival Date', flightModels[0].arrivalDate, context),
-                Divider(),
-                fieldView(Icons.today, 'Arrival Time', flightModels[0].arrivalTime, context),
-                // TODO enter checkbox details
+                    FontAwesomeIcons.clock, 'Arrival Time', flightModels[0].arrivalTime, context),
                 Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
                 SectionTitle('Notes'),
-                fieldView(Icons.group, 'Notes', flightModels[0].notes, context),
+                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+                fieldView(FontAwesomeIcons.stickyNote, 'Notes', flightModels[0].notes, context),
+                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
                 SizedBox(height: 10),
                 bottomBar(context),
               ]),
