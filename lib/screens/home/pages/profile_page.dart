@@ -93,29 +93,32 @@ class _ProfilePageState extends State<ProfilePage>
               ),
             ),
           ),
-        SizedBox(height: 50),
-        FutureBuilder(
-            future: AuthProvider.of(context).auth.getCurrentUser(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return UserInformation(user: snapshot.data);
-              } else {
-                return CircularProgressIndicator();
-              }
-            }),
-        SizedBox(height: 100),
-        FlatButton.icon(
-          onPressed: () => _signOut(),
-          icon: Icon(Icons.exit_to_app),
-          label: FashionFetishText(
-            text: 'Log out',
-            size: 20,
-            fontWeight: FashionFontWeight.normal,
-            height: 1.05,
-          ),
-        )
-      ],
-    );
+          SizedBox(height: 50),
+          FutureBuilder(
+              future: AuthProvider
+                  .of(context)
+                  .auth
+                  .getCurrentUser(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return UserInformation(user: snapshot.data);
+                } else {
+                  return CircularProgressIndicator();
+                }
+              }),
+          SizedBox(height: 100),
+          FlatButton.icon(
+            onPressed: () => _signOut(),
+            icon: Icon(Icons.exit_to_app),
+            label: FashionFetishText(
+              text: 'Log out',
+              size: 20,
+              fontWeight: FashionFontWeight.NORMAL,
+              height: 1.05,
+            ),
+          )
+        ],
+      );
   }
 
   @override
@@ -125,10 +128,6 @@ class _ProfilePageState extends State<ProfilePage>
     });
   }
 
-
-
-
-
   Future _signOut() async {
     final BaseAuthService _auth = AuthProvider
         .of(context)
@@ -137,7 +136,6 @@ class _ProfilePageState extends State<ProfilePage>
     Navigator.pushReplacementNamed(context, '/');
   }
 }
-
 
 class UserInformation extends StatefulWidget {
   const UserInformation({
@@ -156,55 +154,63 @@ class _UserInformationState extends State<UserInformation> {
   Widget build(BuildContext context) {
     final user = widget.user;
 
-    return Column(key: Key('display_user'), children: [
-      Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        SizedBox(width: 50),
-        Icon(
-          Icons.person,
-          color: Theme.of(context).primaryColor,
-          size: 40,
-        ),
-        SizedBox(width: 20),
-        FashionFetishText(
-          text: user != null ? '${user.displayName}' : '',
-          size: 20,
-          fontWeight: FashionFontWeight.normal,
-          height: 1.05,
-        ),
-      ]),
-      Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        SizedBox(width: 50),
-        Icon(
-          Icons.email,
-          color: Theme.of(context).primaryColor,
-          size: 40,
-        ),
-        SizedBox(width: 20),
-        FashionFetishText(
-          text: user != null ? '${user.email}' : '',
-          size: 20,
-          fontWeight: FashionFontWeight.normal,
-          height: 1.05,
-        ),
-      ]),
-      Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        SizedBox(width: 50),
-        Icon(
-          Icons.date_range,
-          color: Theme.of(context).primaryColor,
-          size: 40,
-        ),
-        SizedBox(width: 20),
-        FashionFetishText(
-          text: user != null
-              ? '${DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)}'
-              : '',
-          size: 20,
-          fontWeight: FashionFontWeight.normal,
-          height: 1.05,
-        ),
-      ]),
-    ]);
+    return Column(
+        key: Key('display_user'),
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            SizedBox(width: 50),
+            Icon(
+              Icons.person,
+              color: Theme
+                  .of(context)
+                  .primaryColor,
+              size: 40,
+            ),
+            SizedBox(width: 20),
+            FashionFetishText(
+              text: user != null ? '${user.displayName}' : '',
+              size: 20,
+              fontWeight: FashionFontWeight.NORMAL,
+              height: 1.05,
+            ),
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            SizedBox(width: 50),
+            Icon(
+              Icons.email,
+              color: Theme
+                  .of(context)
+                  .primaryColor,
+              size: 40,
+            ),
+            SizedBox(width: 20),
+            FashionFetishText(
+              text: user != null ? '${user.email}' : '',
+              size: 20,
+              fontWeight: FashionFontWeight.NORMAL,
+              height: 1.05,
+            ),
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            SizedBox(width: 50),
+            Icon(
+              Icons.date_range,
+              color: Theme
+                  .of(context)
+                  .primaryColor,
+              size: 40,
+            ),
+            SizedBox(width: 20),
+            FashionFetishText(
+              text: user != null ? '${DateFormat('dd.MM.yyyy').format(
+                  user.metadata.creationTime)}' : '',
+              size: 20,
+              fontWeight: FashionFontWeight.NORMAL,
+              height: 1.05,
+            ),
+          ]
+          ),
+        ]
+    );
   }
 }
-

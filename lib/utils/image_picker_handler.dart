@@ -28,7 +28,7 @@ class ImagePickerHandler extends StatelessWidget {
   }
 
   void init() {
-    imagePicker = ImagePickerDialog(this, _controller);
+    imagePicker =  ImagePickerDialog(this, _controller);
     imagePicker.initState();
   }
 

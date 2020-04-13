@@ -23,7 +23,7 @@ class ImagePickerDialog extends StatelessWidget {
     _drawerDetailsPosition = Tween<Offset>(
       begin: const Offset(0.0, 1.0),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
+    ).animate( CurvedAnimation(
       parent: _controller,
       curve: Curves.fastOutSlowIn,
     ));
