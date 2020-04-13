@@ -11,8 +11,8 @@ class RentalCarView extends StatefulWidget {
 }
 
 class _RentalCarViewState extends State<RentalCarView> {
-  String bannerUrl = 'assets/images/bookings/vehicles.png';
-  String headerTitle = 'Your Rental Car Booking';
+  final String bannerUrl = 'assets/images/bookings/vehicles.png';
+  final String headerTitle = 'Your Rental Car Booking';
 
   @override
   Widget build(BuildContext context) {

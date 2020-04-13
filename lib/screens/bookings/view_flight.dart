@@ -12,8 +12,8 @@ class FlightView extends StatefulWidget {
 }
 
 class _FlightViewState extends State<FlightView> {
-  String bannerUrl = 'assets/images/bookings/airline_banner.jpg';
-  String headerTitle = 'View Your Flight Booking';
+  final String bannerUrl = 'assets/images/bookings/airline_banner.jpg';
+  final String headerTitle = 'View Your Flight Booking';
 
   @override
   Widget build(BuildContext context) {
