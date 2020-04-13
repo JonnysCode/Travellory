@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/list_models.dart';
@@ -73,49 +74,49 @@ class _PublicTransportState extends State<PublicTransport> {
     // don't put in build because it will be recreated on every build
     // with state changes this is not appreciated
     final List<Widget> shown = [
-      BookingSiteTitle('Add Public Transport', Icons.train),
+      BookingSiteTitle('Add Public Transport', FontAwesomeIcons.train),
       SectionTitle('Type of Transportation'),
       transportTypeDropdown,
       TravelloryFormField(
           labelText: 'Company',
-          icon: Icon(Icons.supervised_user_circle),
+          icon: Icon(FontAwesomeIcons.solidBuilding),
           optional: true,
           onChanged: (value) => publicTransportModel.company = value),
       SectionTitle('Departure Information'),
       TravelloryFormField(
         labelText: 'Departure Location *',
-        icon: Icon(Icons.location_on),
+        icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
         onChanged: (value) => publicTransportModel.departureLocation = value,
       ),
       DateFormField(
         key: _depDateFormFieldKey,
         labelText: 'Departure Date *',
-        icon: Icon(Icons.date_range),
+        icon: Icon(FontAwesomeIcons.calendarAlt),
         chosenDateString: (value) => publicTransportModel.departureDate = value,
       ),
       TimeFormField(
         labelText: 'Departure Time *',
-        icon: Icon(Icons.access_time),
+        icon: Icon(FontAwesomeIcons.clock),
         chosenTimeString: (value) => publicTransportModel.departureTime = value,
       ),
       SectionTitle('Arrival Information'),
       TravelloryFormField(
         labelText: 'Arrival Location *',
-        icon: Icon(Icons.location_on),
+        icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
         onChanged: (value) => publicTransportModel.arrivalLocation = value,
       ),
       DateFormField(
         labelText: 'Arrival Date *',
-        icon: Icon(Icons.date_range),
+        icon: Icon(FontAwesomeIcons.calendarAlt),
         beforeDateKey: _depDateFormFieldKey,
         dateValidationMessage: 'Departure Date cannot be before Arrival Date',
         chosenDateString: (value) => publicTransportModel.arrivalDate = value,
       ),
       TimeFormField(
         labelText: 'Arrival Time',
-        icon: Icon(Icons.access_time),
+        icon: Icon(FontAwesomeIcons.clock),
         optional: true,
         chosenTimeString: (value) => publicTransportModel.arrivalTime = value,
       ),
@@ -125,7 +126,7 @@ class _PublicTransportState extends State<PublicTransport> {
       SectionTitle('Notes'),
       TravelloryFormField(
         labelText: 'Notes',
-        icon: Icon(Icons.speaker_notes),
+        icon: Icon(FontAwesomeIcons.stickyNote),
         optional: true,
         onChanged: (value) => publicTransportModel.notes = value,
       ),
@@ -145,7 +146,7 @@ class _PublicTransportState extends State<PublicTransport> {
       children: <Widget>[
         TravelloryFormField(
           labelText: 'Specific Type of Transportation',
-          icon: Icon(Icons.train),
+          icon: Icon(FontAwesomeIcons.train),
           optional: true,
           onChanged: (value) => publicTransportModel.specificType = value,
         ),
@@ -156,13 +157,13 @@ class _PublicTransportState extends State<PublicTransport> {
       children: <Widget>[
         TravelloryFormField(
           labelText: 'Booking Reference',
-          icon: Icon(Icons.confirmation_number),
+          icon: Icon(FontAwesomeIcons.ticketAlt),
           optional: true,
           onChanged: (value) => publicTransportModel.reference = value,
         ),
         TravelloryFormField(
           labelText: 'Booking Company',
-          icon: Icon(Icons.supervised_user_circle),
+          icon: Icon(FontAwesomeIcons.building),
           optional: true,
           onChanged: (value) => publicTransportModel.companyReservation = value,
         ),
@@ -173,7 +174,7 @@ class _PublicTransportState extends State<PublicTransport> {
       children: <Widget>[
         TravelloryFormField(
           labelText: 'Seat',
-          icon: Icon(Icons.airline_seat_recline_normal),
+          icon: Icon(FontAwesomeIcons.chair),
           optional: true,
           onChanged: (value) => publicTransportModel.seat = value,
         ),
@@ -188,13 +189,13 @@ class _PublicTransportState extends State<PublicTransport> {
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
 
   List<Item> types = <Item>[
-    const Item('Rail', Icon(Icons.directions_railway, color: Color(0xFF167F67))),
-    const Item('Bus', Icon(Icons.directions_bus, color: Color(0xFF167F67))),
-    const Item('Metro', Icon(Icons.train, color: Color(0xFF167F67))),
-    const Item('Ferry', Icon(Icons.directions_boat, color: Color(0xFF167F67))),
-    const Item('Taxi', Icon(Icons.directions_car, color: Color(0xFF167F67))),
-    const Item('Uber', Icon(Icons.directions_car, color: Color(0xFF167F67))),
-    const Item('Other', Icon(Icons.directions_walk, color: Color(0xFF167F67))),
+    const Item('Rail', Icon(FontAwesomeIcons.train, color: Color(0xFF167F67))),
+    const Item('Bus', Icon(FontAwesomeIcons.bus, color: Color(0xFF167F67))),
+    const Item('Metro', Icon(FontAwesomeIcons.subway, color: Color(0xFF167F67))),
+    const Item('Ferry', Icon(FontAwesomeIcons.ship, color: Color(0xFF167F67))),
+    const Item('Taxi', Icon(FontAwesomeIcons.taxi, color: Color(0xFF167F67))),
+    const Item('Uber', Icon(FontAwesomeIcons.carSide, color: Color(0xFF167F67))),
+    const Item('Other', Icon(FontAwesomeIcons.walking, color: Color(0xFF167F67))),
   ];
 
   Widget _itemBuilder(BuildContext context, int index, Animation<double> animation) {
