@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:travellory/utils/input_validator.dart';
 
 Widget inputAuthentication(Icon icon, String hint, Color decorationColor, TextEditingController controller,
-    ValidatorType validatorType, bool obscure, String errorText) {
     FocusNode focusNode, validatorType, bool obscure, String errorText) {
   return Container(
     padding: EdgeInsets.only(left: 20, right: 20),
