@@ -44,6 +44,7 @@ dependencies:
   json_serializable: ^2.0.2
   flutter_rounded_date_picker: 1.0.0
   dropdownfield: 1.0.0
+  logger: ^0.6.0
 
 dev_dependencies:
   flutter_test:
