@@ -126,6 +126,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SpeedDialButton(
+              key: Key('home_page_dial'),
               dials: _dials,
             ),
           ],
