@@ -88,7 +88,7 @@ class _ProfilePageState extends State<ProfilePage>
                   ),
           ),
         ),
-        SizedBox(height: 50),
+        SizedBox(height: 20),
         FutureBuilder(
             future: AuthProvider.of(context).auth.getCurrentUser(),
             builder: (context, snapshot) {
@@ -98,17 +98,59 @@ class _ProfilePageState extends State<ProfilePage>
                 return CircularProgressIndicator();
               }
             }),
-        SizedBox(height: 100),
-        FlatButton.icon(
-          onPressed: () => _signOut(),
-          icon: Icon(Icons.exit_to_app),
-          label: FashionFetishText(
-            text: 'Log out',
-            size: 20,
-            fontWeight: FashionFontWeight.normal,
-            height: 1.05,
+        Padding(
+          padding: EdgeInsets.only(
+              top: 10,
+              left: 90,
+              right: 90,
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Container(
+            child: filledButton("Change password", Colors.white, Theme.of(context).primaryColor,
+                Theme.of(context).primaryColor, Colors.white, () {
+                  Navigator.pushNamed(context, '/password');
+                }),
+            height: 40,
+            width: MediaQuery.of(context).size.width,
           ),
-        )
+        ),
+        //more to add
+        SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+              left: 90,
+              right: 90,
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Container(
+            child: filledButton("Friends", Colors.white, Theme.of(context).primaryColor,
+                Theme.of(context).primaryColor, Colors.white, () {
+                  Navigator.pushNamed(context, '/friends/friends_page');
+                }),
+            height: 40,
+            width: MediaQuery.of(context).size.width,
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+              left: 90,
+              right: 90,
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Container(
+            child: filledButton("Logout", Colors.white, Theme.of(context).primaryColor,
+                Theme.of(context).primaryColor, Colors.white, () async {
+                  await _signOut();
+                }),
+            height: 40,
+            width: MediaQuery.of(context).size.width,
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
       ],
     );
   }
