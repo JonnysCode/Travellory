@@ -1,6 +1,7 @@
-import 'abstract_model.dart';
 import 'package:travellory/models/day_model.dart';
 import 'package:travellory/utils/date_converter.dart';
+import 'abstract_model.dart';
+
 
 class TripModel extends Model {
   TripModel({
