@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -5,6 +7,7 @@ import 'package:mockito/mockito.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/screens/home/pages/profile_page.dart';
 import 'package:travellory/services/auth.dart';
+import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class MockAuth extends Mock implements BaseAuthService {}
@@ -68,17 +71,17 @@ void main() {
     expect(find.byIcon(Icons.date_range), findsOneWidget);
   });
 
-  testWidgets('test if profile page has a logout button',
+  testWidgets('test if profile page has the three buttons: change-pw, friends, logout',
       (WidgetTester tester) async {
     MockAuth mockAuth = MockAuth();
     ProfilePage page = ProfilePage();
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
-    var fashionFetishText = find.byType(FashionFetishText);
 
-    // Verify that the ProfilePage has a exit icon and logout text.
-    expect(fashionFetishText, findsOneWidget);
-    expect(find.byIcon(Icons.exit_to_app), findsNWidgets(1));
+    // Verify that the ProfilePage has logout button.
+    expect(find.byKey(Key('change-pw')), findsOneWidget);
+    expect(find.byKey(Key('friends')), findsOneWidget);
+    expect(find.byKey(Key('logout')), findsOneWidget);
   });
 }
