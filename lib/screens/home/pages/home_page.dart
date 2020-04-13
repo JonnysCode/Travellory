@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
               right: 40,
               child: Container(
                 child: Text(
-                  "Your trip to Los Angeles starts in 1 day. Pack your bags now.",
+                  'Your trip to Los Angeles starts in 1 day. Pack your bags now.',
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.black54,
@@ -119,7 +119,11 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.black12,
                         ),
                       ),
-                      Expanded(child: Schedule()),
+                      Expanded(
+                        child: Schedule(
+                          key: Key('home_schedule'),
+                        ),
+                      ),
                     ],
                   ),
                 ),
