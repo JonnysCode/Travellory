@@ -62,7 +62,7 @@ class _RegisterState extends State<ChangePassword> {
         backgroundColor: Colors.green,
         margin: EdgeInsets.all(8),
         borderRadius: 12,
-        duration: Duration(seconds: 3),
+        duration: Duration(seconds: 3)
       )..show(context),
     );
   }
@@ -82,143 +82,143 @@ class _RegisterState extends State<ChangePassword> {
       body: Column(
         children: <Widget>[
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
+            height: MediaQuery.of(context).size.height * 0.05
           ),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                color: Theme.of(context).canvasColor,
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: Theme.of(context).canvasColor,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40.0),
+                  topRight: Radius.circular(40.0)
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40.0),
-                    topRight: Radius.circular(40.0)
-                ),
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.95,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/login/beach.png"),
-                      fit: BoxFit.fitWidth,
-                      alignment: Alignment.bottomCenter,
-                    ),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.95,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/login/beach.png"),
+                    fit: BoxFit.fitWidth,
+                    alignment: Alignment.bottomCenter
                   ),
-                  child: ListView(
-                    children: <Widget>[
-                      Container(
-                        height: 50,
-                        width: 50,
-                        child: Stack(
-                          children: <Widget>[
-                            Positioned(
-                              left: 18,
-                              top: 18,
-                              child: Container(
-                                width: 32,
-                                height: 32,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Theme.of(context).primaryColor
-                                ),
+                ),
+                child: ListView(
+                  children: <Widget>[
+                    Container(
+                      height: 50,
+                      width: 50,
+                      child: Stack(
+                        children: <Widget>[
+                          Positioned(
+                            left: 18,
+                            top: 18,
+                            child: Container(
+                              width: 32,
+                              height: 32,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(context).primaryColor
                               ),
                             ),
-                            Positioned(
-                              left: 8,
-                              top: 8,
-                              child: IconButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  _passwordController.clear();
-                                  _oldPasswordController.clear();
-                                },
-                                icon: Icon(
-                                  FontAwesomeIcons.angleLeft,
-                                  size: 30.0,
-                                  color: Colors.white,
-                                ),
+                          ),
+                          Positioned(
+                            left: 8,
+                            top: 8,
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                _passwordController.clear();
+                                _oldPasswordController.clear();
+                              },
+                              icon: Icon(
+                                FontAwesomeIcons.angleLeft,
+                                size: 30.0,
+                                color: Colors.white
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          )
+                        ],
                       ),
-                      SingleChildScrollView(
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                                padding: EdgeInsets.only(top: 20, bottom: 8),
-                                child: Text(
-                                  'Please first enter the old password',
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 16,
+                    ),
+                    SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(top: 20, bottom: 8),
+                            child: Text(
+                              'Please first enter the old password',
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 16
+                              ),
+                            ),
+                          ),
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 20),
+                                  child: inputAuthentication(
+                                      Icon(FontAwesomeIcons.unlockAlt),
+                                      "OLD PASSWORD",
+                                      Theme.of(context).primaryColor,
+                                      _oldPasswordController,
+                                      null,
+                                      ValidatorType.password,
+                                      true,
+                                      _reauthError
                                   ),
                                 ),
-                            ),
-                            Form(
-                                key: _formKey,
-                                child: Column(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(bottom: 20),
-                                      child: inputAuthentication(
-                                          Icon(FontAwesomeIcons.unlockAlt),
-                                          "OLD PASSWORD",
-                                          Theme.of(context).primaryColor,
-                                          _oldPasswordController,
-                                          null,
-                                          ValidatorType.password,
-                                          true,
-                                          _reauthError
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(bottom: 20),
-                                      child: inputAuthentication(
-                                          Icon(FontAwesomeIcons.unlockAlt),
-                                          "NEW PASSWORD",
-                                          Theme.of(context).primaryColor,
-                                          _passwordController,
-                                          null,
-                                          ValidatorType.password,
-                                          true,
-                                          _changePwError
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 20,
-                                          right: 20,
-                                          bottom: MediaQuery.of(context)
-                                              .viewInsets.bottom
-                                      ),
-                                      child: Container(
-                                        child: filledButton(
-                                            "SAVE",
-                                            Colors.white,
-                                            Theme.of(context).primaryColor,
-                                            Theme.of(context).primaryColor,
-                                            Colors.white,
-                                            _validateAndChangePW
-                                        ),
-                                        height: 50,
-                                        width: MediaQuery.of(context).size.width,
-                                      ),
-                                    ),
-                                  ],
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 20),
+                                  child: inputAuthentication(
+                                      Icon(FontAwesomeIcons.unlockAlt),
+                                      "NEW PASSWORD",
+                                      Theme.of(context).primaryColor,
+                                      _passwordController,
+                                      null,
+                                      ValidatorType.password,
+                                      true,
+                                      _changePwError
+                                  ),
                                 ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20,
+                                      right: 20,
+                                      bottom: MediaQuery.of(context)
+                                          .viewInsets.bottom
+                                  ),
+                                  child: Container(
+                                    child: filledButton(
+                                        "SAVE",
+                                        Colors.white,
+                                        Theme.of(context).primaryColor,
+                                        Theme.of(context).primaryColor,
+                                        Colors.white,
+                                        _validateAndChangePW
+                                    ),
+                                    height: 50,
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
+          ),
         ],
       ),
     );
