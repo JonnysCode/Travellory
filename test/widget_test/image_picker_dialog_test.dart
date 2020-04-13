@@ -78,4 +78,29 @@ void main() {
     // Verify that the page pick image
     expect(find.byKey(Key('selection_menu')), findsOneWidget);
   });
+
+
+  testWidgets('test if gallery open and crop image',
+          (WidgetTester tester) async {
+        MockAuth mockAuth = MockAuth();
+        AnimationController _controllerHandler;
+        ImagePickerListener _listenerHandler;
+        ImagePickerHandler _listener = ImagePickerHandler(_listenerHandler,_controllerHandler);
+        AnimationController _controller;
+        ImagePickerDialog page = ImagePickerDialog(_listener, _controller);
+        //page.dismissDialog();
+        //_controller.reverse();
+
+        // Build our app and trigger a frame.
+        await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
+        await tester.tap(find.byKey(Key('gallery_key')));
+        await tester.pump();
+
+        // Verify that the profile page has crop image
+        // expect(find.byKey(Key('croped_Image'), skipOffstage: false), isOffstage);
+        expect(find.byKey(Key('croped_Image')), findsOneWidget);
+      });
+
+
+
 }

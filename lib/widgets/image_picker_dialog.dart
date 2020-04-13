@@ -81,6 +81,7 @@ class ImagePickerDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 GestureDetector(
+                  key: Key('camera_key'),
                   onTap: () => _listener.openCamera(),
                   child: roundedButton(
                       'Take Photo',
@@ -89,6 +90,7 @@ class ImagePickerDialog extends StatelessWidget {
                       const Color(0xFFFFFFFF)),
                 ),
                 GestureDetector(
+                  key: Key('gallery_key'),
                   onTap: () => _listener.openGallery(),
                   child: roundedButton(
                       'Choose from Library',
