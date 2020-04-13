@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/screens/trip/accommodation.dart';
+import 'package:travellory/screens/trip/bookings/rental_car.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({ Key key }) : super(key: key);
@@ -9,14 +10,14 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     TripModel tripModel = TripModel(
         name: 'Castle Discovery',
-        startDate: DateTime(2020, 5, 12),
-        endDate: DateTime(2020, 5, 25),
+        startDate: '2020-05-12',
+        endDate: '2020-05-25',
         destination: 'Munich',
         imageNr: 3
     );
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/booking/accommodation', arguments: tripModel);
+        Navigator.pushNamed(context, '/booking/rentalCar', arguments: tripModel);
       },
       child: Container(
         color: const Color(0xFFFFFF00),
@@ -31,25 +32,25 @@ void main() {
     return MaterialApp(
       routes: <String, WidgetBuilder>{
         '/': (context) => const Wrapper(),
-        '/booking/accommodation': (context) => Accommodation()
+        '/booking/rentalCar': (context) => RentalCar()
       },
     );
   }
 
-  Future<void> pumpAccommodation(WidgetTester tester) async {
+  Future<void> pumpRentalCar(WidgetTester tester) async {
     await tester.tap(find.text('X'));
     await tester.pump();
   }
 
-  testWidgets('test if accommodation page is loaded', (WidgetTester tester) async {
-    final testKey = Key('Accommodation');
+  testWidgets('test if Rental Car page is loaded', (WidgetTester tester) async {
+    final testKey = Key('Rental Car');
 
     await tester.pumpWidget(makeTestableWidget());
 
     expect(find.text('X'), findsOneWidget);
     expect(find.byKey(testKey, skipOffstage: false), findsNothing);
 
-    await pumpAccommodation(tester);
+    await pumpRentalCar(tester);
     expect(find.text('X'), findsOneWidget);
     expect(find.byKey(testKey, skipOffstage: false), isOffstage);
   });
@@ -58,7 +59,7 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget());
 
-    await pumpAccommodation(tester);
+    await pumpRentalCar(tester);
     // verify that form is present
     expect(find.byType(Form, skipOffstage: false), isOffstage);
   });
@@ -66,23 +67,31 @@ void main() {
   testWidgets('test if form is present', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget());
-    await pumpAccommodation(tester);
+    await pumpRentalCar(tester);
 
     // Verify that form is present.
     expect(find.byType(Form, skipOffstage: false), isOffstage);
+  });
 
-    // Verify that form fields are present.
-    expect(find.byIcon(Icons.confirmation_number, skipOffstage: false), isOffstage);
-    expect(find.byIcon(Icons.supervised_user_circle, skipOffstage: false), isOffstage);
-    expect(find.byIcon(Icons.location_on, skipOffstage: false), isOffstage);
-    expect(find.byIcon(Icons.location_on, skipOffstage: false), isOffstage);
-    expect(find.byIcon(Icons.speaker_notes, skipOffstage: false), isOffstage);
+  testWidgets('test if all form fields are present', (WidgetTester tester) async {
+    await tester.pumpWidget(makeTestableWidget());
+    await pumpRentalCar(tester);
+
+    expect(find.byKey(Key('BookingSiteTitle'), skipOffstage: false), findsOneWidget);
+    expect(find.byKey(Key('SectionTitle'), skipOffstage: false), findsNWidgets(5));
+    expect(find.byIcon(FontAwesomeIcons.solidBuilding, skipOffstage: false), findsOneWidget);
+    expect(find.byIcon(FontAwesomeIcons.clock, skipOffstage: false), findsNWidgets(2));
+    expect(find.byIcon(FontAwesomeIcons.calendarAlt, skipOffstage: false), findsNWidgets(2));
+    expect(find.byIcon(FontAwesomeIcons.mapMarkerAlt, skipOffstage: false), findsNWidgets(2));
+    expect(find.byIcon(FontAwesomeIcons.car, skipOffstage: false), findsNWidgets(3));
+    expect(find.byIcon(FontAwesomeIcons.ticketAlt, skipOffstage: false), findsOneWidget);
+    expect(find.byIcon(FontAwesomeIcons.stickyNote, skipOffstage: false), findsOneWidget);
   });
 
   testWidgets('test if submit button is present', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget());
-    await pumpAccommodation(tester);
+    await pumpRentalCar(tester);
     // Verify that form is present.
     expect(find.byKey(Key('SubmitButton'), skipOffstage: false), isOffstage);
   });
@@ -90,7 +99,7 @@ void main() {
   testWidgets('test if cancel button is present', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget());
-    await pumpAccommodation(tester);
+    await pumpRentalCar(tester);
 
     // Verify that form is present.
     expect(find.byKey(Key('CancelButton'), skipOffstage: false), isOffstage);

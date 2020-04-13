@@ -1,19 +1,19 @@
 import 'package:email_validator/email_validator.dart';
 
 enum ValidatorType{
-  EMAIL, PASSWORD, USERNAME
+  email, password, username
 }
 
 class InputValidator {
 
   static String validate(String value, ValidatorType type){
     switch(type){
-      case ValidatorType.EMAIL:
+      case ValidatorType.email:
         return _validateEmail(value);
-      case ValidatorType.PASSWORD :
+      case ValidatorType.password :
         return _validatePassword(value);
-      case ValidatorType.USERNAME :
-        return null;
+      case ValidatorType.username :
+        return _validateUsername(value);
       default :
         return null;
     }
@@ -38,6 +38,21 @@ class InputValidator {
     // todo: make password validation more strict
     if (value.length < 6 ) {
       return 'Enter a password with at least 6 characters';
+    }
+    return null;
+  }
+
+  static String _validateUsername(String value) {
+    if (value.isEmpty) {
+      // the form is empty
+      return 'Enter a username';
+    }
+    
+    const Pattern pattern =
+        r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
+    final RegExp regex = RegExp(pattern);
+    if (!regex.hasMatch(value)) {
+      return 'Invalid username';
     }
     return null;
   }
