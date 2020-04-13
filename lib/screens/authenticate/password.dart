@@ -8,8 +8,8 @@ import 'package:travellory/widgets/input_widgets.dart';
 import 'package:flushbar/flushbar.dart';
 
 class ChangePassword extends StatefulWidget {
-  final Function toggleView;
   ChangePassword({this.toggleView});
+  final Function toggleView;
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -20,17 +20,17 @@ class _RegisterState extends State<ChangePassword> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final String alertText = "You've successfully changed your password.";
 
-  TextEditingController _oldPasswordController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _oldPasswordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   String _reauthError;
   String _changePwError;
 
   Future _validateAndChangePW() async {
     if (_formKey.currentState.validate()) {
-      Navigator.pushNamed(context, '/loading');
+       Navigator.pushNamed(context, '/loading');
 
-      _changePassword().then((value) async {
+       await _changePassword().then((value) async {
         setState(() => _changePwError = null);
         Navigator.popUntil(context, ModalRoute.withName('/'));
         _showSnackBar();
@@ -84,19 +84,30 @@ class _RegisterState extends State<ChangePassword> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.05,
           ),
-          Container(
-            child: DecoratedBox(
+            DecoratedBox(
               decoration: BoxDecoration(
                 color: Theme.of(context).canvasColor,
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(40.0),
-                    topRight: Radius.circular(40.0)),
+                    topRight: Radius.circular(40.0)
+                ),
                 child: Container(
+                  height: MediaQuery.of(context).size.height * 0.95,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/login/beach.png"),
+                      fit: BoxFit.fitWidth,
+                      alignment: Alignment.bottomCenter,
+                    ),
+                  ),
                   child: ListView(
                     children: <Widget>[
                       Container(
+                        height: 50,
+                        width: 50,
                         child: Stack(
                           children: <Widget>[
                             Positioned(
@@ -107,7 +118,8 @@ class _RegisterState extends State<ChangePassword> {
                                 height: 32,
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: Theme.of(context).primaryColor),
+                                    color: Theme.of(context).primaryColor
+                                ),
                               ),
                             ),
                             Positioned(
@@ -128,26 +140,22 @@ class _RegisterState extends State<ChangePassword> {
                             )
                           ],
                         ),
-                        height: 50,
-                        width: 50,
                       ),
                       SingleChildScrollView(
                         child: Column(
                           children: <Widget>[
-                            Container(
-                                child: Padding(
-                              padding: EdgeInsets.only(top: 20, bottom: 8),
-                              child: Text(
-                                'Please first enter the old password',
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 16,
+                            Padding(
+                                padding: EdgeInsets.only(top: 20, bottom: 8),
+                                child: Text(
+                                  'Please first enter the old password',
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
                                 ),
-                              ),
-                            )),
-                            Container(
-                              child: Form(
+                            ),
+                            Form(
                                 key: _formKey,
                                 child: Column(
                                   children: <Widget>[
@@ -161,7 +169,8 @@ class _RegisterState extends State<ChangePassword> {
                                           null,
                                           ValidatorType.password,
                                           true,
-                                          _reauthError),
+                                          _reauthError
+                                      ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
@@ -173,15 +182,16 @@ class _RegisterState extends State<ChangePassword> {
                                           null,
                                           ValidatorType.password,
                                           true,
-                                          _changePwError),
+                                          _changePwError
+                                      ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
                                           left: 20,
                                           right: 20,
                                           bottom: MediaQuery.of(context)
-                                              .viewInsets
-                                              .bottom),
+                                              .viewInsets.bottom
+                                      ),
                                       child: Container(
                                         child: filledButton(
                                             "SAVE",
@@ -189,15 +199,14 @@ class _RegisterState extends State<ChangePassword> {
                                             Theme.of(context).primaryColor,
                                             Theme.of(context).primaryColor,
                                             Colors.white,
-                                            _validateAndChangePW),
+                                            _validateAndChangePW
+                                        ),
                                         height: 50,
-                                        width:
-                                            MediaQuery.of(context).size.width,
+                                        width: MediaQuery.of(context).size.width,
                                       ),
                                     ),
                                   ],
                                 ),
-                              ),
                             ),
                             SizedBox(
                               height: 20,
@@ -207,19 +216,9 @@ class _RegisterState extends State<ChangePassword> {
                       ),
                     ],
                   ),
-                  height: MediaQuery.of(context).size.height * 0.95,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/login/beach.png"),
-                      fit: BoxFit.fitWidth,
-                      alignment: Alignment.bottomCenter,
-                    ),
-                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );
