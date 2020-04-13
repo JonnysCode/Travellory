@@ -12,7 +12,7 @@ class PublicTransportView extends StatefulWidget {
 }
 
 class _PublicTransportViewState extends State<PublicTransportView> {
-  final String bannerUrl = 'assets/images/bookings/hotel.jpg';
+  final String bannerUrl = 'assets/images/bookings/metro.jpg';
   final String headerTitle = 'Your Public Transport';
 
   @override
