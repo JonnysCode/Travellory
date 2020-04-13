@@ -40,14 +40,6 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
-  List<Widget> _layoutPages(){
-    final layoutPages = <Widget>[];
-    for(final page in _pages){
-      layoutPages.add(page);
-    }
-    return layoutPages;
-  }
-
   void _setNavBarIndex(int index){
     setState(() {
       _navBarIndex = index;
@@ -79,7 +71,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Widget _costumeNavigationBar(){
+  Widget _customNavigationBar(){
     return Container(
       height: 48,
       decoration: BoxDecoration(
@@ -131,11 +123,11 @@ class _HomeState extends State<Home> {
             controller: _pageController,
             scrollDirection: Axis.horizontal,
             onPageChanged: (index) => _setNavIndices(index),
-            children: _layoutPages(),
+            children: _pages,
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: _costumeNavigationBar(),
+            child: _customNavigationBar(),
           ),
         ],
       ),
