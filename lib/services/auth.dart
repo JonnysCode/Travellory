@@ -108,7 +108,7 @@ class AuthService implements BaseAuthService {
 
   //reauthenticate before security-sensitive action (f.e. change password)
   Future reauthenticate (String oldPassword) async {
-    FirebaseUser user = await _auth.currentUser();
+    FirebaseUser user = await auth.currentUser();
     String email = user.email;
     AuthCredential credential = EmailAuthProvider.
     getCredential(email: email, password: oldPassword);
@@ -117,7 +117,7 @@ class AuthService implements BaseAuthService {
 
   //change password
   Future changePassword(String password) async {
-    FirebaseUser user = await _auth.currentUser();
+    FirebaseUser user = await auth.currentUser();
     return user.updatePassword(password);
   }
 
