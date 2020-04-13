@@ -146,10 +146,10 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
 
   _toggleExpanded() async {
     if(_isExpanded){
-      _hideBookings();
+     await  _hideBookings();
       _controller.reverse();
     }
-    await Future.delayed(Duration(milliseconds: 260));
+    await Future.delayed(Duration(milliseconds: 360));
     setState(() {
       _isExpanded = !_isExpanded;
       if(_isExpanded){
@@ -159,7 +159,7 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
     });
   }
 
-  Future _hideBookings() async {
+  Future<void> _hideBookings() async {
     for (GlobalKey<ItemFaderState> key in keys) {
       await Future.delayed(Duration(milliseconds: 40));
       key.currentState.hide();

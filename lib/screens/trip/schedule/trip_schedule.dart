@@ -22,7 +22,7 @@ class _ScheduleState extends State<Schedule> {
   void initState() {
     _tripModel.init();
     _expandedDays = _tripModel.days.map((day) => false).toList();
-    _expandedDays[0] = true;
+    //_expandedDays[0] = true;
     super.initState();
   }
 
