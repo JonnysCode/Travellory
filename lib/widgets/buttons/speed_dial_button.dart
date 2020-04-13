@@ -59,7 +59,9 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
               return dial;
             }).toList()..add(
               FloatingActionButton(
+                key: Key('dial_button'),
                 highlightElevation: 3.0,
+                onPressed: () => _toggleFloatingButton(),
                 child: AnimatedBuilder(
                   animation: _controller,
                   builder: (BuildContext context, Widget child) {
@@ -70,7 +72,6 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
                     );
                   },
                 ),
-                onPressed: () => _toggleFloatingButton(),
               ),
             ),
           ),
@@ -79,7 +80,7 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
     );
   }
 
-  _toggleFloatingButton() {
+  void _toggleFloatingButton() {
     _controller.isDismissed
         ? _controller.forward()
         : _controller.reverse();
@@ -120,7 +121,7 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
           FloatingActionButton(
             backgroundColor: Colors.white,
             mini: true,
-            child: FaIcon(
+            child: Icon(
                 dials[index].icon,
                 color: Colors.black54
             ),
