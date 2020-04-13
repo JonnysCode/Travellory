@@ -161,7 +161,7 @@ class _ProfilePageState extends State<ProfilePage>
 }
 
 
-class UserInformation extends StatefulWidget {
+class UserInformation extends StatelessWidget {
   const UserInformation({
     Key key,
     this.user,
