@@ -14,7 +14,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   static const int _animationSpeed = 200;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final List<Widget> _pages = <Widget>[
     HomePage(),
     CalendarPage(),
@@ -45,7 +44,6 @@ class _HomeState extends State<Home> {
     final layoutPages = <Widget>[];
     for(final page in _pages){
       layoutPages.add(page);
-      //layoutPages.add(mainPageLayout(context, MediaQuery.of(context).size.height, page));
     }
     return layoutPages;
   }
@@ -93,6 +91,7 @@ class _HomeState extends State<Home> {
       child: ClipRRect(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
         child: CustomNavigationBar(
+          key: Key('key_bar'),
           iconSize: 22.0,
           selectedColor: Color(0xff040307),
           strokeColor: Color(0x90040307),
@@ -102,16 +101,16 @@ class _HomeState extends State<Home> {
           onTap: (index) => _setNavBarIndex(index),
           items: [
             CustomNavigationBarItem(
-            icon: FontAwesomeIcons.suitcaseRolling,
+              icon: FontAwesomeIcons.suitcaseRolling,
             ),
             CustomNavigationBarItem(
-            icon: FontAwesomeIcons.calendarAlt,
+              icon: FontAwesomeIcons.calendarAlt,
             ),
             CustomNavigationBarItem(
-            icon: FontAwesomeIcons.globeAfrica,
+              icon: FontAwesomeIcons.globeAfrica,
             ),
             CustomNavigationBarItem(
-            icon: FontAwesomeIcons.addressBook,
+              icon: FontAwesomeIcons.addressBook,
             ),
             CustomNavigationBarItem(
               icon: FontAwesomeIcons.user,
@@ -125,7 +124,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       backgroundColor: Theme.of(context).primaryColor,
       body: Stack(
         children: <Widget>[

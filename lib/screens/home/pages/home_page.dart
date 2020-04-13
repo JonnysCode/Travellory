@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
-                    boxShadow: [
+                    boxShadow: <BoxShadow>[
                       BoxShadow(blurRadius: 18, color: Colors.black.withOpacity(.2), offset: Offset(0.0, -6.0))
                     ],
                   ),
