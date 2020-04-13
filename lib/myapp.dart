@@ -3,8 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
+import 'package:travellory/screens/authenticate/password.dart';
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
+import 'package:travellory/screens/friends/friends_page.dart';
 import 'package:travellory/screens/home/home.dart';
 import 'package:travellory/screens/trip/bookings/accommodation.dart';
 import 'package:travellory/screens/trip/bookings/activity.dart';
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
             '/auth': (context) => Authenticate(),
             '/login': (context) => SignIn(),
             '/register': (context) => Register(),
+            '/password': (context) => ChangePassword(),
             '/loading': (context) => Loading(),
             '/home': (context) => Home(),
             '/viewtrip': (context) => TripScreen(),
@@ -49,6 +52,7 @@ class MyApp extends StatelessWidget {
             '/booking/flight': (context) => Flight(),
             '/booking/publicTransport': (context) => PublicTransport(),
             '/booking/activity': (context) => Activity(),
+            '/friends/friends_page': (context) => FriendsPage(),
           },
         ),
       ),
