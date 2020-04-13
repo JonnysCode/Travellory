@@ -5,8 +5,10 @@ import 'package:travellory/services/add_database.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 
 Function() onSubmitBooking(Model model, String functionName, BuildContext context, alertText) {
+  DatabaseAdder databaseAdder = DatabaseAdder();
+
   return () async {
-    final bool added = await DatabaseAdder.addModel(model, functionName);
+    final bool added = await databaseAdder.addModel(model, functionName);
     if (added) {
       showSubmittedBookingDialog(context, alertText);
     } else {
@@ -19,8 +21,10 @@ Function() onSubmitBooking(Model model, String functionName, BuildContext contex
 }
 
 void Function() onSubmitTrip(TripModel tripModel, String functionName, BuildContext context, alertText) {
+  DatabaseAdder databaseAdder = DatabaseAdder();
+
   return () async {
-    final bool added = await DatabaseAdder.addModel(tripModel, functionName);
+    final bool added = await databaseAdder.addModel(tripModel, functionName);
     if (added) {
       showSubmittedTripDialog(context, alertText);
     } else {
