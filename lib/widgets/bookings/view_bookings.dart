@@ -41,7 +41,7 @@ Padding fieldView(IconData icon, String title, String details, BuildContext cont
         SizedBox(width: 30.0),
         Icon(
           icon,
-          size: 40.0,
+          size: 30.0,
           color: Theme.of(context).primaryColor,
         ),
         SizedBox(width: 15.0),

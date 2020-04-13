@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:travellory/screens/bookings/view_flight.dart';
+import 'package:travellory/screens/bookings/view_rental_car.dart';
 import 'package:travellory/screens/home/pages/calendar_page.dart';
 import 'package:travellory/screens/home/pages/home_page.dart';
 import 'package:travellory/screens/home/pages/map_page.dart';
@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
     CalendarPage(),
     MapPage(),
     ProfilePage(),
-    FlightView(),
+    RentalCarView(),
   ];
 
   PageController _pageController;
@@ -133,8 +133,8 @@ class _HomeState extends State<Home> {
                       ),
                       GButton(
                         key: Key('nav_profile_button'),
-                        icon: FontAwesomeIcons.plane,
-                        text: 'Plane',
+                        icon: FontAwesomeIcons.car,
+                        text: 'Car',
                       ),
                     ],
                     selectedIndex: _navBarIndex,
