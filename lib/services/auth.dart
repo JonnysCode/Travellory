@@ -5,6 +5,8 @@ import 'package:travellory/services/user_management.dart';
 abstract class BaseAuthService {
   Future signInAnonymously();
   Future signInWithEmailAndPassword(String email, String password);
+  Future reauthenticate (String oldPassword);
+  Future changePassword(String password);
   Future registerWithEmailAndPassword(
       String email, String password, String displayName);
   Future signOut();
@@ -103,6 +105,23 @@ class AuthService implements BaseAuthService {
   // register with google
 
   // register with facebook
+
+  //reauthenticate before security-sensitive action (f.e. change password)
+  Future reauthenticate (String oldPassword) async {
+    FirebaseUser user = await auth.currentUser();
+    String email = user.email;
+    AuthCredential credential = EmailAuthProvider.
+    getCredential(email: email, password: oldPassword);
+    return user.reauthenticateWithCredential(credential);
+  }
+
+  //change password
+  Future changePassword(String password) async {
+    FirebaseUser user = await auth.currentUser();
+    return user.updatePassword(password);
+  }
+
+
 
   // sign out
   @override
