@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
-import 'package:travellory/widgets/buttons.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
@@ -113,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage>
             label: FashionFetishText(
               text: 'Log out',
               size: 20,
-              fontWeight: FashionFontWeight.NORMAL,
+              fontWeight: FashionFontWeight.normal,
               height: 1.05,
             ),
           )
@@ -170,7 +169,7 @@ class _UserInformationState extends State<UserInformation> {
             FashionFetishText(
               text: user != null ? '${user.displayName}' : '',
               size: 20,
-              fontWeight: FashionFontWeight.NORMAL,
+              fontWeight: FashionFontWeight.normal,
               height: 1.05,
             ),
           ]),
@@ -187,7 +186,7 @@ class _UserInformationState extends State<UserInformation> {
             FashionFetishText(
               text: user != null ? '${user.email}' : '',
               size: 20,
-              fontWeight: FashionFontWeight.NORMAL,
+              fontWeight: FashionFontWeight.normal,
               height: 1.05,
             ),
           ]),
@@ -205,7 +204,7 @@ class _UserInformationState extends State<UserInformation> {
               text: user != null ? '${DateFormat('dd.MM.yyyy').format(
                   user.metadata.creationTime)}' : '',
               size: 20,
-              fontWeight: FashionFontWeight.NORMAL,
+              fontWeight: FashionFontWeight.normal,
               height: 1.05,
             ),
           ]
