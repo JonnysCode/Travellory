@@ -16,68 +16,6 @@ class _AccommodationViewState extends State<AccommodationView> {
   final String bannerUrl = 'assets/images/bookings/hotel.jpg';
   final String headerTitle = 'Your Accommodation';
 
-//  Column displayExtraFieldRoomType() {
-//    if (accommodationModels[0].type == 'Hotel') {
-//      return Column(children: [
-//        displayField(
-//            FontAwesomeIcons.hotel, 'Room Type', accommodationModels[0].hotelRoomType, context),
-//        Divider()
-//      ]);
-//    } else {
-//      return Column(children: [
-//        Padding(
-//          padding: const EdgeInsets.only(top: 0, left: 0, right: 0),
-//        )
-//      ]);
-//    }
-//  }
-
-//  Column displayExtraFieldAirbnbType() {
-//    if (accommodationModels[0].type == 'Airbnb') {
-//      return Column(children: [
-//        displayField(FontAwesomeIcons.suitcase, 'Specific type of airbnb',
-//            accommodationModels[0].airbnbType, context),
-//        Divider()
-//      ]);
-//    } else {
-//      return Column(children: [
-//        Padding(
-//          padding: const EdgeInsets.only(top: 0, left: 0, right: 0),
-//        )
-//      ]);
-//    }
-//  }
-
-//  Column displayExtraFieldOtherType() {
-//    if (accommodationModels[0].type == 'Other') {
-//      return Column(children: [
-//        displayField(FontAwesomeIcons.suitcase, "Description of type 'Other'",
-//            accommodationModels[0].airbnbType, context),
-//        Divider()
-//      ]);
-//    } else {
-//      return Column(children: [
-//        Padding(
-//          padding: const EdgeInsets.only(top: 0, left: 0, right: 0),
-//        )
-//      ]);
-//    }
-//  }
-
-  Column displayExtraField(String toCompare, String comparison, IconData icon, String displayText,
-      String display, BuildContext context) {
-    if (toCompare == comparison) {
-      return Column(children: [
-        displayField(icon, displayText, display, context),
-        Divider(),
-      ]);
-    } else {
-      return Column(children: [
-        Padding(padding: const EdgeInsets.only(top: 0, left: 0, right: 0)),
-      ]);
-    }
-  }
-
   SingleChildScrollView accommodationViewPage() {
     return SingleChildScrollView(
       child: Column(children: [
@@ -88,10 +26,6 @@ class _AccommodationViewState extends State<AccommodationView> {
         displayDropdownField(
             'Accommodation Type', accommodationTypes, accommodationModels[0].type, context),
         Divider(),
-
-//        displayExtraFieldAirbnbType(),
-//        displayExtraFieldOtherType(),
-
         // this checks if type chosen is Airbnb
         displayExtraField(accommodationModels[0].type, 'Airbnb', FontAwesomeIcons.suitcase,
             'Specific type of airbnb', accommodationModels[0].airbnbType, context),
@@ -106,8 +40,7 @@ class _AccommodationViewState extends State<AccommodationView> {
         displayField(
             FontAwesomeIcons.mapMarkerAlt, 'Address', accommodationModels[0].address, context),
         Divider(),
-//        displayExtraFieldRoomType(),
-        // this checks for hotel room type
+         // this checks for hotel room type
         displayExtraField(accommodationModels[0].type, 'Hotel', FontAwesomeIcons.hotel, 'Room Type',
             accommodationModels[0].hotelRoomType, context),
         displayCheckboxField('Breafast Included', accommodationModels[0].breakfast),

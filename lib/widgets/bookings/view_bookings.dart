@@ -122,3 +122,17 @@ Padding fieldNoDetailsView(IconData icon, String title, BuildContext context) {
         ),
       ]));
 }
+
+Column displayExtraField(String toCompare, String comparison, IconData icon, String displayText,
+    String display, BuildContext context) {
+  if (toCompare == comparison) {
+    return Column(children: [
+      displayField(icon, displayText, display, context),
+      Divider(),
+    ]);
+  } else {
+    return Column(children: [
+      Padding(padding: const EdgeInsets.only(top: 0, left: 0, right: 0)),
+    ]);
+  }
+}
