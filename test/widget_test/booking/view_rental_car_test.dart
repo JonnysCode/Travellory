@@ -30,7 +30,7 @@ void main() {
     );
   }
 
-  Future<void> pumpFlight(WidgetTester tester) async {
+  Future<void> pumpRentalCarView(WidgetTester tester) async {
     await tester.tap(find.text('X'));
     await tester.pump();
   }
@@ -43,35 +43,35 @@ void main() {
     expect(find.text('X'), findsOneWidget);
     expect(find.byKey(testKey, skipOffstage: false), findsNothing);
 
-    await pumpFlight(tester);
+    await pumpRentalCarView(tester);
     expect(find.text('X'), findsOneWidget);
     expect(find.byKey(testKey, skipOffstage: false), isOffstage);
   });
 
   testWidgets('test if view booking header is present', (WidgetTester tester) async {
     await tester.pumpWidget(makeTestableWidget());
-    await pumpFlight(tester);
+    await pumpRentalCarView(tester);
 
     expect(find.byKey(Key('ViewBookingHeader'), skipOffstage: false), findsOneWidget);
   });
 
   testWidgets('test if view rental car page content is present', (WidgetTester tester) async {
     await tester.pumpWidget(makeTestableWidget());
-    await pumpFlight(tester);
+    await pumpRentalCarView(tester);
 
     expect(find.byKey(Key('RentalCarViewPage'), skipOffstage: false), findsOneWidget);
   });
 
   testWidgets('test if bottom bar is present', (WidgetTester tester) async {
     await tester.pumpWidget(makeTestableWidget());
-    await pumpFlight(tester);
+    await pumpRentalCarView(tester);
 
     expect(find.byKey(Key('BottomBar'), skipOffstage: false), findsOneWidget);
   });
 
   testWidgets('test if all view fields are present', (WidgetTester tester) async {
     await tester.pumpWidget(makeTestableWidget());
-    await pumpFlight(tester);
+    await pumpRentalCarView(tester);
 
     expect(find.byKey(Key('SectionTitle'), skipOffstage: false), findsNWidgets(5));
     expect(find.byIcon(FontAwesomeIcons.solidBuilding, skipOffstage: false), findsOneWidget);
