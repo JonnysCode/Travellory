@@ -18,6 +18,7 @@ class _PublicTransportViewState extends State<PublicTransportView> {
 
   SingleChildScrollView publicTransportViewPage() {
     return SingleChildScrollView(
+      key: Key('PublicTransportViewPage'),
       child: Column(children: [
         BookingHeader(headerTitle, bannerUrl),
         SizedBox(height: 20),
