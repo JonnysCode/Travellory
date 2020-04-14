@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/forms/dropdown.dart';
 import '../font_widgets.dart';
 
 Container bookingView(SingleChildScrollView child) {
@@ -52,6 +54,22 @@ Padding displayField(IconData icon, String title, String details, BuildContext c
     return fieldDetailsView(icon, title, details, context);
   } else {
     return fieldNoDetailsView(icon, title, context);
+  }
+}
+
+Padding displayDropdownField(String title, List<Item> types, String details, BuildContext context) {
+  if (details != null && details != '') {
+    if (details == 'Hotel') {
+      return fieldDetailsView(FontAwesomeIcons.hotel, title, details, context);
+    } else if (details == 'Airbnb') {
+      return fieldDetailsView(FontAwesomeIcons.suitcase, title, details, context);
+    } else if (details == 'Bed & Breakfast') {
+      return fieldDetailsView(FontAwesomeIcons.coffee, title, details, context);
+    } else {
+      return fieldDetailsView(FontAwesomeIcons.bed, title, details, context);
+    }
+  } else {
+    return fieldNoDetailsView(FontAwesomeIcons.hotel, title, context);
   }
 }
 
