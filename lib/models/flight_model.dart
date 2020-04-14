@@ -65,6 +65,6 @@ List<FlightModel> flightModels = <FlightModel> [
     arrivalTime: '17:15:00',
     checkedBaggage: true,
     excessBaggage: false,
-    notes: 'Some Notes',
+    notes: null,
   ),
 ];
