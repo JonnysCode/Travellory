@@ -49,31 +49,31 @@ Container bottomBar(
   );
 }
 
-Padding displayField(IconData icon, String title, String details, BuildContext context) {
+Padding displayField(IconData icon, String title, String details, Color color) {
   if (details != null && details != '') {
-    return fieldDetailsView(icon, title, details, context);
+    return fieldDetailsView(icon, title, details, color);
   } else {
-    return fieldNoDetailsView(icon, title, context);
+    return fieldNoDetailsView(icon, title, color);
   }
 }
 
-Padding displayDropdownField(String title, List<Item> types, String details, BuildContext context) {
+Padding displayDropdownField(String title, List<Item> types, String details, Color color) {
   if (details != null && details != '') {
     if (details == 'Hotel') {
-      return fieldDetailsView(FontAwesomeIcons.hotel, title, details, context);
+      return fieldDetailsView(FontAwesomeIcons.hotel, title, details, color);
     } else if (details == 'Airbnb') {
-      return fieldDetailsView(FontAwesomeIcons.suitcase, title, details, context);
+      return fieldDetailsView(FontAwesomeIcons.suitcase, title, details, color);
     } else if (details == 'Bed & Breakfast') {
-      return fieldDetailsView(FontAwesomeIcons.coffee, title, details, context);
+      return fieldDetailsView(FontAwesomeIcons.coffee, title, details, color);
     } else {
-      return fieldDetailsView(FontAwesomeIcons.bed, title, details, context);
+      return fieldDetailsView(FontAwesomeIcons.bed, title, details, color);
     }
   } else {
-    return fieldNoDetailsView(FontAwesomeIcons.hotel, title, context);
+    return fieldNoDetailsView(FontAwesomeIcons.hotel, title, color);
   }
 }
 
-Padding fieldDetailsView(IconData icon, String title, String details, BuildContext context) {
+Padding fieldDetailsView(IconData icon, String title, String details, Color color) {
   return Padding(
       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
       child: Row(children: <Widget>[
@@ -81,7 +81,7 @@ Padding fieldDetailsView(IconData icon, String title, String details, BuildConte
         Icon(
           icon,
           size: 30.0,
-          color: Theme.of(context).primaryColor,
+          color: color,
         ),
         SizedBox(width: 15.0),
         Column(
@@ -98,7 +98,7 @@ Padding fieldDetailsView(IconData icon, String title, String details, BuildConte
       ]));
 }
 
-Padding fieldNoDetailsView(IconData icon, String title, BuildContext context) {
+Padding fieldNoDetailsView(IconData icon, String title, Color color) {
   return Padding(
       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
       child: Row(children: <Widget>[
@@ -106,7 +106,7 @@ Padding fieldNoDetailsView(IconData icon, String title, BuildContext context) {
         Icon(
           icon,
           size: 30.0,
-          color: Theme.of(context).primaryColor,
+          color: color,
         ),
         SizedBox(width: 15.0),
         Column(
@@ -124,10 +124,10 @@ Padding fieldNoDetailsView(IconData icon, String title, BuildContext context) {
 }
 
 Column displayExtraField(String toCompare, String comparison, IconData icon, String displayText,
-    String display, BuildContext context) {
+    String display, Color color) {
   if (toCompare == comparison) {
     return Column(children: [
-      displayField(icon, displayText, display, context),
+      displayField(icon, displayText, display, color),
       Divider(),
     ]);
   } else {
