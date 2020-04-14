@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../font_widgets.dart';
 
 class CheckboxFormField extends StatefulWidget {
   const CheckboxFormField({Key key, this.initialValue, this.label, this.onChanged})
@@ -55,10 +56,8 @@ CheckboxListTile checkedView(String text) {
   return CheckboxListTile(
     value: true,
     onChanged: null,
-    title: Text(
-      text,
-      style: TextStyle(fontSize: 16),
-    ),
+    title: FashionFetishText(
+        text: text, size: 15.0, fontWeight: FashionFontWeight.bold, color: Colors.black54),
   );
 }
 
@@ -66,9 +65,10 @@ CheckboxListTile notCheckedView(String text) {
   return CheckboxListTile(
     value: false,
     onChanged: null,
-    title: Text(
-      text + ' (not elected)',
-      style: TextStyle(fontStyle: FontStyle.italic, fontSize: 16),
-    ),
+    title: FashionFetishText(
+        text: text + ' (not elected)',
+        size: 15.0,
+        fontWeight: FashionFontWeight.bold,
+        color: Colors.black54),
   );
 }
