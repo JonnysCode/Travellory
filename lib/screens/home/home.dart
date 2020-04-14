@@ -1,6 +1,7 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/screens/bookings/view_flight.dart';
 import 'package:travellory/screens/home/pages/calendar_page.dart';
 import 'package:travellory/screens/home/pages/friends_page.dart';
 import 'package:travellory/screens/home/pages/home_page.dart';
@@ -18,8 +19,9 @@ class _HomeState extends State<Home> {
     HomePage(),
     CalendarPage(),
     MapPage(),
-    FriendsPage(),
-    ProfilePage()
+    FlightView(),
+    //FriendsPage(),
+    ProfilePage(),
   ];
 
   PageController _pageController;
@@ -102,7 +104,7 @@ class _HomeState extends State<Home> {
               icon: FontAwesomeIcons.globeAfrica,
             ),
             CustomNavigationBarItem(
-              icon: FontAwesomeIcons.addressBook,
+              icon: FontAwesomeIcons.plane,
             ),
             CustomNavigationBarItem(
               icon: FontAwesomeIcons.user,
