@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/utils/list_models.dart';
-import 'package:travellory/widgets/bookings.dart';
-import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/screens/trip/bookings/bookings.dart';
+import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
@@ -12,8 +12,7 @@ import 'package:travellory/widgets/forms/section_titles.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/time_form_field.dart';
-
-import 'header.dart';
+import 'package:travellory/widgets/trip/trip_header.dart';
 
 class PublicTransport extends StatefulWidget {
   @override
@@ -232,7 +231,7 @@ class _PublicTransportState extends State<PublicTransport> {
         color: Colors.white,
         child: Column(
           children: <Widget>[
-            getBookingHeader(context, tripModel),
+            TripHeader(tripModel),
             Expanded(
                 //child: Form(
                 child: Container(
