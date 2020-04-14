@@ -35,7 +35,7 @@ Container bottomBar(
 }
 
 Padding displayField(IconData icon, String title, String details, BuildContext context) {
-  if (details != null) {
+  if (details != null && details != '') {
     return fieldDetailsView(icon, title, details, context);
   } else {
     return fieldNoDetailsView(icon, title, context);
