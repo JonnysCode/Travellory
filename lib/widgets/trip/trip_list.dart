@@ -71,12 +71,10 @@ class _TripListState extends State<TripList> {
           ),
           Expanded(
             child: ListView.separated(
-
-
               padding: const EdgeInsets.all(10),
               itemCount: tripModels.length + 1,
               itemBuilder: (context, index) {
-                _getTrips( Provider.of<UserModel>(context).uid);
+                _getTrips(Provider.of<UserModel>(context).uid);
                 if(index < tripModels.length){
                   final tripModel = tripModels[index]
                       ..index = index
