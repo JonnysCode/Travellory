@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/add_database.dart';
+import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/screens/trip/bookings/bookings.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
@@ -43,9 +44,9 @@ class _AccommodationState extends State<Accommodation> {
 
     accommodationTypeDropdown = TravelloryDropdownField(
         title: 'Select Accommodation Type',
-        types: types,
+        types: accommodationTypes,
         onChanged: (value) {
-          accommodationModel.accommodationType = value.name;
+          accommodationModel.airbnbType = value.name;
           showAdditional(accommodationList, value.name == 'Airbnb', accommodationTypeDropdown,
               airbnbAdditional);
           showAdditional(
@@ -69,7 +70,7 @@ class _AccommodationState extends State<Accommodation> {
           labelText: 'Name *',
           icon: Icon(FontAwesomeIcons.solidBuilding),
           optional: false,
-          onChanged: (value) => accommodationModel.hotelName = value),
+          onChanged: (value) => accommodationModel.name = value),
       TravelloryFormField(
         labelText: 'Address *',
         icon: Icon(FontAwesomeIcons.mapMarkerAlt),
@@ -136,7 +137,7 @@ class _AccommodationState extends State<Accommodation> {
           labelText: 'Specific type of airbnb',
           icon: Icon(Icons.hotel),
           optional: true,
-          onChanged: (value) => accommodationModel.accommodationType = value,
+          onChanged: (value) => accommodationModel.airbnbType = value,
         ),
       ],
     );
@@ -148,7 +149,7 @@ class _AccommodationState extends State<Accommodation> {
           labelText: 'Room Type',
           icon: Icon(Icons.hotel),
           optional: true,
-          onChanged: (value) => accommodationModel.roomType = value,
+          onChanged: (value) => accommodationModel.hotelRoomType = value,
         ),
         CheckboxFormField(
           initialValue: false,
@@ -166,15 +167,6 @@ class _AccommodationState extends State<Accommodation> {
 
   final String cancelText =
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
-
-  List<Item> types = <Item>[
-    const Item('Hotel', Icon(FontAwesomeIcons.hotel, color: Color(0xFF167F67))),
-    const Item('Airbnb', Icon(FontAwesomeIcons.suitcase, color: Color(0xFF167F67))),
-    const Item('Hostel', Icon(FontAwesomeIcons.bed, color: Color(0xFF167F67))),
-    const Item('Motel', Icon(FontAwesomeIcons.bed, color: Color(0xFF167F67))),
-    const Item('Bed & Breakfast', Icon(FontAwesomeIcons.coffee, color: Color(0xFF167F67))),
-    const Item('Other', Icon(FontAwesomeIcons.bed, color: Color(0xFF167F67))),
-  ];
 
   Widget _itemBuilder(BuildContext context, int index, Animation<double> animation) {
     return FormItem(animation: animation, child: accommodationList[index]);
