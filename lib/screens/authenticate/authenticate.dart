@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/buttons/buttons.dart';
 
 class Authenticate extends StatefulWidget {
   @override

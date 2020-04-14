@@ -4,7 +4,7 @@ import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/services/user_management.dart';
 import 'package:travellory/utils/input_validator.dart';
-import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
 import 'package:pedantic/pedantic.dart';
 

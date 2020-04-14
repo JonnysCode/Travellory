@@ -1,4 +1,12 @@
 
+String toDateStringFrom(DateTime dateTime){
+  return dateTime.toString().substring(0, 10);
+}
+
+DateTime getDateTimeFrom(String date){
+  List<String> dates = date.split('-');
+  return DateTime(int.parse(dates[0]), int.parse(dates[1]), int.parse(dates[2]));
+}
 
 final List<String> monthsShortened = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
