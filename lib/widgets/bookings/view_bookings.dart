@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
-
 import '../font_widgets.dart';
+
+Container bookingView(SingleChildScrollView child) {
+  return Container(
+    padding: const EdgeInsets.all(5.0),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(0), bottom: Radius.circular(20)),
+      color: Colors.white,
+      boxShadow: <BoxShadow>[
+        BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.15), offset: Offset(3.0, 3.0))
+      ],
+    ),
+    child: child,
+  );
+}
 
 Container bottomBar(
   BuildContext context,
@@ -75,19 +88,14 @@ Padding fieldNoDetailsView(IconData icon, String title, BuildContext context) {
         Icon(
           icon,
           size: 30.0,
-          color: Theme
-              .of(context)
-              .primaryColor,
+          color: Theme.of(context).primaryColor,
         ),
         SizedBox(width: 15.0),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             FashionFetishText(
-                text: title,
-                size: 15.0,
-                fontWeight: FashionFontWeight.bold,
-                color: Colors.black54),
+                text: title, size: 15.0, fontWeight: FashionFontWeight.bold, color: Colors.black54),
             Text(
               'No information',
               style: TextStyle(fontSize: 20.0),
