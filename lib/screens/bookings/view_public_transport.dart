@@ -72,9 +72,9 @@ class _PublicTransportViewState extends State<PublicTransportView> {
                 Padding(
                     padding: const EdgeInsets.only(top: 0, left: 15, right: 15),
                     child: Column(children: [
-                      checkboxView('Made Booking'),
+                      displayCheckboxField('Made Booking', publicTransportModels[0].booked),
                       Divider(),
-                      checkboxView('Seat Reserved'),
+                      displayCheckboxField('Seat Reserved', publicTransportModels[0].seatReservation),
                     ])),
                 SectionTitle('Notes'),
                 Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
