@@ -66,7 +66,7 @@ class _PublicTransportState extends State<PublicTransport> {
         initialValue: false,
         label: 'Did you make a seat reservation?',
         onChanged: (value) {
-          publicTransportModel.seatReservation = value;
+          publicTransportModel.seatReserved = value;
           showAdditional(
               publicTransportList, value, seatReservedCheckbox, seatReservationAdditional);
         });
@@ -81,7 +81,7 @@ class _PublicTransportState extends State<PublicTransport> {
           labelText: 'Company',
           icon: Icon(FontAwesomeIcons.solidBuilding),
           optional: true,
-          onChanged: (value) => publicTransportModel.company = value),
+          onChanged: (value) => publicTransportModel.publicTransportCompany = value),
       SectionTitle('Departure Information'),
       TravelloryFormField(
         labelText: 'Departure Location *',
@@ -159,13 +159,13 @@ class _PublicTransportState extends State<PublicTransport> {
           labelText: 'Booking Reference',
           icon: Icon(FontAwesomeIcons.ticketAlt),
           optional: true,
-          onChanged: (value) => publicTransportModel.reference = value,
+          onChanged: (value) => publicTransportModel.referenceNr = value,
         ),
         TravelloryFormField(
           labelText: 'Booking Company',
           icon: Icon(FontAwesomeIcons.building),
           optional: true,
-          onChanged: (value) => publicTransportModel.companyReservation = value,
+          onChanged: (value) => publicTransportModel.reservationCompany = value,
         ),
       ],
     );
