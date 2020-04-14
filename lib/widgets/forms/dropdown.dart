@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Item {
   const Item(this.name, this.icon);
@@ -40,7 +41,7 @@ class TravelloryDropdownFieldState extends State<TravelloryDropdownField>
     super.build(context);
     return ListTile(
       key: Key('Dropdown Menu'),
-      leading: Icon(Icons.menu),
+      leading: Icon(FontAwesomeIcons.listUl),
       title: Container(
         child: Theme(
           data: Theme.of(context).copyWith(
