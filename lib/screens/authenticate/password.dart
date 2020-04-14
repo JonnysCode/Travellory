@@ -59,7 +59,7 @@ class _RegisterState extends State<ChangePassword> {
         flushbarStyle: FlushbarStyle.FLOATING,
         title: "Success",
         message: alertText,
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.of(context).primaryColor,
         margin: EdgeInsets.all(8),
         borderRadius: 12,
         duration: Duration(seconds: 3)

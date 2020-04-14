@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
+import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -100,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage>
                         ),
                       ),
                     ),
-                    SizedBox(height: 50),
+                    SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: FutureBuilder(
@@ -113,21 +113,40 @@ class _ProfilePageState extends State<ProfilePage>
                             }
                           }),
                     ),
-                    SizedBox(height: 100),
-                    FlatButton.icon(
-                      onPressed: () => _signOut(),
-                      icon: Icon(
-                        FontAwesomeIcons.signOutAlt,
-                        color: Colors.black54,
+                    SizedBox(height: 10),
+                    Padding(
+                      key: Key('change-pw'),
+                      padding: EdgeInsets.only(
+                          top: 10,
+                          left: 90,
+                          right: 90,
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: Container(
+                        child: filledButton("Change password", Colors.white, Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor, Colors.white, () {
+                              Navigator.pushNamed(context, '/password');
+                            }),
+                        height: 40,
+                        width: MediaQuery.of(context).size.width,
                       ),
-                      label: FashionFetishText(
-                        text: 'Log out',
-                        size: 20,
-                        fontWeight: FashionFontWeight.bold,
-                        height: 1.05,
-                        color: Colors.black54,
+                    ),
+                    SizedBox(height: 10),
+                    Padding(
+                      key: Key('logout'),
+                      padding: EdgeInsets.only(
+                          left: 90,
+                          right: 90,
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: Container(
+                        child: filledButton("Logout", Colors.white, Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor, Colors.white, () async {
+                              await _signOut();
+                            }),
+                        height: 40,
+                        width: MediaQuery.of(context).size.width,
                       ),
-                    )
+                    ),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),
