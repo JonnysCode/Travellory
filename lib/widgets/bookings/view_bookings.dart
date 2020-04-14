@@ -34,7 +34,15 @@ Container bottomBar(
   );
 }
 
-Padding fieldView(IconData icon, String title, String details, BuildContext context) {
+Padding displayField(IconData icon, String title, String details, BuildContext context) {
+  if (details != null) {
+    return fieldDetailsView(icon, title, details, context);
+  } else {
+    return fieldNoDetailsView(icon, title, context);
+  }
+}
+
+Padding fieldDetailsView(IconData icon, String title, String details, BuildContext context) {
   return Padding(
       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
       child: Row(children: <Widget>[
@@ -49,12 +57,39 @@ Padding fieldView(IconData icon, String title, String details, BuildContext cont
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             FashionFetishText(
+                text: title, size: 15.0, fontWeight: FashionFontWeight.bold, color: Colors.black54),
+            Text(
+              details,
+              style: TextStyle(fontSize: 20.0),
+            ),
+          ],
+        ),
+      ]));
+}
+
+Padding fieldNoDetailsView(IconData icon, String title, BuildContext context) {
+  return Padding(
+      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+      child: Row(children: <Widget>[
+        SizedBox(width: 30.0),
+        Icon(
+          icon,
+          size: 30.0,
+          color: Theme
+              .of(context)
+              .primaryColor,
+        ),
+        SizedBox(width: 15.0),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            FashionFetishText(
                 text: title,
                 size: 15.0,
                 fontWeight: FashionFontWeight.bold,
                 color: Colors.black54),
             Text(
-              details,
+              'No information',
               style: TextStyle(fontSize: 20.0),
             ),
           ],
