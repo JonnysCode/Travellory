@@ -1,7 +1,7 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/screens/bookings/view_rental_car.dart';
+import 'package:travellory/screens/bookings/view_public_transport.dart';
 import 'package:travellory/screens/home/pages/calendar_page.dart';
 import 'package:travellory/screens/home/pages/friends_page.dart';
 import 'package:travellory/screens/home/pages/home_page.dart';
@@ -17,9 +17,9 @@ class _HomeState extends State<Home> {
   static const int _animationSpeed = 200;
   final List<Widget> _pages = <Widget>[
     HomePage(),
-    RentalCarView(),
-    //CalendarPage(),
-    MapPage(),
+    CalendarPage(),
+    PublicTransportView(),
+    //MapPage(),
     FriendsPage(),
     ProfilePage(),
   ];
