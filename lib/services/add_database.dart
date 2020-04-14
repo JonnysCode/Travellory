@@ -1,23 +1,26 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:travellory/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 
 class DatabaseAdder {
+  final log = getLogger('DatabaseAdder');
+
   // adds Model to the database
-  static Future<bool> addModel(Model model, String correspondingFunctionName) async {
+  Future<bool> addModel(Model model, String correspondingFunctionName) async {
     final HttpsCallable callable =
         CloudFunctions.instance.getHttpsCallable(functionName: correspondingFunctionName);
     try {
       final HttpsCallableResult result = await callable.call(model.toMap());
-      print(result.data);
+      log.i(result.data);
       return Future<bool>.value(true);
     } on CloudFunctionsException catch (e) {
-      print('caught firebase functions exception');
-      print(e.code);
-      print(e.message);
-      print(e.details);
+      log.i('caught firebase functions exception');
+      log.e(e.code);
+      log.e(e.message);
+      log.e(e.details);
     } catch (e) {
-      print('caught generic exception');
-      print(e);
+      log.i('caught generic exception');
+      log.i(e);
     }
     return Future<bool>.value(true);
   }
