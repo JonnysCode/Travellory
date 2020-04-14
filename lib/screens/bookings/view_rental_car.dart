@@ -16,6 +16,7 @@ class _RentalCarViewState extends State<RentalCarView> {
 
   SingleChildScrollView rentalCarViewPage() {
     return SingleChildScrollView(
+      key: Key('RentalCarViewPage'),
       child: Column(children: [
         BookingHeader(headerTitle, bannerUrl),
         SizedBox(height: 20),
