@@ -74,6 +74,23 @@ List<PublicTransportModel> publicTransportModels = <PublicTransportModel> [
     arrivalDate: '2020-06-20',
     arrivalTime: '15:23:00',
     notes: 'Coche 8',
+  ),
+  PublicTransportModel(
+    transportationType: 'Other',
+    publicTransportCompany: 'RENFE',
+    specificType: 'Cercanias',
+    booked: true,
+    seatReserved: false,
+    referenceNr: 'R1A6',
+    reservationCompany: 'RENFE',
+    seat: '13F',
+    departureLocation: 'Madrid',
+    departureDate: '2020-06-20',
+    departureTime: '12:00:00',
+    arrivalLocation: 'Sevilla',
+    arrivalDate: '2020-06-20',
+    arrivalTime: '15:23:00',
+    notes: 'Coche 8',
   )
 ];
 
