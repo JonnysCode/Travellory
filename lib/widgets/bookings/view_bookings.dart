@@ -30,6 +30,7 @@ Container bottomBar(
   }
 
   return Container(
+    key: Key('BottomBar'),
     padding: EdgeInsets.all(20.0),
     height: 130.0,
     decoration: BoxDecoration(

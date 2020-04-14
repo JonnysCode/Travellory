@@ -17,6 +17,7 @@ class _FlightViewState extends State<FlightView> {
 
   SingleChildScrollView flightViewPage() {
     return SingleChildScrollView(
+      key: Key('FlightViewPage'),
       child: Column(children: [
         BookingHeader(headerTitle, bannerUrl),
         SizedBox(height: 20),
