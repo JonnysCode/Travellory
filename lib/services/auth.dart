@@ -107,17 +107,19 @@ class AuthService implements BaseAuthService {
   // register with facebook
 
   //reauthenticate before security-sensitive action (f.e. change password)
+  @override
   Future reauthenticate (String oldPassword) async {
-    FirebaseUser user = await auth.currentUser();
-    String email = user.email;
-    AuthCredential credential = EmailAuthProvider.
+    final FirebaseUser user = await auth.currentUser();
+    final String email = user.email;
+    final AuthCredential credential = EmailAuthProvider.
     getCredential(email: email, password: oldPassword);
     return user.reauthenticateWithCredential(credential);
   }
 
   //change password
+  @override
   Future changePassword(String password) async {
-    FirebaseUser user = await auth.currentUser();
+    final FirebaseUser user = await auth.currentUser();
     return user.updatePassword(password);
   }
 
