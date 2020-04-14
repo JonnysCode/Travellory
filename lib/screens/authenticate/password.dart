@@ -8,7 +8,7 @@ import 'package:travellory/widgets/input_widgets.dart';
 import 'package:flushbar/flushbar.dart';
 
 class ChangePassword extends StatefulWidget {
-  ChangePassword({this.toggleView});
+  const ChangePassword({this.toggleView});
   final Function toggleView;
 
   @override
@@ -28,15 +28,15 @@ class _RegisterState extends State<ChangePassword> {
 
   Future _validateAndChangePW() async {
     if (_formKey.currentState.validate()) {
-       Navigator.pushNamed(context, '/loading');
+      Navigator.pushNamed(context, '/loading');
 
-       await _changePassword().then((value) async {
+      await _changePassword().then((value) async {
         setState(() => _changePwError = null);
         Navigator.popUntil(context, ModalRoute.withName('/'));
         _showSnackBar();
       }).catchError((error) {
         setState(
-            () => _changePwError = 'Password could not be changed. Try again.');
+                () => _changePwError = 'Password could not be changed. Try again.');
         Navigator.pop(context);
       });
     }
@@ -56,13 +56,13 @@ class _RegisterState extends State<ChangePassword> {
   Widget _showSnackBar() {
     return SnackBar(
       content: Flushbar(
-        flushbarStyle: FlushbarStyle.FLOATING,
-        title: "Success",
-        message: alertText,
-        backgroundColor: Theme.of(context).primaryColor,
-        margin: EdgeInsets.all(8),
-        borderRadius: 12,
-        duration: Duration(seconds: 3)
+          flushbarStyle: FlushbarStyle.FLOATING,
+          title: "Success",
+          message: alertText,
+          backgroundColor: Theme.of(context).primaryColor,
+          margin: EdgeInsets.all(8),
+          borderRadius: 12,
+          duration: Duration(seconds: 3)
       )..show(context),
     );
   }
@@ -82,7 +82,7 @@ class _RegisterState extends State<ChangePassword> {
       body: Column(
         children: <Widget>[
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05
+              height: MediaQuery.of(context).size.height * 0.05
           ),
           DecoratedBox(
             decoration: BoxDecoration(
@@ -98,9 +98,9 @@ class _RegisterState extends State<ChangePassword> {
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/images/login/beach.png"),
-                    fit: BoxFit.fitWidth,
-                    alignment: Alignment.bottomCenter
+                      image: AssetImage("assets/images/login/beach.png"),
+                      fit: BoxFit.fitWidth,
+                      alignment: Alignment.bottomCenter
                   ),
                 ),
                 child: ListView(
@@ -132,9 +132,9 @@ class _RegisterState extends State<ChangePassword> {
                                 _oldPasswordController.clear();
                               },
                               icon: Icon(
-                                FontAwesomeIcons.angleLeft,
-                                size: 30.0,
-                                color: Colors.white
+                                  FontAwesomeIcons.angleLeft,
+                                  size: 30.0,
+                                  color: Colors.white
                               ),
                             ),
                           )
@@ -151,7 +151,7 @@ class _RegisterState extends State<ChangePassword> {
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontSize: 16
+                                  fontSize: 16
                               ),
                             ),
                           ),
@@ -193,6 +193,8 @@ class _RegisterState extends State<ChangePassword> {
                                           .viewInsets.bottom
                                   ),
                                   child: Container(
+                                    height: 50,
+                                    width: MediaQuery.of(context).size.width,
                                     child: filledButton(
                                         "SAVE",
                                         Colors.white,
@@ -201,8 +203,6 @@ class _RegisterState extends State<ChangePassword> {
                                         Colors.white,
                                         _validateAndChangePW
                                     ),
-                                    height: 50,
-                                    width: MediaQuery.of(context).size.width,
                                   ),
                                 ),
                               ],
