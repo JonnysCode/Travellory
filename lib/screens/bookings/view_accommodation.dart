@@ -18,6 +18,7 @@ class _AccommodationViewState extends State<AccommodationView> {
 
   SingleChildScrollView accommodationViewPage() {
     return SingleChildScrollView(
+      key: Key('AccommodationViewPage'),
       child: Column(children: [
         BookingHeader(headerTitle, bannerUrl),
         SizedBox(height: 20),
