@@ -43,7 +43,7 @@ dependencies:
   json_serializable: ^2.0.2
   flutter_rounded_date_picker: 1.0.0
   dropdownfield: 1.0.0
-  custom_navigation_bar: ^0.2.5
+  custom_navigation_bar: ^0.2.6
   flushbar: 1.8.0
   logger: ^0.6.0
 
