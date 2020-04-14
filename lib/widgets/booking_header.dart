@@ -16,6 +16,7 @@ class _BookingHeaderState extends State<BookingHeader> {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      key: Key('ViewBookingHeader'),
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(bottom: 40.0),
