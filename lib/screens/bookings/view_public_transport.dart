@@ -15,6 +15,60 @@ class _PublicTransportViewState extends State<PublicTransportView> {
   final String bannerUrl = 'assets/images/bookings/metro.jpg';
   final String headerTitle = 'Your Public Transport';
 
+  SingleChildScrollView publicTransportViewPage() {
+    return SingleChildScrollView(
+      child: Column(children: [
+        BookingHeader(headerTitle, bannerUrl),
+        SizedBox(height: 20),
+        SectionTitle('Public Transport Details'),
+        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+        displayField(FontAwesomeIcons.train, 'Type',
+            publicTransportModels[0].transportationType, context),
+        Divider(),
+        displayField(FontAwesomeIcons.solidBuilding, 'Company',
+            publicTransportModels[0].company, context),
+        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+        SectionTitle('Departure Details'),
+        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+        displayField(FontAwesomeIcons.mapMarkerAlt, 'Departure Location',
+            publicTransportModels[0].departureLocation, context),
+        Divider(),
+        displayField(FontAwesomeIcons.calendarAlt, 'Departure Date',
+            publicTransportModels[0].departureDate, context),
+        Divider(),
+        displayField(FontAwesomeIcons.clock, 'Departure Time',
+            publicTransportModels[0].departureTime, context),
+        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+        SectionTitle('Arrival Details'),
+        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+        displayField(FontAwesomeIcons.mapMarkerAlt, 'Arrival Location',
+            publicTransportModels[0].arrivalLocation, context),
+        Divider(),
+        displayField(FontAwesomeIcons.calendarAlt, 'Arrival Date',
+            publicTransportModels[0].arrivalDate, context),
+        Divider(),
+        displayField(FontAwesomeIcons.clock, 'Arrival Time',
+            publicTransportModels[0].arrivalTime, context),
+        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+        SectionTitle('Booking Details'),
+        Padding(
+            padding: const EdgeInsets.only(top: 0, left: 15, right: 15),
+            child: Column(children: [
+              displayCheckboxField('Made Booking', publicTransportModels[0].booked),
+              Divider(),
+              displayCheckboxField('Seat Reserved', publicTransportModels[0].seatReservation),
+            ])),
+        SectionTitle('Notes'),
+        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+        displayField(
+            FontAwesomeIcons.stickyNote, 'Notes', publicTransportModels[0].notes, context),
+        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+        SizedBox(height: 10),
+        bottomBar(context),
+      ]),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,68 +77,8 @@ class _PublicTransportViewState extends State<PublicTransportView> {
       body: Stack(children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-          child: Container(
-            padding: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-              borderRadius:
-                  BorderRadius.vertical(top: Radius.circular(0), bottom: Radius.circular(20)),
-              color: Colors.white,
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    blurRadius: 6, color: Colors.black.withOpacity(.15), offset: Offset(3.0, 3.0))
-              ],
-            ),
-            child: SingleChildScrollView(
-              child: Column(children: [
-                BookingHeader(headerTitle, bannerUrl),
-                SizedBox(height: 20),
-                SectionTitle('Public Transport Details'),
-                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-                displayField(FontAwesomeIcons.train, 'Type',
-                    publicTransportModels[0].transportationType, context),
-                Divider(),
-                displayField(FontAwesomeIcons.solidBuilding, 'Company',
-                    publicTransportModels[0].company, context),
-                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-                SectionTitle('Departure Details'),
-                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-                displayField(FontAwesomeIcons.mapMarkerAlt, 'Departure Location',
-                    publicTransportModels[0].departureLocation, context),
-                Divider(),
-                displayField(FontAwesomeIcons.calendarAlt, 'Departure Date',
-                    publicTransportModels[0].departureDate, context),
-                Divider(),
-                displayField(FontAwesomeIcons.clock, 'Departure Time',
-                    publicTransportModels[0].departureTime, context),
-                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-                SectionTitle('Arrival Details'),
-                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-                displayField(FontAwesomeIcons.mapMarkerAlt, 'Arrival Location',
-                    publicTransportModels[0].arrivalLocation, context),
-                Divider(),
-                displayField(FontAwesomeIcons.calendarAlt, 'Arrival Date',
-                    publicTransportModels[0].arrivalDate, context),
-                Divider(),
-                displayField(FontAwesomeIcons.clock, 'Arrival Time',
-                    publicTransportModels[0].arrivalTime, context),
-                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-                SectionTitle('Booking Details'),
-                Padding(
-                    padding: const EdgeInsets.only(top: 0, left: 15, right: 15),
-                    child: Column(children: [
-                      displayCheckboxField('Made Booking', publicTransportModels[0].booked),
-                      Divider(),
-                      displayCheckboxField('Seat Reserved', publicTransportModels[0].seatReservation),
-                    ])),
-                SectionTitle('Notes'),
-                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-                displayField(
-                    FontAwesomeIcons.stickyNote, 'Notes', publicTransportModels[0].notes, context),
-                Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-                SizedBox(height: 10),
-                bottomBar(context),
-              ]),
-            ),
+          child: bookingView(
+            publicTransportViewPage(),
           ),
         ),
       ]),
