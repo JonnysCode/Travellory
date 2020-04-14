@@ -6,7 +6,7 @@ import 'package:travellory/screens/home/pages/calendar_page.dart';
 void main() {
   Widget makeTestableWidget({Widget child}){
     return MaterialApp(
-      home: child,
+      home: Material(child: child),
     );
   }
 
