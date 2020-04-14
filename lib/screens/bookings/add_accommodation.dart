@@ -135,7 +135,7 @@ class _AccommodationState extends State<Accommodation> {
       children: <Widget>[
         TravelloryFormField(
           labelText: 'Specific type of airbnb',
-          icon: Icon(Icons.hotel),
+          icon: Icon(FontAwesomeIcons.hotel),
           optional: true,
           onChanged: (value) => accommodationModel.airbnbType = value,
         ),
@@ -147,7 +147,7 @@ class _AccommodationState extends State<Accommodation> {
         SectionTitle('Further Hotel Details'),
         TravelloryFormField(
           labelText: 'Room Type',
-          icon: Icon(Icons.hotel),
+          icon: Icon(FontAwesomeIcons.hotel),
           optional: true,
           onChanged: (value) => accommodationModel.hotelRoomType = value,
         ),
