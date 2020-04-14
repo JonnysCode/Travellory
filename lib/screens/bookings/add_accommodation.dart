@@ -33,6 +33,7 @@ class _AccommodationState extends State<Accommodation> {
   TravelloryDropdownField accommodationTypeDropdown;
   Widget hotelAdditional;
   Widget airbnbAdditional;
+  Widget otherAdditional;
 
   bool validateForm() {
     return accommodationFormKey.currentState.validate();
@@ -51,6 +52,8 @@ class _AccommodationState extends State<Accommodation> {
               airbnbAdditional);
           showAdditional(
               accommodationList, value.name == 'Hotel', accommodationTypeDropdown, hotelAdditional);
+          showAdditional(
+              accommodationList, value.name == 'Other', accommodationTypeDropdown, otherAdditional);
         },
         validatorText: 'Please enter the required information');
 
@@ -157,6 +160,17 @@ class _AccommodationState extends State<Accommodation> {
           onChanged: (value) {
             accommodationModel.breakfast = value;
           },
+        ),
+      ],
+    );
+
+    otherAdditional = Column(
+      children: <Widget>[
+        TravelloryFormField(
+          labelText: "Specification of 'Other'",
+          icon: Icon(FontAwesomeIcons.bed),
+          optional: true,
+          onChanged: (value) => accommodationModel.specificationOther = value,
         ),
       ],
     );
