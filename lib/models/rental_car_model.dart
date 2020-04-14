@@ -56,6 +56,6 @@ List<RentalCarModel> rentalCarModels = <RentalCarModel>[
     returnTime: '17:00:00',
     carDescription: 'Audi',
     carNumberPlate: 'FAB123',
-    notes: 'Some Notes',
+    notes: null,
   ),
 ];

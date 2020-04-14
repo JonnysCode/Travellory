@@ -39,6 +39,7 @@ class _RentalCarViewState extends State<RentalCarView> {
             FontAwesomeIcons.clock, 'Pick Up Time', rentalCarModels[0].pickupTime, context),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SectionTitle('Return Details'),
+        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         displayField(FontAwesomeIcons.mapMarkerAlt, 'Return Location',
             rentalCarModels[0].returnLocation, context),
         Divider(),
