@@ -3,12 +3,12 @@ import 'package:travellory/models/abstract_model.dart';
 class PublicTransportModel extends Model {
   PublicTransportModel({
     this.transportationType,
-    this.company,
+    this.publicTransportCompany,
     this.specificType,
     this.booked,
-    this.seatReservation,
-    this.reference,
-    this.companyReservation,
+    this.seatReserved,
+    this.referenceNr,
+    this.reservationCompany,
     this.seat,
     this.departureLocation,
     this.departureDate,
@@ -20,12 +20,12 @@ class PublicTransportModel extends Model {
   });
 
   String transportationType;
-  String company;
+  String publicTransportCompany;
   String specificType;
   bool booked;
-  bool seatReservation;
-  String reference;
-  String companyReservation;
+  bool seatReserved;
+  String referenceNr;
+  String reservationCompany;
   String seat;
   String departureLocation;
   String departureDate;
@@ -39,12 +39,12 @@ class PublicTransportModel extends Model {
   Map<String, dynamic> toMap() {
     return {
       'transportationType': transportationType,
-      'company': company,
+      'publicTransportCompany': publicTransportCompany,
       'specificType': specificType,
       'booked': booked,
-      'seatReservation': seatReservation,
-      'reference': reference,
-      'companyReservation': companyReservation,
+      'seatReserved': seatReserved,
+      'referenceNr': referenceNr,
+      'reservationCompany': reservationCompany,
       'seat': seat,
       'departureLocation': departureLocation,
       'departureDate': departureDate,
@@ -60,12 +60,12 @@ class PublicTransportModel extends Model {
 List<PublicTransportModel> publicTransportModels = <PublicTransportModel> [
   PublicTransportModel(
     transportationType: 'Rail',
-    company: 'RENFE',
+    publicTransportCompany: 'RENFE',
     specificType: null,
     booked: true,
-    seatReservation: true,
-    reference: 'R1A6',
-    companyReservation: 'RENFE',
+    seatReserved: true,
+    referenceNr: 'R1A6',
+    reservationCompany: 'RENFE',
     seat: '13F',
     departureLocation: 'Madrid',
     departureDate: '2020-06-20',

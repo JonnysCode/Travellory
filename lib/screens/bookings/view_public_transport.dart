@@ -26,7 +26,7 @@ class _PublicTransportViewState extends State<PublicTransportView> {
             publicTransportModels[0].transportationType, context),
         Divider(),
         displayField(FontAwesomeIcons.solidBuilding, 'Company',
-            publicTransportModels[0].company, context),
+            publicTransportModels[0].publicTransportCompany, context),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SectionTitle('Departure Details'),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
@@ -56,7 +56,7 @@ class _PublicTransportViewState extends State<PublicTransportView> {
             child: Column(children: [
               displayCheckboxField('Made Booking', publicTransportModels[0].booked),
               Divider(),
-              displayCheckboxField('Seat Reserved', publicTransportModels[0].seatReservation),
+              displayCheckboxField('Seat Reserved', publicTransportModels[0].seatReserved),
             ])),
         SectionTitle('Notes'),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
