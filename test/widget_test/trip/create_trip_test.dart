@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:travellory/screens/trip/create_trip_screen.dart';
-import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 
-class MockUser extends Mock implements UserModel {}
-
 void main() {
-  Widget makeTestableWidget({Widget page, UserModel user}) {
+  Widget makeTestableWidget({Widget page}) {
+    UserModel user = UserModel(uid: 'uid', displayName: 'name');
     return Provider<UserModel>.value(
       value: user,
       child: MaterialApp(
@@ -21,11 +19,7 @@ void main() {
     final testKey = Key('create_trip');
     Widget page = CreateTrip();
 
-    MockUser mockUser = MockUser();
-    when(mockUser.uid).thenReturn('uid');
-    expect(mockUser.uid, 'uid');
-
-    await tester.pumpWidget(makeTestableWidget(page: page, user: mockUser));
+    await tester.pumpWidget(makeTestableWidget(page: page));
 
     expect(find.byKey(testKey), findsOneWidget);
   });
@@ -33,11 +27,7 @@ void main() {
   testWidgets('test if form instance is found', (WidgetTester tester) async {
     Widget page = CreateTrip();
 
-    MockUser mockUser = MockUser();
-    when(mockUser.uid).thenReturn('uid');
-    expect(mockUser.uid, 'uid');
-
-    await tester.pumpWidget(makeTestableWidget(page: page, user: mockUser));
+    await tester.pumpWidget(makeTestableWidget(page: page));
 
     // verify that form is present
     expect(find.byType(Form), findsOneWidget);
@@ -46,11 +36,7 @@ void main() {
   testWidgets('test if all form fields are present', (WidgetTester tester) async {
     Widget page = CreateTrip();
 
-    MockUser mockUser = MockUser();
-    when(mockUser.uid).thenReturn('uid');
-    expect(mockUser.uid, 'uid');
-
-    await tester.pumpWidget(makeTestableWidget(page: page, user: mockUser));
+    await tester.pumpWidget(makeTestableWidget(page: page));
 
     expect(find.text('Trip Details'), findsOneWidget);
     expect(find.text('General Information'), findsOneWidget);
@@ -63,11 +49,7 @@ void main() {
   testWidgets('test if all form fields are present', (WidgetTester tester) async {
     Widget page = CreateTrip();
 
-    MockUser mockUser = MockUser();
-    when(mockUser.uid).thenReturn('uid');
-    expect(mockUser.uid, 'uid');
-
-    await tester.pumpWidget(makeTestableWidget(page: page, user: mockUser));
+    await tester.pumpWidget(makeTestableWidget(page: page));
 
     expect(find.byKey(Key('image_icon')), findsNWidgets(10));
   });
