@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/day_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/animations/item_fader.dart';
 import 'package:travellory/widgets/trip/schedule/accommodation_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/day_circle.dart';
 import 'package:travellory/widgets/trip/schedule/flight_schedule.dart';
@@ -25,28 +24,23 @@ class DaySchedule extends StatefulWidget {
 class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStateMixin{
   bool _isExpanded;
   AnimationController _controller;
-  List<GlobalKey<ItemFaderState>> keys;
 
-  List<Widget> bookings = <Widget>[FlightSchedule(), RentalCarSchedule(), AccommodationSchedule()];
+  List<Widget> bookings = <Widget>[
+    FlightSchedule(),
+    RentalCarSchedule(),
+    AccommodationSchedule()
+  ];
 
   @override
   void initState() {
     super.initState();
-
-    keys = List.generate(
-      bookings.length,
-      (_) => GlobalKey<ItemFaderState>(),
-    );
-
     _isExpanded = widget.isExpanded;
     _controller = AnimationController(
       vsync: this, // the SingleTickerProviderStateMixin
       duration: Duration(milliseconds: 200),
-    );
-    if(_isExpanded){
-      _controller.forward();
-      _showBookings();
-    }
+    )
+      ..forward();
+
   }
 
   @override
@@ -119,7 +113,10 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
                       padding: const EdgeInsets.only(right: 8),
                       child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                        children: fadingBookings(),
+                        children: bookings.map((booking) => Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: booking,
+                        )).toList(),
                       ),
                     ),
                   )
@@ -130,47 +127,13 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
     );
   }
 
-  List<Widget> fadingBookings(){
-    int index = 0;
-    var fadingBookings = <Widget>[];
-
-    for(Widget widget in bookings){
-      fadingBookings.add(ItemFader(child: widget, key: keys[index]));
-      if(index+1 < bookings.length){
-        fadingBookings.add(const Divider());
-      }
-      index++;
-    }
-    return fadingBookings;
-  }
-
-  _toggleExpanded() async {
-    if(_isExpanded){
-     await  _hideBookings();
-      _controller.reverse();
-    }
-    await Future.delayed(Duration(milliseconds: 360));
+  void _toggleExpanded() async {
     setState(() {
       _isExpanded = !_isExpanded;
-      if(_isExpanded){
-        _controller.forward();
-        _showBookings();
-      }
+      _isExpanded
+          ? _controller.forward()
+          : _controller.reverse();
     });
-  }
-
-  Future<void> _hideBookings() async {
-    for (GlobalKey<ItemFaderState> key in keys) {
-      await Future.delayed(Duration(milliseconds: 40));
-      key.currentState.hide();
-    }
-  }
-
-  void _showBookings() async {
-    for (GlobalKey<ItemFaderState> key in keys) {
-      await Future.delayed(Duration(milliseconds: 40));
-      key.currentState.show();
-    }
   }
 }
 
