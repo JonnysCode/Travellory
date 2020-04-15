@@ -4,11 +4,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 import 'src/locations.dart' as locations;
 
 String _mapStyle;
 
-final List<LatLng> _simplePoints = [];
+//final List<LatLng> _simplePoints = [];
+final List<String> _userCities = ["switzerland"];
 
 class MapPage extends StatefulWidget {
   @override
@@ -42,7 +44,9 @@ class MapSample extends StatefulWidget {
 class MapSampleState extends State<MapSample> {
   final Completer<GoogleMapController> _controller = Completer();
   final Map<String, Marker> _markers = {};
+  final List<Polygon> _boundaries = [];
 
+  /*
   List<Polygon> polygons = <Polygon>[
     Polygon(
       polygonId: PolygonId("simple_polygon"),
@@ -61,6 +65,7 @@ class MapSampleState extends State<MapSample> {
       */
     ),
   ];
+   */
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final googleOffices = await locations.getGoogleOffices();
@@ -76,6 +81,16 @@ class MapSampleState extends State<MapSample> {
           ),
         );
         _markers[office.name] = marker;
+      }
+    });
+  }
+
+  Future<void> _loadCitiesBoundaries(GoogleMapController controller) async {
+    final boundaries = await GMapBorderLoader.generateBorders(_userCities);
+    setState(() {
+      _boundaries.clear();
+      for (final polygon in boundaries){
+        _boundaries.add(polygon);
       }
     });
   }
@@ -108,10 +123,13 @@ class MapSampleState extends State<MapSample> {
             onMapCreated: (GoogleMapController controller) {
               controller.setMapStyle(_mapStyle);
               _onMapCreated(controller);
+              _loadCitiesBoundaries(controller);
               _controller.complete(controller);
             },
             markers: _markers.values.toSet(),
-            polygons: polygons.toSet(),
+            //polygons: polygons.toSet(),
+            //polygons: GMapBorderLoader.generateBorders(_userCities).toSet(),
+            polygons: _boundaries.toSet(),
           ),
           Positioned(
             right: 10,
