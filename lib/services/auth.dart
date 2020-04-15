@@ -12,16 +12,26 @@ abstract class BaseAuthService {
   Future signOut();
   Future getCurrentUser();
   Stream<UserModel> get user;
+  set user(Stream<UserModel> user);
 }
 
 class AuthService implements BaseAuthService {
-  AuthService({this.auth}){
+  AuthService({
+    this.auth,
+    this.userStream
+  }){
     if(auth == null){
       auth = FirebaseAuth.instance;
     }
   }
 
   FirebaseAuth auth;
+  Stream<UserModel> userStream;
+
+  @override
+  set user(Stream<UserModel> user) {
+    userStream = user;
+  }
 
   // create User object based on firebase user
   UserModel _userFromFirebaseUser(FirebaseUser user) {
@@ -33,7 +43,9 @@ class AuthService implements BaseAuthService {
   // auth change user stream
   @override
   Stream<UserModel> get user {
-    return auth.onAuthStateChanged.map(_userFromFirebaseUser);
+    return userStream == null
+        ? auth.onAuthStateChanged.map(_userFromFirebaseUser)
+        : userStream;
   }
 
   // get current user
@@ -69,12 +81,6 @@ class AuthService implements BaseAuthService {
     }
   }
 
-  // sign in with phone number
-
-  // sign in with google
-
-  // sign in with facebook
-
   // register with email and password
   @override
   Future registerWithEmailAndPassword(
@@ -100,28 +106,22 @@ class AuthService implements BaseAuthService {
     }
   }
 
-  // register with phone
-
-  // register with google
-
-  // register with facebook
-
   //reauthenticate before security-sensitive action (f.e. change password)
+  @override
   Future reauthenticate (String oldPassword) async {
-    FirebaseUser user = await auth.currentUser();
-    String email = user.email;
-    AuthCredential credential = EmailAuthProvider.
+    final FirebaseUser user = await auth.currentUser();
+    final String email = user.email;
+    final AuthCredential credential = EmailAuthProvider.
     getCredential(email: email, password: oldPassword);
     return user.reauthenticateWithCredential(credential);
   }
 
   //change password
+  @override
   Future changePassword(String password) async {
-    FirebaseUser user = await auth.currentUser();
+    final FirebaseUser user = await auth.currentUser();
     return user.updatePassword(password);
   }
-
-
 
   // sign out
   @override
@@ -133,4 +133,5 @@ class AuthService implements BaseAuthService {
       return null;
     }
   }
+
 }
