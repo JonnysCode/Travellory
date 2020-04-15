@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
+import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -93,14 +93,14 @@ class _ProfilePageState extends State<ProfilePage>
                             fit: BoxFit.cover,
                           ),
                           border: Border.all(
-                          color: Theme.of(context).primaryColor, width: 2.0
-                        ),
-                        borderRadius:
+                              color: Theme.of(context).primaryColor, width: 2.0
+                          ),
+                          borderRadius:
                           BorderRadius.all(const Radius.circular(300.0)),
                         ),
                       ),
                     ),
-                    SizedBox(height: 50),
+                    SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: FutureBuilder(
@@ -113,21 +113,40 @@ class _ProfilePageState extends State<ProfilePage>
                             }
                           }),
                     ),
-                    SizedBox(height: 100),
-                    FlatButton.icon(
-                      onPressed: () => _signOut(),
-                      icon: Icon(
-                        FontAwesomeIcons.signOutAlt,
-                        color: Colors.black54,
+                    SizedBox(height: 10),
+                    Padding(
+                      key: Key('change-pw'),
+                      padding: EdgeInsets.only(
+                          top: 10,
+                          left: 90,
+                          right: 90,
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: Container(
+                        height: 40,
+                        width: MediaQuery.of(context).size.width,
+                        child: filledButton("Change password", Colors.white, Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor, Colors.white, () {
+                              Navigator.pushNamed(context, '/password');
+                            }),
                       ),
-                      label: FashionFetishText(
-                        text: 'Log out',
-                        size: 20,
-                        fontWeight: FashionFontWeight.bold,
-                        height: 1.05,
-                        color: Colors.black54,
+                    ),
+                    SizedBox(height: 10),
+                    Padding(
+                      key: Key('logout'),
+                      padding: EdgeInsets.only(
+                          left: 90,
+                          right: 90,
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: Container(
+                        height: 40,
+                        width: MediaQuery.of(context).size.width,
+                        child: filledButton("Logout", Colors.white, Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor, Colors.white, () async {
+                              await _signOut();
+                            }),
                       ),
-                    )
+                    ),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),
@@ -172,67 +191,67 @@ class UserInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      key: Key('display_user'),
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              FontAwesomeIcons.user,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            SizedBox(width: 10),
-            FashionFetishText(
-              text: user != null ? '${user.displayName}' : '',
-              size: 18,
-              fontWeight: FashionFontWeight.bold,
-              height: 1.1,
-            ),
-          ]
-        ),
-        SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              FontAwesomeIcons.envelope,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            SizedBox(width: 10),
-            FashionFetishText(
-              text: user != null ? '${user.email}' : '',
-              size: 18,
-              fontWeight: FashionFontWeight.bold,
-              height: 1.1,
-            ),
-          ]
-        ),
-        SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              FontAwesomeIcons.calendarAlt,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            SizedBox(width: 10),
-            FashionFetishText(
-              text: user != null
-                  ? '${DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)}'
-                  : '',
-              size: 18,
-              fontWeight: FashionFontWeight.bold,
-              height: 1.2,
-            ),
-          ]
-        ),
-      ]
+        key: Key('display_user'),
+        children: [
+          Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  FontAwesomeIcons.user,
+                  color: Theme.of(context).primaryColor,
+                  size: 32,
+                ),
+                SizedBox(width: 10),
+                FashionFetishText(
+                  text: user != null ? '${user.displayName}' : '',
+                  size: 18,
+                  fontWeight: FashionFontWeight.bold,
+                  height: 1.1,
+                ),
+              ]
+          ),
+          SizedBox(height: 8),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  FontAwesomeIcons.envelope,
+                  color: Theme.of(context).primaryColor,
+                  size: 32,
+                ),
+                SizedBox(width: 10),
+                FashionFetishText(
+                  text: user != null ? '${user.email}' : '',
+                  size: 18,
+                  fontWeight: FashionFontWeight.bold,
+                  height: 1.1,
+                ),
+              ]
+          ),
+          SizedBox(height: 8),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  FontAwesomeIcons.calendarAlt,
+                  color: Theme.of(context).primaryColor,
+                  size: 32,
+                ),
+                SizedBox(width: 10),
+                FashionFetishText(
+                  text: user != null
+                      ? '${DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)}'
+                      : '',
+                  size: 18,
+                  fontWeight: FashionFontWeight.bold,
+                  height: 1.2,
+                ),
+              ]
+          ),
+        ]
     );
   }
 }
