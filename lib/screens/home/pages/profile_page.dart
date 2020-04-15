@@ -160,6 +160,7 @@ class _ProfilePageState extends State<ProfilePage>
   }
 }
 
+
 class UserInformation extends StatelessWidget {
   const UserInformation({
     Key key,
