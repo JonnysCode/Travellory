@@ -5,6 +5,7 @@ import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/schedule/accommodation_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/day_circle.dart';
 import 'package:travellory/widgets/trip/schedule/flight_schedule.dart';
+import 'package:travellory/widgets/trip/schedule/public_transport_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/rental_car_schedule.dart';
 
 class DaySchedule extends StatefulWidget {
@@ -28,7 +29,8 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
   List<Widget> bookings = <Widget>[
     FlightSchedule(),
     RentalCarSchedule(),
-    AccommodationSchedule()
+    AccommodationSchedule(),
+    PublicTransportSchedule(),
   ];
 
   @override
