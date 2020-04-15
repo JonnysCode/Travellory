@@ -46,6 +46,7 @@ dependencies:
   custom_navigation_bar: ^0.2.6
   flushbar: 1.8.0
   logger: ^0.6.0
+  get_it: ^1.0.3
 
 dev_dependencies:
   flutter_test:
