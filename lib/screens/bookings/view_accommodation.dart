@@ -13,7 +13,7 @@ class AccommodationView extends StatefulWidget {
 }
 
 class _AccommodationViewState extends State<AccommodationView> {
-  final String bannerUrl = 'assets/images/bookings/hotel.jpg';
+  final String bannerUrl = 'assets/images/bookings/house_banner.png';
   final String headerTitle = 'Your Accommodation';
 
   SingleChildScrollView accommodationViewPage() {

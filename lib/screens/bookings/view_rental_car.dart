@@ -11,8 +11,8 @@ class RentalCarView extends StatefulWidget {
 }
 
 class _RentalCarViewState extends State<RentalCarView> {
-  final String bannerUrl = 'assets/images/bookings/vehicles.png';
-  final String headerTitle = 'Your Rental Car Booking';
+  final String bannerUrl = 'assets/images/bookings/rentalcar_banner.jpg';
+  final String headerTitle = 'Your Rental Car';
 
   SingleChildScrollView rentalCarViewPage() {
     return SingleChildScrollView(

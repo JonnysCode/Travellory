@@ -12,8 +12,9 @@ class FlightView extends StatefulWidget {
 }
 
 class _FlightViewState extends State<FlightView> {
-  final String bannerUrl = 'assets/images/bookings/airline_banner.jpg';
-  final String headerTitle = 'View Your Flight Booking';
+  //final String bannerUrl = 'assets/images/bookings/airline_banner.jpg';
+  final String bannerUrl = 'assets/images/bookings/plane_banner.png';
+  final String headerTitle = 'Your Flight';
 
   SingleChildScrollView flightViewPage() {
     return SingleChildScrollView(
