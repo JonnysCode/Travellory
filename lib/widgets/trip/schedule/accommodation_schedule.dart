@@ -24,7 +24,7 @@ class AccommodationSchedule extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             FashionFetishText(
-              text: accommodation.hotelName,
+              text: accommodation.name,
               size: 13,
               fontWeight: FashionFontWeight.heavy,
               height: 1.2,
