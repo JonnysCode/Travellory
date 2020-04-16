@@ -7,10 +7,10 @@ import 'package:travellory/widgets/font_widgets.dart';
 class PublicTransportSchedule extends StatelessWidget {
   final PublicTransportModel _publicTransportModel = PublicTransportModel()
     ..transportationType = 'train'
-    ..departureLocation = 'Winterthur'
-    ..departureTime = '13:31'
-    ..arrivalLocation = 'Dozwil'
-    ..arrivalTime = '14:18';
+    ..departureLocation = 'Los Angeles'
+    ..departureTime = '13:35'
+    ..arrivalLocation = 'Las Vegas'
+    ..arrivalTime = '15:40';
 
   @override
   Widget build(BuildContext context) {

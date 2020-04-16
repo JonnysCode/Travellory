@@ -3,6 +3,7 @@ import 'package:travellory/models/day_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/schedule/accommodation_schedule.dart';
+import 'package:travellory/widgets/trip/schedule/activity_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/day_circle.dart';
 import 'package:travellory/widgets/trip/schedule/flight_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/public_transport_schedule.dart';
@@ -31,6 +32,7 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
     RentalCarSchedule(),
     AccommodationSchedule(),
     PublicTransportSchedule(),
+    ActivitySchedule()
   ];
 
   @override
