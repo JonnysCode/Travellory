@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class FlightSchedule extends StatelessWidget {
+  final FlightModel _flight = FlightModel()
+    ..departureLocation = 'Zürich'
+    ..departureTime = '9:30'
+    ..arrivalLocation = 'Los Angeles'
+    ..arrivalTime = '12:20';
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,15 +26,15 @@ class FlightSchedule extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Airport(
-              name: 'Zürich',
-              code: 'ZRH',
+              name: _flight.departureLocation,
+              code: _flight.departureLocation.substring(0,3).toUpperCase(),
             ),
           ),
           Expanded(
             flex: 1,
             child: Center(
               child: Text(
-                '9:30',
+                _flight.departureTime,
                 style: TextStyle(
                     color: Colors.white54,
                 ),
@@ -51,7 +58,7 @@ class FlightSchedule extends StatelessWidget {
             flex: 1,
             child: Center(
               child: Text(
-                '12:20',
+                _flight.arrivalTime,
                 style: TextStyle(
                   color: Colors.white54,
                 ),
@@ -61,8 +68,8 @@ class FlightSchedule extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Airport(
-              name: 'Los Angeles',
-              code: 'LRX',
+              name: _flight.arrivalLocation,
+              code: _flight.arrivalLocation.substring(0,3).toUpperCase(),
             ),
           ),
         ],
