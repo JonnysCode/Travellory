@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
+TripModel _tripModel = TripModel(
+    name: 'Castle Discovery',
+    startDate: '2020-05-11',
+    endDate: '2020-05-19',
+    destination: 'Munich',
+    imageNr: 3
+);
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,6 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   static const List<Dial> _dials = <Dial>[
     Dial(
       icon: FontAwesomeIcons.envelope,
@@ -18,25 +27,37 @@ class _HomePageState extends State<HomePage> {
     ),
     Dial(
         icon: FontAwesomeIcons.theaterMasks,
-        description: 'Add Attraction'
+        description: 'Add Activity',
+        route: '/booking/activity'
     ),
     Dial(
         icon: FontAwesomeIcons.car,
-        description: 'Add Rental Car'
+        description: 'Add Rental Car',
+        route: '/booking/rentalcar'
     ),
     Dial(
         icon: FontAwesomeIcons.bus,
-        description: 'Add Public Transportation'
+        description: 'Add Public Transportation',
+        route: '/booking/publictransport'
+
     ),
     Dial(
         icon: FontAwesomeIcons.bed,
-        description: 'Add Accommodation'
+        description: 'Add Accommodation',
+        route: '/booking/accommodation'
     ),
     Dial(
         icon: FontAwesomeIcons.plane,
-        description: 'Add Flight'
+        description: 'Add Flight',
+        route: '/booking/flight',
     ),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _tripModel.init();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +153,7 @@ class _HomePageState extends State<HomePage> {
             SpeedDialButton(
               key: Key('home_page_dial'),
               dials: _dials,
+              tripModel: _tripModel,
             ),
           ],
         ),
