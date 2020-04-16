@@ -1,13 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/models/abstract_model.dart';
+import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/day_model.dart';
+import 'package:travellory/models/flight_model.dart';
+import 'package:travellory/models/public_transport_model.dart';
+import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/trip/schedule/accommodation_schedule.dart';
-import 'package:travellory/widgets/trip/schedule/activity_schedule.dart';
+import 'package:travellory/widgets/trip/schedule/booking_card.dart';
 import 'package:travellory/widgets/trip/schedule/day_circle.dart';
-import 'package:travellory/widgets/trip/schedule/flight_schedule.dart';
-import 'package:travellory/widgets/trip/schedule/public_transport_schedule.dart';
-import 'package:travellory/widgets/trip/schedule/rental_car_schedule.dart';
+
+final PublicTransportModel _publicTransport = PublicTransportModel()
+  ..transportationType = 'train'
+  ..departureLocation = 'Los Angeles'
+  ..departureTime = '13:35'
+  ..arrivalLocation = 'Las Vegas'
+  ..arrivalTime = '15:40';
+
+final AccommodationModel _accommodation = AccommodationModel()
+  ..accommodationType = 'hotel'
+  ..hotelName = 'Novotel Suites'
+  ..address = 'Bluff Street 102, 28343 Los Angeles'
+  ..checkinTime = '13:00';
+
+final ActivityModel _activity = ActivityModel()
+  ..description = 'Surfing Class'
+  ..location = 'Long Beach'
+  ..startTime = '14:00'
+  ..endTime = '18:00';
+
+final FlightModel _flight = FlightModel()
+  ..departureLocation = 'Zürich'
+  ..departureTime = '9:30'
+  ..arrivalLocation = 'Los Angeles'
+  ..arrivalTime = '12:20';
+
+final RentalCarModel _rentalCar = RentalCarModel()
+  ..pickupLocation = 'Los Angeles Airport';
+
+List<Model> _models = <Model>[
+  _rentalCar,
+  _flight,
+  _publicTransport,
+  _accommodation,
+  _activity,
+];
+
 
 class DaySchedule extends StatefulWidget {
   const DaySchedule({
@@ -27,13 +66,9 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
   bool _isExpanded;
   AnimationController _controller;
 
-  List<Widget> bookings = <Widget>[
-    FlightSchedule(),
-    RentalCarSchedule(),
-    AccommodationSchedule(),
-    PublicTransportSchedule(),
-    ActivitySchedule()
-  ];
+  List<Widget> bookings = _models.map((model) => BookingCard(
+    model: model,
+  )).toList();
 
   @override
   void initState() {
