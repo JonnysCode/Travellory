@@ -11,6 +11,7 @@ class ActivitySchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      key: Key('activity'),
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 10, right: 16),

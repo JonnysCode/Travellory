@@ -66,20 +66,21 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
   bool _isExpanded;
   AnimationController _controller;
 
-  List<Widget> bookings = _models.map((model) => BookingCard(
-    model: model,
-  )).toList();
+  List<Widget> bookings;
 
   @override
   void initState() {
     super.initState();
+    bookings = _models.map((model) => BookingCard(
+      model: model,
+    )).toList();
+
     _isExpanded = widget.isExpanded;
     _controller = AnimationController(
       vsync: this, // the SingleTickerProviderStateMixin
       duration: Duration(milliseconds: 200),
     )
       ..forward();
-
   }
 
   @override

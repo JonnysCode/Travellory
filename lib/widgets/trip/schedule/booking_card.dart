@@ -25,6 +25,7 @@ class BookingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  GestureDetector(
+      key: Key('booking_card'),
       onTap: () => onTab,
       child: Container(
         padding: const EdgeInsets.all(6.0),

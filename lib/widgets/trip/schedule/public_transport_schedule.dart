@@ -12,6 +12,7 @@ class PublicTransportSchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      key: Key('public_transport'),
       children: <Widget>[
         Expanded(
           flex: 1,

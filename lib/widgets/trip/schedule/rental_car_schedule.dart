@@ -10,6 +10,7 @@ class RentalCarSchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      key: Key('rental_car'),
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 10, right: 16),
