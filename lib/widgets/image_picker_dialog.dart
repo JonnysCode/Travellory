@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 
+import 'buttons/buttons.dart';
 import 'font_widgets.dart';
 
 class ImagePickerDialog extends StatelessWidget {
@@ -114,31 +115,5 @@ class ImagePickerDialog extends StatelessWidget {
         ));
   }
 
-  Widget roundedButton(
-      String buttonLabel, EdgeInsets margin, Color bgColor, Color textColor) {
-    final loginBtn = Container(
-      margin: margin,
-      padding: EdgeInsets.all(15.0),
-      alignment: FractionalOffset.center,
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.all(const Radius.circular(100.0)),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: const Color(0xFF696969),
-            offset: Offset(1.0, 6.0),
-            blurRadius: 0.001,
-          ),
-        ],
-      ),
-      child: FashionFetishText(
-        text: buttonLabel,
-        size: 20,
-        color: Colors.white,
-        fontWeight: FashionFontWeight.normal,
-        height: 1.05,
-      ),
-    );
-    return loginBtn;
-  }
+
 }
