@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class RentalCarSchedule extends StatelessWidget {
+  final RentalCarModel _rentalCar = RentalCarModel()
+    ..pickupLocation = 'Los Angeles Airport';
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 50,
       decoration: BoxDecoration(
-        color: Color(0xFFeff5f7),
-        borderRadius: BorderRadius.circular(16.0),
+        color: Colors.lightBlue,
+        borderRadius: BorderRadius.circular(12.0),
         boxShadow: [
           BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.1), offset: Offset(0.0, 6.0))
         ],
@@ -23,7 +27,7 @@ class RentalCarSchedule extends StatelessWidget {
               child: FaIcon(
                 FontAwesomeIcons.carSide,
                 size: 28,
-                color: Colors.green,
+                color: Colors.black54,
               ),
             ),
             Column(
@@ -34,6 +38,7 @@ class RentalCarSchedule extends StatelessWidget {
                   size: 16,
                   fontWeight: FashionFontWeight.heavy,
                   height: 1.2,
+                  color: Colors.black54,
                 ),
                 SizedBox(height: 3),
                 Row(
@@ -41,14 +46,14 @@ class RentalCarSchedule extends StatelessWidget {
                     FaIcon(
                       FontAwesomeIcons.locationArrow,
                       size: 14,
-                      color: Colors.redAccent,
+                      color: Colors.white70,
                     ),
                     SizedBox(width: 6),
                     Text(
-                      'Los Angeles Airport',
+                      _rentalCar.pickupLocation,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.black54,
+                        color: Colors.white70,
                       ),
                     ),
                   ],
