@@ -10,6 +10,7 @@ class FlightSchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      key: Key('flight'),
       children: <Widget>[
         Expanded(
           flex: 2,
