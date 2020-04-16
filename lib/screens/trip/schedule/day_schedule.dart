@@ -84,6 +84,12 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
