@@ -3,52 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/trip/schedule/schedule_card.dart';
-
 
 
 class PublicTransportSchedule extends StatelessWidget {
-
-  final PublicTransportModel _publicTransportModel = PublicTransportModel()
-    ..transportationType = 'train'
-    ..departureLocation = 'Los Angeles'
-    ..departureTime = '13:35'
-    ..arrivalLocation = 'Las Vegas'
-    ..arrivalTime = '15:40';
+  const PublicTransportSchedule(this.model, {Key key}) : super(key : key);
+  final PublicTransportModel model;
 
   @override
   Widget build(BuildContext context) {
-    return ScheduleCard(
-      color: Colors.teal,
-      onTab: (){},
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: _Entry(
-              name: _publicTransportModel.departureLocation,
-              code: _publicTransportModel.departureTime,
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: _Entry(
+            name: model.departureLocation,
+            code: model.departureTime,
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Center(
+            child: FaIcon(
+              FontAwesomeIcons.train,
+              size: 30,
+              color: Colors.black54,
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: FaIcon(
-                FontAwesomeIcons.train,
-                size: 30,
-                color: Colors.black54,
-              ),
-            ),
+        ),
+        Expanded(
+          flex: 1,
+          child: _Entry(
+            name: model.arrivalLocation,
+            code: model.arrivalTime,
           ),
-          Expanded(
-            flex: 1,
-            child: _Entry(
-              name: _publicTransportModel.arrivalLocation,
-              code: _publicTransportModel.arrivalTime,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
