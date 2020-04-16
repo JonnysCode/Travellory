@@ -9,7 +9,7 @@ class FlightSchedule extends StatelessWidget {
       padding: const EdgeInsets.all(6.0),
       decoration: BoxDecoration(
         color: Colors.blueGrey,
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(12.0),
         boxShadow: [
           BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.2), offset: Offset(0.0, 6.0))
         ],
