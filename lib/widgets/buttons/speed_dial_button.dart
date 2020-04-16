@@ -143,5 +143,5 @@ class Dial {
 
   final IconData icon;
   final String description;
-  final Function function;
+  final void function;
 }

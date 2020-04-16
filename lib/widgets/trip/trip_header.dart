@@ -33,7 +33,7 @@ class _TripHeaderState extends State<TripHeader> {
             top: 0,
             right: 0,
             child: IconButton(
-              onPressed: () => Navigator.pop(context),
+//              onPressed: () => Navigator.pop(context),
               icon: FaIcon(FontAwesomeIcons.times),
               iconSize: 26,
               color: Colors.red,

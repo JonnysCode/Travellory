@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/services/navigation_service.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+
+import '../../service_locator.dart';
 
 class Authenticate extends StatefulWidget {
   @override
@@ -62,7 +65,7 @@ class _AuthenticateState extends State<Authenticate> {
                                 top: 9,
                                 child: IconButton(
                                   onPressed: () {
-                                    Navigator.of(context).pop();
+//                                    Navigator.of(context).pop();
                                   },
                                   icon: Icon(
                                     FontAwesomeIcons.times,
@@ -111,7 +114,8 @@ class _AuthenticateState extends State<Authenticate> {
                                   width: MediaQuery.of(context).size.width,
                                   child: filledButton("LOGIN", Colors.white, Theme.of(context).primaryColor,
                                       Theme.of(context).primaryColor, Colors.white, () {
-                                        Navigator.pushNamed(context, '/login');
+                                        locator<NavigationService>().navigateTo('login');
+//                                        Navigator.pushNamed(context, '/login');
                                       }),
                                 ),
                               ),
@@ -128,7 +132,8 @@ class _AuthenticateState extends State<Authenticate> {
                                   width: MediaQuery.of(context).size.width,
                                   child: filledButton("REGISTER", Colors.white, Theme.of(context).primaryColor,
                                       Theme.of(context).primaryColor, Colors.white, () {
-                                        Navigator.pushNamed(context, '/register');
+                                        locator<NavigationService>().navigateTo('register');
+//                                        Navigator.pushNamed(context, '/register');
                                       }),
                                 ),
                               ),

@@ -31,7 +31,7 @@ class _TripCardState extends State<TripCard> {
   TripModel _tripModel;
 
   void _openTrip(){
-    Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
+//    Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
   }
 
   @override
@@ -44,7 +44,7 @@ class _TripCardState extends State<TripCard> {
             left: 40,
             right: 0,
             child: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel),
+//              onTap: () => Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel),
               child: Container(
                 height: 100,
                 decoration: BoxDecoration(

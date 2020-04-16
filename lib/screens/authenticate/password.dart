@@ -28,16 +28,16 @@ class _RegisterState extends State<ChangePassword> {
 
   Future _validateAndChangePW() async {
     if (_formKey.currentState.validate()) {
-      Navigator.pushNamed(context, '/loading');
+//      Navigator.pushNamed(context, '/loading');
 
       await _changePassword().then((value) async {
         setState(() => _changePwError = null);
-        Navigator.popUntil(context, ModalRoute.withName('/'));
+//        Navigator.popUntil(context, ModalRoute.withName('/'));
         _showSnackBar();
       }).catchError((error) {
         setState(
                 () => _changePwError = 'Password could not be changed. Try again.');
-        Navigator.pop(context);
+//        Navigator.pop(context);
       });
     }
   }
@@ -127,7 +127,7 @@ class _RegisterState extends State<ChangePassword> {
                             top: 8,
                             child: IconButton(
                               onPressed: () {
-                                Navigator.of(context).pop();
+//                                Navigator.of(context).pop();
                                 _passwordController.clear();
                                 _oldPasswordController.clear();
                               },

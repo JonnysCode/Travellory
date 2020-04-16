@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
+import 'package:travellory/services/navigation_service.dart';
 import 'package:travellory/utils/input_validator.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
 import 'package:pedantic/pedantic.dart';
 
+import '../../service_locator.dart';
+
 class SignIn extends StatefulWidget {
-  const SignIn({ this.toggleView });
+  const SignIn({this.toggleView});
 
   final Function toggleView;
 
@@ -27,24 +30,27 @@ class _SignInState extends State<SignIn> {
 
   Future _validateSignIn() async {
     if (_formKey.currentState.validate()) {
-      unawaited(Navigator.pushNamed(context, '/loading'));
+      unawaited(locator<NavigationService>().navigateTo('loading'));
+//      unawaited(Navigator.pushNamed(context, '/loading'));
       final user = await _signIn();
 
-      if(user == null){
-        Navigator.pop(context);
+      if (user == null) {
+//        Navigator.pop(context);
         setState(() {
           _error = 'Could not sign in with those credentials.';
         });
       } else {
-        Navigator.popUntil(context, ModalRoute.withName('/'),
-        );
+        unawaited(locator<NavigationService>().navigateTo('/'));
+//        Navigator.popUntil(context, ModalRoute.withName('/'),
+//        );
       }
     }
   }
 
   Future _signIn() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    final user = await _auth.signInWithEmailAndPassword(_emailController.text, _passwordController.text);
+    final user =
+        await _auth.signInWithEmailAndPassword(_emailController.text, _passwordController.text);
 
     return user;
   }
@@ -67,14 +73,13 @@ class _SignInState extends State<SignIn> {
             height: MediaQuery.of(context).size.height * 0.05,
           ),
           Container(
-            child:  DecoratedBox(
+            child: DecoratedBox(
               decoration: BoxDecoration(
                 color: Theme.of(context).canvasColor,
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40.0),
-                    topRight: Radius.circular(40.0)),
+                    topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.95,
                   width: MediaQuery.of(context).size.width,
@@ -99,8 +104,7 @@ class _SignInState extends State<SignIn> {
                                 width: 32,
                                 height: 32,
                                 decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Theme.of(context).primaryColor),
+                                    shape: BoxShape.circle, color: Theme.of(context).primaryColor),
                               ),
                             ),
                             Positioned(
@@ -108,7 +112,7 @@ class _SignInState extends State<SignIn> {
                               top: 8,
                               child: IconButton(
                                 onPressed: () {
-                                  Navigator.of(context).pop();
+//                                  Navigator.of(context).pop();
                                   _emailController.clear();
                                   _passwordController.clear();
                                 },
@@ -166,13 +170,27 @@ class _SignInState extends State<SignIn> {
                                   children: <Widget>[
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 10, top: 40),
-                                      child: inputAuthentication(Icon(Icons.email), "EMAIL", Theme.of(context).primaryColor,
-                                          _emailController, null, ValidatorType.email, false, null),
+                                      child: inputAuthentication(
+                                          Icon(Icons.email),
+                                          "EMAIL",
+                                          Theme.of(context).primaryColor,
+                                          _emailController,
+                                          null,
+                                          ValidatorType.email,
+                                          false,
+                                          null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
-                                      child: inputAuthentication(Icon(Icons.lock), "PASSWORD", Theme.of(context).primaryColor,
-                                          _passwordController, null, ValidatorType.password, true, null),
+                                      child: inputAuthentication(
+                                          Icon(Icons.lock),
+                                          "PASSWORD",
+                                          Theme.of(context).primaryColor,
+                                          _passwordController,
+                                          null,
+                                          ValidatorType.password,
+                                          true,
+                                          null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
@@ -188,8 +206,7 @@ class _SignInState extends State<SignIn> {
                                             Theme.of(context).primaryColor,
                                             Theme.of(context).primaryColor,
                                             Colors.white,
-                                            _validateSignIn
-                                        ),
+                                            _validateSignIn),
                                       ),
                                     ),
                                   ],
@@ -217,4 +234,3 @@ class _SignInState extends State<SignIn> {
     );
   }
 }
-

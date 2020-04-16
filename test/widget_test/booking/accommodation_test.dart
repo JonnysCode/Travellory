@@ -17,7 +17,7 @@ class Wrapper extends StatelessWidget {
     tripModel.init();
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/booking/accommodation', arguments: tripModel);
+//        Navigator.pushNamed(context, '/booking/accommodation', arguments: tripModel);
       },
       child: Container(
         color: const Color(0xFFFFFF00),

@@ -50,7 +50,7 @@ class _TripListState extends State<TripList> {
                     top: 11,
                     right: 0,
                     child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, '/createtrip'),
+//                      onTap: () => Navigator.pushNamed(context, '/createtrip'),
                       child: Container(
                         height: 32,
                         width: 32,

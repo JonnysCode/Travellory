@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
+import 'package:travellory/services/navigation_service.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+
+import '../../../service_locator.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -11,35 +14,43 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const List<Dial> _dials = <Dial>[
-    Dial(
-      icon: FontAwesomeIcons.envelope,
-      description: 'Manage forwarded bookings'
-    ),
-    Dial(
-        icon: FontAwesomeIcons.theaterMasks,
-        description: 'Add Attraction'
-    ),
-    Dial(
-        icon: FontAwesomeIcons.car,
-        description: 'Add Rental Car'
-    ),
-    Dial(
-        icon: FontAwesomeIcons.bus,
-        description: 'Add Public Transportation'
-    ),
-    Dial(
-        icon: FontAwesomeIcons.bed,
-        description: 'Add Accommodation'
-    ),
-    Dial(
-        icon: FontAwesomeIcons.plane,
-        description: 'Add Flight'
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
+
+    Future changeRoute(String route) {
+      return locator<NavigationService>().navigateTo(route);
+    }
+
+    List<Dial> _dials = <Dial>[
+      Dial(
+          icon: FontAwesomeIcons.envelope,
+          description: 'Manage forwarded bookings'
+      ),
+      Dial(
+          icon: FontAwesomeIcons.theaterMasks,
+          description: 'Add Attraction'
+      ),
+      Dial(
+        icon: FontAwesomeIcons.car,
+        description: 'Add Rental Car',
+      ),
+      Dial(
+          icon: FontAwesomeIcons.bus,
+          description: 'Add Public Transportation'
+      ),
+      Dial(
+          icon: FontAwesomeIcons.bed,
+          description: 'Add Accommodation'
+      ),
+      Dial(
+        icon: FontAwesomeIcons.plane,
+        description: 'Add Flight',
+        // ERROR PROBABLY FROM HERE
+        function: changeRoute('flight'),
+      ),
+    ];
+
     return SafeArea(
       child: Container(
         key: Key('home_page'),

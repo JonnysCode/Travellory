@@ -40,17 +40,17 @@ class _RegisterState extends State<Register> {
 
   Future _validateRegister() async {
     if (_formKey.currentState.validate() && _isUsernameAvailable) {
-      unawaited(Navigator.pushNamed(context, '/loading'));
+//      unawaited(Navigator.pushNamed(context, '/loading'));
       final user = await _register();
 
       if(user == null){
-        Navigator.pop(context);
+//        Navigator.pop(context);
         setState(() {
           _error = 'Please supply a valid email and password.';
         });
       } else {
-        Navigator.popUntil(context, ModalRoute.withName('/'),
-        );
+//        Navigator.popUntil(context, ModalRoute.withName('/'),
+//        );
       }
     }
   }
@@ -134,7 +134,7 @@ class _RegisterState extends State<Register> {
                               top: 8,
                               child: IconButton(
                                 onPressed: () {
-                                  Navigator.of(context).pop();
+//                                  Navigator.of(context).pop();
                                   _emailController.clear();
                                   _passwordController.clear();
                                   _nameController.clear();

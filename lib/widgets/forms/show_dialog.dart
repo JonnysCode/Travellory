@@ -19,10 +19,10 @@ void showSubmittedBookingDialog(BuildContext context, String alertText) {
         content: Text(alertText),
         actions: <Widget>[
           alertButton('Home', Colors.transparent, context, () async {
-            Navigator.popUntil(context, ModalRoute.withName('/home'));
+//            Navigator.popUntil(context, ModalRoute.withName('/home'));
           }),
           alertButton("Back to Trip", Theme.of(context).hintColor, context, () async {
-            Navigator.pop(context);
+//            Navigator.pop(context);
           }),
         ],
       );
@@ -46,7 +46,7 @@ void showSubmittedTripDialog(BuildContext context, String alertText) {
         content: Text(alertText),
         actions: <Widget>[
           alertButton('Home', Colors.transparent, context, () async {
-            Navigator.of(context).popUntil((route) => route.isFirst);
+//            Navigator.of(context).popUntil((route) => route.isFirst);
           }),
         ],
       );
@@ -70,11 +70,11 @@ void cancellingDialog(BuildContext context, String cancelDialog) {
         content: Text(cancelDialog),
         actions: <Widget>[
           alertButton('No', Colors.transparent, context, () async {
-            Navigator.pop(context);
+//            Navigator.pop(context);
           }),
           alertButton('Yes', Color(0xFFF48FB1), context, () async {
-            Navigator.pop(context);
-            Navigator.pop(context);
+//            Navigator.pop(context);
+//            Navigator.pop(context);
           }),
         ],
       );
@@ -99,7 +99,7 @@ void missingFormFieldInformationDialog(BuildContext context) {
             'The form is not complete. Please look at the marked fields and add the required information.'),
         actions: <Widget>[
           alertButton('Edit Booking', Theme.of(context).primaryColor, context, () async {
-            Navigator.pop(context);
+//            Navigator.pop(context);
           }),
         ],
       );
@@ -123,7 +123,7 @@ void addToDataBaseFailedDialog(BuildContext context, String alertText) {
         content: Text(alertText),
         actions: <Widget>[
           alertButton("Try Again", Theme.of(context).hintColor, context, () async {
-            Navigator.pop(context);
+//            Navigator.pop(context);
           }),
         ],
       );

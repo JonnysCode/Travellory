@@ -14,7 +14,7 @@ class _TripScreenState extends State<TripScreen> {
     final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
 
     void _openBooking(String bookingSite){
-      Navigator.pushNamed(context, bookingSite, arguments: _tripModel);
+//      Navigator.pushNamed(context, bookingSite, arguments: _tripModel);
     }
 
     Widget _subsection(String title, String route){

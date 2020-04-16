@@ -126,7 +126,7 @@ class _ProfilePageState extends State<ProfilePage>
                         width: MediaQuery.of(context).size.width,
                         child: filledButton("Change password", Colors.white, Theme.of(context).primaryColor,
                             Theme.of(context).primaryColor, Colors.white, () {
-                              Navigator.pushNamed(context, '/password');
+//                              Navigator.pushNamed(context, '/password');
                             }),
                       ),
                     ),
@@ -175,7 +175,7 @@ class _ProfilePageState extends State<ProfilePage>
   Future _signOut() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     await _auth.signOut();
-    await Navigator.popUntil(context, ModalRoute.withName('/'));
+//    await Navigator.popUntil(context, ModalRoute.withName('/'));
   }
 }
 

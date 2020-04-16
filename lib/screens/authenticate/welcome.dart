@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/services/navigation_service.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+
+import '../../service_locator.dart';
 
 class Welcome extends StatefulWidget {
   @override
@@ -36,10 +39,11 @@ class _WelcomeState extends State<Welcome> {
                 height: 50,
                 child: filledButton('easy', Colors.white, Colors.deepOrange, Theme.of(context).accentColor,
                     Colors.white, () {
-                      Navigator.pushNamed(
-                        context,
-                        '/auth'
-                      );
+                      locator<NavigationService>().navigateTo('auth');
+//                      Navigator.pushNamed(
+//                        context,
+//                        '/auth'
+//                      );
                     }),
               ),
             ),
