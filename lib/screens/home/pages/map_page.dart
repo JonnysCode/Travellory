@@ -8,8 +8,6 @@ import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 import 'src/locations.dart' as locations;
 
 String _mapStyle;
-
-//final List<LatLng> _simplePoints = [];
 final List<String> _userCities = ["switzerland"];
 
 class MapPage extends StatefulWidget {
@@ -46,27 +44,6 @@ class MapSampleState extends State<MapSample> {
   final Map<String, Marker> _markers = {};
   final List<Polygon> _boundaries = [];
 
-  /*
-  List<Polygon> polygons = <Polygon>[
-    Polygon(
-      polygonId: PolygonId("simple_polygon"),
-      consumeTapEvents: false,
-      fillColor: Color.fromRGBO(255, 0, 0, 0.35),
-      geodesic: false,
-      points: _simplePoints,
-      strokeColor: Color.fromRGBO(255, 0, 0, 0.8),
-      strokeWidth: 2,
-      visible: true,
-      zIndex: 0,
-      /*
-      onTap: (){
-        print("Tapped!");
-      },
-      */
-    ),
-  ];
-   */
-
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final googleOffices = await locations.getGoogleOffices();
     setState(() {
@@ -89,8 +66,8 @@ class MapSampleState extends State<MapSample> {
     final boundaries = await GMapBorderLoader.generateBorders(_userCities);
     setState(() {
       _boundaries.clear();
-      for (final polygon in boundaries){
-        _boundaries.add(polygon);
+      if(boundaries.isNotEmpty){
+        boundaries.forEach((final element) => _boundaries.add(element));
       }
     });
   }
@@ -127,8 +104,6 @@ class MapSampleState extends State<MapSample> {
               _controller.complete(controller);
             },
             markers: _markers.values.toSet(),
-            //polygons: polygons.toSet(),
-            //polygons: GMapBorderLoader.generateBorders(_userCities).toSet(),
             polygons: _boundaries.toSet(),
           ),
           Positioned(
