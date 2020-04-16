@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'package:travellory/widgets/trip/schedule/schedule_card.dart';
+
+
 
 class PublicTransportSchedule extends StatelessWidget {
+
   final PublicTransportModel _publicTransportModel = PublicTransportModel()
     ..transportationType = 'train'
     ..departureLocation = 'Los Angeles'
@@ -14,15 +18,9 @@ class PublicTransportSchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(6.0),
-      decoration: BoxDecoration(
-        color: Colors.teal,
-        borderRadius: BorderRadius.circular(12.0),
-        boxShadow: [
-          BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.2), offset: Offset(0.0, 6.0))
-        ],
-      ),
+    return ScheduleCard(
+      color: Colors.teal,
+      onTab: (){},
       child: Row(
         children: <Widget>[
           Expanded(
