@@ -12,7 +12,7 @@ class GMapBorderLoader{
   static Future<List<LatLng>> _doPoints(String city_name) async {
     final List<LatLng> points = List<LatLng>();
 
-    String data = await rootBundle.loadString('assets/g_map/border_points/switzerland.json');
+    String data = await rootBundle.loadString('assets/g_map/border_points/'+city_name.toLowerCase()+'.json');
     final jsonResult = await json.decode(data);
     List results = jsonResult["geometry"] as List;
     for(var result in results) {
