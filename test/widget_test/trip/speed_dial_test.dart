@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 
 const List<Dial> _dials = <Dial>[
@@ -30,6 +31,14 @@ const List<Dial> _dials = <Dial>[
   ),
 ];
 
+TripModel _tripModel = TripModel(
+    name: 'Castle Discovery',
+    startDate: '2020-05-11',
+    endDate: '2020-05-19',
+    destination: 'Munich',
+    imageNr: 3
+);
+
 void main(){
   Widget makeTestableWidget({Widget child}){
     return MaterialApp(
@@ -40,6 +49,7 @@ void main(){
   testWidgets('test if SpeedDial is rendered', (WidgetTester tester) async {
     Widget page = SpeedDialButton(
       dials: _dials,
+      tripModel: _tripModel,
     );
 
     // Build our app and trigger a frame.
@@ -52,6 +62,7 @@ void main(){
   testWidgets('test if all dials are present', (WidgetTester tester) async {
     Widget page = SpeedDialButton(
       dials: _dials,
+      tripModel: _tripModel,
     );
 
     // Build our app and trigger a frame.
