@@ -17,6 +17,7 @@ class FlightSchedule extends StatelessWidget {
           child: Airport(
             name: flight.departureLocation,
             code: flight.departureLocation.substring(0,3).toUpperCase(),
+            color: Colors.black54,
           ),
         ),
         Expanded(
@@ -59,6 +60,7 @@ class FlightSchedule extends StatelessWidget {
           child: Airport(
             name: flight.arrivalLocation,
             code: flight.arrivalLocation.substring(0,3).toUpperCase(),
+            color: Colors.black54,
           ),
         ),
       ],
@@ -70,10 +72,12 @@ class Airport extends StatelessWidget {
   const Airport({
     @required this.name,
     @required this.code,
+    @required this.color,
   });
 
   final String name;
   final String code;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +95,7 @@ class Airport extends StatelessWidget {
           name,
           style: TextStyle(
             fontSize: 11,
-            color: Colors.white54
+            color: color,
           ),
         ),
       ],

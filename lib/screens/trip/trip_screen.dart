@@ -105,40 +105,40 @@ class _TripScreenState extends State<TripScreen> {
     flightBookings = _flightModels
         .map((model) => BookingCard(
               model: model,
-              color: getColorAccordingTo(model),
-              getSchedule: getScheduleAccordingTo(model),
+              color: getBookingColorAccordingTo(model),
+              getSchedule: getBookingsAccordingTo(model),
             ))
         .toList();
 
     accommodationBookings = _accommodationModels
         .map((model) => BookingCard(
               model: model,
-              color: getColorAccordingTo(model),
-              getSchedule: getScheduleAccordingTo(model),
+              color: getBookingColorAccordingTo(model),
+              getSchedule: getBookingsAccordingTo(model),
             ))
         .toList();
 
     publicTransportBookings = _publicTransportModels
         .map((model) => BookingCard(
               model: model,
-              color: getColorAccordingTo(model),
-              getSchedule: getScheduleAccordingTo(model),
+              color: getBookingColorAccordingTo(model),
+              getSchedule: getBookingsAccordingTo(model),
             ))
         .toList();
 
     activityBookings = _activityModels
         .map((model) => BookingCard(
               model: model,
-              color: getColorAccordingTo(model),
-              getSchedule: getScheduleAccordingTo(model),
+              color: getBookingColorAccordingTo(model),
+              getSchedule: getBookingsAccordingTo(model),
             ))
         .toList();
 
     rentalCarBookings = _rentalCarModels
         .map((model) => BookingCard(
               model: model,
-              color: getColorAccordingTo(model),
-              getSchedule: getScheduleAccordingTo(model),
+              color: getBookingColorAccordingTo(model),
+              getSchedule: getBookingsAccordingTo(model),
             ))
         .toList();
   }
@@ -241,7 +241,7 @@ class _TripScreenState extends State<TripScreen> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: _subsection('Flight', '/booking/flight'),
+                  child: _subsection('Flights', '/booking/flight'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
