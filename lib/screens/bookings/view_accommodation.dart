@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/shared/lists_of_types.dart';
-import 'package:travellory/widgets/booking_header.dart';
+import 'package:travellory/widgets/bookings/view_booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
