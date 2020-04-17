@@ -230,29 +230,6 @@ class _TripScreenState extends State<TripScreen> {
       );
     }
 
-    Widget _cardCarousel() {
-      return Container(
-        height: 80,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemCount: 3,
-          itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Container(
-              height: 50,
-              width: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Theme.of(context).scaffoldBackgroundColor,
-              ),
-              child: Center(child: Text('Entry')),
-            ),
-          ),
-          separatorBuilder: (context, index) => const Divider(),
-        ),
-      );
-    }
-
     return Scaffold(
       body: Container(
         color: Colors.white,
