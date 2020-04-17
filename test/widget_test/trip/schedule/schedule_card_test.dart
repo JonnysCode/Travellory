@@ -17,8 +17,8 @@ final PublicTransportModel _publicTransport = PublicTransportModel()
   ..arrivalTime = '15:40';
 
 final AccommodationModel _accommodation = AccommodationModel()
-  ..accommodationType = 'hotel'
-  ..hotelName = 'Novotel Suites'
+  ..type = 'hotel'
+  ..name = 'Novotel Suites'
   ..address = 'Bluff Street 102, 28343 Los Angeles'
   ..checkinTime = '13:00';
 

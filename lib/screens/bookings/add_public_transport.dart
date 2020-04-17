@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/screens/trip/bookings/bookings.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
@@ -44,7 +45,7 @@ class _PublicTransportState extends State<PublicTransport> {
 
     transportTypeDropdown = TravelloryDropdownField(
         title: 'Select Transport Type',
-        types: types,
+        types: publicTransportTypes,
         onChanged: (value) {
           publicTransportModel.transportationType = value.name;
           showAdditional(publicTransportList, value.name == 'Other', transportTypeDropdown,
@@ -65,7 +66,7 @@ class _PublicTransportState extends State<PublicTransport> {
         initialValue: false,
         label: 'Did you make a seat reservation?',
         onChanged: (value) {
-          publicTransportModel.seatReservation = value;
+          publicTransportModel.seatReserved = value;
           showAdditional(
               publicTransportList, value, seatReservedCheckbox, seatReservationAdditional);
         });
@@ -80,7 +81,7 @@ class _PublicTransportState extends State<PublicTransport> {
           labelText: 'Company',
           icon: Icon(FontAwesomeIcons.solidBuilding),
           optional: true,
-          onChanged: (value) => publicTransportModel.company = value),
+          onChanged: (value) => publicTransportModel.publicTransportCompany = value),
       SectionTitle('Departure Information'),
       TravelloryFormField(
         labelText: 'Departure Location *',
@@ -158,13 +159,13 @@ class _PublicTransportState extends State<PublicTransport> {
           labelText: 'Booking Reference',
           icon: Icon(FontAwesomeIcons.ticketAlt),
           optional: true,
-          onChanged: (value) => publicTransportModel.reference = value,
+          onChanged: (value) => publicTransportModel.referenceNr = value,
         ),
         TravelloryFormField(
           labelText: 'Booking Company',
           icon: Icon(FontAwesomeIcons.building),
           optional: true,
-          onChanged: (value) => publicTransportModel.companyReservation = value,
+          onChanged: (value) => publicTransportModel.reservationCompany = value,
         ),
       ],
     );
@@ -186,16 +187,6 @@ class _PublicTransportState extends State<PublicTransport> {
 
   final String cancelText =
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
-
-  List<Item> types = <Item>[
-    const Item('Rail', Icon(FontAwesomeIcons.train, color: Color(0xFF167F67))),
-    const Item('Bus', Icon(FontAwesomeIcons.bus, color: Color(0xFF167F67))),
-    const Item('Metro', Icon(FontAwesomeIcons.subway, color: Color(0xFF167F67))),
-    const Item('Ferry', Icon(FontAwesomeIcons.ship, color: Color(0xFF167F67))),
-    const Item('Taxi', Icon(FontAwesomeIcons.taxi, color: Color(0xFF167F67))),
-    const Item('Uber', Icon(FontAwesomeIcons.carSide, color: Color(0xFF167F67))),
-    const Item('Other', Icon(FontAwesomeIcons.walking, color: Color(0xFF167F67))),
-  ];
 
   Widget _itemBuilder(BuildContext context, int index, Animation<double> animation) {
     return FormItem(animation: animation, child: publicTransportList[index]);
