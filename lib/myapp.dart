@@ -6,14 +6,18 @@ import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/screens/authenticate/password.dart';
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
+import 'package:travellory/screens/bookings/view_accommodation.dart';
+import 'package:travellory/screens/bookings/view_flight.dart';
+import 'package:travellory/screens/bookings/view_public_transport.dart';
+import 'package:travellory/screens/bookings/view_rental_car.dart';
 import 'package:travellory/screens/home/home.dart';
 import 'package:travellory/screens/home/pages/friends_page.dart';
-import 'package:travellory/screens/trip/bookings/accommodation.dart';
-import 'package:travellory/screens/trip/bookings/activity.dart';
+import 'package:travellory/screens/bookings/add_accommodation.dart';
+import 'package:travellory/screens/bookings/add_activity.dart';
 import 'package:travellory/screens/trip/create_trip_screen.dart';
-import 'package:travellory/screens/trip/bookings/flight.dart';
-import 'package:travellory/screens/trip/bookings/public_transport.dart';
-import 'package:travellory/screens/trip/bookings/rental_car.dart';
+import 'package:travellory/screens/bookings/add_flight.dart';
+import 'package:travellory/screens/bookings/add_public_transport.dart';
+import 'package:travellory/screens/bookings/add_rental_car.dart';
 import 'package:travellory/screens/trip/trip_screen.dart';
 import 'package:travellory/screens/wrapper.dart';
 import 'package:travellory/services/auth.dart';
@@ -47,11 +51,15 @@ class MyApp extends StatelessWidget {
             '/home': (context) => Home(),
             '/viewtrip': (context) => TripScreen(),
             '/createtrip': (context) => CreateTrip(),
-            '/booking/rentalCar': (context) => RentalCar(),
+            '/booking/rentalcar': (context) => RentalCar(),
             '/booking/accommodation': (context) => Accommodation(),
             '/booking/flight': (context) => Flight(),
-            '/booking/publicTransport': (context) => PublicTransport(),
+            '/booking/publictransport': (context) => PublicTransport(),
             '/booking/activity': (context) => Activity(),
+            '/view/accommodation': (context) => AccommodationView(),
+            '/view/flight': (context) => FlightView(),
+            '/view/rentalcar': (context) => RentalCarView(),
+            '/view/publictransport': (context) => PublicTransportView(),
             '/friends/friends_page': (context) => FriendsPage(),
           },
         ),

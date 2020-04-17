@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/models/flight_model.dart';
+import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/services/add_database.dart';
-import 'package:travellory/screens/trip/bookings/bookings.dart';
+import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
-import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 
-class Flight extends StatefulWidget {
+class RentalCar extends StatefulWidget {
   @override
-  _FlightState createState() => _FlightState();
+  _RentalCarState createState() => _RentalCarState();
 }
 
-class _FlightState extends State<Flight> {
-  final GlobalKey<FormState> flightFormKey = GlobalKey<FormState>();
-  final FlightModel flightModel = FlightModel();
+class _RentalCarState extends State<RentalCar> {
+  final GlobalKey<FormState> rentalCarFormKey = GlobalKey<FormState>();
+  final RentalCarModel rentalCarModel = RentalCarModel();
   final DatabaseAdder databaseAdder = DatabaseAdder();
 
-  final GlobalKey<DateFormFieldState> _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _pickUpDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
   bool validateForm() {
-    return flightFormKey.currentState.validate();
+    return rentalCarFormKey.currentState.validate();
   }
 
   final String alertText =
-      "You've just submitted the booking information for your flight booking. You can see all the information in the trip overview";
+      "You've just submitted the booking information for your rental car booking. You can see all the information in the trip overview";
 
   final String cancelText =
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
@@ -39,7 +39,7 @@ class _FlightState extends State<Flight> {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
-      key: Key('Flight'),
+      key: Key('Rental Car'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
@@ -50,11 +50,11 @@ class _FlightState extends State<Flight> {
               //child: Form(
               child: SingleChildScrollView(
                 child: Form(
-                  key: flightFormKey,
+                  key: rentalCarFormKey,
                   child: Column(children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: BookingSiteTitle('Add Flight', FontAwesomeIcons.plane),
+                      child: BookingSiteTitle('Add Rental Car', FontAwesomeIcons.car),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -66,31 +66,15 @@ class _FlightState extends State<Flight> {
                           labelText: 'Booking Reference',
                           icon: Icon(FontAwesomeIcons.ticketAlt),
                           optional: true,
-                          onChanged: (value) => flightModel.bookingReference = value),
+                          onChanged: (value) => rentalCarModel.bookingReference = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
-                          labelText: 'Airline *',
-                          icon: Icon(FontAwesomeIcons.plane),
+                          labelText: 'Company *',
+                          icon: Icon(FontAwesomeIcons.solidBuilding),
                           optional: false,
-                          onChanged: (value) => flightModel.airline = value),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: TravelloryFormField(
-                          labelText: 'Flight Number',
-                          icon: Icon(FontAwesomeIcons.ticketAlt),
-                          optional: true,
-                          onChanged: (value) => flightModel.flightNr = value),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: TravelloryFormField(
-                          labelText: 'Seat',
-                          icon: Icon(FontAwesomeIcons.chair),
-                          optional: true,
-                          onChanged: (value) => flightModel.seat = value),
+                          onChanged: (value) => rentalCarModel.company = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -99,59 +83,77 @@ class _FlightState extends State<Flight> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
-                          labelText: 'Departure Location *',
-                          icon: Icon(FontAwesomeIcons.planeDeparture),
-                          optional: false,
-                          onChanged: (value) => flightModel.departureLocation = value),
+                          labelText: 'Pick Up Location',
+                          icon: Icon(FontAwesomeIcons.mapMarkerAlt),
+                          optional: true,
+                          onChanged: (value) => rentalCarModel.pickupLocation = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
-                        key: _depDateFormFieldKey,
-                        labelText: 'Departure Date *',
+                        key: _pickUpDateFormFieldKey,
+                        labelText: 'Pick Up Date *',
                         icon: Icon(FontAwesomeIcons.calendarAlt),
-                        optional: false,
-                        chosenDateString: (value) => flightModel.departureDate = value,
+                        chosenDateString: (value) => rentalCarModel.pickupDate = value,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
-                          labelText: 'Departure Time *',
+                          labelText: 'Pick Up Time',
                           icon: Icon(FontAwesomeIcons.clock),
-                          optional: false,
-                          chosenTimeString: (value) => flightModel.departureTime = value),
+                          optional: true,
+                          chosenTimeString: (value) => rentalCarModel.pickupTime = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: SectionTitle('Arrival Information'),
+                      child: SectionTitle('Return Information'),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
-                          labelText: 'Arrival Location *',
-                          icon: Icon(FontAwesomeIcons.planeArrival),
-                          optional: false,
-                          onChanged: (value) => flightModel.arrivalLocation = value),
+                          labelText: 'Return Location',
+                          icon: Icon(FontAwesomeIcons.mapMarkerAlt),
+                          optional: true,
+                          onChanged: (value) => rentalCarModel.returnLocation = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
-                        labelText: 'Arrival Date',
+                        labelText: 'Return Date *',
                         icon: Icon(FontAwesomeIcons.calendarAlt),
-                        beforeDateKey: _depDateFormFieldKey,
-                        optional: true,
-                        dateValidationMessage: 'Arrival Date cannot be before Departure Date',
-                        chosenDateString: (value) => flightModel.arrivalDate = value,
+                        beforeDateKey: _pickUpDateFormFieldKey,
+                        dateValidationMessage: 'Return Date cannot be before Pick Up Date',
+                        chosenDateString: (value) => rentalCarModel.returnDate = value,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
-                          labelText: 'Arrival Time',
+                          labelText: 'Return Time',
                           icon: Icon(FontAwesomeIcons.clock),
                           optional: true,
-                          chosenTimeString: (value) => flightModel.arrivalTime = value),
+                          chosenTimeString: (value) => rentalCarModel.returnTime = value),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: SectionTitle('Car Details'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: TravelloryFormField(
+                          labelText: 'Car Description',
+                          icon: Icon(FontAwesomeIcons.car),
+                          optional: true,
+                          onChanged: (value) => rentalCarModel.carDescription = value),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: TravelloryFormField(
+                          labelText: 'Car Plate',
+                          icon: Icon(FontAwesomeIcons.car),
+                          optional: true,
+                          onChanged: (value) => rentalCarModel.carNumberPlate = value),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -163,7 +165,7 @@ class _FlightState extends State<Flight> {
                         labelText: 'Notes',
                         icon: Icon(FontAwesomeIcons.stickyNote),
                         optional: true,
-                        onChanged: (value) => flightModel.notes = value,
+                        onChanged: (value) => rentalCarModel.notes = value,
                       ),
                     ),
                     Padding(
@@ -172,7 +174,7 @@ class _FlightState extends State<Flight> {
                           highlightColor: Theme.of(context).primaryColor,
                           fillColor: Theme.of(context).primaryColor,
                           validationFunction: validateForm,
-                          onSubmit: onSubmitBooking(flightModel, 'booking-addFlight', context,
+                          onSubmit: onSubmitBooking(rentalCarModel, 'booking-addRentalCar', context,
                               alertText),
                         ),
                     ),
