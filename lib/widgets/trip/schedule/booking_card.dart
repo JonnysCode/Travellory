@@ -5,6 +5,7 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
+import 'package:travellory/widgets/bookings/overview_flight.dart';
 import 'package:travellory/widgets/trip/schedule/accommodation_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/activity_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/flight_schedule.dart';
@@ -17,10 +18,14 @@ class BookingCard extends StatelessWidget {
     Key key,
     @required this.model,
     this.onTab,
+    this.color,
+    this.getSchedule,
   }) : super(key : key);
 
   final Model model;
   final Function onTab;
+  final Color color;
+  final Widget getSchedule;
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +35,19 @@ class BookingCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(6.0),
         decoration: BoxDecoration(
-          color: _getColorAccordingTo(model),
+          color: color,
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
             BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.2), offset: Offset(0.0, 6.0))
           ],
         ),
-        child: _getScheduleAccordingTo(model),
+        child: getSchedule,
       ),
     );
   }
 }
 
-Widget _getScheduleAccordingTo(Model model){
+Widget getScheduleAccordingTo(Model model){
   Widget widget;
   if (model is FlightModel){
     widget = FlightSchedule(model);
@@ -57,12 +62,29 @@ Widget _getScheduleAccordingTo(Model model){
   } else {
     widget = Container();
   }
+  return widget;
+}
 
+Widget getBookingsAccordingTo(Model model){
+  Widget widget;
+  if (model is FlightModel){
+    widget = FlightBookings(model);
+  } else if (model is RentalCarModel){
+//    widget = RentalCarBookings(model);
+  } else if (model is AccommodationModel){
+//    widget = AccommodationBookings(model);
+  } else if (model is PublicTransportModel){
+//    widget = PublicTransportBookings(model);
+  } else if (model is ActivityModel){
+//    widget = ActivityBookings(model);
+  } else {
+    widget = Container();
+  }
   return widget;
 }
 
 // TODO: Change colors
-Color _getColorAccordingTo(Model model){
+Color getColorAccordingTo(Model model){
   Color color;
   if (model is FlightModel){
     color = Colors.blueGrey;
