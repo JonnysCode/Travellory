@@ -1,6 +1,7 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travellory/models/trip_collection.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/screens/trip/bookings/bookings.dart';
@@ -17,7 +18,7 @@ class TripList extends StatefulWidget {
 class _TripListState extends State<TripList> {
   @override
   Widget build(BuildContext context) {
-    getTripsFromDatabase(Provider.of<UserModel>(context).uid);
+    //List<TripModel> tripModels = Provider.of<TripCollection>(context).trips;
     return Container(
       key: Key('home_page'),
       child: Column(
@@ -72,20 +73,22 @@ class _TripListState extends State<TripList> {
             ),
           ),
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.all(10),
-              itemCount: tripModels.length + 1,
-              itemBuilder: (context, index) {
-                if(index < tripModels.length){
-                  final tripModel = tripModels[index]
+            child: Consumer<TripCollection>(
+              builder: (_, tripCollection, __ ) => ListView.separated(
+                padding: const EdgeInsets.all(10),
+                itemCount: tripCollection.trips.length + 1,
+                itemBuilder: (context, index) {
+                  if(index < tripCollection.trips.length){
+                    final tripModel = tripCollection.trips[index]
                       ..index = index
                       ..init();
-                  return TripCard(tripModel: tripModel);
-                } else {
-                  return  _bottomMargin();
-                }
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    return TripCard(tripModel: tripModel);
+                  } else {
+                    return  _bottomMargin();
+                  }
+                },
+                separatorBuilder: (context, index) => const SizedBox(height: 12),
+              ),
             ),
           ),
         ],

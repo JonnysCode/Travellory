@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travellory/models/trip_collection.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/screens/authenticate/welcome.dart';
 import 'package:travellory/screens/home/home.dart';
+import 'package:travellory/services/trip_service.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -14,7 +16,10 @@ class Wrapper extends StatelessWidget {
     if(user == null){
       return Welcome();
     } else {
-      return Home();
+      return ChangeNotifierProvider<TripCollection>(
+          create: (context) => TripCollection.init(user.uid),
+          child: Home()
+      );
     }
   }
 }
