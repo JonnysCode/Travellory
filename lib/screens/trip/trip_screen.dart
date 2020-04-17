@@ -32,6 +32,7 @@ final AccommodationModel _accommodation = AccommodationModel()
   ..type = 'hotel'
   ..name = 'Travelodge'
   ..address = "100 King's Cross Rd, London WC1X 9DT"
+  ..checkinDate = '2020-05-01'
   ..checkinTime = '12:00';
 
 final ActivityModel _cinema = ActivityModel()
