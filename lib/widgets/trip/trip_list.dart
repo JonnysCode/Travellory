@@ -1,11 +1,12 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/trip_collection.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/screens/trip/bookings/bookings.dart';
 import 'package:travellory/services/trip_service.dart';
+import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/trip_card.dart';
 import 'package:travellory/logger.dart';
@@ -73,8 +74,10 @@ class _TripListState extends State<TripList> {
             ),
           ),
           Expanded(
-            child: Consumer<TripCollection>(
-              builder: (_, tripCollection, __ ) => ListView.separated(
+            child: Consumer<TripsProvider>(
+              builder: (_, tripCollection, __ ) => tripCollection == null
+                  ? Loading()
+                  : ListView.separated(
                 padding: const EdgeInsets.all(10),
                 itemCount: tripCollection.trips.length + 1,
                 itemBuilder: (context, index) {

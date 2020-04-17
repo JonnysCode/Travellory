@@ -7,10 +7,10 @@ Future<List<TripModel>> getTripsFromDatabase(String userUID) async {
   final log = getLogger('_TripListState');
   final HttpsCallable callable =
   CloudFunctions.instance.getHttpsCallable(functionName: 'trips-getTrips');
-  List<dynamic> trips = <dynamic>[];
+  List<dynamic> trips = [];
   try {
     final HttpsCallableResult result = await callable.call(_getUserMap(userUID));
-    trips.addAll(result.data);
+    trips = result.data;
   } on CloudFunctionsException catch (e) {
     log.e('caught firebase functions exception');
     log.e(e.code);
@@ -30,9 +30,9 @@ Map<String, dynamic> _getUserMap(String userUID) {
 List<TripModel> _createTrips(dbTrips) {
   // add to trips from DB to tripModels
   List<TripModel> trips = <TripModel>[];
-  for (Object dbTrip in dbTrips) {
+  for (var dbTrip in dbTrips) {
     TripModel trip = TripModel.fromData(dbTrip);
     trips.add(trip);
   }
-  return tripModels;
+  return trips;
 }
