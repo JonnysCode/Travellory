@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/screens/trip/bookings/bookings.dart';
+import 'package:travellory/services/trip_service.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/trip_card.dart';
 import 'package:travellory/logger.dart';
@@ -16,6 +17,7 @@ class TripList extends StatefulWidget {
 class _TripListState extends State<TripList> {
   @override
   Widget build(BuildContext context) {
+    getTripsFromDatabase(Provider.of<UserModel>(context).uid);
     return Container(
       key: Key('home_page'),
       child: Column(
@@ -74,7 +76,6 @@ class _TripListState extends State<TripList> {
               padding: const EdgeInsets.all(10),
               itemCount: tripModels.length + 1,
               itemBuilder: (context, index) {
-                _getTrips(Provider.of<UserModel>(context).uid);
                 if(index < tripModels.length){
                   final tripModel = tripModels[index]
                       ..index = index
@@ -99,25 +100,3 @@ class _TripListState extends State<TripList> {
   }
 }
 
-void _getTrips(String userUID) async {
-  final log = getLogger('_TripListState');
-  final HttpsCallable callable =
-  CloudFunctions.instance.getHttpsCallable(functionName: 'trips-getTrips');
-  try {
-    final HttpsCallableResult result = await callable.call(getTrips(userUID));
-    List<dynamic> trips = result.data;
-    createTrips(trips);
-  } on CloudFunctionsException catch (e) {
-    log.e('caught firebase functions exception');
-    log.e(e.code);
-    log.e(e.message);
-    log.e(e.details);
-  } on Exception catch (e) {
-    log.w('caught generic exception');
-    log.w(e);
-  }
-}
-
-Map<String, dynamic> getTrips(String userUID) {
-  return {"userUID": userUID};
-}

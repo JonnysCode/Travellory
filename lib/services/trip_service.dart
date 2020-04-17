@@ -3,26 +3,14 @@ import 'package:travellory/logger.dart';
 import 'package:travellory/models/trip_model.dart';
 
 
-List<TripModel> createTrips(dbTrips) {
-  // add to trips from DB to tripModels
-  List<TripModel> trips = <TripModel>[];
-  for (Object dbTrip in dbTrips) {
-    TripModel trip = TripModel.fromData(dbTrip);
-    trips.add(trip);
-  }
-  tripModels = trips;
-  return tripModels;
-}
-
-
-void _getTrips(String userUID) async {
+Future<void> getTripsFromDatabase(String userUID) async {
   final log = getLogger('_TripListState');
   final HttpsCallable callable =
   CloudFunctions.instance.getHttpsCallable(functionName: 'trips-getTrips');
   try {
-    final HttpsCallableResult result = await callable.call(getTrips(userUID));
+    final HttpsCallableResult result = await callable.call(_getUserMap(userUID));
     List<dynamic> trips = result.data;
-    createTrips(trips);
+    _createTrips(trips);
   } on CloudFunctionsException catch (e) {
     log.e('caught firebase functions exception');
     log.e(e.code);
@@ -34,6 +22,17 @@ void _getTrips(String userUID) async {
   }
 }
 
-Map<String, dynamic> getTrips(String userUID) {
+Map<String, dynamic> _getUserMap(String userUID) {
   return {"userUID": userUID};
+}
+
+List<TripModel> _createTrips(dbTrips) {
+  // add to trips from DB to tripModels
+  List<TripModel> trips = <TripModel>[];
+  for (Object dbTrip in dbTrips) {
+    TripModel trip = TripModel.fromData(dbTrip);
+    trips.add(trip);
+  }
+  tripModels = trips;
+  return tripModels;
 }
