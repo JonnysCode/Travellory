@@ -92,7 +92,7 @@ class _CalendarPageState extends State<CalendarPage> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Container(
-                        height: 40,
+                        height: 36,
                         width: 40,
                         alignment: Alignment.topCenter,
                         decoration: BoxDecoration(

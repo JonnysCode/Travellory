@@ -3,14 +3,14 @@ import 'package:travellory/logger.dart';
 import 'package:travellory/models/trip_model.dart';
 
 
-Future<void> getTripsFromDatabase(String userUID) async {
+Future<List<TripModel>> getTripsFromDatabase(String userUID) async {
   final log = getLogger('_TripListState');
   final HttpsCallable callable =
   CloudFunctions.instance.getHttpsCallable(functionName: 'trips-getTrips');
+  List<dynamic> trips = <dynamic>[];
   try {
     final HttpsCallableResult result = await callable.call(_getUserMap(userUID));
-    List<dynamic> trips = result.data;
-    _createTrips(trips);
+    trips.addAll(result.data);
   } on CloudFunctionsException catch (e) {
     log.e('caught firebase functions exception');
     log.e(e.code);
@@ -20,6 +20,7 @@ Future<void> getTripsFromDatabase(String userUID) async {
     log.w('caught generic exception');
     log.w(e);
   }
+  return _createTrips(trips);
 }
 
 Map<String, dynamic> _getUserMap(String userUID) {
@@ -33,6 +34,5 @@ List<TripModel> _createTrips(dbTrips) {
     TripModel trip = TripModel.fromData(dbTrip);
     trips.add(trip);
   }
-  tripModels = trips;
   return tripModels;
 }
