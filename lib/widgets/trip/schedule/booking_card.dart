@@ -5,7 +5,7 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/widgets/bookings/overview_flight.dart';
+import 'package:travellory/widgets/bookings/bookings_flight.dart';
 import 'package:travellory/widgets/trip/schedule/accommodation_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/activity_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/flight_schedule.dart';
@@ -88,6 +88,25 @@ Color getColorAccordingTo(Model model){
   Color color;
   if (model is FlightModel){
     color = Colors.blueGrey;
+  } else if (model is RentalCarModel){
+    color = Colors.lightBlueAccent;
+  } else if (model is AccommodationModel){
+    color = Colors.deepOrangeAccent;
+  } else if (model is PublicTransportModel){
+    color = Colors.teal;
+  } else if (model is ActivityModel){
+    color = Colors.grey;
+  } else {
+    color = Colors.grey;
+  }
+
+  return color;
+}
+
+Color getBookingColorAccordingTo(Model model){
+  Color color;
+  if (model is FlightModel){
+    color = Colors.blue[100];
   } else if (model is RentalCarModel){
     color = Colors.lightBlueAccent;
   } else if (model is AccommodationModel){
