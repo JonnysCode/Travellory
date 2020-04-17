@@ -6,11 +6,11 @@ import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 TripModel _tripModel = TripModel(
-    name: 'Castle Discovery',
+    name: 'California Camper Tour',
     startDate: '2020-05-11',
     endDate: '2020-05-19',
-    destination: 'Munich',
-    imageNr: 3
+    destination: 'California',
+    imageNr: 5
 );
 
 class HomePage extends StatefulWidget {
