@@ -19,8 +19,9 @@ class TripsProvider extends ChangeNotifier{
 
   List<TripModel> get trips => _trips;
 
-  set user(UserModel user){
+  void init(UserModel user){
     _user = user;
+    unawaited(fetchTrips());
   }
 
   Future<bool> addTrip(TripModel tripModel) async {
@@ -36,7 +37,6 @@ class TripsProvider extends ChangeNotifier{
 
   Future<void> fetchTrips() async {
     isFetching = true;
-    notifyListeners();
     _trips = await getTripsFromDatabase(_user.uid);
     isFetching = false;
     notifyListeners();

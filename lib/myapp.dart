@@ -29,42 +29,46 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return AuthProvider(
       auth: AuthService(),
-      child: StreamProvider<UserModel>.value(
-        value: AuthService().user,
-        child: ChangeNotifierProvider(
-          create: (context) => TripsProvider(),
-          child: MaterialApp(
-            title: 'Travellory',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              canvasColor: Colors.transparent,
-              hintColor: Color(0xFFC0F0E8),
-              primaryColor: Color(0xFF61BAA9),
-              accentColor: Color(0xFFF72349),
-              scaffoldBackgroundColor: Color(0xFFF0F4F4),
-            ),
-            routes: <String, Widget Function(BuildContext)>{
-              '/': (context) => Wrapper(),
-              '/auth': (context) => Authenticate(),
-              '/login': (context) => SignIn(),
-              '/register': (context) => Register(),
-              '/password': (context) => ChangePassword(),
-              '/loading': (context) => Loading(),
-              '/home': (context) => Home(),
-              '/viewtrip': (context) => TripScreen(),
-              '/createtrip': (context) => CreateTrip(),
-              '/booking/rentalcar': (context) => RentalCar(),
-              '/booking/accommodation': (context) => Accommodation(),
-              '/booking/flight': (context) => Flight(),
-              '/booking/publictransport': (context) => PublicTransport(),
-              '/booking/activity': (context) => Activity(),
-              '/view/accommodation': (context) => AccommodationView(),
-              '/view/flight': (context) => FlightView(),
-              '/view/rentalcar': (context) => RentalCarView(),
-              '/view/publictransport': (context) => PublicTransportView(),
-              '/friends/friends_page': (context) => FriendsPage(),
-            },
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TripsProvider>(
+            create: (context) => TripsProvider()
           ),
+          StreamProvider<UserModel>.value(
+            value: AuthService().user
+          ),
+        ],
+        child: MaterialApp(
+          title: 'Travellory',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            canvasColor: Colors.transparent,
+            hintColor: Color(0xFFC0F0E8),
+            primaryColor: Color(0xFF61BAA9),
+            accentColor: Color(0xFFF72349),
+            scaffoldBackgroundColor: Color(0xFFF0F4F4),
+          ),
+          routes: <String, Widget Function(BuildContext)>{
+            '/': (context) => Wrapper(),
+            '/auth': (context) => Authenticate(),
+            '/login': (context) => SignIn(),
+            '/register': (context) => Register(),
+            '/password': (context) => ChangePassword(),
+            '/loading': (context) => Loading(),
+            '/home': (context) => Home(),
+            '/viewtrip': (context) => TripScreen(),
+            '/createtrip': (context) => CreateTrip(),
+            '/booking/rentalcar': (context) => RentalCar(),
+            '/booking/accommodation': (context) => Accommodation(),
+            '/booking/flight': (context) => Flight(),
+            '/booking/publictransport': (context) => PublicTransport(),
+            '/booking/activity': (context) => Activity(),
+            '/view/accommodation': (context) => AccommodationView(),
+            '/view/flight': (context) => FlightView(),
+            '/view/rentalcar': (context) => RentalCarView(),
+            '/view/publictransport': (context) => PublicTransportView(),
+            '/friends/friends_page': (context) => FriendsPage(),
+          },
         ),
       ),
     );
