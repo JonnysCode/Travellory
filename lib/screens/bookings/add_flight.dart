@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/services/add_database.dart';
+import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/screens/trip/bookings/bookings.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';

@@ -4,7 +4,6 @@ import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/screens/authenticate/welcome.dart';
 import 'package:travellory/screens/home/home.dart';
-import 'package:travellory/services/trip_service.dart';
 
 class Wrapper extends StatelessWidget {
   @override
