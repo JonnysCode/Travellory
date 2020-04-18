@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/screens/authenticate/password.dart';
 import 'package:travellory/screens/authenticate/register.dart';
@@ -30,37 +31,40 @@ class MyApp extends StatelessWidget {
       auth: AuthService(),
       child: StreamProvider<UserModel>.value(
         value: AuthService().user,
-        child: MaterialApp(
-          title: 'Travellory',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            canvasColor: Colors.transparent,
-            hintColor: Color(0xFFC0F0E8),
-            primaryColor: Color(0xFF61BAA9),
-            accentColor: Color(0xFFF72349),
-            scaffoldBackgroundColor: Color(0xFFF0F4F4),
+        child: ChangeNotifierProvider(
+          create: (context) => TripsProvider(),
+          child: MaterialApp(
+            title: 'Travellory',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              canvasColor: Colors.transparent,
+              hintColor: Color(0xFFC0F0E8),
+              primaryColor: Color(0xFF61BAA9),
+              accentColor: Color(0xFFF72349),
+              scaffoldBackgroundColor: Color(0xFFF0F4F4),
+            ),
+            routes: <String, Widget Function(BuildContext)>{
+              '/': (context) => Wrapper(),
+              '/auth': (context) => Authenticate(),
+              '/login': (context) => SignIn(),
+              '/register': (context) => Register(),
+              '/password': (context) => ChangePassword(),
+              '/loading': (context) => Loading(),
+              '/home': (context) => Home(),
+              '/viewtrip': (context) => TripScreen(),
+              '/createtrip': (context) => CreateTrip(),
+              '/booking/rentalcar': (context) => RentalCar(),
+              '/booking/accommodation': (context) => Accommodation(),
+              '/booking/flight': (context) => Flight(),
+              '/booking/publictransport': (context) => PublicTransport(),
+              '/booking/activity': (context) => Activity(),
+              '/view/accommodation': (context) => AccommodationView(),
+              '/view/flight': (context) => FlightView(),
+              '/view/rentalcar': (context) => RentalCarView(),
+              '/view/publictransport': (context) => PublicTransportView(),
+              '/friends/friends_page': (context) => FriendsPage(),
+            },
           ),
-          routes: <String, Widget Function(BuildContext)>{
-            '/': (context) => Wrapper(),
-            '/auth': (context) => Authenticate(),
-            '/login': (context) => SignIn(),
-            '/register': (context) => Register(),
-            '/password': (context) => ChangePassword(),
-            '/loading': (context) => Loading(),
-            '/home': (context) => Home(),
-            '/viewtrip': (context) => TripScreen(),
-            '/createtrip': (context) => CreateTrip(),
-            '/booking/rentalcar': (context) => RentalCar(),
-            '/booking/accommodation': (context) => Accommodation(),
-            '/booking/flight': (context) => Flight(),
-            '/booking/publictransport': (context) => PublicTransport(),
-            '/booking/activity': (context) => Activity(),
-            '/view/accommodation': (context) => AccommodationView(),
-            '/view/flight': (context) => FlightView(),
-            '/view/rentalcar': (context) => RentalCarView(),
-            '/view/publictransport': (context) => PublicTransportView(),
-            '/friends/friends_page': (context) => FriendsPage(),
-          },
         ),
       ),
     );
