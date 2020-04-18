@@ -5,17 +5,28 @@ import 'package:travellory/services/auth.dart';
 
 class MockAuth extends Mock implements FirebaseAuth {}
 class MockAuthResult extends Mock implements AuthResult {}
+class MockFirebaseUser extends Mock implements FirebaseUser {}
 
 void main() {
   testWidgets('test register with email and password',
       (WidgetTester tester) async {
     FirebaseAuth auth = MockAuth();
+    AuthResult result = MockAuthResult();
+    FirebaseUser user = MockFirebaseUser();
+
     AuthService authService = AuthService(auth: auth);
+
+    await when(auth.createUserWithEmailAndPassword(
+        email: 'email@email.com', password:'password'))
+        .thenAnswer((_) async => result);
+    
+    when(result.user).thenReturn(user);
+    await when(auth.currentUser()).thenThrow((e) {});
 
     await authService
         .registerWithEmailAndPassword(
             'email@email.com', 'password', 'displayName')
-        .catchError((e){});
+        .catchError((e) {});
 
     verify(auth.createUserWithEmailAndPassword(
         email: 'email@email.com', password: 'password'));

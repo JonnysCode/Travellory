@@ -102,7 +102,9 @@ class AuthService implements BaseAuthService {
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
       log.e(e.toString());
-      await _deleteCurrentUser();
+      if(auth.currentUser() != null){
+        await _deleteCurrentUser();
+      }
       return Future.error(e);
     }
   }
