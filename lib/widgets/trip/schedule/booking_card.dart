@@ -6,6 +6,7 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/widgets/bookings/bookings_accommodation.dart';
+import 'package:travellory/widgets/bookings/bookings_activity.dart';
 import 'package:travellory/widgets/bookings/bookings_flight.dart';
 import 'package:travellory/widgets/bookings/bookings_publict_transport.dart';
 import 'package:travellory/widgets/bookings/bookings_rental_car.dart';
@@ -79,7 +80,7 @@ Widget getBookingsAccordingTo(Model model){
   } else if (model is PublicTransportModel){
     widget = PublicTransportBookings(model);
   } else if (model is ActivityModel){
-//    widget = ActivityBookings(model);
+    widget = ActivityBookings(model);
   } else {
     widget = Container();
   }
