@@ -69,17 +69,16 @@ void main() {
     expect(find.byIcon(FontAwesomeIcons.calendarAlt), findsOneWidget);
   });
 
-  testWidgets('test if profile page has a logout button',
-      (WidgetTester tester) async {
+  testWidgets('test if profile page has the two buttons: change-pw and logout',
+          (WidgetTester tester) async {
     MockAuth mockAuth = MockAuth();
     ProfilePage page = ProfilePage();
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
-    var fashionFetishText = find.byType(FashionFetishText);
 
-    // Verify that the ProfilePage has a exit icon and logout text.
-    expect(fashionFetishText, findsOneWidget);
-    expect(find.byIcon(FontAwesomeIcons.signOutAlt), findsOneWidget);
+    // Verify that the ProfilePage has a change password and a logout button.
+    expect(find.byKey(Key('change-pw')), findsOneWidget);
+    expect(find.byKey(Key('logout')), findsOneWidget);
   });
 }

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travellory/utils/g_map/g_map_border_loader.dart';
-import 'src/locations.dart' as locations;
+import 'package:travellory/services/api/map/locations.dart' as locations;
 
 String _mapStyle;
 final List<String> _userCities = ["switzerland"];
@@ -27,9 +27,17 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      key: Key('map_page'),
-      child: MapSample(),
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(6, 12, 6, 0),
+        child: Container(
+          key: Key('map_page'),
+          child: ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+            child: MapSample()
+          ),
+        ),
+      ),
     );
   }
 }

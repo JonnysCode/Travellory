@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
     CalendarPage(),
     MapPage(),
     FriendsPage(),
-    ProfilePage()
+    ProfilePage(),
   ];
 
   PageController _pageController;

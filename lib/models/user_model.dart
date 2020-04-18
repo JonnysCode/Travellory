@@ -1,5 +1,5 @@
 class UserModel {
-  UserModel({this.uid, this.displayName});
+  const UserModel({this.uid, this.displayName});
 
   final String uid;
   final String displayName;

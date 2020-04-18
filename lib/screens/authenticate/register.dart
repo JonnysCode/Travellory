@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/logger.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
 import 'package:travellory/services/user_management.dart';
@@ -27,6 +28,8 @@ class _RegisterState extends State<Register> {
 
   final FocusNode _nameFocus = FocusNode();
 
+  final log = getLogger('_RegisterState');
+
   String _error;
   String _errorUsername;
   bool _isUsernameAvailable = true;
@@ -41,24 +44,30 @@ class _RegisterState extends State<Register> {
   Future _validateRegister() async {
     if (_formKey.currentState.validate() && _isUsernameAvailable) {
       unawaited(Navigator.pushNamed(context, '/loading'));
-      final user = await _register();
-
-      if(user == null){
+      await _register().then((_) {
+        log.i('User successfully registered');
+        Navigator.popUntil(
+          context,
+          ModalRoute.withName('/'),
+        );
+      }).catchError((e) {
         Navigator.pop(context);
         setState(() {
-          _error = 'Please supply a valid email and password.';
+          _error =
+              e.message != null ? e.message : 'Something went wrong. Try again';
         });
-      } else {
-        Navigator.popUntil(context, ModalRoute.withName('/'),
-        );
-      }
+      });
     }
   }
 
   Future _register() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    final user = await _auth.registerWithEmailAndPassword(
-        _emailController.text, _passwordController.text, _nameController.text);
+    final user = await _auth
+        .registerWithEmailAndPassword(_emailController.text,
+            _passwordController.text, _nameController.text)
+        .catchError((e) {
+      return Future.error(e);
+    });
     return user;
   }
 
@@ -166,7 +175,7 @@ class _RegisterState extends State<Register> {
                                         decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             color:
-                                            Theme.of(context).primaryColor),
+                                                Theme.of(context).primaryColor),
                                       ),
                                     ),
                                   ),
@@ -190,7 +199,7 @@ class _RegisterState extends State<Register> {
                                       alignment: Alignment.center,
                                       child: Container(
                                         padding:
-                                        EdgeInsets.only(top: 40, left: 28),
+                                            EdgeInsets.only(top: 40, left: 28),
                                         width: 130,
                                         child: Text(
                                           "STER",
@@ -264,15 +273,14 @@ class _RegisterState extends State<Register> {
                                       child: Container(
                                         height: 50,
                                         width:
-                                        MediaQuery.of(context).size.width,
+                                            MediaQuery.of(context).size.width,
                                         child: filledButton(
                                             "REGISTER",
                                             Colors.white,
                                             Theme.of(context).primaryColor,
                                             Theme.of(context).primaryColor,
                                             Colors.white,
-                                            _validateRegister
-                                        ),
+                                            _validateRegister),
                                       ),
                                     ),
                                   ],
