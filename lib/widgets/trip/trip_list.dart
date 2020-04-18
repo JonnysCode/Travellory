@@ -1,19 +1,11 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/models/user_model.dart';
-import 'package:travellory/services/database/get_database.dart';
+import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/trip_card.dart';
-import 'package:travellory/logger.dart';
 
-class TripList extends StatefulWidget {
-  @override
-  _TripListState createState() => _TripListState();
-}
-
-class _TripListState extends State<TripList> {
+class TripList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -70,21 +62,24 @@ class _TripListState extends State<TripList> {
             ),
           ),
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.all(10),
-              itemCount: tripModels.length + 1,
-              itemBuilder: (context, index) {
-                _getTrips(Provider.of<UserModel>(context).uid);
-                if(index < tripModels.length){
-                  final tripModel = tripModels[index]
+            child: Consumer<TripsProvider>(
+              builder: (_, tripsProvider, __ ) => tripsProvider.isFetching
+                  ? Loading()
+                  : ListView.separated(
+                padding: const EdgeInsets.all(10),
+                itemCount: tripsProvider.trips.length + 1,
+                itemBuilder: (context, index) {
+                  if(index < tripsProvider.trips.length){
+                    final tripModel = tripsProvider.trips[index]
                       ..index = index
                       ..init();
-                  return TripCard(tripModel: tripModel);
-                } else {
-                  return  _bottomMargin();
-                }
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    return TripCard(tripModel: tripModel);
+                  } else {
+                    return  _bottomMargin();
+                  }
+                },
+                separatorBuilder: (context, index) => const SizedBox(height: 12),
+              ),
             ),
           ),
         ],
@@ -99,25 +94,3 @@ class _TripListState extends State<TripList> {
   }
 }
 
-void _getTrips(String userUID) async {
-  final log = getLogger('_TripListState');
-  final HttpsCallable callable =
-  CloudFunctions.instance.getHttpsCallable(functionName: 'trips-getTrips');
-  try {
-    final HttpsCallableResult result = await callable.call(getTrips(userUID));
-    List<dynamic> trips = result.data;
-    createTrips(trips);
-  } on CloudFunctionsException catch (e) {
-    log.e('caught firebase functions exception');
-    log.e(e.code);
-    log.e(e.message);
-    log.e(e.details);
-  } on Exception catch (e) {
-    log.w('caught generic exception');
-    log.w(e);
-  }
-}
-
-Map<String, dynamic> getTrips(String userUID) {
-  return {"userUID": userUID};
-}

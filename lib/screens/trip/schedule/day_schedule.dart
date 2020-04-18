@@ -8,7 +8,7 @@ import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/trip/schedule/booking_card.dart';
+import 'package:travellory/widgets/trip/booking_card.dart';
 import 'package:travellory/widgets/trip/schedule/day_circle.dart';
 
 final PublicTransportModel _publicTransport = PublicTransportModel()
