@@ -104,7 +104,7 @@ Color getColorAccordingTo(Model model){
     color = Colors.grey;
   }
 
-  return color;
+  return Colors.blueGrey.withOpacity(0.4);
 }
 
 Color getBookingColorAccordingTo(Model model){

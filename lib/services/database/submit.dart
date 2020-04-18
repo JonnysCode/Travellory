@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
+
 import '../../logger.dart';
 
 final String errorMessage = "Seems like there's a connection problem. "
@@ -25,11 +27,9 @@ Function() onSubmitBooking(Model model, String functionName, BuildContext contex
 }
 
 void Function() onSubmitTrip(
-    TripModel tripModel, String functionName, BuildContext context, alertText) {
-  final DatabaseAdder databaseAdder = DatabaseAdder();
-
+    TripsProvider tripsProvider,TripModel tripModel, BuildContext context, alertText) {
   return () async {
-    final bool added = await databaseAdder.addModel(tripModel, functionName);
+    final bool added = await tripsProvider.addTrip(tripModel);
     if (added) {
       showSubmittedTripDialog(context, alertText);
     } else {
