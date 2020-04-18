@@ -2,7 +2,6 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:travellory/logger.dart';
 import 'package:travellory/models/trip_model.dart';
 
-
 Future<List<TripModel>> getTripsFromDatabase(String userUID) async {
   final log = getLogger('_TripListState');
   final HttpsCallable callable =
