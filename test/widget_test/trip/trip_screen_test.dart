@@ -5,7 +5,7 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/widgets/trip/schedule/booking_card.dart';
+import 'package:travellory/widgets/trip/booking_card.dart';
 
 final PublicTransportModel _publicTransport = PublicTransportModel()
   ..transportationType = 'Taxi'
