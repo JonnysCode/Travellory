@@ -10,14 +10,21 @@ class TripsProvider extends ChangeNotifier{
   TripsProvider(){
    _trips = <TripModel>[];
   }
+  final DatabaseAdder _databaseAdder = DatabaseAdder();
+  final DatabaseGetter _databaseGetter = DatabaseGetter();
+
+  bool isFetching = false;
 
   List<TripModel> _trips;
   UserModel _user;
-  bool isFetching = false;
   // TODO: next upcoming trip
   // TODO: selected trip so we don't have to pass it via Navigator
 
   List<TripModel> get trips => _trips;
+
+  set user(UserModel user){
+    _user = user;
+  }
 
   void init(UserModel user){
     _user = user;
@@ -26,8 +33,7 @@ class TripsProvider extends ChangeNotifier{
 
   Future<bool> addTrip(TripModel tripModel) async {
     tripModel.userUID = _user.uid;
-    final DatabaseAdder databaseAdder = DatabaseAdder();
-    final bool added = await databaseAdder.addModel(tripModel, FunctionName.addTrip);
+    final bool added = await _databaseAdder.addModel(tripModel, FunctionName.addTrip);
     print('Have trips been added? '+ added.toString());
     if(added){
       unawaited(fetchTrips());
@@ -37,9 +43,8 @@ class TripsProvider extends ChangeNotifier{
 
   Future<void> fetchTrips() async {
     isFetching = true;
-    _trips = await getTripsFromDatabase(_user.uid);
+    _trips = await _databaseGetter.getTripsFromDatabase(_user.uid);
     isFetching = false;
     notifyListeners();
   }
-
 }
