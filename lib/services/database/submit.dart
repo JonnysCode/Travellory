@@ -32,6 +32,7 @@ void Function() onSubmitTrip(
     final bool added = await databaseAdder.addModel(tripModel, functionName);
     if (added) {
       showSubmittedTripDialog(context, alertText);
+      // fetch trips
     } else {
       addToDataBaseFailedDialog(context, errorMessage);
       log.i('onSubmitTrip did not work');

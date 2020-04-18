@@ -16,7 +16,7 @@ class Wrapper extends StatelessWidget {
       return Welcome();
     } else {
       return FutureProvider<TripsProvider>(
-          create: (context) => TripsProvider.init(user.uid),
+          create: (context) => TripsProvider.init(user),
           child: Home()
       );
     }
