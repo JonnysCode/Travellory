@@ -69,7 +69,7 @@ class _TripListState extends State<TripList> {
           ),
           Expanded(
             child: Consumer<TripsProvider>(
-              builder: (_, tripCollection, __ ) => tripCollection == null
+              builder: (_, tripCollection, __ ) => tripCollection.isFetching
                   ? Loading()
                   : ListView.separated(
                 padding: const EdgeInsets.all(10),
