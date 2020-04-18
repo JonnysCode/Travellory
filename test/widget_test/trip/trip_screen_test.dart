@@ -70,6 +70,17 @@ void main() {
     expect(find.byKey(Key('rentalCarBookings')), findsOneWidget);
   });
 
+  testWidgets('test if activity is loaded', (WidgetTester tester) async {
+    Widget page = BookingCard(
+        model: _activity,
+        color: getBookingColorAccordingTo(_activity),
+        getSchedule: getBookingsAccordingTo(_activity));
+
+    await tester.pumpWidget(makeTestableWidget(page: page));
+
+    expect(find.byKey(Key('activityBookings')), findsOneWidget);
+  });
+
   testWidgets('test if public transport is loaded', (WidgetTester tester) async {
     Widget page = BookingCard(
         model: _publicTransport,
