@@ -9,12 +9,15 @@ class TripsProvider extends ChangeNotifier{
   // from the db and returning it as a future
   static Future<TripsProvider> init(String userUID) async {
     var tripsProvider = TripsProvider();
-    tripsProvider.trips = await getTripsFromDatabase(userUID);
+    tripsProvider._trips = await getTripsFromDatabase(userUID);
     return tripsProvider;
   }
 
-  List<TripModel> trips;
+  List<TripModel> _trips;
   // TODO: next upcoming trip
   // TODO: selected trip so we don't have to pass it via Navigator
+
+  List<TripModel> get trips => _trips;
+
 
 }
