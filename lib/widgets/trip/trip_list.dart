@@ -5,15 +5,9 @@ import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/trip_card.dart';
 
-class TripList extends StatefulWidget {
-  @override
-  _TripListState createState() => _TripListState();
-}
-
-class _TripListState extends State<TripList> {
+class TripList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //List<TripModel> tripModels = Provider.of<TripCollection>(context).trips;
     return Container(
       key: Key('home_page'),
       child: Column(
@@ -69,14 +63,14 @@ class _TripListState extends State<TripList> {
           ),
           Expanded(
             child: Consumer<TripsProvider>(
-              builder: (_, tripCollection, __ ) => tripCollection.isFetching
+              builder: (_, tripsProvider, __ ) => tripsProvider.isFetching
                   ? Loading()
                   : ListView.separated(
                 padding: const EdgeInsets.all(10),
-                itemCount: tripCollection.trips.length + 1,
+                itemCount: tripsProvider.trips.length + 1,
                 itemBuilder: (context, index) {
-                  if(index < tripCollection.trips.length){
-                    final tripModel = tripCollection.trips[index]
+                  if(index < tripsProvider.trips.length){
+                    final tripModel = tripsProvider.trips[index]
                       ..index = index
                       ..init();
                     return TripCard(tripModel: tripModel);

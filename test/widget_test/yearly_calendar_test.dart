@@ -33,7 +33,7 @@ void main() {
 
   testWidgets('test if navigation is present', (WidgetTester tester) async {
     Widget page = CalendarPage();
-    
+
     TripsProvider tripsProvider = TripsProvider();
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(body: page, tripsProvider: tripsProvider));
