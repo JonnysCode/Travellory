@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/services/database/trip_service.dart';
+import 'package:travellory/services/database/get_database.dart';
 
 class TripsProvider extends ChangeNotifier{
   TripsProvider();
