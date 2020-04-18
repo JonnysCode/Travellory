@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:travellory/logger.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/user_management.dart';
 
 abstract class BaseAuthService {
   Future signInAnonymously();
   Future signInWithEmailAndPassword(String email, String password);
-  Future reauthenticate (String oldPassword);
+  Future reauthenticate(String oldPassword);
   Future changePassword(String password);
   Future registerWithEmailAndPassword(
       String email, String password, String displayName);
@@ -16,17 +17,16 @@ abstract class BaseAuthService {
 }
 
 class AuthService implements BaseAuthService {
-  AuthService({
-    this.auth,
-    this.userStream
-  }){
-    if(auth == null){
+  AuthService({this.auth, this.userStream}) {
+    if (auth == null) {
       auth = FirebaseAuth.instance;
     }
   }
 
   FirebaseAuth auth;
   Stream<UserModel> userStream;
+
+  final log = getLogger('AuthService');
 
   @override
   set user(Stream<UserModel> user) {
@@ -76,8 +76,8 @@ class AuthService implements BaseAuthService {
       final FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
-      // todo: logging and error handling
-      return null;
+      log.e(e.toString());
+      return Future.error(e);
     }
   }
 
@@ -97,22 +97,23 @@ class AuthService implements BaseAuthService {
       await firebaseUser.reload();
       firebaseUser = await auth.currentUser();
 
-      UserManagement.setUsername(firebaseUser);
+      await UserManagement.setUsername(firebaseUser);
 
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
-      // todo: logging and error handling
-      return null;
+      log.e(e.toString());
+      await _deleteCurrentUser();
+      return Future.error(e);
     }
   }
 
   //reauthenticate before security-sensitive action (f.e. change password)
   @override
-  Future reauthenticate (String oldPassword) async {
+  Future reauthenticate(String oldPassword) async {
     final FirebaseUser user = await auth.currentUser();
     final String email = user.email;
-    final AuthCredential credential = EmailAuthProvider.
-    getCredential(email: email, password: oldPassword);
+    final AuthCredential credential =
+        EmailAuthProvider.getCredential(email: email, password: oldPassword);
     return user.reauthenticateWithCredential(credential);
   }
 
@@ -134,4 +135,12 @@ class AuthService implements BaseAuthService {
     }
   }
 
+  // delete current user
+ Future _deleteCurrentUser() async {
+   await auth.currentUser().then((user) {
+     user.delete();
+   }).catchError((e) {
+     log.e('User was not deleted');
+   });
+ }
 }
