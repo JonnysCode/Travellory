@@ -16,8 +16,7 @@ class Wrapper extends StatelessWidget {
     if(user == null){
       return Welcome();
     } else {
-      tripsProvider.user = user;
-      tripsProvider.fetchTrips();
+      tripsProvider.init(user);
       return Home();
     }
   }
