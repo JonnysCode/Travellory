@@ -45,7 +45,6 @@ class _CreateTripState extends State<CreateTrip> {
 
   @override
   Widget build(BuildContext context) {
-    tripModel.userUID = Provider.of<UserModel>(context, listen: false).uid;
     TripsProvider trips = Provider.of<TripsProvider>(context, listen: false);
 
     bool validateForm() {
