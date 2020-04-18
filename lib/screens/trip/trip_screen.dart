@@ -57,7 +57,9 @@ final FlightModel _flightTwo = FlightModel()
   ..arrivalDate = '2020-05-04'
   ..arrivalTime = '13:55';
 
-final RentalCarModel _rental = RentalCarModel()..pickupLocation = 'Gatwick Airport';
+final RentalCarModel _rental = RentalCarModel()
+  ..pickupLocation = 'London City'
+  ..pickupDate = '2020-05-02';
 
 List<Model> _flightModels = <Model>[
   _flightOne,
