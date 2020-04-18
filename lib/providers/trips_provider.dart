@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/database/add_database.dart';
-import 'package:travellory/services/database/function_names.dart';
 import 'package:travellory/services/database/get_database.dart';
 import 'package:pedantic/pedantic.dart';
 
@@ -28,20 +27,20 @@ class TripsProvider extends ChangeNotifier{
 
   void init(UserModel user){
     _user = user;
-    unawaited(fetchTrips());
+    unawaited(_fetchTrips());
   }
 
   Future<bool> addTrip(TripModel tripModel) async {
     tripModel.userUID = _user.uid;
-    final bool added = await _databaseAdder.addModel(tripModel, FunctionName.addTrip);
+    final bool added = await _databaseAdder.addModel(tripModel, _databaseAdder.addTrip);
     print('Have trips been added? '+ added.toString());
     if(added){
-      unawaited(fetchTrips());
+      unawaited(_fetchTrips());
     }
     return added;
   }
 
-  Future<void> fetchTrips() async {
+  Future<void> _fetchTrips() async {
     isFetching = true;
     _trips = await _databaseGetter.getTripsFromDatabase(_user.uid);
     isFetching = false;
