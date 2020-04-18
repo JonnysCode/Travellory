@@ -1,15 +1,9 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
-import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/models/user_model.dart';
-import 'package:travellory/screens/trip/bookings/bookings.dart';
-import 'package:travellory/services/database/trip_service.dart';
 import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/trip_card.dart';
-import 'package:travellory/logger.dart';
 
 class TripList extends StatefulWidget {
   @override

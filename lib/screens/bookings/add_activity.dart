@@ -4,7 +4,7 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
-import 'package:travellory/screens/trip/bookings/bookings.dart';
+import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';

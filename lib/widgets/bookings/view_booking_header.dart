@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/screens/bookings/banner.dart';
+import 'package:travellory/widgets/bookings/banner.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class BookingHeader extends StatefulWidget {
