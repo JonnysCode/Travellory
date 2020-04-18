@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/models/trip_model.dart';
+import 'package:provider/provider.dart';
+import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/trip_card.dart';
 
-class TripList extends StatefulWidget {
-  @override
-  _TripListState createState() => _TripListState();
-}
-
-class _TripListState extends State<TripList> {
+class TripList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -65,20 +62,24 @@ class _TripListState extends State<TripList> {
             ),
           ),
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.all(10),
-              itemCount: tripModels.length + 1,
-              itemBuilder: (context, index) {
-                if(index < tripModels.length){
-                  final tripModel = tripModels[index] // TODO: Load trips from firestore
+            child: Consumer<TripsProvider>(
+              builder: (_, tripsProvider, __ ) => tripsProvider.isFetching
+                  ? Loading()
+                  : ListView.separated(
+                padding: const EdgeInsets.all(10),
+                itemCount: tripsProvider.trips.length + 1,
+                itemBuilder: (context, index) {
+                  if(index < tripsProvider.trips.length){
+                    final tripModel = tripsProvider.trips[index]
                       ..index = index
                       ..init();
-                  return TripCard(tripModel: tripModel);
-                } else {
-                  return  _bottomMargin();
-                }
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    return TripCard(tripModel: tripModel);
+                  } else {
+                    return  _bottomMargin();
+                  }
+                },
+                separatorBuilder: (context, index) => const SizedBox(height: 12),
+              ),
             ),
           ),
         ],
@@ -92,3 +93,4 @@ class _TripListState extends State<TripList> {
     );
   }
 }
+

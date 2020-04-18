@@ -8,7 +8,7 @@ import 'package:travellory/widgets/input_widgets.dart';
 import 'package:pedantic/pedantic.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({ this.toggleView });
+  const SignIn({this.toggleView});
 
   final Function toggleView;
 
@@ -28,23 +28,29 @@ class _SignInState extends State<SignIn> {
   Future _validateSignIn() async {
     if (_formKey.currentState.validate()) {
       unawaited(Navigator.pushNamed(context, '/loading'));
-      final user = await _signIn();
-
-      if(user == null){
+      await _signIn().then((_) {
+        Navigator.popUntil(
+          context,
+          ModalRoute.withName('/'),
+        );
+      }).catchError((e) {
         Navigator.pop(context);
         setState(() {
-          _error = 'Could not sign in with those credentials.';
+          _error =
+              e.message != null ? e.message : 'Something went wrong. Try again';
         });
-      } else {
-        Navigator.popUntil(context, ModalRoute.withName('/'),
-        );
-      }
+      });
     }
   }
 
   Future _signIn() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    final user = await _auth.signInWithEmailAndPassword(_emailController.text, _passwordController.text);
+    final user = await _auth
+        .signInWithEmailAndPassword(
+            _emailController.text, _passwordController.text)
+        .catchError((e) {
+      return Future.error(e);
+    });
 
     return user;
   }
@@ -67,7 +73,7 @@ class _SignInState extends State<SignIn> {
             height: MediaQuery.of(context).size.height * 0.05,
           ),
           Container(
-            child:  DecoratedBox(
+            child: DecoratedBox(
               decoration: BoxDecoration(
                 color: Theme.of(context).canvasColor,
               ),
@@ -165,31 +171,48 @@ class _SignInState extends State<SignIn> {
                                 child: Column(
                                   children: <Widget>[
                                     Padding(
-                                      padding: EdgeInsets.only(bottom: 10, top: 40),
-                                      child: inputAuthentication(Icon(Icons.email), "EMAIL", Theme.of(context).primaryColor,
-                                          _emailController, null, ValidatorType.email, false, null),
+                                      padding:
+                                          EdgeInsets.only(bottom: 10, top: 40),
+                                      child: inputAuthentication(
+                                          Icon(Icons.email),
+                                          "EMAIL",
+                                          Theme.of(context).primaryColor,
+                                          _emailController,
+                                          null,
+                                          ValidatorType.email,
+                                          false,
+                                          null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 20),
-                                      child: inputAuthentication(Icon(Icons.lock), "PASSWORD", Theme.of(context).primaryColor,
-                                          _passwordController, null, ValidatorType.password, true, null),
+                                      child: inputAuthentication(
+                                          Icon(Icons.lock),
+                                          "PASSWORD",
+                                          Theme.of(context).primaryColor,
+                                          _passwordController,
+                                          null,
+                                          ValidatorType.password,
+                                          true,
+                                          null),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
                                           left: 20,
                                           right: 20,
-                                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                                          bottom: MediaQuery.of(context)
+                                              .viewInsets
+                                              .bottom),
                                       child: Container(
                                         height: 50,
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         child: filledButton(
                                             "LOGIN",
                                             Colors.white,
                                             Theme.of(context).primaryColor,
                                             Theme.of(context).primaryColor,
                                             Colors.white,
-                                            _validateSignIn
-                                        ),
+                                            _validateSignIn),
                                       ),
                                     ),
                                   ],
@@ -201,7 +224,8 @@ class _SignInState extends State<SignIn> {
                             ),
                             Text(
                               _error,
-                              style: TextStyle(color: Colors.red, fontSize: 14.0),
+                              style:
+                                  TextStyle(color: Colors.red, fontSize: 14.0),
                             )
                           ],
                         ),
@@ -217,4 +241,3 @@ class _SignInState extends State<SignIn> {
     );
   }
 }
-
