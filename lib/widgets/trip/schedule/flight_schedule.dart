@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/widgets/font_widgets.dart';
+import 'package:travellory/widgets/bookings/card_specifics.dart';
 
 class FlightSchedule extends StatelessWidget {
-  const FlightSchedule(this.flight, {Key key}) : super(key : key);
+  const FlightSchedule(this.flight, {Key key}) : super(key: key);
   final FlightModel flight;
 
   @override
@@ -16,7 +16,7 @@ class FlightSchedule extends StatelessWidget {
           flex: 2,
           child: Airport(
             name: flight.departureLocation,
-            code: flight.departureLocation.substring(0,3).toUpperCase(),
+            code: flight.departureLocation.substring(0, 3).toUpperCase(),
             color: Colors.black54,
           ),
         ),
@@ -26,7 +26,7 @@ class FlightSchedule extends StatelessWidget {
             child: Text(
               flight.departureTime,
               style: TextStyle(
-                  color: Colors.white54,
+                color: Colors.white54,
               ),
             ),
           ),
@@ -47,19 +47,18 @@ class FlightSchedule extends StatelessWidget {
         Expanded(
           flex: 1,
           child: Center(
-            child: Text(
-              flight.arrivalTime,
-              style: TextStyle(
-                color: Colors.white54,
-              ),
-            )
-          ),
+              child: Text(
+            flight.arrivalTime,
+            style: TextStyle(
+              color: Colors.white54,
+            ),
+          )),
         ),
         Expanded(
           flex: 2,
           child: Airport(
             name: flight.arrivalLocation,
-            code: flight.arrivalLocation.substring(0,3).toUpperCase(),
+            code: flight.arrivalLocation.substring(0, 3).toUpperCase(),
             color: Colors.black54,
           ),
         ),
@@ -67,39 +66,3 @@ class FlightSchedule extends StatelessWidget {
     );
   }
 }
-
-class Airport extends StatelessWidget {
-  const Airport({
-    @required this.name,
-    @required this.code,
-    @required this.color,
-  });
-
-  final String name;
-  final String code;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        FashionFetishText(
-          text: code,
-          size: 24,
-          fontWeight: FashionFontWeight.bold,
-          height: 1.1,
-          color: Colors.black54,
-        ),
-        Text(
-          name,
-          style: TextStyle(
-            fontSize: 11,
-            color: color,
-          ),
-        ),
-      ],
-    );
-  }
-}
-

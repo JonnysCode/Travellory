@@ -86,10 +86,7 @@ List<Model> _rentalCarModels = <Model>[
 class TripScreen extends StatefulWidget {
   const TripScreen({
     Key key,
-//    @required this.model,
   }) : super(key: key);
-
-//  final TripModel model;
 
   @override
   _TripScreenState createState() => _TripScreenState();
@@ -234,6 +231,7 @@ class _TripScreenState extends State<TripScreen> {
     }
 
     return Scaffold(
+      key: Key('TripScreen'),
       body: Container(
         color: Colors.white,
         child: Column(

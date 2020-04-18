@@ -44,9 +44,7 @@ final RentalCarModel _rentalCar = RentalCarModel()
 void main() {
   Widget makeTestableWidget({Widget page}) {
     return MaterialApp(
-      home: Material(
-          child: page
-      ),
+      home: Material(child: page),
     );
   }
 
@@ -58,7 +56,7 @@ void main() {
 
     await tester.pumpWidget(makeTestableWidget(page: page));
 
-    expect(find.byKey(Key('booking_card'),), findsOneWidget);
+    expect(find.byKey(Key('booking_card')), findsOneWidget);
   });
 
   testWidgets('test if rental car is loaded', (WidgetTester tester) async {
@@ -104,5 +102,4 @@ void main() {
 
     expect(find.byKey(Key('accommodationBookings')), findsOneWidget);
   });
-
 }
