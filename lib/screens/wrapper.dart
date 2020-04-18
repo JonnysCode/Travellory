@@ -10,15 +10,15 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final UserModel user = Provider.of<UserModel>(context);
+    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
 
     // return either home or authentication
     if(user == null){
       return Welcome();
     } else {
-      return FutureProvider<TripsProvider>(
-          create: (context) => TripsProvider.init(user),
-          child: Home()
-      );
+      tripsProvider.user = user;
+      tripsProvider.fetchTrips();
+      return Home();
     }
   }
 }
