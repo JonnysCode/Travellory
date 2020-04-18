@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/screens/authenticate/password.dart';
 import 'package:travellory/screens/authenticate/register.dart';
@@ -24,13 +25,19 @@ import 'package:travellory/services/auth.dart';
 import 'package:travellory/shared/loading.dart';
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return AuthProvider(
       auth: AuthService(),
-      child: StreamProvider<UserModel>.value(
-        value: AuthService().user,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TripsProvider>(
+            create: (context) => TripsProvider()
+          ),
+          StreamProvider<UserModel>.value(
+            value: AuthService().user
+          ),
+        ],
         child: MaterialApp(
           title: 'Travellory',
           debugShowCheckedModeBanner: false,
