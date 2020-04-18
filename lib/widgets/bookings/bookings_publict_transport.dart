@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/widgets/trip/schedule/public_transport_schedule.dart';
+
+import 'card_specifics.dart';
 
 class PublicTransportBookings extends StatelessWidget {
   const PublicTransportBookings(this.publicTransport, {Key key}) : super(key: key);
@@ -15,7 +15,7 @@ class PublicTransportBookings extends StatelessWidget {
       children: <Widget>[
         Expanded(
           flex: 1,
-          child: Entry(
+          child: PublicTransportEntry(
             name: publicTransport.departureLocation,
             code: publicTransport.departureTime,
           ),
@@ -37,50 +37,12 @@ class PublicTransportBookings extends StatelessWidget {
         ),
         Expanded(
           flex: 1,
-          child: Entry(
+          child: PublicTransportEntry(
             name: publicTransport.arrivalLocation,
             code: publicTransport.arrivalTime,
           ),
         ),
       ],
-    );
-  }
-}
-
-class TransportIcon extends StatelessWidget {
-  const TransportIcon({
-    @required this.model,
-  });
-
-  final PublicTransportModel model;
-
-  IconData getIcon(String type) {
-    IconData icon;
-
-    if (type == 'Rail') {
-      icon = FontAwesomeIcons.train;
-    } else if (type == 'Bus') {
-      icon = FontAwesomeIcons.train;
-    } else if (type == 'Metro') {
-      icon = FontAwesomeIcons.subway;
-    } else if (type == 'Ferry') {
-      icon = FontAwesomeIcons.ship;
-    } else if (type == 'Taxi') {
-      icon = FontAwesomeIcons.taxi;
-    } else if (type == 'Uber') {
-      icon = FontAwesomeIcons.carSide;
-    } else {
-      icon = FontAwesomeIcons.walking;
-    }
-    return icon;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FaIcon(
-      getIcon(model.transportationType),
-      size: 30,
-      color: Colors.black54,
     );
   }
 }

@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
+import 'card_specifics.dart';
+
 class AccommodationBookings extends StatelessWidget {
   const AccommodationBookings(this.accommodation, {Key key}) : super(key: key);
   final AccommodationModel accommodation;
@@ -54,38 +56,6 @@ class AccommodationBookings extends StatelessWidget {
           ],
         ),
       ],
-    );
-  }
-}
-
-class AccommodationIcon extends StatelessWidget {
-  const AccommodationIcon({
-    @required this.model,
-  });
-
-  final AccommodationModel model;
-
-  IconData getIcon(String type) {
-    IconData icon;
-
-    if (type == 'Hotel') {
-      icon = FontAwesomeIcons.hotel;
-    } else if (type == 'Airbnb') {
-      icon = FontAwesomeIcons.suitcase;
-    } else if (type == 'Bed & Breakfast') {
-      icon = FontAwesomeIcons.coffee;
-    } else {
-      icon = FontAwesomeIcons.bed;
-    }
-    return icon;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FaIcon(
-      getIcon(model.type),
-      size: 30,
-      color: Colors.black54,
     );
   }
 }
