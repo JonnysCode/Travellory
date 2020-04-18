@@ -5,7 +5,7 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/utils/list_models.dart';
-import 'package:travellory/screens/trip/bookings/bookings.dart';
+import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
