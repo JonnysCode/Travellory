@@ -16,7 +16,7 @@ class PublicTransportSchedule extends StatelessWidget {
       children: <Widget>[
         Expanded(
           flex: 1,
-          child: _Entry(
+          child: Entry(
             name: model.departureLocation,
             code: model.departureTime,
           ),
@@ -33,7 +33,7 @@ class PublicTransportSchedule extends StatelessWidget {
         ),
         Expanded(
           flex: 1,
-          child: _Entry(
+          child: Entry(
             name: model.arrivalLocation,
             code: model.arrivalTime,
           ),
@@ -43,8 +43,8 @@ class PublicTransportSchedule extends StatelessWidget {
   }
 }
 
-class _Entry extends StatelessWidget {
-  const _Entry({
+class Entry extends StatelessWidget {
+  const Entry({
     @required this.name,
     @required this.code,
   });
