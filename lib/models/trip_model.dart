@@ -16,13 +16,15 @@ class TripModel extends Model {
   });
 
   TripModel.fromData(trip) {
-    this.userUID = trip["userUID"];
-    this.name = trip["name"];
-    this.startDate = getOnlyDate(trip["startDate"]);
-    this.endDate = getOnlyDate(trip["endDate"]);
-    this.destination = trip["destination"];
-    this.imageNr = trip["imageNr"];
-    this.imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
+    print(trip);
+    userUID = trip["userUID"];
+    uid = trip["uid"];
+    name = trip["name"];
+    startDate = getOnlyDate(trip["startDate"]);
+    endDate = getOnlyDate(trip["endDate"]);
+    destination = trip["destination"];
+    imageNr = trip["imageNr"];
+    imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
   }
 
   String userUID;
