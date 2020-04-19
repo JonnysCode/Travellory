@@ -33,7 +33,6 @@ class TripsProvider extends ChangeNotifier{
   Future<bool> addTrip(TripModel tripModel) async {
     tripModel.userUID = _user.uid;
     final bool added = await _databaseAdder.addModel(tripModel, _databaseAdder.addTrip);
-    print('Have trips been added? '+ added.toString());
     if(added){
       unawaited(_fetchTrips());
     }
