@@ -16,7 +16,7 @@ class GMapBorderLoader{
     final jsonResult = await json.decode(data);
     List results = jsonResult["geometry"] as List;
     for(var result in results) {
-      points.add(LatLng(result[0],result[1]));
+      points.add(LatLng(result[0].toDouble(),result[1].toDouble()));
     }
 
     return points;
