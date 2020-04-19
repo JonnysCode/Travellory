@@ -8,7 +8,7 @@ import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 import 'package:travellory/services/api/map/locations.dart' as locations;
 
 String _mapStyle;
-final List<String> _userCities = ["switzerland","germany","belgium"];
+final List<String> _userCities = ["switzerland","germany","belgium"]; // TODO: change to user real visited cities
 
 class MapPage extends StatefulWidget {
   @override
