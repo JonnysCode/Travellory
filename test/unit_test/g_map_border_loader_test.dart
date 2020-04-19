@@ -18,7 +18,7 @@ void main() async{
     Polygon polygon = await GMapBorderLoader.doPolygon(_state_name);
 
     expect(polygon.points.length, _n_points);
-    expect(polygon.polygonId.value, "Switzerland");
+    expect(polygon.polygonId.value, _state_name);
   });
 
   test('Try to generate borders', () async {
