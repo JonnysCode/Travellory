@@ -4,6 +4,7 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
 
 class DatabaseGetter{
+  static const String emptyResult = 'no-data';
   final log = getLogger('DatabaseGetter');
 
   Future<List<TripModel>> getTripsFromDatabase(String userUID) async {
@@ -12,6 +13,9 @@ class DatabaseGetter{
     List<dynamic> trips = [];
     try {
       final HttpsCallableResult result = await callable.call(_getUserMap(userUID));
+      if(result.data == emptyResult){
+        return <TripModel>[];
+      }
       trips = result.data;
     } on CloudFunctionsException catch (e) {
       log.e('caught firebase functions exception');
