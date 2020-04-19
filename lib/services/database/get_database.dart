@@ -1,7 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:travellory/logger.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/models/user_model.dart';
 
 class DatabaseGetter{
   final log = getLogger('DatabaseGetter');
