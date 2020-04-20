@@ -18,7 +18,7 @@ class ActivityModel extends Model {
   }
 
   void _initImagePath(){
-    imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
+    imagePath = 'assets/images/activity/activity_${(imageNr + 1).toString()}.png';
   }
 
   @override
