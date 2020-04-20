@@ -27,13 +27,10 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(6, 12, 6, 0),
+        padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
         child: Container(
           key: Key('map_page'),
-          child: ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
-            child: MapSample()
-          ),
+          child: MapSample(),
         ),
       ),
     );
@@ -81,36 +78,34 @@ class MapSampleState extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          GoogleMap(
-            key: Key('google_map_widget'),
-            mapType: MapType.normal,
-            initialCameraPosition: _kGooglePlex,
-            gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-              Factory<OneSequenceGestureRecognizer>(
-                () => EagerGestureRecognizer(),
-              ),
-            ].toSet(),
-            onMapCreated: (GoogleMapController controller) {
-              controller.setMapStyle(_mapStyle);
-              _onMapCreated(controller);
-              _controller.complete(controller);
-            },
-            markers: _markers.values.toSet(),
-          ),
-          Positioned(
-            right: 10,
-            bottom: 150,
-            child: FloatingActionButton.extended(
-              onPressed: _goToTheLake,
-              label: Text('To the lake!'),
-              icon: Icon(Icons.directions_boat),
+    return Stack(
+      children: <Widget>[
+        GoogleMap(
+          key: Key('google_map_widget'),
+          mapType: MapType.normal,
+          initialCameraPosition: _kGooglePlex,
+          gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+            Factory<OneSequenceGestureRecognizer>(
+              () => EagerGestureRecognizer(),
             ),
+          ].toSet(),
+          onMapCreated: (GoogleMapController controller) {
+            controller.setMapStyle(_mapStyle);
+            _onMapCreated(controller);
+            _controller.complete(controller);
+          },
+          markers: _markers.values.toSet(),
+        ),
+        Positioned(
+          right: 10,
+          bottom: 150,
+          child: FloatingActionButton.extended(
+            onPressed: _goToTheLake,
+            label: Text('To the lake!'),
+            icon: Icon(Icons.directions_boat),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

@@ -65,18 +65,18 @@ Widget _getScheduleAccordingTo(Model model){
 Color _getColorAccordingTo(Model model){
   Color color;
   if (model is FlightModel){
-    color = Colors.blueGrey;
+    color = Color(0xFF4B677B);
   } else if (model is RentalCarModel){
-    color = Colors.lightBlueAccent;
+    color = Color(0xFF948273);
   } else if (model is AccommodationModel){
-    color = Colors.deepOrangeAccent;
+    color = Color(0xFFc4bdd1);
   } else if (model is PublicTransportModel){
-    color = Colors.teal;
+    color = Color(0xFF89A399);
   } else if (model is ActivityModel){
-    color = Colors.grey;
+    color = Color(0xFFA1B9C6);
   } else {
     color = Colors.grey;
   }
 
-  return Colors.blueGrey.withOpacity(0.4);
+  return color;
 }
