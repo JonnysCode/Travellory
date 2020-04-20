@@ -6,6 +6,24 @@ import 'package:travellory/widgets/bookings/view_bookings.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
+List<FlightModel> flightModels = <FlightModel> [
+  FlightModel(
+    bookingReference: 'A1B',
+    airline: 'Swiss',
+    flightNr: 'LX300',
+    seat: '13F',
+    departureLocation: 'ZRH',
+    departureDate: '2020-05-01',
+    departureTime: '15:07:00',
+    arrivalLocation: 'LDN',
+    arrivalDate: '2020-05-01',
+    arrivalTime: '17:15:00',
+    checkedBaggage: true,
+    excessBaggage: false,
+    notes: null,
+  ),
+];
+
 class FlightView extends StatefulWidget {
   @override
   _FlightViewState createState() => _FlightViewState();
