@@ -50,7 +50,7 @@ class _ActivityState extends State<Activity> {
   @override
   Widget build(BuildContext context) {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
-    activityModel.tripUID = tripModel.uid;
+    // activityModel.tripUID = tripModel.uid;
 
     return Scaffold(
       key: Key('Activity'),
