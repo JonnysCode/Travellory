@@ -18,8 +18,6 @@ void main(){
     // Verify that map container is present.
     expect(find.byKey(Key('map_page')), findsOneWidget);
 
-    // Verify that simple button is present.
-    expect(find.byIcon(Icons.directions_boat), findsOneWidget);
 
     // Verify that google_map_widget is loaded
     expect(find.byKey(Key('google_map_widget')), findsOneWidget);
