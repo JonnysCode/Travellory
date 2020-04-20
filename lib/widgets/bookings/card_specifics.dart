@@ -112,27 +112,38 @@ class Airport extends StatelessWidget {
 
 class PublicTransportEntry extends StatelessWidget {
   const PublicTransportEntry({
-    @required this.name,
-    @required this.code,
+    @required this.location,
+    @required this.time,
   });
 
-  final String name;
-  final String code;
+  final String location;
+  final String time;
 
   @override
   Widget build(BuildContext context) {
+    String displayLocation = location;
+    String displayTime = time;
+
+    if(!(location != '' && location != null)) {
+      displayLocation = 'No location known';
+    }
+
+    if(!(time != '' && time != null)) {
+      displayTime = '?:??';
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         FashionFetishText(
-          text: code,
+          text: displayTime,
           size: 19,
           fontWeight: FashionFontWeight.bold,
           height: 1.1,
           color: Colors.black54,
         ),
         Text(
-          name,
+          displayLocation,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14,

@@ -16,8 +16,8 @@ class PublicTransportBookings extends StatelessWidget {
         Expanded(
           flex: 1,
           child: PublicTransportEntry(
-            name: publicTransport.departureLocation,
-            code: publicTransport.departureTime,
+            location: publicTransport.departureLocation,
+            time: publicTransport.departureTime,
           ),
         ),
         Expanded(
@@ -38,8 +38,8 @@ class PublicTransportBookings extends StatelessWidget {
         Expanded(
           flex: 1,
           child: PublicTransportEntry(
-            name: publicTransport.arrivalLocation,
-            code: publicTransport.arrivalTime,
+            location: publicTransport.arrivalLocation,
+            time: publicTransport.arrivalTime,
           ),
         ),
       ],
