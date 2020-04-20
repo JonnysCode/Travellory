@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/abstract_model.dart';
+import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/widgets/font_widgets.dart';
@@ -135,6 +136,7 @@ class _TripScreenState extends State<TripScreen> {
     activityBookings = _activityModels
         .map((model) => BookingCard(
               model: model,
+              onTap: () => Navigator.pushNamed(context, '/view/activity', arguments: model),
               color: getBookingColorAccordingTo(model),
               getSchedule: getBookingsAccordingTo(model),
             ))
@@ -143,48 +145,53 @@ class _TripScreenState extends State<TripScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final TripsProvider tripsProvider =
-        Provider.of<TripsProvider>(context, listen: false);
+    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: true);
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
     tripsProvider.initBookings(tripModel);
+
     _flightModels = tripsProvider.flights;
+    _accommodationModels = tripsProvider.accommodations;
+    _rentalCarModels = tripsProvider.rentalcars;
+    _publicTransportModels = tripsProvider.publictransports;
+
     flightBookings = _flightModels
         .map((model) => BookingCard(
               model: model,
+              onTap: () => Navigator.pushNamed(context, '/view/flight', arguments: model),
               color: getBookingColorAccordingTo(model),
               getSchedule: getBookingsAccordingTo(model),
             ))
         .toList();
 
-    _accommodationModels = tripsProvider.accommodations;
     accommodationBookings = _accommodationModels
         .map((model) => BookingCard(
               model: model,
+              onTap: () => Navigator.pushNamed(context, '/view/accommodation', arguments: model),
               color: getBookingColorAccordingTo(model),
               getSchedule: getBookingsAccordingTo(model),
             ))
         .toList();
 
-    _rentalCarModels = tripsProvider.rentalcars;
     rentalCarBookings = _rentalCarModels
         .map((model) => BookingCard(
               model: model,
+              onTap: () => Navigator.pushNamed(context, '/view/rentalcar', arguments: model),
               color: getBookingColorAccordingTo(model),
               getSchedule: getBookingsAccordingTo(model),
             ))
         .toList();
 
-    _publicTransportModels = tripsProvider.publictransports;
     publicTransportBookings = _publicTransportModels
         .map((model) => BookingCard(
               model: model,
+              onTap: () => Navigator.pushNamed(context, '/view/publictransport', arguments: model),
               color: getBookingColorAccordingTo(model),
               getSchedule: getBookingsAccordingTo(model),
             ))
         .toList();
 
-    void _openBooking(String bookingSite) {
-      Navigator.pushNamed(context, bookingSite, arguments: tripModel);
+    void _openAddBooking(String bookingToAddSite) {
+      Navigator.pushNamed(context, bookingToAddSite, arguments: tripModel);
     }
 
     Widget _subsection(String title, String route) {
@@ -216,7 +223,7 @@ class _TripScreenState extends State<TripScreen> {
               top: 6,
               right: 0,
               child: GestureDetector(
-                onTap: () => _openBooking(route),
+                onTap: () => _openAddBooking(route),
                 child: Container(
                   height: 28,
                   width: 28,
@@ -310,8 +317,7 @@ class _TripScreenState extends State<TripScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child:
-                      _subsection('Transportation', '/booking/publictransport'),
+                  child: _subsection('Transportation', '/booking/publictransport'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
