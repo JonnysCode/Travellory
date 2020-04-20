@@ -21,13 +21,13 @@ class BookingCard extends StatelessWidget {
   const BookingCard({
     Key key,
     @required this.model,
-    this.onTab,
+    this.onTap,
     this.color,
     this.getSchedule,
   }) : super(key : key);
 
   final Model model;
-  final Function onTab;
+  final Function onTap;
   final Color color;
   final Widget getSchedule;
 
@@ -35,7 +35,7 @@ class BookingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return  GestureDetector(
       key: Key('booking_card'),
-      onTap: () => onTab,
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(6.0),
         decoration: BoxDecoration(
