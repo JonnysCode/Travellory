@@ -105,6 +105,16 @@ class _FlightViewState extends State<FlightView> {
             flightViewPage(),
           ),
         ),
+        Positioned(
+          top: 15,
+          right: 10,
+          child: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: FaIcon(FontAwesomeIcons.times),
+            iconSize: 26,
+            color: Colors.red,
+          ),
+        ),
       ]),
     );
   }

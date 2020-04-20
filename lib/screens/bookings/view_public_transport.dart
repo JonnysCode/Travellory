@@ -7,7 +7,7 @@ import 'package:travellory/widgets/bookings/view_bookings.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
-List<PublicTransportModel> publicTransportModels = <PublicTransportModel> [
+List<PublicTransportModel> publicTransportModels = <PublicTransportModel>[
   PublicTransportModel(
     transportationType: 'Rail',
     publicTransportCompany: 'RENFE',
@@ -135,6 +135,16 @@ class _PublicTransportViewState extends State<PublicTransportView> {
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
           child: bookingView(
             publicTransportViewPage(),
+          ),
+        ),
+        Positioned(
+          top: 15,
+          right: 10,
+          child: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: FaIcon(FontAwesomeIcons.times),
+            iconSize: 26,
+            color: Colors.red,
           ),
         ),
       ]),

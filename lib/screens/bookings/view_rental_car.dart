@@ -97,6 +97,16 @@ class _RentalCarViewState extends State<RentalCarView> {
             rentalCarViewPage(),
           ),
         ),
+        Positioned(
+          top: 15,
+          right: 10,
+          child: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: FaIcon(FontAwesomeIcons.times),
+            iconSize: 26,
+            color: Colors.red,
+          ),
+        ),
       ]),
     );
   }
