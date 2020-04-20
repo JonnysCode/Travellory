@@ -23,7 +23,7 @@ class _ActivityState extends State<Activity> {
   final ActivityModel activityModel = ActivityModel();
   final DatabaseAdder databaseAdder = DatabaseAdder();
 
-  static const int _imageItemCount = 1;
+  static const int _imageItemCount = 13;
 
   final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
