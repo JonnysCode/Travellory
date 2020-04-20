@@ -65,7 +65,7 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
       selectedDate = pickedDate;
       final String pickedDateString = pickedDate.toString();
       displayController.text = "$pickedDateString".split(' ')[0];
-      controller.text = pickedDate.toIso8601String();
+      controller.text = "$pickedDateString".split(' ')[0];
       if (widget.chosenDate != null) widget.chosenDate(selectedDate);
       if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
     }
