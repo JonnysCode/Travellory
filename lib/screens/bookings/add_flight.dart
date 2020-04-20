@@ -38,6 +38,7 @@ class _FlightState extends State<Flight> {
   @override
   Widget build(BuildContext context) {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
+    flightModel.tripUID = tripModel.uid;
 
     return Scaffold(
       key: Key('Flight'),

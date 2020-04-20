@@ -50,6 +50,7 @@ class _ActivityState extends State<Activity> {
   @override
   Widget build(BuildContext context) {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
+    activityModel.tripUID = tripModel.uid;
 
     return Scaffold(
       key: Key('Activity'),
@@ -172,7 +173,7 @@ class _ActivityState extends State<Activity> {
                           fillColor: Theme.of(context).primaryColor,
                           validationFunction: validateForm,
                           onSubmit: onSubmitBooking(
-                              activityModel, 'booking-addActivity', context, alertText),
+                              activityModel, 'activity-addActivity', context, alertText),
                         ),
                     ),
                     Padding(

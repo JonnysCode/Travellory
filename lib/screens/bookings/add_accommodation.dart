@@ -193,6 +193,7 @@ class _AccommodationState extends State<Accommodation> {
   @override
   Widget build(BuildContext context) {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
+    accommodationModel.tripUID = tripModel.uid;
 
     // replace widget to get the context
     accommodationList[accommodationList.length - 3] = SubmitButton(

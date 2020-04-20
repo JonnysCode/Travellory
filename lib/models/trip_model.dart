@@ -16,7 +16,6 @@ class TripModel extends Model {
   });
 
   TripModel.fromData(trip) {
-    print(trip);
     userUID = trip["userUID"];
     uid = trip["uid"];
     name = trip["name"];
@@ -70,11 +69,6 @@ class TripModel extends Model {
         "destination": destination,
         "imageNr": imageNr
     };
-  }
-
-  String getOnlyDate(String date) {
-    List<String> dateTime = date.split("T");
-    return dateTime[0];
   }
 }
 
