@@ -9,6 +9,9 @@ import 'package:travellory/services/api/map/locations.dart' as locations;
 
 String _mapStyle;
 final List<String> _userCities = ["switzerland","germany","belgium"]; // TODO: change to user real visited cities
+final Completer<GoogleMapController> g_controller = Completer();
+final Map<String, Marker> markers = {};
+final List<Polygon> boundaries = [];
 
 class MapPage extends StatefulWidget {
   @override
@@ -48,14 +51,12 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-  final Completer<GoogleMapController> _controller = Completer();
-  final Map<String, Marker> _markers = {};
-  final List<Polygon> _boundaries = [];
 
-  Future<void> _onMapCreated(GoogleMapController controller) async {
+  Future<void> onMapCreated() async {
     final googleOffices = await locations.getGoogleOffices();
+    final t_boundaries = await GMapBorderLoader.generateBorders(_userCities);
     setState(() {
-      _markers.clear();
+      markers.clear();
       for (final office in googleOffices.offices) {
         final marker = Marker(
           markerId: MarkerId(office.name),
@@ -65,31 +66,17 @@ class MapSampleState extends State<MapSample> {
             snippet: office.address,
           ),
         );
-        _markers[office.name] = marker;
+        markers[office.name] = marker;
+      }
+
+      if(t_boundaries.isNotEmpty){
+        boundaries.clear();
+        for (final boundary in t_boundaries){
+          boundaries.add(boundary);
+        }
       }
     });
   }
-
-  Future<void> _loadCitiesBoundaries(GoogleMapController controller) async {
-    final boundaries = await GMapBorderLoader.generateBorders(_userCities);
-    setState(() {
-      _boundaries.clear();
-      if(boundaries.isNotEmpty){
-        boundaries.forEach((final element) => _boundaries.add(element));
-      }
-    });
-  }
-
-  static final CameraPosition _initialCameraPosition = CameraPosition(
-    target: LatLng(46.8076885, 7.1005233),
-    zoom: 5,
-  );
-
-  static final CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +86,10 @@ class MapSampleState extends State<MapSample> {
           GoogleMap(
             key: Key('google_map_widget'),
             mapType: MapType.normal,
-            initialCameraPosition: _initialCameraPosition,
+            initialCameraPosition: CameraPosition(
+              target: LatLng(46.8076885, 7.1005233),
+              zoom: 5,
+            ),
             gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
               Factory<OneSequenceGestureRecognizer>(
                 () => EagerGestureRecognizer(),
@@ -107,29 +97,14 @@ class MapSampleState extends State<MapSample> {
             ].toSet(),
             onMapCreated: (GoogleMapController controller) {
               controller.setMapStyle(_mapStyle);
-              _onMapCreated(controller);
-              _loadCitiesBoundaries(controller);
-              _controller.complete(controller);
+              onMapCreated();
+              g_controller.complete(controller);
             },
-            markers: _markers.values.toSet(),
-            polygons: _boundaries.toSet(),
-          ),
-          Positioned(
-            right: 10,
-            bottom: 150,
-            child: FloatingActionButton.extended(
-              onPressed: _goToTheLake,
-              label: Text('To the lake!'),
-              icon: Icon(Icons.directions_boat),
-            ),
+            markers: markers.values.toSet(),
+            polygons: boundaries.toSet(),
           ),
         ],
       ),
     );
-  }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }
