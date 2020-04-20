@@ -1,86 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/abstract_model.dart';
-import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/models/activity_model.dart';
-import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/booking_card.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 
-final PublicTransportModel _metro = PublicTransportModel()
-  ..transportationType = 'Metro'
-  ..departureLocation = 'Gatwick Airport'
-  ..departureDate = '2020-05-01'
-  ..departureTime = '10:55'
-  ..arrivalLocation = 'London City'
-  ..arrivalDate = '2020-05-01'
-  ..arrivalTime = '11:40';
+/**final PublicTransportModel _metro = PublicTransportModel()
+    ..transportationType = 'Metro'
+    ..departureLocation = 'Gatwick Airport'
+    ..departureDate = '2020-05-01'
+    ..departureTime = '10:55'
+    ..arrivalLocation = 'London City'
+    ..arrivalDate = '2020-05-01'
+    ..arrivalTime = '11:40';
 
-final PublicTransportModel _taxi = PublicTransportModel()
-  ..transportationType = 'Taxi'
-  ..departureLocation = 'London City'
-  ..departureDate = '2020-05-04'
-  ..departureTime = '10:55'
-  ..arrivalLocation = 'Gatwick Airport'
-  ..arrivalDate = '2020-05-04'
-  ..arrivalTime = '11:30';
+    final PublicTransportModel _taxi = PublicTransportModel()
+    ..transportationType = 'Taxi'
+    ..departureLocation = 'London City'
+    ..departureDate = '2020-05-04'
+    ..departureTime = '10:55'
+    ..arrivalLocation = 'Gatwick Airport'
+    ..arrivalDate = '2020-05-04'
+    ..arrivalTime = '11:30';
 
-final AccommodationModel _accommodation = AccommodationModel()
-  ..type = 'hotel'
-  ..name = 'Travelodge'
-  ..address = "100 King's Cross Rd, London WC1X 9DT"
-  ..checkinDate = '2020-05-01'
-  ..checkinTime = '12:00';
+    final AccommodationModel _accommodation = AccommodationModel()
+    ..type = 'hotel'
+    ..name = 'Travelodge'
+    ..address = "100 King's Cross Rd, London WC1X 9DT"
+    ..checkinDate = '2020-05-01'
+    ..checkinTime = '12:00';
 
-final ActivityModel _cinema = ActivityModel()
-  ..description = 'Cinema'
-  ..location = 'London Odeon'
-  ..startTime = '20:00'
-  ..endTime = '22:00';
+    final ActivityModel _cinema = ActivityModel()
+    ..description = 'Cinema'
+    ..location = 'London Odeon'
+    ..startTime = '20:00'
+    ..endTime = '22:00';
 
-final FlightModel _flightOne = FlightModel()
-  ..departureLocation = 'Zürich'
-  ..departureDate = '2020-05-01'
-  ..departureTime = '7:30'
-  ..arrivalLocation = 'London'
-  ..arrivalDate = '2020-05-01'
-  ..arrivalTime = '8:35';
+    final FlightModel _flightOne = FlightModel()
+    ..departureLocation = 'Zürich'
+    ..departureDate = '2020-05-01'
+    ..departureTime = '7:30'
+    ..arrivalLocation = 'London'
+    ..arrivalDate = '2020-05-01'
+    ..arrivalTime = '8:35';
 
-final FlightModel _flightTwo = FlightModel()
-  ..departureLocation = 'London'
-  ..departureDate = '2020-05-04'
-  ..departureTime = '12:30'
-  ..arrivalLocation = 'Zürich'
-  ..arrivalDate = '2020-05-04'
-  ..arrivalTime = '13:55';
+    final FlightModel _flightTwo = FlightModel()
+    ..departureLocation = 'London'
+    ..departureDate = '2020-05-04'
+    ..departureTime = '12:30'
+    ..arrivalLocation = 'Zürich'
+    ..arrivalDate = '2020-05-04'
+    ..arrivalTime = '13:55';
 
-final RentalCarModel _rental = RentalCarModel()
-  ..pickupLocation = 'London City'
-  ..pickupDate = '2020-05-02';
+    final RentalCarModel _rental = RentalCarModel()
+    ..pickupLocation = 'London City'
+    ..pickupDate = '2020-05-02';*/
 
 List<Model> _flightModels = <Model>[
-  _flightOne,
-  _flightTwo,
+  //_flightOne,
+  //_flightTwo,
 ];
 
 List<Model> _accommodationModels = <Model>[
-  _accommodation,
+  //_accommodation,
 ];
 
 List<Model> _publicTransportModels = <Model>[
-  _metro,
-  _taxi,
+  //_metro,
+  //_taxi,
 ];
 
 List<Model> _activityModels = <Model>[
-  _cinema,
+  //_cinema,
 ];
 
 List<Model> _rentalCarModels = <Model>[
-  _rental,
+  //_rental,
 ];
 
 class TripScreen extends StatefulWidget {
@@ -102,39 +99,40 @@ class _TripScreenState extends State<TripScreen> {
   @override
   void initState() {
     super.initState();
-    flightBookings = _flightModels
+
+    /**flightBookings = _flightModels
         .map((model) => BookingCard(
-              model: model,
-              color: getBookingColorAccordingTo(model),
-              getSchedule: getBookingsAccordingTo(model),
-            ))
+        model: model,
+        color: getBookingColorAccordingTo(model),
+        getSchedule: getBookingsAccordingTo(model),
+        ))
         .toList();
 
-    accommodationBookings = _accommodationModels
+        accommodationBookings = _accommodationModels
         .map((model) => BookingCard(
-              model: model,
-              color: getBookingColorAccordingTo(model),
-              getSchedule: getBookingsAccordingTo(model),
-            ))
+        model: model,
+        color: getBookingColorAccordingTo(model),
+        getSchedule: getBookingsAccordingTo(model),
+        ))
         .toList();
 
-    publicTransportBookings = _publicTransportModels
+        rentalCarBookings = _rentalCarModels
         .map((model) => BookingCard(
-              model: model,
-              color: getBookingColorAccordingTo(model),
-              getSchedule: getBookingsAccordingTo(model),
-            ))
+        model: model,
+        color: getBookingColorAccordingTo(model),
+        getSchedule: getBookingsAccordingTo(model),
+        ))
         .toList();
+
+        publicTransportBookings = _publicTransportModels
+        .map((model) => BookingCard(
+        model: model,
+        color: getBookingColorAccordingTo(model),
+        getSchedule: getBookingsAccordingTo(model),
+        ))
+        .toList(); */
 
     activityBookings = _activityModels
-        .map((model) => BookingCard(
-              model: model,
-              color: getBookingColorAccordingTo(model),
-              getSchedule: getBookingsAccordingTo(model),
-            ))
-        .toList();
-
-    rentalCarBookings = _rentalCarModels
         .map((model) => BookingCard(
               model: model,
               color: getBookingColorAccordingTo(model),
@@ -145,7 +143,45 @@ class _TripScreenState extends State<TripScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final TripsProvider tripsProvider =
+        Provider.of<TripsProvider>(context, listen: false);
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
+    tripsProvider.initBookings(tripModel);
+    _flightModels = tripsProvider.flights;
+    flightBookings = _flightModels
+        .map((model) => BookingCard(
+              model: model,
+              color: getBookingColorAccordingTo(model),
+              getSchedule: getBookingsAccordingTo(model),
+            ))
+        .toList();
+
+    _accommodationModels = tripsProvider.accommodations;
+    accommodationBookings = _accommodationModels
+        .map((model) => BookingCard(
+              model: model,
+              color: getBookingColorAccordingTo(model),
+              getSchedule: getBookingsAccordingTo(model),
+            ))
+        .toList();
+
+    _rentalCarModels = tripsProvider.rentalcars;
+    rentalCarBookings = _rentalCarModels
+        .map((model) => BookingCard(
+              model: model,
+              color: getBookingColorAccordingTo(model),
+              getSchedule: getBookingsAccordingTo(model),
+            ))
+        .toList();
+
+    _publicTransportModels = tripsProvider.publictransports;
+    publicTransportBookings = _publicTransportModels
+        .map((model) => BookingCard(
+              model: model,
+              color: getBookingColorAccordingTo(model),
+              getSchedule: getBookingsAccordingTo(model),
+            ))
+        .toList();
 
     void _openBooking(String bookingSite) {
       Navigator.pushNamed(context, bookingSite, arguments: tripModel);
@@ -266,7 +302,7 @@ class _TripScreenState extends State<TripScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: _subsection('Car rental', '/booking/rentalCar'),
+                  child: _subsection('Car rental', '/booking/rentalcar'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -274,7 +310,8 @@ class _TripScreenState extends State<TripScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: _subsection('Transportation', '/booking/publicTransport'),
+                  child:
+                      _subsection('Transportation', '/booking/publictransport'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
