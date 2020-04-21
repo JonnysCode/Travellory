@@ -8,7 +8,7 @@ import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
 List<PublicTransportModel> publicTransportModels = <PublicTransportModel>[
-  PublicTransportModel(
+  /**PublicTransportModel(
     transportationType: 'Rail',
     publicTransportCompany: 'RENFE',
     specificType: null,
@@ -41,7 +41,7 @@ List<PublicTransportModel> publicTransportModels = <PublicTransportModel>[
     arrivalDate: '2020-06-20',
     arrivalTime: '15:23:00',
     notes: 'Coche 8',
-  )
+  )*/
 ];
 
 class PublicTransportView extends StatefulWidget {
@@ -62,61 +62,61 @@ class _PublicTransportViewState extends State<PublicTransportView> {
         SectionTitle('Public Transport Details'),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         displayDropdownField('Public Transport Type', publicTransportTypes,
-            publicTransportModels[1].transportationType, Theme.of(context).primaryColor),
+            publicTransportModels[0].transportationType, Theme.of(context).primaryColor),
         Divider(),
         displayExtraField(
-            publicTransportModels[1].transportationType,
+            publicTransportModels[0].transportationType,
             'Other',
             FontAwesomeIcons.walking,
             "Description of type 'Other'",
-            publicTransportModels[1].specificType,
+            publicTransportModels[0].specificType,
             Theme.of(context).primaryColor),
         displayField(FontAwesomeIcons.solidBuilding, 'Company',
-            publicTransportModels[1].publicTransportCompany, Theme.of(context).primaryColor),
+            publicTransportModels[0].publicTransportCompany, Theme.of(context).primaryColor),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SectionTitle('Departure Details'),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         displayField(FontAwesomeIcons.mapMarkerAlt, 'Departure Location',
-            publicTransportModels[1].departureLocation, Theme.of(context).primaryColor),
+            publicTransportModels[0].departureLocation, Theme.of(context).primaryColor),
         Divider(),
         displayField(FontAwesomeIcons.calendarAlt, 'Departure Date',
-            publicTransportModels[1].departureDate, Theme.of(context).primaryColor),
+            publicTransportModels[0].departureDate, Theme.of(context).primaryColor),
         Divider(),
         displayField(FontAwesomeIcons.clock, 'Departure Time',
-            publicTransportModels[1].departureTime, Theme.of(context).primaryColor),
+            publicTransportModels[0].departureTime, Theme.of(context).primaryColor),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SectionTitle('Arrival Details'),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         displayField(FontAwesomeIcons.mapMarkerAlt, 'Arrival Location',
-            publicTransportModels[1].arrivalLocation, Theme.of(context).primaryColor),
+            publicTransportModels[0].arrivalLocation, Theme.of(context).primaryColor),
         Divider(),
         displayField(FontAwesomeIcons.calendarAlt, 'Arrival Date',
-            publicTransportModels[1].arrivalDate, Theme.of(context).primaryColor),
+            publicTransportModels[0].arrivalDate, Theme.of(context).primaryColor),
         Divider(),
-        displayField(FontAwesomeIcons.clock, 'Arrival Time', publicTransportModels[1].arrivalTime,
+        displayField(FontAwesomeIcons.clock, 'Arrival Time', publicTransportModels[0].arrivalTime,
             Theme.of(context).primaryColor),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SectionTitle('Booking Details'),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-        displayCheckboxField('Made Booking', publicTransportModels[1].booked),
+        displayCheckboxField('Made Booking', publicTransportModels[0].booked),
         Divider(),
-        displayCheckboxField('Seat Reserved', publicTransportModels[1].seatReserved),
+        displayCheckboxField('Seat Reserved', publicTransportModels[0].seatReserved),
         Divider(),
         displayExtraField(
-            publicTransportModels[1].booked.toString(),
+            publicTransportModels[0].booked.toString(),
             'true',
             FontAwesomeIcons.ticketAlt,
             'Booking Reference Number',
-            publicTransportModels[1].referenceNr,
+            publicTransportModels[0].referenceNr,
             Theme.of(context).primaryColor),
         displayExtraField(
-            publicTransportModels[1].seatReserved.toString(),
+            publicTransportModels[0].seatReserved.toString(),
             'true',
             FontAwesomeIcons.chair,
             'Seat',
-            publicTransportModels[1].seat,
+            publicTransportModels[0].seat,
             Theme.of(context).primaryColor),
-        displayField(FontAwesomeIcons.stickyNote, 'Notes', publicTransportModels[1].notes,
+        displayField(FontAwesomeIcons.stickyNote, 'Notes', publicTransportModels[0].notes,
             Theme.of(context).primaryColor),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SizedBox(height: 10),
@@ -127,6 +127,10 @@ class _PublicTransportViewState extends State<PublicTransportView> {
 
   @override
   Widget build(BuildContext context) {
+    final PublicTransportModel publicTransportModel = ModalRoute.of(context).settings.arguments;
+    List<PublicTransportModel> publicTransports = [];
+    publicTransports.add(publicTransportModel);
+    publicTransportModels = publicTransports;
     return Scaffold(
       key: Key('PublicTransportView'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,

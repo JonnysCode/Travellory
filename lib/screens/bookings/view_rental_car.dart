@@ -87,6 +87,10 @@ class _RentalCarViewState extends State<RentalCarView> {
 
   @override
   Widget build(BuildContext context) {
+    final RentalCarModel rentalCarModel = ModalRoute.of(context).settings.arguments;
+    List<RentalCarModel> rentalCars = [];
+    rentalCars.add(rentalCarModel);
+    rentalCarModels = rentalCars;
     return Scaffold(
       key: Key('RentalCarView'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
