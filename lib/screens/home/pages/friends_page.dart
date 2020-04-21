@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/friends_list_widget.dart';
 
 class FriendsPage extends StatefulWidget {
   @override
@@ -98,38 +99,10 @@ class _FriendsPageState extends State<FriendsPage> {
                         ),
                       ),
                     ),
-                    Padding(
-                      key: Key('friend_requests_list'),
-                      padding: EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: Column(
-                          children: <Widget>[
-                            Container(
-                              height: 100,
-                              child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                itemExtent: 35,
-                                padding: EdgeInsets.only(
-                                  bottom: 20
-                                ),
-                                shrinkWrap: true,
-                                itemCount: friendRequests.length,
-                                itemBuilder: (context, index) {
-                                  return ListTile(
-                                    title: Text(
-                                      '${friendRequests[index].username}',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ]
-                      ),
+                    friendList(
+                        Key('friend_requests_list'),
+                        friendRequests,
+                        context
                     ),
                     Padding(
                       key: Key('my_friends'),
@@ -150,39 +123,10 @@ class _FriendsPageState extends State<FriendsPage> {
                         ),
                       ),
                     ),
-                    Padding(
-                      key: Key('my_friends_list'),
-                      padding: EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: Column(
-                          children: <Widget>[
-                            Container(
-                              height: 100,
-                              child: ListView.builder(
-                                //TODO: fluetfab make size fixed
-                                scrollDirection: Axis.vertical,
-                                itemExtent: 35,
-                                padding: EdgeInsets.only(
-                                    bottom: 20
-                                ),
-                                shrinkWrap: true,
-                                itemCount: friends.length,
-                                itemBuilder: (context, index) {
-                                  return ListTile(
-                                    title: Text(
-                                      '${friends[index].username}',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ]
-                      ),
+                    friendList(
+                        Key('my_friends_list'),
+                        friends,
+                        context
                     ),
 
                     SizedBox(height: 20,),
@@ -204,7 +148,6 @@ class _FriendsPageState extends State<FriendsPage> {
                             }),
                       ),
                     ),
-
                   ],
                 ),
               ),
