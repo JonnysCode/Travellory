@@ -1,7 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/screens/bookings/view_public_transport.dart';
+
+final PublicTransportModel model = PublicTransportModel()
+  ..transportationType = 'Taxi'
+  ..departureLocation = 'London City'
+  ..departureDate = '2020-05-04'
+  ..departureTime = '10:55'
+  ..arrivalLocation = 'Gatwick Airport'
+  ..arrivalDate = '2020-05-04'
+  ..arrivalTime = '11:30'
+  ..tripUID = ''
+  ..uid = ''
+  ..publicTransportCompany = ''
+  ..specificType = ''
+  ..booked = true
+  ..seatReserved = false
+  ..referenceNr = ''
+  ..reservationCompany = ''
+  ..seat = ''
+  ..notes = 'Some Notes';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key key}) : super(key: key);
@@ -10,7 +30,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/view/publictransport');
+        Navigator.pushNamed(context, '/view/publictransport', arguments: model);
       },
       child: Container(
         color: const Color(0xFFFFFF00),

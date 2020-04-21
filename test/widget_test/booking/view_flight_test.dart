@@ -1,7 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/screens/bookings/view_flight.dart';
+
+final FlightModel model = FlightModel()
+  ..departureLocation = 'Zürich'
+  ..departureDate = '2020-05-01'
+  ..departureTime = '7:30'
+  ..arrivalLocation = 'London'
+  ..arrivalDate = '2020-05-01'
+  ..arrivalTime = '8:35'
+  ..tripUID = ''
+  ..uid = ''
+  ..bookingReference = ''
+  ..airline = ''
+  ..flightNr = ''
+  ..seat = ''
+  ..checkedBaggage = false
+  ..excessBaggage = false
+  ..notes = '';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key key}) : super(key: key);
@@ -10,7 +28,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/view/flight');
+        Navigator.pushNamed(context, '/view/flight', arguments: model);
       },
       child: Container(
         color: const Color(0xFFFFFF00),
