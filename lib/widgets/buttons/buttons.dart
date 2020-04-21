@@ -102,8 +102,9 @@ class SubmitButton extends StatelessWidget {
   }
 }
 
-Widget socialButton(IconData icon, Color color, void function()) {
+Widget socialButton(Key key, IconData icon, Color color, void function()) {
   return IconButton(
+    key: key,
     padding: EdgeInsets.only(
       top: 0,
     ),
