@@ -23,6 +23,8 @@ class _ActivityState extends State<Activity> {
   final ActivityModel activityModel = ActivityModel();
   final DatabaseAdder databaseAdder = DatabaseAdder();
 
+  static const int _imageItemCount = 13;
+
   final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
   bool validateForm() {
@@ -46,6 +48,16 @@ class _ActivityState extends State<Activity> {
     const Item('Dining', Icon(FontAwesomeIcons.utensils, color: Color(0xFF167F67))),
     const Item('Other', Icon(FontAwesomeIcons.futbol, color: Color(0xFF167F67))),
   ];
+
+//  ActivityModel activityModel;
+  int _selectedIndex;
+
+  @override
+  void initState() {
+    _selectedIndex = 0;
+    activityModel.imageNr = 1;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +95,10 @@ class _ActivityState extends State<Activity> {
                             activityModel.category = value.name;
                           },
                           validatorText: 'Please enter the required information'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: _imageSelection(),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -191,6 +207,63 @@ class _ActivityState extends State<Activity> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _imageSelection() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 96,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          itemCount: _imageItemCount,
+          itemBuilder: (context, index) {
+            return _imageItem(index);
+          },
+          separatorBuilder: (context, index) => const SizedBox(),
+        ),
+      ),
+    );
+  }
+
+  void _selectImage(index) {
+    setState(() {
+      _selectedIndex = index;
+      activityModel.imageNr = _selectedIndex + 1;
+    });
+  }
+
+  Widget _imageItem(int index) {
+    return Center(
+      child: GestureDetector(
+        onTap: () => _selectImage(index),
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 200),
+          height: _selectedIndex == index ? 80 : 72,
+          width: _selectedIndex == index ? 80 : 72,
+          padding: _selectedIndex == index ? const EdgeInsets.all(8.0) : const EdgeInsets.all(3.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(40.0),
+            color: _selectedIndex == index ? Colors.black26 : Colors.transparent,
+          ),
+          child: Container(
+            key: Key('image_icon'),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/activity/activity_${(index + 1).toString()}.png'),
+                fit: BoxFit.fitWidth,
+              ),
+              borderRadius: BorderRadius.circular(33.0),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    blurRadius: 4, color: Colors.black.withOpacity(.25), offset: Offset(2.0, 2.0))
+              ],
+            ),
+          ),
         ),
       ),
     );
