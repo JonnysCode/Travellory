@@ -11,63 +11,63 @@ class FriendsPage extends StatefulWidget {
 
 class _FriendsPageState extends State<FriendsPage> {
 
-  final List<FriendsModel> friendRequests = List();
-  final List<FriendsModel> friends = List();
+  final List<FriendsModel> friendRequests = [];
+  final List<FriendsModel> friends = [];
 
   @override
   void initState(){
     super.initState();
     setState(() {
-      //TODO: hessgia1 create dynamic list according to logged in user
-      friendRequests.add(FriendsModel(
+      //TODO(hessgia1): create dynamic list according to logged in user
+      friendRequests..add(FriendsModel(
         "1",
         "doejohn",
       ));
-      friendRequests.add(FriendsModel(
+      friendRequests..add(FriendsModel(
         "2",
         "doejane",
       ));
-      friendRequests.add(FriendsModel(
+      friendRequests..add(FriendsModel(
         "3",
         "doejames",
       ));
-      friendRequests.add(FriendsModel(
+      friendRequests..add(FriendsModel(
         "4",
         "doejessy",
       ));
-      friendRequests.add(FriendsModel(
+      friendRequests..add(FriendsModel(
         "5",
         "doejason",
       ));
-      friends.add(FriendsModel(
+      friends..add(FriendsModel(
           "11",
           "hessgia1"
       ));
-      friends.add(FriendsModel(
+      friends..add(FriendsModel(
           "12",
           "schinsev"
       ));
-      friends.add(FriendsModel(
+      friends..add(FriendsModel(
           "13",
           "grussjon"
       ));
-      friends.add(FriendsModel(
+      friends..add(FriendsModel(
           "14",
           "bertaben"
       ));
-      friends.add(FriendsModel(
+      friends..add(FriendsModel(
           "15",
           "stadena1"
       ));
-      friends.add(FriendsModel(
+      friends..add(FriendsModel(
           "16",
           "antilyas"
       ));
-      friends.add(FriendsModel(
+      friends..add(FriendsModel(
           "17",
           "gubleet1"
       ));
-      friends.add(FriendsModel(
+      friends..add(FriendsModel(
           "18",
           "isztldav"
       ));
