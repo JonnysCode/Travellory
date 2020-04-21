@@ -8,6 +8,15 @@ class FriendsPage extends StatefulWidget {
 }
 
 class _FriendsPageState extends State<FriendsPage> {
+  bool _isSearching;
+
+  @override
+  void initState() {
+    super.initState();
+    _isSearching = false;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,7 +41,9 @@ class _FriendsPageState extends State<FriendsPage> {
                         Padding(
                             padding: const EdgeInsets.only(
                                 top: 15, left: 40, right: 25),
-                            child: Container(
+                            child: _isSearching
+                                ? Container() // TODO add friend page, and set state to false,
+                                : Container(
                               height: 56,
                               width: MediaQuery.of(context).size.width,
                               child: Stack(
@@ -50,7 +61,7 @@ class _FriendsPageState extends State<FriendsPage> {
                                     top: 24,
                                     right: 36,
                                     child: FashionFetishText(
-                                      text: 'Search',
+                                      text: 'Add Friends',
                                       size: 16,
                                       color: Colors.black54,
                                       fontWeight: FashionFontWeight.bold,
@@ -60,8 +71,11 @@ class _FriendsPageState extends State<FriendsPage> {
                                     top: 11,
                                     right: 0,
                                     child: GestureDetector(
-                                      onTap: () => Navigator.pushNamed(
-                                          context, '/search_friends'),
+                                      onTap: () =>{
+                                        setState((){
+                                          _isSearching = true;
+                                        })
+                                      },
                                       child: Icon(
                                         FontAwesomeIcons.search,
                                         color: Theme.of(context).primaryColor,
@@ -71,8 +85,15 @@ class _FriendsPageState extends State<FriendsPage> {
                                   ),
                                 ],
                               ),
-                            ))
-                      ]))))
-        ]));
+                            )
+                        )
+                      ]
+                      )
+                  )
+              )
+          )
+        ]
+        )
+    );
   }
 }
