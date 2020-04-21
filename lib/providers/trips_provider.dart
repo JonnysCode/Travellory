@@ -70,8 +70,8 @@ class TripsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void initBookings(TripModel trip) {
-    unawaited(_fetchBookings(trip.uid));
+  Future<void> initBookings(TripModel trip) async {
+    await _fetchBookings(trip.uid);
   }
 
   Future<void> _fetchBookings(String tripUID) async {
