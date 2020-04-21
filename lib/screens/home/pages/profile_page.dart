@@ -1,13 +1,19 @@
 import 'dart:io';
+import 'package:path/path.dart' as path;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
+import 'package:travellory/services/storage.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'package:travellory/services/user_management.dart';
+import 'package:travellory/logger.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -16,9 +22,13 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage>
     with TickerProviderStateMixin, ImagePickerListener {
+
+  final log = getLogger('_ProfilePageState');
+
   File _image;
   AnimationController _controller;
   ImagePickerHandler imagePicker;
+  UserModel user;
 
   @override
   void initState() {
@@ -39,6 +49,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
+    this.user = Provider.of<UserModel>(context);
     return SafeArea(
       child: Stack(
         children: <Widget>[
@@ -62,56 +73,78 @@ class _ProfilePageState extends State<ProfilePage>
                     GestureDetector(
                       key: Key('image_pick'),
                       onTap: () => imagePicker.showDialog(context),
-                      child: _image == null
-                          ? Stack(
-                        children: <Widget>[
-                          Center(
-                            child: CircleAvatar(
-                              radius: 130.0,
-                              backgroundColor: Colors.blueGrey.withOpacity(0.5),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 260,
-                            child: Center(
-                              child: Image.asset(
-                                'assets/photo_camera.png',
-                                height: 100,
-                                width: 100,
+                      child: FutureBuilder<File>(
+                        future: getUserImage(), // a previously-obtained Future<String> or null
+                        builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+                          if(snapshot.connectionState == ConnectionState.done){
+                            this._image = snapshot.data;
+                            log.d('filesize inside futurebuilder: '+this._image.lengthSync().toString());
+                            return this._image == null
+                                ? Stack(
+                              children: <Widget>[
+                                Center(
+                                  child: CircleAvatar(
+                                    radius: 130.0,
+                                    backgroundColor: Colors.blueGrey.withOpacity(0.5),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 260,
+                                  child: Center(
+                                    child: Image.asset(
+                                      'assets/photo_camera.png',
+                                      height: 100,
+                                      width: 100,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                                : Container(
+                              height: 260.0,
+                              width: 260.0,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).primaryColor,
+                                image: DecorationImage(
+                                  image: NetworkImage(user.photoUrl),
+                                  fit: BoxFit.cover,
+                                ),
+                                border: Border.all(
+                                    color: Theme.of(context).primaryColor, width: 2.0
+                                ),
+                                borderRadius:
+                                BorderRadius.all(const Radius.circular(300.0)),
                               ),
-                            ),
-                          ),
-                        ],
+                            );
+                          }else{
+                            return Stack(
+                              children: <Widget>[
+                                Center(
+                                  child: CircleAvatar(
+                                    radius: 130.0,
+                                    backgroundColor: Colors.blueGrey.withOpacity(0.5),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 260,
+                                  child: Center(
+                                    child: Image.asset(
+                                      'assets/photo_camera.png',
+                                      height: 100,
+                                      width: 100,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+                        }
                       )
-                          : Container(
-                        height: 260.0,
-                        width: 260.0,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          image: DecorationImage(
-                            image: ExactAssetImage(_image.path),
-                            fit: BoxFit.cover,
-                          ),
-                          border: Border.all(
-                              color: Theme.of(context).primaryColor, width: 2.0
-                          ),
-                          borderRadius:
-                          BorderRadius.all(const Radius.circular(300.0)),
-                        ),
-                      ),
                     ),
                     SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: FutureBuilder(
-                          future: AuthProvider.of(context).auth.getCurrentUser(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.done) {
-                              return UserInformation(user: snapshot.data);
-                            } else {
-                              return CircularProgressIndicator();
-                            }
-                          }),
+                      child: UserInformation(user: user)
                     ),
                     SizedBox(height: 10),
                     Padding(
@@ -166,10 +199,14 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   @override
-  void userImage(File _image) {
+  void userImage(File _image) async {
     setState(() {
       this._image = _image;
     });
+    if(_image != null){
+      String fileURL = await Storage.uploadFile(_image, Storage.USER_PROFILE_PICTURES, filename: user.uid);
+      bool success = await UserManagement.saveUserProfilePicture(_image, user, fileURL);
+    }
   }
 
   Future _signOut() async {
@@ -177,8 +214,16 @@ class _ProfilePageState extends State<ProfilePage>
     await _auth.signOut();
     await Navigator.popUntil(context, ModalRoute.withName('/'));
   }
-}
 
+  ///
+  Future<File> getUserImage() async {
+    String filePath = await UserManagement.getUserProfilePicturePath(user);
+    log.d('File.path of loaded profile image: '+filePath);
+    File file = File(filePath);
+    log.d('filesize: '+file.lengthSync().toString());
+    return file;
+  }
+}
 
 class UserInformation extends StatelessWidget {
   const UserInformation({
@@ -186,7 +231,7 @@ class UserInformation extends StatelessWidget {
     this.user,
   }) : super(key: key);
 
-  final FirebaseUser user;
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -204,7 +249,7 @@ class UserInformation extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 FashionFetishText(
-                  text: user != null ? '${user.displayName}' : '',
+                  text: user != null ? user.displayName : '',
                   size: 18,
                   fontWeight: FashionFontWeight.bold,
                   height: 1.1,
@@ -223,7 +268,7 @@ class UserInformation extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 FashionFetishText(
-                  text: user != null ? '${user.email}' : '',
+                  text: user != null ? user.email : '',
                   size: 18,
                   fontWeight: FashionFontWeight.bold,
                   height: 1.1,
@@ -243,7 +288,7 @@ class UserInformation extends StatelessWidget {
                 SizedBox(width: 10),
                 FashionFetishText(
                   text: user != null
-                      ? '${DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)}'
+                      ? DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)
                       : '',
                   size: 18,
                   fontWeight: FashionFontWeight.bold,
