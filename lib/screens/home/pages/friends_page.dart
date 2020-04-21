@@ -25,19 +25,19 @@ class _FriendsPageState extends State<FriendsPage> {
         "doejohn",
       ));
       friendRequests.add(FriendsModel(
-        "1",
+        "2",
         "doejane",
       ));
       friendRequests.add(FriendsModel(
-        "1",
+        "3",
         "doejames",
       ));
       friendRequests.add(FriendsModel(
-        "1",
+        "4",
         "doejessy",
       ));
       friendRequests.add(FriendsModel(
-        "1",
+        "5",
         "doejason",
       ));
       friends.add(FriendsModel(
