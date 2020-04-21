@@ -12,8 +12,8 @@ class SimpleLogPrinter extends LogPrinter {
 
   @override
   void log(Level level, message, error, StackTrace stackTrace) {
-    var color = PrettyPrinter.levelColors[level];
-    var emoji = PrettyPrinter.levelEmojis[level];
+    final color = PrettyPrinter.levelColors[level];
+    final emoji = PrettyPrinter.levelEmojis[level];
     println(color('$emoji $className - $message'));
   }
 }
