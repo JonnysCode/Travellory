@@ -129,7 +129,6 @@ class _FriendsPageState extends State<FriendsPage> {
                         friends,
                         context
                     ),
-
                     SizedBox(height: 20,),
                     //TODO: fluetfab move search bar top right
                     Padding(
