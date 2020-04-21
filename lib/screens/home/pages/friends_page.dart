@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 
 class FriendsPage extends StatefulWidget {
@@ -8,6 +9,38 @@ class FriendsPage extends StatefulWidget {
 }
 
 class _FriendsPageState extends State<FriendsPage> {
+
+  final List<FriendsModel> friendRequests = List();
+  final List<FriendsModel> friends = List();
+
+  @override
+  void initState(){
+    super.initState();
+    setState(() {
+      //TODO: hessgia1 create dynamic list according to logged in user
+      friendRequests.add(FriendsModel(
+          "1",
+          "bertaben"
+      ));
+      friendRequests.add(FriendsModel(
+          "2",
+          "grussjon"
+      ));
+      friends.add(FriendsModel(
+          "3",
+          "hessgia1"
+      ));
+      friends.add(FriendsModel(
+          "4",
+          "schinsev"
+      ));
+      friends.add(FriendsModel(
+          "4",
+          "doejohn"
+      ));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -65,37 +98,25 @@ class _FriendsPageState extends State<FriendsPage> {
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: Column(
                           children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top : 10
-                              ),
-                              child: Text(
-                                'John Doe                 acc_btn    dec_btn',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top : 15,
-                                bottom: 25,
-                              ),
-                              child: Text(
-                                'John Doe                 acc_btn    dec_btn',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
+                            ListView.builder(
+                              //TODO: fluetfab make size fixed
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: friendRequests.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: Text(
+                                    '${friendRequests[index].username}',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ]
                       ),
                     ),
-
-
-
                     Padding(
                       key: Key('my_friends'),
                       padding: EdgeInsets.only(
@@ -115,8 +136,6 @@ class _FriendsPageState extends State<FriendsPage> {
                         ),
                       ),
                     ),
-
-
                     Padding(
                       key: Key('my_friends_list'),
                       padding: EdgeInsets.only(
@@ -125,60 +144,28 @@ class _FriendsPageState extends State<FriendsPage> {
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: Column(
                           children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top : 10
-                              ),
-                              child: Text(
-                                'Severin Schindler              remove_btn',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top : 15,
-                              ),
-                              child: Text(
-                                'Gian Hess                           remove_btn',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top : 15,
-                              ),
-                              child: Text(
-                                'Jöni Gruss                          remove_btn',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top : 15,
-                                bottom: 25,
-                              ),
-                              child: Text(
-                                'Benjamin Bertalan            remove_btn',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
+                            ListView.builder(
+                              //TODO: fluetfab make size fixed
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: friends.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: Text(
+                                    '${friends[index].username}',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ]
                       ),
                     ),
 
                     SizedBox(height: 20,),
+                    //TODO: fluetfab move search bar top right
                     Padding(
                       key: Key('add_friends'),
                       padding: EdgeInsets.only(
