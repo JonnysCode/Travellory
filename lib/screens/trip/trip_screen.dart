@@ -130,7 +130,7 @@ class _TripScreenState extends State<TripScreen> {
         color: getBookingColorAccordingTo(model),
         getSchedule: getBookingsAccordingTo(model),
         ))
-        .toList(); */
+        .toList();
 
     activityBookings = _activityModels
         .map((model) => BookingCard(
@@ -139,7 +139,7 @@ class _TripScreenState extends State<TripScreen> {
               color: getBookingColorAccordingTo(model),
               getSchedule: getBookingsAccordingTo(model),
             ))
-        .toList();
+        .toList();*/
   }
 
   @override
@@ -150,6 +150,7 @@ class _TripScreenState extends State<TripScreen> {
 
     _flightModels = tripsProvider.flights;
     _accommodationModels = tripsProvider.accommodations;
+    _activityModels = tripsProvider.activities;
     _rentalCarModels = tripsProvider.rentalcars;
     _publicTransportModels = tripsProvider.publictransports;
 
@@ -169,6 +170,15 @@ class _TripScreenState extends State<TripScreen> {
               color: getBookingColorAccordingTo(model),
               getSchedule: getBookingsAccordingTo(model),
             ))
+        .toList();
+
+    activityBookings = _activityModels
+        .map((model) => BookingCard(
+      model: model,
+      onTap: () => Navigator.pushNamed(context, '/view/activity', arguments: model),
+      color: getBookingColorAccordingTo(model),
+      getSchedule: getBookingsAccordingTo(model),
+    ))
         .toList();
 
     rentalCarBookings = _rentalCarModels

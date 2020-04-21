@@ -25,7 +25,8 @@ class _ActivityState extends State<Activity> {
 
   static const int _imageItemCount = 13;
 
-  final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _startDateFormFieldKey =
+      GlobalKey<DateFormFieldState>();
 
   bool validateForm() {
     return activityFormKey.currentState.validate();
@@ -39,14 +40,22 @@ class _ActivityState extends State<Activity> {
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
 
   List<Item> types = <Item>[
-    const Item('Historic', Icon(FontAwesomeIcons.landmark, color: Color(0xFF167F67))),
-    const Item('Outdoors', Icon(FontAwesomeIcons.mountain, color: Color(0xFF167F67))),
-    const Item('Culture', Icon(FontAwesomeIcons.diagnoses, color: Color(0xFF167F67))),
-    const Item('Social', Icon(FontAwesomeIcons.users, color: Color(0xFF167F67))),
-    const Item('Relaxing', Icon(FontAwesomeIcons.hotTub, color: Color(0xFF167F67))),
-    const Item('Adventure', Icon(FontAwesomeIcons.hiking, color: Color(0xFF167F67))),
-    const Item('Dining', Icon(FontAwesomeIcons.utensils, color: Color(0xFF167F67))),
-    const Item('Other', Icon(FontAwesomeIcons.futbol, color: Color(0xFF167F67))),
+    const Item(
+        'Historic', Icon(FontAwesomeIcons.landmark, color: Color(0xFF167F67))),
+    const Item(
+        'Outdoors', Icon(FontAwesomeIcons.mountain, color: Color(0xFF167F67))),
+    const Item(
+        'Culture', Icon(FontAwesomeIcons.diagnoses, color: Color(0xFF167F67))),
+    const Item(
+        'Social', Icon(FontAwesomeIcons.users, color: Color(0xFF167F67))),
+    const Item(
+        'Relaxing', Icon(FontAwesomeIcons.hotTub, color: Color(0xFF167F67))),
+    const Item(
+        'Adventure', Icon(FontAwesomeIcons.hiking, color: Color(0xFF167F67))),
+    const Item(
+        'Dining', Icon(FontAwesomeIcons.utensils, color: Color(0xFF167F67))),
+    const Item(
+        'Other', Icon(FontAwesomeIcons.futbol, color: Color(0xFF167F67))),
   ];
 
 //  ActivityModel activityModel;
@@ -62,7 +71,7 @@ class _ActivityState extends State<Activity> {
   @override
   Widget build(BuildContext context) {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
-    // activityModel.tripUID = tripModel.uid;
+    activityModel.tripUID = tripModel.uid;
 
     return Scaffold(
       key: Key('Activity'),
@@ -79,33 +88,41 @@ class _ActivityState extends State<Activity> {
                   key: activityFormKey,
                   child: Column(children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: BookingSiteTitle('Add Activity', FontAwesomeIcons.fortAwesome),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: BookingSiteTitle(
+                          'Add Activity', FontAwesomeIcons.fortAwesome),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: SectionTitle('Category'),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryDropdownField(
                           title: 'Select Category',
                           types: types,
                           onChanged: (value) {
                             activityModel.category = value.name;
                           },
-                          validatorText: 'Please enter the required information'),
+                          validatorText:
+                              'Please enter the required information'),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: _imageSelection(),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: SectionTitle('More Details'),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
                           labelText: 'Activity Title *',
                           icon: Icon(FontAwesomeIcons.star),
@@ -113,19 +130,23 @@ class _ActivityState extends State<Activity> {
                           onChanged: (value) => activityModel.title = value),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
                           labelText: 'Description',
                           icon: Icon(FontAwesomeIcons.info),
                           optional: true,
-                          onChanged: (value) => activityModel.description = value),
+                          onChanged: (value) =>
+                              activityModel.description = value),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: SectionTitle('Schedule'),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
                           labelText: 'Location',
                           icon: Icon(Icons.location_on),
@@ -133,48 +154,59 @@ class _ActivityState extends State<Activity> {
                           onChanged: (value) => activityModel.location = value),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
                         key: _startDateFormFieldKey,
                         labelText: 'Start Date *',
                         icon: Icon(Icons.date_range),
                         optional: false,
-                        chosenDateString: (value) => activityModel.startDate = value,
+                        chosenDateString: (value) =>
+                            activityModel.startDate = value,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
                           labelText: 'Start Time',
                           icon: Icon(Icons.access_time),
                           optional: true,
-                          chosenTimeString: (value) => activityModel.startTime = value),
+                          chosenTimeString: (value) =>
+                              activityModel.startTime = value),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
                         labelText: 'End Date *',
                         icon: Icon(Icons.date_range),
                         beforeDateKey: _startDateFormFieldKey,
                         optional: false,
-                        dateValidationMessage: 'End Date cannot be before Start Date',
-                        chosenDateString: (value) => activityModel.endDate = value,
+                        dateValidationMessage:
+                            'End Date cannot be before Start Date',
+                        chosenDateString: (value) =>
+                            activityModel.endDate = value,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
                           labelText: 'End Time',
                           icon: Icon(Icons.access_time),
                           optional: true,
-                          chosenTimeString: (value) => activityModel.endTime = value),
+                          chosenTimeString: (value) =>
+                              activityModel.endTime = value),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: SectionTitle('Notes'),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
                         labelText: 'Notes',
                         icon: Icon(Icons.speaker_notes),
@@ -183,22 +215,24 @@ class _ActivityState extends State<Activity> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: SubmitButton(
-                          highlightColor: Theme.of(context).primaryColor,
-                          fillColor: Theme.of(context).primaryColor,
-                          validationFunction: validateForm,
-                          onSubmit: onSubmitBooking(
-                              activityModel, 'activity-addActivity', context, alertText),
-                        ),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: SubmitButton(
+                        highlightColor: Theme.of(context).primaryColor,
+                        fillColor: Theme.of(context).primaryColor,
+                        validationFunction: validateForm,
+                        onSubmit: onSubmitBooking(activityModel,
+                            'activity-addActivity', context, alertText),
+                      ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                        child: CancelButton(
-                          text: 'CANCEL',
-                          onCancel: () {
-                            cancellingDialog(context, cancelText);
-                          },
+                      padding:
+                          const EdgeInsets.only(top: 2, left: 15, right: 15),
+                      child: CancelButton(
+                        text: 'CANCEL',
+                        onCancel: () {
+                          cancellingDialog(context, cancelText);
+                        },
                       ),
                     ),
                     SizedBox(height: 20),
@@ -245,22 +279,28 @@ class _ActivityState extends State<Activity> {
           duration: Duration(milliseconds: 200),
           height: _selectedIndex == index ? 80 : 72,
           width: _selectedIndex == index ? 80 : 72,
-          padding: _selectedIndex == index ? const EdgeInsets.all(8.0) : const EdgeInsets.all(3.0),
+          padding: _selectedIndex == index
+              ? const EdgeInsets.all(8.0)
+              : const EdgeInsets.all(3.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(40.0),
-            color: _selectedIndex == index ? Colors.black26 : Colors.transparent,
+            color:
+                _selectedIndex == index ? Colors.black26 : Colors.transparent,
           ),
           child: Container(
             key: Key('image_icon'),
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/activity/activity_${(index + 1).toString()}.png'),
+                image: AssetImage(
+                    'assets/images/activity/activity_${(index + 1).toString()}.png'),
                 fit: BoxFit.fitWidth,
               ),
               borderRadius: BorderRadius.circular(33.0),
               boxShadow: <BoxShadow>[
                 BoxShadow(
-                    blurRadius: 4, color: Colors.black.withOpacity(.25), offset: Offset(2.0, 2.0))
+                    blurRadius: 4,
+                    color: Colors.black.withOpacity(.25),
+                    offset: Offset(2.0, 2.0))
               ],
             ),
           ),
