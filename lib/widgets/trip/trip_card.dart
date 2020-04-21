@@ -30,10 +30,6 @@ class _TripCardState extends State<TripCard> {
 
   TripModel _tripModel;
 
-  void _openTrip(){
-    Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
