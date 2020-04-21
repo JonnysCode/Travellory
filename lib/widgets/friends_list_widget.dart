@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/friends_model.dart';
 
 Widget friendList(Key key, List<FriendsModel> list, BuildContext context) {
@@ -13,19 +14,28 @@ Widget friendList(Key key, List<FriendsModel> list, BuildContext context) {
           Container(
             height: 100,
             child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemExtent: 35,
               padding: EdgeInsets.only(
-                  bottom: 20
+                bottom: 50,
               ),
+              scrollDirection: Axis.vertical,
+              itemExtent: 40,
               shrinkWrap: true,
               itemCount: list.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    '${list[index].username}',
-                    style: TextStyle(
-                      fontSize: 20,
+                return Container(
+                  decoration: friendBoxDecoration(),
+                  height: 50,
+                  child: ListTile(
+                    trailing: Icon(
+                      FontAwesomeIcons.userPlus,
+                    ),
+                    title: Text(
+                      '${list[index].username}',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 20,
+                        height: 0,
+                      ),
                     ),
                   ),
                 );
@@ -33,6 +43,18 @@ Widget friendList(Key key, List<FriendsModel> list, BuildContext context) {
             ),
           ),
         ]
+    ),
+  );
+}
+
+BoxDecoration friendBoxDecoration() {
+  return BoxDecoration(
+    border: Border(
+        bottom: BorderSide(
+            color: Colors.grey,
+            width: 0.3,
+            style: BorderStyle.solid
+        )
     ),
   );
 }
