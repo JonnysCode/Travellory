@@ -34,10 +34,10 @@ class PublicTransportModel extends Model {
     reservationCompany = publicTransport["reservationCompany"];
     seat = publicTransport["seat"];
     departureLocation = publicTransport["departureLocation"];
-    departureDate = getOnlyDate(publicTransport["departureDate"]);
+    departureDate = publicTransport["departureDate"];
     departureTime = publicTransport["departureTime"];
     arrivalLocation = publicTransport["arrivalLocation"];
-    arrivalDate = getOnlyDate(publicTransport["arrivalDate"]);
+    arrivalDate = publicTransport["arrivalDate"];
     arrivalTime = publicTransport["arrivalTime"];
     notes = publicTransport["notes"];
   }
