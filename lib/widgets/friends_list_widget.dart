@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/friends_model.dart';
 
-Widget friendList(Key key, List<FriendsModel> list, BuildContext context) {
+Widget friendList(Key key, List<FriendsModel> list, Widget trailing, BuildContext context) {
   return Padding(
     key: key,
     padding: EdgeInsets.only(
@@ -26,9 +25,6 @@ Widget friendList(Key key, List<FriendsModel> list, BuildContext context) {
                   decoration: friendBoxDecoration(),
                   height: 50,
                   child: ListTile(
-                    trailing: Icon(
-                      FontAwesomeIcons.userPlus,
-                    ),
                     title: Text(
                       '${list[index].username}',
                       textAlign: TextAlign.left,
@@ -37,6 +33,7 @@ Widget friendList(Key key, List<FriendsModel> list, BuildContext context) {
                         height: 0,
                       ),
                     ),
+                    trailing: trailing
                   ),
                 );
               },
