@@ -33,7 +33,7 @@ void main() {
     return MaterialApp(
       routes: <String, WidgetBuilder>{
         '/': (context) => const Wrapper(),
-        '/booking/rentalCar': (context) => RentalCar()
+        '/booking/rentalcar': (context) => RentalCar()
       },
     );
   }
