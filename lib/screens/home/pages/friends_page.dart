@@ -102,9 +102,23 @@ class _FriendsPageState extends State<FriendsPage> {
                     friendList(
                         Key('friend_requests_list'),
                         friendRequests,
+                        Wrap(
+                          children: <Widget>[
+                            socialButton(
+                                Icons.add_circle,
+                                Colors.green,
+                                null
+                            ),
+                            socialButton(
+                                Icons.remove_circle,
+                                Colors.red,
+                                null
+                            ),
+                          ],
+                        ),
                         context
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 40),
                     Padding(
                       key: Key('my_friends'),
                       padding: EdgeInsets.only(
@@ -127,6 +141,15 @@ class _FriendsPageState extends State<FriendsPage> {
                     friendList(
                         Key('my_friends_list'),
                         friends,
+                        Wrap(
+                          children: <Widget>[
+                            socialButton(
+                                Icons.remove_circle,
+                                Colors.red,
+                                null
+                            ),
+                          ],
+                        ),
                         context
                     ),
                     SizedBox(height: 20,),
