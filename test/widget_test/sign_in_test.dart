@@ -104,6 +104,10 @@ void main() {
     String email = 'sample.email@gmail.com';
     String password = 'sampl3P8assword!';
 
+    // mock method register
+    when(mockAuth.signInWithEmailAndPassword(email, password))
+        .thenAnswer((_) => Future.value('Stub'));
+
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 

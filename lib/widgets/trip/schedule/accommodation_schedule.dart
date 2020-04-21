@@ -1,71 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class AccommodationSchedule extends StatelessWidget {
+  const AccommodationSchedule(this.accommodation, {Key key}) : super(key : key);
+  final AccommodationModel accommodation;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      decoration: BoxDecoration(
-        color: Color(0xFFeff5f7),
-        borderRadius: BorderRadius.circular(16.0),
-        boxShadow: [
-          BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.1), offset: Offset(0.0, 6.0))
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(6.0),
-        child: Row(
+    return Row(
+      key: Key('accommodation'),
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 16),
+          child: FaIcon(
+            FontAwesomeIcons.bed,
+            size: 28,
+            color: Colors.black54,
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 16),
-              child: FaIcon(
-                FontAwesomeIcons.bed,
-                size: 28,
-                color: Colors.lightGreen,
-              ),
+            FashionFetishText(
+              text: accommodation.name,
+              size: 13,
+              fontWeight: FashionFontWeight.heavy,
+              height: 1.2,
+              color: Colors.black54,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            SizedBox(height: 2),
+            Row(
               children: <Widget>[
-                FashionFetishText(
-                  text: 'Novotel Suites',
-                  size: 13,
-                  fontWeight: FashionFontWeight.heavy,
-                  height: 1.2,
+                FaIcon(
+                  FontAwesomeIcons.locationArrow,
+                  size: 12,
+                  color: Colors.white70,
                 ),
-                SizedBox(height: 2),
-                Row(
-                  children: <Widget>[
-                    FaIcon(
-                      FontAwesomeIcons.locationArrow,
-                      size: 12,
-                      color: Colors.redAccent,
-                    ),
-                    SizedBox(width: 4),
-                    Text(
-                      'Bluff Street 102',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 2),
+                SizedBox(width: 4),
                 Text(
-                  'Check in: 13:00',
+                  accommodation.address,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.black54,
+                    color: Colors.white70,
                   ),
                 ),
               ],
             ),
+            SizedBox(height: 2),
+            Text(
+              'Check in: ${accommodation.checkinTime}',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.white70,
+              ),
+            ),
           ],
         ),
-      ),
+      ],
     );
   }
 }

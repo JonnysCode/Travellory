@@ -15,6 +15,16 @@ class TripModel extends Model {
     this.index
   });
 
+  TripModel.fromData(trip) {
+    this.userUID = trip["userUID"];
+    this.name = trip["name"];
+    this.startDate = getOnlyDate(trip["startDate"]);
+    this.endDate = getOnlyDate(trip["endDate"]);
+    this.destination = trip["destination"];
+    this.imageNr = trip["imageNr"];
+    this.imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
+  }
+
   String userUID;
   String uid;
   String name;
@@ -58,16 +68,6 @@ class TripModel extends Model {
         "destination": destination,
         "imageNr": imageNr
     };
-  }
-
-  TripModel.fromData(trip) {
-    this.userUID = trip["userUID"];
-    this.name = trip["name"];
-    this.startDate = getOnlyDate(trip["startDate"]);
-    this.endDate = getOnlyDate(trip["endDate"]);
-    this.destination = trip["destination"];
-    this.imageNr = trip["imageNr"];
-    this.imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
   }
 
   String getOnlyDate(String date) {
