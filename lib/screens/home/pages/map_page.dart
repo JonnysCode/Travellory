@@ -71,7 +71,7 @@ class MapSampleState extends State<MapSample> {
 
       if(boundariesTemp.isNotEmpty){
         boundaries.clear();
-        boundariesTemp.forEach((boundary) => boundaries.add(boundary));
+        boundariesTemp.forEach(boundaries.add);
       }
     });
   }
