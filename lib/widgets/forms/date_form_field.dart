@@ -85,7 +85,9 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
               if (value.isEmpty) {
                 return widget.validatorText;
               } else if (widget.beforeDateKey != null &&
-                  selectedDate.isBefore(widget.beforeDateKey.currentState.selectedDate)) {
+                  (selectedDate.isBefore(widget.beforeDateKey.currentState.selectedDate) ||
+                      selectedDate
+                          .isAtSameMomentAs(widget.beforeDateKey.currentState.selectedDate))) {
                 return widget.dateValidationMessage;
               }
               return null;
