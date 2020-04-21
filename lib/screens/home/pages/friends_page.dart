@@ -26,17 +26,25 @@ class _FriendsPageState extends State<FriendsPage> {
           "2",
           "grussjon"
       ));
-      friends.add(FriendsModel(
+      friendRequests.add(FriendsModel(
           "3",
+          "stadena1"
+      ));
+      friends.add(FriendsModel(
+          "13",
           "hessgia1"
       ));
       friends.add(FriendsModel(
-          "4",
+          "14",
           "schinsev"
       ));
       friends.add(FriendsModel(
-          "4",
+          "15",
           "doejohn"
+      ));
+      friends.add(FriendsModel(
+          "16",
+          "doejane"
       ));
     });
   }
@@ -98,21 +106,27 @@ class _FriendsPageState extends State<FriendsPage> {
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: Column(
                           children: <Widget>[
-                            ListView.builder(
-                              //TODO: fluetfab make size fixed
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: friendRequests.length,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  title: Text(
-                                    '${friendRequests[index].username}',
-                                    style: TextStyle(
-                                      fontSize: 20,
+                            Container(
+                              height: 100,
+                              child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemExtent: 35,
+                                padding: EdgeInsets.only(
+                                  bottom: 20
+                                ),
+                                shrinkWrap: true,
+                                itemCount: friendRequests.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    title: Text(
+                                      '${friendRequests[index].username}',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
                           ]
                       ),
@@ -144,21 +158,28 @@ class _FriendsPageState extends State<FriendsPage> {
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: Column(
                           children: <Widget>[
-                            ListView.builder(
-                              //TODO: fluetfab make size fixed
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: friends.length,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  title: Text(
-                                    '${friends[index].username}',
-                                    style: TextStyle(
-                                      fontSize: 20,
+                            Container(
+                              height: 100,
+                              child: ListView.builder(
+                                //TODO: fluetfab make size fixed
+                                scrollDirection: Axis.vertical,
+                                itemExtent: 35,
+                                padding: EdgeInsets.only(
+                                    bottom: 20
+                                ),
+                                shrinkWrap: true,
+                                itemCount: friends.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    title: Text(
+                                      '${friends[index].username}',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
                           ]
                       ),
