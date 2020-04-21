@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/abstract_model.dart';
-import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/widgets/font_widgets.dart';
@@ -145,7 +144,7 @@ class _TripScreenState extends State<TripScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: true);
+    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
     tripsProvider.initBookings(tripModel);
 
