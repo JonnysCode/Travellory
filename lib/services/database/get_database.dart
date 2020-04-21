@@ -7,7 +7,7 @@ import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 
-class DatabaseGetter{
+class DatabaseGetter {
   final String getTrips = 'trips-getTrips';
   final String getFlights = 'booking-getFlights';
   final String getAccommodations = 'booking-getAccommodations';
@@ -15,12 +15,18 @@ class DatabaseGetter{
   final String getPublicTransportations = 'booking-getPublicTransportations';
   final log = getLogger('DatabaseGetter');
 
-  Future<List<Model>> getEntriesFromDatabase(String uid, String function) async {
+  Future<List<Model>> getEntriesFromDatabase(
+      String uid, String function) async {
     final HttpsCallable callable =
-    CloudFunctions.instance.getHttpsCallable(functionName: function);
+        CloudFunctions.instance.getHttpsCallable(functionName: function);
     List<dynamic> entries = [];
     try {
-      final HttpsCallableResult result = await callable.call(_getMap(uid, function));
+      final HttpsCallableResult result =
+          await callable.call(_getMap(uid, function));
+      if (result.data.contains('no-data')) {
+        print("good");
+        return _getEmptyEntries(function);
+      }
       entries = result.data;
     } on CloudFunctionsException catch (e) {
       log.e('caught firebase functions exception');
@@ -41,6 +47,28 @@ class DatabaseGetter{
         break;
     }
     return {"tripUID": uid};
+  }
+
+  List<Model> _getEmptyEntries(function) {
+    List<Model> entries = <Model>[];
+    switch (function) {
+      case "booking-getFlights":
+        entries = <FlightModel>[];
+        break;
+      case "booking-getAccommodations":
+        entries = <AccommodationModel>[];
+        break;
+      case "booking-getRentalCars":
+        entries = <RentalCarModel>[];
+        break;
+      case "booking-getPublicTransportations":
+        entries = <PublicTransportModel>[];
+        break;
+      case "trips-getTrips":
+        entries = <TripModel>[];
+        break;
+    }
+    return entries;
   }
 
   List<Model> _createEntries(dbEntries, function) {
@@ -89,7 +117,8 @@ class DatabaseGetter{
     // add accommodations from DB to accommodationModels
     List<AccommodationModel> accommodations = <AccommodationModel>[];
     for (var dbAccommodation in dbAccommodations) {
-      AccommodationModel accommodation = AccommodationModel.fromData(dbAccommodation);
+      AccommodationModel accommodation =
+          AccommodationModel.fromData(dbAccommodation);
       accommodations.add(accommodation);
     }
     return accommodations;
@@ -109,7 +138,8 @@ class DatabaseGetter{
     // add publictransport from DB to publictransportModels
     List<PublicTransportModel> publicTransports = <PublicTransportModel>[];
     for (var dbPublicTransport in dbPublicTransports) {
-      PublicTransportModel publicTransport = PublicTransportModel.fromData(dbPublicTransport);
+      PublicTransportModel publicTransport =
+          PublicTransportModel.fromData(dbPublicTransport);
       publicTransports.add(publicTransport);
     }
     return publicTransports;
