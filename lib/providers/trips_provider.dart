@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
@@ -14,6 +15,7 @@ class TripsProvider extends ChangeNotifier {
     _trips = <TripModel>[];
     _flights = <FlightModel>[];
     _accommodations = <AccommodationModel>[];
+    _activities = <ActivityModel>[];
     _rentalcars = <RentalCarModel>[];
     _publictransports = <PublicTransportModel>[];
   }
@@ -26,6 +28,7 @@ class TripsProvider extends ChangeNotifier {
   List<TripModel> _trips;
   List<FlightModel> _flights;
   List<AccommodationModel> _accommodations;
+  List<ActivityModel> _activities;
   List<RentalCarModel> _rentalcars;
   List<PublicTransportModel> _publictransports;
   UserModel _user;
@@ -38,6 +41,8 @@ class TripsProvider extends ChangeNotifier {
   List<FlightModel> get flights => _flights;
 
   List<AccommodationModel> get accommodations => _accommodations;
+
+  List<ActivityModel> get activities => _activities;
 
   List<RentalCarModel> get rentalcars => _rentalcars;
 
@@ -70,8 +75,8 @@ class TripsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void initBookings(TripModel trip) {
-    unawaited(_fetchBookings(trip.uid));
+  Future<void> initBookings(TripModel trip) async {
+    await _fetchBookings(trip.uid);
   }
 
   Future<void> _fetchBookings(String tripUID) async {
@@ -80,6 +85,7 @@ class TripsProvider extends ChangeNotifier {
         tripUID, _databaseGetter.getFlights);
     _accommodations = await _databaseGetter.getEntriesFromDatabase(
         tripUID, _databaseGetter.getAccommodations);
+    _activities = await _databaseGetter.getEntriesFromDatabase(tripUID, _databaseGetter.getActivities);
     _rentalcars = await _databaseGetter.getEntriesFromDatabase(
         tripUID, _databaseGetter.getRentalCars);
     _publictransports = await _databaseGetter.getEntriesFromDatabase(

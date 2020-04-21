@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/abstract_model.dart';
-import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/widgets/font_widgets.dart';
@@ -131,7 +130,7 @@ class _TripScreenState extends State<TripScreen> {
         color: getBookingColorAccordingTo(model),
         getSchedule: getBookingsAccordingTo(model),
         ))
-        .toList(); */
+        .toList();
 
     activityBookings = _activityModels
         .map((model) => BookingCard(
@@ -140,17 +139,18 @@ class _TripScreenState extends State<TripScreen> {
               color: getBookingColorAccordingTo(model),
               getSchedule: getBookingsAccordingTo(model),
             ))
-        .toList();
+        .toList();*/
   }
 
   @override
   Widget build(BuildContext context) {
-    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: true);
+    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
     tripsProvider.initBookings(tripModel);
 
     _flightModels = tripsProvider.flights;
     _accommodationModels = tripsProvider.accommodations;
+    _activityModels = tripsProvider.activities;
     _rentalCarModels = tripsProvider.rentalcars;
     _publicTransportModels = tripsProvider.publictransports;
 
@@ -170,6 +170,15 @@ class _TripScreenState extends State<TripScreen> {
               color: getBookingColorAccordingTo(model),
               getSchedule: getBookingsAccordingTo(model),
             ))
+        .toList();
+
+    activityBookings = _activityModels
+        .map((model) => BookingCard(
+      model: model,
+      onTap: () => Navigator.pushNamed(context, '/view/activity', arguments: model),
+      color: getBookingColorAccordingTo(model),
+      getSchedule: getBookingsAccordingTo(model),
+    ))
         .toList();
 
     rentalCarBookings = _rentalCarModels
