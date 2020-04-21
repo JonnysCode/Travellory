@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends_list_widget.dart';
 
 class FriendsPage extends StatefulWidget {
@@ -20,32 +21,56 @@ class _FriendsPageState extends State<FriendsPage> {
     setState(() {
       //TODO: hessgia1 create dynamic list according to logged in user
       friendRequests.add(FriendsModel(
-          "1",
-          "bertaben"
+        "1",
+        "doejohn",
       ));
       friendRequests.add(FriendsModel(
-          "2",
-          "grussjon"
+        "1",
+        "doejane",
       ));
       friendRequests.add(FriendsModel(
-          "3",
-          "stadena1"
+        "1",
+        "doejames",
+      ));
+      friendRequests.add(FriendsModel(
+        "1",
+        "doejessy",
+      ));
+      friendRequests.add(FriendsModel(
+        "1",
+        "doejason",
       ));
       friends.add(FriendsModel(
-          "13",
+          "11",
           "hessgia1"
       ));
       friends.add(FriendsModel(
-          "14",
+          "12",
           "schinsev"
       ));
       friends.add(FriendsModel(
+          "13",
+          "grussjon"
+      ));
+      friends.add(FriendsModel(
+          "14",
+          "bertaben"
+      ));
+      friends.add(FriendsModel(
           "15",
-          "doejohn"
+          "stadena1"
       ));
       friends.add(FriendsModel(
           "16",
-          "doejane"
+          "antilyas"
+      ));
+      friends.add(FriendsModel(
+          "17",
+          "gubleet1"
+      ));
+      friends.add(FriendsModel(
+          "18",
+          "isztldav"
       ));
     });
   }
@@ -88,12 +113,12 @@ class _FriendsPageState extends State<FriendsPage> {
                           right: 90,
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: Container(
-                        height: 25,
+                        height: 30,
                         width: MediaQuery.of(context).size.width,
                         child: Text(
                           'Friend requests',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -101,6 +126,7 @@ class _FriendsPageState extends State<FriendsPage> {
                     ),
                     friendList(
                         Key('friend_requests_list'),
+                        145,
                         friendRequests,
                         Wrap(
                           children: <Widget>[
@@ -127,12 +153,12 @@ class _FriendsPageState extends State<FriendsPage> {
                           right: 90,
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: Container(
-                        height: 25,
+                        height: 30,
                         width: MediaQuery.of(context).size.width,
                         child: Text(
                           'Friends',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -140,6 +166,7 @@ class _FriendsPageState extends State<FriendsPage> {
                     ),
                     friendList(
                         Key('my_friends_list'),
+                        225,
                         friends,
                         Wrap(
                           children: <Widget>[
@@ -152,25 +179,6 @@ class _FriendsPageState extends State<FriendsPage> {
                         ),
                         context
                     ),
-                    SizedBox(height: 20,),
-                    //TODO: fluetfab move search bar top right
-                    Padding(
-                      key: Key('add_friends'),
-                      padding: EdgeInsets.only(
-                          top: 10,
-                          left: 90,
-                          right: 90,
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: Container(
-                        height: 40,
-                        width: MediaQuery.of(context).size.width,
-                        child: filledButton("Add friends", Colors.white, Theme.of(context).primaryColor,
-                            Theme.of(context).primaryColor, Colors.white, () {
-                              //TODO: fluetfab redirect to adding friends site (schinsev)
-                              Navigator.pushNamed(context, '');
-                            }),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -181,6 +189,14 @@ class _FriendsPageState extends State<FriendsPage> {
             left: 30,
             child: Icon(
               FontAwesomeIcons.addressBook,
+              size: 50,
+            ),
+          ),
+          Positioned(
+            top: 50,
+            right: 30,
+            child: Icon(
+              Icons.search,
               size: 50,
             ),
           )

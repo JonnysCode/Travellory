@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/friends_model.dart';
 
-Widget friendList(Key key, List<FriendsModel> list, Widget trailing, BuildContext context) {
+Widget friendList(Key key, double height ,List<FriendsModel> list, Widget trailing, BuildContext context) {
   return Padding(
     key: key,
     padding: EdgeInsets.only(
@@ -11,7 +11,7 @@ Widget friendList(Key key, List<FriendsModel> list, Widget trailing, BuildContex
     child: Column(
         children: <Widget>[
           Container(
-            height: 100,
+            height: height,
             child: ListView.builder(
               padding: EdgeInsets.only(
                 bottom: 50,
