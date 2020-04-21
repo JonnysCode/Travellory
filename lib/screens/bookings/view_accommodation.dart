@@ -7,24 +7,6 @@ import 'package:travellory/widgets/bookings/view_bookings.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
-List<AccommodationModel> accommodationModels = <AccommodationModel>[
-  /**AccommodationModel(
-      type: 'Hotel',
-      specificationOther: null,
-      name: 'Carina',
-      confirmationNr: 'Ra1574e',
-      address: 'Zürcherstrasse 5',
-      nights: '2',
-      checkinDate: '2020-05-11',
-      checkinTime: '12:00:00',
-      checkoutDate: '2020-05-13',
-      checkoutTime: '10:00',
-      breakfast: true,
-      hotelRoomType: 'Double',
-      airbnbType: null,
-      notes: 'Some Notes'),*/
-];
-
 class AccommodationView extends StatefulWidget {
   @override
   _AccommodationViewState createState() => _AccommodationViewState();
@@ -111,6 +93,7 @@ class _AccommodationViewState extends State<AccommodationView> {
     List<AccommodationModel> accommodations = [];
     accommodations.add(accommodationModel);
     accommodationModels = accommodations;
+
     return Scaffold(
       key: Key('AccommodationView'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,

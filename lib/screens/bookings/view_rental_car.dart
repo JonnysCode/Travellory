@@ -91,6 +91,7 @@ class _RentalCarViewState extends State<RentalCarView> {
     List<RentalCarModel> rentalCars = [];
     rentalCars.add(rentalCarModel);
     rentalCarModels = rentalCars;
+
     return Scaffold(
       key: Key('RentalCarView'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
