@@ -9,18 +9,7 @@ final AccommodationModel model = AccommodationModel()
   ..name = 'Travelodge'
   ..address = "100 King's Cross Rd, London WC1X 9DT"
   ..checkinDate = '2020-05-01'
-  ..checkinTime = '12:00'
-  ..tripUID = ''
-  ..uid = ''
-  ..specificationOther = ''
-  ..confirmationNr = ''
-  ..nights = ''
-  ..checkoutDate = ''
-  ..checkoutTime = ''
-  ..breakfast = false
-  ..hotelRoomType = ''
-  ..airbnbType = ''
-  ..notes = '';
+  ..checkinTime = '12:00';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key key}) : super(key: key);

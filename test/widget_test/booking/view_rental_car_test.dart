@@ -6,18 +6,7 @@ import 'package:travellory/screens/bookings/view_rental_car.dart';
 
 final RentalCarModel model = RentalCarModel()
   ..pickupLocation = 'London City'
-  ..pickupDate = '2020-05-02'
-  ..tripUID = ''
-  ..uid = ''
-  ..bookingReference = ''
-  ..company = ''
-  ..pickupTime = ''
-  ..returnLocation = ''
-  ..returnDate = ''
-  ..returnTime = ''
-  ..carDescription = ''
-  ..carNumberPlate = ''
-  ..notes = '';
+  ..pickupDate = '2020-05-02';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key key}) : super(key: key);
