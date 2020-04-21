@@ -36,7 +36,7 @@ class AuthService implements BaseAuthService {
   // create User object based on firebase user
   UserModel _userFromFirebaseUser(FirebaseUser user) {
     return user != null
-        ? UserModel(uid: user.uid, displayName: user.displayName)
+        ? UserModel(firebaseUser: user)
         : null;
   }
 
