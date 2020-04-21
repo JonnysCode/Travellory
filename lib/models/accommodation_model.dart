@@ -2,23 +2,22 @@ import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 
 class AccommodationModel extends Model {
-  AccommodationModel(
-      {this.tripUID,
-        this.uid,
-      this.type,
-      this.specificationOther,
-      this.name,
-      this.confirmationNr,
-      this.address,
-      this.nights,
-      this.checkinDate,
-      this.checkinTime,
-      this.checkoutDate,
-      this.checkoutTime,
-      this.breakfast,
-      this.hotelRoomType,
-      this.airbnbType,
-      this.notes});
+  AccommodationModel({this.tripUID = '',
+  this.uid = '',
+  this.type = '',
+  this.specificationOther = '',
+  this.name = '',
+  this.confirmationNr = '',
+  this.address = '',
+  this.nights = '',
+  this.checkinDate = '',
+  this.checkinTime = '',
+  this.checkoutDate = '',
+  this.checkoutTime = '',
+  this.breakfast = false,
+  this.hotelRoomType = '',
+  this.airbnbType = '',
+  this.notes = ''});
 
   AccommodationModel.fromData(accommodation) {
     tripUID = accommodation["tripUID"];

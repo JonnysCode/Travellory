@@ -3,21 +3,21 @@ import 'package:travellory/utils/date_converter.dart';
 
 class FlightModel extends Model {
   FlightModel(
-      {this.tripUID,
-      this.uid,
-      this.bookingReference,
-      this.airline,
-      this.flightNr,
-      this.seat,
-      this.departureLocation,
-      this.departureDate,
-      this.departureTime,
-      this.arrivalLocation,
-      this.arrivalDate,
-      this.arrivalTime,
-      this.checkedBaggage,
-      this.excessBaggage,
-      this.notes});
+      {this.tripUID = '',
+      this.uid = '',
+      this.bookingReference = '',
+      this.airline = '',
+      this.flightNr = '',
+      this.seat = '',
+      this.departureLocation = '',
+      this.departureDate = '',
+      this.departureTime = '',
+      this.arrivalLocation = '',
+      this.arrivalDate = '',
+      this.arrivalTime = '',
+      this.checkedBaggage = false,
+      this.excessBaggage = false,
+      this.notes = ''});
 
   FlightModel.fromData(flight) {
     tripUID = flight["tripUID"];

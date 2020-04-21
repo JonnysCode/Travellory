@@ -11,17 +11,7 @@ final PublicTransportModel model = PublicTransportModel()
   ..departureTime = '10:55'
   ..arrivalLocation = 'Gatwick Airport'
   ..arrivalDate = '2020-05-04'
-  ..arrivalTime = '11:30'
-  ..tripUID = ''
-  ..uid = ''
-  ..publicTransportCompany = ''
-  ..specificType = ''
-  ..booked = true
-  ..seatReserved = false
-  ..referenceNr = ''
-  ..reservationCompany = ''
-  ..seat = ''
-  ..notes = 'Some Notes';
+  ..arrivalTime = '11:30';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key key}) : super(key: key);
@@ -98,7 +88,6 @@ void main() {
     expect(find.byIcon(FontAwesomeIcons.calendarAlt, skipOffstage: false), findsNWidgets(2));
     expect(find.byIcon(FontAwesomeIcons.solidBuilding, skipOffstage: false), findsOneWidget);
     expect(find.byIcon(FontAwesomeIcons.mapMarkerAlt, skipOffstage: false), findsNWidgets(2));
-    expect(find.byIcon(FontAwesomeIcons.ticketAlt, skipOffstage: false), findsOneWidget);
     expect(find.byIcon(FontAwesomeIcons.stickyNote, skipOffstage: false), findsOneWidget);
   });
 }

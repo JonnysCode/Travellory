@@ -2,18 +2,18 @@ import 'package:travellory/models/abstract_model.dart';
 
 class ActivityModel extends Model {
   ActivityModel(
-      {this.tripUID,
-      this.uid,
-      this.category,
-      this.title,
-      this.description,
-      this.location,
-      this.startDate,
-      this.startTime,
-      this.endDate,
-      this.endTime,
-      this.imageNr,
-      this.notes});
+      {this.tripUID = '',
+      this.uid = '',
+      this.category = '',
+      this.title = '',
+      this.description = '',
+      this.location = '',
+      this.startDate = '',
+      this.startTime = '',
+      this.endDate = '',
+      this.endTime = '',
+      this.imageNr = 1,
+      this.notes = ''});
 
   ActivityModel.fromData(activity) {
     tripUID = activity["tripUID"];

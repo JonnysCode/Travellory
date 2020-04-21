@@ -10,16 +10,16 @@ final FlightModel model = FlightModel()
   ..departureTime = '7:30'
   ..arrivalLocation = 'London'
   ..arrivalDate = '2020-05-01'
-  ..arrivalTime = '8:35'
-  ..tripUID = ''
-  ..uid = ''
-  ..bookingReference = ''
-  ..airline = ''
-  ..flightNr = ''
-  ..seat = ''
-  ..checkedBaggage = false
-  ..excessBaggage = false
-  ..notes = '';
+  ..arrivalTime = '8:35';
+//  ..tripUID = ''
+//  ..uid = ''
+//  ..bookingReference = ''
+//  ..airline = ''
+//  ..flightNr = ''
+//  ..seat = ''
+//  ..checkedBaggage = false
+//  ..excessBaggage = false
+//  ..notes = '';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key key}) : super(key: key);

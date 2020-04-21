@@ -3,19 +3,19 @@ import 'package:travellory/utils/date_converter.dart';
 
 class RentalCarModel extends Model {
   RentalCarModel(
-      {this.tripUID,
-      this.uid,
-      this.bookingReference,
-      this.company,
-      this.pickupLocation,
-      this.pickupDate,
-      this.pickupTime,
-      this.returnLocation,
-      this.returnDate,
-      this.returnTime,
-      this.carDescription,
-      this.carNumberPlate,
-      this.notes});
+      {this.tripUID = '',
+      this.uid = '',
+      this.bookingReference = '',
+      this.company = '',
+      this.pickupLocation = '',
+      this.pickupDate = '',
+      this.pickupTime = '',
+      this.returnLocation = '',
+      this.returnDate = '',
+      this.returnTime = '',
+      this.carDescription = '',
+      this.carNumberPlate = '',
+      this.notes = ''});
 
   RentalCarModel.fromData(rentalCar) {
     tripUID = rentalCar["tripUID"];

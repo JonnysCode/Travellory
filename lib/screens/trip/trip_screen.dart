@@ -58,27 +58,27 @@ import 'package:travellory/widgets/trip/trip_header.dart';
     ..pickupLocation = 'London City'
     ..pickupDate = '2020-05-02';*/
 
-List<Model> _flightModels = <Model>[
-  //_flightOne,
-  //_flightTwo,
-];
-
-List<Model> _accommodationModels = <Model>[
-  //_accommodation,
-];
-
-List<Model> _publicTransportModels = <Model>[
-  //_metro,
-  //_taxi,
-];
-
-List<Model> _activityModels = <Model>[
-  //_cinema,
-];
-
-List<Model> _rentalCarModels = <Model>[
-  //_rental,
-];
+//List<Model> _flightModels = <Model>[
+//  //_flightOne,
+//  //_flightTwo,
+//];
+//
+//List<Model> _accommodationModels = <Model>[
+//  //_accommodation,
+//];
+//
+//List<Model> _publicTransportModels = <Model>[
+//  //_metro,
+//  //_taxi,
+//];
+//
+//List<Model> _activityModels = <Model>[
+//  //_cinema,
+//];
+//
+//List<Model> _rentalCarModels = <Model>[
+//  //_rental,
+//];
 
 class TripScreen extends StatefulWidget {
   const TripScreen({
@@ -132,13 +132,13 @@ class _TripScreenState extends State<TripScreen> {
         ))
         .toList();
 
-    activityBookings = _activityModels
+        activityBookings = _activityModels
         .map((model) => BookingCard(
-              model: model,
-              onTap: () => Navigator.pushNamed(context, '/view/activity', arguments: model),
-              color: getBookingColorAccordingTo(model),
-              getSchedule: getBookingsAccordingTo(model),
-            ))
+        model: model,
+        onTap: () => Navigator.pushNamed(context, '/view/activity', arguments: model),
+        color: getBookingColorAccordingTo(model),
+        getSchedule: getBookingsAccordingTo(model),
+        ))
         .toList();*/
   }
 
@@ -148,11 +148,11 @@ class _TripScreenState extends State<TripScreen> {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
     tripsProvider.initBookings(tripModel);
 
-    _flightModels = tripsProvider.flights;
-    _accommodationModels = tripsProvider.accommodations;
-    _activityModels = tripsProvider.activities;
-    _rentalCarModels = tripsProvider.rentalcars;
-    _publicTransportModels = tripsProvider.publictransports;
+    List<Model> _flightModels = tripsProvider.flights;
+    List<Model> _accommodationModels = tripsProvider.accommodations;
+    List<Model> _activityModels = tripsProvider.activities;
+    List<Model> _rentalCarModels = tripsProvider.rentalcars;
+    List<Model> _publicTransportModels = tripsProvider.publictransports;
 
     flightBookings = _flightModels
         .map((model) => BookingCard(
@@ -174,11 +174,11 @@ class _TripScreenState extends State<TripScreen> {
 
     activityBookings = _activityModels
         .map((model) => BookingCard(
-      model: model,
-      onTap: () => Navigator.pushNamed(context, '/view/activity', arguments: model),
-      color: getBookingColorAccordingTo(model),
-      getSchedule: getBookingsAccordingTo(model),
-    ))
+              model: model,
+              onTap: () => Navigator.pushNamed(context, '/view/activity', arguments: model),
+              color: getBookingColorAccordingTo(model),
+              getSchedule: getBookingsAccordingTo(model),
+            ))
         .toList();
 
     rentalCarBookings = _rentalCarModels
