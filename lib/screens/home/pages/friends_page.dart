@@ -88,7 +88,7 @@ class _FriendsPageState extends State<FriendsPage> {
                           right: 90,
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: Container(
-                        height: 20,
+                        height: 25,
                         width: MediaQuery.of(context).size.width,
                         child: Text(
                           'Friend requests',
@@ -104,6 +104,7 @@ class _FriendsPageState extends State<FriendsPage> {
                         friendRequests,
                         context
                     ),
+                    SizedBox(height: 20),
                     Padding(
                       key: Key('my_friends'),
                       padding: EdgeInsets.only(
@@ -112,7 +113,7 @@ class _FriendsPageState extends State<FriendsPage> {
                           right: 90,
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: Container(
-                        height: 20,
+                        height: 25,
                         width: MediaQuery.of(context).size.width,
                         child: Text(
                           'Friends',
