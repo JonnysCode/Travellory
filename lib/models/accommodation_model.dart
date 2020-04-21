@@ -28,9 +28,9 @@ class AccommodationModel extends Model {
     confirmationNr = accommodation["confirmationNr"];
     address = accommodation["address"];
     nights = accommodation["nights"];
-    checkinDate = getOnlyDate(accommodation["checkinDate"]);
+    checkinDate = accommodation["checkinDate"];
     checkinTime = accommodation["checkinTime"];
-    checkoutDate = getOnlyDate(accommodation["checkoutDate"]);
+    checkoutDate = accommodation["checkoutDate"];
     checkoutTime = accommodation["checkoutTime"];
     breakfast = accommodation["breakfast"];
     hotelRoomType = accommodation["hotelRoomType"];

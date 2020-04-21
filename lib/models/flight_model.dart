@@ -27,10 +27,10 @@ class FlightModel extends Model {
     flightNr = flight["flightNr"];
     seat = flight["seat"];
     departureLocation = flight["departureLocation"];
-    departureDate = getOnlyDate(flight["departureDate"]);
+    departureDate = flight["departureDate"];
     departureTime = flight["departureTime"];
     arrivalLocation = flight["arrivalLocation"];
-    arrivalDate = getOnlyDate(flight["arrivalDate"]);
+    arrivalDate = flight["arrivalDate"];
     arrivalTime = flight["arrivalTime"];
     checkedBaggage = flight["checkedBaggage"];
     excessBaggage = flight["excessBaggage"];

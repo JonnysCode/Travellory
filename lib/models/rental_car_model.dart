@@ -23,10 +23,10 @@ class RentalCarModel extends Model {
     bookingReference = rentalCar["bookingReference"];
     company = rentalCar["company"];
     pickupLocation = rentalCar["pickupLocation"];
-    pickupDate = getOnlyDate(rentalCar["pickupDate"]);
+    pickupDate = rentalCar["pickupDate"];
     pickupTime = rentalCar["pickupTime"];
     returnLocation = rentalCar["returnLocation"];
-    returnDate = getOnlyDate(rentalCar["returnDate"]);
+    returnDate = rentalCar["returnDate"];
     returnTime = rentalCar["returnTime"];
     carDescription = rentalCar["carDescription"];
     carNumberPlate = rentalCar["carNumberPlate"];
