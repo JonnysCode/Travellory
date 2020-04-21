@@ -50,21 +50,21 @@ class MapSample extends StatefulWidget {
 class MapSampleState extends State<MapSample> {
 
   Future<void> onMapCreated() async {
-    final googleOffices = await locations.getGoogleOffices();
+    //final googleOffices = await locations.getGoogleOffices();
     final t_boundaries = await GMapBorderLoader.generateBorders(_userCities);
     setState(() {
       markers.clear();
-      for (final office in googleOffices.offices) {
-        final marker = Marker(
-          markerId: MarkerId(office.name),
-          position: LatLng(office.lat, office.lng),
-          infoWindow: InfoWindow(
-            title: office.name,
-            snippet: office.address,
-          ),
-        );
-        markers[office.name] = marker;
-      }
+//      for (final office in googleOffices.offices) {
+//        final marker = Marker(
+//          markerId: MarkerId(office.name),
+//          position: LatLng(office.lat, office.lng),
+//          infoWindow: InfoWindow(
+//            title: office.name,
+//            snippet: office.address,
+//          ),
+//        );
+//        markers[office.name] = marker;
+//      }
 
       if(t_boundaries.isNotEmpty){
         boundaries.clear();
