@@ -7,7 +7,7 @@ import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
 List<FlightModel> flightModels = <FlightModel> [
-  FlightModel(
+  /**FlightModel(
     bookingReference: 'A1B',
     airline: 'Swiss',
     flightNr: 'LX300',
@@ -21,7 +21,7 @@ List<FlightModel> flightModels = <FlightModel> [
     checkedBaggage: true,
     excessBaggage: false,
     notes: null,
-  ),
+  ),*/
 ];
 
 class FlightView extends StatefulWidget {
@@ -33,6 +33,7 @@ class _FlightViewState extends State<FlightView> {
   //final String bannerUrl = 'assets/images/bookings/airline_banner.jpg';
   final String bannerUrl = 'assets/images/bookings/plane_banner.png';
   final String headerTitle = 'Your Flight';
+
 
   SingleChildScrollView flightViewPage() {
     return SingleChildScrollView(
@@ -95,6 +96,10 @@ class _FlightViewState extends State<FlightView> {
 
   @override
   Widget build(BuildContext context) {
+    final FlightModel flightModel = ModalRoute.of(context).settings.arguments;
+    List<FlightModel> flights = [];
+    flights.add(flightModel);
+    flightModels = flights;
     return Scaffold(
       key: Key('FlightView'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
