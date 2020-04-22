@@ -3,8 +3,8 @@ import 'package:path/path.dart' as path;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:travellory/logger.dart';
 
-final String USER_PROFILE_PICTURES = 'profile-pictures/';
-final String DEFAULT_USER_PROFILE_PICTURES =
+const String userProfilePicturesDir = 'profile-pictures/';
+const String defaultUserProfilePicture =
     'https://firebasestorage.googleapis.com/v0/b/travellory-9b789.appspot.com/o/profile-pictures%2Fphoto_camera.png?alt=media&token=5e138c64-709e-4172-9b89-664cdc28a347';
 
 class Storage {
@@ -23,7 +23,7 @@ class Storage {
     }
     log.d('Will upload file: $filename');
     StorageReference storageReference =
-        FirebaseStorage.instance.ref().child(directory + '/' + filename);
+        FirebaseStorage.instance.ref().child('$directory/$filename');
 
     final StorageUploadTask uploadTask = storageReference.putFile(file);
     await uploadTask.onComplete;

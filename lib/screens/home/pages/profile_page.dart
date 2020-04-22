@@ -34,8 +34,8 @@ class _ProfilePageState extends State<ProfilePage>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    imagePicker = ImagePickerHandler(this, _controller);
-    imagePicker.init();
+    imagePicker = ImagePickerHandler(this, _controller)
+      ..init();
   }
 
   @override
@@ -46,9 +46,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    if (user == null) {
-      user = Provider.of<UserModel>(context);
-    }
+    user ??= Provider.of<UserModel>(context);
     return SafeArea(
       child: Stack(
         children: <Widget>[
@@ -86,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage>
                         child: CachedNetworkImage(
                           /// will check local cache first and download from firebase if necessary
                           imageUrl:
-                              user.photoUrl ?? DEFAULT_USER_PROFILE_PICTURES,
+                              user.photoUrl ?? defaultUserProfilePicture,
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                                 image: DecorationImage(
@@ -174,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage>
     if (_image != null) {
       /// uploading file to the firebase storage
       Storage storage = Storage();
-      String fileURL = await storage.uploadFile(_image, USER_PROFILE_PICTURES,
+      String fileURL = await storage.uploadFile(_image, userProfilePicturesDir,
           filename: '$user.uid ${path.basename(_image.path)}');
 
       /// update variable photoUrl of current user with the returned fileURL from firebase
