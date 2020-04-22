@@ -26,7 +26,7 @@ class ActivityBookings extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               FashionFetishText(
-                text: activity.description,
+                text: activity.title,
                 size: 15,
                 fontWeight: FashionFontWeight.heavy,
                 height: 1.2,
@@ -60,13 +60,19 @@ class ActivityBookings extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'from ${activity.startTime}',
+                  '${activity.startTime}',
                   style: TextStyle(
                     color: Colors.black38,
                   ),
                 ),
                 Text(
-                  'to ${activity.endTime}',
+                  'to',
+                  style: TextStyle(
+                    color: Colors.black38,
+                  ),
+                ),
+                Text(
+                  '${activity.endTime}',
                   style: TextStyle(
                     color: Colors.black38,
                   ),
