@@ -47,6 +47,7 @@ dependencies:
   custom_navigation_bar: ^0.2.6
   flushbar: 1.8.0
   logger: ^0.6.0
+  tuple: ^1.0.3
   path_provider: 1.5.1
   cached_network_image: 2.0.0
   firebase_auth_mocks: ^0.1.3

@@ -79,7 +79,6 @@ class _ProfilePageState extends State<ProfilePage>
                       child: Container(
                         height: 258.0,
                         width: 258.0,
-
                         /// profile picture with placeholder
                         child: CachedNetworkImage(
                           /// will check local cache first and download from firebase if necessary
