@@ -58,4 +58,15 @@ void main() {
     verify(auth.signOut());
   });
 
+  testWidgets('test update photoUrl', (WidgetTester tester) async {
+
+    FirebaseAuth auth = MockAuth();
+    AuthService authService = AuthService(auth: auth);
+
+    String photoUrl = 'https://via.placeholder.com/150';
+    await authService.updatePhotoUrl(photoUrl);
+
+    verify(authService.updatePhotoUrl(photoUrl));
+  });
+
 }
