@@ -86,18 +86,23 @@ class TripScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: Consumer<TripsProvider>( //TODO: choose better option -> consumer/selector (with Tuple)
+                  child: Consumer<TripsProvider>(
+                    //TODO: choose better option -> consumer/selector (with Tuple)
                     builder: (_, tripsProvider, __) => tripsProvider.isFetching
-                        ?  SizedBox(height: 80, child: Loading())
-                        :  Column(
-                      children: tripsProvider.flights.map((model) => BookingCard(
-                          model: model,
-                          onTap: () => Navigator.pushNamed(context, '/view/flight', arguments: model),
-                          color: getBookingColorAccordingTo(model),
-                          getSchedule: getBookingsAccordingTo(model),
-                        )
-                      ).toList(),
-                    ),
+                        ? SizedBox(height: 80, child: Loading())
+                        : Column(
+                            children: tripsProvider.flights
+                                .map((model) => Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: BookingCard(
+                                      model: model,
+                                      onTap: () => Navigator.pushNamed(context, '/view/flight',
+                                          arguments: model),
+                                      color: getBookingColorAccordingTo(model),
+                                      getSchedule: getBookingsAccordingTo(model),
+                                    )))
+                                .toList(),
+                          ),
                   ),
                 ),
                 Padding(
@@ -109,13 +114,17 @@ class TripScreen extends StatelessWidget {
                   child: Selector<TripsProvider, List<Model>>(
                     selector: (_, tripsProvider) => tripsProvider.accommodations,
                     builder: (_, accommodations, __) => Column(
-                      children: accommodations.map((model) => BookingCard(
-                        model: model,
-                        onTap: () => Navigator.pushNamed(context, '/view/accommodation', arguments: model),
-                        color: getBookingColorAccordingTo(model),
-                        getSchedule: getBookingsAccordingTo(model),
-                      )
-                      ).toList(),
+                      children: accommodations
+                          .map((model) => Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: BookingCard(
+                                model: model,
+                                onTap: () => Navigator.pushNamed(context, '/view/accommodation',
+                                    arguments: model),
+                                color: getBookingColorAccordingTo(model),
+                                getSchedule: getBookingsAccordingTo(model),
+                              )))
+                          .toList(),
                     ),
                   ),
                 ),
@@ -128,13 +137,17 @@ class TripScreen extends StatelessWidget {
                   child: Selector<TripsProvider, List<Model>>(
                     selector: (_, tripsProvider) => tripsProvider.activities,
                     builder: (_, activities, __) => Column(
-                      children: activities.map((model) => BookingCard(
-                        model: model,
-                        onTap: () => Navigator.pushNamed(context, '/view/activity', arguments: model),
-                        color: getBookingColorAccordingTo(model),
-                        getSchedule: getBookingsAccordingTo(model),
-                      )
-                      ).toList(),
+                      children: activities
+                          .map((model) => Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: BookingCard(
+                                model: model,
+                                onTap: () => Navigator.pushNamed(context, '/view/activity',
+                                    arguments: model),
+                                color: getBookingColorAccordingTo(model),
+                                getSchedule: getBookingsAccordingTo(model),
+                              )))
+                          .toList(),
                     ),
                   ),
                 ),
@@ -147,13 +160,17 @@ class TripScreen extends StatelessWidget {
                   child: Selector<TripsProvider, List<Model>>(
                     selector: (_, tripsProvider) => tripsProvider.rentalcars,
                     builder: (_, rentalCars, __) => Column(
-                      children: rentalCars.map((model) => BookingCard(
-                        model: model,
-                        onTap: () => Navigator.pushNamed(context, '/view/rentalcar', arguments: model),
-                        color: getBookingColorAccordingTo(model),
-                        getSchedule: getBookingsAccordingTo(model),
-                      )
-                      ).toList(),
+                      children: rentalCars
+                          .map((model) => Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: BookingCard(
+                                model: model,
+                                onTap: () => Navigator.pushNamed(context, '/view/rentalcar',
+                                    arguments: model),
+                                color: getBookingColorAccordingTo(model),
+                                getSchedule: getBookingsAccordingTo(model),
+                              )))
+                          .toList(),
                     ),
                   ),
                 ),
@@ -166,13 +183,17 @@ class TripScreen extends StatelessWidget {
                   child: Selector<TripsProvider, List<Model>>(
                     selector: (_, tripsProvider) => tripsProvider.publictransports,
                     builder: (_, publicTransports, __) => Column(
-                      children: publicTransports.map((model) => BookingCard(
-                        model: model,
-                        onTap: () => Navigator.pushNamed(context, '/view/publictransport', arguments: model),
-                        color: getBookingColorAccordingTo(model),
-                        getSchedule: getBookingsAccordingTo(model),
-                      )
-                      ).toList(),
+                      children: publicTransports
+                          .map((model) => Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: BookingCard(
+                                model: model,
+                                onTap: () => Navigator.pushNamed(context, '/view/publictransport',
+                                    arguments: model),
+                                color: getBookingColorAccordingTo(model),
+                                getSchedule: getBookingsAccordingTo(model),
+                              )))
+                          .toList(),
                     ),
                   ),
                 ),
