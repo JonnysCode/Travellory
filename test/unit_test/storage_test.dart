@@ -20,8 +20,8 @@ void main() {
   test('test uploading a file', () async {
     File file = File('assets/photo_camera.png');
     Storage storage = MockStorage();
-    String fileUrl = await storage.uploadFile(file, USER_PROFILE_PICTURES);
-    expect(fileUrl, USER_PROFILE_PICTURES+path.basename(file.path));
+    String fileUrl = await storage.uploadFile(file, userProfilePicturesDir);
+    expect(fileUrl, userProfilePicturesDir+path.basename(file.path));
   });
 
 }
