@@ -9,16 +9,28 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 
 class DatabaseGetter {
-  final String getTrips = 'trips-getTrips';
-  final String getFlights = 'booking-getFlights';
-  final String getAccommodations = 'booking-getAccommodations';
-  final String getActivities = 'activity-getActivities';
-  final String getRentalCars = 'booking-getRentalCars';
-  final String getPublicTransportations = 'booking-getPublicTransportations';
+  static const String getTrips = 'trips-getTrips';
+  static const String getFlights = 'booking-getFlights';
+  static const String getAccommodations = 'booking-getAccommodations';
+  static const String getActivities = 'activity-getActivities';
+  static const String getRentalCars = 'booking-getRentalCars';
+  static const String getPublicTransportations = 'booking-getPublicTransportations';
+  static const int _maxCount = 100;
+
+  static int _count = 0;
+
   final log = getLogger('DatabaseGetter');
 
   Future<List<Model>> getEntriesFromDatabase(
       String uid, String function) async {
+    // debug
+    print('Getting entry from database -> ' + (++_count).toString());
+    print('Entry type: ' + function);
+    if(_count >= _maxCount){
+      log.w('maxCount exceeded in get ');
+      return <Model>[];
+    }
+
     final HttpsCallable callable =
         CloudFunctions.instance.getHttpsCallable(functionName: function);
     List<dynamic> entries = [];
@@ -43,7 +55,7 @@ class DatabaseGetter {
 
   Map<String, dynamic> _getMap(String uid, String function) {
     switch (function) {
-      case "trips-getTrips":
+      case 'trips-getTrips':
         return {"userUID": uid};
         break;
     }
@@ -53,22 +65,22 @@ class DatabaseGetter {
   List<Model> _getEmptyEntries(function) {
     List<Model> entries = <Model>[];
     switch (function) {
-      case "booking-getFlights":
+      case 'booking-getFlights':
         entries = <FlightModel>[];
         break;
-      case "booking-getAccommodations":
+      case 'booking-getAccommodations':
         entries = <AccommodationModel>[];
         break;
-      case "booking-getRentalCars":
+      case 'booking-getRentalCars':
         entries = <RentalCarModel>[];
         break;
-      case "booking-getPublicTransportations":
+      case 'booking-getPublicTransportations':
         entries = <PublicTransportModel>[];
         break;
-      case "activity-getActivities":
+      case 'activity-getActivities':
         entries = <ActivityModel>[];
         break;
-      case "trips-getTrips":
+      case 'trips-getTrips':
         entries = <TripModel>[];
         break;
     }
@@ -78,22 +90,22 @@ class DatabaseGetter {
   List<Model> _createEntries(dbEntries, function) {
     List<Model> entries = <Model>[];
     switch (function) {
-      case "booking-getFlights":
+      case 'booking-getFlights':
         entries = _createFlights(dbEntries);
         break;
-      case "booking-getAccommodations":
+      case 'booking-getAccommodations':
         entries = _createAccommodations(dbEntries);
         break;
-      case "booking-getRentalCars":
+      case 'booking-getRentalCars':
         entries = _createRentalCars(dbEntries);
         break;
-      case "booking-getPublicTransportations":
+      case 'booking-getPublicTransportations':
         entries = _createPublicTransports(dbEntries);
         break;
-      case "activity-getActivities":
+      case 'activity-getActivities':
         entries = _createActivities(dbEntries);
         break;
-      case "trips-getTrips":
+      case 'trips-getTrips':
         entries = _createTrips(dbEntries);
         break;
     }
