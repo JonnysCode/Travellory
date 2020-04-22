@@ -115,9 +115,9 @@ class DatabaseGetter {
 
   List<TripModel> _createTrips(dbTrips) {
     // add trips from DB to tripModels
-    List<TripModel> trips = <TripModel>[];
-    for (var dbTrip in dbTrips) {
-      TripModel trip = TripModel.fromData(dbTrip);
+    final List<TripModel> trips = <TripModel>[];
+    for (final dbTrip in dbTrips) {
+      final TripModel trip = TripModel.fromData(dbTrip);
       trips.add(trip);
     }
     return trips;
@@ -125,9 +125,9 @@ class DatabaseGetter {
 
   List<FlightModel> _createFlights(dbFlights) {
     // add flights from DB to flightModels
-    List<FlightModel> flights = <FlightModel>[];
-    for (var dbFlight in dbFlights) {
-      FlightModel flight = FlightModel.fromData(dbFlight);
+    final List<FlightModel> flights = <FlightModel>[];
+    for (final dbFlight in dbFlights) {
+      final FlightModel flight = FlightModel.fromData(dbFlight);
       flights.add(flight);
     }
     return flights;
@@ -135,9 +135,9 @@ class DatabaseGetter {
 
   List<AccommodationModel> _createAccommodations(dbAccommodations) {
     // add accommodations from DB to accommodationModels
-    List<AccommodationModel> accommodations = <AccommodationModel>[];
-    for (var dbAccommodation in dbAccommodations) {
-      AccommodationModel accommodation =
+    final List<AccommodationModel> accommodations = <AccommodationModel>[];
+    for (final dbAccommodation in dbAccommodations) {
+      final AccommodationModel accommodation =
           AccommodationModel.fromData(dbAccommodation);
       accommodations.add(accommodation);
     }
@@ -146,9 +146,9 @@ class DatabaseGetter {
 
   List<RentalCarModel> _createRentalCars(dbRentalCars) {
     // add rentalcars from DB to rentalcarModels
-    List<RentalCarModel> rentalCars = <RentalCarModel>[];
-    for (var dbRentalCar in dbRentalCars) {
-      RentalCarModel rentalCar = RentalCarModel.fromData(dbRentalCar);
+    final List<RentalCarModel> rentalCars = <RentalCarModel>[];
+    for (final dbRentalCar in dbRentalCars) {
+      final RentalCarModel rentalCar = RentalCarModel.fromData(dbRentalCar);
       rentalCars.add(rentalCar);
     }
     return rentalCars;
@@ -156,9 +156,9 @@ class DatabaseGetter {
 
   List<PublicTransportModel> _createPublicTransports(dbPublicTransports) {
     // add publictransport from DB to publictransportModels
-    List<PublicTransportModel> publicTransports = <PublicTransportModel>[];
-    for (var dbPublicTransport in dbPublicTransports) {
-      PublicTransportModel publicTransport =
+    final List<PublicTransportModel> publicTransports = <PublicTransportModel>[];
+    for (final dbPublicTransport in dbPublicTransports) {
+      final PublicTransportModel publicTransport =
           PublicTransportModel.fromData(dbPublicTransport);
       publicTransports.add(publicTransport);
     }
@@ -167,9 +167,9 @@ class DatabaseGetter {
 
   List<ActivityModel> _createActivities(dbActivities) {
     // add activity from DB to activityModels
-    List<ActivityModel> activities = <ActivityModel>[];
-    for (var dbActivity in dbActivities) {
-      ActivityModel activity =
+    final List<ActivityModel> activities = <ActivityModel>[];
+    for (final dbActivity in dbActivities) {
+      final ActivityModel activity =
       ActivityModel.fromData(dbActivity);
       activities.add(activity);
     }
