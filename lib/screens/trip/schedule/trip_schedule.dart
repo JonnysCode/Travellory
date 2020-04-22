@@ -10,7 +10,7 @@ class Schedule extends StatefulWidget {
 }
 
 class _ScheduleState extends State<Schedule> {
-  static TripModel _tripModel = TripModel(
+  static final TripModel _tripModel = TripModel(
       name: 'Castle Discovery',
       startDate: '2020-05-11',
       endDate: '2020-05-19',
