@@ -151,7 +151,7 @@ class _ActivityState extends State<Activity> {
                       padding:
                           const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
-                          labelText: 'Location',
+                          labelText: 'Location *',
                           icon: Icon(Icons.location_on),
                           optional: false,
                           onChanged: (value) => activityModel.location = value),

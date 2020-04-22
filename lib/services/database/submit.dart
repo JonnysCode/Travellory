@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
-import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 
 import '../../logger.dart';
