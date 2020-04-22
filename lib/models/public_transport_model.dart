@@ -1,24 +1,49 @@
 import 'package:travellory/models/abstract_model.dart';
+import 'package:travellory/utils/date_converter.dart';
 
 class PublicTransportModel extends Model {
   PublicTransportModel({
-    this.transportationType,
-    this.publicTransportCompany,
-    this.specificType,
-    this.booked,
-    this.seatReserved,
-    this.referenceNr,
-    this.reservationCompany,
-    this.seat,
-    this.departureLocation,
-    this.departureDate,
-    this.departureTime,
-    this.arrivalLocation,
-    this.arrivalDate,
-    this.arrivalTime,
-    this.notes,
+    this.tripUID = '',
+    this.uid = '',
+    this.transportationType = '',
+    this.publicTransportCompany = '',
+    this.specificType = '',
+    this.booked = false,
+    this.seatReserved = false,
+    this.referenceNr = '',
+    this.reservationCompany = '',
+    this.seat = '',
+    this.departureLocation = '',
+    this.departureDate = '',
+    this.departureTime = '',
+    this.arrivalLocation = '',
+    this.arrivalDate = '',
+    this.arrivalTime = '',
+    this.notes = '',
   });
 
+  PublicTransportModel.fromData(publicTransport) {
+    tripUID = publicTransport["tripUID"];
+    uid = publicTransport["uid"];
+    transportationType = publicTransport["transportationType"];
+    publicTransportCompany = publicTransport["publicTransportCompany"];
+    specificType = publicTransport["specificType"];
+    booked = publicTransport["booked"];
+    seatReserved = publicTransport["seatReserved"];
+    referenceNr = publicTransport["referenceNr"];
+    reservationCompany = publicTransport["reservationCompany"];
+    seat = publicTransport["seat"];
+    departureLocation = publicTransport["departureLocation"];
+    departureDate = publicTransport["departureDate"];
+    departureTime = publicTransport["departureTime"];
+    arrivalLocation = publicTransport["arrivalLocation"];
+    arrivalDate = publicTransport["arrivalDate"];
+    arrivalTime = publicTransport["arrivalTime"];
+    notes = publicTransport["notes"];
+  }
+
+  String tripUID;
+  String uid;
   String transportationType;
   String publicTransportCompany;
   String specificType;
@@ -38,59 +63,24 @@ class PublicTransportModel extends Model {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'transportationType': transportationType,
-      'publicTransportCompany': publicTransportCompany,
-      'specificType': specificType,
-      'booked': booked,
-      'seatReserved': seatReserved,
-      'referenceNr': referenceNr,
-      'reservationCompany': reservationCompany,
-      'seat': seat,
-      'departureLocation': departureLocation,
-      'departureDate': departureDate,
-      'departureTime': departureTime,
-      'arrivalLocation': arrivalLocation,
-      'arrivalDate': arrivalDate,
-      'arrivalTime': arrivalTime,
-      'notes': notes
+      "tripUID": tripUID,
+      "transportationType": transportationType,
+      "publicTransportCompany": publicTransportCompany,
+      "specificType": specificType,
+      "booked": booked,
+      "seatReserved": seatReserved,
+      "referenceNr": referenceNr,
+      "reservationCompany": reservationCompany,
+      "seat": seat,
+      "departureLocation": departureLocation,
+      "departureDate": departureDate,
+      "departureTime": departureTime,
+      "arrivalLocation": arrivalLocation,
+      "arrivalDate": arrivalDate,
+      "arrivalTime": arrivalTime,
+      "notes": notes
     };
   }
 }
 
-List<PublicTransportModel> publicTransportModels = <PublicTransportModel> [
-  PublicTransportModel(
-    transportationType: 'Rail',
-    publicTransportCompany: 'RENFE',
-    specificType: null,
-    booked: true,
-    seatReserved: true,
-    referenceNr: 'R1A6',
-    reservationCompany: 'RENFE',
-    seat: '13F',
-    departureLocation: 'Madrid',
-    departureDate: '2020-06-20',
-    departureTime: '12:00:00',
-    arrivalLocation: 'Sevilla',
-    arrivalDate: '2020-06-20',
-    arrivalTime: '15:23:00',
-    notes: 'Coche 8',
-  ),
-  PublicTransportModel(
-    transportationType: 'Other',
-    publicTransportCompany: 'RENFE',
-    specificType: 'Cercanias',
-    booked: true,
-    seatReserved: false,
-    referenceNr: 'R1A6',
-    reservationCompany: 'RENFE',
-    seat: '13F',
-    departureLocation: 'Madrid',
-    departureDate: '2020-06-20',
-    departureTime: '12:00:00',
-    arrivalLocation: 'Sevilla',
-    arrivalDate: '2020-06-20',
-    arrivalTime: '15:23:00',
-    notes: 'Coche 8',
-  )
-];
-
+List<PublicTransportModel> publicTransportModels = <PublicTransportModel>[];

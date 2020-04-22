@@ -18,6 +18,7 @@ class FriendsProvider extends ChangeNotifier{
 
   List<FriendsModel> get friends => _friends;
   List<FriendsModel> get friendRequests => _friendRequests;
+  UserModel get user => _user;
 
   set user(UserModel user){
     _user = user;

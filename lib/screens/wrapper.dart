@@ -18,8 +18,13 @@ class Wrapper extends StatelessWidget {
     if(user == null){
       return Welcome();
     } else {
-      tripsProvider.init(user);
-      friendsProvider.init(user);
+      if(tripsProvider.user == null || tripsProvider.user != user){
+        tripsProvider.init(user);
+      }
+
+      if(friendsProvider.user == null || friendsProvider.user != user) {
+        friendsProvider.init(user);
+      }
       return Home();
     }
   }
