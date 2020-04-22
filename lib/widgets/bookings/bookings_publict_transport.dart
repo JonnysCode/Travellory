@@ -28,7 +28,7 @@ class PublicTransportBookings extends StatelessWidget {
               Text(
                 publicTransport.departureDate,
                 style: TextStyle(
-                  fontSize: 10.0,
+                  fontSize: 12.0,
                   color: Colors.white70,
                 ),
               ),
