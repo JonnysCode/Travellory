@@ -75,8 +75,8 @@ class _ProfilePageState extends State<ProfilePage>
                       key: Key('image_pick'),
                       onTap: () => imagePicker.showDialog(context),
                       child:  Container(
-                        height: 260.0,
-                        width: 260.0,
+                        height: 258.0,
+                        width: 258.0,
                         /// profile picture with placeholder
                         child: CachedNetworkImage(
                           /// will check local cache first and download from firebase if necessary
@@ -85,13 +85,12 @@ class _ProfilePageState extends State<ProfilePage>
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: imageProvider,
-                                  fit: BoxFit.cover
+                                  fit: BoxFit.contain
                               ),
                               border: Border.all(
                                   color: Theme.of(context).primaryColor, width: 2.0
                               ),
-                              borderRadius:
-                              BorderRadius.all(const Radius.circular(300.0))
+                              borderRadius: BorderRadius.all(const Radius.circular(300.0))
                             ),
                           ),
                           placeholder: (context, url) =>
@@ -157,7 +156,6 @@ class _ProfilePageState extends State<ProfilePage>
                             }),
                       ),
                     ),
-                    SizedBox(height: 10),
                   ],
                 ),
               ),

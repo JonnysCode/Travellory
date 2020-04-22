@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserModel {
-  UserModel({this.firebaseUser}):
-    this.uid = firebaseUser.uid,
-    this.email = firebaseUser.email,
-    this.displayName = firebaseUser.displayName,
-    this.photoUrl = firebaseUser.photoUrl,
-    this.metadata = firebaseUser.metadata;
+  UserModel({this.firebaseUser, uid, email, displayName, photoUrl, metadata}):
+    this.uid = (firebaseUser != null && firebaseUser.uid != null) ? firebaseUser.uid : uid,
+    this.email = (firebaseUser != null && firebaseUser.email != null) ? firebaseUser.email : email,
+    this.displayName = (firebaseUser != null && firebaseUser.displayName != null) ? firebaseUser.displayName : displayName,
+    this.photoUrl = (firebaseUser != null && firebaseUser.photoUrl != null) ? firebaseUser.photoUrl : photoUrl,
+    this.metadata = (firebaseUser != null && firebaseUser.metadata != null) ? firebaseUser.metadata : metadata;
 
   FirebaseUser firebaseUser;
   final String uid;
