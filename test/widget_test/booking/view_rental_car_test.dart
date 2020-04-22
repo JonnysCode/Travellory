@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/screens/bookings/view_rental_car.dart';
+
+final RentalCarModel model = RentalCarModel()
+  ..pickupLocation = 'London City'
+  ..pickupDate = '2020-05-02';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key key}) : super(key: key);
@@ -10,7 +15,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/view/rentalcar');
+        Navigator.pushNamed(context, '/view/rentalcar', arguments: model);
       },
       child: Container(
         color: const Color(0xFFFFFF00),
