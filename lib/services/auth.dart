@@ -153,8 +153,8 @@ class AuthService implements BaseAuthService {
 
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
-      // todo: logging and error handling
-      return null;
+      log.e(e.toString());
+      return Future.error(e);
     }
   }
 
