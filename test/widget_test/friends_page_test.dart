@@ -1,30 +1,63 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/screens/home/pages/friends_page.dart';
-import 'package:travellory/services/auth.dart';
-
-class MockAuth extends Mock implements BaseAuthService {}
 
 void main() {
-  Widget makeTestableWidget({Widget child, BaseAuthService auth}) {
-    return AuthProvider(
-        auth: auth,
-        child: MaterialApp(
-          home: child,
-        ));
+  Widget makeTestableWidget({Widget child}) {
+    return MaterialApp(
+      home: child
+    );
   }
 
   testWidgets('test if page is the friends page', (WidgetTester tester) async {
-    MockAuth mockAuth = MockAuth();
     FriendsPage page = FriendsPage();
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
+    await tester.pumpWidget(makeTestableWidget(child: page));
 
     // Verify that the friends page is present.
     expect(find.byKey(Key('friends_page')), findsOneWidget);
+  });
+
+  testWidgets('test if friend_requests_list is present', (WidgetTester tester) async {
+    FriendsPage page = FriendsPage();
+
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(makeTestableWidget(child: page));
+
+    // Verify that the friends_request_list page is present.
+    expect(find.byKey(Key('friend_requests_list')), findsOneWidget);
+  });
+
+  testWidgets('test if friends_list is present', (WidgetTester tester) async {
+    FriendsPage page = FriendsPage();
+
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(makeTestableWidget(child: page));
+
+    // Verify that the friends_request_list page is present.
+    expect(find.byKey(Key('friends_list')), findsOneWidget);
+  });
+
+  testWidgets('test if buttons for friends requests are present', (WidgetTester tester) async {
+    FriendsPage page = FriendsPage();
+
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(makeTestableWidget(child: page));
+
+    // Verify that the buttons for friends_request_list is present.
+    expect(find.byKey(Key('accept_button')), findsNWidgets(4));
+    expect(find.byKey(Key('decline_button')), findsNWidgets(4));
+  });
+
+  testWidgets('test if button for removing friends', (WidgetTester tester) async {
+    FriendsPage page = FriendsPage();
+
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(makeTestableWidget(child: page));
+
+    // Verify that the button for friend_list is present.
+    expect(find.byKey(Key('accept_button')), findsNWidgets(4));
   });
 }

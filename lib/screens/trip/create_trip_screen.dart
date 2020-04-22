@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/models/user_model.dart';
-import 'package:travellory/services/add_database.dart';
-import 'package:travellory/screens/trip/bookings/bookings.dart';
+import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
@@ -44,7 +44,7 @@ class _CreateTripState extends State<CreateTrip> {
 
   @override
   Widget build(BuildContext context) {
-    tripModel.userUID = Provider.of<UserModel>(context).uid;
+    TripsProvider trips = Provider.of<TripsProvider>(context, listen: false);
 
     bool validateForm() {
       return (createTripFormKey.currentState.validate());
@@ -153,7 +153,7 @@ class _CreateTripState extends State<CreateTrip> {
                             highlightColor: Theme.of(context).primaryColor,
                             fillColor: Theme.of(context).primaryColor,
                             validationFunction: validateForm,
-                            onSubmit: onSubmitTrip(tripModel, 'trips-addTrip', context, alertText),
+                            onSubmit: onSubmitTrip(trips, tripModel, context, alertText),
                           ),
                         ),
                       ),
