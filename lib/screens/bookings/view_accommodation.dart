@@ -90,7 +90,7 @@ class _AccommodationViewState extends State<AccommodationView> {
   @override
   Widget build(BuildContext context) {
     final AccommodationModel accommodationModel = ModalRoute.of(context).settings.arguments;
-    List<AccommodationModel> accommodations = [];
+    final List<AccommodationModel> accommodations = [];
     accommodations.add(accommodationModel);
     accommodationModels = accommodations;
 

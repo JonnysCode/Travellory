@@ -24,7 +24,7 @@ class BookingCard extends StatelessWidget {
     this.onTap,
     this.color,
     this.getSchedule,
-  }) : super(key : key);
+  }) : super(key: key);
 
   final Model model;
   final Function onTap;
@@ -33,7 +33,7 @@ class BookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  GestureDetector(
+    return GestureDetector(
       key: Key('booking_card'),
       onTap: onTap,
       child: Container(
@@ -51,17 +51,17 @@ class BookingCard extends StatelessWidget {
   }
 }
 
-Widget getScheduleAccordingTo(Model model){
+Widget getScheduleAccordingTo(Model model) {
   Widget widget;
-  if (model is FlightModel){
+  if (model is FlightModel) {
     widget = FlightSchedule(model);
-  } else if (model is RentalCarModel){
+  } else if (model is RentalCarModel) {
     widget = RentalCarSchedule(model);
-  } else if (model is AccommodationModel){
+  } else if (model is AccommodationModel) {
     widget = AccommodationSchedule(model);
-  } else if (model is PublicTransportModel){
+  } else if (model is PublicTransportModel) {
     widget = PublicTransportSchedule(model);
-  } else if (model is ActivityModel){
+  } else if (model is ActivityModel) {
     widget = ActivitySchedule(model);
   } else {
     widget = Container();
@@ -69,17 +69,17 @@ Widget getScheduleAccordingTo(Model model){
   return widget;
 }
 
-Widget getBookingsAccordingTo(Model model){
+Widget getBookingsAccordingTo(Model model) {
   Widget widget;
-  if (model is FlightModel){
+  if (model is FlightModel) {
     widget = FlightBookings(model);
-  } else if (model is RentalCarModel){
+  } else if (model is RentalCarModel) {
     widget = RentalCarBookings(model);
-  } else if (model is AccommodationModel){
+  } else if (model is AccommodationModel) {
     widget = AccommodationBookings(model);
-  } else if (model is PublicTransportModel){
+  } else if (model is PublicTransportModel) {
     widget = PublicTransportBookings(model);
-  } else if (model is ActivityModel){
+  } else if (model is ActivityModel) {
     widget = ActivityBookings(model);
   } else {
     widget = Container();
@@ -87,37 +87,36 @@ Widget getBookingsAccordingTo(Model model){
   return widget;
 }
 
-Color getColorAccordingTo(Model model){
+Color getColorAccordingTo(Model model) {
   Color color;
-  if (model is FlightModel){
+  if (model is FlightModel) {
     color = Colors.blue[100];
-  } else if (model is RentalCarModel){
-    color = Colors.yellow[700];
-  } else if (model is AccommodationModel){
+  } else if (model is RentalCarModel) {
+    color = Colors.yellow[600];
+  } else if (model is AccommodationModel) {
     color = Colors.deepOrange[200];
-  } else if (model is PublicTransportModel){
+  } else if (model is PublicTransportModel) {
+    color = Colors.grey;
+  } else if (model is ActivityModel) {
     color = Colors.teal[300];
-  } else if (model is ActivityModel){
-    color = Color(0xFFA1B9C6);
   } else {
     color = Colors.grey;
   }
-
   return color;
 }
 
-Color getBookingColorAccordingTo(Model model){
+Color getBookingColorAccordingTo(Model model) {
   Color color;
-  if (model is FlightModel){
+  if (model is FlightModel) {
     color = Colors.blue[100];
-  } else if (model is RentalCarModel){
+  } else if (model is RentalCarModel) {
     color = Colors.yellow[600];
-  } else if (model is AccommodationModel){
+  } else if (model is AccommodationModel) {
     color = Colors.deepOrange[200];
-  } else if (model is PublicTransportModel){
-    color = Colors.teal[300];
-  } else if (model is ActivityModel){
+  } else if (model is PublicTransportModel) {
     color = Colors.grey;
+  } else if (model is ActivityModel) {
+    color = Colors.teal[300];
   } else {
     color = Colors.grey;
   }
