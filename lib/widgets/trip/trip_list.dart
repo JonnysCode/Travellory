@@ -63,7 +63,7 @@ class TripList extends StatelessWidget {
           ),
           Expanded(
             child: Consumer<TripsProvider>(
-              builder: (_, tripsProvider, __ ) => tripsProvider.isFetching
+              builder: (_, tripsProvider, __ ) => tripsProvider.isFetchingTrips
                   ? Loading()
                   : ListView.separated(
                 padding: const EdgeInsets.all(10),
