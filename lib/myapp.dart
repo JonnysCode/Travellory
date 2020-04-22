@@ -21,7 +21,7 @@ import 'package:travellory/screens/bookings/add_public_transport.dart';
 import 'package:travellory/screens/bookings/add_rental_car.dart';
 import 'package:travellory/screens/trip/trip_screen.dart';
 import 'package:travellory/screens/wrapper.dart';
-import 'package:travellory/services/auth.dart';
+import 'package:travellory/services/authentication/auth.dart';
 import 'package:travellory/shared/loading.dart';
 
 class MyApp extends StatelessWidget {

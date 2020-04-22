@@ -88,26 +88,22 @@ class _HomePageState extends State<HomePage> {
               top: 40,
               left: 175,
               right: 20,
-              child: Container(
-                child: FashionFetishText(
-                  text: 'Get ready Bill!',
-                  size: 24,
-                  fontWeight: FashionFontWeight.heavy,
-                  height: 1.2,
-                ),
+              child: FashionFetishText(
+                text: 'Get ready Bill!',
+                size: 24,
+                fontWeight: FashionFontWeight.heavy,
+                height: 1.2,
               ),
             ),
             Positioned(
               top: 75,
               left: 175,
               right: 40,
-              child: Container(
-                child: Text(
-                  'Your trip to Los Angeles starts in 1 day. Pack your bags now.',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black54,
-                  ),
+              child: Text(
+                'Your trip to Los Angeles starts in 1 day. Pack your bags now.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black54,
                 ),
               ),
             ),

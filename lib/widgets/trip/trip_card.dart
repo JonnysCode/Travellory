@@ -70,7 +70,7 @@ class _TripCardState extends State<TripCard> {
                     Spacer(),
                     FashionFetishText(
                       text: '${toShortenedMonthDateFrom( _tripModel.startDate)} - '
-                          + '${toShortenedMonthDateFrom( _tripModel.endDate)}',
+                            '${toShortenedMonthDateFrom( _tripModel.endDate)}',
                       size: 14.0,
                       fontWeight: FashionFontWeight.bold,
                       color: Colors.black54,

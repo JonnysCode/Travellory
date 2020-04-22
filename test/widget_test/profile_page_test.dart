@@ -8,7 +8,7 @@ import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/screens/home/pages/profile_page.dart';
-import 'package:travellory/services/auth.dart';
+import 'package:travellory/services/authentication/auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
 class MockAuth extends Mock implements BaseAuthService {}

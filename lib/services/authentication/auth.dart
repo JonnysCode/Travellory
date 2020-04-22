@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travellory/logger.dart';
 import 'package:travellory/models/user_model.dart';
-import 'package:travellory/services/user_management.dart';
+import 'package:travellory/services/authentication/user_management.dart';
 
 abstract class BaseAuthService {
   Future signInAnonymously();
@@ -58,8 +58,8 @@ class AuthService implements BaseAuthService {
       final AuthResult result = await auth.signInAnonymously();
       final FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
-    } catch (e) {
-      // todo: error handling -> logging
+    } on Exception catch (e) {
+      log.e(e.toString());
       return null;
     }
   }
@@ -72,7 +72,7 @@ class AuthService implements BaseAuthService {
           email: email, password: password);
       final FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
-    } catch (e) {
+    } on Exception catch (e) {
       log.e(e.toString());
       return Future.error(e);
     }
@@ -97,7 +97,7 @@ class AuthService implements BaseAuthService {
       await UserManagement.setUsername(firebaseUser);
 
       return _userFromFirebaseUser(firebaseUser);
-    } catch (e) {
+    } on Exception catch (e) {
       log.e(e.toString());
       await _deleteCurrentUser();
       return Future.error(e);
@@ -126,8 +126,8 @@ class AuthService implements BaseAuthService {
   Future signOut() async {
     try {
       return await auth.signOut();
-    } catch (e) {
-      // todo: exeption handling, logging
+    } on Exception catch (e) {
+      log.e(e.toString());
       return null;
     }
   }

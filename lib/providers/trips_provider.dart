@@ -37,9 +37,8 @@ class TripsProvider extends ChangeNotifier {
   List<ActivityModel> _activities;
   List<RentalCarModel> _rentalCars;
   List<PublicTransportModel> _publicTransports;
-  UserModel _user;
+  UserModel user;
   TripModel selectedTrip;
-  // TODO: upcoming trip
 
   List<TripModel> get trips => _trips;
 
@@ -53,19 +52,14 @@ class TripsProvider extends ChangeNotifier {
 
   List<PublicTransportModel> get publictransports => _publicTransports;
 
-  UserModel get user => _user;
-
-  set user(UserModel user) {
-    _user = user;
-  }
 
   void init(UserModel user) {
-    _user = user;
+    this.user = user;
     unawaited(_fetchTrips());
   }
 
   Future<bool> addTrip(TripModel tripModel) async {
-    tripModel.userUID = _user.uid;
+    tripModel.userUID = user.uid;
     final bool added =
         await _databaseAdder.addModel(tripModel, DatabaseAdder.addTrip);
     if (added) {
@@ -103,7 +97,7 @@ class TripsProvider extends ChangeNotifier {
   Future<void> _fetchTrips() async {
     isFetchingTrips = true;
     _trips = await _databaseGetter.getEntriesFromDatabase(
-        _user.uid, DatabaseGetter.getTrips);
+        user.uid, DatabaseGetter.getTrips);
     isFetchingTrips = false;
     notifyListeners();
   }
