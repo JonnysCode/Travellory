@@ -200,7 +200,7 @@ class UserInformation extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 FashionFetishText(
-                  text: user.displayName != null ? user.displayName : '',
+                  text: user != null ? user.displayName : '',
                   size: 18,
                   fontWeight: FashionFontWeight.bold,
                   height: 1.1,
@@ -219,7 +219,7 @@ class UserInformation extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 FashionFetishText(
-                  text: user.email != null ? user.email : '',
+                  text: user != null ? user.email : '',
                   size: 18,
                   fontWeight: FashionFontWeight.bold,
                   height: 1.1,
@@ -238,7 +238,7 @@ class UserInformation extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 FashionFetishText(
-                  text: user.metadata != null
+                  text: user != null
                       ? DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)
                       : '',
                   size: 18,
