@@ -48,6 +48,8 @@ class TripsProvider extends ChangeNotifier {
 
   List<PublicTransportModel> get publictransports => _publictransports;
 
+  UserModel get user => _user;
+
   set user(UserModel user) {
     _user = user;
   }
@@ -60,7 +62,7 @@ class TripsProvider extends ChangeNotifier {
   Future<bool> addTrip(TripModel tripModel) async {
     tripModel.userUID = _user.uid;
     final bool added =
-        await _databaseAdder.addModel(tripModel, _databaseAdder.addTrip);
+        await _databaseAdder.addModel(tripModel, DatabaseAdder.addTrip);
     if (added) {
       unawaited(_fetchTrips());
     }
@@ -70,7 +72,7 @@ class TripsProvider extends ChangeNotifier {
   Future<void> _fetchTrips() async {
     isFetching = true;
     _trips = await _databaseGetter.getEntriesFromDatabase(
-        _user.uid, _databaseGetter.getTrips);
+        _user.uid, DatabaseGetter.getTrips);
     isFetching = false;
     notifyListeners();
   }
@@ -82,14 +84,15 @@ class TripsProvider extends ChangeNotifier {
   Future<void> _fetchBookings(String tripUID) async {
     isFetching = true;
     _flights = await _databaseGetter.getEntriesFromDatabase(
-        tripUID, _databaseGetter.getFlights);
+        tripUID, DatabaseGetter.getFlights);
     _accommodations = await _databaseGetter.getEntriesFromDatabase(
-        tripUID, _databaseGetter.getAccommodations);
-    _activities = await _databaseGetter.getEntriesFromDatabase(tripUID, _databaseGetter.getActivities);
+        tripUID, DatabaseGetter.getAccommodations);
+    _activities = await _databaseGetter.getEntriesFromDatabase(
+        tripUID, DatabaseGetter.getActivities);
     _rentalcars = await _databaseGetter.getEntriesFromDatabase(
-        tripUID, _databaseGetter.getRentalCars);
+        tripUID, DatabaseGetter.getRentalCars);
     _publictransports = await _databaseGetter.getEntriesFromDatabase(
-        tripUID, _databaseGetter.getPublicTransportations);
+        tripUID, DatabaseGetter.getPublicTransportations);
     isFetching = false;
     notifyListeners();
   }
