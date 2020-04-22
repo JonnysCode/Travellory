@@ -201,7 +201,8 @@ class TripScreen extends StatelessWidget {
                           child: Column(
                       children: data.item1.map((model) => BookingCard(
                           model: model,
-                          onTap: () => Navigator.pushNamed(context, '/view/publictransport'),
+                          onTap: () => Navigator.pushNamed(context,
+                              '/view/publictransport', arguments: model),
                           color: getBookingColorAccordingTo(model),
                           getSchedule: getBookingsAccordingTo(model),
                       )
