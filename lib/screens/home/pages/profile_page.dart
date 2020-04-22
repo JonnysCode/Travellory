@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
-import 'package:travellory/services/auth.dart';
+import 'package:travellory/services/authentication/auth.dart';
 import 'package:travellory/services/storage.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';

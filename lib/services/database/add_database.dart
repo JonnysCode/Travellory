@@ -12,8 +12,6 @@ class DatabaseAdder {
 
   // adds Model to the database
   Future<bool> addModel(Model model, String correspondingFunctionName) async {
-    log.i('Model has been added -> ' + (++_count).toString());
-    log.i('Function name: ' + correspondingFunctionName);
     if(_count >= _maxCount){
       log.w('maxCount exceeded in AddModel');
       return false;
@@ -29,7 +27,7 @@ class DatabaseAdder {
       log.e(e.code);
       log.e(e.message);
       log.e(e.details);
-    } catch (e) {
+    } on Exception catch (e) {
       log.i('caught generic exception');
       log.i(e);
     }

@@ -47,7 +47,7 @@ class _CreateTripState extends State<CreateTrip> {
     final TripsProvider trips = Provider.of<TripsProvider>(context, listen: false);
 
     bool validateForm() {
-      return (createTripFormKey.currentState.validate());
+      return createTripFormKey.currentState.validate();
     }
 
     return SafeArea(

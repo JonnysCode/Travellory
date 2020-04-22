@@ -92,19 +92,19 @@ class TripScreen extends StatelessWidget {
                         tripsProvider.isFetchingFlights),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
-                        :  Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: Column(
-                      children: data.item1.map((model) => BookingCard(
+                        :  Column(
+                      children: data.item1.map((model) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: BookingCard(
                             model: model,
                             onTap: () => Navigator.pushNamed(
                                 context, '/view/flight', arguments: model),
                             color: getBookingColorAccordingTo(model),
                             getSchedule: getBookingsAccordingTo(model),
-                          )
+                          ),
+                      )
                       ).toList(),
                     ),
-                        ),
                   ),
                 ),
                 Padding(
@@ -118,19 +118,19 @@ class TripScreen extends StatelessWidget {
                         tripsProvider.isFetchingAccommodations),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
-                        :  Padding(
-                          padding:const EdgeInsets.only(bottom: 10),
-                          child: Column(
-                      children: data.item1.map((model) => BookingCard(
+                        :  Column(
+                      children: data.item1.map((model) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: BookingCard(
                           model: model,
                           onTap: () => Navigator.pushNamed(
                               context, '/view/accommodation', arguments: model),
                           color: getBookingColorAccordingTo(model),
                           getSchedule: getBookingsAccordingTo(model),
+                        ),
                       )
                       ).toList(),
                     ),
-                        ),
                   ),
                 ),
                 Padding(
@@ -144,19 +144,19 @@ class TripScreen extends StatelessWidget {
                         tripsProvider.isFetchingActivities),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
-                        :  Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: Column(
-                      children: data.item1.map((model) => BookingCard(
+                        :  Column(
+                      children: data.item1.map((model) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: BookingCard(
                           model: model,
                           onTap: () => Navigator.pushNamed(
                               context, '/view/activity', arguments: model),
                           color: getBookingColorAccordingTo(model),
                           getSchedule: getBookingsAccordingTo(model),
+                        ),
                       )
                       ).toList(),
                     ),
-                        ),
                   ),
                 ),
                 Padding(
@@ -170,19 +170,19 @@ class TripScreen extends StatelessWidget {
                         tripsProvider.isFetchingRentalCars),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
-                        :  Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: Column(
-                      children: data.item1.map((model) => BookingCard(
+                        :  Column(
+                      children: data.item1.map((model) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: BookingCard(
                           model: model,
                           onTap: () => Navigator.pushNamed(
                               context, '/view/rentalcar', arguments: model),
                           color: getBookingColorAccordingTo(model),
                           getSchedule: getBookingsAccordingTo(model),
+                        ),
                       )
                       ).toList(),
                     ),
-                        ),
                   ),
                 ),
                 Padding(
@@ -196,19 +196,19 @@ class TripScreen extends StatelessWidget {
                         tripsProvider.isFetchingPublicTransport),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
-                        :  Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: Column(
-                      children: data.item1.map((model) => BookingCard(
+                        :  Column(
+                      children: data.item1.map((model) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: BookingCard(
                           model: model,
                           onTap: () => Navigator.pushNamed(context,
                               '/view/publictransport', arguments: model),
                           color: getBookingColorAccordingTo(model),
                           getSchedule: getBookingsAccordingTo(model),
+                        ),
                       )
                       ).toList(),
                     ),
-                        ),
                   ),
                 ),
                 SizedBox(
