@@ -24,7 +24,6 @@ class _ProfilePageState extends State<ProfilePage>
 
   final log = getLogger('_ProfilePageState');
 
-  File _image;
   AnimationController _controller;
   ImagePickerHandler imagePicker;
   UserModel user;
@@ -48,8 +47,8 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    if(this.user == null){
-      this.user = Provider.of<UserModel>(context);
+    if(user == null){
+      user = Provider.of<UserModel>(context);
     }
     return SafeArea(
       child: Stack(
@@ -80,7 +79,7 @@ class _ProfilePageState extends State<ProfilePage>
                         /// profile picture with placeholder
                         child: CachedNetworkImage(
                           /// will check local cache first and download from firebase if necessary
-                          imageUrl: user.photoUrl == null ? Storage.DEFAULT_USER_PROFILE_PICTURES : user.photoUrl,
+                          imageUrl: user.photoUrl ?? DEFAULT_USER_PROFILE_PICTURES,
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
@@ -158,13 +157,14 @@ class _ProfilePageState extends State<ProfilePage>
   void userImage(File _image) async {
     if(_image != null){
       /// uploading file to the firebase storage
-      String fileURL = await Storage.uploadFile(_image, Storage.USER_PROFILE_PICTURES, filename: this.user.uid+'_'+path.basename(_image.path));
+      Storage storage = Storage();
+      String fileURL = await storage.uploadFile(_image, USER_PROFILE_PICTURES, filename: '$user.uid ${path.basename(_image.path)}');
       /// update variable photoUrl of current user with the returned fileURL from firebase
       final BaseAuthService _auth = AuthProvider.of(context).auth;
       UserModel newUser = await _auth.updatePhotoUrl(fileURL);
       /// set this user in setState() for rebuilding widget.
       setState(() {
-        this.user = newUser;
+        user = newUser;
       });
     }
   }

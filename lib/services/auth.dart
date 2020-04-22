@@ -19,9 +19,7 @@ abstract class BaseAuthService {
 
 class AuthService implements BaseAuthService {
   AuthService({this.auth, this.userStream}) {
-    if (auth == null) {
-      auth = FirebaseAuth.instance;
-    }
+    auth ??= FirebaseAuth.instance;
   }
 
   FirebaseAuth auth;
@@ -44,9 +42,7 @@ class AuthService implements BaseAuthService {
   // auth change user stream
   @override
   Stream<UserModel> get user {
-    return userStream == null
-        ? auth.onAuthStateChanged.map(_userFromFirebaseUser)
-        : userStream;
+    return userStream ?? auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
   // get current user
@@ -141,18 +137,18 @@ class AuthService implements BaseAuthService {
   Future updatePhotoUrl(String photoUrl) async {
     try {
       FirebaseUser firebaseUser = await auth.currentUser();
-      log.d('current firebase user: '+firebaseUser.uid);
+      log.d('current firebase user: ${firebaseUser.toString()}');
 
       final UserUpdateInfo updateInfo = UserUpdateInfo()
         ..photoUrl = photoUrl;
 
-      log.d('updating photoUrl to: '+photoUrl);
+      log.d('updating photoUrl to: $photoUrl');
       await firebaseUser.updateProfile(updateInfo);
       await firebaseUser.reload();
       firebaseUser = await auth.currentUser();
 
       return _userFromFirebaseUser(firebaseUser);
-    } catch (e) {
+    } on Exception catch (e) {
       log.e(e.toString());
       return Future.error(e);
     }

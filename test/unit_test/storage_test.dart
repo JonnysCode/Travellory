@@ -6,7 +6,8 @@ import 'package:mockito/mockito.dart';
 import 'package:travellory/services/storage.dart';
 
 class MockStorage extends Mock implements Storage {
-  static Future<String> uploadFile(File file, String directory, {String filename}) async {
+  @override
+  Future<String> uploadFile(File file, String directory, {String filename}) async {
     if(filename == null){
       filename = path.basename(file.path);
     }
@@ -18,8 +19,9 @@ void main() {
 
   test('test uploading a file', () async {
     File file = File('assets/photo_camera.png');
-    String fileUrl = await MockStorage.uploadFile(file, Storage.USER_PROFILE_PICTURES);
-    expect(fileUrl, Storage.USER_PROFILE_PICTURES+path.basename(file.path));
+    Storage storage = MockStorage();
+    String fileUrl = await storage.uploadFile(file, USER_PROFILE_PICTURES);
+    expect(fileUrl, USER_PROFILE_PICTURES+path.basename(file.path));
   });
 
 }
