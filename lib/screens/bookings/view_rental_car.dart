@@ -5,6 +5,22 @@ import 'package:travellory/widgets/bookings/view_booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
+List<RentalCarModel> rentalCarModels = <RentalCarModel>[
+  RentalCarModel(
+    bookingReference: 'R1',
+    company: 'Hertz',
+    pickupLocation: 'London',
+    pickupDate: '2020-05-01',
+    pickupTime: '15:10:00',
+    returnLocation: 'London',
+    returnDate: '2020-05-04',
+    returnTime: '17:00:00',
+    carDescription: 'Audi',
+    carNumberPlate: 'FAB123',
+    notes: null,
+  ),
+];
+
 class RentalCarView extends StatefulWidget {
   @override
   _RentalCarViewState createState() => _RentalCarViewState();
@@ -71,6 +87,11 @@ class _RentalCarViewState extends State<RentalCarView> {
 
   @override
   Widget build(BuildContext context) {
+    final RentalCarModel rentalCarModel = ModalRoute.of(context).settings.arguments;
+    List<RentalCarModel> rentalCars = [];
+    rentalCars.add(rentalCarModel);
+    rentalCarModels = rentalCars;
+
     return Scaffold(
       key: Key('RentalCarView'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -79,6 +100,16 @@ class _RentalCarViewState extends State<RentalCarView> {
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
           child: bookingView(
             rentalCarViewPage(),
+          ),
+        ),
+        Positioned(
+          top: 15,
+          right: 10,
+          child: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: FaIcon(FontAwesomeIcons.times),
+            iconSize: 26,
+            color: Colors.red,
           ),
         ),
       ]),

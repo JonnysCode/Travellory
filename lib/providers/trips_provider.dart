@@ -1,40 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/models/activity_model.dart';
+import 'package:travellory/models/flight_model.dart';
+import 'package:travellory/models/public_transport_model.dart';
+import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/get_database.dart';
 import 'package:pedantic/pedantic.dart';
 
-class TripsProvider extends ChangeNotifier{
-  TripsProvider(){
-   _trips = <TripModel>[];
+class TripsProvider extends ChangeNotifier {
+  TripsProvider() {
+    _trips = <TripModel>[];
+    _flights = <FlightModel>[];
+    _accommodations = <AccommodationModel>[];
+    _activities = <ActivityModel>[];
+    _rentalcars = <RentalCarModel>[];
+    _publictransports = <PublicTransportModel>[];
   }
+
   final DatabaseAdder _databaseAdder = DatabaseAdder();
   final DatabaseGetter _databaseGetter = DatabaseGetter();
 
   bool isFetching = false;
 
   List<TripModel> _trips;
+  List<FlightModel> _flights;
+  List<AccommodationModel> _accommodations;
+  List<ActivityModel> _activities;
+  List<RentalCarModel> _rentalcars;
+  List<PublicTransportModel> _publictransports;
   UserModel _user;
+
   // TODO: next upcoming trip
   // TODO: selected trip so we don't have to pass it via Navigator
 
   List<TripModel> get trips => _trips;
 
-  set user(UserModel user){
+  List<FlightModel> get flights => _flights;
+
+  List<AccommodationModel> get accommodations => _accommodations;
+
+  List<ActivityModel> get activities => _activities;
+
+  List<RentalCarModel> get rentalcars => _rentalcars;
+
+  List<PublicTransportModel> get publictransports => _publictransports;
+
+  UserModel get user => _user;
+
+  set user(UserModel user) {
     _user = user;
   }
 
-  void init(UserModel user){
+  void init(UserModel user) {
     _user = user;
     unawaited(_fetchTrips());
   }
 
   Future<bool> addTrip(TripModel tripModel) async {
     tripModel.userUID = _user.uid;
-    final bool added = await _databaseAdder.addModel(tripModel, _databaseAdder.addTrip);
-    print('Have trips been added? '+ added.toString());
-    if(added){
+    final bool added =
+        await _databaseAdder.addModel(tripModel, DatabaseAdder.addTrip);
+    if (added) {
       unawaited(_fetchTrips());
     }
     return added;
@@ -42,7 +71,28 @@ class TripsProvider extends ChangeNotifier{
 
   Future<void> _fetchTrips() async {
     isFetching = true;
-    _trips = await _databaseGetter.getTripsFromDatabase(_user.uid);
+    _trips = await _databaseGetter.getEntriesFromDatabase(
+        _user.uid, DatabaseGetter.getTrips);
+    isFetching = false;
+    notifyListeners();
+  }
+
+  Future<void> initBookings(TripModel trip) async {
+    await _fetchBookings(trip.uid);
+  }
+
+  Future<void> _fetchBookings(String tripUID) async {
+    isFetching = true;
+    _flights = await _databaseGetter.getEntriesFromDatabase(
+        tripUID, DatabaseGetter.getFlights);
+    _accommodations = await _databaseGetter.getEntriesFromDatabase(
+        tripUID, DatabaseGetter.getAccommodations);
+    _activities = await _databaseGetter.getEntriesFromDatabase(
+        tripUID, DatabaseGetter.getActivities);
+    _rentalcars = await _databaseGetter.getEntriesFromDatabase(
+        tripUID, DatabaseGetter.getRentalCars);
+    _publictransports = await _databaseGetter.getEntriesFromDatabase(
+        tripUID, DatabaseGetter.getPublicTransportations);
     isFetching = false;
     notifyListeners();
   }
