@@ -1,7 +1,8 @@
+import 'dart:math' as math;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'dart:math' as math;
 
 import 'package:travellory/models/trip_model.dart';
 
@@ -121,9 +122,9 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
                 heroTag: 'dial${index.toString()}',
                 backgroundColor: Colors.white,
                 mini: true,
-                child: Icon(dials[index].icon, color: Colors.black54),
                 onPressed: () => Navigator.pushNamed(context, dials[index].route,
                     arguments: widget.tripModel),
+                child: Icon(dials[index].icon, color: Colors.black54),
               ),
               const SizedBox(width: 6),
             ],
