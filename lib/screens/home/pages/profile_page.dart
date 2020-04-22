@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:path/path.dart' as path;
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -12,7 +12,6 @@ import 'package:travellory/services/storage.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/services/user_management.dart';
 import 'package:travellory/logger.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -49,7 +48,9 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    this.user = Provider.of<UserModel>(context);
+    if(this.user == null){
+      this.user = Provider.of<UserModel>(context);
+    }
     return SafeArea(
       child: Stack(
         children: <Widget>[
@@ -73,73 +74,50 @@ class _ProfilePageState extends State<ProfilePage>
                     GestureDetector(
                       key: Key('image_pick'),
                       onTap: () => imagePicker.showDialog(context),
-                      child: FutureBuilder<File>(
-                        future: getUserImage(), // a previously-obtained Future<String> or null
-                        builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-                          if(snapshot.connectionState == ConnectionState.done){
-                            this._image = snapshot.data;
-                            log.d('filesize inside futurebuilder: '+this._image.lengthSync().toString());
-                            return this._image == null
-                                ? Stack(
-                              children: <Widget>[
-                                Center(
-                                  child: CircleAvatar(
-                                    radius: 130.0,
-                                    backgroundColor: Colors.blueGrey.withOpacity(0.5),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 260,
-                                  child: Center(
-                                    child: Image.asset(
-                                      'assets/photo_camera.png',
-                                      height: 100,
-                                      width: 100,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                                : Container(
-                              height: 260.0,
-                              width: 260.0,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
-                                image: DecorationImage(
-                                  image: NetworkImage(user.photoUrl),
-                                  fit: BoxFit.cover,
-                                ),
-                                border: Border.all(
-                                    color: Theme.of(context).primaryColor, width: 2.0
-                                ),
-                                borderRadius:
-                                BorderRadius.all(const Radius.circular(300.0)),
+                      child:  Container(
+                        height: 260.0,
+                        width: 260.0,
+                        /// profile picture with placeholder
+                        child: CachedNetworkImage(
+                          /// will check local cache first and download from firebase if necessary
+                          imageUrl: user.photoUrl,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover
                               ),
-                            );
-                          }else{
-                            return Stack(
-                              children: <Widget>[
-                                Center(
-                                  child: CircleAvatar(
-                                    radius: 130.0,
-                                    backgroundColor: Colors.blueGrey.withOpacity(0.5),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 260,
-                                  child: Center(
-                                    child: Image.asset(
-                                      'assets/photo_camera.png',
-                                      height: 100,
-                                      width: 100,
+                              border: Border.all(
+                                  color: Theme.of(context).primaryColor, width: 2.0
+                              ),
+                              borderRadius:
+                              BorderRadius.all(const Radius.circular(300.0))
+                            ),
+                          ),
+                          placeholder: (context, url) =>
+                              Stack(
+                                children: <Widget>[
+                                  Center(
+                                    child: CircleAvatar(
+                                      radius: 130.0,
+                                      backgroundColor: Colors.blueGrey.withOpacity(0.5),
                                     ),
                                   ),
-                                ),
-                              ],
-                            );
-                          }
-                        }
-                      )
+                                  SizedBox(
+                                    height: 260,
+                                    child: Center(
+                                      child: Image.asset(
+                                        'assets/photo_camera.png',
+                                        height: 100,
+                                        width: 100,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 20),
                     Padding(
@@ -200,12 +178,16 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   void userImage(File _image) async {
-    setState(() {
-      this._image = _image;
-    });
     if(_image != null){
-      String fileURL = await Storage.uploadFile(_image, Storage.USER_PROFILE_PICTURES, filename: user.uid);
-      bool success = await UserManagement.saveUserProfilePicture(_image, user, fileURL);
+      /// uploading file to the firebase storage
+      String fileURL = await Storage.uploadFile(_image, Storage.USER_PROFILE_PICTURES, filename: this.user.uid+'_'+path.basename(_image.path));
+      /// update variable photoUrl of current user with the returned fileURL from firebase
+      final BaseAuthService _auth = AuthProvider.of(context).auth;
+      UserModel newUser = await _auth.updatePhotoUrl(fileURL);
+      /// set this user in setState() for rebuilding widget.
+      setState(() {
+        this.user = newUser;
+      });
     }
   }
 
@@ -213,15 +195,6 @@ class _ProfilePageState extends State<ProfilePage>
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     await _auth.signOut();
     await Navigator.popUntil(context, ModalRoute.withName('/'));
-  }
-
-  ///
-  Future<File> getUserImage() async {
-    String filePath = await UserManagement.getUserProfilePicturePath(user);
-    log.d('File.path of loaded profile image: '+filePath);
-    File file = File(filePath);
-    log.d('filesize: '+file.lengthSync().toString());
-    return file;
   }
 }
 

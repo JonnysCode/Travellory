@@ -48,6 +48,7 @@ dependencies:
   flushbar: 1.8.0
   logger: ^0.6.0
   path_provider: 1.5.1
+  cached_network_image: 2.0.0
 
 dev_dependencies:
   flutter_test:
