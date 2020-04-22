@@ -19,8 +19,8 @@ class TripModel extends Model {
     userUID = trip["userUID"];
     uid = trip["uid"];
     name = trip["name"];
-    startDate = getOnlyDate(trip["startDate"]);
-    endDate = getOnlyDate(trip["endDate"]);
+    startDate = trip["startDate"];
+    endDate = trip["endDate"];
     destination = trip["destination"];
     imageNr = trip["imageNr"];
     imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
