@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
@@ -30,6 +32,11 @@ class _TripCardState extends State<TripCard> {
 
   TripModel _tripModel;
 
+  void _openTrip(){
+    Provider.of<TripsProvider>(context, listen: false).initBookings(_tripModel);
+    Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,7 +47,7 @@ class _TripCardState extends State<TripCard> {
             left: 40,
             right: 0,
             child: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel),
+              onTap: () => _openTrip(),
               child: Container(
                 height: 100,
                 decoration: BoxDecoration(

@@ -37,6 +37,7 @@ class _RentalCarState extends State<RentalCar> {
   @override
   Widget build(BuildContext context) {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
+    rentalCarModel.tripUID = tripModel.uid;
 
     return Scaffold(
       key: Key('Rental Car'),

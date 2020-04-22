@@ -18,7 +18,7 @@ class Wrapper extends StatelessWidget {
     tripModel.init();
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/booking/rentalCar', arguments: tripModel);
+        Navigator.pushNamed(context, '/booking/rentalcar', arguments: tripModel);
       },
       child: Container(
         color: const Color(0xFFFFFF00),
@@ -33,7 +33,7 @@ void main() {
     return MaterialApp(
       routes: <String, WidgetBuilder>{
         '/': (context) => const Wrapper(),
-        '/booking/rentalCar': (context) => RentalCar()
+        '/booking/rentalcar': (context) => RentalCar()
       },
     );
   }
