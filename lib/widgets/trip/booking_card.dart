@@ -91,20 +91,21 @@ Widget getBookingsAccordingTo(Model model){
 Color getColorAccordingTo(Model model){
   Color color;
   if (model is FlightModel){
-    color = Colors.blueGrey;
+    color = Colors.blue[100];
   } else if (model is RentalCarModel){
-    color = Colors.lightBlueAccent;
+    color = Colors.yellow[700];
   } else if (model is AccommodationModel){
-    color = Colors.deepOrangeAccent;
+    color = Colors.deepOrangeAccent[100];
   } else if (model is PublicTransportModel){
-    color = Colors.teal;
+    color = Colors.teal[300];
   } else if (model is ActivityModel){
     color = Colors.grey;
   } else {
     color = Colors.grey;
   }
 
-  return Colors.blueGrey.withOpacity(0.4);
+  return color;
+  //return Colors.blueGrey.withOpacity(0.4);
 }
 
 Color getBookingColorAccordingTo(Model model){
