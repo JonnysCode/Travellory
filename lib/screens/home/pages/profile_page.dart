@@ -80,7 +80,7 @@ class _ProfilePageState extends State<ProfilePage>
                         /// profile picture with placeholder
                         child: CachedNetworkImage(
                           /// will check local cache first and download from firebase if necessary
-                          imageUrl: user.photoUrl,
+                          imageUrl: user.photoUrl == null ? Storage.DEFAULT_USER_PROFILE_PICTURES : user.photoUrl,
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
@@ -93,27 +93,7 @@ class _ProfilePageState extends State<ProfilePage>
                               borderRadius: BorderRadius.all(const Radius.circular(300.0))
                             ),
                           ),
-                          placeholder: (context, url) =>
-                              Stack(
-                                children: <Widget>[
-                                  Center(
-                                    child: CircleAvatar(
-                                      radius: 130.0,
-                                      backgroundColor: Colors.blueGrey.withOpacity(0.5),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 260,
-                                    child: Center(
-                                      child: Image.asset(
-                                        'assets/photo_camera.png',
-                                        height: 100,
-                                        width: 100,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          placeholder: (context, url) => CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor)),
                           errorWidget: (context, url, error) => const Icon(Icons.error),
                         ),
                       ),
@@ -220,7 +200,7 @@ class UserInformation extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 FashionFetishText(
-                  text: user != null ? user.displayName : '',
+                  text: user.displayName != null ? user.displayName : '',
                   size: 18,
                   fontWeight: FashionFontWeight.bold,
                   height: 1.1,
@@ -239,7 +219,7 @@ class UserInformation extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 FashionFetishText(
-                  text: user != null ? user.email : '',
+                  text: user.email != null ? user.email : '',
                   size: 18,
                   fontWeight: FashionFontWeight.bold,
                   height: 1.1,
@@ -258,7 +238,7 @@ class UserInformation extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 FashionFetishText(
-                  text: user != null
+                  text: user.metadata != null
                       ? DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)
                       : '',
                   size: 18,
