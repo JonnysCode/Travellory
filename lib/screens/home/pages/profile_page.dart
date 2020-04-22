@@ -1,13 +1,18 @@
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:path/path.dart' as path;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/auth.dart';
+import 'package:travellory/services/storage.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'package:travellory/logger.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -16,9 +21,11 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage>
     with TickerProviderStateMixin, ImagePickerListener {
-  File _image;
+  final log = getLogger('_ProfilePageState');
+
   AnimationController _controller;
   ImagePickerHandler imagePicker;
+  UserModel user;
 
   @override
   void initState() {
@@ -27,8 +34,8 @@ class _ProfilePageState extends State<ProfilePage>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    imagePicker = ImagePickerHandler(this, _controller);
-    imagePicker.init();
+    imagePicker = ImagePickerHandler(this, _controller)
+      ..init();
   }
 
   @override
@@ -39,6 +46,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
+    user ??= Provider.of<UserModel>(context);
     return SafeArea(
       child: Stack(
         children: <Widget>[
@@ -48,8 +56,14 @@ class _ProfilePageState extends State<ProfilePage>
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
-                  boxShadow: [BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.2), offset: Offset(0.0, -6.0))],
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(40.0)),
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 20,
+                        color: Colors.black.withOpacity(.2),
+                        offset: Offset(0.0, -6.0))
+                  ],
                 ),
                 child: Column(
                   key: Key('profile_page'),
@@ -62,57 +76,37 @@ class _ProfilePageState extends State<ProfilePage>
                     GestureDetector(
                       key: Key('image_pick'),
                       onTap: () => imagePicker.showDialog(context),
-                      child: _image == null
-                          ? Stack(
-                        children: <Widget>[
-                          Center(
-                            child: CircleAvatar(
-                              radius: 130.0,
-                              backgroundColor: Colors.blueGrey.withOpacity(0.5),
-                            ),
+                      child: Container(
+                        height: 258.0,
+                        width: 258.0,
+                        /// profile picture with placeholder
+                        child: CachedNetworkImage(
+                          /// will check local cache first and download from firebase if necessary
+                          imageUrl:
+                              user.photoUrl ?? defaultUserProfilePicture,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.contain),
+                                border: Border.all(
+                                    color: Theme.of(context).primaryColor,
+                                    width: 2.0),
+                                borderRadius: BorderRadius.all(
+                                    const Radius.circular(300.0))),
                           ),
-                          SizedBox(
-                            height: 260,
-                            child: Center(
-                              child: Image.asset(
-                                'assets/photo_camera.png',
-                                height: 100,
-                                width: 100,
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                          : Container(
-                        height: 260.0,
-                        width: 260.0,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          image: DecorationImage(
-                            image: FileImage(File(_image.path)),
-                            fit: BoxFit.cover,
-                          ),
-                          border: Border.all(
-                              color: Theme.of(context).primaryColor, width: 2.0
-                          ),
-                          borderRadius:
-                          BorderRadius.all(const Radius.circular(300.0)),
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation(
+                                      Theme.of(context).primaryColor)),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
                       ),
                     ),
                     SizedBox(height: 20),
                     Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: FutureBuilder(
-                          future: AuthProvider.of(context).auth.getCurrentUser(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.done) {
-                              return UserInformation(user: snapshot.data);
-                            } else {
-                              return CircularProgressIndicator();
-                            }
-                          }),
-                    ),
+                        padding: const EdgeInsets.all(20.0),
+                        child: UserInformation(user: user)),
                     SizedBox(height: 10),
                     Padding(
                       key: Key('change-pw'),
@@ -124,10 +118,14 @@ class _ProfilePageState extends State<ProfilePage>
                       child: Container(
                         height: 40,
                         width: MediaQuery.of(context).size.width,
-                        child: filledButton("Change password", Colors.white, Theme.of(context).primaryColor,
-                            Theme.of(context).primaryColor, Colors.white, () {
-                              Navigator.pushNamed(context, '/password');
-                            }),
+                        child: filledButton(
+                            "Change password",
+                            Colors.white,
+                            Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor,
+                            Colors.white, () {
+                          Navigator.pushNamed(context, '/password');
+                        }),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -140,13 +138,16 @@ class _ProfilePageState extends State<ProfilePage>
                       child: Container(
                         height: 40,
                         width: MediaQuery.of(context).size.width,
-                        child: filledButton("Logout", Colors.white, Theme.of(context).primaryColor,
-                            Theme.of(context).primaryColor, Colors.white, () async {
-                              await _signOut();
-                            }),
+                        child: filledButton(
+                            "Logout",
+                            Colors.white,
+                            Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor,
+                            Colors.white, () async {
+                          await _signOut();
+                        }),
                       ),
                     ),
-                    SizedBox(height: 10),
                   ],
                 ),
               ),
@@ -166,19 +167,30 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   @override
-  void userImage(File _image) {
-    setState(() {
-      this._image = _image;
-    });
+  void userImage(File _image) async {
+    if (_image != null) {
+      /// uploading file to the firebase storage
+      final Storage storage = Storage();
+      final String fileURL = await storage.uploadFile(_image, userProfilePicturesDir,
+          filename: '$user.uid ${path.basename(_image.path)}');
+
+      /// update variable photoUrl of current user with the returned fileURL from firebase
+      final BaseAuthService _auth = AuthProvider.of(context).auth;
+      final UserModel newUser = await _auth.updatePhotoUrl(fileURL);
+
+      /// set this user in setState() for rebuilding widget.
+      setState(() {
+        user = newUser;
+      });
+    }
   }
 
   Future _signOut() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     await _auth.signOut();
-    await Navigator.popUntil(context, ModalRoute.withName('/'));
+    Navigator.popUntil(context, ModalRoute.withName('/'));
   }
 }
-
 
 class UserInformation extends StatelessWidget {
   const UserInformation({
@@ -186,72 +198,66 @@ class UserInformation extends StatelessWidget {
     this.user,
   }) : super(key: key);
 
-  final FirebaseUser user;
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        key: Key('display_user'),
-        children: [
-          Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  FontAwesomeIcons.user,
-                  color: Theme.of(context).primaryColor,
-                  size: 32,
-                ),
-                SizedBox(width: 10),
-                FashionFetishText(
-                  text: user != null ? '${user.displayName}' : '',
-                  size: 18,
-                  fontWeight: FashionFontWeight.bold,
-                  height: 1.1,
-                ),
-              ]
-          ),
-          SizedBox(height: 8),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  FontAwesomeIcons.envelope,
-                  color: Theme.of(context).primaryColor,
-                  size: 32,
-                ),
-                SizedBox(width: 10),
-                FashionFetishText(
-                  text: user != null ? '${user.email}' : '',
-                  size: 18,
-                  fontWeight: FashionFontWeight.bold,
-                  height: 1.1,
-                ),
-              ]
-          ),
-          SizedBox(height: 8),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  FontAwesomeIcons.calendarAlt,
-                  color: Theme.of(context).primaryColor,
-                  size: 32,
-                ),
-                SizedBox(width: 10),
-                FashionFetishText(
-                  text: user != null
-                      ? '${DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)}'
-                      : '',
-                  size: 18,
-                  fontWeight: FashionFontWeight.bold,
-                  height: 1.2,
-                ),
-              ]
-          ),
-        ]
-    );
+    return Column(key: Key('display_user'), children: [
+      Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              FontAwesomeIcons.user,
+              color: Theme.of(context).primaryColor,
+              size: 32,
+            ),
+            SizedBox(width: 10),
+            FashionFetishText(
+              text: user != null ? user.displayName : '',
+              size: 18,
+              fontWeight: FashionFontWeight.bold,
+              height: 1.1,
+            ),
+          ]),
+      SizedBox(height: 8),
+      Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              FontAwesomeIcons.envelope,
+              color: Theme.of(context).primaryColor,
+              size: 32,
+            ),
+            SizedBox(width: 10),
+            FashionFetishText(
+              text: user != null ? user.email : '',
+              size: 18,
+              fontWeight: FashionFontWeight.bold,
+              height: 1.1,
+            ),
+          ]),
+      SizedBox(height: 8),
+      Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              FontAwesomeIcons.calendarAlt,
+              color: Theme.of(context).primaryColor,
+              size: 32,
+            ),
+            SizedBox(width: 10),
+            FashionFetishText(
+              text: user != null
+                  ? DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)
+                  : '',
+              size: 18,
+              fontWeight: FashionFontWeight.bold,
+              height: 1.2,
+            ),
+          ]),
+    ]);
   }
 }
