@@ -86,10 +86,10 @@ flutter:
     - assets/images/bookings/
     - assets/images/home/trip/
     - assets/images/home/
+    - assets/images/activity/
     - assets/photo_camera.png
     - assets/g_map/
     - assets/g_map/border_points/
-
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

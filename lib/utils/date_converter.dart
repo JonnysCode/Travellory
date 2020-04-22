@@ -25,3 +25,8 @@ String toShortenedMonthDateFrom(String date){
 
   return dateBuffer.toString();
 }
+
+String getOnlyDate(String date) {
+  List<String> dateTime = date.split("T");
+  return dateTime[0];
+}
