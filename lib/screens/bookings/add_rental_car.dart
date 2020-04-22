@@ -37,6 +37,7 @@ class _RentalCarState extends State<RentalCar> {
   @override
   Widget build(BuildContext context) {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
+    rentalCarModel.tripUID = tripModel.uid;
 
     return Scaffold(
       key: Key('Rental Car'),
@@ -85,7 +86,7 @@ class _RentalCarState extends State<RentalCar> {
                       child: TravelloryFormField(
                           labelText: 'Pick Up Location',
                           icon: Icon(FontAwesomeIcons.mapMarkerAlt),
-                          optional: true,
+                          optional: false,
                           onChanged: (value) => rentalCarModel.pickupLocation = value),
                     ),
                     Padding(
@@ -93,6 +94,7 @@ class _RentalCarState extends State<RentalCar> {
                       child: DateFormField(
                         key: _pickUpDateFormFieldKey,
                         labelText: 'Pick Up Date *',
+                        optional: false,
                         icon: Icon(FontAwesomeIcons.calendarAlt),
                         chosenDateString: (value) => rentalCarModel.pickupDate = value,
                       ),
@@ -123,6 +125,7 @@ class _RentalCarState extends State<RentalCar> {
                         labelText: 'Return Date *',
                         icon: Icon(FontAwesomeIcons.calendarAlt),
                         beforeDateKey: _pickUpDateFormFieldKey,
+                        optional: false,
                         dateValidationMessage: 'Return Date cannot be before Pick Up Date',
                         chosenDateString: (value) => rentalCarModel.returnDate = value,
                       ),
