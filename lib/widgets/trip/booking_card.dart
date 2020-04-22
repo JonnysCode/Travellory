@@ -87,7 +87,6 @@ Widget getBookingsAccordingTo(Model model){
   return widget;
 }
 
-// TODO: Change colors
 Color getColorAccordingTo(Model model){
   Color color;
   if (model is FlightModel){
@@ -99,13 +98,12 @@ Color getColorAccordingTo(Model model){
   } else if (model is PublicTransportModel){
     color = Colors.teal[300];
   } else if (model is ActivityModel){
-    color = Colors.grey;
+    color = Color(0xFFA1B9C6);
   } else {
     color = Colors.grey;
   }
 
   return color;
-  //return Colors.blueGrey.withOpacity(0.4);
 }
 
 Color getBookingColorAccordingTo(Model model){

@@ -12,11 +12,10 @@ final String errorMessage = "Seems like there's a connection problem. "
 
 final log = getLogger('Submit');
 
-Function() onSubmitBooking(Model model, String functionName, BuildContext context, alertText) {
-  final DatabaseAdder databaseAdder = DatabaseAdder();
-
+Function() onSubmitBooking(TripsProvider tripsProvider, Model model,
+    String functionName, BuildContext context, alertText) {
   return () async {
-    final bool added = await databaseAdder.addModel(model, functionName);
+    final bool added = await tripsProvider.addModel(model, functionName);
     if (added) {
       showSubmittedBookingDialog(context, alertText);
     } else {
