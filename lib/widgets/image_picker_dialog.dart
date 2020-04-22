@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 
 import 'buttons/buttons.dart';
-import 'font_widgets.dart';
 
 class ImagePickerDialog extends StatelessWidget {
   ImagePickerDialog(this._listener, this._controller);

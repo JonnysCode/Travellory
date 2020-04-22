@@ -45,6 +45,6 @@ class ImagePickerHandler {
   }
 }
 
-abstract class ImagePickerListener {
+mixin ImagePickerListener {
   userImage(File _image);
 }
