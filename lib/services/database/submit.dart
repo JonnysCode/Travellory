@@ -7,7 +7,7 @@ import 'package:travellory/widgets/forms/show_dialog.dart';
 
 import '../../logger.dart';
 
-final String errorMessage = "Seems like there's a connection problem. "
+const String errorMessage = "Seems like there's a connection problem. "
     "Please check your internet connection and try submitting again.";
 
 final log = getLogger('Submit');
