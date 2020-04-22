@@ -140,30 +140,15 @@ class _TripScreenState extends State<TripScreen> {
 
     Widget _bookings(List<Widget> bookings) {
       return Container(
-        child: Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5.5, 6, 5.5, 0),
-              child: Container(
-                width: 1,
-                color: Colors.black54,
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: bookings
-                      .map((booking) => Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: booking,
-                          ))
-                      .toList(),
-                ),
-              ),
-            )
-          ],
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: bookings
+              .map((booking) => Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: booking,
+                  ))
+              .toList(),
         ),
       );
     }
