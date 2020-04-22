@@ -17,18 +17,16 @@ class Storage {
       {String filename}) async {
     final log = getLogger('Storage');
 
-    if (filename == null) {
-      log.d('no filename provided, will use original file name');
-      filename = path.basename(file.path);
-    }
+    filename ??= path.basename(file.path);
+
     log.d('Will upload file: $filename');
-    StorageReference storageReference =
+    final StorageReference storageReference =
         FirebaseStorage.instance.ref().child('$directory/$filename');
 
     final StorageUploadTask uploadTask = storageReference.putFile(file);
     await uploadTask.onComplete;
 
-    String fileURL = await storageReference.getDownloadURL();
+    final String fileURL = await storageReference.getDownloadURL();
     log.d('FileURL of uploaded file: $fileURL');
 
     return fileURL;
