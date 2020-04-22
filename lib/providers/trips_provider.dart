@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
@@ -16,25 +17,30 @@ class TripsProvider extends ChangeNotifier {
     _flights = <FlightModel>[];
     _accommodations = <AccommodationModel>[];
     _activities = <ActivityModel>[];
-    _rentalcars = <RentalCarModel>[];
-    _publictransports = <PublicTransportModel>[];
+    _rentalCars = <RentalCarModel>[];
+    _publicTransports = <PublicTransportModel>[];
   }
 
   final DatabaseAdder _databaseAdder = DatabaseAdder();
   final DatabaseGetter _databaseGetter = DatabaseGetter();
 
-  bool isFetching = false;
+  bool isFetchingTrips = false;
+  bool isFetchingFlights = false;
+  bool isFetchingAccommodations = false;
+  bool isFetchingActivities = false;
+  bool isFetchingRentalCars = false;
+  bool isFetchingPublicTransport = false;
 
   List<TripModel> _trips;
   List<FlightModel> _flights;
   List<AccommodationModel> _accommodations;
   List<ActivityModel> _activities;
-  List<RentalCarModel> _rentalcars;
-  List<PublicTransportModel> _publictransports;
+  List<RentalCarModel> _rentalCars;
+  List<PublicTransportModel> _publicTransports;
   UserModel _user;
+  TripModel selectedTrip;
 
   // TODO: next upcoming trip
-  // TODO: selected trip so we don't have to pass it via Navigator
 
   List<TripModel> get trips => _trips;
 
@@ -44,9 +50,9 @@ class TripsProvider extends ChangeNotifier {
 
   List<ActivityModel> get activities => _activities;
 
-  List<RentalCarModel> get rentalcars => _rentalcars;
+  List<RentalCarModel> get rentalcars => _rentalCars;
 
-  List<PublicTransportModel> get publictransports => _publictransports;
+  List<PublicTransportModel> get publictransports => _publicTransports;
 
   UserModel get user => _user;
 
@@ -69,31 +75,78 @@ class TripsProvider extends ChangeNotifier {
     return added;
   }
 
+  Future<bool> addModel(Model model, String functionName) async {
+    final bool added = await _databaseAdder.addModel(model, functionName);
+    if (added) {
+      if (model is FlightModel){
+        unawaited(_fetchFlights());
+      } else if (model is RentalCarModel){
+        unawaited(_fetchRentalCars());
+      } else if (model is AccommodationModel){
+        unawaited(_fetchAccommodation());
+      } else if (model is PublicTransportModel){
+        unawaited(_fetchPublicTransportation());
+      } else if (model is ActivityModel){
+        unawaited(_fetchActivities());
+      }
+    }
+    return added;
+  }
+
+  Future<void> initBookings() async {
+    unawaited(_fetchFlights());
+    unawaited(_fetchAccommodation());
+    unawaited(_fetchActivities());
+    unawaited(_fetchPublicTransportation());
+    unawaited(_fetchRentalCars());
+  }
+
   Future<void> _fetchTrips() async {
-    isFetching = true;
+    isFetchingTrips = true;
     _trips = await _databaseGetter.getEntriesFromDatabase(
         _user.uid, DatabaseGetter.getTrips);
-    isFetching = false;
+    isFetchingTrips = false;
     notifyListeners();
   }
 
-  Future<void> initBookings(TripModel trip) async {
-    await _fetchBookings(trip.uid);
-  }
-
-  Future<void> _fetchBookings(String tripUID) async {
-    isFetching = true;
+  Future<void> _fetchFlights() async {
+    isFetchingFlights = true;
     _flights = await _databaseGetter.getEntriesFromDatabase(
-        tripUID, DatabaseGetter.getFlights);
-    _accommodations = await _databaseGetter.getEntriesFromDatabase(
-        tripUID, DatabaseGetter.getAccommodations);
-    _activities = await _databaseGetter.getEntriesFromDatabase(
-        tripUID, DatabaseGetter.getActivities);
-    _rentalcars = await _databaseGetter.getEntriesFromDatabase(
-        tripUID, DatabaseGetter.getRentalCars);
-    _publictransports = await _databaseGetter.getEntriesFromDatabase(
-        tripUID, DatabaseGetter.getPublicTransportations);
-    isFetching = false;
+        selectedTrip.uid, DatabaseGetter.getFlights);
+    isFetchingFlights = false;
     notifyListeners();
   }
+
+  Future<void> _fetchAccommodation() async {
+    isFetchingAccommodations = true;
+    _accommodations = await _databaseGetter.getEntriesFromDatabase(
+        selectedTrip.uid, DatabaseGetter.getAccommodations);
+    isFetchingAccommodations = false;
+    notifyListeners();
+  }
+
+  Future<void> _fetchActivities() async {
+    isFetchingActivities = true;
+    _activities = await _databaseGetter.getEntriesFromDatabase(
+        selectedTrip.uid, DatabaseGetter.getActivities);
+    isFetchingActivities = false;
+    notifyListeners();
+  }
+
+  Future<void> _fetchRentalCars() async {
+    isFetchingRentalCars = true;
+    _rentalCars = await _databaseGetter.getEntriesFromDatabase(
+        selectedTrip.uid, DatabaseGetter.getRentalCars);
+    isFetchingRentalCars = false;
+    notifyListeners();
+  }
+
+  Future<void> _fetchPublicTransportation() async {
+    isFetchingPublicTransport = true;
+    _publicTransports = await _databaseGetter.getEntriesFromDatabase(
+        selectedTrip.uid, DatabaseGetter.getPublicTransportations);
+    isFetchingPublicTransport = false;
+    notifyListeners();
+  }
+
 }

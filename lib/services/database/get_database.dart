@@ -16,7 +16,7 @@ class DatabaseGetter {
   static const String getRentalCars = 'booking-getRentalCars';
   static const String getPublicTransportations = 'booking-getPublicTransportations';
   static const String _emptyResult = 'no-data';
-  static const int _maxCount = 100;
+  static const int _maxCount = 200;
 
   static int _count = 0;
 

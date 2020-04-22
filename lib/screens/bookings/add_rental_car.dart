@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
@@ -36,7 +38,8 @@ class _RentalCarState extends State<RentalCar> {
 
   @override
   Widget build(BuildContext context) {
-    final TripModel tripModel = ModalRoute.of(context).settings.arguments;
+    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
+    final TripModel tripModel = tripsProvider.selectedTrip;
     rentalCarModel.tripUID = tripModel.uid;
 
     return Scaffold(
@@ -175,8 +178,8 @@ class _RentalCarState extends State<RentalCar> {
                           highlightColor: Theme.of(context).primaryColor,
                           fillColor: Theme.of(context).primaryColor,
                           validationFunction: validateForm,
-                          onSubmit: onSubmitBooking(rentalCarModel, 'booking-addRentalCar', context,
-                              alertText),
+                          onSubmit: onSubmitBooking(tripsProvider, rentalCarModel,
+                              'booking-addRentalCar', context, alertText),
                         ),
                     ),
                     Padding(
