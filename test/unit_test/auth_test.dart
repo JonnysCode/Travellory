@@ -43,14 +43,15 @@ void main() {
     verify(auth.currentUser());
   });
 
-  testWidgets('test sign in anonym', (WidgetTester tester) async {
-    FirebaseAuth auth = MockAuth();
-    AuthService authService = AuthService(auth: auth);
-
-    await authService.signInAnonymously();
-
-    verify(auth.signInAnonymously());
-  });
+//  Function is not currently in use
+//  testWidgets('test sign in anonym', (WidgetTester tester) async {
+//    FirebaseAuth auth = MockAuth();
+//    AuthService authService = AuthService(auth: auth);
+//
+//    await authService.signInAnonymously();
+//
+//    verify(auth.signInAnonymously());
+//  });
 
   testWidgets('test sign out', (WidgetTester tester) async {
     FirebaseAuth auth = MockAuth();
