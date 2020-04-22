@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/user_management.dart';
+import 'package:travellory/logger.dart';
 
 abstract class BaseAuthService {
   Future signInAnonymously();
@@ -11,11 +12,14 @@ abstract class BaseAuthService {
       String email, String password, String displayName);
   Future signOut();
   Future getCurrentUser();
+  Future updatePhotoUrl(String photoUrl);
   Stream<UserModel> get user;
   set user(Stream<UserModel> user);
 }
 
 class AuthService implements BaseAuthService {
+  final log = getLogger('AuthService');
+
   AuthService({
     this.auth,
     this.userStream
@@ -130,6 +134,28 @@ class AuthService implements BaseAuthService {
       return await auth.signOut();
     } catch (e) {
       // todo: exeption handling, logging
+      return null;
+    }
+  }
+
+  /// update the photoUrl variable of the current firebase user
+  @override
+  Future updatePhotoUrl(String photoUrl) async {
+    try {
+      FirebaseUser firebaseUser = await auth.currentUser();
+      log.d('current firebase user: '+firebaseUser.uid);
+
+      final UserUpdateInfo updateInfo = UserUpdateInfo()
+        ..photoUrl = photoUrl;
+
+      log.d('updating photoUrl to: '+photoUrl);
+      await firebaseUser.updateProfile(updateInfo);
+      await firebaseUser.reload();
+      firebaseUser = await auth.currentUser();
+
+      return _userFromFirebaseUser(firebaseUser);
+    } catch (e) {
+      // todo: logging and error handling
       return null;
     }
   }
