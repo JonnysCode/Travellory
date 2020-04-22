@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +13,7 @@ import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
 class MockAuth extends Mock implements BaseAuthService {}
 class MockFirebaseUserFirebaseUserMetadata extends Mock implements FirebaseUserMetadata {
-  /// When this account was created as dictated by the server clock.
   DateTime get creationTime => DateTime.now();
-
-  /// When the user last signed in as dictated by the server clock.
-  ///
-  /// This is only accurate up to a granularity of 2 minutes for consecutive sign-in attempts.
   DateTime get lastSignInTime => DateTime.now();
 }
 
@@ -58,17 +54,17 @@ void main() {
     expect(find.byKey(Key('display_user')), findsOneWidget);
   });
 
-  testWidgets('test if profile page has a circle avatar',
+  testWidgets('test if profile page has a cached network image',
       (WidgetTester tester) async {
     MockAuth mockAuth = MockAuth();
     ProfilePage page = ProfilePage();
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(await makeTestableWidget(child: page, auth: mockAuth));
-    var circleAvatar = find.byType(CircleAvatar);
+    var cachedNetworkImage = find.byType(CachedNetworkImage);
 
-    // Verify that the profile page has a circleAvatar.
-    expect(circleAvatar, findsOneWidget);
+    // Verify that the profile page has a cachedNetworkImage.
+    expect(cachedNetworkImage, findsOneWidget);
   });
 
   testWidgets('test if profile page has three icons',
