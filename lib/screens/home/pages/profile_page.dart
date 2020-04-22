@@ -171,13 +171,13 @@ class _ProfilePageState extends State<ProfilePage>
   void userImage(File _image) async {
     if (_image != null) {
       /// uploading file to the firebase storage
-      Storage storage = Storage();
-      String fileURL = await storage.uploadFile(_image, userProfilePicturesDir,
+      final Storage storage = Storage();
+      final String fileURL = await storage.uploadFile(_image, userProfilePicturesDir,
           filename: '$user.uid ${path.basename(_image.path)}');
 
       /// update variable photoUrl of current user with the returned fileURL from firebase
       final BaseAuthService _auth = AuthProvider.of(context).auth;
-      UserModel newUser = await _auth.updatePhotoUrl(fileURL);
+      final UserModel newUser = await _auth.updatePhotoUrl(fileURL);
 
       /// set this user in setState() for rebuilding widget.
       setState(() {
@@ -189,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage>
   Future _signOut() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     await _auth.signOut();
-    await Navigator.popUntil(context, ModalRoute.withName('/'));
+    Navigator.popUntil(context, ModalRoute.withName('/'));
   }
 }
 
