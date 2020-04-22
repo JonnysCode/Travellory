@@ -8,8 +8,8 @@ import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 import 'package:travellory/services/api/map/locations.dart' as locations;
 
 String _mapStyle;
-final List<String> _userCities = ["switzerland","germany","belgium"]; // TODO: change to user real visited cities
-final Completer<GoogleMapController> g_controller = Completer();
+final List<String> _userCities = ["switzerland","germany","austria","belgium"];
+final Completer<GoogleMapController> _controller = Completer();
 final Map<String, Marker> markers = {};
 final List<Polygon> boundaries = [];
 
@@ -50,27 +50,26 @@ class MapSample extends StatefulWidget {
 class MapSampleState extends State<MapSample> {
 
   Future<void> onMapCreated() async {
-    //final googleOffices = await locations.getGoogleOffices();
-    final t_boundaries = await GMapBorderLoader.generateBorders(_userCities);
+    final googleOffices = await locations.getGoogleOffices();
+    final boundariesTemp = await GMapBorderLoader.generateBorders(_userCities);
+
     setState(() {
       markers.clear();
-//      for (final office in googleOffices.offices) {
-//        final marker = Marker(
-//          markerId: MarkerId(office.name),
-//          position: LatLng(office.lat, office.lng),
-//          infoWindow: InfoWindow(
-//            title: office.name,
-//            snippet: office.address,
-//          ),
-//        );
-//        markers[office.name] = marker;
-//      }
+      for (final office in googleOffices.offices) {
+        final marker = Marker(
+          markerId: MarkerId(office.name),
+          position: LatLng(office.lat, office.lng),
+          infoWindow: InfoWindow(
+            title: office.name,
+            snippet: office.address,
+          ),
+        );
+        markers[office.name] = marker;
+      }
 
-      if(t_boundaries.isNotEmpty){
+      if(boundariesTemp.isNotEmpty){
         boundaries.clear();
-        for (final boundary in t_boundaries){
-          boundaries.add(boundary);
-        }
+        boundariesTemp.forEach(boundaries.add);
       }
     });
   }
@@ -94,7 +93,7 @@ class MapSampleState extends State<MapSample> {
           onMapCreated: (GoogleMapController controller) {
             controller.setMapStyle(_mapStyle);
             onMapCreated();
-            g_controller.complete(controller);
+            _controller.complete(controller);
           },
           markers: markers.values.toSet(),
           polygons: boundaries.toSet(),

@@ -2,11 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/widgets/font_widgets.dart';
-
+import 'package:travellory/widgets/bookings/card_specifics.dart';
 
 class PublicTransportSchedule extends StatelessWidget {
-  const PublicTransportSchedule(this.model, {Key key}) : super(key : key);
+  const PublicTransportSchedule(this.model, {Key key}) : super(key: key);
   final PublicTransportModel model;
 
   @override
@@ -16,9 +15,9 @@ class PublicTransportSchedule extends StatelessWidget {
       children: <Widget>[
         Expanded(
           flex: 1,
-          child: _Entry(
-            name: model.departureLocation,
-            code: model.departureTime,
+          child: PublicTransportEntry(
+            location: model.departureLocation,
+            time: model.departureTime,
           ),
         ),
         Expanded(
@@ -33,43 +32,9 @@ class PublicTransportSchedule extends StatelessWidget {
         ),
         Expanded(
           flex: 1,
-          child: _Entry(
-            name: model.arrivalLocation,
-            code: model.arrivalTime,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _Entry extends StatelessWidget {
-  const _Entry({
-    @required this.name,
-    @required this.code,
-  });
-
-  final String name;
-  final String code;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        FashionFetishText(
-          text: code,
-          size: 19,
-          fontWeight: FashionFontWeight.bold,
-          height: 1.1,
-          color: Colors.black54,
-        ),
-        Text(
-          name,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.white70,
+          child: PublicTransportEntry(
+            location: model.arrivalLocation,
+            time: model.arrivalTime,
           ),
         ),
       ],

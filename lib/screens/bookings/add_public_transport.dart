@@ -199,13 +199,14 @@ class _PublicTransportState extends State<PublicTransport> {
   @override
   Widget build(BuildContext context) {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
+    publicTransportModel.tripUID = tripModel.uid;
 
     // replace widget to get the context
     publicTransportList[publicTransportList.length - 3] = SubmitButton(
         highlightColor: Theme.of(context).primaryColor,
         fillColor: Theme.of(context).primaryColor,
         validationFunction: validateForm,
-        onSubmit: onSubmitBooking(publicTransportModel, 'booking-addPublicTransport', context, alertText),
+        onSubmit: onSubmitBooking(publicTransportModel, 'booking-addPublicTransportation', context, alertText),
         );
 
     publicTransportList[publicTransportList.length - 2] = CancelButton(
