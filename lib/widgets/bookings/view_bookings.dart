@@ -132,8 +132,10 @@ Column displayExtraField(String toCompare, String comparison, IconData icon, Str
       Divider(),
     ]);
   } else {
-    return Column(children: [
-      Padding(padding: const EdgeInsets.only(top: 0, left: 0, right: 0)),
-    ]);
+    return Column(
+      children: [
+        Padding(padding: const EdgeInsets.only(top: 0, left: 0, right: 0)),
+      ]
+    );
   }
 }

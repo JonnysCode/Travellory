@@ -146,30 +146,28 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
           ),
         ),
         if (_isExpanded)
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(23.5, 6, 12.5, 0),
-                    child: Container(
-                      width: 1,
-                      color: Colors.black54,
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(23.5, 6, 12.5, 0),
+                  child: Container(
+                    width: 1,
+                    color: Colors.black54,
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                      children: bookings.map((booking) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: booking,
+                      )).toList(),
                     ),
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                        children: bookings.map((booking) => Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: booking,
-                        )).toList(),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
       ],
     );
