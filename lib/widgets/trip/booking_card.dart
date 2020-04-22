@@ -95,7 +95,7 @@ Color getColorAccordingTo(Model model){
   } else if (model is RentalCarModel){
     color = Colors.yellow[700];
   } else if (model is AccommodationModel){
-    color = Colors.deepOrangeAccent[100];
+    color = Colors.deepOrange[200];
   } else if (model is PublicTransportModel){
     color = Colors.teal[300];
   } else if (model is ActivityModel){
@@ -113,9 +113,9 @@ Color getBookingColorAccordingTo(Model model){
   if (model is FlightModel){
     color = Colors.blue[100];
   } else if (model is RentalCarModel){
-    color = Colors.yellow[700];
+    color = Colors.yellow[600];
   } else if (model is AccommodationModel){
-    color = Colors.deepOrangeAccent[100];
+    color = Colors.deepOrange[200];
   } else if (model is PublicTransportModel){
     color = Colors.teal[300];
   } else if (model is ActivityModel){

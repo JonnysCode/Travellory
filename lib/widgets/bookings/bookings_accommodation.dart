@@ -17,9 +17,9 @@ class AccommodationBookings extends StatelessWidget {
         Padding(
             padding: const EdgeInsets.only(left: 10, right: 16),
             child: AccommodationIcon(model: accommodation)),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+        Expanded(
+          flex: 2,
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
             FashionFetishText(
               text: accommodation.name,
               size: 13,
@@ -36,16 +36,24 @@ class AccommodationBookings extends StatelessWidget {
                   color: Colors.white70,
                 ),
                 SizedBox(width: 4),
-                Text(
-                  accommodation.address,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[800],
+                Expanded(
+                  child: Text(
+                    accommodation.address,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey[800],
+                    ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 2),
+          ]),
+        ),
+        Expanded(
+          flex: 1,
+          child: Column(children: [
             Text(
               'Check-In Date: ${accommodation.checkinDate}',
               style: TextStyle(
@@ -53,7 +61,7 @@ class AccommodationBookings extends StatelessWidget {
                 color: Colors.grey[800],
               ),
             ),
-          ],
+          ]),
         ),
       ],
     );
