@@ -88,7 +88,7 @@ class _RentalCarViewState extends State<RentalCarView> {
   @override
   Widget build(BuildContext context) {
     final RentalCarModel rentalCarModel = ModalRoute.of(context).settings.arguments;
-    List<RentalCarModel> rentalCars = [];
+    final List<RentalCarModel> rentalCars = [];
     rentalCars.add(rentalCarModel);
     rentalCarModels = rentalCars;
 

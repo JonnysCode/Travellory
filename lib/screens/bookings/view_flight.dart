@@ -77,7 +77,7 @@ class _FlightViewState extends State<FlightView> {
   @override
   Widget build(BuildContext context) {
     final FlightModel flightModel = ModalRoute.of(context).settings.arguments;
-    List<FlightModel> flights = [];
+    final List<FlightModel> flights = [];
     flights.add(flightModel);
     flightModels = flights;
 

@@ -16,6 +16,7 @@ import 'package:travellory/widgets/trip/schedule/flight_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/public_transport_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/rental_car_schedule.dart';
 
+
 class BookingCard extends StatelessWidget {
   const BookingCard({
     Key key,

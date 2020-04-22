@@ -18,59 +18,23 @@ class _FriendsPageState extends State<FriendsPage> {
   void initState(){
     super.initState();
     setState(() {
-      //TODO(hessgia1): create dynamic list according to logged in user
-      friendRequests..add(FriendsModel(
-        "1",
-        "doejohn",
-      ));
-      friendRequests..add(FriendsModel(
-        "2",
-        "doejane",
-      ));
-      friendRequests..add(FriendsModel(
-        "3",
-        "doejames",
-      ));
-      friendRequests..add(FriendsModel(
-        "4",
-        "doejessy",
-      ));
-      friendRequests..add(FriendsModel(
-        "5",
-        "doejason",
-      ));
-      friends..add(FriendsModel(
-          "11",
-          "hessgia1"
-      ));
-      friends..add(FriendsModel(
-          "12",
-          "schinsev"
-      ));
-      friends..add(FriendsModel(
-          "13",
-          "grussjon"
-      ));
-      friends..add(FriendsModel(
-          "14",
-          "bertaben"
-      ));
-      friends..add(FriendsModel(
-          "15",
-          "stadena1"
-      ));
-      friends..add(FriendsModel(
-          "16",
-          "antilyas"
-      ));
-      friends..add(FriendsModel(
-          "17",
-          "gubleet1"
-      ));
-      friends..add(FriendsModel(
-          "18",
-          "isztldav"
-      ));
+      //TODO(hessgia1): create dynamic list according to logged in user.
+      friendRequests
+        ..add(FriendsModel("1","doejohn"))
+        ..add(FriendsModel("2","doejane"))
+        ..add(FriendsModel("3","doejames",))
+        ..add(FriendsModel("4","doejessy",))
+        ..add(FriendsModel("5","doejason",));
+
+      friends
+        ..add(FriendsModel("11","hessgia1"))
+        ..add(FriendsModel("12","schinsev"))
+        ..add(FriendsModel("13","grussjon"))
+        ..add(FriendsModel("14","bertaben"))
+        ..add(FriendsModel("15","stadena1"))
+        ..add(FriendsModel("16","antilyas"))
+        ..add(FriendsModel("17","gubleet1"))
+        ..add(FriendsModel("18","isztldav"));
     });
   }
 
