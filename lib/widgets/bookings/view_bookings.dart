@@ -22,11 +22,11 @@ Container bottomBar(
   BuildContext context,
 ) {
   void _edit() {
-    // TODO
+    // TODO(antilyas): implement
   }
 
   void _delete() {
-    // TODO
+    // TODO(antilyas): implement
   }
 
   return Container(
