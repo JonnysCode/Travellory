@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/friends_model.dart';
+import 'package:travellory/providers/friends_provider.dart';
+import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/friends_list_widget.dart';
 
@@ -11,7 +14,7 @@ class FriendsPage extends StatefulWidget {
 
 class _FriendsPageState extends State<FriendsPage> {
 
-  final List<FriendsModel> friendRequests = [];
+  List<FriendsModel> friendRequests = [];
   final List<FriendsModel> friends = [];
 
   @override
@@ -19,26 +22,7 @@ class _FriendsPageState extends State<FriendsPage> {
     super.initState();
     setState(() {
       //TODO(hessgia1): create dynamic list according to logged in user
-      friendRequests..add(FriendsModel(
-        "1",
-        "doejohn",
-      ));
-      friendRequests..add(FriendsModel(
-        "2",
-        "doejane",
-      ));
-      friendRequests..add(FriendsModel(
-        "3",
-        "doejames",
-      ));
-      friendRequests..add(FriendsModel(
-        "4",
-        "doejessy",
-      ));
-      friendRequests..add(FriendsModel(
-        "5",
-        "doejason",
-      ));
+
       friends..add(FriendsModel(
           "11",
           "hessgia1"
@@ -124,27 +108,33 @@ class _FriendsPageState extends State<FriendsPage> {
                           ),
                         ),
                       ),
-                      friendList(
-                          Key('friend_requests_list'),
-                          145,
-                          friendRequests,
-                          Wrap(
-                            children: <Widget>[
-                              socialButton(
-                                  Key('accept_button'),
-                                  Icons.add_circle,
-                                  Colors.green,
-                                  null
-                              ),
-                              socialButton(
-                                  Key('decline_button'),
-                                  Icons.remove_circle,
-                                  Colors.red,
-                                  null
-                              ),
-                            ],
-                          ),
-                          context
+                      Consumer<FriendsProvider>(
+                        builder: (_, friendsProvider, __ ) => friendsProvider.isFetching
+                            ? Loading()
+                            : friendsProvider.friends.isEmpty
+                              ? Text('You have no friend requests :(')
+                              : friendList(
+                            Key('friend_requests_list'),
+                            145,
+                            friendsProvider.friendRequests,
+                            Wrap(
+                              children: <Widget>[
+                                socialButton(
+                                    Key('accept_button'),
+                                    Icons.add_circle,
+                                    Colors.green,
+                                    null
+                                ),
+                                socialButton(
+                                    Key('decline_button'),
+                                    Icons.remove_circle,
+                                    Colors.red,
+                                    null
+                                ),
+                              ],
+                            ),
+                            context
+                        ),
                       ),
                       SizedBox(height: 40),
                       Padding(
@@ -166,21 +156,27 @@ class _FriendsPageState extends State<FriendsPage> {
                           ),
                         ),
                       ),
-                      friendList(
-                          Key('friends_list'),
-                          225,
-                          friends,
-                          Wrap(
-                            children: <Widget>[
-                              socialButton(
-                                  Key('remove_button'),
-                                  Icons.remove_circle,
-                                  Colors.red,
-                                  null
-                              ),
-                            ],
-                          ),
-                          context
+                      Consumer<FriendsProvider>(
+                        builder: (_, friendsProvider, __ ) => friendsProvider.isFetching
+                            ? Loading()
+                            : friendsProvider.friends.isEmpty
+                              ? Text('You have no friends :(')
+                              : friendList(
+                            Key('friends_list'),
+                            225,
+                            friendsProvider.friends,
+                            Wrap(
+                              children: <Widget>[
+                                socialButton(
+                                    Key('remove_button'),
+                                    Icons.remove_circle,
+                                    Colors.red,
+                                    null
+                                ),
+                              ],
+                            ),
+                            context
+                        ),
                       ),
                     ],
                   ),

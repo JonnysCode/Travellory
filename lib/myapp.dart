@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
+import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/screens/authenticate/password.dart';
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<TripsProvider>(
             create: (context) => TripsProvider()
+          ),
+          ChangeNotifierProvider<FriendsProvider>(
+              create: (context) => FriendsProvider()
           ),
           StreamProvider<UserModel>.value(
             value: AuthService().user
