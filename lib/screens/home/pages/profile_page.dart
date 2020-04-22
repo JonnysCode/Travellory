@@ -21,7 +21,6 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage>
     with TickerProviderStateMixin, ImagePickerListener {
-
   final log = getLogger('_ProfilePageState');
 
   AnimationController _controller;
@@ -47,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    if(user == null){
+    if (user == null) {
       user = Provider.of<UserModel>(context);
     }
     return SafeArea(
@@ -59,8 +58,14 @@ class _ProfilePageState extends State<ProfilePage>
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
-                  boxShadow: [BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.2), offset: Offset(0.0, -6.0))],
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(40.0)),
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 20,
+                        color: Colors.black.withOpacity(.2),
+                        offset: Offset(0.0, -6.0))
+                  ],
                 ),
                 child: Column(
                   key: Key('profile_page'),
@@ -73,35 +78,38 @@ class _ProfilePageState extends State<ProfilePage>
                     GestureDetector(
                       key: Key('image_pick'),
                       onTap: () => imagePicker.showDialog(context),
-                      child:  Container(
+                      child: Container(
                         height: 258.0,
                         width: 258.0,
+
                         /// profile picture with placeholder
                         child: CachedNetworkImage(
                           /// will check local cache first and download from firebase if necessary
-                          imageUrl: user.photoUrl ?? DEFAULT_USER_PROFILE_PICTURES,
+                          imageUrl:
+                              user.photoUrl ?? DEFAULT_USER_PROFILE_PICTURES,
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.contain
-                              ),
-                              border: Border.all(
-                                  color: Theme.of(context).primaryColor, width: 2.0
-                              ),
-                              borderRadius: BorderRadius.all(const Radius.circular(300.0))
-                            ),
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.contain),
+                                border: Border.all(
+                                    color: Theme.of(context).primaryColor,
+                                    width: 2.0),
+                                borderRadius: BorderRadius.all(
+                                    const Radius.circular(300.0))),
                           ),
-                          placeholder: (context, url) => CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor)),
-                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation(
+                                      Theme.of(context).primaryColor)),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
                       ),
                     ),
                     SizedBox(height: 20),
                     Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: UserInformation(user: user)
-                    ),
+                        padding: const EdgeInsets.all(20.0),
+                        child: UserInformation(user: user)),
                     SizedBox(height: 10),
                     Padding(
                       key: Key('change-pw'),
@@ -113,10 +121,14 @@ class _ProfilePageState extends State<ProfilePage>
                       child: Container(
                         height: 40,
                         width: MediaQuery.of(context).size.width,
-                        child: filledButton("Change password", Colors.white, Theme.of(context).primaryColor,
-                            Theme.of(context).primaryColor, Colors.white, () {
-                              Navigator.pushNamed(context, '/password');
-                            }),
+                        child: filledButton(
+                            "Change password",
+                            Colors.white,
+                            Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor,
+                            Colors.white, () {
+                          Navigator.pushNamed(context, '/password');
+                        }),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -129,10 +141,14 @@ class _ProfilePageState extends State<ProfilePage>
                       child: Container(
                         height: 40,
                         width: MediaQuery.of(context).size.width,
-                        child: filledButton("Logout", Colors.white, Theme.of(context).primaryColor,
-                            Theme.of(context).primaryColor, Colors.white, () async {
-                              await _signOut();
-                            }),
+                        child: filledButton(
+                            "Logout",
+                            Colors.white,
+                            Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor,
+                            Colors.white, () async {
+                          await _signOut();
+                        }),
                       ),
                     ),
                   ],
@@ -155,13 +171,16 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   void userImage(File _image) async {
-    if(_image != null){
+    if (_image != null) {
       /// uploading file to the firebase storage
       Storage storage = Storage();
-      String fileURL = await storage.uploadFile(_image, USER_PROFILE_PICTURES, filename: '$user.uid ${path.basename(_image.path)}');
+      String fileURL = await storage.uploadFile(_image, USER_PROFILE_PICTURES,
+          filename: '$user.uid ${path.basename(_image.path)}');
+
       /// update variable photoUrl of current user with the returned fileURL from firebase
       final BaseAuthService _auth = AuthProvider.of(context).auth;
       UserModel newUser = await _auth.updatePhotoUrl(fileURL);
+
       /// set this user in setState() for rebuilding widget.
       setState(() {
         user = newUser;
@@ -186,68 +205,62 @@ class UserInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        key: Key('display_user'),
-        children: [
-          Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  FontAwesomeIcons.user,
-                  color: Theme.of(context).primaryColor,
-                  size: 32,
-                ),
-                SizedBox(width: 10),
-                FashionFetishText(
-                  text: user != null ? user.displayName : '',
-                  size: 18,
-                  fontWeight: FashionFontWeight.bold,
-                  height: 1.1,
-                ),
-              ]
-          ),
-          SizedBox(height: 8),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  FontAwesomeIcons.envelope,
-                  color: Theme.of(context).primaryColor,
-                  size: 32,
-                ),
-                SizedBox(width: 10),
-                FashionFetishText(
-                  text: user != null ? user.email : '',
-                  size: 18,
-                  fontWeight: FashionFontWeight.bold,
-                  height: 1.1,
-                ),
-              ]
-          ),
-          SizedBox(height: 8),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  FontAwesomeIcons.calendarAlt,
-                  color: Theme.of(context).primaryColor,
-                  size: 32,
-                ),
-                SizedBox(width: 10),
-                FashionFetishText(
-                  text: user != null
-                      ? DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)
-                      : '',
-                  size: 18,
-                  fontWeight: FashionFontWeight.bold,
-                  height: 1.2,
-                ),
-              ]
-          ),
-        ]
-    );
+    return Column(key: Key('display_user'), children: [
+      Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              FontAwesomeIcons.user,
+              color: Theme.of(context).primaryColor,
+              size: 32,
+            ),
+            SizedBox(width: 10),
+            FashionFetishText(
+              text: user != null ? user.displayName : '',
+              size: 18,
+              fontWeight: FashionFontWeight.bold,
+              height: 1.1,
+            ),
+          ]),
+      SizedBox(height: 8),
+      Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              FontAwesomeIcons.envelope,
+              color: Theme.of(context).primaryColor,
+              size: 32,
+            ),
+            SizedBox(width: 10),
+            FashionFetishText(
+              text: user != null ? user.email : '',
+              size: 18,
+              fontWeight: FashionFontWeight.bold,
+              height: 1.1,
+            ),
+          ]),
+      SizedBox(height: 8),
+      Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              FontAwesomeIcons.calendarAlt,
+              color: Theme.of(context).primaryColor,
+              size: 32,
+            ),
+            SizedBox(width: 10),
+            FashionFetishText(
+              text: user != null
+                  ? DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)
+                  : '',
+              size: 18,
+              fontWeight: FashionFontWeight.bold,
+              height: 1.2,
+            ),
+          ]),
+    ]);
   }
 }
