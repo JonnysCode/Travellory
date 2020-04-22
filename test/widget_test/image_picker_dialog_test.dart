@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:provider/provider.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/screens/home/pages/profile_page.dart';
 import 'package:travellory/services/auth.dart';
@@ -10,6 +13,7 @@ import 'package:travellory/utils/image_picker_handler.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/image_picker_dialog.dart';
+import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
 import 'profile_page_test.dart';
 
@@ -20,6 +24,19 @@ void main() {
         child: MaterialApp(
           home: child,
         ));
+  }
+
+  Future<Widget> makeTestableWidgetForProfilePage({Widget child, BaseAuthService auth}) async {
+    final auth = MockFirebaseAuth(signedIn: true);
+    FirebaseUser firebaseUser = await auth.currentUser();
+    FirebaseUserMetadata metadata = MockFirebaseUserFirebaseUserMetadata();
+    UserModel user = UserModel(firebaseUser: firebaseUser, email: 'tester@testing.com', photoUrl: 'https://via.placeholder.com/25', metadata: metadata);
+    return Provider<UserModel>.value(
+      value: user,
+      child: MaterialApp(
+        home: child,
+      ),
+    );
   }
 
   testWidgets('test if page has the select menu widget',
@@ -74,7 +91,7 @@ void main() {
     Widget page = ProfilePage();
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
+    await tester.pumpWidget(await makeTestableWidgetForProfilePage(child: page, auth: mockAuth));
     await tester.tap(find.byKey(Key('image_pick')));
     await tester.pump();
 

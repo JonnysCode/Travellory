@@ -15,7 +15,8 @@ class DatabaseGetter {
   static const String getActivities = 'activity-getActivities';
   static const String getRentalCars = 'booking-getRentalCars';
   static const String getPublicTransportations = 'booking-getPublicTransportations';
-  static const int _maxCount = 100;
+  static const String _emptyResult = 'no-data';
+  static const int _maxCount = 200;
 
   static int _count = 0;
 
@@ -24,8 +25,8 @@ class DatabaseGetter {
   Future<List<Model>> getEntriesFromDatabase(
       String uid, String function) async {
     // debug
-    print('Getting entry from database -> ' + (++_count).toString());
-    print('Entry type: ' + function);
+    log.i('Getting entry from database -> ' + (++_count).toString());
+    log.i('Entry type: ' + function);
     if(_count >= _maxCount){
       log.w('maxCount exceeded in get ');
       return <Model>[];
@@ -37,7 +38,7 @@ class DatabaseGetter {
     try {
       final HttpsCallableResult result =
           await callable.call(_getMap(uid, function));
-      if (result.data.contains('no-data')) {
+      if (result.data.contains(_emptyResult)) {
         return _getEmptyEntries(function);
       }
       entries = result.data;

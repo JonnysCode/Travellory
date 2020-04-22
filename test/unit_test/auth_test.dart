@@ -60,4 +60,5 @@ void main() {
 
     verify(auth.signOut());
   });
+
 }

@@ -32,13 +32,10 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(6, 12, 6, 0),
+        padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
         child: Container(
           key: Key('map_page'),
-          child: ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
-            child: MapSample()
-          ),
+          child: MapSample(),
         ),
       ),
     );
@@ -55,6 +52,7 @@ class MapSampleState extends State<MapSample> {
   Future<void> onMapCreated() async {
     final googleOffices = await locations.getGoogleOffices();
     final boundariesTemp = await GMapBorderLoader.generateBorders(_userCities);
+
     setState(() {
       markers.clear();
       for (final office in googleOffices.offices) {
@@ -78,31 +76,29 @@ class MapSampleState extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          GoogleMap(
-            key: Key('google_map_widget'),
-            mapType: MapType.normal,
-            initialCameraPosition: CameraPosition(
-              target: LatLng(46.8076885, 7.1005233),
-              zoom: 5,
-            ),
-            gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-              Factory<OneSequenceGestureRecognizer>(
-                () => EagerGestureRecognizer(),
-              ),
-            ].toSet(),
-            onMapCreated: (GoogleMapController controller) {
-              controller.setMapStyle(_mapStyle);
-              onMapCreated();
-              _controller.complete(controller);
-            },
-            markers: markers.values.toSet(),
-            polygons: boundaries.toSet(),
+    return Stack(
+      children: <Widget>[
+        GoogleMap(
+          key: Key('google_map_widget'),
+          mapType: MapType.normal,
+          initialCameraPosition: CameraPosition(
+            target: LatLng(46.8076885, 7.1005233),
+            zoom: 5,
           ),
-        ],
-      ),
+          gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+            Factory<OneSequenceGestureRecognizer>(
+              () => EagerGestureRecognizer(),
+            ),
+          ].toSet(),
+          onMapCreated: (GoogleMapController controller) {
+            controller.setMapStyle(_mapStyle);
+            onMapCreated();
+            _controller.complete(controller);
+          },
+          markers: markers.values.toSet(),
+          polygons: boundaries.toSet(),
+        ),
+      ],
     );
   }
 }
