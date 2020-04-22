@@ -175,7 +175,7 @@ class _FlightState extends State<Flight> {
                       child: TimeFormField(
                           labelText: 'Arrival Time',
                           icon: Icon(FontAwesomeIcons.clock),
-                          optional: true,
+                          optional: false,
                           chosenTimeString: (value) => flightModel.arrivalTime = value),
                     ),
                     Padding(
