@@ -1,22 +1,45 @@
 import 'package:travellory/models/abstract_model.dart';
+import 'package:travellory/utils/date_converter.dart';
 
 class AccommodationModel extends Model {
-  AccommodationModel(
-      {this.type,
-      this.specificationOther,
-      this.name,
-      this.confirmationNr,
-      this.address,
-      this.nights,
-      this.checkinDate,
-      this.checkinTime,
-      this.checkoutDate,
-      this.checkoutTime,
-      this.breakfast,
-      this.hotelRoomType,
-      this.airbnbType,
-      this.notes});
+  AccommodationModel({this.tripUID = '',
+  this.uid = '',
+  this.type = '',
+  this.specificationOther = '',
+  this.name = '',
+  this.confirmationNr = '',
+  this.address = '',
+  this.nights = '',
+  this.checkinDate = '',
+  this.checkinTime = '',
+  this.checkoutDate = '',
+  this.checkoutTime = '',
+  this.breakfast = false,
+  this.hotelRoomType = '',
+  this.airbnbType = '',
+  this.notes = ''});
 
+  AccommodationModel.fromData(accommodation) {
+    tripUID = accommodation["tripUID"];
+    uid = accommodation["uid"];
+    type = accommodation["type"];
+    specificationOther = accommodation["specificationOther"];
+    name = accommodation["name"];
+    confirmationNr = accommodation["confirmationNr"];
+    address = accommodation["address"];
+    nights = accommodation["nights"];
+    checkinDate = accommodation["checkinDate"];
+    checkinTime = accommodation["checkinTime"];
+    checkoutDate = accommodation["checkoutDate"];
+    checkoutTime = accommodation["checkoutTime"];
+    breakfast = accommodation["breakfast"];
+    hotelRoomType = accommodation["hotelRoomType"];
+    airbnbType = accommodation["airbnbType"];
+    notes = accommodation["notes"];
+  }
+
+  String tripUID;
+  String uid;
   String type;
   String specificationOther;
   String name;
@@ -35,38 +58,23 @@ class AccommodationModel extends Model {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'type': type,
-      'specificationOther': specificationOther,
-      'name': name,
-      'confirmationNr': confirmationNr,
-      'address': address,
-      'nights': nights,
-      'checkinDate': checkinDate,
-      'checkinTime': checkinTime,
-      'checkoutDate': checkoutDate,
-      'checkoutTime': checkoutTime,
-      'breakfast': breakfast,
-      'hotelRoomType': hotelRoomType,
-      'airbnbType': airbnbType,
-      'notes': notes
+      "tripUID": tripUID,
+      "type": type,
+      "specificationOther": specificationOther,
+      "name": name,
+      "confirmationNr": confirmationNr,
+      "address": address,
+      "nights": nights,
+      "checkinDate": checkinDate,
+      "checkinTime": checkinTime,
+      "checkoutDate": checkoutDate,
+      "checkoutTime": checkoutTime,
+      "breakfast": breakfast,
+      "hotelRoomType": hotelRoomType,
+      "airbnbType": airbnbType,
+      "notes": notes
     };
   }
 }
 
-List<AccommodationModel> accommodationModels = <AccommodationModel>[
-  AccommodationModel(
-      type: 'Hotel',
-      specificationOther: null,
-      name: 'Carina',
-      confirmationNr: 'Ra1574e',
-      address: 'Zürcherstrasse 5',
-      nights: '2',
-      checkinDate: '2020-05-11',
-      checkinTime: '12:00:00',
-      checkoutDate: '2020-05-13',
-      checkoutTime: '10:00',
-      breakfast: true,
-      hotelRoomType: 'Double',
-      airbnbType: null,
-      notes: 'Some Notes'),
-];
+List<AccommodationModel> accommodationModels = <AccommodationModel>[];

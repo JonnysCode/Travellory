@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
+
+final AccommodationModel model = AccommodationModel()
+  ..type = 'hotel'
+  ..name = 'Travelodge'
+  ..address = "100 King's Cross Rd, London WC1X 9DT"
+  ..checkinDate = '2020-05-01'
+  ..checkinTime = '12:00';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key key}) : super(key: key);
@@ -10,7 +18,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/view/accommodation');
+        Navigator.pushNamed(context, '/view/accommodation', arguments: model);
       },
       child: Container(
         color: const Color(0xFFFFFF00),
@@ -79,7 +87,6 @@ void main() {
     expect(find.byIcon(FontAwesomeIcons.solidBuilding, skipOffstage: false), findsOneWidget);
     expect(find.byIcon(FontAwesomeIcons.mapMarkerAlt, skipOffstage: false), findsOneWidget);
     expect(find.byIcon(FontAwesomeIcons.solidMoon, skipOffstage: false), findsOneWidget);
-    expect(find.byIcon(FontAwesomeIcons.hotel, skipOffstage: false), findsNWidgets(2));
     expect(find.byIcon(FontAwesomeIcons.ticketAlt, skipOffstage: false), findsOneWidget);
     expect(find.byIcon(FontAwesomeIcons.stickyNote, skipOffstage: false), findsOneWidget);
   });

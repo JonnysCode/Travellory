@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/widgets/bookings/card_specifics.dart';
 
-class FlightSchedule extends StatelessWidget {
-  const FlightSchedule(this.flight, {Key key}) : super(key: key);
+import 'card_specifics.dart';
+
+class FlightBookings extends StatelessWidget {
+  const FlightBookings(this.flight, {Key key}) : super(key: key);
   final FlightModel flight;
 
   @override
   Widget build(BuildContext context) {
+    final Color textColor = Colors.grey[850];
+
     return Row(
-      key: Key('flight'),
+      key: Key('flightBookings'),
       children: <Widget>[
         Expanded(
-          flex: 2,
+          flex: 1,
           child: Airport(
             name: flight.departureLocation,
             code: flight.departureLocation.substring(0, 3).toUpperCase(),
-            color: Colors.black54,
+            color: textColor,
           ),
         ),
         Expanded(
@@ -26,7 +29,8 @@ class FlightSchedule extends StatelessWidget {
             child: Text(
               flight.departureTime,
               style: TextStyle(
-                color: Colors.white54,
+                fontSize: 15,
+                color: textColor,
               ),
             ),
           ),
@@ -34,14 +38,23 @@ class FlightSchedule extends StatelessWidget {
         Expanded(
           flex: 1,
           child: Center(
-            child: Transform.rotate(
-              angle: -0.5,
-              child: FaIcon(
-                FontAwesomeIcons.plane,
-                size: 30,
-                color: Colors.black54,
+            child: Column(children: <Widget>[
+              Text(
+                flight.departureDate,
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: textColor,
+                ),
               ),
-            ),
+              Transform.rotate(
+                angle: -0.5,
+                child: FaIcon(
+                  FontAwesomeIcons.plane,
+                  size: 20,
+                  color: Colors.blue[900],
+                ),
+              ),
+            ]),
           ),
         ),
         Expanded(
@@ -50,16 +63,17 @@ class FlightSchedule extends StatelessWidget {
               child: Text(
             flight.arrivalTime,
             style: TextStyle(
-              color: Colors.white54,
+              fontSize: 15,
+              color: textColor,
             ),
           )),
         ),
         Expanded(
-          flex: 2,
+          flex: 1,
           child: Airport(
             name: flight.arrivalLocation,
             code: flight.arrivalLocation.substring(0, 3).toUpperCase(),
-            color: Colors.black54,
+            color: textColor,
           ),
         ),
       ],

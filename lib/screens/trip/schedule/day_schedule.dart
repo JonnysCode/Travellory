@@ -73,6 +73,8 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
     super.initState();
     bookings = _models.map((model) => BookingCard(
       model: model,
+      color: getColorAccordingTo(model),
+      getSchedule: getScheduleAccordingTo(model),
     )).toList();
 
     _isExpanded = widget.isExpanded;

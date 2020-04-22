@@ -38,6 +38,7 @@ class _FlightState extends State<Flight> {
   @override
   Widget build(BuildContext context) {
     final TripModel tripModel = ModalRoute.of(context).settings.arguments;
+    flightModel.tripUID = tripModel.uid;
 
     return Scaffold(
       key: Key('Flight'),
@@ -171,7 +172,7 @@ class _FlightState extends State<Flight> {
                       child: TimeFormField(
                           labelText: 'Arrival Time',
                           icon: Icon(FontAwesomeIcons.clock),
-                          optional: true,
+                          optional: false,
                           chosenTimeString: (value) => flightModel.arrivalTime = value),
                     ),
                     Padding(
