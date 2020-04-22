@@ -32,7 +32,7 @@ Container bottomBar(
   return Container(
     key: Key('BottomBar'),
     padding: EdgeInsets.all(20.0),
-    height: 130.0,
+    height: 60.0,
     decoration: BoxDecoration(
       color: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(40.0),

@@ -89,6 +89,11 @@ class _AccommodationViewState extends State<AccommodationView> {
 
   @override
   Widget build(BuildContext context) {
+    final AccommodationModel accommodationModel = ModalRoute.of(context).settings.arguments;
+    List<AccommodationModel> accommodations = [];
+    accommodations.add(accommodationModel);
+    accommodationModels = accommodations;
+
     return Scaffold(
       key: Key('AccommodationView'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -97,6 +102,16 @@ class _AccommodationViewState extends State<AccommodationView> {
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
           child: bookingView(
             accommodationViewPage(),
+          ),
+        ),
+        Positioned(
+          top: 15,
+          right: 10,
+          child: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: FaIcon(FontAwesomeIcons.times),
+            iconSize: 26,
+            color: Colors.red,
           ),
         ),
       ]),

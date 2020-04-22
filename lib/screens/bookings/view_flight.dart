@@ -12,7 +12,6 @@ class FlightView extends StatefulWidget {
 }
 
 class _FlightViewState extends State<FlightView> {
-  //final String bannerUrl = 'assets/images/bookings/airline_banner.jpg';
   final String bannerUrl = 'assets/images/bookings/plane_banner.png';
   final String headerTitle = 'Your Flight';
 
@@ -77,6 +76,11 @@ class _FlightViewState extends State<FlightView> {
 
   @override
   Widget build(BuildContext context) {
+    final FlightModel flightModel = ModalRoute.of(context).settings.arguments;
+    List<FlightModel> flights = [];
+    flights.add(flightModel);
+    flightModels = flights;
+
     return Scaffold(
       key: Key('FlightView'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -85,6 +89,16 @@ class _FlightViewState extends State<FlightView> {
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
           child: bookingView(
             flightViewPage(),
+          ),
+        ),
+        Positioned(
+          top: 15,
+          right: 10,
+          child: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: FaIcon(FontAwesomeIcons.times),
+            iconSize: 26,
+            color: Colors.red,
           ),
         ),
       ]),
