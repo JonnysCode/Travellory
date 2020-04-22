@@ -15,7 +15,7 @@ class DatabaseGetter {
   static const String getActivities = 'activity-getActivities';
   static const String getRentalCars = 'booking-getRentalCars';
   static const String getPublicTransportations = 'booking-getPublicTransportations';
-  static const int _maxCount = 30;
+  static const int _maxCount = 100;
 
   static int _count = 0;
 
@@ -27,7 +27,7 @@ class DatabaseGetter {
     print('Getting entry from database -> ' + (++_count).toString());
     print('Entry type: ' + function);
     if(_count >= _maxCount){
-      print('WARNING: MaxCount exceeded in AddModel');
+      log.w('maxCount exceeded in get ');
       return <Model>[];
     }
 
