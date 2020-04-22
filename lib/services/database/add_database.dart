@@ -3,6 +3,7 @@ import 'package:travellory/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 
 class DatabaseAdder {
+  final String addTrip = 'trips-addTrip';
   final log = getLogger('DatabaseAdder');
 
   // adds Model to the database

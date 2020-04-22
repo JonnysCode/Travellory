@@ -87,10 +87,12 @@ flutter:
   assets:
     - assets/images/login/
     - assets/images/logo/
+    - assets/images/bookings/
     - assets/images/home/trip/
     - assets/images/home/
     - assets/photo_camera.png
     - assets/g_map/
+    - assets/g_map/border_points/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
