@@ -89,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage>
                         decoration: BoxDecoration(
                           color: Theme.of(context).primaryColor,
                           image: DecorationImage(
-                            image: ExactAssetImage(_image.path),
+                            image: FileImage(File(_image.path)),
                             fit: BoxFit.cover,
                           ),
                           border: Border.all(
