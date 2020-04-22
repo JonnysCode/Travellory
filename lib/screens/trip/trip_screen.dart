@@ -92,15 +92,19 @@ class TripScreen extends StatelessWidget {
                         tripsProvider.isFetchingFlights),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
-                        :  Column(
+                        :  Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Column(
                       children: data.item1.map((model) => BookingCard(
-                          model: model,
-                          onTap: () => Navigator.pushNamed(context, '/view/flight'),
-                          color: getBookingColorAccordingTo(model),
-                          getSchedule: getBookingsAccordingTo(model),
-                        )
+                            model: model,
+                            onTap: () => Navigator.pushNamed(
+                                context, '/view/flight', arguments: model),
+                            color: getBookingColorAccordingTo(model),
+                            getSchedule: getBookingsAccordingTo(model),
+                          )
                       ).toList(),
                     ),
+                        ),
                   ),
                 ),
                 Padding(
@@ -114,15 +118,19 @@ class TripScreen extends StatelessWidget {
                         tripsProvider.isFetchingAccommodations),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
-                        :  Column(
+                        :  Padding(
+                          padding:const EdgeInsets.only(bottom: 10),
+                          child: Column(
                       children: data.item1.map((model) => BookingCard(
-                        model: model,
-                        onTap: () => Navigator.pushNamed(context, '/view/accommodation'),
-                        color: getBookingColorAccordingTo(model),
-                        getSchedule: getBookingsAccordingTo(model),
+                          model: model,
+                          onTap: () => Navigator.pushNamed(
+                              context, '/view/accommodation', arguments: model),
+                          color: getBookingColorAccordingTo(model),
+                          getSchedule: getBookingsAccordingTo(model),
                       )
                       ).toList(),
                     ),
+                        ),
                   ),
                 ),
                 Padding(
@@ -136,15 +144,19 @@ class TripScreen extends StatelessWidget {
                         tripsProvider.isFetchingActivities),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
-                        :  Column(
+                        :  Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Column(
                       children: data.item1.map((model) => BookingCard(
-                        model: model,
-                        onTap: () => Navigator.pushNamed(context, '/view/activity'),
-                        color: getBookingColorAccordingTo(model),
-                        getSchedule: getBookingsAccordingTo(model),
+                          model: model,
+                          onTap: () => Navigator.pushNamed(
+                              context, '/view/activity', arguments: model),
+                          color: getBookingColorAccordingTo(model),
+                          getSchedule: getBookingsAccordingTo(model),
                       )
                       ).toList(),
                     ),
+                        ),
                   ),
                 ),
                 Padding(
@@ -158,15 +170,19 @@ class TripScreen extends StatelessWidget {
                         tripsProvider.isFetchingRentalCars),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
-                        :  Column(
+                        :  Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Column(
                       children: data.item1.map((model) => BookingCard(
-                        model: model,
-                        onTap: () => Navigator.pushNamed(context, '/view/rentalcar'),
-                        color: getBookingColorAccordingTo(model),
-                        getSchedule: getBookingsAccordingTo(model),
+                          model: model,
+                          onTap: () => Navigator.pushNamed(
+                              context, '/view/rentalcar', arguments: model),
+                          color: getBookingColorAccordingTo(model),
+                          getSchedule: getBookingsAccordingTo(model),
                       )
                       ).toList(),
                     ),
+                        ),
                   ),
                 ),
                 Padding(
@@ -180,15 +196,18 @@ class TripScreen extends StatelessWidget {
                         tripsProvider.isFetchingPublicTransport),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
-                        :  Column(
+                        :  Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Column(
                       children: data.item1.map((model) => BookingCard(
-                        model: model,
-                        onTap: () => Navigator.pushNamed(context, '/view/publictransport'),
-                        color: getBookingColorAccordingTo(model),
-                        getSchedule: getBookingsAccordingTo(model),
+                          model: model,
+                          onTap: () => Navigator.pushNamed(context, '/view/publictransport'),
+                          color: getBookingColorAccordingTo(model),
+                          getSchedule: getBookingsAccordingTo(model),
                       )
                       ).toList(),
                     ),
+                        ),
                   ),
                 ),
                 SizedBox(
