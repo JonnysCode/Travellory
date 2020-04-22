@@ -128,103 +128,103 @@ void main() {
     await checkText('Company');
   });
 
-  testWidgets('TestFormField required has empty Text and validation is false',
-      (WidgetTester tester) async {
-    final GlobalKey<FormState> requiredFormKey = GlobalKey<FormState>();
-
-    // for testing purposes we will use a rental car model here
-    final RentalCarModel testModel = RentalCarModel();
-
-    final TravelloryFormField testFormField = TravelloryFormField(
-      labelText: 'Test',
-      icon: Icon(Icons.confirmation_number),
-      optional: false,
-      onChanged: (value) => testModel.company = value,
-    );
-
-    Widget makeTestableWidget() {
-      return MaterialApp(
-        home: MediaQuery(
-          data: const MediaQueryData(devicePixelRatio: 1.0),
-          child: Directionality(
-            textDirection: TextDirection.ltr,
-            child: Center(
-              child: Material(
-                child: Form(
-                  key: requiredFormKey,
-                  child: testFormField,
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(makeTestableWidget());
-
-    bool validateForm() {
-      return (requiredFormKey.currentState.validate());
-    }
-
-    Future<void> checkEmptyText() async {
-      await tester.tap(find.byType(TextFormField));
-      bool validate = validateForm();
-      expect(testModel.company, equals(null));
-      expect(validate, isFalse);
-    }
-
-    await checkEmptyText();
-  });
-
-  testWidgets('TestFormField optional has empty Text and validation is true',
-          (WidgetTester tester) async {
-        final GlobalKey<FormState> requiredFormKey = GlobalKey<FormState>();
-
-        // for testing purposes we will use a rental car model here
-        final RentalCarModel testModel = RentalCarModel();
-
-        final TravelloryFormField testFormField = TravelloryFormField(
-          labelText: 'Test',
-          icon: Icon(Icons.confirmation_number),
-          optional: true,
-          onChanged: (value) => testModel.company = value,
-        );
-
-        Widget makeTestableWidget() {
-          return MaterialApp(
-            home: MediaQuery(
-              data: const MediaQueryData(devicePixelRatio: 1.0),
-              child: Directionality(
-                textDirection: TextDirection.ltr,
-                child: Center(
-                  child: Material(
-                    child: Form(
-                      key: requiredFormKey,
-                      child: testFormField,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-        }
-
-        // Build our app and trigger a frame.
-        await tester.pumpWidget(makeTestableWidget());
-
-        bool validateForm() {
-          return (requiredFormKey.currentState.validate());
-        }
-
-        Future<void> checkEmptyText() async {
-          await tester.tap(find.byType(TextFormField));
-          bool validate = validateForm();
-          expect(testModel.company, equals(null));
-          expect(validate, isTrue);
-        }
-
-        await checkEmptyText();
-      });
+//  testWidgets('TestFormField required has empty Text and validation is false',
+//      (WidgetTester tester) async {
+//    final GlobalKey<FormState> requiredFormKey = GlobalKey<FormState>();
+//
+//    // for testing purposes we will use a rental car model here
+//    final RentalCarModel testModel = RentalCarModel();
+//
+//    final TravelloryFormField testFormField = TravelloryFormField(
+//      labelText: 'Test',
+//      icon: Icon(Icons.confirmation_number),
+//      optional: false,
+//      onChanged: (value) => testModel.company = value,
+//    );
+//
+//    Widget makeTestableWidget() {
+//      return MaterialApp(
+//        home: MediaQuery(
+//          data: const MediaQueryData(devicePixelRatio: 1.0),
+//          child: Directionality(
+//            textDirection: TextDirection.ltr,
+//            child: Center(
+//              child: Material(
+//                child: Form(
+//                  key: requiredFormKey,
+//                  child: testFormField,
+//                ),
+//              ),
+//            ),
+//          ),
+//        ),
+//      );
+//    }
+//
+//    // Build our app and trigger a frame.
+//    await tester.pumpWidget(makeTestableWidget());
+//
+//    bool validateForm() {
+//      return (requiredFormKey.currentState.validate());
+//    }
+//
+//    Future<void> checkEmptyText() async {
+//      await tester.tap(find.byType(TextFormField));
+//      bool validate = validateForm();
+//      expect(testModel.company, equals(null));
+//      expect(validate, isFalse);
+//    }
+//
+//    await checkEmptyText();
+//  });
+//
+//  testWidgets('TestFormField optional has empty Text and validation is true',
+//          (WidgetTester tester) async {
+//        final GlobalKey<FormState> requiredFormKey = GlobalKey<FormState>();
+//
+//        // for testing purposes we will use a rental car model here
+//        final RentalCarModel testModel = RentalCarModel();
+//
+//        final TravelloryFormField testFormField = TravelloryFormField(
+//          labelText: 'Test',
+//          icon: Icon(Icons.confirmation_number),
+//          optional: true,
+//          onChanged: (value) => testModel.company = value,
+//        );
+//
+//        Widget makeTestableWidget() {
+//          return MaterialApp(
+//            home: MediaQuery(
+//              data: const MediaQueryData(devicePixelRatio: 1.0),
+//              child: Directionality(
+//                textDirection: TextDirection.ltr,
+//                child: Center(
+//                  child: Material(
+//                    child: Form(
+//                      key: requiredFormKey,
+//                      child: testFormField,
+//                    ),
+//                  ),
+//                ),
+//              ),
+//            ),
+//          );
+//        }
+//
+//        // Build our app and trigger a frame.
+//        await tester.pumpWidget(makeTestableWidget());
+//
+//        bool validateForm() {
+//          return (requiredFormKey.currentState.validate());
+//        }
+//
+//        Future<void> checkEmptyText() async {
+//          await tester.tap(find.byType(TextFormField));
+//          bool validate = validateForm();
+//          expect(testModel.company, equals(null));
+//          expect(validate, isTrue);
+//        }
+//
+//        await checkEmptyText();
+//      });
 }
