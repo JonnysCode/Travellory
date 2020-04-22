@@ -35,7 +35,7 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    var _dials = widget.dials;
+    final _dials = widget.dials;
 
     return Stack(
       children: <Widget>[
@@ -59,7 +59,7 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: List.generate(_dials.length, (int index) {
-              Widget dial = _dial(index, _dials);
+              final Widget dial = _dial(index, _dials);
               return dial;
             }).toList()
               ..add(

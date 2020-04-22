@@ -20,8 +20,8 @@ class _CalendarState extends State<Calendar> {
 
   List<Meeting> _getDataSource(List<TripModel> trips) {
     final meetings = <Meeting>[];
-    for(var trip in trips){
-      Meeting meeting = Meeting(trip.name, getDateTimeFrom(trip.startDate),
+    for(final trip in trips){
+      final Meeting meeting = Meeting(trip.name, getDateTimeFrom(trip.startDate),
           getDateTimeFrom(trip.endDate), tripColor, true);
       meetings.add(meeting);
     }
@@ -48,7 +48,7 @@ class _CalendarState extends State<Calendar> {
     SyncfusionLicense.registerLicense(
         "NT8mJyc2IWhia31ifWN9Z2FoYmF8YGJ8ampqanNiYmlmamlmanMDHmg5PD0yJzsyPTQhJiAgEzs8Jz4yOj99MDw+");
 
-    TripsProvider tripsProvider = Provider.of<TripsProvider>(context);
+    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context);
 
     return Row(
       children: <Widget>[
