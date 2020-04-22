@@ -81,8 +81,8 @@ void main() {
 
     await tester.pumpWidget(makeTestableWidget());
 
-    expect(find.text('Check-In Date *'), findsOneWidget);
-    expect(find.byKey(testKey), findsOneWidget);
+    expect(find.text('Check-In Date *', skipOffstage: false), findsOneWidget);
+    expect(find.byKey(testKey, skipOffstage: false), findsOneWidget);
   });
 
   testWidgets('test if check-in time field instance is found', (WidgetTester tester) async {
@@ -90,8 +90,8 @@ void main() {
 
     await tester.pumpWidget(makeTestableWidget());
 
-    expect(find.text('Check-In Time'), findsOneWidget);
-    expect(find.byKey(testKey), findsOneWidget);
+    expect(find.text('Check-In Time', skipOffstage: false), findsOneWidget);
+    expect(find.byKey(testKey, skipOffstage: false), findsOneWidget);
   });
 
   testWidgets('test if animated list is present', (WidgetTester tester) async {
