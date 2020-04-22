@@ -39,8 +39,7 @@ class TripsProvider extends ChangeNotifier {
   List<PublicTransportModel> _publicTransports;
   UserModel _user;
   TripModel selectedTrip;
-
-  // TODO: next upcoming trip
+  // TODO: upcoming trip
 
   List<TripModel> get trips => _trips;
 
