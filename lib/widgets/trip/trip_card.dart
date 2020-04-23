@@ -33,7 +33,9 @@ class _TripCardState extends State<TripCard> {
   TripModel _tripModel;
 
   void _openTrip(){
-    Provider.of<TripsProvider>(context, listen: false).initBookings(_tripModel);
+    Provider.of<TripsProvider>(context, listen: false)
+        ..selectedTrip = _tripModel
+        ..initBookings();
     Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
   }
 
@@ -68,7 +70,7 @@ class _TripCardState extends State<TripCard> {
                     Spacer(),
                     FashionFetishText(
                       text: '${toShortenedMonthDateFrom( _tripModel.startDate)} - '
-                          + '${toShortenedMonthDateFrom( _tripModel.endDate)}',
+                            '${toShortenedMonthDateFrom( _tripModel.endDate)}',
                       size: 14.0,
                       fontWeight: FashionFontWeight.bold,
                       color: Colors.black54,

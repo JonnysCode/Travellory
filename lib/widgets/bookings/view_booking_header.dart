@@ -20,7 +20,7 @@ class _BookingHeaderState extends State<BookingHeader> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(bottom: 40.0),
-          child: BannerImage(this.widget.bannerUrl),
+          child: BannerImage(widget.bannerUrl),
         ),
         Positioned(
           bottom: 0.0,
@@ -36,7 +36,7 @@ class _BookingHeaderState extends State<BookingHeader> {
                   children: [
                     Center(
                       child: FashionFetishText(
-                        text: this.widget.title,
+                        text: widget.title,
                         size: 24,
                         fontWeight: FashionFontWeight.heavy,
                       ),

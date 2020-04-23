@@ -91,7 +91,7 @@ class _PublicTransportViewState extends State<PublicTransportView> {
   @override
   Widget build(BuildContext context) {
     final PublicTransportModel publicTransportModel = ModalRoute.of(context).settings.arguments;
-    List<PublicTransportModel> publicTransports = [];
+    final List<PublicTransportModel> publicTransports = [];
     publicTransports.add(publicTransportModel);
     publicTransportModels = publicTransports;
 
