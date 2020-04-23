@@ -1,27 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:travellory/screens/friends/friends_list_page.dart';
 import 'package:travellory/screens/home/pages/friends_page.dart';
 
 void main() {
   Widget makeTestableWidget({Widget child}) {
     return MaterialApp(
-      home: child
+        home: child
     );
   }
 
-  testWidgets('test if page is the friends page', (WidgetTester tester) async {
-    FriendsPage page = FriendsPage();
-
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(makeTestableWidget(child: page));
-
-    // Verify that the friends page is present.
-    expect(find.byKey(Key('friends_page')), findsOneWidget);
-  });
-
   testWidgets('test if friend_requests_list is present', (WidgetTester tester) async {
-    FriendsPage page = FriendsPage();
+    FriendListPage page = FriendListPage();
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page));
@@ -60,4 +51,5 @@ void main() {
     // Verify that the button for friend_list is present.
     expect(find.byKey(Key('accept_button')), findsNWidgets(4));
   });
+
 }
