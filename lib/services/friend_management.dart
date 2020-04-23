@@ -20,6 +20,22 @@ class FriendManagement {
     return callable.call({'uidSender': uidSender, 'uidReceiver': uidReceiver});
   }
 
+  static Future<HttpsCallableResult> declineFriendRequest(
+      String uidSender, String uidReceiver) {
+    final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+      functionName: 'friends-declineFriendRequest',
+    );
+    return callable.call({'uidSender': uidSender, 'uidReceiver': uidReceiver});
+  }
+
+  static Future<HttpsCallableResult> removeFriend(
+      String uidA, String uidB) {
+    final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+      functionName: 'friends-removeFriend',
+    );
+    return callable.call({'uidA': uidA, 'uidB': uidB});
+  }
+
   static Future<List<FriendsModel>> getFriends(String uid) async {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'friends-getFriends',
