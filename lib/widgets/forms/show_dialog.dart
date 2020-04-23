@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/widgets/buttons.dart';
+import 'package:travellory/widgets/buttons/buttons.dart';
 
 import '../font_widgets.dart';
 
@@ -19,10 +19,11 @@ void showSubmittedBookingDialog(BuildContext context, String alertText) {
         content: Text(alertText),
         actions: <Widget>[
           alertButton('Home', Colors.transparent, context, () async {
-            Navigator.popUntil(context, ModalRoute.withName('/home'));
+            Navigator.of(context).popUntil((route) => route.isFirst);
           }),
           alertButton("Back to Trip", Theme.of(context).hintColor, context, () async {
-            Navigator.pop(context);
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
           }),
         ],
       );

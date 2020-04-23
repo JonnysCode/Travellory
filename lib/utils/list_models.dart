@@ -52,7 +52,7 @@ class FormItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-      child: SizeTransition(axis: Axis.vertical, sizeFactor: this.animation, child: this.child),
+      child: SizeTransition(axis: Axis.vertical, sizeFactor: animation, child: child),
     );
   }
 }
