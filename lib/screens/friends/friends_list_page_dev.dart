@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_list_widget.dart';
 
 class FriendListPageDev extends StatefulWidget {
@@ -60,18 +61,8 @@ class _FriendListPageDevState extends State<FriendListPageDev> {
         children: <Widget>[
           SizedBox(height: 20),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            Icon(
-              FontAwesomeIcons.addressBook,
-              size: 50,
-            ),
-            Text(
-              'FRIENDS',
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-              ),
+            Padding(
+              padding: EdgeInsets.only(left: 200, top: 10),
             ),
             GestureDetector(
               onTap: () => {
@@ -106,10 +97,10 @@ class _FriendListPageDevState extends State<FriendListPageDev> {
           ),
           friendList(
               Key('friend_requests_list'),
-              145,
+              158,
               friendRequests,
               context),
-          SizedBox(height: 40),
+          SizedBox(height: 20),
           Padding(
             key: Key('friends'),
             padding: EdgeInsets.only(
@@ -131,7 +122,7 @@ class _FriendListPageDevState extends State<FriendListPageDev> {
           ),
           friendList(
               Key('friends_list'),
-              225,
+              240,
               friends,
               context),
         ],
