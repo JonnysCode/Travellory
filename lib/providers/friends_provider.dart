@@ -29,10 +29,15 @@ class FriendsProvider extends ChangeNotifier{
     unawaited(_fetchFriends());
   }
 
+  void update() {
+    unawaited(_fetchFriends());
+  }
+
   Future<void> _fetchFriends() async {
     isFetching = true;
-    _friends = await FriendManagement.getFriends(_user.uid);
     _friendRequests = await FriendManagement.getFriendRequests(_user.uid);
+    _friends = await FriendManagement.getFriends(_user.uid);
+
     isFetching = false;
     notifyListeners();
   }

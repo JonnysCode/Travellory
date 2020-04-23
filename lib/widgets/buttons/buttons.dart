@@ -116,7 +116,7 @@ Widget socialButton(Key key, IconData icon, Color color, void function()) {
       icon,
       color: color,
     ),
-    onPressed: function,
+    onPressed: () => function(),
   );
 }
 
