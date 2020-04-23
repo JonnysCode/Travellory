@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/screens/friends/create_search_friend_screen.dart';
+import 'package:travellory/screens/friends/search_friend_page.dart';
 import 'package:travellory/screens/friends/friends_list_page.dart';
 
 class FriendsPage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _FriendsPageState extends State<FriendsPage> {
                       padding: const EdgeInsets.fromLTRB(6, 40, 6, 0),
                       child: Container(
                           child: _isSearching
-                              ? Container(child: SearchFriendsPage()) // TODO add friend page, and set state to false,
+                              ? Container(child: SearchFriendsPage()) // TODO Fix that both pages on the friendspage
                               : Container(child: FriendListPage())
                       ),
                     ),
