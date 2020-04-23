@@ -12,7 +12,7 @@ class DatabaseAdder {
 
   // adds Model to the database
   Future<bool> addModel(Model model, String correspondingFunctionName) async {
-    if(_count >= _maxCount){
+    if(_count++ >= _maxCount){
       log.w('maxCount exceeded in AddModel');
       return false;
     }

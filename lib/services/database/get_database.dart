@@ -24,7 +24,7 @@ class DatabaseGetter {
 
   Future<List<Model>> getEntriesFromDatabase(
       String uid, String function) async {
-    if(_count >= _maxCount){
+    if(_count++ >= _maxCount){
       log.w('maxCount exceeded in get');
       return <Model>[];
     }

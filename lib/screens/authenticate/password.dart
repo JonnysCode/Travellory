@@ -28,7 +28,7 @@ class _RegisterState extends State<ChangePassword> {
 
   Future _validateAndChangePW() async {
     if (_formKey.currentState.validate()) {
-      Navigator.pushNamed(context, '/loading');
+      await Navigator.pushNamed(context, '/loading');
 
       await _changePassword().then((value) async {
         setState(() => _changePwError = null);
