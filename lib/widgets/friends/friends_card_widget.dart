@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
-
 @override
 Widget friendsCard(BuildContext context, List<FriendsModel> list, int index) {
   double cardSize = 70;
@@ -70,7 +69,7 @@ Widget friendsCard(BuildContext context, List<FriendsModel> list, int index) {
                 BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.3), offset: Offset(3.0, 3.0))
               ],
               image: DecorationImage(
-                image: AssetImage("assets/images/friends/user.png"),
+                image: AssetImage("assets/images/login/beach.png"),
                 fit: BoxFit.fitWidth,
                 alignment: Alignment.bottomCenter,
               ),

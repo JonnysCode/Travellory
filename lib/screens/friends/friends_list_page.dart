@@ -8,6 +8,7 @@ import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/services/friend_management.dart';
 import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_list_widget.dart';
 
 class FriendListPage extends StatefulWidget {
@@ -87,18 +88,8 @@ class _FriendListPageState extends State<FriendListPage> {
         children: <Widget>[
           SizedBox(height: 20),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            Icon(
-              FontAwesomeIcons.addressBook,
-              size: 50,
-            ),
-            Text(
-              'FRIENDS',
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-              ),
+            Padding(
+              padding: EdgeInsets.only(left: 200, top: 10),
             ),
             GestureDetector(
               onTap: () => {
@@ -138,7 +129,7 @@ class _FriendListPageState extends State<FriendListPage> {
                 ? Text('You have no friend requests :(')
                 : friendList(
                 Key('friend_requests_list'),
-                145,
+                158,
                 friendsProvider.friendRequests,
 //                Wrap(
 //                  children: <Widget>[
@@ -160,7 +151,7 @@ class _FriendListPageState extends State<FriendListPage> {
 //                ),
                 context),
           ),
-          SizedBox(height: 40),
+          SizedBox(height: 20),
           Padding(
             key: Key('friends'),
             padding: EdgeInsets.only(
@@ -187,7 +178,7 @@ class _FriendListPageState extends State<FriendListPage> {
                 ? Text('You have no friends :(')
                 : friendList(
                 Key('friends_list'),
-                225,
+                240,
                 friendsProvider.friends,
 //                Wrap(
 //                  children: <Widget>[

@@ -38,6 +38,14 @@ class _FriendsPageState extends State<FriendsPage> {
                       ),
                     ),
                   ),
+                  Positioned(
+                    top: 15,
+                    left: 25,
+                    child: Image(
+                      image: AssetImage('assets/images/logo/travellory_icon.png'),
+                      height: 80,
+                    ),
+                  )
                 ]
             )
         )
