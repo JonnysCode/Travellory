@@ -6,23 +6,25 @@ import 'package:travellory/widgets/font_widgets.dart';
 
 @override
 Widget friendsCard(BuildContext context, List<FriendsModel> list, int index) {
+  double cardSize = 70;
+
   return Container(
-    height: 80,
+    height: cardSize,
     child: Stack(
       children: <Widget>[
         Positioned(
-          left: 40,
+          left: 20,
           right: 0,
           child: GestureDetector(
 //              TODO(fluetfab): link to profile-page of the friend
 //              onTap: () => _openFriendsProfile(),
             child: Container(
-              height: 80,
+              height: cardSize,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(40),
                 color: Color(0xBBCCD7DD),
               ),
-              padding: const EdgeInsets.only(left: 50.0, top: 14.0, bottom: 14.0, right: 14.0),
+              padding: const EdgeInsets.only(left: 65.0, top: 10.0, bottom: 14.0, right: 14.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -37,14 +39,14 @@ Widget friendsCard(BuildContext context, List<FriendsModel> list, int index) {
                   Row(
                     children: <Widget>[
                       Icon(
-                        FontAwesomeIcons.locationArrow,
+                        FontAwesomeIcons.home,
                         size: 14,
-                        color: Colors.redAccent,
+                        color: Colors.brown,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 6, left: 3),
                         child: FashionFetishText(
-                          text: 'Homecountry: ${list[index].username}',
+                          text: 'Switzerland',
                           size: 13.0,
                           fontWeight: FashionFontWeight.heavy,
                           color: Colors.black54,
@@ -60,15 +62,15 @@ Widget friendsCard(BuildContext context, List<FriendsModel> list, int index) {
         Align(
           alignment: Alignment.centerLeft,
           child: Container(
-            height: 80,
-            width: 80,
+            height: cardSize,
+            width: cardSize,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
               boxShadow: <BoxShadow>[
                 BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.3), offset: Offset(3.0, 3.0))
               ],
               image: DecorationImage(
-                image: AssetImage("assets/images/login/beach.png"),
+                image: AssetImage("assets/images/friends/user.png"),
                 fit: BoxFit.fitWidth,
                 alignment: Alignment.bottomCenter,
               ),

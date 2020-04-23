@@ -140,24 +140,24 @@ class _FriendListPageState extends State<FriendListPage> {
                 Key('friend_requests_list'),
                 145,
                 friendsProvider.friendRequests,
-                Wrap(
-                  children: <Widget>[
-                    socialButton(
-                        Key('accept_button'),
-                        Icons.add_circle,
-                        Colors.green,
-                            () => _acceptFriendRequest(
-                            friendsProvider.friendRequests[0].uid,
-                            user.uid)),
-                    socialButton(
-                        Key('decline_button'),
-                        Icons.remove_circle,
-                        Colors.red,
-                            () => _declineFriendRequest(
-                            friendsProvider.friendRequests[0].uid,
-                            user.uid)),
-                  ],
-                ),
+//                Wrap(
+//                  children: <Widget>[
+//                    socialButton(
+//                        Key('accept_button'),
+//                        Icons.add_circle,
+//                        Colors.green,
+//                            () => _acceptFriendRequest(
+//                            friendsProvider.friendRequests[0].uid,
+//                            user.uid)),
+//                    socialButton(
+//                        Key('decline_button'),
+//                        Icons.remove_circle,
+//                        Colors.red,
+//                            () => _declineFriendRequest(
+//                            friendsProvider.friendRequests[0].uid,
+//                            user.uid)),
+//                  ],
+//                ),
                 context),
           ),
           SizedBox(height: 40),
@@ -189,17 +189,17 @@ class _FriendListPageState extends State<FriendListPage> {
                 Key('friends_list'),
                 225,
                 friendsProvider.friends,
-                Wrap(
-                  children: <Widget>[
-                    socialButton(
-                        Key('remove_button'),
-                        Icons.remove_circle,
-                        Colors.red,
-                            () => _removeFriend(
-                            friendsProvider.friendRequests[0].uid,
-                            user.uid)),
-                  ],
-                ),
+//                Wrap(
+//                  children: <Widget>[
+//                    socialButton(
+//                        Key('remove_button'),
+//                        Icons.remove_circle,
+//                        Colors.red,
+//                            () => _removeFriend(
+//                            friendsProvider.friendRequests[0].uid,
+//                            user.uid)),
+//                  ],
+//                ),
                 context),
           ),
         ],
