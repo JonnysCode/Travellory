@@ -21,18 +21,21 @@ class _FriendsPageState extends State<FriendsPage> {
     return SafeArea(
         child: Container(
             key: Key('friends_page'),
-            child: Stack(children: <Widget>[
-              SizedBox.expand(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(6, 40, 6, 0),
-                  child: Container(
-                      child: _isSearching
-                          ? Container(
-                          child:
-                          SearchFriendsPage()) // TODO add friend page, and set state to false,
-                          : Container(child: FriendListPage())),
-                ),
-              ),
-            ])));
+            child: Stack(
+                children: <Widget>[
+                  SizedBox.expand(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(6, 40, 6, 0),
+                      child: Container(
+                          child: _isSearching
+                              ? Container(child: SearchFriendsPage()) // TODO add friend page, and set state to false,
+                              : Container(child: FriendListPage())
+                      ),
+                    ),
+                  ),
+                ]
+            )
+        )
+    );
   }
 }
