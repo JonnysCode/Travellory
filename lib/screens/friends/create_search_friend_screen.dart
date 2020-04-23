@@ -80,11 +80,11 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                                       );
                                     },
                                     searchBarPadding:
-                                        EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                    EdgeInsets.fromLTRB(0, 0, 10, 0),
                                     headerPadding:
-                                        EdgeInsets.symmetric(horizontal: 50),
+                                    EdgeInsets.symmetric(horizontal: 50),
                                     listPadding:
-                                        EdgeInsets.symmetric(horizontal: 30),
+                                    EdgeInsets.symmetric(horizontal: 30),
                                     hintText: 'Add friends',
                                     hintStyle: TextStyle(
                                       color: Colors.grey[800],
@@ -95,7 +95,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                                     ),
                                     searchBarStyle: SearchBarStyle(
                                       backgroundColor:
-                                          Theme.of(context).primaryColor,
+                                      Theme.of(context).primaryColor,
                                       padding: EdgeInsets.all(5),
                                     ),
                                     cancellationWidget: Text(
