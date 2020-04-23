@@ -108,20 +108,6 @@ class _FriendListPageDevState extends State<FriendListPageDev> {
               Key('friend_requests_list'),
               145,
               friendRequests,
-              Wrap(
-                children: <Widget>[
-                  socialButton(
-                      Key('accept_button'),
-                      Icons.add_circle,
-                      Colors.green,
-                      null),
-                  socialButton(
-                      Key('decline_button'),
-                      Icons.remove_circle,
-                      Colors.red,
-                      null),
-                ],
-              ),
               context),
           SizedBox(height: 40),
           Padding(
@@ -147,15 +133,6 @@ class _FriendListPageDevState extends State<FriendListPageDev> {
               Key('friends_list'),
               225,
               friends,
-              Wrap(
-                children: <Widget>[
-                  socialButton(
-                      Key('remove_button'),
-                      Icons.remove_circle,
-                      Colors.red,
-                      null),
-                ],
-              ),
               context),
         ],
       ),

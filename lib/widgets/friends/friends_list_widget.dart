@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
 
-Widget friendList(Key key, double height, List<FriendsModel> list, Widget trailing, BuildContext context) {
+Widget friendList(Key key, double height, List<FriendsModel> list, BuildContext context) {
   return Padding(
     key: key,
     padding: EdgeInsets.only(
