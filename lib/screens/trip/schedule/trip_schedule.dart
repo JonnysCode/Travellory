@@ -10,7 +10,7 @@ class Schedule extends StatefulWidget {
 }
 
 class _ScheduleState extends State<Schedule> {
-  static TripModel _tripModel = TripModel(
+  static final TripModel _tripModel = TripModel(
       name: 'Castle Discovery',
       startDate: '2020-05-11',
       endDate: '2020-05-19',
@@ -23,8 +23,7 @@ class _ScheduleState extends State<Schedule> {
   @override
   void initState() {
     _tripModel.init();
-    _expandedDays = _tripModel.days.map((day) => false).toList();
-    //_expandedDays[0] = true;
+    _expandedDays = _tripModel.days.map((day) => true).toList();
     super.initState();
   }
 

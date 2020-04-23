@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_core/core.dart';
+import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/utils/date_converter.dart';
 
 class Calendar extends StatefulWidget {
   @override
@@ -9,17 +13,19 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  final Color calendarBackgroundColor = Colors.orangeAccent;
+  static const Color tripColor = Colors.orangeAccent;
   final DateTime today = DateTime.now();
 
   CalendarController _calendarController;
 
-  List<Meeting> _getDataSource() {
+  List<Meeting> _getDataSource(List<TripModel> trips) {
     final meetings = <Meeting>[];
-    final DateTime startDate = today.add(const Duration(days: -3));
-    final DateTime endDate = startDate.add(const Duration(days: 6));
-    meetings.add(
-        Meeting('TestTrip', startDate, endDate, calendarBackgroundColor, true));
+    for(final trip in trips){
+      final Meeting meeting = Meeting(trip.name, getDateTimeFrom(trip.startDate),
+          getDateTimeFrom(trip.endDate), tripColor, true);
+      meetings.add(meeting);
+    }
+
     return meetings;
   }
 
@@ -42,6 +48,8 @@ class _CalendarState extends State<Calendar> {
     SyncfusionLicense.registerLicense(
         "NT8mJyc2IWhia31ifWN9Z2FoYmF8YGJ8ampqanNiYmlmamlmanMDHmg5PD0yJzsyPTQhJiAgEzs8Jz4yOj99MDw+");
 
+    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context);
+
     return Row(
       children: <Widget>[
         SizedBox(
@@ -56,7 +64,81 @@ class _CalendarState extends State<Calendar> {
           ),
         ),
         Expanded(
-          child: _calendar(),
+          child: Container(
+            key: Key('calendar_page'),
+            height: MediaQuery.of(context).size.height*0.4,
+            width: MediaQuery.of(context).size.width - 60,
+            child: SfCalendar(
+              key: Key('yearly_calendar'),
+              controller: _calendarController,
+              view: CalendarView.month,
+              cellBorderColor: Colors.transparent,
+              backgroundColor: Colors.transparent,
+              todayHighlightColor: Colors.black54,
+              initialDisplayDate: DateTime.utc(today.year, today.month, 1),
+              dataSource: MeetingDataSource(_getDataSource(tripsProvider.trips)),
+              selectionDecoration: BoxDecoration(
+                color: Colors.black12,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(blurRadius: 2, color: Colors.black.withOpacity(.1), offset: Offset(0.0, 0.0))
+                ],
+              ),
+              headerStyle: CalendarHeaderStyle(
+                textAlign: TextAlign.left,
+                backgroundColor: Colors.transparent,
+                textStyle: TextStyle(
+                    fontFamily: 'FashionFetish',
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600
+                ),
+              ),
+              monthViewSettings: MonthViewSettings(
+                showAgenda: false,
+                appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
+                navigationDirection: MonthNavigationDirection.horizontal,
+                numberOfWeeksInView: 6,
+                dayFormat: 'EEE',
+                monthCellStyle: MonthCellStyle(
+                  todayTextStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'FashionFetish',
+                    height: 1.2,
+                  ),
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                    fontFamily: 'FashionFetish',
+                    height: 1.2,
+                  ),
+                  trailingDatesTextStyle: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white70,
+                    fontFamily: 'FashionFetish',
+                    height: 1.2,
+                  ),
+                  leadingDatesTextStyle: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white70,
+                    fontFamily: 'FashionFetish',
+                    height: 1.2,
+                  ),
+                ),
+              ),
+              viewHeaderStyle: ViewHeaderStyle(
+                dayTextStyle: TextStyle(
+                  fontSize: 10,
+                  color: Colors.white,
+                  fontFamily: 'FashionFetish',
+                  fontWeight: FontWeight.bold,
+                  height: 1.3,
+                ),
+              ),
+              firstDayOfWeek: 1, // first day of the week should be monday
+            ),
+          ),
         ),
         SizedBox(
           width: 40,
@@ -70,84 +152,6 @@ class _CalendarState extends State<Calendar> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _calendar() {
-    return Container(
-      key: Key('calendar_page'),
-      height: MediaQuery.of(context).size.height*0.4,
-      width: MediaQuery.of(context).size.width - 60,
-      child: SfCalendar(
-        key: Key('yearly_calendar'),
-        controller: _calendarController,
-        view: CalendarView.month,
-        cellBorderColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        todayHighlightColor: Colors.black54,
-        initialDisplayDate: DateTime.utc(today.year, today.month, 1),
-        dataSource: MeetingDataSource(_getDataSource()),
-        selectionDecoration: BoxDecoration(
-          color: Colors.black12,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(blurRadius: 2, color: Colors.black.withOpacity(.1), offset: Offset(0.0, 0.0))
-          ],
-        ),
-        headerStyle: CalendarHeaderStyle(
-          textAlign: TextAlign.left,
-          backgroundColor: Colors.transparent,
-          textStyle: TextStyle(
-              fontFamily: 'FashionFetish',
-              fontSize: 24,
-              color: Colors.white,
-              fontWeight: FontWeight.w600
-          ),
-        ),
-        monthViewSettings: MonthViewSettings(
-          showAgenda: false,
-          appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
-          navigationDirection: MonthNavigationDirection.horizontal,
-          numberOfWeeksInView: 6,
-          dayFormat: 'EEE',
-          monthCellStyle: MonthCellStyle(
-            todayTextStyle: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'FashionFetish',
-              height: 1.2,
-            ),
-            textStyle: TextStyle(
-              fontSize: 14,
-              color: Colors.white,
-              fontFamily: 'FashionFetish',
-              height: 1.2,
-            ),
-            trailingDatesTextStyle: TextStyle(
-              fontSize: 14,
-              color: Colors.white70,
-              fontFamily: 'FashionFetish',
-              height: 1.2,
-            ),
-            leadingDatesTextStyle: TextStyle(
-              fontSize: 14,
-              color: Colors.white70,
-              fontFamily: 'FashionFetish',
-              height: 1.2,
-            ),
-          ),
-        ),
-        viewHeaderStyle: ViewHeaderStyle(
-          dayTextStyle: TextStyle(
-            fontSize: 10,
-            color: Colors.white,
-            fontFamily: 'FashionFetish',
-            fontWeight: FontWeight.bold,
-            height: 1.3,
-          ),
-        ),
-        firstDayOfWeek: 1, // first day of the week should be monday
-      ),
     );
   }
 }

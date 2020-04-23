@@ -3,10 +3,19 @@ import 'package:travellory/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 
 class DatabaseAdder {
+  static const int _maxCount = 50;
+  static const String addTrip = 'trips-addTrip';
+
+  static int _count = 0;
+
   final log = getLogger('DatabaseAdder');
 
   // adds Model to the database
   Future<bool> addModel(Model model, String correspondingFunctionName) async {
+    if(_count++ >= _maxCount){
+      log.w('maxCount exceeded in AddModel');
+      return false;
+    }
     final HttpsCallable callable =
         CloudFunctions.instance.getHttpsCallable(functionName: correspondingFunctionName);
     try {
@@ -18,7 +27,7 @@ class DatabaseAdder {
       log.e(e.code);
       log.e(e.message);
       log.e(e.details);
-    } catch (e) {
+    } on Exception catch (e) {
       log.i('caught generic exception');
       log.i(e);
     }

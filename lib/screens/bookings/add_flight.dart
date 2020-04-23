@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/services/add_database.dart';
-import 'package:travellory/screens/trip/bookings/bookings.dart';
+import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
@@ -36,7 +39,9 @@ class _FlightState extends State<Flight> {
 
   @override
   Widget build(BuildContext context) {
-    final TripModel tripModel = ModalRoute.of(context).settings.arguments;
+    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
+    final TripModel tripModel = tripsProvider.selectedTrip;
+    flightModel.tripUID = tripModel.uid;
 
     return Scaffold(
       key: Key('Flight'),
@@ -92,6 +97,26 @@ class _FlightState extends State<Flight> {
                           optional: true,
                           onChanged: (value) => flightModel.seat = value),
                     ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: CheckboxFormField(
+                    initialValue: false,
+                    label: 'Does your flight ticket include checked baggage?',
+                    onChanged: (value) {
+                      flightModel.checkedBaggage = value;
+                    },
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                    child: CheckboxFormField(
+                      initialValue: false,
+                      label: 'Does your flight ticket include excess baggage?',
+                      onChanged: (value) {
+                        flightModel.excessBaggage = value;
+                      },
+                    ),
+                ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: SectionTitle('Pick Up Information'),
@@ -150,7 +175,7 @@ class _FlightState extends State<Flight> {
                       child: TimeFormField(
                           labelText: 'Arrival Time',
                           icon: Icon(FontAwesomeIcons.clock),
-                          optional: true,
+                          optional: false,
                           chosenTimeString: (value) => flightModel.arrivalTime = value),
                     ),
                     Padding(
@@ -172,7 +197,7 @@ class _FlightState extends State<Flight> {
                           highlightColor: Theme.of(context).primaryColor,
                           fillColor: Theme.of(context).primaryColor,
                           validationFunction: validateForm,
-                          onSubmit: onSubmitBooking(flightModel, 'booking-addFlight', context,
+                          onSubmit: onSubmitBooking(tripsProvider, flightModel, 'booking-addFlight', context,
                               alertText),
                         ),
                     ),

@@ -1,32 +1,31 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:travellory/logger.dart';
 import 'package:travellory/models/user_model.dart';
-import 'package:travellory/services/user_management.dart';
+import 'package:travellory/services/authentication/user_management.dart';
 
 abstract class BaseAuthService {
   Future signInAnonymously();
   Future signInWithEmailAndPassword(String email, String password);
-  Future reauthenticate (String oldPassword);
+  Future reauthenticate(String oldPassword);
   Future changePassword(String password);
   Future registerWithEmailAndPassword(
       String email, String password, String displayName);
   Future signOut();
   Future getCurrentUser();
+  Future updatePhotoUrl(String photoUrl);
   Stream<UserModel> get user;
   set user(Stream<UserModel> user);
 }
 
 class AuthService implements BaseAuthService {
-  AuthService({
-    this.auth,
-    this.userStream
-  }){
-    if(auth == null){
-      auth = FirebaseAuth.instance;
-    }
+  AuthService({this.auth, this.userStream}) {
+    auth ??= FirebaseAuth.instance;
   }
 
   FirebaseAuth auth;
   Stream<UserModel> userStream;
+
+  final log = getLogger('AuthService');
 
   @override
   set user(Stream<UserModel> user) {
@@ -36,16 +35,14 @@ class AuthService implements BaseAuthService {
   // create User object based on firebase user
   UserModel _userFromFirebaseUser(FirebaseUser user) {
     return user != null
-        ? UserModel(uid: user.uid, displayName: user.displayName)
+        ? UserModel(firebaseUser: user)
         : null;
   }
 
   // auth change user stream
   @override
   Stream<UserModel> get user {
-    return userStream == null
-        ? auth.onAuthStateChanged.map(_userFromFirebaseUser)
-        : userStream;
+    return userStream ?? auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
   // get current user
@@ -61,8 +58,8 @@ class AuthService implements BaseAuthService {
       final AuthResult result = await auth.signInAnonymously();
       final FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
-    } catch (e) {
-      // todo: error handling -> logging
+    } on Exception catch (e) {
+      log.e(e.toString());
       return null;
     }
   }
@@ -75,9 +72,9 @@ class AuthService implements BaseAuthService {
           email: email, password: password);
       final FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
-    } catch (e) {
-      // todo: logging and error handling
-      return null;
+    } on Exception catch (e) {
+      log.e(e.toString());
+      return Future.error(e);
     }
   }
 
@@ -97,22 +94,23 @@ class AuthService implements BaseAuthService {
       await firebaseUser.reload();
       firebaseUser = await auth.currentUser();
 
-      UserManagement.setUsername(firebaseUser);
+      await UserManagement.setUsername(firebaseUser);
 
       return _userFromFirebaseUser(firebaseUser);
-    } catch (e) {
-      // todo: logging and error handling
-      return null;
+    } on Exception catch (e) {
+      log.e(e.toString());
+      await _deleteCurrentUser();
+      return Future.error(e);
     }
   }
 
   //reauthenticate before security-sensitive action (f.e. change password)
   @override
-  Future reauthenticate (String oldPassword) async {
+  Future reauthenticate(String oldPassword) async {
     final FirebaseUser user = await auth.currentUser();
     final String email = user.email;
-    final AuthCredential credential = EmailAuthProvider.
-    getCredential(email: email, password: oldPassword);
+    final AuthCredential credential =
+        EmailAuthProvider.getCredential(email: email, password: oldPassword);
     return user.reauthenticateWithCredential(credential);
   }
 
@@ -128,10 +126,40 @@ class AuthService implements BaseAuthService {
   Future signOut() async {
     try {
       return await auth.signOut();
-    } catch (e) {
-      // todo: exeption handling, logging
+    } on Exception catch (e) {
+      log.e(e.toString());
       return null;
     }
   }
 
+  /// update the photoUrl variable of the current firebase user
+  @override
+  Future updatePhotoUrl(String photoUrl) async {
+    try {
+      FirebaseUser firebaseUser = await auth.currentUser();
+      log.d('current firebase user: ${firebaseUser.toString()}');
+
+      final UserUpdateInfo updateInfo = UserUpdateInfo()
+        ..photoUrl = photoUrl;
+
+      log.d('updating photoUrl to: $photoUrl');
+      await firebaseUser.updateProfile(updateInfo);
+      await firebaseUser.reload();
+      firebaseUser = await auth.currentUser();
+
+      return _userFromFirebaseUser(firebaseUser);
+    } on Exception catch (e) {
+      log.e(e.toString());
+      return Future.error(e);
+    }
+  }
+
+  // delete current user
+ Future _deleteCurrentUser() async {
+   await auth.currentUser().then((user) {
+     user.delete();
+   }).catchError((e) {
+     log.e('User was not deleted');
+   });
+ }
 }

@@ -31,6 +31,7 @@ dependencies:
   image_cropper: ^1.2.1
   firebase_auth: 0.15.5+3 #0.15.4 #^0.15.5+2
   cloud_firestore: ^0.13.4+2 #^0.13.4
+  firebase_storage: ^3.1.5
   provider: ^4.0.4
   email_validator: ^1.0.4
   flutter_spinkit: ^4.1.2
@@ -44,9 +45,13 @@ dependencies:
   flutter_rounded_date_picker: 1.0.0
   dropdownfield: 1.0.0
   custom_navigation_bar: ^0.2.6
-  flushbar: 1.10.0
+  flushbar: 1.8.0
   logger: ^0.6.0
   flappy_search_bar: 1.7.2
+  tuple: ^1.0.3
+  path_provider: 1.5.1
+  cached_network_image: 2.0.0
+  firebase_auth_mocks: ^0.1.3
 
 dev_dependencies:
   flutter_test:
@@ -84,11 +89,13 @@ flutter:
   assets:
     - assets/images/login/
     - assets/images/logo/
+    - assets/images/bookings/
     - assets/images/home/trip/
     - assets/images/home/
+    - assets/images/activity/
     - assets/photo_camera.png
     - assets/g_map/
-
+    - assets/g_map/border_points/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

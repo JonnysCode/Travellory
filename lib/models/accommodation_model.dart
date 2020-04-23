@@ -1,9 +1,48 @@
 import 'package:travellory/models/abstract_model.dart';
+import 'package:travellory/utils/date_converter.dart';
 
-class AccommodationModel extends Model{
+class AccommodationModel extends Model {
+  AccommodationModel({this.tripUID = '',
+  this.uid = '',
+  this.type = '',
+  this.specificationOther = '',
+  this.name = '',
+  this.confirmationNr = '',
+  this.address = '',
+  this.nights = '',
+  this.checkinDate = '',
+  this.checkinTime = '',
+  this.checkoutDate = '',
+  this.checkoutTime = '',
+  this.breakfast = false,
+  this.hotelRoomType = '',
+  this.airbnbType = '',
+  this.notes = ''});
 
+  AccommodationModel.fromData(accommodation) {
+    tripUID = accommodation["tripUID"];
+    uid = accommodation["uid"];
+    type = accommodation["type"];
+    specificationOther = accommodation["specificationOther"];
+    name = accommodation["name"];
+    confirmationNr = accommodation["confirmationNr"];
+    address = accommodation["address"];
+    nights = accommodation["nights"];
+    checkinDate = accommodation["checkinDate"];
+    checkinTime = accommodation["checkinTime"];
+    checkoutDate = accommodation["checkoutDate"];
+    checkoutTime = accommodation["checkoutTime"];
+    breakfast = accommodation["breakfast"];
+    hotelRoomType = accommodation["hotelRoomType"];
+    airbnbType = accommodation["airbnbType"];
+    notes = accommodation["notes"];
+  }
+
+  String tripUID;
+  String uid;
   String type;
-  String hotelName;
+  String specificationOther;
+  String name;
   String confirmationNr;
   String address;
   String nights;
@@ -12,26 +51,30 @@ class AccommodationModel extends Model{
   String checkoutDate;
   String checkoutTime;
   bool breakfast;
-  String roomType;
-  String accommodationType;
+  String hotelRoomType;
+  String airbnbType;
   String notes;
 
   @override
-  Map<String, dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
-      'type': type,
-      'hotelName': hotelName,
-      'confirmationNr': confirmationNr,
-      'address': address,
-      'nights': nights,
-      'checkinDate': checkinDate,
-      'checkinTime': checkinTime,
-      'checkoutDate': checkoutDate,
-      'checkoutTime': checkoutTime,
-      'breakfast': breakfast,
-      'roomType': roomType,
-      'accommodationType': accommodationType,
-      'notes': notes
+      "tripUID": tripUID,
+      "type": type,
+      "specificationOther": specificationOther,
+      "name": name,
+      "confirmationNr": confirmationNr,
+      "address": address,
+      "nights": nights,
+      "checkinDate": checkinDate,
+      "checkinTime": checkinTime,
+      "checkoutDate": checkoutDate,
+      "checkoutTime": checkoutTime,
+      "breakfast": breakfast,
+      "hotelRoomType": hotelRoomType,
+      "airbnbType": airbnbType,
+      "notes": notes
     };
   }
 }
+
+List<AccommodationModel> accommodationModels = <AccommodationModel>[];
