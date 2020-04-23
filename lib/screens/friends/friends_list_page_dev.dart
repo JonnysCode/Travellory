@@ -86,12 +86,10 @@ class _FriendListPageDevState extends State<FriendListPageDev> {
             child: Container(
               height: 30,
               width: MediaQuery.of(context).size.width,
-              child: Text(
-                'Friend requests',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: FashionFetishText(
+                text: 'Friend requests',
+                size: 22,
+                fontWeight: FashionFontWeight.heavy,
               ),
             ),
           ),
@@ -111,12 +109,10 @@ class _FriendListPageDevState extends State<FriendListPageDev> {
             child: Container(
               height: 30,
               width: MediaQuery.of(context).size.width,
-              child: Text(
-                'Friends',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: FashionFetishText(
+                text: 'Friends',
+                size: 22,
+                fontWeight: FashionFontWeight.heavy,
               ),
             ),
           ),
