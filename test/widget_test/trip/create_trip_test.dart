@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/screens/trip/create_trip_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
@@ -7,8 +8,10 @@ import 'package:travellory/models/user_model.dart';
 void main() {
   Widget makeTestableWidget({Widget page}) {
     UserModel user = UserModel(uid: 'uid', displayName: 'name');
-    return Provider<UserModel>.value(
-      value: user,
+    TripsProvider tripsProvider = TripsProvider()
+      ..user = user;
+    return ChangeNotifierProvider<TripsProvider>(
+      create: (_) => tripsProvider,
       child: MaterialApp(
         home: page,
       ),

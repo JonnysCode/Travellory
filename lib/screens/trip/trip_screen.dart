@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'package:travellory/widgets/trip/booking_card.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
+import 'package:tuple/tuple.dart';
 
-class TripScreen extends StatefulWidget {
-  @override
-  _TripScreenState createState() => _TripScreenState();
-}
+class TripScreen extends StatelessWidget {
+  const TripScreen({
+    Key key,
+  }) : super(key: key);
 
-class _TripScreenState extends State<TripScreen> {
   @override
   Widget build(BuildContext context) {
-    final TripModel _tripModel = ModalRoute.of(context).settings.arguments;
+    final TripModel tripModel = Provider.of<TripsProvider>(context, listen: false).selectedTrip;
 
-    void _openBooking(String bookingSite){
-      Navigator.pushNamed(context, bookingSite, arguments: _tripModel);
+    void _openAddBooking(String bookingToAddSite) {
+      Navigator.pushNamed(context, bookingToAddSite);
     }
 
-    Widget _subsection(String title, String route){
+    Widget _subsection(String title, String route) {
       return Container(
         height: 40,
         width: MediaQuery.of(context).size.width,
@@ -46,7 +51,7 @@ class _TripScreenState extends State<TripScreen> {
               top: 6,
               right: 0,
               child: GestureDetector(
-                onTap: () => _openBooking(route),
+                onTap: () => _openAddBooking(route),
                 child: Container(
                   height: 28,
                   width: 28,
@@ -66,85 +71,151 @@ class _TripScreenState extends State<TripScreen> {
       );
     }
 
-    Widget _cardCarousel(){
-      return Container(
-        height: 80,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemCount: 3,
-          itemBuilder: (context, index) =>
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Container(
-                height: 50,
-                width: 200,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  ),
-                child: Center(child: Text('Entry')),
-              ),
-            ),
-          separatorBuilder: (context, index) => const Divider(),
-        ),
-      );
-    }
-
     return Scaffold(
+      key: Key('TripScreen'),
       body: Container(
         color: Colors.white,
         child: Column(
           children: <Widget>[
-            TripHeader(_tripModel),
+            TripHeader(tripModel),
             Expanded(
-               child: ListView(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Flight', '/booking/flight'),
+                child: ListView(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: _subsection('Flights', '/booking/flight'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: Selector<TripsProvider, Tuple2<List<Model>, bool>>(
+                    selector: (_, tripsProvider) => Tuple2(tripsProvider.flights,
+                        tripsProvider.isFetchingFlights),
+                    builder: (_, data, __) => data.item2
+                        ?  SizedBox(height: 60, child: Loading())
+                        :  Column(
+                      children: data.item1.map((model) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: BookingCard(
+                            model: model,
+                            onTap: () => Navigator.pushNamed(
+                                context, '/view/flight', arguments: model),
+                            color: getBookingColorAccordingTo(model),
+                            getSchedule: getBookingsAccordingTo(model),
+                          ),
+                      )
+                      ).toList(),
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _cardCarousel(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: _subsection('Accommodation', '/booking/accommodation'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: Selector<TripsProvider, Tuple2<List<Model>, bool>>(
+                    selector: (_, tripsProvider) => Tuple2(tripsProvider.accommodations,
+                        tripsProvider.isFetchingAccommodations),
+                    builder: (_, data, __) => data.item2
+                        ?  SizedBox(height: 60, child: Loading())
+                        :  Column(
+                      children: data.item1.map((model) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: BookingCard(
+                          model: model,
+                          onTap: () => Navigator.pushNamed(
+                              context, '/view/accommodation', arguments: model),
+                          color: getBookingColorAccordingTo(model),
+                          getSchedule: getBookingsAccordingTo(model),
+                        ),
+                      )
+                      ).toList(),
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Accommodation', '/booking/accommodation'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: _subsection('Activities', '/booking/activity'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: Selector<TripsProvider, Tuple2<List<Model>, bool>>(
+                    selector: (_, tripsProvider) => Tuple2(tripsProvider.activities,
+                        tripsProvider.isFetchingActivities),
+                    builder: (_, data, __) => data.item2
+                        ?  SizedBox(height: 60, child: Loading())
+                        :  Column(
+                      children: data.item1.map((model) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: BookingCard(
+                          model: model,
+                          onTap: () => Navigator.pushNamed(
+                              context, '/view/activity', arguments: model),
+                          color: getBookingColorAccordingTo(model),
+                          getSchedule: getBookingsAccordingTo(model),
+                        ),
+                      )
+                      ).toList(),
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _cardCarousel(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: _subsection('Car rental', '/booking/rentalcar'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: Selector<TripsProvider, Tuple2<List<Model>, bool>>(
+                    selector: (_, tripsProvider) => Tuple2(tripsProvider.rentalcars,
+                        tripsProvider.isFetchingRentalCars),
+                    builder: (_, data, __) => data.item2
+                        ?  SizedBox(height: 60, child: Loading())
+                        :  Column(
+                      children: data.item1.map((model) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: BookingCard(
+                          model: model,
+                          onTap: () => Navigator.pushNamed(
+                              context, '/view/rentalcar', arguments: model),
+                          color: getBookingColorAccordingTo(model),
+                          getSchedule: getBookingsAccordingTo(model),
+                        ),
+                      )
+                      ).toList(),
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Activities', '/booking/activity'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: _subsection('Transportation', '/booking/publictransport'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: Selector<TripsProvider, Tuple2<List<Model>, bool>>(
+                    selector: (_, tripsProvider) => Tuple2(tripsProvider.publictransports,
+                        tripsProvider.isFetchingPublicTransport),
+                    builder: (_, data, __) => data.item2
+                        ?  SizedBox(height: 60, child: Loading())
+                        :  Column(
+                      children: data.item1.map((model) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: BookingCard(
+                          model: model,
+                          onTap: () => Navigator.pushNamed(context,
+                              '/view/publictransport', arguments: model),
+                          color: getBookingColorAccordingTo(model),
+                          getSchedule: getBookingsAccordingTo(model),
+                        ),
+                      )
+                      ).toList(),
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _cardCarousel(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Car rental', '/booking/rentalCar'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _cardCarousel(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Transportation', '/booking/publicTransport'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _cardCarousel(),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              )
-            )
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
+            ))
           ],
         ),
       ),

@@ -4,7 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:travellory/providers/auth_provider.dart';
 
 import 'package:travellory/screens/authenticate/sign_in.dart';
-import 'package:travellory/services/auth.dart';
+import 'package:travellory/services/authentication/auth.dart';
 import 'package:travellory/shared/loading.dart';
 
 class MockAuth extends Mock implements BaseAuthService {}
@@ -103,6 +103,10 @@ void main() {
 
     String email = 'sample.email@gmail.com';
     String password = 'sampl3P8assword!';
+
+    // mock method register
+    when(mockAuth.signInWithEmailAndPassword(email, password))
+        .thenAnswer((_) => Future.value('Stub'));
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));

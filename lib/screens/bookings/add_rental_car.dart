@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/services/add_database.dart';
-import 'package:travellory/screens/trip/bookings/bookings.dart';
+import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
@@ -36,7 +38,9 @@ class _RentalCarState extends State<RentalCar> {
 
   @override
   Widget build(BuildContext context) {
-    final TripModel tripModel = ModalRoute.of(context).settings.arguments;
+    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
+    final TripModel tripModel = tripsProvider.selectedTrip;
+    rentalCarModel.tripUID = tripModel.uid;
 
     return Scaffold(
       key: Key('Rental Car'),
@@ -85,7 +89,7 @@ class _RentalCarState extends State<RentalCar> {
                       child: TravelloryFormField(
                           labelText: 'Pick Up Location',
                           icon: Icon(FontAwesomeIcons.mapMarkerAlt),
-                          optional: true,
+                          optional: false,
                           onChanged: (value) => rentalCarModel.pickupLocation = value),
                     ),
                     Padding(
@@ -93,6 +97,7 @@ class _RentalCarState extends State<RentalCar> {
                       child: DateFormField(
                         key: _pickUpDateFormFieldKey,
                         labelText: 'Pick Up Date *',
+                        optional: false,
                         icon: Icon(FontAwesomeIcons.calendarAlt),
                         chosenDateString: (value) => rentalCarModel.pickupDate = value,
                       ),
@@ -123,6 +128,7 @@ class _RentalCarState extends State<RentalCar> {
                         labelText: 'Return Date *',
                         icon: Icon(FontAwesomeIcons.calendarAlt),
                         beforeDateKey: _pickUpDateFormFieldKey,
+                        optional: false,
                         dateValidationMessage: 'Return Date cannot be before Pick Up Date',
                         chosenDateString: (value) => rentalCarModel.returnDate = value,
                       ),
@@ -174,8 +180,8 @@ class _RentalCarState extends State<RentalCar> {
                           highlightColor: Theme.of(context).primaryColor,
                           fillColor: Theme.of(context).primaryColor,
                           validationFunction: validateForm,
-                          onSubmit: onSubmitBooking(rentalCarModel, 'booking-addRentalCar', context,
-                              alertText),
+                          onSubmit: onSubmitBooking(tripsProvider, rentalCarModel,
+                              'booking-addRentalCar', context, alertText),
                         ),
                     ),
                     Padding(
