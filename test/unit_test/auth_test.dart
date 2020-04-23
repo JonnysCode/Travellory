@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:travellory/services/auth.dart';
+import 'package:travellory/services/authentication/auth.dart';
 
 class MockAuth extends Mock implements FirebaseAuth {}
 class MockAuthResult extends Mock implements AuthResult {}
@@ -43,14 +43,15 @@ void main() {
     verify(auth.currentUser());
   });
 
-  testWidgets('test sign in anonym', (WidgetTester tester) async {
-    FirebaseAuth auth = MockAuth();
-    AuthService authService = AuthService(auth: auth);
-
-    await authService.signInAnonymously();
-
-    verify(auth.signInAnonymously());
-  });
+//  Function is not currently in use
+//  testWidgets('test sign in anonym', (WidgetTester tester) async {
+//    FirebaseAuth auth = MockAuth();
+//    AuthService authService = AuthService(auth: auth);
+//
+//    await authService.signInAnonymously();
+//
+//    verify(auth.signInAnonymously());
+//  });
 
   testWidgets('test sign out', (WidgetTester tester) async {
     FirebaseAuth auth = MockAuth();
@@ -60,4 +61,5 @@ void main() {
 
     verify(auth.signOut());
   });
+
 }

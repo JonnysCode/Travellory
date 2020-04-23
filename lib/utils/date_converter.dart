@@ -4,7 +4,7 @@ String toDateStringFrom(DateTime dateTime){
 }
 
 DateTime getDateTimeFrom(String date){
-  List<String> dates = date.split('-');
+  final List<String> dates = date.split('-');
   return DateTime(int.parse(dates[0]), int.parse(dates[1]), int.parse(dates[2]));
 }
 
@@ -27,6 +27,6 @@ String toShortenedMonthDateFrom(String date){
 }
 
 String getOnlyDate(String date) {
-  List<String> dateTime = date.split("T");
+  final List<String> dateTime = date.split("T");
   return dateTime[0];
 }

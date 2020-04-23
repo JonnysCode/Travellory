@@ -1,7 +1,8 @@
+import 'dart:math' as math;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'dart:math' as math;
 
 import 'package:travellory/models/trip_model.dart';
 
@@ -34,7 +35,7 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    var _dials = widget.dials;
+    final _dials = widget.dials;
 
     return Stack(
       children: <Widget>[
@@ -58,7 +59,7 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: List.generate(_dials.length, (int index) {
-              Widget dial = _dial(index, _dials);
+              final Widget dial = _dial(index, _dials);
               return dial;
             }).toList()
               ..add(
@@ -121,9 +122,9 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
                 heroTag: 'dial${index.toString()}',
                 backgroundColor: Colors.white,
                 mini: true,
-                child: Icon(dials[index].icon, color: Colors.black54),
                 onPressed: () => Navigator.pushNamed(context, dials[index].route,
                     arguments: widget.tripModel),
+                child: Icon(dials[index].icon, color: Colors.black54),
               ),
               const SizedBox(width: 6),
             ],

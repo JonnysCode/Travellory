@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ItemFader extends StatefulWidget {
-  final Widget child;
-
   const ItemFader({Key key, @required this.child}) : super(key: key);
+
+  final Widget child;
 
   @override
   ItemFaderState createState() => ItemFaderState();

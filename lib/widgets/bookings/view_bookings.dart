@@ -22,11 +22,11 @@ Container bottomBar(
   BuildContext context,
 ) {
   void _edit() {
-    // TODO
+    // TODO(antilyas): implement
   }
 
   void _delete() {
-    // TODO
+    // TODO(antilyas): implement
   }
 
   return Container(
@@ -85,16 +85,19 @@ Padding fieldDetailsView(IconData icon, String title, String details, Color colo
           color: color,
         ),
         SizedBox(width: 15.0),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            FashionFetishText(
-                text: title, size: 15.0, fontWeight: FashionFontWeight.bold, color: Colors.black54),
-            Text(
-              details,
-              style: TextStyle(fontSize: 20.0),
-            ),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              FashionFetishText(
+                  text: title, size: 15.0, fontWeight: FashionFontWeight.bold, color: Colors.black54),
+              Text(
+                details,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ],
+          ),
         ),
       ]));
 }
@@ -132,8 +135,10 @@ Column displayExtraField(String toCompare, String comparison, IconData icon, Str
       Divider(),
     ]);
   } else {
-    return Column(children: [
-      Padding(padding: const EdgeInsets.only(top: 0, left: 0, right: 0)),
-    ]);
+    return Column(
+      children: [
+        Padding(padding: const EdgeInsets.only(top: 0, left: 0, right: 0)),
+      ]
+    );
   }
 }
