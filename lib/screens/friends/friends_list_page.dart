@@ -8,7 +8,7 @@ import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/services/friend_management.dart';
 import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
-import 'package:travellory/widgets/friends_list_widget.dart';
+import 'package:travellory/widgets/friends/friends_list_widget.dart';
 
 class FriendListPage extends StatefulWidget {
   @override
