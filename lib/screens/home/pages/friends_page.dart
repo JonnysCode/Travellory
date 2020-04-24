@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/screens/friends/friends_list_page_dev.dart';
 import 'package:travellory/screens/friends/search_friend_page.dart';
 import 'package:travellory/screens/friends/friends_list_page.dart';
 
@@ -9,11 +10,13 @@ class FriendsPage extends StatefulWidget {
 
 class _FriendsPageState extends State<FriendsPage> {
   bool _isSearching;
+  bool _dev;
 
   @override
   void initState() {
     super.initState();
     _isSearching = false;
+    _dev = true;
   }
 
   @override
@@ -29,10 +32,20 @@ class _FriendsPageState extends State<FriendsPage> {
                       child: Container(
                           child: _isSearching
                               ? Container(child: SearchFriendsPage()) // TODO Fix that both pages on the friendspage
-                              : Container(child: FriendListPage())
+                              : Container(child: _dev
+                                ? Container(child: FriendListPageDev())
+                                : Container(child: FriendListPage()))
                       ),
                     ),
                   ),
+                  Positioned(
+                    top: 15,
+                    left: 25,
+                    child: Image(
+                      image: AssetImage('assets/images/logo/travellory_icon.png'),
+                      height: 80,
+                    ),
+                  )
                 ]
             )
         )
