@@ -52,6 +52,7 @@ Container bottomBar(
 
 Positioned exitViewPage(BuildContext context) {
   return Positioned(
+    key: Key('ExitViewPage'),
     top: 15,
     right: 10,
     child: IconButton(
