@@ -154,7 +154,7 @@ class _ActivityState extends State<Activity> {
                           const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
                           labelText: 'Start Time',
-                          icon: Icon(Icons.access_time),
+                          icon: Icon(FontAwesomeIcons.clock),
                           optional: true,
                           chosenTimeString: (value) =>
                               activityModel.startTime = value),
@@ -164,7 +164,7 @@ class _ActivityState extends State<Activity> {
                           const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
                         labelText: 'End Date *',
-                        icon: Icon(Icons.date_range),
+                        icon: Icon(FontAwesomeIcons.calendarAlt),
                         beforeDateKey: _startDateFormFieldKey,
                         optional: false,
                         dateValidationMessage:
@@ -178,7 +178,7 @@ class _ActivityState extends State<Activity> {
                           const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
                           labelText: 'End Time',
-                          icon: Icon(Icons.access_time),
+                          icon: Icon(FontAwesomeIcons.clock),
                           optional: true,
                           chosenTimeString: (value) =>
                               activityModel.endTime = value),
@@ -193,7 +193,7 @@ class _ActivityState extends State<Activity> {
                           const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
                         labelText: 'Notes',
-                        icon: Icon(Icons.speaker_notes),
+                        icon: Icon(FontAwesomeIcons.stickyNote),
                         optional: true,
                         onChanged: (value) => activityModel.notes = value,
                       ),
