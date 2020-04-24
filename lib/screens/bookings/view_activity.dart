@@ -78,17 +78,7 @@ class _ActivityViewState extends State<ActivityView> {
             flightViewPage(),
           ),
         ),
-        // TODO(antilyas): refactor this part in all views
-        Positioned(
-          top: 15,
-          right: 10,
-          child: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: FaIcon(FontAwesomeIcons.times),
-            iconSize: 26,
-            color: Colors.red,
-          ),
-        ),
+        exitViewPage(context),
       ]),
     );
   }
