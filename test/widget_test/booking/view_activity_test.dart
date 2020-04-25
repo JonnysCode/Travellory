@@ -7,6 +7,8 @@ import 'package:travellory/screens/bookings/view_activity.dart';
 final ActivityModel model = ActivityModel()
   ..category = 'Historic'
   ..title = 'Museum visit'
+  ..imageNr = 9
+  ..imagePath = 'assets/images/activity/activity_9.png'
   ..location = "100 King's Cross Rd, London WC1X 9DT"
   ..startDate = '2020-05-01'
   ..startTime = '12:00'
