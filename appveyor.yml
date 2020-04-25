@@ -42,7 +42,6 @@ install:
 
 build:
   verbosity: detailed
-
 artifacts:
   - path: "build/app/outputs/apk/release/app-release.apk"
 
@@ -57,6 +56,9 @@ test_script:
 
 after_test:
   - sh: $SONAR_BUILD_PARAMS
+
+on_failure:
+  - sh: appveyor PushArtifact "build/app/outputs/apk/release/app-release.apk"
 
 on_finish:
   - sh: echo "finish part here"
