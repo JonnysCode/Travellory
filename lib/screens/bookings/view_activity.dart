@@ -12,7 +12,7 @@ class ActivityView extends StatefulWidget {
 }
 
 class _ActivityViewState extends State<ActivityView> {
-  // TODO(antilyas): change banner image based on chosen category
+  final String activity = 'assets/images/activity/hill_sky_banner.jpg';
   final String activityBannerUrl = 'assets/images/activity/hill_sky_banner.jpg';
   final String cinemaBannerUrl = 'assets/images/activity/cinema_banner.jpg';
   final String feastBannerUrl = 'assets/images/activity/feast_banner.jpg';
@@ -20,25 +20,56 @@ class _ActivityViewState extends State<ActivityView> {
   final String restaurantBannerUrl = 'assets/images/activity/restaurant_banner.jpg';
   final String seaBannerUrl = 'assets/images/activity/sea_banner.jpg';
   final String seaMountainBannerUrl = 'assets/images/activity/sea_mountain_banner.jpg';
-  final String stageBannerUrl = 'assets/images/activity/stage_banner.jpg';
   final String campBannerUrl = 'assets/images/activity/camp_banner.jpg';
 
   final String headerTitle = 'Your Activity';
 
-  BookingHeader getHeader(String title) {
-    return BookingHeader(title, activityBannerUrl);
+  BookingHeader _getHeader(String title, int imageNr) {
+    String url;
+
+    switch (imageNr) {
+      case 1:
+        url = cinemaBannerUrl;
+        break;
+      case 3:
+        url = seaBannerUrl;
+        break;
+      case 4:
+        url = feastBannerUrl;
+        break;
+      case 6:
+        url = restaurantBannerUrl;
+        break;
+      case 8:
+        url = campBannerUrl;
+        break;
+      case 10:
+        url = restaurantBannerUrl;
+        break;
+      case 12:
+        url = restaurantBannerUrl;
+        break;
+      case 13:
+        url = mountainBannerUrl;
+        break;
+      default:
+        url = activity;
+        break;
+    }
+
+    return BookingHeader(title, url);
   }
 
-  SingleChildScrollView flightViewPage() {
+  SingleChildScrollView flightViewPage(ActivityModel activityModel) {
     return SingleChildScrollView(
       key: Key('ActivityViewPage'),
       child: Column(children: [
-        getHeader(headerTitle),
+        _getHeader(headerTitle, activityModel.imageNr),
         SizedBox(height: 20),
         SectionTitle('Activity Details'),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-        displayDropdownField('Category', activityTypes, activityModels[0].category,
-            Theme.of(context).primaryColor),
+        displayDropdownField(
+            'Category', activityTypes, activityModels[0].category, Theme.of(context).primaryColor),
         Divider(),
         displayField(FontAwesomeIcons.star, 'Activity Title', activityModels[0].title,
             Theme.of(context).primaryColor),
@@ -48,8 +79,8 @@ class _ActivityViewState extends State<ActivityView> {
         Padding(padding: const EdgeInsets.only(top: 15, left: 15, right: 15)),
         SectionTitle('Schedule'),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-        displayField(FontAwesomeIcons.mapMarkerAlt, 'Location',
-            activityModels[0].location, Theme.of(context).primaryColor),
+        displayField(FontAwesomeIcons.mapMarkerAlt, 'Location', activityModels[0].location,
+            Theme.of(context).primaryColor),
         Divider(),
         displayField(FontAwesomeIcons.calendarAlt, 'Start Date', activityModels[0].startDate,
             Theme.of(context).primaryColor),
@@ -88,7 +119,27 @@ class _ActivityViewState extends State<ActivityView> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
           child: bookingView(
-            flightViewPage(),
+            flightViewPage(activityModel),
+          ),
+        ),
+        Positioned(
+          top: 180,
+          left: 25,
+          child: Container(
+            height: 80,
+            width: 80,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(40),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    blurRadius: 6, color: Colors.black.withOpacity(.3), offset: Offset(3.0, 3.0))
+              ],
+              image: DecorationImage(
+                image: AssetImage(activityModel.imagePath),
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.bottomCenter,
+              ),
+            ),
           ),
         ),
         exitViewPage(context),

@@ -28,6 +28,7 @@ class ActivityModel extends Model {
     endTime = activity["endTime"];
     imageNr = activity["imageNr"];
     notes = activity["notes"];
+    imagePath = 'assets/images/activity/activity_${imageNr.toString()}.png';
   }
 
   String tripUID;
