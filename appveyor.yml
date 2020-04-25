@@ -50,7 +50,7 @@ before_build:
   - sh: flutter pub get
 
 build_script:
-  - sh: flutter build apk
+  - sh: flutter build apk --verbose
 
 test_script:
   - sh: flutter test --coverage && flutter test --machine > tests.output
