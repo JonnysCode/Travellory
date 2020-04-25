@@ -26,7 +26,6 @@ class _ActivityViewState extends State<ActivityView> {
 
   BookingHeader _getHeader(String title, int imageNr) {
     String url;
-
     switch (imageNr) {
       case 1:
         url = cinemaBannerUrl;
@@ -56,7 +55,6 @@ class _ActivityViewState extends State<ActivityView> {
         url = activity;
         break;
     }
-
     return BookingHeader(title, url);
   }
 
