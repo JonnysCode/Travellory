@@ -1,7 +1,7 @@
 image: ubuntu-18.04-amd64
 
 environment:
-  FLUTTER_VERSION: flutter_linux_v1.12.13+hotfix.8-stable
+  FLUTTER_VERSION: flutter_linux_v1.12.13+hotfix.9-stable
   SONAR_CLI_VERSION: sonar-scanner-cli-4.2.0.1873-linux
   SONAR_VERSION: sonar-scanner-4.2.0.1873-linux
   SONAR_PARAMS: -Dsonar.sources=. -Dsonar.host.url=http://160.85.252.103:9000 -Dsonar.password=
@@ -53,8 +53,7 @@ build_script:
   - sh: flutter build apk
 
 test_script:
-  - sh: flutter test && flutter test --machine > tests.output
-  - sh: flutter test --coverage
+  - sh: flutter test --coverage && flutter test --machine > tests.output
 
 after_test:
   - sh: $SONAR_BUILD_PARAMS
