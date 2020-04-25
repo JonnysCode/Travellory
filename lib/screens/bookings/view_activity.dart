@@ -13,14 +13,27 @@ class ActivityView extends StatefulWidget {
 
 class _ActivityViewState extends State<ActivityView> {
   // TODO(antilyas): change banner image based on chosen category
-  final String bannerUrl = 'assets/images/activity/camp_banner.jpg';
+  final String activityBannerUrl = 'assets/images/activity/hill_sky_banner.jpg';
+  final String cinemaBannerUrl = 'assets/images/activity/cinema_banner.jpg';
+  final String feastBannerUrl = 'assets/images/activity/feast_banner.jpg';
+  final String mountainBannerUrl = 'assets/images/activity/mountain_banner.jpg';
+  final String restaurantBannerUrl = 'assets/images/activity/restaurant_banner.jpg';
+  final String seaBannerUrl = 'assets/images/activity/sea_banner.jpg';
+  final String seaMountainBannerUrl = 'assets/images/activity/sea_mountain_banner.jpg';
+  final String stageBannerUrl = 'assets/images/activity/stage_banner.jpg';
+  final String campBannerUrl = 'assets/images/activity/camp_banner.jpg';
+
   final String headerTitle = 'Your Activity';
+
+  BookingHeader getHeader(String title) {
+    return BookingHeader(title, activityBannerUrl);
+  }
 
   SingleChildScrollView flightViewPage() {
     return SingleChildScrollView(
       key: Key('ActivityViewPage'),
       child: Column(children: [
-        BookingHeader(headerTitle, bannerUrl),
+        getHeader(headerTitle),
         SizedBox(height: 20),
         SectionTitle('Activity Details'),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
