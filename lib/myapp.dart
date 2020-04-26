@@ -8,6 +8,7 @@ import 'package:travellory/screens/authenticate/password.dart';
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
+import 'package:travellory/screens/bookings/view_activity.dart';
 import 'package:travellory/screens/bookings/view_flight.dart';
 import 'package:travellory/screens/bookings/view_public_transport.dart';
 import 'package:travellory/screens/bookings/view_rental_car.dart';
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
             '/view/flight': (context) => FlightView(),
             '/view/rentalcar': (context) => RentalCarView(),
             '/view/publictransport': (context) => PublicTransportView(),
+            '/view/activity': (context) => ActivityView(),
             '/friends/friends_page': (context) => FriendsPage(),
           },
         ),
