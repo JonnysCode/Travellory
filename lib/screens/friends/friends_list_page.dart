@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
+import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/screens/home/pages/friends_page.dart';
 import 'package:travellory/services/friend_management.dart';
 import 'package:travellory/shared/loading.dart';
@@ -73,16 +74,6 @@ class _FriendListPageState extends State<FriendListPage> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
-        boxShadow: [
-          BoxShadow(
-              blurRadius: 20,
-              color: Colors.black.withOpacity(.2),
-              offset: Offset(0.0, -6.0))
-        ],
-      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,12 +84,7 @@ class _FriendListPageState extends State<FriendListPage> {
               padding: EdgeInsets.only(left: 200, top: 10),
             ),
             GestureDetector(
-              onTap: () => {
-                setState(() {
-                  isSearch = true;
-                })
-               /* Navigator.pushNamed(context, '/search_friends'),*/
-              },
+              onTap: () => Provider.of<FriendsPageProvider>(context, listen: false).toggleSearching(),
               child: Icon(
                 FontAwesomeIcons.search,
                 color: Theme.of(context).primaryColor,
