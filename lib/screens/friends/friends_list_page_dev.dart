@@ -4,9 +4,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/models/user_model.dart';
+import 'package:travellory/providers/screens/friends_page_provider.dart';
+import 'package:travellory/screens/home/pages/friends_page.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_list_widget.dart';
+
 
 class FriendListPageDev extends StatefulWidget {
   @override
@@ -45,16 +48,6 @@ class _FriendListPageDevState extends State<FriendListPageDev> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
-        boxShadow: [
-          BoxShadow(
-              blurRadius: 20,
-              color: Colors.black.withOpacity(.2),
-              offset: Offset(0.0, -6.0))
-        ],
-      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,15 +57,20 @@ class _FriendListPageDevState extends State<FriendListPageDev> {
             Padding(
               padding: EdgeInsets.only(left: 200, top: 10),
             ),
-            GestureDetector(
-              onTap: () => {
-                Navigator.pushNamed(context, '/search_friends'),
-              },
-              child: Icon(
+            FashionFetishText(
+              text: 'Add Friends',
+              size: 16,
+              color: Colors.black54,
+              fontWeight: FashionFontWeight.bold,
+            ),
+            IconButton(
+              onPressed: () => Provider.of<FriendsPageProvider>(context, listen: false).toggleSearching(),
+              icon: Icon(
                 FontAwesomeIcons.search,
                 color: Theme.of(context).primaryColor,
                 size: 32,
               ),
+              padding: EdgeInsets.fromLTRB(5, 5, 20,5),
             ),
           ]),
           SizedBox(height: 20),
