@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
             '/view/rentalcar': (context) => RentalCarView(),
             '/view/publictransport': (context) => PublicTransportView(),
             '/friends/friends_page': (context) => FriendsPage(),
-            '/search_friends': (context) => SearchFriendsPage(),
+            //'/search_friends': (context) => SearchFriendsPage(),
           },
         ),
       ),

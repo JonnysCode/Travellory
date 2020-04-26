@@ -1,6 +1,7 @@
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
+import 'package:travellory/screens/home/pages/friends_page.dart';
 
 class Post {
   final String title;
@@ -64,7 +65,13 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                             child: Row(children: [
                               Container(
                                 child: IconButton(
-                                  onPressed: () => Navigator.pop(context),
+                                  onPressed: () => {
+                                    setState(() {
+                                      isSearch = false;
+                                    })
+                                  },
+
+                                  /* Navigator.pop(context)},*/
                                   icon: Icon(Icons.arrow_back),
                                   iconSize: 30,
                                   color: Colors.black,
@@ -80,11 +87,11 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                                       );
                                     },
                                     searchBarPadding:
-                                    EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                        EdgeInsets.fromLTRB(0, 0, 10, 0),
                                     headerPadding:
-                                    EdgeInsets.symmetric(horizontal: 50),
+                                        EdgeInsets.symmetric(horizontal: 50),
                                     listPadding:
-                                    EdgeInsets.symmetric(horizontal: 30),
+                                        EdgeInsets.symmetric(horizontal: 30),
                                     hintText: 'Add friends',
                                     hintStyle: TextStyle(
                                       color: Colors.grey[800],
@@ -95,7 +102,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                                     ),
                                     searchBarStyle: SearchBarStyle(
                                       backgroundColor:
-                                      Theme.of(context).primaryColor,
+                                          Theme.of(context).primaryColor,
                                       padding: EdgeInsets.all(5),
                                     ),
                                     cancellationWidget: Text(

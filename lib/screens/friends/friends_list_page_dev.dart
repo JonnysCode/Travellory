@@ -4,9 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/models/user_model.dart';
+import 'package:travellory/screens/home/pages/friends_page.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_list_widget.dart';
+
 
 class FriendListPageDev extends StatefulWidget {
   @override
@@ -66,7 +68,10 @@ class _FriendListPageDevState extends State<FriendListPageDev> {
             ),
             GestureDetector(
               onTap: () => {
-                Navigator.pushNamed(context, '/search_friends'),
+                setState(() {
+                  isSearch = true;
+                })
+                /*Navigator.pushNamed(context, '/search_friends'),*/
               },
               child: Icon(
                 FontAwesomeIcons.search,
