@@ -79,6 +79,13 @@ void main() {
     expect(find.byKey(Key('BottomBar'), skipOffstage: false), findsOneWidget);
   });
 
+  testWidgets('test if exit view button is present', (WidgetTester tester) async {
+    await tester.pumpWidget(makeTestableWidget());
+    await pumpPublicTransportView(tester);
+
+    expect(find.byKey(Key('ExitViewPage'), skipOffstage: false), findsOneWidget);
+  });
+
   testWidgets('test if all view fields are present', (WidgetTester tester) async {
     await tester.pumpWidget(makeTestableWidget());
     await pumpPublicTransportView(tester);

@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
-import 'card_specifics.dart';
+import 'bookings_card_specifics.dart';
 
 class AccommodationBookings extends StatelessWidget {
   const AccommodationBookings(this.accommodation, {Key key}) : super(key: key);
