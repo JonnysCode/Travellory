@@ -82,7 +82,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                 ),
                 Expanded(
                   child: Container(
-
+                    // TODO LIST Stuff
                   )
                 ),
               ],
