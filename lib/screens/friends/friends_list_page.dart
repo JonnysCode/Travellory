@@ -62,7 +62,9 @@ class _FriendListPageState extends State<FriendListPage> {
           title: success ? "Success" : "Error",
           message: message,
           backgroundColor:
-          success ? Theme.of(context).primaryColor : Colors.redAccent,
+          success ? Theme
+              .of(context)
+              .primaryColor : Colors.redAccent,
           margin: EdgeInsets.all(8),
           borderRadius: 12,
           duration: Duration(seconds: 3))
@@ -83,11 +85,21 @@ class _FriendListPageState extends State<FriendListPage> {
             Padding(
               padding: EdgeInsets.only(left: 200, top: 10),
             ),
+            FashionFetishText(
+                text: 'Add Friends',
+                size: 16,
+                color: Colors.black54,
+                fontWeight: FashionFontWeight.bold,
+           ),
             GestureDetector(
-              onTap: () => Provider.of<FriendsPageProvider>(context, listen: false).toggleSearching(),
+              onTap: () =>
+                  Provider.of<FriendsPageProvider>(context, listen: false)
+                      .toggleSearching(),
               child: Icon(
                 FontAwesomeIcons.search,
-                color: Theme.of(context).primaryColor,
+                color: Theme
+                    .of(context)
+                    .primaryColor,
                 size: 32,
               ),
             ),
@@ -99,10 +111,16 @@ class _FriendListPageState extends State<FriendListPage> {
                 top: 10,
                 left: 30,
                 right: 90,
-                bottom: MediaQuery.of(context).viewInsets.bottom),
+                bottom: MediaQuery
+                    .of(context)
+                    .viewInsets
+                    .bottom),
             child: Container(
               height: 30,
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               child: FashionFetishText(
                 text: 'Friend requests',
                 size: 22,
@@ -111,7 +129,8 @@ class _FriendListPageState extends State<FriendListPage> {
             ),
           ),
           Consumer<FriendsProvider>(
-            builder: (_, friendsProvider, __) => friendsProvider.isFetching
+            builder: (_, friendsProvider, __) =>
+            friendsProvider.isFetching
                 ? Loading()
                 : friendsProvider.friendRequests.isEmpty
                 ? Text('You have no friend requests :(')
@@ -146,10 +165,16 @@ class _FriendListPageState extends State<FriendListPage> {
                 top: 10,
                 left: 30,
                 right: 90,
-                bottom: MediaQuery.of(context).viewInsets.bottom),
+                bottom: MediaQuery
+                    .of(context)
+                    .viewInsets
+                    .bottom),
             child: Container(
               height: 30,
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               child: FashionFetishText(
                 text: 'Friends',
                 size: 22,
@@ -158,7 +183,8 @@ class _FriendListPageState extends State<FriendListPage> {
             ),
           ),
           Consumer<FriendsProvider>(
-            builder: (_, friendsProvider, __) => friendsProvider.isFetching
+            builder: (_, friendsProvider, __) =>
+            friendsProvider.isFetching
                 ? Loading()
                 : friendsProvider.friends.isEmpty
                 ? Text('You have no friends :(')

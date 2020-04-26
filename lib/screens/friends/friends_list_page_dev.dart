@@ -57,13 +57,20 @@ class _FriendListPageDevState extends State<FriendListPageDev> {
             Padding(
               padding: EdgeInsets.only(left: 200, top: 10),
             ),
-            GestureDetector(
-              onTap: () => Provider.of<FriendsPageProvider>(context, listen: false).toggleSearching(),
-              child: Icon(
+            FashionFetishText(
+              text: 'Add Friends',
+              size: 16,
+              color: Colors.black54,
+              fontWeight: FashionFontWeight.bold,
+            ),
+            IconButton(
+              onPressed: () => Provider.of<FriendsPageProvider>(context, listen: false).toggleSearching(),
+              icon: Icon(
                 FontAwesomeIcons.search,
                 color: Theme.of(context).primaryColor,
                 size: 32,
               ),
+              padding: EdgeInsets.fromLTRB(5, 5, 20,5),
             ),
           ]),
           SizedBox(height: 20),
