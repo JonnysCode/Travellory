@@ -50,6 +50,20 @@ Container bottomBar(
   );
 }
 
+Positioned exitViewPage(BuildContext context) {
+  return Positioned(
+    key: Key('ExitViewPage'),
+    top: 15,
+    right: 10,
+    child: IconButton(
+      onPressed: () => Navigator.pop(context),
+      icon: FaIcon(FontAwesomeIcons.times),
+      iconSize: 26,
+      color: Colors.red,
+    ),
+  );
+}
+
 Padding displayField(IconData icon, String title, String details, Color color) {
   if (details != null && details != '') {
     return fieldDetailsView(icon, title, details, color);

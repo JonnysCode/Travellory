@@ -55,14 +55,14 @@ void main() {
     await tester.pumpWidget(makeTestableWidget());
 
     expect(find.byKey(Key('BookingSiteTitle')), findsOneWidget);
-    expect(find.byKey(Key('SectionTitle')), findsNWidgets(4));
+    expect(find.byKey(Key('SectionTitle')), findsNWidgets(4 ));
     expect(find.byKey(Key('Dropdown Menu')), findsOneWidget);
-    expect(find.byIcon(FontAwesomeIcons.star), findsOneWidget);
-    expect(find.byIcon(FontAwesomeIcons.info), findsOneWidget);
-    expect(find.byIcon(Icons.location_on), findsOneWidget);
-    expect(find.byIcon(Icons.date_range), findsNWidgets(2));
-    expect(find.byIcon(Icons.access_time), findsNWidgets(2));
-    expect(find.byIcon(Icons.speaker_notes), findsOneWidget);
+    expect(find.byIcon(FontAwesomeIcons.clock, skipOffstage: false), findsNWidgets(2));
+    expect(find.byIcon(FontAwesomeIcons.calendarAlt, skipOffstage: false), findsNWidgets(2));
+    expect(find.byIcon(FontAwesomeIcons.star, skipOffstage: false), findsOneWidget);
+    expect(find.byIcon(FontAwesomeIcons.mapMarkerAlt, skipOffstage: false), findsOneWidget);
+    expect(find.byIcon(FontAwesomeIcons.info, skipOffstage: false), findsOneWidget);
+    expect(find.byIcon(FontAwesomeIcons.stickyNote, skipOffstage: false), findsOneWidget);
   });
 
   testWidgets('test if submit button is present', (WidgetTester tester) async {
