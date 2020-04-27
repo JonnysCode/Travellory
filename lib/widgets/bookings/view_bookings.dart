@@ -4,6 +4,7 @@ import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
 import '../font_widgets.dart';
+import 'edit_delete_dialogs.dart';
 
 Container bookingView(SingleChildScrollView child) {
   return Container(
@@ -20,11 +21,12 @@ Container bookingView(SingleChildScrollView child) {
 }
 
 Container bottomBar(BuildContext context, Model model) {
-  void _edit() {
-    // TODO(antilyas): implement
-  }
+  final String modelText = getDeleteTextBasedOn(model);
+  final String deleteAlertText = 'You are about to delete your ' +
+      modelText +
+      ' entry. Are you sure you want to continue? This action cannot be undone!';
 
-  void _delete() {
+  void _edit() {
     // TODO(antilyas): implement
   }
 
@@ -40,10 +42,18 @@ Container bottomBar(BuildContext context, Model model) {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        filledButton('EDIT', Colors.white, Theme.of(context).primaryColor,
-            Theme.of(context).primaryColor, Colors.white, _edit),
-        filledButton('DELETE', Colors.white, Theme.of(context).primaryColor,
-            Theme.of(context).primaryColor, Colors.white, _delete),
+        // TODO(antilyas): Implement edit button
+//        filledButton('EDIT', Colors.white, Theme.of(context).primaryColor,
+//            Theme.of(context).primaryColor, Colors.white, _edit),
+        Flexible(
+          child: DeleteButton(
+            highlightColor: Theme.of(context).primaryColor,
+            fillColor: Theme.of(context).primaryColor,
+            onDelete: () {
+              showDeleteDialog(context, deleteAlertText);
+            },
+          ),
+        ),
       ],
     ),
   );
@@ -103,7 +113,10 @@ Padding fieldDetailsView(IconData icon, String title, String details, Color colo
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               FashionFetishText(
-                  text: title, size: 15.0, fontWeight: FashionFontWeight.bold, color: Colors.black54),
+                  text: title,
+                  size: 15.0,
+                  fontWeight: FashionFontWeight.bold,
+                  color: Colors.black54),
               Text(
                 details,
                 overflow: TextOverflow.ellipsis,
@@ -148,10 +161,8 @@ Column displayExtraField(String toCompare, String comparison, IconData icon, Str
       Divider(),
     ]);
   } else {
-    return Column(
-      children: [
-        Padding(padding: const EdgeInsets.only(top: 0, left: 0, right: 0)),
-      ]
-    );
+    return Column(children: [
+      Padding(padding: const EdgeInsets.only(top: 0, left: 0, right: 0)),
+    ]);
   }
 }
