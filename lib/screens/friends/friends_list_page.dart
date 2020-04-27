@@ -10,6 +10,7 @@ import 'package:travellory/screens/home/pages/friends_page.dart';
 import 'package:travellory/services/friend_management.dart';
 import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_list_widget.dart';
 
@@ -138,24 +139,20 @@ class _FriendListPageState extends State<FriendListPage> {
                 Key('friend_requests_list'),
                 158,
                 friendsProvider.friendRequests,
-//                Wrap(
-//                  children: <Widget>[
-//                    socialButton(
-//                        Key('accept_button'),
-//                        Icons.add_circle,
-//                        Colors.green,
-//                            () => _acceptFriendRequest(
-//                            friendsProvider.friendRequests[0].uid,
-//                            user.uid)),
-//                    socialButton(
-//                        Key('decline_button'),
-//                        Icons.remove_circle,
-//                        Colors.red,
-//                            () => _declineFriendRequest(
-//                            friendsProvider.friendRequests[0].uid,
-//                            user.uid)),
-//                  ],
-//                ),
+                OptionButton(
+                  optionItems: <OptionItem>[
+                    OptionItem(
+                        description: 'Accept',
+                        icon: FontAwesomeIcons.check,
+                        onTab: () => {}
+                    ),
+                    OptionItem(
+                        description: 'Decline',
+                        icon: FontAwesomeIcons.times,
+                        onTab: () => {}
+                    ),
+                  ],
+                ),
                 context),
           ),
           SizedBox(height: 20),
@@ -192,17 +189,15 @@ class _FriendListPageState extends State<FriendListPage> {
                 Key('friends_list'),
                 240,
                 friendsProvider.friends,
-//                Wrap(
-//                  children: <Widget>[
-//                    socialButton(
-//                        Key('remove_button'),
-//                        Icons.remove_circle,
-//                        Colors.red,
-//                            () => _removeFriend(
-//                            friendsProvider.friendRequests[0].uid,
-//                            user.uid)),
-//                  ],
-//                ),
+                OptionButton(
+                  optionItems: <OptionItem>[
+                    OptionItem(
+                        description: 'Remove',
+                        icon: FontAwesomeIcons.trash,
+                        onTab: () => {}
+                    ),
+                  ],
+                ),
                 context),
           ),
         ],
