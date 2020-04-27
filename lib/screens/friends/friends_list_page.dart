@@ -9,7 +9,6 @@ import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/screens/home/pages/friends_page.dart';
 import 'package:travellory/services/friend_management.dart';
 import 'package:travellory/shared/loading.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_list_widget.dart';
@@ -87,11 +86,11 @@ class _FriendListPageState extends State<FriendListPage> {
               padding: EdgeInsets.only(left: 200, top: 10),
             ),
             FashionFetishText(
-                text: 'Add Friends',
-                size: 16,
-                color: Colors.black54,
-                fontWeight: FashionFontWeight.bold,
-           ),
+              text: 'Add Friends',
+              size: 16,
+              color: Colors.black54,
+              fontWeight: FashionFontWeight.bold,
+            ),
             GestureDetector(
               onTap: () =>
                   Provider.of<FriendsPageProvider>(context, listen: false)
@@ -142,14 +141,24 @@ class _FriendListPageState extends State<FriendListPage> {
                 OptionButton(
                   optionItems: <OptionItem>[
                     OptionItem(
-                        description: 'Accept',
-                        icon: FontAwesomeIcons.check,
-                        onTab: () => {}
+                      description: 'Accept',
+                      icon: FontAwesomeIcons.check,
+                      onTab: () => _acceptFriendRequest(
+                          friendsProvider
+                              .friendRequests[0]
+                              .uid,
+                          user.uid
+                      ),
                     ),
                     OptionItem(
                         description: 'Decline',
                         icon: FontAwesomeIcons.times,
-                        onTab: () => {}
+                        onTab: () => _declineFriendRequest(
+                            friendsProvider
+                                .friendRequests[0]
+                                .uid,
+                            user.uid
+                        )
                     ),
                   ],
                 ),
@@ -194,7 +203,12 @@ class _FriendListPageState extends State<FriendListPage> {
                     OptionItem(
                         description: 'Remove',
                         icon: FontAwesomeIcons.trash,
-                        onTab: () => {}
+                        onTab: () => _removeFriend(
+                            friendsProvider
+                                .friends[0]
+                                .uid,
+                            user.uid
+                        )
                     ),
                   ],
                 ),
