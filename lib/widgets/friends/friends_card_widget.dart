@@ -67,7 +67,7 @@ Widget friendsCard(BuildContext context, List<FriendsModel> list, OptionButton b
                     child: button,
                   ),
                 ],
-            ),
+              ),
             ),
           ),
         ),
