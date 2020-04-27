@@ -5,8 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
-import 'package:travellory/screens/home/pages/friends_page.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_list_widget.dart';
 
@@ -95,6 +94,20 @@ class _FriendListPageDevState extends State<FriendListPageDev> {
               Key('friend_requests_list'),
               158,
               friendRequests,
+              OptionButton(
+                optionItems: <OptionItem>[
+                  OptionItem(
+                      description: 'Accept',
+                      icon: FontAwesomeIcons.check,
+                      onTab: () => {}
+                  ),
+                  OptionItem(
+                      description: 'Decline',
+                      icon: FontAwesomeIcons.times,
+                      onTab: () => {}
+                  ),
+                ],
+              ),
               context),
           SizedBox(height: 20),
           Padding(
@@ -118,6 +131,15 @@ class _FriendListPageDevState extends State<FriendListPageDev> {
               Key('friends_list'),
               240,
               friends,
+              OptionButton(
+                optionItems: <OptionItem>[
+                  OptionItem(
+                      description: 'Remove',
+                      icon: FontAwesomeIcons.trash,
+                      onTab: () => {}
+                  ),
+                ],
+              ),
               context),
         ],
       ),
