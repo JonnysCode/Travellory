@@ -6,11 +6,17 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GMapBorderLoader{
+  static String data;
+
   @visibleForTesting
-  static Future<List<LatLng>> doPoints(String cityName) async {
+  static Future<List<LatLng>> doPoints(String stateName) async {
     final List<LatLng> points = <LatLng>[];
 
-    final String data = await rootBundle.loadString('assets/g_map/border_points/${cityName.toLowerCase()}.json');
+    try {
+      data = await rootBundle.loadString('assets/g_map/border_points/${stateName.toLowerCase()}.json');
+    }catch(_){
+      return points;
+    }
 
     final jsonResult = await json.decode(data);
     final List results = jsonResult["geometry"] as List;
@@ -22,10 +28,10 @@ class GMapBorderLoader{
   }
 
   @visibleForTesting
-  static Future<Polygon> doPolygon(String cityName) async {
-    final points = await doPoints(cityName);
+  static Future<Polygon> doPolygon(String stateName) async {
+    final points = await doPoints(stateName);
     return Polygon(
-      polygonId: PolygonId(cityName),
+      polygonId: PolygonId(stateName),
       consumeTapEvents: false,
       fillColor: Color.fromRGBO(255, 0, 0, 0.35),
       geodesic: false,
@@ -38,11 +44,14 @@ class GMapBorderLoader{
     );
   }
 
-  static Future<List<Polygon>> generateBorders (List<String> cities) async {
+  static Future<List<Polygon>> generateBorders (List<String> states) async {
     final List<Polygon> borders = <Polygon>[];
 
-    for(final city_name in cities) {
-      borders.add(await doPolygon(city_name));
+    for(final stateName in states) {
+      final Polygon state = await doPolygon(stateName);
+      if(state.points.isNotEmpty){
+        borders.add(state);
+      }
     }
     return borders;
   }
