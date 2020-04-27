@@ -98,7 +98,7 @@ class _ActivityViewState extends State<ActivityView> {
             Theme.of(context).primaryColor),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SizedBox(height: 10),
-        bottomBar(context),
+        bottomBar(context, activityModels[0]),
       ]),
     );
   }
