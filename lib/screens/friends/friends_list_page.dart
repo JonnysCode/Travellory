@@ -149,6 +149,7 @@ class _FriendListPageState extends State<FriendListPage> {
                               .uid,
                           user.uid
                       ),
+                      color: Colors.green
                     ),
                     OptionItem(
                         description: 'Decline',
@@ -158,7 +159,8 @@ class _FriendListPageState extends State<FriendListPage> {
                                 .friendRequests[0]
                                 .uid,
                             user.uid
-                        )
+                        ),
+                      color: Colors.red
                     ),
                   ],
                 ),
@@ -208,7 +210,8 @@ class _FriendListPageState extends State<FriendListPage> {
                                 .friends[0]
                                 .uid,
                             user.uid
-                        )
+                        ),
+                      color: Colors.red
                     ),
                   ],
                 ),
