@@ -9,7 +9,7 @@ import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 import 'package:travellory/services/api/map/locations.dart' as locations;
 
 String _mapStyle;
-final List<String> _userCities = ["switzerland","austria","belgium"];
+final List<String> _userStates = ["switzerland","austria","belgium"];
 
 class MapPage extends StatefulWidget {
   @override
@@ -52,7 +52,7 @@ class MapSampleState extends State<MapSample> {
 
   Future<void> onMapCreated() async {
     final googleOffices = await locations.getGoogleOffices();
-    final _boundariesTemp = await GMapBorderLoader.generateBorders(_userCities);
+    final _boundariesTemp = await GMapBorderLoader.generateBorders(_userStates);
 
     setState(() {
       _markers.clear();
