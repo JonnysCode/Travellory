@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,6 @@ import 'package:travellory/services/api/map/locations.dart' as locations;
 
 String _mapStyle;
 final List<String> _userCities = ["switzerland","germany","austria","belgium"];
-final Completer<GoogleMapController> _controller = Completer();
-final Map<String, Marker> markers = {};
-final List<Polygon> boundaries = [];
 
 class MapPage extends StatefulWidget {
   @override
@@ -48,28 +46,36 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
+  final Completer<GoogleMapController> _controller = Completer();
+  final Map<String, Marker> _markers = {};
+  final List<Polygon> _boundaries = [];
 
   Future<void> onMapCreated() async {
     final googleOffices = await locations.getGoogleOffices();
-    final boundariesTemp = await GMapBorderLoader.generateBorders(_userCities);
+    final _boundariesTemp = await GMapBorderLoader.generateBorders(_userCities);
 
     setState(() {
-      markers.clear();
+      _markers.clear();
       for (final office in googleOffices.offices) {
         final marker = Marker(
           markerId: MarkerId(office.name),
           position: LatLng(office.lat, office.lng),
+          /*
+          onTap: () {
+            // TODO: open location info page
+          },
+          */
           infoWindow: InfoWindow(
             title: office.name,
             snippet: office.address,
           ),
         );
-        markers[office.name] = marker;
+        _markers[office.name] = marker;
       }
 
-      if(boundariesTemp.isNotEmpty){
-        boundaries.clear();
-        boundariesTemp.forEach(boundaries.add);
+      if(_boundariesTemp.isNotEmpty){
+        _boundaries.clear();
+        _boundariesTemp.forEach(_boundaries.add);
       }
     });
   }
@@ -95,9 +101,22 @@ class MapSampleState extends State<MapSample> {
             onMapCreated();
             _controller.complete(controller);
           },
-          markers: markers.values.toSet(),
-          polygons: boundaries.toSet(),
+          markers: _markers.values.toSet(),
+          polygons: _boundaries.toSet(),
         ),
+        Positioned(
+          child: FabCircularMenu(
+              alignment: Alignment.topRight,
+              children: <Widget>[
+                IconButton(icon: Icon(Icons.home), onPressed: () {
+                  print('Home');
+                }),
+                IconButton(icon: Icon(Icons.favorite), onPressed: () {
+                  print('Favorite');
+                })
+              ]
+          ),
+        )
       ],
     );
   }
