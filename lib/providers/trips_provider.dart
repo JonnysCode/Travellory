@@ -10,6 +10,7 @@ import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/get_database.dart';
 import 'package:pedantic/pedantic.dart';
+import 'package:travellory/utils/date_converter.dart';
 
 class TripsProvider extends ChangeNotifier {
   TripsProvider() {
@@ -37,8 +38,10 @@ class TripsProvider extends ChangeNotifier {
   List<ActivityModel> _activities;
   List<RentalCarModel> _rentalCars;
   List<PublicTransportModel> _publicTransports;
+
   UserModel user;
   TripModel selectedTrip;
+  TripModel activeTrip;
 
   List<TripModel> get trips => _trips;
 
@@ -98,6 +101,7 @@ class TripsProvider extends ChangeNotifier {
     isFetchingTrips = true;
     _trips = await _databaseGetter.getEntriesFromDatabase(
         user.uid, DatabaseGetter.getTrips);
+    _setActiveTrip();
     isFetchingTrips = false;
     notifyListeners();
   }
@@ -140,6 +144,20 @@ class TripsProvider extends ChangeNotifier {
         selectedTrip.uid, DatabaseGetter.getPublicTransportations);
     isFetchingPublicTransport = false;
     notifyListeners();
+  }
+
+  void _setActiveTrip(){
+    if(_trips.isEmpty){
+      return;
+    }
+
+    int index = 1;
+    activeTrip = _trips[0];
+    // get the first trip with an end date after the current date
+    while(getDateTimeFrom(activeTrip.endDate).isBefore(DateTime.now())){
+      activeTrip = _trips[index];
+      index++;
+    }
   }
 
 }
