@@ -105,13 +105,13 @@ class _TripCardState extends State<TripCard> {
                     OptionButton(
                       optionItems: <OptionItem>[
                         OptionItem(
-                          description: 'Accept',
-                          icon: FontAwesomeIcons.check,
+                          description: 'Edit',
+                          icon: FontAwesomeIcons.edit,
                           onTab: () => {}
                         ),
                         OptionItem(
-                            description: 'Decline',
-                            icon: FontAwesomeIcons.times,
+                            description: 'Remove',
+                            icon: FontAwesomeIcons.trashAlt,
                             onTab: () => {}
                         ),
                       ],
