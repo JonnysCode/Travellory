@@ -9,6 +9,7 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/delete_database.dart';
+import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/get_database.dart';
 import 'package:pedantic/pedantic.dart';
 
@@ -25,6 +26,7 @@ class TripsProvider extends ChangeNotifier {
   final DatabaseAdder _databaseAdder = DatabaseAdder();
   final DatabaseGetter _databaseGetter = DatabaseGetter();
   final DatabaseDeleter _databaseDeleter = DatabaseDeleter();
+  final DatabaseEditor _databaseEditor = DatabaseEditor();
 
   bool isFetchingTrips = false;
   bool isFetchingFlights = false;
@@ -104,6 +106,24 @@ class TripsProvider extends ChangeNotifier {
       }
     }
     return deleted;
+  }
+
+  Future<bool> editModel(Model model, String functionName) async {
+    final bool edited = await _databaseEditor.editModel(model, functionName);
+    if (edited) {
+      if (model is FlightModel){
+        unawaited(_fetchFlights());
+      } else if (model is RentalCarModel){
+        unawaited(_fetchRentalCars());
+      } else if (model is AccommodationModel){
+        unawaited(_fetchAccommodation());
+      } else if (model is PublicTransportModel){
+        unawaited(_fetchPublicTransportation());
+      } else if (model is ActivityModel){
+        unawaited(_fetchActivities());
+      }
+    }
+    return edited;
   }
 
   Future<void> initBookings() async {
