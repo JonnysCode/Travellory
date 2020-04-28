@@ -26,10 +26,6 @@ Container bottomBar(BuildContext context, Model model) {
       modelText +
       ' entry. Are you sure you want to continue? This action cannot be undone!';
 
-  void _edit() {
-    // TODO(antilyas): implement
-  }
-
   return Container(
     key: Key('BottomBar'),
     padding: EdgeInsets.all(20.0),
@@ -50,7 +46,7 @@ Container bottomBar(BuildContext context, Model model) {
               highlightColor: Theme.of(context).primaryColor,
               fillColor: Theme.of(context).primaryColor,
               onEdit: () {
-                 _edit;
+                // TODO(antilyas): implement
               },
             ),
           ),
