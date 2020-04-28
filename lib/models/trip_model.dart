@@ -1,6 +1,12 @@
-import 'package:travellory/models/day_model.dart';
 import 'package:travellory/utils/date_converter.dart';
+
 import 'abstract_model.dart';
+import 'accommodation_model.dart';
+import 'activity_model.dart';
+import 'day_model.dart';
+import 'flight_model.dart';
+import 'public_transport_model.dart';
+import 'rental_car_model.dart';
 
 
 class TripModel extends Model {
@@ -37,9 +43,20 @@ class TripModel extends Model {
   int index;
   List<Day> days;
 
+  List<FlightModel> flights;
+  List<AccommodationModel> accommodations;
+  List<ActivityModel> activities;
+  List<RentalCarModel> rentalCars;
+  List<PublicTransportModel> publicTransports;
+
   void init(){
     _initImagePath();
     _initDays();
+    flights = <FlightModel>[];
+    accommodations = <AccommodationModel>[];
+    activities = <ActivityModel>[];
+    rentalCars = <RentalCarModel>[];
+    publicTransports = <PublicTransportModel>[];
   }
 
   void _initImagePath(){
