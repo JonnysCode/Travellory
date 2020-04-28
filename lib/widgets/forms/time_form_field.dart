@@ -4,6 +4,7 @@ class TimeFormField extends StatefulWidget {
   const TimeFormField(
       {Key key,
       this.icon,
+      this.initialValue,
       this.labelText,
       this.optional = false,
       this.controller,
@@ -12,6 +13,7 @@ class TimeFormField extends StatefulWidget {
       : super(key: key);
 
   final Icon icon;
+  final String initialValue;
   final String labelText;
   final bool optional;
   final TextEditingController controller;
@@ -31,12 +33,26 @@ class TimeFormFieldState extends State<TimeFormField> with AutomaticKeepAliveCli
   TextEditingController controller;
   TextEditingController displayController;
   TimeOfDay selectedTime;
+  TimeOfDay initialTime;
 
   @override
   void initState() {
     super.initState();
     controller = widget.controller != null ? widget.controller : TextEditingController();
     displayController = TextEditingController();
+    // TODO(antilyas): check if getInitialTime works
+    getInitialTime();
+  }
+
+  TimeOfDay getInitialTime() {
+    if (widget.initialValue != null) {
+      displayController..text = (widget.initialValue);
+      return initialTime = TimeOfDay(
+          hour: int.parse(widget.initialValue.split(":")[0]),
+          minute: int.parse(widget.initialValue.split(":")[1]));
+    } else {
+      return TimeOfDay.now();
+    }
   }
 
   @override
@@ -51,6 +67,7 @@ class TimeFormFieldState extends State<TimeFormField> with AutomaticKeepAliveCli
     final TimeOfDay pickedTime =
         await showTimePicker(context: context, initialTime: TimeOfDay.now());
     if (pickedTime != null && pickedTime != selectedTime) {
+      // TODO(antilyas): only need one controller
       selectedTime = pickedTime;
       displayController.text = pickedTime.format(context);
       final String pickedTimeString = pickedTime.format(context).toString();
