@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/abstract_model.dart';
+import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
 import '../font_widgets.dart';
@@ -46,7 +47,7 @@ Container bottomBar(BuildContext context, Model model) {
               highlightColor: Theme.of(context).primaryColor,
               fillColor: Theme.of(context).primaryColor,
               onEdit: () {
-                // TODO(antilyas): implement
+                editModel(model, context);
               },
             ),
           ),
