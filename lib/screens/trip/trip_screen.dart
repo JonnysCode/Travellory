@@ -87,13 +87,13 @@ class TripScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: Selector<TripsProvider, Tuple2<List<Model>, bool>>(
-                    selector: (_, tripsProvider) => Tuple2(tripsProvider.flights,
+                  child: Selector<TripsProvider, Tuple2<TripModel, bool>>(
+                    selector: (_, tripsProvider) => Tuple2(tripsProvider.selectedTrip,
                         tripsProvider.isFetchingFlights),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
                         :  Column(
-                      children: data.item1.map((model) => Padding(
+                      children: data.item1.flights.map((model) => Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: BookingCard(
                             model: model,
@@ -113,13 +113,13 @@ class TripScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: Selector<TripsProvider, Tuple2<List<Model>, bool>>(
-                    selector: (_, tripsProvider) => Tuple2(tripsProvider.accommodations,
+                  child: Selector<TripsProvider, Tuple2<TripModel, bool>>(
+                    selector: (_, tripsProvider) => Tuple2(tripsProvider.selectedTrip,
                         tripsProvider.isFetchingAccommodations),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
                         :  Column(
-                      children: data.item1.map((model) => Padding(
+                      children: data.item1.accommodations.map((model) => Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: BookingCard(
                           model: model,
@@ -139,13 +139,13 @@ class TripScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: Selector<TripsProvider, Tuple2<List<Model>, bool>>(
-                    selector: (_, tripsProvider) => Tuple2(tripsProvider.activities,
+                  child: Selector<TripsProvider, Tuple2<TripModel, bool>>(
+                    selector: (_, tripsProvider) => Tuple2(tripsProvider.selectedTrip,
                         tripsProvider.isFetchingActivities),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
                         :  Column(
-                      children: data.item1.map((model) => Padding(
+                      children: data.item1.activities.map((model) => Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: BookingCard(
                           model: model,
@@ -165,13 +165,13 @@ class TripScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: Selector<TripsProvider, Tuple2<List<Model>, bool>>(
-                    selector: (_, tripsProvider) => Tuple2(tripsProvider.rentalcars,
+                  child: Selector<TripsProvider, Tuple2<TripModel, bool>>(
+                    selector: (_, tripsProvider) => Tuple2(tripsProvider.selectedTrip,
                         tripsProvider.isFetchingRentalCars),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
                         :  Column(
-                      children: data.item1.map((model) => Padding(
+                      children: data.item1.rentalCars.map((model) => Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: BookingCard(
                           model: model,
@@ -191,13 +191,13 @@ class TripScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: Selector<TripsProvider, Tuple2<List<Model>, bool>>(
-                    selector: (_, tripsProvider) => Tuple2(tripsProvider.publictransports,
+                  child: Selector<TripsProvider, Tuple2<TripModel, bool>>(
+                    selector: (_, tripsProvider) => Tuple2(tripsProvider.selectedTrip,
                         tripsProvider.isFetchingPublicTransport),
                     builder: (_, data, __) => data.item2
                         ?  SizedBox(height: 60, child: Loading())
                         :  Column(
-                      children: data.item1.map((model) => Padding(
+                      children: data.item1.publicTransports.map((model) => Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: BookingCard(
                           model: model,

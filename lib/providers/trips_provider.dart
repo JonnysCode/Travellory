@@ -26,10 +26,9 @@ class TripsProvider extends ChangeNotifier {
   bool isFetchingActivities = false;
   bool isFetchingRentalCars = false;
   bool isFetchingPublicTransport = false;
+  UserModel user;
 
   List<TripModel> _trips;
-
-  UserModel user;
   int _selectedTripIndex;
   int _activeTripIndex;
 
