@@ -34,10 +34,8 @@ class _TripCardState extends State<TripCard> {
   TripModel _tripModel;
 
   void _openTrip(){
-    Provider.of<TripsProvider>(context, listen: false)
-        ..selectedTrip = _tripModel
-        ..initBookings();
-    Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
+    Provider.of<TripsProvider>(context, listen: false).selectTrip(_tripModel);
+    Navigator.pushNamed(context, '/viewtrip');
   }
 
   @override
