@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/abstract_model.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
 import '../font_widgets.dart';
@@ -21,6 +23,7 @@ Container bookingView(SingleChildScrollView child) {
 }
 
 Container bottomBar(BuildContext context, Model model) {
+  final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
   final String modelText = getDeleteTextBasedOn(model);
   final String deleteAlertText = 'You are about to delete your ' +
       modelText +
@@ -53,7 +56,7 @@ Container bottomBar(BuildContext context, Model model) {
             highlightColor: Theme.of(context).primaryColor,
             fillColor: Theme.of(context).primaryColor,
             onDelete: () {
-              showDeleteDialog(context, deleteAlertText);
+              showDeleteDialog(tripsProvider, model, context, deleteAlertText);
             },
           ),
           ),

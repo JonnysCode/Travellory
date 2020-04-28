@@ -8,6 +8,7 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/services/database/get_database.dart';
 import 'package:pedantic/pedantic.dart';
 
@@ -23,6 +24,7 @@ class TripsProvider extends ChangeNotifier {
 
   final DatabaseAdder _databaseAdder = DatabaseAdder();
   final DatabaseGetter _databaseGetter = DatabaseGetter();
+  final DatabaseDeleter _databaseDeleter = DatabaseDeleter();
 
   bool isFetchingTrips = false;
   bool isFetchingFlights = false;
@@ -84,6 +86,24 @@ class TripsProvider extends ChangeNotifier {
       }
     }
     return added;
+  }
+
+  Future<bool> deleteModel(Model model, String functionName) async {
+    final bool deleted = await _databaseDeleter.deleteModel(model, functionName);
+    if (deleted) {
+      if (model is FlightModel){
+        unawaited(_fetchFlights());
+      } else if (model is RentalCarModel){
+        unawaited(_fetchRentalCars());
+      } else if (model is AccommodationModel){
+        unawaited(_fetchAccommodation());
+      } else if (model is PublicTransportModel){
+        unawaited(_fetchPublicTransportation());
+      } else if (model is ActivityModel){
+        unawaited(_fetchActivities());
+      }
+    }
+    return deleted;
   }
 
   Future<void> initBookings() async {
