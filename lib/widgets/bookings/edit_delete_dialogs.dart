@@ -11,7 +11,7 @@ import 'package:travellory/widgets/buttons/buttons.dart';
 
 import '../font_widgets.dart';
 
-void showDeleteDialog(TripsProvider tripsProvider, Model model, BuildContext context, String alertText) {
+void showDeleteDialog(Model model, BuildContext context, String alertText) {
   const String errorMessage = "Seems like there's a connection problem. "
       "Please check your internet connection and try submitting again.";
 
@@ -33,7 +33,7 @@ void showDeleteDialog(TripsProvider tripsProvider, Model model, BuildContext con
             Navigator.of(context).pop();
           }),
           alertButton('DELETE', Theme.of(context).accentColor, context,
-            onDeleteBooking(tripsProvider, model, context, errorMessage),
+            onDeleteBooking(model, context, errorMessage),
           ),
         ],
       );

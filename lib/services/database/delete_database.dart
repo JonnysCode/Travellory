@@ -54,7 +54,9 @@ String getDeleteFunctionNameBasedOn(Model model) {
   return functionName;
 }
 
-void Function() onDeleteBooking(TripsProvider tripsProvider, Model model, BuildContext context, String errorMessage) {
+void Function() onDeleteBooking(Model model, BuildContext context, String errorMessage) {
+  final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
+
   String functionName = getDeleteFunctionNameBasedOn(model);
 
   const String alertText =
