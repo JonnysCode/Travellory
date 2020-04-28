@@ -39,7 +39,7 @@ void main() {
                 highlightColor: Theme.of(context).primaryColor,
                 fillColor: Theme.of(context).primaryColor,
                 onDelete: () {
-                  showDeleteDialog(tripsProvider, activityModel, context, alertText);
+                  showDeleteDialog(activityModel, context, alertText);
                 },
               ),
             );
