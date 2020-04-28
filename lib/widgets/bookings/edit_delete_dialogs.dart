@@ -11,6 +11,8 @@ import 'package:travellory/widgets/buttons/buttons.dart';
 import '../font_widgets.dart';
 
 void showDeleteDialog(BuildContext context, String alertText) {
+  String errorMessage = '';
+
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -25,12 +27,41 @@ void showDeleteDialog(BuildContext context, String alertText) {
         ),
         content: Text(alertText),
         actions: <Widget>[
-          alertButton('Continue With Delete', Theme.of(context).accentColor, context, () async {
-            onDeleteBooking();
-            print('true');
-          }),
-          alertButton("Back to Booking", Theme.of(context).hintColor, context, () async {
+          alertButton("CANCEL", Theme.of(context).hintColor, context, () async {
             Navigator.of(context).pop();
+          }),
+          alertButton('DELETE', Theme.of(context).accentColor, context,
+            onDeleteBooking(context, errorMessage),
+//            print('true');
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void showDeletedBookingDialog(BuildContext context, String alertText) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        key: Key('ShowDeletedBookingDialog'),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        title: FashionFetishText(
+          text: 'Delete Successful!',
+          size: 18,
+          fontWeight: FashionFontWeight.heavy,
+          height: 1.05,
+        ),
+        content: Text(alertText),
+        actions: <Widget>[
+          alertButton('Home', Colors.transparent, context, () async {
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          }),
+          alertButton('Back To Trip', Theme.of(context).hintColor, context, () async {
+            Navigator.pop(context);
+            Navigator.pop(context);
+            Navigator.pop(context);
           }),
         ],
       );

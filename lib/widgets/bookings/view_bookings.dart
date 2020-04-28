@@ -45,13 +45,17 @@ Container bottomBar(BuildContext context, Model model) {
         // TODO(antilyas): Implement edit button
 //        filledButton('EDIT', Colors.white, Theme.of(context).primaryColor,
 //            Theme.of(context).primaryColor, Colors.white, _edit),
-        Flexible(
+        Center(
+          child: Container(
+            height: 32,
+            width: 120,
           child: DeleteButton(
             highlightColor: Theme.of(context).primaryColor,
             fillColor: Theme.of(context).primaryColor,
             onDelete: () {
               showDeleteDialog(context, deleteAlertText);
             },
+          ),
           ),
         ),
       ],
