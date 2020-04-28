@@ -11,7 +11,8 @@ import 'package:travellory/widgets/buttons/buttons.dart';
 import '../font_widgets.dart';
 
 void showDeleteDialog(BuildContext context, String alertText) {
-  String errorMessage = '';
+  const String errorMessage = "Seems like there's a connection problem. "
+      "Please check your internet connection and try submitting again.";
 
   showDialog(
     context: context,
@@ -32,7 +33,6 @@ void showDeleteDialog(BuildContext context, String alertText) {
           }),
           alertButton('DELETE', Theme.of(context).accentColor, context,
             onDeleteBooking(context, errorMessage),
-//            print('true');
           ),
         ],
       );

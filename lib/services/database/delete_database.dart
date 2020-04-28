@@ -41,9 +41,6 @@ void Function() onDeleteBooking(BuildContext context, String errorMessage) {
   const String alertText =
       "You've just deleted this entry. Your booking overview has been updated. ";
 
-  const String errorMessage = "Seems like there's a connection problem. "
-      "Please check your internet connection and try submitting again.";
-
   // TODO (nadine): implement delete booking function maybe similar to onSubmitTrip ?
   return () async {
     // TODO (nadine): implement correct bool
