@@ -40,8 +40,8 @@ class TripsProvider extends ChangeNotifier {
   List<PublicTransportModel> _publicTransports;
 
   UserModel user;
-  TripModel selectedTrip;
-  TripModel activeTrip;
+  int _selectedTripIndex;
+  int _activeTripIndex;
 
   List<TripModel> get trips => _trips;
 
@@ -55,6 +55,9 @@ class TripsProvider extends ChangeNotifier {
 
   List<PublicTransportModel> get publictransports => _publicTransports;
 
+  TripModel get activeTrip => _trips[_activeTripIndex];
+
+  TripModel get selectedTrip => _trips[_selectedTripIndex];
 
   void init(UserModel user) {
     this.user = user;
@@ -75,26 +78,31 @@ class TripsProvider extends ChangeNotifier {
     final bool added = await _databaseAdder.addModel(model, functionName);
     if (added) {
       if (model is FlightModel){
-        unawaited(_fetchFlights());
+        unawaited(_fetchFlights(_selectedTripIndex));
       } else if (model is RentalCarModel){
-        unawaited(_fetchRentalCars());
+        unawaited(_fetchRentalCars(_selectedTripIndex));
       } else if (model is AccommodationModel){
-        unawaited(_fetchAccommodation());
+        unawaited(_fetchAccommodation(_selectedTripIndex));
       } else if (model is PublicTransportModel){
-        unawaited(_fetchPublicTransportation());
+        unawaited(_fetchPublicTransportation(_selectedTripIndex));
       } else if (model is ActivityModel){
-        unawaited(_fetchActivities());
+        unawaited(_fetchActivities(_selectedTripIndex));
       }
     }
     return added;
   }
 
-  Future<void> initBookings() async {
-    unawaited(_fetchFlights());
-    unawaited(_fetchAccommodation());
-    unawaited(_fetchActivities());
-    unawaited(_fetchPublicTransportation());
-    unawaited(_fetchRentalCars());
+  Future<void> initBookings(int tripIndex) async {
+    unawaited(_fetchFlights(tripIndex));
+    unawaited(_fetchAccommodation(tripIndex));
+    unawaited(_fetchActivities(tripIndex));
+    unawaited(_fetchPublicTransportation(tripIndex));
+    unawaited(_fetchRentalCars(tripIndex));
+  }
+
+  void selectTrip(TripModel tripModel){
+    _selectedTripIndex = _trips.indexWhere((trip) => trip.uid == tripModel.uid);
+    initBookings(_selectedTripIndex);
   }
 
   Future<void> _fetchTrips() async {
@@ -106,58 +114,55 @@ class TripsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _fetchFlights() async {
+  Future<void> _fetchFlights(int tripIndex) async {
     isFetchingFlights = true;
     _flights = await _databaseGetter.getEntriesFromDatabase(
-        selectedTrip.uid, DatabaseGetter.getFlights);
+        _trips[tripIndex].uid, DatabaseGetter.getFlights);
     isFetchingFlights = false;
     notifyListeners();
   }
 
-  Future<void> _fetchAccommodation() async {
+  Future<void> _fetchAccommodation(int tripIndex) async {
     isFetchingAccommodations = true;
     _accommodations = await _databaseGetter.getEntriesFromDatabase(
-        selectedTrip.uid, DatabaseGetter.getAccommodations);
+        _trips[tripIndex].uid, DatabaseGetter.getAccommodations);
     isFetchingAccommodations = false;
     notifyListeners();
   }
 
-  Future<void> _fetchActivities() async {
+  Future<void> _fetchActivities(int tripIndex) async {
     isFetchingActivities = true;
     _activities = await _databaseGetter.getEntriesFromDatabase(
-        selectedTrip.uid, DatabaseGetter.getActivities);
+        _trips[tripIndex].uid, DatabaseGetter.getActivities);
     isFetchingActivities = false;
     notifyListeners();
   }
 
-  Future<void> _fetchRentalCars() async {
+  Future<void> _fetchRentalCars(int tripIndex) async {
     isFetchingRentalCars = true;
     _rentalCars = await _databaseGetter.getEntriesFromDatabase(
-        selectedTrip.uid, DatabaseGetter.getRentalCars);
+        _trips[tripIndex].uid, DatabaseGetter.getRentalCars);
     isFetchingRentalCars = false;
     notifyListeners();
   }
 
-  Future<void> _fetchPublicTransportation() async {
+  Future<void> _fetchPublicTransportation(int tripIndex) async {
     isFetchingPublicTransport = true;
     _publicTransports = await _databaseGetter.getEntriesFromDatabase(
-        selectedTrip.uid, DatabaseGetter.getPublicTransportations);
+        _trips[tripIndex].uid, DatabaseGetter.getPublicTransportations);
     isFetchingPublicTransport = false;
     notifyListeners();
   }
 
   void _setActiveTrip(){
-    if(_trips.isEmpty){
-      return;
-    }
-
-    int index = 1;
-    activeTrip = _trips[0];
+    int index = 0;
     // get the first trip with an end date after the current date
-    while(getDateTimeFrom(activeTrip.endDate).isBefore(DateTime.now())){
-      activeTrip = _trips[index];
+    do {
+      _activeTripIndex = index;
       index++;
-    }
+    } while(
+      getDateTimeFrom(_trips[_activeTripIndex].endDate).isBefore(DateTime.now())
+    );
   }
 
 }
