@@ -15,11 +15,6 @@ import 'package:travellory/utils/date_converter.dart';
 class TripsProvider extends ChangeNotifier {
   TripsProvider() {
     _trips = <TripModel>[];
-    _flights = <FlightModel>[];
-    _accommodations = <AccommodationModel>[];
-    _activities = <ActivityModel>[];
-    _rentalCars = <RentalCarModel>[];
-    _publicTransports = <PublicTransportModel>[];
   }
 
   final DatabaseAdder _databaseAdder = DatabaseAdder();
@@ -33,27 +28,12 @@ class TripsProvider extends ChangeNotifier {
   bool isFetchingPublicTransport = false;
 
   List<TripModel> _trips;
-  List<FlightModel> _flights;
-  List<AccommodationModel> _accommodations;
-  List<ActivityModel> _activities;
-  List<RentalCarModel> _rentalCars;
-  List<PublicTransportModel> _publicTransports;
 
   UserModel user;
   int _selectedTripIndex;
   int _activeTripIndex;
 
   List<TripModel> get trips => _trips;
-
-  List<FlightModel> get flights => _flights;
-
-  List<AccommodationModel> get accommodations => _accommodations;
-
-  List<ActivityModel> get activities => _activities;
-
-  List<RentalCarModel> get rentalcars => _rentalCars;
-
-  List<PublicTransportModel> get publictransports => _publicTransports;
 
   TripModel get activeTrip => _trips[_activeTripIndex];
 
@@ -77,32 +57,34 @@ class TripsProvider extends ChangeNotifier {
   Future<bool> addModel(Model model, String functionName) async {
     final bool added = await _databaseAdder.addModel(model, functionName);
     if (added) {
+      var trip = _trips[_selectedTripIndex];
       if (model is FlightModel){
-        unawaited(_fetchFlights(_selectedTripIndex));
+        unawaited(_fetchFlights(trip));
       } else if (model is RentalCarModel){
-        unawaited(_fetchRentalCars(_selectedTripIndex));
+        unawaited(_fetchRentalCars(trip));
       } else if (model is AccommodationModel){
-        unawaited(_fetchAccommodation(_selectedTripIndex));
+        unawaited(_fetchAccommodation(trip));
       } else if (model is PublicTransportModel){
-        unawaited(_fetchPublicTransportation(_selectedTripIndex));
+        unawaited(_fetchPublicTransportation(trip));
       } else if (model is ActivityModel){
-        unawaited(_fetchActivities(_selectedTripIndex));
+        unawaited(_fetchActivities(trip));
       }
     }
     return added;
   }
 
-  Future<void> initBookings(int tripIndex) async {
-    unawaited(_fetchFlights(tripIndex));
-    unawaited(_fetchAccommodation(tripIndex));
-    unawaited(_fetchActivities(tripIndex));
-    unawaited(_fetchPublicTransportation(tripIndex));
-    unawaited(_fetchRentalCars(tripIndex));
-  }
-
   void selectTrip(TripModel tripModel){
     _selectedTripIndex = _trips.indexWhere((trip) => trip.uid == tripModel.uid);
-    initBookings(_selectedTripIndex);
+    _initBookings(_selectedTripIndex);
+  }
+
+  Future<void> _initBookings(int tripIndex) async {
+    var trip = _trips[tripIndex];
+    unawaited(_fetchFlights(trip));
+    unawaited(_fetchAccommodation(trip));
+    unawaited(_fetchActivities(trip));
+    unawaited(_fetchPublicTransportation(trip));
+    unawaited(_fetchRentalCars(trip));
   }
 
   Future<void> _fetchTrips() async {
@@ -114,42 +96,42 @@ class TripsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _fetchFlights(int tripIndex) async {
+  Future<void> _fetchFlights(TripModel trip) async {
     isFetchingFlights = true;
-    _flights = await _databaseGetter.getEntriesFromDatabase(
-        _trips[tripIndex].uid, DatabaseGetter.getFlights);
+    trip.flights = await _databaseGetter.getEntriesFromDatabase(
+        trip.uid, DatabaseGetter.getFlights);
     isFetchingFlights = false;
     notifyListeners();
   }
 
-  Future<void> _fetchAccommodation(int tripIndex) async {
+  Future<void> _fetchAccommodation(TripModel trip) async {
     isFetchingAccommodations = true;
-    _accommodations = await _databaseGetter.getEntriesFromDatabase(
-        _trips[tripIndex].uid, DatabaseGetter.getAccommodations);
+    trip.accommodations = await _databaseGetter.getEntriesFromDatabase(
+        trip.uid, DatabaseGetter.getAccommodations);
     isFetchingAccommodations = false;
     notifyListeners();
   }
 
-  Future<void> _fetchActivities(int tripIndex) async {
+  Future<void> _fetchActivities(TripModel trip) async {
     isFetchingActivities = true;
-    _activities = await _databaseGetter.getEntriesFromDatabase(
-        _trips[tripIndex].uid, DatabaseGetter.getActivities);
+    trip.activities = await _databaseGetter.getEntriesFromDatabase(
+        trip.uid, DatabaseGetter.getActivities);
     isFetchingActivities = false;
     notifyListeners();
   }
 
-  Future<void> _fetchRentalCars(int tripIndex) async {
+  Future<void> _fetchRentalCars(TripModel trip) async {
     isFetchingRentalCars = true;
-    _rentalCars = await _databaseGetter.getEntriesFromDatabase(
-        _trips[tripIndex].uid, DatabaseGetter.getRentalCars);
+    trip.rentalCars = await _databaseGetter.getEntriesFromDatabase(
+        trip.uid, DatabaseGetter.getRentalCars);
     isFetchingRentalCars = false;
     notifyListeners();
   }
 
-  Future<void> _fetchPublicTransportation(int tripIndex) async {
+  Future<void> _fetchPublicTransportation(TripModel trip) async {
     isFetchingPublicTransport = true;
-    _publicTransports = await _databaseGetter.getEntriesFromDatabase(
-        _trips[tripIndex].uid, DatabaseGetter.getPublicTransportations);
+    trip.publicTransports = await _databaseGetter.getEntriesFromDatabase(
+        trip.uid, DatabaseGetter.getPublicTransportations);
     isFetchingPublicTransport = false;
     notifyListeners();
   }
