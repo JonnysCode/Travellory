@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/utils/list_models.dart';
 
 class TravelloryFormField extends StatefulWidget {
   const TravelloryFormField(
-      {Key key, this.icon, this.labelText, this.optional = false, this.controller, this.onChanged})
+      {Key key,
+      this.icon,
+      this.initialValue,
+      this.labelText,
+      this.optional = false,
+      this.controller,
+      this.onChanged})
       : super(key: key);
 
   final Icon icon;
+  final String initialValue;
   final String labelText;
   final bool optional;
   final TextEditingController controller;
@@ -18,7 +26,8 @@ class TravelloryFormField extends StatefulWidget {
   TravelloryFormFieldState createState() => TravelloryFormFieldState();
 }
 
-class TravelloryFormFieldState extends State<TravelloryFormField> with AutomaticKeepAliveClientMixin {
+class TravelloryFormFieldState extends State<TravelloryFormField>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -27,7 +36,12 @@ class TravelloryFormFieldState extends State<TravelloryFormField> with Automatic
   @override
   void initState() {
     super.initState();
-    controller = widget.controller != null ? widget.controller : TextEditingController();
+    if (widget.initialValue != null) {
+      controller = widget.controller != null ? widget.controller : TextEditingController()
+        ..text = (widget.initialValue);
+    } else {
+      controller = widget.controller != null ? widget.controller : TextEditingController();
+    }
   }
 
   @override
@@ -63,7 +77,7 @@ class TravelloryFormFieldState extends State<TravelloryFormField> with Automatic
   }
 }
 
-void showAdditional (ListModel<Widget> list, bool show, Widget parent, Widget additionalField) {
+void showAdditional(ListModel<Widget> list, bool show, Widget parent, Widget additionalField) {
   if (show) {
     list.insert(list.indexOf(parent) + 1, additionalField);
   } else {
