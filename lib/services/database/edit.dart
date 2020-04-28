@@ -13,15 +13,15 @@ void editModel(Model model, BuildContext context) {
   String changeRoute = '';
 
   if (model is FlightModel) {
-    changeRoute = '/booking/flight';
+    changeRoute = '/edit/flight';
   } else if (model is RentalCarModel) {
-    changeRoute = '/booking/rentalcar';
+    changeRoute = '/edit/rentalcar';
   } else if (model is AccommodationModel) {
-    changeRoute = '/booking/accommodation';
+    changeRoute = '/edit/accommodation';
   } else if (model is PublicTransportModel) {
-    changeRoute = '/booking/publictransport';
+    changeRoute = '/edit/publictransport';
   } else if (model is ActivityModel) {
-    changeRoute = '/booking/activity';
+    changeRoute = '/edit/activity';
   } else {
     log.w('No edit page was found for model');
   }
