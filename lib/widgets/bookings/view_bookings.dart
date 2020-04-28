@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:travellory/models/abstract_model.dart';
-import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
 import '../font_widgets.dart';
@@ -23,7 +21,6 @@ Container bookingView(SingleChildScrollView child) {
 }
 
 Container bottomBar(BuildContext context, Model model) {
-  final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
   final String modelText = getDeleteTextBasedOn(model);
   final String deleteAlertText = 'You are about to delete your ' +
       modelText +
@@ -45,9 +42,19 @@ Container bottomBar(BuildContext context, Model model) {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        // TODO(antilyas): Implement edit button
-//        filledButton('EDIT', Colors.white, Theme.of(context).primaryColor,
-//            Theme.of(context).primaryColor, Colors.white, _edit),
+        Center(
+          child: Container(
+            height: 32,
+            width: 120,
+            child: EditButton(
+              highlightColor: Theme.of(context).primaryColor,
+              fillColor: Theme.of(context).primaryColor,
+              onEdit: () {
+                 _edit;
+              },
+            ),
+          ),
+        ),
         Center(
           child: Container(
             height: 32,
@@ -56,7 +63,7 @@ Container bottomBar(BuildContext context, Model model) {
             highlightColor: Theme.of(context).primaryColor,
             fillColor: Theme.of(context).primaryColor,
             onDelete: () {
-              showDeleteDialog(tripsProvider, model, context, deleteAlertText);
+              showDeleteDialog(model, context, deleteAlertText);
             },
           ),
           ),
