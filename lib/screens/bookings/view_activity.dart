@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/activity_model.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/widgets/bookings/view_booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';
@@ -12,7 +14,6 @@ class ActivityView extends StatefulWidget {
 }
 
 class _ActivityViewState extends State<ActivityView> {
-  final String activity = 'assets/images/activity/hill_sky_banner.jpg';
   final String activityBannerUrl = 'assets/images/activity/hill_sky_banner.jpg';
   final String cinemaBannerUrl = 'assets/images/activity/cinema_banner.jpg';
   final String feastBannerUrl = 'assets/images/activity/feast_banner.jpg';
@@ -52,7 +53,7 @@ class _ActivityViewState extends State<ActivityView> {
         url = mountainBannerUrl;
         break;
       default:
-        url = activity;
+        url = activityBannerUrl;
         break;
     }
     return BookingHeader(title, url);
@@ -98,7 +99,7 @@ class _ActivityViewState extends State<ActivityView> {
             Theme.of(context).primaryColor),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SizedBox(height: 10),
-        bottomBar(context, activityModels[0]),
+        bottomBar(context, activityModel),
       ]),
     );
   }
@@ -109,6 +110,7 @@ class _ActivityViewState extends State<ActivityView> {
     final List<ActivityModel> activities = [];
     activities.add(activityModel);
     activityModels = activities;
+    Provider.of<TripsProvider>(context, listen: false)..selectedActivity = activityModels[0];
 
     return Scaffold(
       key: Key('ActivityView'),

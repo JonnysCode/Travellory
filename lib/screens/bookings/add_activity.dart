@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
-import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/services/database/submit.dart';
@@ -27,7 +25,6 @@ class Activity extends StatefulWidget {
 class ActivityState<T extends Activity> extends State<T> {
   final GlobalKey<FormState> activityFormKey = GlobalKey<FormState>();
   final ActivityModel activityModel = ActivityModel();
-  final DatabaseAdder databaseAdder = DatabaseAdder();
 
   static const int _imageItemCount = 13;
 
@@ -53,8 +50,14 @@ class ActivityState<T extends Activity> extends State<T> {
     super.initState();
   }
 
-  Column getContent(
-      BuildContext context, TripsProvider tripsProvider, TripModel tripModel, Model model) {
+  Column getContent(BuildContext context, TripsProvider tripsProvider, TripModel tripModel) {
+    ActivityModel model;
+    if (tripsProvider.selectedActivity != null) {
+      model = tripsProvider.selectedActivity;
+    } else {
+      model = activityModel;
+    }
+
     return Column(
       children: <Widget>[
         TripHeader(tripModel),
@@ -78,7 +81,7 @@ class ActivityState<T extends Activity> extends State<T> {
                       title: 'Select Category',
                       types: activityTypes,
                       onChanged: (value) {
-                        activityModel.category = value.name;
+                        model.category = value.name;
                       },
                       validatorText: 'Please enter the required information'),
                 ),
@@ -93,18 +96,20 @@ class ActivityState<T extends Activity> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
+                      initialValue: model.title,
                       labelText: 'Activity Title *',
                       icon: Icon(FontAwesomeIcons.star),
                       optional: false,
-                      onChanged: (value) => activityModel.title = value),
+                      onChanged: (value) => model.title = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
+                      initialValue: model.description,
                       labelText: 'Description',
                       icon: Icon(FontAwesomeIcons.info),
                       optional: true,
-                      onChanged: (value) => activityModel.description = value),
+                      onChanged: (value) => model.description = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -113,47 +118,52 @@ class ActivityState<T extends Activity> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
+                      initialValue: model.location,
                       labelText: 'Location *',
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
-                      onChanged: (value) => activityModel.location = value),
+                      onChanged: (value) => model.location = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
+                    initialValue: model.startDate,
                     key: _startDateFormFieldKey,
                     labelText: 'Start Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     optional: false,
-                    chosenDateString: (value) => activityModel.startDate = value,
+                    chosenDateString: (value) => model.startDate = value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TimeFormField(
+                      initialValue: model.startTime,
                       labelText: 'Start Time',
                       icon: Icon(FontAwesomeIcons.clock),
                       optional: true,
-                      chosenTimeString: (value) => activityModel.startTime = value),
+                      chosenTimeString: (value) => model.startTime = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
+                    initialValue: model.endDate,
                     labelText: 'End Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     beforeDateKey: _startDateFormFieldKey,
                     optional: false,
                     dateValidationMessage: 'End Date cannot be before Start Date',
-                    chosenDateString: (value) => activityModel.endDate = value,
+                    chosenDateString: (value) => model.endDate = value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TimeFormField(
+                      initialValue: model.endTime,
                       labelText: 'End Time',
                       icon: Icon(FontAwesomeIcons.clock),
                       optional: true,
-                      chosenTimeString: (value) => activityModel.endTime = value),
+                      chosenTimeString: (value) => model.endTime = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -165,9 +175,10 @@ class ActivityState<T extends Activity> extends State<T> {
                     labelText: 'Notes',
                     icon: Icon(FontAwesomeIcons.stickyNote),
                     optional: true,
-                    onChanged: (value) => activityModel.notes = value,
+                    onChanged: (value) => model.notes = value,
                   ),
                 ),
+                // TODO(antilyas): refactor this out so that I can add 2 different submmit buttons for add/edit
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: SubmitButton(
@@ -175,7 +186,7 @@ class ActivityState<T extends Activity> extends State<T> {
                     fillColor: Theme.of(context).primaryColor,
                     validationFunction: validateForm,
                     onSubmit: onSubmitBooking(
-                        tripsProvider, activityModel, 'activity-addActivity', context, alertText),
+                        tripsProvider, model, 'activity-addActivity', context, alertText),
                   ),
                 ),
                 Padding(
@@ -207,7 +218,7 @@ class ActivityState<T extends Activity> extends State<T> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, tripsProvider, tripModel, activityModel),
+        child: getContent(context, tripsProvider, tripModel),
       ),
     );
   }

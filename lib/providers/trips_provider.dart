@@ -44,6 +44,8 @@ class TripsProvider extends ChangeNotifier {
   UserModel user;
   TripModel selectedTrip;
 
+  ActivityModel selectedActivity;
+
   List<TripModel> get trips => _trips;
 
   List<FlightModel> get flights => _flights;
