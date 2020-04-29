@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
@@ -72,8 +73,9 @@ class _ActivityState extends State<Activity> {
 
   @override
   Widget build(BuildContext context) {
-    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
-    final TripModel tripModel = tripsProvider.selectedTrip;
+    final SingleTripProvider singleTripProvider =
+        Provider.of<TripsProvider>(context, listen: false).selectedTrip;
+    final TripModel tripModel = singleTripProvider.tripModel;
     activityModel.tripUID = tripModel.uid;
 
     return Scaffold(
@@ -224,7 +226,7 @@ class _ActivityState extends State<Activity> {
                         highlightColor: Theme.of(context).primaryColor,
                         fillColor: Theme.of(context).primaryColor,
                         validationFunction: validateForm,
-                        onSubmit: onSubmitBooking(tripsProvider, activityModel,
+                        onSubmit: onSubmitBooking(singleTripProvider, activityModel,
                             'activity-addActivity', context, alertText),
                       ),
                     ),

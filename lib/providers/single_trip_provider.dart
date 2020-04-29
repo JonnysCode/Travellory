@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:travellory/models/abstract_model.dart';
 
@@ -11,7 +10,7 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/get_database.dart';
 
-class SingleTripProvider extends ChangeNotifier {
+class SingleTripProvider {
   SingleTripProvider(TripModel trip, DatabaseGetter databaseGetter, DatabaseAdder databaseAdder){
     this.tripModel = trip;
     this.databaseGetter = databaseGetter;
@@ -73,7 +72,6 @@ class SingleTripProvider extends ChangeNotifier {
     flights = await databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getFlights);
     isFetchingFlights = false;
-    notifyListeners();
   }
 
   Future<void> _fetchAccommodation() async {
@@ -81,7 +79,6 @@ class SingleTripProvider extends ChangeNotifier {
     accommodations = await databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getAccommodations);
     isFetchingAccommodations = false;
-    notifyListeners();
   }
 
   Future<void> _fetchActivities() async {
@@ -89,7 +86,6 @@ class SingleTripProvider extends ChangeNotifier {
     activities = await databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getActivities);
     isFetchingActivities = false;
-    notifyListeners();
   }
 
   Future<void> _fetchRentalCars() async {
@@ -97,7 +93,6 @@ class SingleTripProvider extends ChangeNotifier {
     rentalCars = await databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getRentalCars);
     isFetchingRentalCars = false;
-    notifyListeners();
   }
 
   Future<void> _fetchPublicTransportation() async {
@@ -105,6 +100,5 @@ class SingleTripProvider extends ChangeNotifier {
     publicTransports = await databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getPublicTransportations);
     isFetchingPublicTransports = false;
-    notifyListeners();
   }
 }
