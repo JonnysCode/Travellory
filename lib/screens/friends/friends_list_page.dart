@@ -6,9 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
-import 'package:travellory/screens/home/pages/friends_page.dart';
 import 'package:travellory/services/friend_management.dart';
 import 'package:travellory/shared/loading.dart';
+import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_list_widget.dart';
@@ -62,9 +62,7 @@ class _FriendListPageState extends State<FriendListPage> {
           title: success ? "Success" : "Error",
           message: message,
           backgroundColor:
-          success ? Theme
-              .of(context)
-              .primaryColor : Colors.redAccent,
+          success ? Theme.of(context).primaryColor : Colors.redAccent,
           margin: EdgeInsets.all(8),
           borderRadius: 12,
           duration: Duration(seconds: 3))
@@ -97,9 +95,7 @@ class _FriendListPageState extends State<FriendListPage> {
                       .toggleSearching(),
               child: Icon(
                 FontAwesomeIcons.search,
-                color: Theme
-                    .of(context)
-                    .primaryColor,
+                color: Theme.of(context).primaryColor,
                 size: 32,
               ),
             ),
@@ -111,16 +107,11 @@ class _FriendListPageState extends State<FriendListPage> {
                 top: 10,
                 left: 30,
                 right: 90,
-                bottom: MediaQuery
-                    .of(context)
-                    .viewInsets
-                    .bottom),
+                bottom: MediaQuery.of(context).viewInsets.bottom
+            ),
             child: Container(
               height: 30,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              width: MediaQuery.of(context).size.width,
               child: FashionFetishText(
                 text: 'Friend requests',
                 size: 22,
@@ -138,32 +129,25 @@ class _FriendListPageState extends State<FriendListPage> {
                 Key('friend_requests_list'),
                 158,
                 friendsProvider.friendRequests,
-                OptionButton(
-                  optionItems: <OptionItem>[
-                    OptionItem(
-                      description: 'Accept',
-                      icon: FontAwesomeIcons.check,
-                      onTab: () => _acceptFriendRequest(
-                          friendsProvider
-                              .friendRequests[0]
-                              .uid,
-                          user.uid
-                      ),
-                      color: Colors.green
-                    ),
-                    OptionItem(
-                        description: 'Decline',
-                        icon: FontAwesomeIcons.times,
-                        onTab: () => _declineFriendRequest(
-                            friendsProvider
-                                .friendRequests[0]
-                                .uid,
-                            user.uid
-                        ),
-                      color: Colors.red
-                    ),
+                Wrap(
+                  children: <Widget>[
+                    socialButton(
+                        Key('accept_button'),
+                        Icons.person_add,
+                        Colors.green,
+                            () => _acceptFriendRequest(
+                            friendsProvider.friendRequests[0].uid,
+                            user.uid)),
+                    socialButton(
+                        Key('decline_button'),
+                        Icons.clear,
+                        Colors.red,
+                            () => _declineFriendRequest(
+                            friendsProvider.friendRequests[0].uid,
+                            user.uid)),
                   ],
                 ),
+                10,
                 context),
           ),
           SizedBox(height: 20),
@@ -173,16 +157,11 @@ class _FriendListPageState extends State<FriendListPage> {
                 top: 10,
                 left: 30,
                 right: 90,
-                bottom: MediaQuery
-                    .of(context)
-                    .viewInsets
-                    .bottom),
+                bottom: MediaQuery.of(context).viewInsets.bottom
+            ),
             child: Container(
               height: 30,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              width: MediaQuery.of(context).size.width,
               child: FashionFetishText(
                 text: 'Friends',
                 size: 22,
@@ -211,10 +190,11 @@ class _FriendListPageState extends State<FriendListPage> {
                                 .uid,
                             user.uid
                         ),
-                      color: Colors.red
+                        color: Colors.red
                     ),
                   ],
                 ),
+                6,
                 context),
           ),
         ],
