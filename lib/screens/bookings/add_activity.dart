@@ -78,6 +78,7 @@ class ActivityState<T extends Activity> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryDropdownField(
+                    initialValue: model.category,
                       title: 'Select Category',
                       types: activityTypes,
                       onChanged: (value) {
