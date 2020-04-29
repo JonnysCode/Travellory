@@ -32,7 +32,7 @@ void main() {
 
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
-        SingleTripProvider(tripModel, null, null, null)
+        SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
@@ -45,7 +45,7 @@ void main() {
 
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
-        SingleTripProvider(tripModel, null, null, null)
+        SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
@@ -58,7 +58,7 @@ void main() {
 
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
-        SingleTripProvider(tripModel, null, null, null)
+        SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
@@ -72,7 +72,7 @@ void main() {
 
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
-        SingleTripProvider(tripModel, null, null, null)
+        SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
@@ -86,7 +86,7 @@ void main() {
 
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
-        SingleTripProvider(tripModel, null, null, null)
+        SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
@@ -100,7 +100,7 @@ void main() {
 
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
-        SingleTripProvider(tripModel, null, null, null)
+        SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
@@ -118,7 +118,7 @@ void main() {
 
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
-        SingleTripProvider(tripModel, null, null, null)
+        SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
@@ -133,7 +133,7 @@ void main() {
 
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
-        SingleTripProvider(tripModel, null, null, null)
+        SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
@@ -146,7 +146,7 @@ void main() {
 
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
-        SingleTripProvider(tripModel, null, null, null)
+        SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
