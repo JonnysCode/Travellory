@@ -37,7 +37,6 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
   bool get wantKeepAlive => true;
 
   TextEditingController controller;
-  TextEditingController displayController;
   DateTime selectedDate;
   DateTime initialDate;
 
@@ -45,14 +44,12 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
   void initState() {
     super.initState();
     controller = widget.controller != null ? widget.controller : TextEditingController();
-    displayController = TextEditingController();
-    // TODO(antilyas): check if dateformating works
     getInitialDate();
   }
 
   DateTime getInitialDate() {
-    if (widget.initialValue != null) {
-      displayController..text = (widget.initialValue);;
+    if (widget.initialValue != '' && widget.initialValue != null) {
+      controller..text = (widget.initialValue);;
       return initialDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.initialValue);
     } else {
       return DateTime.now();
@@ -62,7 +59,6 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
   @override
   void dispose() {
     controller.dispose();
-    displayController.dispose();
     super.dispose();
   }
 
@@ -78,12 +74,7 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
     );
     if (pickedDate != null) {
       selectedDate = pickedDate;
-      // TODO(antilyas): one controller is enough now that dates are saved as strings to database
-//      final String pickedDateString = pickedDate.toString();
-      displayController.text = DateFormat("dd-MM-yyyy").format(pickedDate);
       controller.text = DateFormat("dd-MM-yyyy").format(pickedDate);
-//      displayController.text = "$pickedDateString".split(' ')[0];
-//      controller.text = "$pickedDateString".split(' ')[0];
       if (widget.chosenDate != null) widget.chosenDate(selectedDate);
       if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
     }
@@ -97,15 +88,15 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
       child: ListTile(
         leading: widget.icon,
         title: TextFormField(
-            controller: displayController,
+            controller: controller,
             validator: (value) {
               if (widget.optional) return null;
               if (value.isEmpty) {
                 return widget.validatorText;
               } else if (widget.beforeDateKey != null &&
                   selectedDate.isBefore(widget.beforeDateKey.currentState.selectedDate) &&
-                  (displayController.text !=
-                      widget.beforeDateKey.currentState.displayController.text)) {
+                  (controller.text !=
+                      widget.beforeDateKey.currentState.controller.text)) {
                 return widget.dateValidationMessage;
               }
               return null;

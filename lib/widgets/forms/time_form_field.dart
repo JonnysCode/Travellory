@@ -67,10 +67,9 @@ class TimeFormFieldState extends State<TimeFormField> with AutomaticKeepAliveCli
         await showTimePicker(context: context, initialTime: TimeOfDay.now());
     if (pickedTime != null && pickedTime != selectedTime) {
       selectedTime = pickedTime;
-      final String pickedTimeString = pickedTime.format(context).toString();
-      controller.text = pickedTimeString;
+      controller.text = pickedTime.format(context).toString();
       if (widget.chosenTime != null) widget.chosenTime(selectedTime);
-      if (widget.chosenTimeString != null) widget.chosenTimeString(pickedTimeString);
+      if (widget.chosenTimeString != null) widget.chosenTimeString(controller.text);
     }
   }
 
