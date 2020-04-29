@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/font_widgets.dart';
@@ -75,19 +74,20 @@ class TripScreen extends StatelessWidget {
           children: <Widget>[
             TripHeader(tripModel),
             Expanded(
-              child: ListView(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Flights', '/booking/flight'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: Selector<TripsProvider, SingleTripProvider>(
-                      selector: (_, tripsProvider) => tripsProvider.selectedTrip,
-                      builder: (_, trip, __) => trip.isFetchingFlights
-                          ?  SizedBox(height: 50, child: Loading())
-                          :  Column(
+              child: Consumer<TripsProvider>(
+                builder: (_, tripsProvider, __) {
+                  var trip = tripsProvider.selectedTrip;
+                  return ListView(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: _subsection('Flights', '/booking/flight'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: trip.isFetchingFlights
+                          ? Loading()
+                          : Column(
                         children: trip.flights.map((model) => Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: BookingCard(
@@ -97,22 +97,18 @@ class TripScreen extends StatelessWidget {
                               color: getBookingColorAccordingTo(model),
                               getSchedule: getBookingsAccordingTo(model),
                             ),
-                        )
-                        ).toList(),
+                        )).toList(),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Accommodation', '/booking/accommodation'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: Selector<TripsProvider, SingleTripProvider>(
-                      selector: (_, tripsProvider) => tripsProvider.selectedTrip,
-                      builder: (_, trip, __) => trip.isFetchingAccommodations
-                          ?  SizedBox(height: 60, child: Loading())
-                          :  Column(
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: _subsection('Accommodation', '/booking/accommodation'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: trip.isFetchingAccommodations
+                          ? Loading()
+                          : Column(
                         children: trip.accommodations.map((model) => Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: BookingCard(
@@ -122,22 +118,18 @@ class TripScreen extends StatelessWidget {
                             color: getBookingColorAccordingTo(model),
                             getSchedule: getBookingsAccordingTo(model),
                           ),
-                        )
-                        ).toList(),
+                        )).toList(),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Activities', '/booking/activity'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: Selector<TripsProvider, SingleTripProvider>(
-                      selector: (_, tripsProvider) => tripsProvider.selectedTrip,
-                      builder: (_, trip, __) => trip.isFetchingActivities
-                          ?  SizedBox(height: 60, child: Loading())
-                          :  Column(
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: _subsection('Activities', '/booking/activity'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: trip.isFetchingActivities
+                          ? Loading()
+                          : Column(
                         children: trip.activities.map((model) => Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: BookingCard(
@@ -147,48 +139,40 @@ class TripScreen extends StatelessWidget {
                             color: getBookingColorAccordingTo(model),
                             getSchedule: getBookingsAccordingTo(model),
                           ),
-                        )
-                        ).toList(),
+                        )).toList(),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Car rental', '/booking/rentalcar'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: Selector<TripsProvider, SingleTripProvider>(
-                      selector: (_, tripsProvider) => tripsProvider.selectedTrip,
-                      builder: (_, trip, __) => trip.isFetchingRentalCars
-                          ?  SizedBox(height: 60, child: Loading())
-                          :  Column(
-                        children: trip.rentalCars.map((model) => Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: BookingCard(
-                            model: model,
-                            onTap: () => Navigator.pushNamed(
-                                context, '/view/rentalcar', arguments: model),
-                            color: getBookingColorAccordingTo(model),
-                            getSchedule: getBookingsAccordingTo(model),
-                          ),
-                        )
-                        ).toList(),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: _subsection('Car rental', '/booking/rentalcar'),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: _subsection('Transportation', '/booking/publictransport'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: Selector<TripsProvider, SingleTripProvider>(
-                      selector: (_, tripsProvider) => tripsProvider.selectedTrip,
-                      builder: (_, trip, __) => trip.isFetchingPublicTransports
-                          ?  SizedBox(height: 60, child: Loading())
-                          :  Column(
-                        children: trip.rentalCars.map((model) => Padding(
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: trip.isFetchingRentalCars
+                          ? Loading()
+                          : Column(
+                          children: trip.rentalCars.map((model) => Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: BookingCard(
+                              model: model,
+                              onTap: () => Navigator.pushNamed(
+                                  context, '/view/rentalcar', arguments: model),
+                              color: getBookingColorAccordingTo(model),
+                              getSchedule: getBookingsAccordingTo(model),
+                            ),
+                          )).toList(),
+                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: _subsection('Transportation', '/booking/publictransport'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                      child: trip.isFetchingPublicTransports
+                          ? Loading()
+                          : Column(
+                        children: trip.publicTransports.map((model) => Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: BookingCard(
                             model: model,
@@ -197,15 +181,14 @@ class TripScreen extends StatelessWidget {
                             color: getBookingColorAccordingTo(model),
                             getSchedule: getBookingsAccordingTo(model),
                           ),
-                        )
-                        ).toList(),
+                        )).toList(),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                );},
               ),
             )
           ],
