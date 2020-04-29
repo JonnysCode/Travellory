@@ -10,7 +10,7 @@ import 'package:travellory/utils/date_converter.dart';
 
 class TripsProvider extends ChangeNotifier implements NotifyListener{
   TripsProvider() {
-    _trips = <SingleTripProvider>[];
+    trips = <SingleTripProvider>[];
   }
 
   final DatabaseAdder _databaseAdder = DatabaseAdder();
@@ -18,16 +18,14 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   UserModel user;
   bool isFetchingTrips = false;
+  List<SingleTripProvider> trips;
 
-  List<SingleTripProvider> _trips;
   int _selectedTripIndex;
   int _activeTripIndex;
 
-  List<SingleTripProvider> get trips => _trips;
+  SingleTripProvider get activeTrip => trips[_activeTripIndex];
 
-  SingleTripProvider get activeTrip => _trips[_activeTripIndex];
-
-  SingleTripProvider get selectedTrip => _trips[_selectedTripIndex];
+  SingleTripProvider get selectedTrip => trips[_selectedTripIndex];
 
   void init(UserModel user) {
     this.user = user;
@@ -46,15 +44,15 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
   }
 
   void selectTrip(TripModel tripModel){
-    _selectedTripIndex = _trips.indexWhere((entry) => entry.tripModel.uid == tripModel.uid);
-    _trips[_selectedTripIndex].initBookings();
+    _selectedTripIndex = trips.indexWhere((entry) => entry.tripModel.uid == tripModel.uid);
+    trips[_selectedTripIndex].initBookings();
   }
 
   Future<void> _fetchTrips() async {
     isFetchingTrips = true;
     List<TripModel> tripModels = await _databaseGetter.getEntriesFromDatabase(
         user.uid, DatabaseGetter.getTrips);
-    _trips = tripModels.map((tripModel) => SingleTripProvider(
+    trips = tripModels.map((tripModel) => SingleTripProvider(
         tripModel, _databaseGetter, _databaseAdder, this)).toList();
 
     _setActiveTrip();
@@ -69,7 +67,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
       _activeTripIndex = index;
       index++;
     } while(
-      getDateTimeFrom(_trips[_activeTripIndex].tripModel.endDate).isBefore(DateTime.now())
+      getDateTimeFrom(trips[_activeTripIndex].tripModel.endDate).isBefore(DateTime.now())
     );
   }
 
