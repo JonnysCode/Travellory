@@ -22,6 +22,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   int _selectedTripIndex;
   int _activeTripIndex;
+  bool _tripsInitiated = false;
 
   SingleTripProvider get activeTrip => trips[_activeTripIndex];
 
@@ -29,7 +30,10 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   void init(UserModel user) {
     this.user = user;
-    unawaited(_initTrips());
+    if(!_tripsInitiated){
+      unawaited(_initTrips());
+      _tripsInitiated = true;
+    }
   }
 
   Future<bool> addTrip(TripModel tripModel) async {
