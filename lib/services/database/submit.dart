@@ -14,7 +14,7 @@ final log = getLogger('Submit');
 Function() onSubmitBooking(TripsProvider tripsProvider, Model model,
     String functionName, BuildContext context, alertText) {
   return () async {
-    final bool added = await tripsProvider.addModel(model, functionName);
+    final bool added = await tripsProvider.addBooking(model, functionName);
     if (added) {
       showSubmittedBookingDialog(context, alertText);
     } else {
