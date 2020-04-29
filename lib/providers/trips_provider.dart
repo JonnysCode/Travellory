@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
+import 'package:travellory/providers/NotifyListener.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/get_database.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:travellory/utils/date_converter.dart';
 
-class TripsProvider extends ChangeNotifier {
+class TripsProvider extends ChangeNotifier implements NotifyListener{
   TripsProvider() {
     _trips = <SingleTripProvider>[];
   }
 
   final DatabaseAdder _databaseAdder = DatabaseAdder();
   final DatabaseGetter _databaseGetter = DatabaseGetter();
-
 
   UserModel user;
   bool isFetchingTrips = false;
@@ -55,7 +55,7 @@ class TripsProvider extends ChangeNotifier {
     List<TripModel> tripModels = await _databaseGetter.getEntriesFromDatabase(
         user.uid, DatabaseGetter.getTrips);
     _trips = tripModels.map((tripModel) => SingleTripProvider(
-        tripModel, _databaseGetter, _databaseAdder)).toList();
+        tripModel, _databaseGetter, _databaseAdder, this)).toList();
 
     _setActiveTrip();
     isFetchingTrips = false;
@@ -71,6 +71,12 @@ class TripsProvider extends ChangeNotifier {
     } while(
       getDateTimeFrom(_trips[_activeTripIndex].tripModel.endDate).isBefore(DateTime.now())
     );
+  }
+
+  @override
+  void notify() {
+    notifyListeners();
+    print('NOTIFIED!');
   }
 
 }
