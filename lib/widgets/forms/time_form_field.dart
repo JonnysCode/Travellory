@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TimeFormField extends StatefulWidget {
   const TimeFormField(
@@ -33,6 +34,7 @@ class TimeFormFieldState extends State<TimeFormField> with AutomaticKeepAliveCli
   TextEditingController controller;
   TextEditingController displayController;
   TimeOfDay selectedTime;
+  DateTime initialTimeValue;
   TimeOfDay initialTime;
 
   @override
@@ -40,16 +42,16 @@ class TimeFormFieldState extends State<TimeFormField> with AutomaticKeepAliveCli
     super.initState();
     controller = widget.controller != null ? widget.controller : TextEditingController();
     displayController = TextEditingController();
-    // TODO(antilyas): check if getInitialTime works
-    getInitialTime();
+    _getInitialTime();
   }
 
-  TimeOfDay getInitialTime() {
-    if (widget.initialValue != null) {
+  // pass string of initial value first to dateTime format,
+  // to then make it possible to easily change it to timeOfDay
+  TimeOfDay _getInitialTime() {
+    if (widget.initialValue != '' && widget.initialValue != null) {
       displayController..text = (widget.initialValue);
-      return initialTime = TimeOfDay(
-          hour: int.parse(widget.initialValue.split(":")[0]),
-          minute: int.parse(widget.initialValue.split(":")[1]));
+      initialTimeValue = DateFormat("H:mm", "en_US").parse(widget.initialValue);
+      return initialTime = TimeOfDay(hour: initialTimeValue.hour, minute: initialTimeValue.minute);
     } else {
       return TimeOfDay.now();
     }
@@ -70,8 +72,11 @@ class TimeFormFieldState extends State<TimeFormField> with AutomaticKeepAliveCli
       // TODO(antilyas): only need one controller
       selectedTime = pickedTime;
       displayController.text = pickedTime.format(context);
+      controller.text = pickedTime.format(context).toString();
       final String pickedTimeString = pickedTime.format(context).toString();
-      controller.text = pickedTimeString;
+//      displayController.text = pickedTime.format(context);
+//      final String pickedTimeString = pickedTime.format(context).toString();
+//      controller.text = pickedTimeString;
       if (widget.chosenTime != null) widget.chosenTime(selectedTime);
       if (widget.chosenTimeString != null) widget.chosenTimeString(pickedTimeString);
     }
