@@ -50,7 +50,13 @@ class ActivityState<T extends Activity> extends State<T> {
     super.initState();
   }
 
-  Column getContent(BuildContext context, TripsProvider tripsProvider, TripModel tripModel) {
+  Column getContent(BuildContext context, TripsProvider tripsProvider, TripModel tripModel, int startIndex) {
+    // this selects the correct image for editing the activity
+    if(startIndex != 0) {
+      _selectedIndex = startIndex;
+    }
+
+    // this chooses between the edit and the new model
     ActivityModel model;
     if (tripsProvider.selectedActivity != null) {
       model = tripsProvider.selectedActivity;
@@ -78,7 +84,7 @@ class ActivityState<T extends Activity> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryDropdownField(
-                    initialValue: model.category,
+                      initialValue: model.category,
                       title: 'Select Category',
                       types: activityTypes,
                       onChanged: (value) {
@@ -219,7 +225,7 @@ class ActivityState<T extends Activity> extends State<T> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, tripsProvider, tripModel),
+        child: getContent(context, tripsProvider, tripModel, 0),
       ),
     );
   }

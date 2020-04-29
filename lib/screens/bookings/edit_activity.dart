@@ -14,38 +14,25 @@ class EditActivity extends Activity {
   final ActivityModel activityModel;
 
   @override
-  _EditActivityState createState() => _EditActivityState(activityModel);
+  _EditActivityState createState() => _EditActivityState();
 }
 
 class _EditActivityState extends ActivityState<EditActivity> {
-  _EditActivityState(ActivityModel activityModel) {
-    _activityModel = activityModel;
-  }
-
-  ActivityModel _activityModel;
-
-//  int _selectedIndex;
-//
-//  @override
-//  void initState() {
-//    _selectedIndex = activityModel.imageNr - 1;
-//    super.initState();
-//  }
-
   // TODO(antilyas): overwrite submit button for editing maybe ?
 
   @override
   Widget build(BuildContext context) {
     final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
     final TripModel tripModel = tripsProvider.selectedTrip;
-//    Provider.of<TripsProvider>(context, listen: false)..selectedActivity = _activityModel;
+    ActivityModel _activityModel = tripsProvider.selectedActivity;
+    final int _selectedIndex = _activityModel.imageNr - 1;
 
     return Scaffold(
       key: Key('EditActivity'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, tripsProvider, tripModel),
+        child: getContent(context, tripsProvider, tripModel, _selectedIndex),
       ),
     );
   }
