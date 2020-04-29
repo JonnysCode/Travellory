@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
@@ -73,6 +74,10 @@ class _FriendListPageState extends State<FriendListPage> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
+//    final friendsProvider = Provider.of<FriendsProvider>(context);
+//    final FriendsModel friend = FriendsModel('uid', 'username');
+//    final int index = friendsProvider.friends.indexOf(friend);
+
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -137,14 +142,16 @@ class _FriendListPageState extends State<FriendListPage> {
                         Colors.green,
                             () => _acceptFriendRequest(
                             friendsProvider.friendRequests[0].uid,
-                            user.uid)),
+                            user.uid)
+                    ),
                     socialButton(
                         Key('decline_button'),
                         Icons.clear,
                         Colors.red,
                             () => _declineFriendRequest(
                             friendsProvider.friendRequests[0].uid,
-                            user.uid)),
+                            user.uid)
+                    ),
                   ],
                 ),
                 10,
@@ -179,21 +186,33 @@ class _FriendListPageState extends State<FriendListPage> {
                 Key('friends_list'),
                 240,
                 friendsProvider.friends,
-                OptionButton(
-                  optionItems: <OptionItem>[
-                    OptionItem(
-                        description: 'Remove',
-                        icon: FontAwesomeIcons.trash,
-                        onTab: () => _removeFriend(
-                            friendsProvider
-                                .friends[0]
-                                .uid,
-                            user.uid
-                        ),
-                        color: Colors.red
+                Wrap(
+                  children: <Widget>[
+                    socialButton(
+                        Key('remove_button'),
+                        Icons.delete,
+                        Colors.red,
+                            () => _removeFriend(
+                            friendsProvider.friends[0].uid,
+                            user.uid)
                     ),
                   ],
                 ),
+//                OptionButton(
+//                  optionItems: <OptionItem>[
+//                    OptionItem(
+//                        description: 'Remove',
+//                        icon: FontAwesomeIcons.trash,
+//                        onTab: () => _removeFriend(
+//                            friendsProvider
+//                                .friends[0]
+//                                .uid,
+//                            user.uid
+//                        ),
+//                        color: Colors.red
+//                    ),
+//                  ],
+//                ),
                 6,
                 context),
           ),
