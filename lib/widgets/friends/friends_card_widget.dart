@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/friends_model.dart';
-import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 @override
-Widget friendsCard(BuildContext context, List<FriendsModel> list, OptionButton button, int index) {
+Widget friendsCard(BuildContext context, List<FriendsModel> list, Widget button, double topPadding, int index) {
   double cardSize = 70;
 
   return Container(
@@ -62,7 +61,8 @@ Widget friendsCard(BuildContext context, List<FriendsModel> list, OptionButton b
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      right: 15,
+                        right: 15,
+                        top: topPadding
                     ),
                     child: button,
                   ),
