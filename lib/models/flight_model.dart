@@ -1,5 +1,4 @@
 import 'package:travellory/models/abstract_model.dart';
-import 'package:travellory/utils/date_converter.dart';
 
 class FlightModel extends Model {
   FlightModel(
