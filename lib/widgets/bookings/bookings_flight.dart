@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/flight_model.dart';
 
-import 'card_specifics.dart';
+import 'bookings_card_specifics.dart';
 
 class FlightBookings extends StatelessWidget {
   const FlightBookings(this.flight, {Key key}) : super(key: key);

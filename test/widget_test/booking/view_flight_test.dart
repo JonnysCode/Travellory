@@ -11,15 +11,6 @@ final FlightModel model = FlightModel()
   ..arrivalLocation = 'London'
   ..arrivalDate = '2020-05-01'
   ..arrivalTime = '8:35';
-//  ..tripUID = ''
-//  ..uid = ''
-//  ..bookingReference = ''
-//  ..airline = ''
-//  ..flightNr = ''
-//  ..seat = ''
-//  ..checkedBaggage = false
-//  ..excessBaggage = false
-//  ..notes = '';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key key}) : super(key: key);
@@ -85,6 +76,13 @@ void main() {
     await pumpFlightView(tester);
 
     expect(find.byKey(Key('BottomBar'), skipOffstage: false), findsOneWidget);
+  });
+
+  testWidgets('test if exit view button is present', (WidgetTester tester) async {
+    await tester.pumpWidget(makeTestableWidget());
+    await pumpFlightView(tester);
+
+    expect(find.byKey(Key('ExitViewPage'), skipOffstage: false), findsOneWidget);
   });
 
   testWidgets('test if all view fields are present', (WidgetTester tester) async {

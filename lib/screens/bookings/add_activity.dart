@@ -6,6 +6,7 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
@@ -42,26 +43,6 @@ class _ActivityState extends State<Activity> {
   final String cancelText =
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
 
-  List<Item> types = <Item>[
-    const Item(
-        'Historic', Icon(FontAwesomeIcons.landmark, color: Color(0xFF167F67))),
-    const Item(
-        'Outdoors', Icon(FontAwesomeIcons.mountain, color: Color(0xFF167F67))),
-    const Item(
-        'Culture', Icon(FontAwesomeIcons.diagnoses, color: Color(0xFF167F67))),
-    const Item(
-        'Social', Icon(FontAwesomeIcons.users, color: Color(0xFF167F67))),
-    const Item(
-        'Relaxing', Icon(FontAwesomeIcons.hotTub, color: Color(0xFF167F67))),
-    const Item(
-        'Adventure', Icon(FontAwesomeIcons.hiking, color: Color(0xFF167F67))),
-    const Item(
-        'Dining', Icon(FontAwesomeIcons.utensils, color: Color(0xFF167F67))),
-    const Item(
-        'Other', Icon(FontAwesomeIcons.futbol, color: Color(0xFF167F67))),
-  ];
-
-//  ActivityModel activityModel;
   int _selectedIndex;
 
   @override
@@ -108,7 +89,7 @@ class _ActivityState extends State<Activity> {
                           const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryDropdownField(
                           title: 'Select Category',
-                          types: types,
+                          types: activityTypes,
                           onChanged: (value) {
                             activityModel.category = value.name;
                           },
@@ -154,7 +135,7 @@ class _ActivityState extends State<Activity> {
                           const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
                           labelText: 'Location *',
-                          icon: Icon(Icons.location_on),
+                          icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                           optional: false,
                           onChanged: (value) => activityModel.location = value),
                     ),
@@ -164,7 +145,7 @@ class _ActivityState extends State<Activity> {
                       child: DateFormField(
                         key: _startDateFormFieldKey,
                         labelText: 'Start Date *',
-                        icon: Icon(Icons.date_range),
+                        icon: Icon(FontAwesomeIcons.calendarAlt),
                         optional: false,
                         chosenDateString: (value) =>
                             activityModel.startDate = value,
@@ -175,7 +156,7 @@ class _ActivityState extends State<Activity> {
                           const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
                           labelText: 'Start Time',
-                          icon: Icon(Icons.access_time),
+                          icon: Icon(FontAwesomeIcons.clock),
                           optional: true,
                           chosenTimeString: (value) =>
                               activityModel.startTime = value),
@@ -185,7 +166,7 @@ class _ActivityState extends State<Activity> {
                           const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: DateFormField(
                         labelText: 'End Date *',
-                        icon: Icon(Icons.date_range),
+                        icon: Icon(FontAwesomeIcons.calendarAlt),
                         beforeDateKey: _startDateFormFieldKey,
                         optional: false,
                         dateValidationMessage:
@@ -199,7 +180,7 @@ class _ActivityState extends State<Activity> {
                           const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TimeFormField(
                           labelText: 'End Time',
-                          icon: Icon(Icons.access_time),
+                          icon: Icon(FontAwesomeIcons.clock),
                           optional: true,
                           chosenTimeString: (value) =>
                               activityModel.endTime = value),
@@ -214,7 +195,7 @@ class _ActivityState extends State<Activity> {
                           const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: TravelloryFormField(
                         labelText: 'Notes',
-                        icon: Icon(Icons.speaker_notes),
+                        icon: Icon(FontAwesomeIcons.stickyNote),
                         optional: true,
                         onChanged: (value) => activityModel.notes = value,
                       ),
