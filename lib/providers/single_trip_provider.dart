@@ -45,13 +45,18 @@ class SingleTripProvider {
   bool isFetchingRentalCars = false;
   bool isFetchingPublicTransports = false;
 
+  bool _bookingsInitiated = false;
+
 
   Future<void> initBookings() async {
-    unawaited(_fetchFlights());
-    unawaited(_fetchAccommodation());
-    unawaited(_fetchActivities());
-    unawaited(_fetchPublicTransportation());
-    unawaited(_fetchRentalCars());
+    if(!_bookingsInitiated){
+      unawaited(_fetchFlights());
+      unawaited(_fetchAccommodation());
+      unawaited(_fetchActivities());
+      unawaited(_fetchPublicTransportation());
+      unawaited(_fetchRentalCars());
+      _bookingsInitiated = true;
+    }
   }
 
   Future<bool> addBooking(Model model, String functionName) async {
