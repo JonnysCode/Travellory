@@ -76,7 +76,9 @@ class _CalendarState extends State<Calendar> {
               backgroundColor: Colors.transparent,
               todayHighlightColor: Colors.black54,
               initialDisplayDate: DateTime.utc(today.year, today.month, 1),
-              dataSource: MeetingDataSource(_getDataSource(tripsProvider.trips)),
+              dataSource: MeetingDataSource(_getDataSource(
+                  tripsProvider.trips.map((trip) => trip.tripModel).toList()
+              )),
               selectionDecoration: BoxDecoration(
                 color: Colors.black12,
                 shape: BoxShape.circle,

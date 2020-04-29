@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 
@@ -11,10 +12,10 @@ const String errorMessage = "Seems like there's a connection problem. "
 
 final log = getLogger('Submit');
 
-Function() onSubmitBooking(TripsProvider tripsProvider, Model model,
+Function() onSubmitBooking(SingleTripProvider singleTripProvider, Model model,
     String functionName, BuildContext context, alertText) {
   return () async {
-    final bool added = await tripsProvider.addBooking(model, functionName);
+    final bool added = await singleTripProvider.addBooking(model, functionName);
     if (added) {
       showSubmittedBookingDialog(context, alertText);
     } else {
