@@ -32,7 +32,6 @@ class TimeFormFieldState extends State<TimeFormField> with AutomaticKeepAliveCli
   bool get wantKeepAlive => true;
 
   TextEditingController controller;
-  TextEditingController displayController;
   TimeOfDay selectedTime;
   DateTime initialTimeValue;
   TimeOfDay initialTime;
@@ -41,7 +40,6 @@ class TimeFormFieldState extends State<TimeFormField> with AutomaticKeepAliveCli
   void initState() {
     super.initState();
     controller = widget.controller != null ? widget.controller : TextEditingController();
-    displayController = TextEditingController();
     _getInitialTime();
   }
 
@@ -49,7 +47,7 @@ class TimeFormFieldState extends State<TimeFormField> with AutomaticKeepAliveCli
   // to then make it possible to easily change it to timeOfDay
   TimeOfDay _getInitialTime() {
     if (widget.initialValue != '' && widget.initialValue != null) {
-      displayController..text = (widget.initialValue);
+      controller..text = (widget.initialValue);
       initialTimeValue = DateFormat("H:mm", "en_US").parse(widget.initialValue);
       return initialTime = TimeOfDay(hour: initialTimeValue.hour, minute: initialTimeValue.minute);
     } else {
@@ -60,7 +58,6 @@ class TimeFormFieldState extends State<TimeFormField> with AutomaticKeepAliveCli
   @override
   void dispose() {
     controller.dispose();
-    displayController.dispose();
     super.dispose();
   }
 
@@ -69,14 +66,9 @@ class TimeFormFieldState extends State<TimeFormField> with AutomaticKeepAliveCli
     final TimeOfDay pickedTime =
         await showTimePicker(context: context, initialTime: TimeOfDay.now());
     if (pickedTime != null && pickedTime != selectedTime) {
-      // TODO(antilyas): only need one controller
       selectedTime = pickedTime;
-      displayController.text = pickedTime.format(context);
-      controller.text = pickedTime.format(context).toString();
       final String pickedTimeString = pickedTime.format(context).toString();
-//      displayController.text = pickedTime.format(context);
-//      final String pickedTimeString = pickedTime.format(context).toString();
-//      controller.text = pickedTimeString;
+      controller.text = pickedTimeString;
       if (widget.chosenTime != null) widget.chosenTime(selectedTime);
       if (widget.chosenTimeString != null) widget.chosenTimeString(pickedTimeString);
     }
@@ -90,7 +82,7 @@ class TimeFormFieldState extends State<TimeFormField> with AutomaticKeepAliveCli
       child: ListTile(
         leading: widget.icon,
         title: TextFormField(
-            controller: displayController,
+            controller: controller,
             validator: (value) {
               if (widget.optional) return null;
 
