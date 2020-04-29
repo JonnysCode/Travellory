@@ -7,14 +7,17 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/NotifyListener.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/get_database.dart';
 
 class SingleTripProvider {
-  SingleTripProvider(TripModel trip, DatabaseGetter databaseGetter, DatabaseAdder databaseAdder){
+  SingleTripProvider(TripModel trip, DatabaseGetter databaseGetter,
+      DatabaseAdder databaseAdder, NotifyListener notifier){
     this.tripModel = trip;
     this.databaseGetter = databaseGetter;
     this.databaseAdder = databaseAdder;
+    this.notifier = notifier;
 
     flights = <FlightModel>[];
     accommodations = <AccommodationModel>[];
@@ -25,6 +28,7 @@ class SingleTripProvider {
 
   DatabaseGetter databaseGetter;
   DatabaseAdder databaseAdder;
+  NotifyListener notifier;
 
   TripModel tripModel;
   bool isFetching = false;
@@ -72,6 +76,7 @@ class SingleTripProvider {
     flights = await databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getFlights);
     isFetchingFlights = false;
+    notifier.notify();
   }
 
   Future<void> _fetchAccommodation() async {
@@ -79,6 +84,7 @@ class SingleTripProvider {
     accommodations = await databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getAccommodations);
     isFetchingAccommodations = false;
+    notifier.notify();
   }
 
   Future<void> _fetchActivities() async {
@@ -86,6 +92,7 @@ class SingleTripProvider {
     activities = await databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getActivities);
     isFetchingActivities = false;
+    notifier.notify();
   }
 
   Future<void> _fetchRentalCars() async {
@@ -93,6 +100,7 @@ class SingleTripProvider {
     rentalCars = await databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getRentalCars);
     isFetchingRentalCars = false;
+    notifier.notify();
   }
 
   Future<void> _fetchPublicTransportation() async {
@@ -100,5 +108,6 @@ class SingleTripProvider {
     publicTransports = await databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getPublicTransportations);
     isFetchingPublicTransports = false;
+    notifier.notify();
   }
 }
