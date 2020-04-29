@@ -23,11 +23,14 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
   int _selectedTripIndex;
   int _activeTripIndex;
 
+  SingleTripProvider activeTrip;
+  SingleTripProvider selectedTrip;
+
   List<SingleTripProvider> get trips => _trips;
 
-  SingleTripProvider get activeTrip => _trips[_activeTripIndex];
+  //SingleTripProvider get activeTrip => _trips[_activeTripIndex];
 
-  SingleTripProvider get selectedTrip => _trips[_selectedTripIndex];
+  //SingleTripProvider get selectedTrip => _trips[_selectedTripIndex];
 
   void init(UserModel user) {
     this.user = user;
@@ -47,7 +50,8 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   void selectTrip(TripModel tripModel){
     _selectedTripIndex = _trips.indexWhere((entry) => entry.tripModel.uid == tripModel.uid);
-    _trips[_selectedTripIndex].initBookings();
+    selectedTrip = _trips[_selectedTripIndex];
+    selectedTrip.initBookings();
   }
 
   Future<void> _fetchTrips() async {
@@ -76,7 +80,6 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
   @override
   void notify() {
     notifyListeners();
-    print('NOTIFIED!');
   }
 
 }
