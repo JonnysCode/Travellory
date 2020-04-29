@@ -29,8 +29,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   void init(UserModel user) {
     this.user = user;
-    unawaited(_fetchTrips());
-
+    unawaited(_initTrips());
   }
 
   Future<bool> addTrip(TripModel tripModel) async {
@@ -45,17 +44,21 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   void selectTrip(TripModel tripModel){
     _selectedTripIndex = trips.indexWhere((entry) => entry.tripModel.uid == tripModel.uid);
-    trips[_selectedTripIndex].initBookings();
+    selectedTrip.initBookings();
+  }
+
+  Future<void> _initTrips() async {
+    await _fetchTrips();
+    _setActiveTrip();
+    await activeTrip.initBookings();
   }
 
   Future<void> _fetchTrips() async {
     isFetchingTrips = true;
     List<TripModel> tripModels = await _databaseGetter.getEntriesFromDatabase(
         user.uid, DatabaseGetter.getTrips);
-    trips = tripModels.map((tripModel) => SingleTripProvider(
-        tripModel, _databaseGetter, _databaseAdder, this)).toList();
-
-    _setActiveTrip();
+    trips = tripModels.map((tripModel) =>
+        SingleTripProvider(tripModel, this)).toList();
     isFetchingTrips = false;
     notifyListeners();
   }
@@ -67,7 +70,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
       _activeTripIndex = index;
       index++;
     } while(
-      getDateTimeFrom(trips[_activeTripIndex].tripModel.endDate).isBefore(DateTime.now())
+      getDateTimeFrom(activeTrip.tripModel.endDate).isBefore(DateTime.now())
     );
   }
 

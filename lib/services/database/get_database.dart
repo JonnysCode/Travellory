@@ -9,6 +9,14 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 
 class DatabaseGetter {
+  DatabaseGetter._privateConstructor();
+
+  factory DatabaseGetter() {
+    return _instance;
+  }
+
+  static final DatabaseGetter _instance = DatabaseGetter._privateConstructor();
+
   static const String getTrips = 'trips-getTrips';
   static const String getFlights = 'booking-getFlights';
   static const String getAccommodations = 'booking-getAccommodations';
