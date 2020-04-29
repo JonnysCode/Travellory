@@ -20,3 +20,14 @@ List<Item> publicTransportTypes = <Item>[
   const Item('Uber', Icon(FontAwesomeIcons.carSide, color: Color(0xFF167F67))),
   const Item('Other', Icon(FontAwesomeIcons.walking, color: Color(0xFF167F67))),
 ];
+
+List<Item> activityTypes = <Item>[
+  const Item('Historic', Icon(FontAwesomeIcons.landmark, color: Color(0xFF167F67))),
+  const Item('Outdoors', Icon(FontAwesomeIcons.mountain, color: Color(0xFF167F67))),
+  const Item('Culture', Icon(FontAwesomeIcons.diagnoses, color: Color(0xFF167F67))),
+  const Item('Social', Icon(FontAwesomeIcons.users, color: Color(0xFF167F67))),
+  const Item('Relaxing', Icon(FontAwesomeIcons.hotTub, color: Color(0xFF167F67))),
+  const Item('Adventure', Icon(FontAwesomeIcons.hiking, color: Color(0xFF167F67))),
+  const Item('Dining', Icon(FontAwesomeIcons.utensils, color: Color(0xFF167F67))),
+  const Item('Other', Icon(FontAwesomeIcons.futbol, color: Color(0xFF167F67))),
+];

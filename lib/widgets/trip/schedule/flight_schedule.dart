@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/widgets/bookings/card_specifics.dart';
+import 'package:travellory/widgets/bookings/bookings_card_specifics.dart';
 
 class FlightSchedule extends StatelessWidget {
   const FlightSchedule(this.flight, {Key key}) : super(key: key);

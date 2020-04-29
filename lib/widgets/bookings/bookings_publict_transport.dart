@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travellory/models/public_transport_model.dart';
 
-import 'card_specifics.dart';
+import 'bookings_card_specifics.dart';
 
 class PublicTransportBookings extends StatelessWidget {
   const PublicTransportBookings(this.publicTransport, {Key key}) : super(key: key);
