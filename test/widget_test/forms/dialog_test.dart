@@ -21,7 +21,7 @@ void main() {
           child: SubmitButton(
             highlightColor: Theme.of(context).primaryColor,
             fillColor: Theme.of(context).primaryColor,
-            onSubmit: onSubmitBooking(SingleTripProvider(TripModel(), null, null, null),
+            onSubmit: onSubmitBooking(SingleTripProvider(TripModel(), null),
                 testModel, 'booking-addTest', context, alertText),
           ),
         );
