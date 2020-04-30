@@ -8,6 +8,7 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
+import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/widgets/bookings/edit_delete_dialogs.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
@@ -58,7 +59,8 @@ String getEditFunctionNameBasedOn(Model model) {
 
 // TODO this isn't getting performed, why??
 void Function() onEditBooking(Model model, BuildContext context, String errorMessage) {
-  final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
+  final SingleTripProvider singleTripProvider =
+      Provider.of<TripsProvider>(context, listen: false).selectedTrip;
 
   String functionName = getEditFunctionNameBasedOn(model);
 
@@ -67,7 +69,7 @@ void Function() onEditBooking(Model model, BuildContext context, String errorMes
           "However, it might take a moment to see the changes on your profile. ";
 
   return () async {
-    final bool edited = await tripsProvider.editModel(model, functionName);
+    final bool edited = await singleTripProvider.editModel(model, functionName);
     if (false) {
       showEditedBookingDialog(context, alertText);
       log.i('onEditBooking was performed');

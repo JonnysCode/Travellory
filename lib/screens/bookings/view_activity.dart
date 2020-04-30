@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/activity_model.dart';
+import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/widgets/bookings/view_booking_header.dart';
@@ -110,7 +111,9 @@ class _ActivityViewState extends State<ActivityView> {
     final List<ActivityModel> activities = [];
     activities.add(activityModel);
     activityModels = activities;
-    Provider.of<TripsProvider>(context, listen: false)..selectedActivity = activityModels[0];
+    final SingleTripProvider singleTripProvider =
+        Provider.of<TripsProvider>(context, listen: false).selectedTrip;
+//    singleTripProvider..selectedActivity = activityModels[0];
 
     return Scaffold(
       key: Key('ActivityView'),

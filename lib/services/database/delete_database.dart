@@ -8,6 +8,7 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
+import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/widgets/bookings/edit_delete_dialogs.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
@@ -55,7 +56,8 @@ String getDeleteFunctionNameBasedOn(Model model) {
 }
 
 void Function() onDeleteBooking(Model model, BuildContext context, String errorMessage) {
-  final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
+  final SingleTripProvider singleTripProvider =
+      Provider.of<TripsProvider>(context, listen: false).selectedTrip;
 
   String functionName = getDeleteFunctionNameBasedOn(model);
 
@@ -63,7 +65,7 @@ void Function() onDeleteBooking(Model model, BuildContext context, String errorM
       "You've just deleted this entry. Your booking overview has been updated. ";
 
   return () async {
-    final bool deleted = await tripsProvider.deleteModel(model, functionName);
+    final bool deleted = await singleTripProvider.deleteModel(model, functionName);
     if (deleted) {
       showDeletedBookingDialog(context, alertText);
       log.i('onDeleteBooking was performed');
