@@ -54,7 +54,6 @@ String getEditFunctionNameBasedOn(Model model) {
   return functionName;
 }
 
-// TODO this isn't getting performed, why??
 void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model, BuildContext context, String errorMessage) {
   String functionName = getEditFunctionNameBasedOn(model);
 
@@ -64,7 +63,7 @@ void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model
 
   return () async {
     final bool edited = await singleTripProvider.editModel(model, functionName);
-    if (true) {
+    if (edited) {
       showEditedBookingDialog(context, alertText);
       log.i('onEditBooking was performed');
     } else {
