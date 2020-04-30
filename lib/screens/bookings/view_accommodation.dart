@@ -82,7 +82,7 @@ class _AccommodationViewState extends State<AccommodationView> {
             Theme.of(context).primaryColor),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SizedBox(height: 10),
-        bottomBar(context),
+        bottomBar(context, accommodationModels[0]),
       ]),
     );
   }

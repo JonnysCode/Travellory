@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/NotifyListener.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/services/database/delete_database.dart';
+import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/get_database.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:travellory/utils/date_converter.dart';
@@ -39,6 +42,27 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
     }
   }
 
+  Future<void> _fetchTrips() async {
+    isFetchingTrips = true;
+    List<TripModel> tripModels = await _databaseGetter.getEntriesFromDatabase(
+        user.uid, DatabaseGetter.getTrips);
+    trips = tripModels.map((tripModel) =>
+        SingleTripProvider(tripModel, this)).toList();
+    isFetchingTrips = false;
+    notifyListeners();
+  }
+
+  void _setActiveTrip(){
+    int index = 0;
+    // get the first trip with an end date after the current date
+    do {
+      _activeTripIndex = index;
+      index++;
+    } while(
+    getDateTimeFrom(activeTrip.tripModel.endDate).isBefore(DateTime.now())
+    );
+  }
+
   Future<bool> addTrip(TripModel tripModel) async {
     tripModel.userUID = user.uid;
     final bool added =
@@ -61,30 +85,8 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
     _activeTripInitiated = true;
   }
 
-  Future<void> _fetchTrips() async {
-    isFetchingTrips = true;
-    List<TripModel> tripModels = await _databaseGetter.getEntriesFromDatabase(
-        user.uid, DatabaseGetter.getTrips);
-    trips = tripModels.map((tripModel) =>
-        SingleTripProvider(tripModel, this)).toList();
-    isFetchingTrips = false;
-    notifyListeners();
-  }
-
-  void _setActiveTrip(){
-    int index = 0;
-    // get the first trip with an end date after the current date
-    do {
-      _activeTripIndex = index;
-      index++;
-    } while(
-      getDateTimeFrom(activeTrip.tripModel.endDate).isBefore(DateTime.now())
-    );
-  }
-
   @override
   void notify() {
     notifyListeners();
   }
-
 }
