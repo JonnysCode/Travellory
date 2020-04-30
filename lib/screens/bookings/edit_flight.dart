@@ -25,7 +25,7 @@ class _EditFlightState extends FlightState<EditFlight> {
     final FlightModel _flightModel = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
-      key: Key('EditActivity'),
+      key: Key('EditFlight'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
