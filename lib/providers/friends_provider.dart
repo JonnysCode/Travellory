@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:pedantic/pedantic.dart';
-import 'package:travellory/services/friend_management.dart';
+import 'package:travellory/services/friends/friend_management.dart';
 
 class FriendsProvider extends ChangeNotifier{
   FriendsProvider(){
