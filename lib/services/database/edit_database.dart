@@ -15,6 +15,14 @@ import 'edit.dart';
 final log = getLogger('DatabaseEditor');
 
 class DatabaseEditor {
+  DatabaseEditor._privateConstructor();
+
+  factory DatabaseEditor() {
+    return _instance;
+  }
+
+  static final DatabaseEditor _instance = DatabaseEditor._privateConstructor();
+
   Future<bool> editModel(Model model, String correspondingFunctionName) async {
     final HttpsCallable callable =
         CloudFunctions.instance.getHttpsCallable(functionName: correspondingFunctionName);
