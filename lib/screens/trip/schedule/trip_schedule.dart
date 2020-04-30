@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/single_trip_provider.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/screens/trip/schedule/day_schedule.dart';
 
 class Schedule extends StatefulWidget {
@@ -29,6 +32,8 @@ class _ScheduleState extends State<Schedule> {
 
   @override
   Widget build(BuildContext context) {
+    SingleTripProvider trip = Provider.of<TripsProvider>(context, listen: false).activeTrip;
+
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       shrinkWrap: false,
