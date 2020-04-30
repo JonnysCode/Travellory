@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/services/database/edit_database.dart';
@@ -27,6 +28,7 @@ class Activity extends StatefulWidget {
 class ActivityState<T extends Activity> extends State<T> {
   final GlobalKey<FormState> activityFormKey = GlobalKey<FormState>();
   final ActivityModel activityModel = ActivityModel();
+//  final DatabaseAdder databaseAdder = DatabaseAdder();
 
   static const int _imageItemCount = 13;
 
@@ -75,7 +77,7 @@ class ActivityState<T extends Activity> extends State<T> {
   }
 
   Column getContent(
-      BuildContext context, TripsProvider tripsProvider, TripModel tripModel, int startIndex) {
+      BuildContext context, SingleTripProvider singleTripProvider, TripModel tripModel, int startIndex) {
     bool isNewModel = true;
 
     // this selects the correct image for editing the activity
@@ -85,8 +87,8 @@ class ActivityState<T extends Activity> extends State<T> {
 
     // this chooses between the edit and the new model
     ActivityModel model;
-    if (tripsProvider.selectedActivity != null) {
-      model = tripsProvider.selectedActivity;
+    if (singleTripProvider.selectedActivity != null) {
+      model = singleTripProvider.selectedActivity;
       isNewModel = false;
     } else {
       model = activityModel;
@@ -234,8 +236,11 @@ class ActivityState<T extends Activity> extends State<T> {
 
   @override
   Widget build(BuildContext context) {
-    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
-    final TripModel tripModel = tripsProvider.selectedTrip;
+    final SingleTripProvider singleTripProvider =
+        Provider.of<TripsProvider>(context, listen: false).selectedTrip;
+    final TripModel tripModel = singleTripProvider.tripModel;
+//    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
+//    final TripModel tripModel = tripsProvider.selectedTrip;
     activityModel.tripUID = tripModel.uid;
 
     return Scaffold(
@@ -243,7 +248,7 @@ class ActivityState<T extends Activity> extends State<T> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, tripsProvider, tripModel, 0),
+        child: getContent(context, singleTripProvider, tripModel, 0),
       ),
     );
   }

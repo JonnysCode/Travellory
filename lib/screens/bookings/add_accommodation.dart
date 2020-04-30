@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
@@ -194,8 +195,9 @@ class _AccommodationState extends State<Accommodation> {
 
   @override
   Widget build(BuildContext context) {
-    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
-    final TripModel tripModel = tripsProvider.selectedTrip;
+    final SingleTripProvider singleTripProvider =
+        Provider.of<TripsProvider>(context, listen: false).selectedTrip;
+    final TripModel tripModel = singleTripProvider.tripModel;
     accommodationModel.tripUID = tripModel.uid;
 
     // replace widget to get the context
@@ -204,7 +206,7 @@ class _AccommodationState extends State<Accommodation> {
       fillColor: Theme.of(context).primaryColor,
       validationFunction: validateForm,
       onSubmit: onSubmitBooking(
-          tripsProvider, accommodationModel, 'booking-addAccommodation', context, alertText),
+          singleTripProvider, accommodationModel, 'booking-addAccommodation', context, alertText),
     );
 
     accommodationList[accommodationList.length - 2] = CancelButton(

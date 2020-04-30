@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/screens/bookings/add_public_transport.dart';
 
+class TripsProviderMock extends Mock implements TripsProvider{}
+
+TripModel tripModel = TripModel(
+    name: 'Castle Discovery',
+    startDate: '2020-05-12',
+    endDate: '2020-05-25',
+    destination: 'Munich',
+    imageNr: 3);
+
 void main() {
-  Widget makeTestableWidget() {
-    TripModel tripModel = TripModel(
-        name: 'Castle Discovery',
-        startDate: '2020-05-12',
-        endDate: '2020-05-25',
-        destination: 'Munich',
-        imageNr: 3);
-    tripModel.init();
-
-    TripsProvider tripsProvider = TripsProvider()
-      ..selectedTrip = tripModel;
-
-    return ChangeNotifierProvider<TripsProvider>(
-      create: (context) => tripsProvider,
+  Widget makeTestableWidget(TripsProvider tripsProvider) {
+    return ChangeNotifierProvider<TripsProvider>.value(
+      value: tripsProvider,
       child: MaterialApp(
         home: PublicTransport(),
       ),
@@ -29,21 +29,39 @@ void main() {
   testWidgets('test if Public Transport page is loaded', (WidgetTester tester) async {
     final testKey = Key('Public Transport');
 
-    await tester.pumpWidget(makeTestableWidget());
+    TripsProviderMock tripsProvider = TripsProviderMock();
+
+    tripModel.init();
+    when(tripsProvider.selectedTrip).thenReturn(
+        SingleTripProvider(tripModel, null)
+    );
+    await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
     expect(find.byKey(testKey), findsOneWidget);
   });
 
   testWidgets('test if form instance is found', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(makeTestableWidget());
+    TripsProviderMock tripsProvider = TripsProviderMock();
+
+    tripModel.init();
+    when(tripsProvider.selectedTrip).thenReturn(
+        SingleTripProvider(tripModel, null)
+    );
+    await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
     // verify that form is present
     expect(find.byType(Form), findsOneWidget);
   });
 
   testWidgets('test if site title instance is found', (WidgetTester tester) async {
-    await tester.pumpWidget(makeTestableWidget());
+    TripsProviderMock tripsProvider = TripsProviderMock();
+
+    tripModel.init();
+    when(tripsProvider.selectedTrip).thenReturn(
+        SingleTripProvider(tripModel, null)
+    );
+    await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
 
     expect(find.byKey(Key('BookingSiteTitle')), findsOneWidget);
@@ -52,7 +70,13 @@ void main() {
   testWidgets('test if section title instances are found', (WidgetTester tester) async {
     final testKey = Key('SectionTitle');
 
-    await tester.pumpWidget(makeTestableWidget());
+    TripsProviderMock tripsProvider = TripsProviderMock();
+
+    tripModel.init();
+    when(tripsProvider.selectedTrip).thenReturn(
+        SingleTripProvider(tripModel, null)
+    );
+    await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
     expect(find.byKey(testKey), findsNWidgets(2));
   });
@@ -60,7 +84,13 @@ void main() {
   testWidgets('test if dropdown menu instance is found', (WidgetTester tester) async {
     final testKey = Key('Dropdown Menu');
 
-    await tester.pumpWidget(makeTestableWidget());
+    TripsProviderMock tripsProvider = TripsProviderMock();
+
+    tripModel.init();
+    when(tripsProvider.selectedTrip).thenReturn(
+        SingleTripProvider(tripModel, null)
+    );
+    await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
     expect(find.byKey(testKey), findsOneWidget);
   });
@@ -68,7 +98,13 @@ void main() {
   testWidgets('test if first three form field instances are found', (WidgetTester tester) async {
     final testKey = Key('Form Field');
 
-    await tester.pumpWidget(makeTestableWidget());
+    TripsProviderMock tripsProvider = TripsProviderMock();
+
+    tripModel.init();
+    when(tripsProvider.selectedTrip).thenReturn(
+        SingleTripProvider(tripModel, null)
+    );
+    await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
     expect(find.text('Company', skipOffstage: false), findsOneWidget);
     expect(find.text('Departure Location *', skipOffstage: false), findsOneWidget);
@@ -80,7 +116,13 @@ void main() {
   testWidgets('test if check-in date field instance is found', (WidgetTester tester) async {
     final testKey = Key('Date Field');
 
-    await tester.pumpWidget(makeTestableWidget());
+    TripsProviderMock tripsProvider = TripsProviderMock();
+
+    tripModel.init();
+    when(tripsProvider.selectedTrip).thenReturn(
+        SingleTripProvider(tripModel, null)
+    );
+    await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
     expect(find.text('Departure Date *', skipOffstage: false), findsOneWidget);
     expect(find.byKey(testKey, skipOffstage: false), findsOneWidget);
@@ -89,14 +131,26 @@ void main() {
   testWidgets('test if check-in time field instance is found', (WidgetTester tester) async {
     final testKey = Key('Time Field');
 
-    await tester.pumpWidget(makeTestableWidget());
+    TripsProviderMock tripsProvider = TripsProviderMock();
+
+    tripModel.init();
+    when(tripsProvider.selectedTrip).thenReturn(
+        SingleTripProvider(tripModel, null)
+    );
+    await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
     expect(find.text('Departure Time *', skipOffstage: false), findsOneWidget);
     expect(find.byKey(testKey, skipOffstage: false), findsOneWidget);
   });
 
   testWidgets('test if animated list is present', (WidgetTester tester) async {
-    await tester.pumpWidget(makeTestableWidget());
+    TripsProviderMock tripsProvider = TripsProviderMock();
+
+    tripModel.init();
+    when(tripsProvider.selectedTrip).thenReturn(
+        SingleTripProvider(tripModel, null)
+    );
+    await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
     expect(find.byType(AnimatedList), findsOneWidget);
   });
