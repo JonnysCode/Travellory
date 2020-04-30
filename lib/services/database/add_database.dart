@@ -3,6 +3,14 @@ import 'package:travellory/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 
 class DatabaseAdder {
+  DatabaseAdder._privateConstructor();
+
+  factory DatabaseAdder() {
+    return _instance;
+  }
+
+  static final DatabaseAdder _instance = DatabaseAdder._privateConstructor();
+
   static const int _maxCount = 50;
   static const String addTrip = 'trips-addTrip';
 
