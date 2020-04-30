@@ -16,6 +16,14 @@ import 'package:travellory/widgets/forms/show_dialog.dart';
 final log = getLogger('DatabaseDeleter');
 
 class DatabaseDeleter {
+  DatabaseDeleter._privateConstructor();
+
+  factory DatabaseDeleter() {
+    return _instance;
+  }
+
+  static final DatabaseDeleter _instance = DatabaseDeleter._privateConstructor();
+
   Future<bool> deleteModel(Model model, String correspondingFunctionName) async {
     final HttpsCallable callable =
     CloudFunctions.instance.getHttpsCallable(functionName: correspondingFunctionName);
