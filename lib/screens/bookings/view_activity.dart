@@ -12,7 +12,6 @@ class ActivityView extends StatefulWidget {
 }
 
 class _ActivityViewState extends State<ActivityView> {
-  final String activity = 'assets/images/activity/hill_sky_banner.jpg';
   final String activityBannerUrl = 'assets/images/activity/hill_sky_banner.jpg';
   final String cinemaBannerUrl = 'assets/images/activity/cinema_banner.jpg';
   final String feastBannerUrl = 'assets/images/activity/feast_banner.jpg';
@@ -52,7 +51,7 @@ class _ActivityViewState extends State<ActivityView> {
         url = mountainBannerUrl;
         break;
       default:
-        url = activity;
+        url = activityBannerUrl;
         break;
     }
     return BookingHeader(title, url);
@@ -98,7 +97,7 @@ class _ActivityViewState extends State<ActivityView> {
             Theme.of(context).primaryColor),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SizedBox(height: 10),
-        bottomBar(context),
+        bottomBar(context, activityModel),
       ]),
     );
   }

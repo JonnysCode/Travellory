@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/shared/lists_of_types.dart';
 
 class Item {
   const Item(this.name, this.icon);
@@ -10,10 +11,11 @@ class Item {
 
 class TravelloryDropdownField extends StatefulWidget {
   const TravelloryDropdownField(
-      {Key key, this.title, this.selectedType, this.types, this.validatorText, this.onChanged})
+      {Key key, this.title, this.initialValue, this.selectedType, this.types, this.validatorText, this.onChanged})
       : super(key: key);
 
   final String title;
+  final String initialValue;
   final Item selectedType;
   final List<Item> types;
   final void Function(Item) onChanged;
@@ -33,7 +35,15 @@ class TravelloryDropdownFieldState extends State<TravelloryDropdownField>
   @override
   void initState() {
     super.initState();
-    selectedType = widget.selectedType;
+    _getSelectedType();
+  }
+
+  void _getSelectedType() {
+    if(widget.initialValue != null && widget.initialValue != '') {
+      selectedType = getActivityType(widget.initialValue);
+    } else {
+      selectedType = widget.selectedType;
+    }
   }
 
   @override
