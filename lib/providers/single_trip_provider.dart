@@ -44,15 +44,17 @@ class SingleTripProvider {
 
   bool _bookingsInitiated = false;
 
-
+  // Fetches booking parallel and waits for them to finish
   Future<void> initBookings() async {
     if(!_bookingsInitiated){
-      unawaited(_fetchFlights());
-      unawaited(_fetchAccommodation());
-      unawaited(_fetchActivities());
-      unawaited(_fetchPublicTransportation());
-      unawaited(_fetchRentalCars());
       _bookingsInitiated = true;
+      await Future.wait([
+        _fetchFlights(),
+        _fetchAccommodation(),
+        _fetchActivities(),
+        _fetchPublicTransportation(),
+        _fetchRentalCars()
+      ]);
     }
   }
 

@@ -17,16 +17,19 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
   final DatabaseGetter _databaseGetter = DatabaseGetter();
 
   UserModel user;
-  bool isFetchingTrips = false;
   List<SingleTripProvider> trips;
+  bool isFetchingTrips = false;
 
   int _selectedTripIndex;
   int _activeTripIndex;
   bool _tripsInitiated = false;
+  bool _activeTripInitiated = false;
 
   SingleTripProvider get activeTrip => trips[_activeTripIndex];
 
   SingleTripProvider get selectedTrip => trips[_selectedTripIndex];
+
+  bool get activeTripInitiated => _activeTripInitiated;
 
   void init(UserModel user) {
     this.user = user;
@@ -48,13 +51,14 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   void selectTrip(TripModel tripModel){
     _selectedTripIndex = trips.indexWhere((entry) => entry.tripModel.uid == tripModel.uid);
-    selectedTrip.initBookings();
+    unawaited(selectedTrip.initBookings());
   }
 
   Future<void> _initTrips() async {
     await _fetchTrips();
     _setActiveTrip();
     await activeTrip.initBookings();
+    _activeTripInitiated = true;
   }
 
   Future<void> _fetchTrips() async {
