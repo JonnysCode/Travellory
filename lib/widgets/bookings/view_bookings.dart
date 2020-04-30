@@ -56,13 +56,13 @@ Container bottomBar(BuildContext context, Model model) {
           child: Container(
             height: 32,
             width: 120,
-          child: DeleteButton(
-            highlightColor: Theme.of(context).primaryColor,
-            fillColor: Theme.of(context).primaryColor,
-            onDelete: () {
-              showDeleteDialog(model, context, deleteAlertText);
-            },
-          ),
+            child: DeleteButton(
+              highlightColor: Theme.of(context).primaryColor,
+              fillColor: Theme.of(context).primaryColor,
+              onDelete: () {
+                showDeleteDialog(model, context, deleteAlertText);
+              },
+            ),
           ),
         ),
       ],
