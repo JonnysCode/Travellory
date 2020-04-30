@@ -19,11 +19,13 @@ import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 
 class PublicTransport extends StatefulWidget {
+  PublicTransport({Key key}) : super(key: key);
+
   @override
-  _PublicTransportState createState() => _PublicTransportState();
+  PublicTransportState createState() => PublicTransportState();
 }
 
-class _PublicTransportState extends State<PublicTransport> {
+class PublicTransportState<T extends PublicTransport> extends State<T> {
   ListModel<Widget> publicTransportList;
   final GlobalKey<FormState> publicTransportFormKey = GlobalKey<FormState>();
   final PublicTransportModel publicTransportModel = PublicTransportModel();
@@ -208,12 +210,12 @@ class _PublicTransportState extends State<PublicTransport> {
 
     // replace widget to get the context
     publicTransportList[publicTransportList.length - 3] = SubmitButton(
-        highlightColor: Theme.of(context).primaryColor,
-        fillColor: Theme.of(context).primaryColor,
-        validationFunction: validateForm,
-        onSubmit: onSubmitBooking(singleTripProvider, publicTransportModel,
-            'booking-addPublicTransportation', context, alertText),
-        );
+      highlightColor: Theme.of(context).primaryColor,
+      fillColor: Theme.of(context).primaryColor,
+      validationFunction: validateForm,
+      onSubmit: onSubmitBooking(singleTripProvider, publicTransportModel,
+          'booking-addPublicTransportation', context, alertText),
+    );
 
     publicTransportList[publicTransportList.length - 2] = CancelButton(
       text: 'CANCEL',
