@@ -31,9 +31,6 @@ void editModel(Model model, BuildContext context) {
   Navigator.pushNamed(context, changeRoute, arguments: model);
 }
 
-const String errorMessage = "Seems like there's a connection problem. "
-    "Please check your internet connection and try submitting again.";
-
 void showEditedBookingDialog(BuildContext context, String alertText) {
   showDialog(
     context: context,
@@ -52,7 +49,7 @@ void showEditedBookingDialog(BuildContext context, String alertText) {
           alertButton('Home', Colors.transparent, context, () async {
             Navigator.of(context).popUntil((route) => route.isFirst);
           }),
-          alertButton("Back to Trip", Theme.of(context).hintColor, context, () async {
+          alertButton('Back to Booking', Theme.of(context).hintColor, context, () async {
             Navigator.of(context).pop();
             Navigator.of(context).pop();
           }),

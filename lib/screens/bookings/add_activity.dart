@@ -56,7 +56,7 @@ class ActivityState<T extends Activity> extends State<T> {
       onSubmit =
           onSubmitBooking(singleTripProvider, model, 'activity-addActivity', context, alertText);
     } else {
-      onSubmit = onEditBooking(model, context, errorMessage);
+      onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
     }
 
     return Padding(
@@ -71,9 +71,7 @@ class ActivityState<T extends Activity> extends State<T> {
   }
 
   Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
-      TripModel tripModel, ActivityModel model) {
-    bool isNewModel = true;
-
+      TripModel tripModel, ActivityModel model, bool isNewModel) {
     // set activityModel instance to edit or new model
     _activityModel = model;
 
@@ -232,7 +230,7 @@ class ActivityState<T extends Activity> extends State<T> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, _activityModel),
+        child: getContent(context, singleTripProvider, tripModel, _activityModel, true),
       ),
     );
   }

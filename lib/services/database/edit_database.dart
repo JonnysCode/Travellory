@@ -1,6 +1,5 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:travellory/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
@@ -9,8 +8,6 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
-import 'package:travellory/providers/trips_provider.dart';
-import 'package:travellory/widgets/bookings/edit_delete_dialogs.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 
 import 'edit.dart';
@@ -58,10 +55,7 @@ String getEditFunctionNameBasedOn(Model model) {
 }
 
 // TODO this isn't getting performed, why??
-void Function() onEditBooking(Model model, BuildContext context, String errorMessage) {
-  final SingleTripProvider singleTripProvider =
-      Provider.of<TripsProvider>(context, listen: false).selectedTrip;
-
+void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model, BuildContext context, String errorMessage) {
   String functionName = getEditFunctionNameBasedOn(model);
 
   const String alertText =
@@ -70,7 +64,7 @@ void Function() onEditBooking(Model model, BuildContext context, String errorMes
 
   return () async {
     final bool edited = await singleTripProvider.editModel(model, functionName);
-    if (false) {
+    if (true) {
       showEditedBookingDialog(context, alertText);
       log.i('onEditBooking was performed');
     } else {
