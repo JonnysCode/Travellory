@@ -49,8 +49,10 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
 
   DateTime getInitialDate() {
     if (widget.initialValue != '' && widget.initialValue != null) {
-      controller..text = (widget.initialValue);;
-      return initialDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.initialValue);
+      controller..text = (widget.initialValue);
+      initialDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.initialValue);
+      selectedDate = initialDate;
+      return initialDate;
     } else {
       return DateTime.now();
     }
