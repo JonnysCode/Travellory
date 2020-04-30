@@ -36,7 +36,7 @@ void showEditedBookingDialog(BuildContext context, String alertText) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        key: Key('ShowSubmittedBookingDialog'),
+        key: Key('ShowEditedBookingDialog'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         title: FashionFetishText(
           text: 'Edit Successful!',
