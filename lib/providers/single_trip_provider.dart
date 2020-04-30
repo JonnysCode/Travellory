@@ -46,8 +46,6 @@ class SingleTripProvider {
   bool isFetchingRentalCars = false;
   bool isFetchingPublicTransports = false;
 
-//  ActivityModel selectedActivity;
-
   bool _bookingsInitiated = false;
 
 
@@ -62,9 +60,8 @@ class SingleTripProvider {
     }
   }
 
-  Future<bool> addBooking(Model model, String functionName) async {
-    final bool added = await _databaseAdder.addModel(model, functionName);
-    if (added) {
+  void _updateBookings(Model model, bool update) {
+    if (update) {
       if (model is FlightModel){
         unawaited(_fetchFlights());
       } else if (model is RentalCarModel){
@@ -77,42 +74,23 @@ class SingleTripProvider {
         unawaited(_fetchActivities());
       }
     }
+  }
+
+  Future<bool> addBooking(Model model, String functionName) async {
+    final bool added = await _databaseAdder.addModel(model, functionName);
+    _updateBookings(model, added);
     return added;
   }
 
     Future<bool> deleteModel(Model model, String functionName) async {
     final bool deleted = await _databaseDeleter.deleteModel(model, functionName);
-    if (deleted) {
-      if (model is FlightModel){
-        unawaited(_fetchFlights());
-      } else if (model is RentalCarModel){
-        unawaited(_fetchRentalCars());
-      } else if (model is AccommodationModel){
-        unawaited(_fetchAccommodation());
-      } else if (model is PublicTransportModel){
-        unawaited(_fetchPublicTransportation());
-      } else if (model is ActivityModel){
-        unawaited(_fetchActivities());
-      }
-    }
+    _updateBookings(model, deleted);
     return deleted;
   }
 
   Future<bool> editModel(Model model, String functionName) async {
     final bool edited = await _databaseEditor.editModel(model, functionName);
-    if (edited) {
-      if (model is FlightModel){
-        unawaited(_fetchFlights());
-      } else if (model is RentalCarModel){
-        unawaited(_fetchRentalCars());
-      } else if (model is AccommodationModel){
-        unawaited(_fetchAccommodation());
-      } else if (model is PublicTransportModel){
-        unawaited(_fetchPublicTransportation());
-      } else if (model is ActivityModel){
-        unawaited(_fetchActivities());
-      }
-    }
+    _updateBookings(model, edited);
     return edited;
   }
 
