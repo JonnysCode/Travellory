@@ -28,6 +28,7 @@ class Activity extends StatefulWidget {
 class ActivityState<T extends Activity> extends State<T> {
   final GlobalKey<FormState> activityFormKey = GlobalKey<FormState>();
   final ActivityModel activityModel = ActivityModel();
+
 //  final DatabaseAdder databaseAdder = DatabaseAdder();
 
   static const int _imageItemCount = 13;
@@ -50,10 +51,12 @@ class ActivityState<T extends Activity> extends State<T> {
 
   int _selectedIndex;
 
-  Padding _getSubmitButton(TripsProvider tripsProvider, ActivityModel model, bool isNewModel) {
+  Padding _getSubmitButton(
+      SingleTripProvider singleTripProvider, ActivityModel model, bool isNewModel) {
     void Function() onSubmit;
     if (isNewModel) {
-      onSubmit = onSubmitBooking(tripsProvider, model, 'activity-addActivity', context, alertText);
+      onSubmit =
+          onSubmitBooking(singleTripProvider, model, 'activity-addActivity', context, alertText);
     } else {
       onSubmit = onEditBooking(model, context, errorMessage);
     }
@@ -76,8 +79,8 @@ class ActivityState<T extends Activity> extends State<T> {
     super.initState();
   }
 
-  Column getContent(
-      BuildContext context, SingleTripProvider singleTripProvider, TripModel tripModel, int startIndex) {
+  Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
+      TripModel tripModel, int startIndex, ActivityModel model) {
     bool isNewModel = true;
 
     // this selects the correct image for editing the activity
@@ -85,14 +88,14 @@ class ActivityState<T extends Activity> extends State<T> {
       _selectedIndex = startIndex;
     }
 
-    // this chooses between the edit and the new model
-    ActivityModel model;
-    if (singleTripProvider.selectedActivity != null) {
-      model = singleTripProvider.selectedActivity;
-      isNewModel = false;
-    } else {
-      model = activityModel;
-    }
+//    // this chooses between the edit and the new model
+//    ActivityModel model;
+//    if (singleTripProvider.selectedActivity != null) {
+//      model = singleTripProvider.selectedActivity;
+//      isNewModel = false;
+//    } else {
+//      model = activityModel;
+//    }
 
     return Column(
       children: <Widget>[
@@ -215,7 +218,7 @@ class ActivityState<T extends Activity> extends State<T> {
                     onChanged: (value) => model.notes = value,
                   ),
                 ),
-                _getSubmitButton(tripsProvider, model, isNewModel),
+                _getSubmitButton(singleTripProvider, model, isNewModel),
                 Padding(
                   padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                   child: CancelButton(
@@ -239,16 +242,15 @@ class ActivityState<T extends Activity> extends State<T> {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
-//    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
-//    final TripModel tripModel = tripsProvider.selectedTrip;
     activityModel.tripUID = tripModel.uid;
+    ActivityModel _activityModel = ActivityModel();
 
     return Scaffold(
       key: Key('Activity'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, 0),
+        child: getContent(context, singleTripProvider, tripModel, 0, _activityModel),
       ),
     );
   }

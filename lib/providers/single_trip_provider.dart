@@ -10,6 +10,8 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/NotifyListener.dart';
 import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/services/database/delete_database.dart';
+import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/get_database.dart';
 
 class SingleTripProvider {
@@ -26,6 +28,8 @@ class SingleTripProvider {
 
   final DatabaseGetter _databaseGetter = DatabaseGetter();
   final DatabaseAdder _databaseAdder = DatabaseAdder();
+  final DatabaseDeleter _databaseDeleter = DatabaseDeleter();
+  final DatabaseEditor _databaseEditor = DatabaseEditor();
 
   NotifyListener notifier;
   TripModel tripModel;
@@ -41,6 +45,8 @@ class SingleTripProvider {
   bool isFetchingActivities = false;
   bool isFetchingRentalCars = false;
   bool isFetchingPublicTransports = false;
+
+//  ActivityModel selectedActivity;
 
   bool _bookingsInitiated = false;
 
@@ -72,6 +78,42 @@ class SingleTripProvider {
       }
     }
     return added;
+  }
+
+    Future<bool> deleteModel(Model model, String functionName) async {
+    final bool deleted = await _databaseDeleter.deleteModel(model, functionName);
+    if (deleted) {
+      if (model is FlightModel){
+        unawaited(_fetchFlights());
+      } else if (model is RentalCarModel){
+        unawaited(_fetchRentalCars());
+      } else if (model is AccommodationModel){
+        unawaited(_fetchAccommodation());
+      } else if (model is PublicTransportModel){
+        unawaited(_fetchPublicTransportation());
+      } else if (model is ActivityModel){
+        unawaited(_fetchActivities());
+      }
+    }
+    return deleted;
+  }
+
+  Future<bool> editModel(Model model, String functionName) async {
+    final bool edited = await _databaseEditor.editModel(model, functionName);
+    if (edited) {
+      if (model is FlightModel){
+        unawaited(_fetchFlights());
+      } else if (model is RentalCarModel){
+        unawaited(_fetchRentalCars());
+      } else if (model is AccommodationModel){
+        unawaited(_fetchAccommodation());
+      } else if (model is PublicTransportModel){
+        unawaited(_fetchPublicTransportation());
+      } else if (model is ActivityModel){
+        unawaited(_fetchActivities());
+      }
+    }
+    return edited;
   }
 
   Future<void> _fetchFlights() async {
