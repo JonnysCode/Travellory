@@ -193,7 +193,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
   final String cancelText =
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
 
-  Widget _itemBuilder(BuildContext context, int index, Animation<double> animation) {
+  Widget itemBuilder(BuildContext context, int index, Animation<double> animation) {
     return FormItem(animation: animation, child: publicTransportList[index]);
   }
 
@@ -233,7 +233,6 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
           children: <Widget>[
             TripHeader(tripModel),
             Expanded(
-                //child: Form(
                 child: Container(
               height: double.infinity,
               child: Form(
@@ -244,7 +243,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
                       child: AnimatedList(
                         key: _listKey,
                         initialItemCount: publicTransportList.length,
-                        itemBuilder: _itemBuilder,
+                        itemBuilder: itemBuilder,
                       ),
                     ),
                   ],
