@@ -12,6 +12,8 @@ import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/widgets/bookings/edit_delete_dialogs.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 
+import 'edit.dart';
+
 final log = getLogger('DatabaseEditor');
 
 class DatabaseEditor {
@@ -54,6 +56,7 @@ String getEditFunctionNameBasedOn(Model model) {
   return functionName;
 }
 
+// TODO this isn't getting performed, why??
 void Function() onEditBooking(Model model, BuildContext context, String errorMessage) {
   final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
 
@@ -65,9 +68,8 @@ void Function() onEditBooking(Model model, BuildContext context, String errorMes
 
   return () async {
     final bool edited = await tripsProvider.editModel(model, functionName);
-    if (edited) {
-      // TODO !!!
-//      showDeletedBookingDialog(context, alertText);
+    if (false) {
+      showEditedBookingDialog(context, alertText);
       log.i('onEditBooking was performed');
     } else {
       addToDataBaseFailedDialog(context, errorMessage);
