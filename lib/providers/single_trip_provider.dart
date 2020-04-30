@@ -60,37 +60,41 @@ class SingleTripProvider {
     }
   }
 
-  void _updateBookings(Model model, bool update) {
-    if (update) {
-      if (model is FlightModel){
-        unawaited(_fetchFlights());
-      } else if (model is RentalCarModel){
-        unawaited(_fetchRentalCars());
-      } else if (model is AccommodationModel){
-        unawaited(_fetchAccommodation());
-      } else if (model is PublicTransportModel){
-        unawaited(_fetchPublicTransportation());
-      } else if (model is ActivityModel){
-        unawaited(_fetchActivities());
-      }
+  void _updateBookings(Model model) {
+    if (model is FlightModel){
+      unawaited(_fetchFlights());
+    } else if (model is RentalCarModel){
+      unawaited(_fetchRentalCars());
+    } else if (model is AccommodationModel){
+      unawaited(_fetchAccommodation());
+    } else if (model is PublicTransportModel){
+      unawaited(_fetchPublicTransportation());
+    } else if (model is ActivityModel){
+      unawaited(_fetchActivities());
     }
   }
 
   Future<bool> addBooking(Model model, String functionName) async {
     final bool added = await _databaseAdder.addModel(model, functionName);
-    _updateBookings(model, added);
+    if(added) {
+      _updateBookings(model);
+    }
     return added;
   }
 
     Future<bool> deleteModel(Model model, String functionName) async {
     final bool deleted = await _databaseDeleter.deleteModel(model, functionName);
-    _updateBookings(model, deleted);
+    if(deleted) {
+      _updateBookings(model);
+    }
     return deleted;
   }
 
   Future<bool> editModel(Model model, String functionName) async {
     final bool edited = await _databaseEditor.editModel(model, functionName);
-    _updateBookings(model, edited);
+    if(edited) {
+      _updateBookings(model);
+    }
     return edited;
   }
 
