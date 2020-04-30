@@ -31,3 +31,23 @@ List<Item> activityTypes = <Item>[
   const Item('Dining', Icon(FontAwesomeIcons.utensils, color: Color(0xFF167F67))),
   const Item('Other', Icon(FontAwesomeIcons.futbol, color: Color(0xFF167F67))),
 ];
+
+Item getActivityType(String type) {
+  if(type == 'Historic') {
+    return activityTypes[0];
+  } else if (type == 'Outdoors') {
+    return activityTypes[1];
+  } else if (type == 'Culture') {
+    return activityTypes[2];
+  } else if (type == 'Social') {
+    return activityTypes[3];
+  } else if (type == 'Relaxing') {
+    return activityTypes[4];
+  } else if (type == 'Adventure') {
+    return activityTypes[5];
+  } else if (type == 'Dining') {
+    return activityTypes[6];
+  } else {
+    return activityTypes[7];
+  }
+}
