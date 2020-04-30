@@ -20,11 +20,13 @@ import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 
 class Accommodation extends StatefulWidget {
+  Accommodation({Key key}) : super(key: key);
+
   @override
-  _AccommodationState createState() => _AccommodationState();
+  AccommodationState createState() => AccommodationState();
 }
 
-class _AccommodationState extends State<Accommodation> {
+class AccommodationState<T extends Accommodation> extends State<T> {
   ListModel<Widget> accommodationList;
   final GlobalKey<FormState> accommodationFormKey = GlobalKey<FormState>();
   final AccommodationModel accommodationModel = AccommodationModel();
@@ -225,24 +227,24 @@ class _AccommodationState extends State<Accommodation> {
           children: <Widget>[
             TripHeader(tripModel),
             Expanded(
-                //child: Form(
+              //child: Form(
                 child: Container(
-              height: double.infinity,
-              child: Form(
-                key: accommodationFormKey,
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: AnimatedList(
-                        key: _listKey,
-                        initialItemCount: accommodationList.length,
-                        itemBuilder: _itemBuilder,
-                      ),
+                  height: double.infinity,
+                  child: Form(
+                    key: accommodationFormKey,
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(
+                          child: AnimatedList(
+                            key: _listKey,
+                            initialItemCount: accommodationList.length,
+                            itemBuilder: _itemBuilder,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            )),
+                  ),
+                )),
           ],
         ),
       ),
