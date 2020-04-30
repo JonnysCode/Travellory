@@ -70,7 +70,7 @@ class TripList extends StatelessWidget {
                 itemCount: tripsProvider.trips.length + 1,
                 itemBuilder: (context, index) {
                   if(index < tripsProvider.trips.length){
-                    final tripModel = tripsProvider.trips[index]
+                    final tripModel = tripsProvider.trips[index].tripModel
                       ..index = index
                       ..init();
                     return TripCard(tripModel: tripModel);

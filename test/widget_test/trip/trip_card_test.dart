@@ -15,11 +15,11 @@ TripModel _tripModel = TripModel(
 void main(){
   Widget makeTestableWidget({Widget child}){
     return MaterialApp(
-      home: child,
+      home: Material(child: child),
     );
   }
 
-  testWidgets('test if SpeedDial is rendered', (WidgetTester tester) async {
+  testWidgets('test if name and destination are rendered correctly', (WidgetTester tester) async {
     _tripModel.init();
     Widget page = TripCard(tripModel: _tripModel);
 

@@ -1,9 +1,10 @@
-import 'package:travellory/models/day_model.dart';
 import 'package:travellory/utils/date_converter.dart';
+
 import 'abstract_model.dart';
+import 'day_model.dart';
 
 
-class TripModel extends Model {
+class TripModel extends Model{
   TripModel({
     this.userUID,
     this.uid,
@@ -71,5 +72,3 @@ class TripModel extends Model {
     };
   }
 }
-
-List<TripModel> tripModels = <TripModel>[];
