@@ -5,7 +5,6 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
-import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
@@ -27,13 +26,11 @@ class Activity extends StatefulWidget {
 
 class ActivityState<T extends Activity> extends State<T> {
   final GlobalKey<FormState> activityFormKey = GlobalKey<FormState>();
-  final ActivityModel activityModel = ActivityModel();
+  final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
-//  final DatabaseAdder databaseAdder = DatabaseAdder();
+  ActivityModel _activityModel = ActivityModel();
 
   static const int _imageItemCount = 13;
-
-  final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
   bool validateForm() {
     return activityFormKey.currentState.validate();
@@ -51,6 +48,7 @@ class ActivityState<T extends Activity> extends State<T> {
 
   int _selectedIndex;
 
+  /* returns either submit new activity booking or edit old booking button */
   Padding _getSubmitButton(
       SingleTripProvider singleTripProvider, ActivityModel model, bool isNewModel) {
     void Function() onSubmit;
@@ -72,30 +70,15 @@ class ActivityState<T extends Activity> extends State<T> {
     );
   }
 
-  @override
-  void initState() {
-    _selectedIndex = 0;
-    activityModel.imageNr = 1;
-    super.initState();
-  }
-
   Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
-      TripModel tripModel, int startIndex, ActivityModel model) {
+      TripModel tripModel, ActivityModel model) {
     bool isNewModel = true;
 
-    // this selects the correct image for editing the activity
-    if (startIndex != 0) {
-      _selectedIndex = startIndex;
-    }
+    // set activityModel instance to edit or new model
+    _activityModel = model;
 
-//    // this chooses between the edit and the new model
-//    ActivityModel model;
-//    if (singleTripProvider.selectedActivity != null) {
-//      model = singleTripProvider.selectedActivity;
-//      isNewModel = false;
-//    } else {
-//      model = activityModel;
-//    }
+    // this selects the correct image for editing or adding the activity
+    _selectedIndex = _activityModel.imageNr - 1;
 
     return Column(
       children: <Widget>[
@@ -117,11 +100,11 @@ class ActivityState<T extends Activity> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryDropdownField(
-                      initialValue: model.category,
+                      initialValue: _activityModel.category,
                       title: 'Select Category',
                       types: activityTypes,
                       onChanged: (value) {
-                        model.category = value.name;
+                        _activityModel.category = value.name;
                       },
                       validatorText: 'Please enter the required information'),
                 ),
@@ -136,20 +119,20 @@ class ActivityState<T extends Activity> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: model.title,
+                      initialValue: _activityModel.title,
                       labelText: 'Activity Title *',
                       icon: Icon(FontAwesomeIcons.star),
                       optional: false,
-                      onChanged: (value) => model.title = value),
+                      onChanged: (value) => _activityModel.title = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: model.description,
+                      initialValue: _activityModel.description,
                       labelText: 'Description',
                       icon: Icon(FontAwesomeIcons.info),
                       optional: true,
-                      onChanged: (value) => model.description = value),
+                      onChanged: (value) => _activityModel.description = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -158,52 +141,52 @@ class ActivityState<T extends Activity> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: model.location,
+                      initialValue: _activityModel.location,
                       labelText: 'Location *',
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
-                      onChanged: (value) => model.location = value),
+                      onChanged: (value) => _activityModel.location = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
-                    initialValue: model.startDate,
+                    initialValue: _activityModel.startDate,
                     key: _startDateFormFieldKey,
                     labelText: 'Start Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     optional: false,
-                    chosenDateString: (value) => model.startDate = value,
+                    chosenDateString: (value) => _activityModel.startDate = value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TimeFormField(
-                      initialValue: model.startTime,
+                      initialValue: _activityModel.startTime,
                       labelText: 'Start Time',
                       icon: Icon(FontAwesomeIcons.clock),
                       optional: true,
-                      chosenTimeString: (value) => model.startTime = value),
+                      chosenTimeString: (value) => _activityModel.startTime = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
-                    initialValue: model.endDate,
+                    initialValue: _activityModel.endDate,
                     labelText: 'End Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     beforeDateKey: _startDateFormFieldKey,
                     optional: false,
                     dateValidationMessage: 'End Date cannot be before Start Date',
-                    chosenDateString: (value) => model.endDate = value,
+                    chosenDateString: (value) => _activityModel.endDate = value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TimeFormField(
-                      initialValue: model.endTime,
+                      initialValue: _activityModel.endTime,
                       labelText: 'End Time',
                       icon: Icon(FontAwesomeIcons.clock),
                       optional: true,
-                      chosenTimeString: (value) => model.endTime = value),
+                      chosenTimeString: (value) => _activityModel.endTime = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -215,10 +198,10 @@ class ActivityState<T extends Activity> extends State<T> {
                     labelText: 'Notes',
                     icon: Icon(FontAwesomeIcons.stickyNote),
                     optional: true,
-                    onChanged: (value) => model.notes = value,
+                    onChanged: (value) => _activityModel.notes = value,
                   ),
                 ),
-                _getSubmitButton(singleTripProvider, model, isNewModel),
+                _getSubmitButton(singleTripProvider, _activityModel, isNewModel),
                 Padding(
                   padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                   child: CancelButton(
@@ -242,15 +225,14 @@ class ActivityState<T extends Activity> extends State<T> {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
-    activityModel.tripUID = tripModel.uid;
-    ActivityModel _activityModel = ActivityModel();
+    _activityModel.tripUID = tripModel.uid;
 
     return Scaffold(
       key: Key('Activity'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, 0, _activityModel),
+        child: getContent(context, singleTripProvider, tripModel, _activityModel),
       ),
     );
   }
@@ -276,7 +258,7 @@ class ActivityState<T extends Activity> extends State<T> {
   void _selectImage(index) {
     setState(() {
       _selectedIndex = index;
-      activityModel.imageNr = _selectedIndex + 1;
+      _activityModel.imageNr = _selectedIndex + 1;
     });
   }
 

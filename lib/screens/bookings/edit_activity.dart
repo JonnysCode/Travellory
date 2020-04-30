@@ -16,25 +16,20 @@ class EditActivity extends Activity {
 }
 
 class _EditActivityState extends ActivityState<EditActivity> {
-  // TODO(antilyas): overwrite submit button for editing maybe ?
-
   @override
   Widget build(BuildContext context) {
-    final ActivityModel _activityModel = ModalRoute.of(context).settings.arguments;
-
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
-//    ActivityModel activityModel = widget.activityModel;
-//    ActivityModel _activityModel = singleTripProvider.selectedActivity;
-    final int _selectedIndex = _activityModel.imageNr - 1;
+
+    final ActivityModel _activityModel = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       key: Key('EditActivity'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, _selectedIndex, _activityModel),
+        child: getContent(context, singleTripProvider, tripModel, _activityModel),
       ),
     );
   }
