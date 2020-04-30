@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/services/database/edit.dart';
+import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/services/database/submit.dart';
@@ -41,7 +43,29 @@ class ActivityState<T extends Activity> extends State<T> {
   final String cancelText =
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
 
+  final String errorMessage = "Seems like there's a connection problem. "
+      "Please check your internet connection and try submitting again.";
+
   int _selectedIndex;
+
+  Padding _getSubmitButton(TripsProvider tripsProvider, ActivityModel model, bool isNewModel) {
+    void Function() onSubmit;
+    if (isNewModel) {
+      onSubmit = onSubmitBooking(tripsProvider, model, 'activity-addActivity', context, alertText);
+    } else {
+      onSubmit = onEditBooking(model, context, errorMessage);
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+      child: SubmitButton(
+        highlightColor: Theme.of(context).primaryColor,
+        fillColor: Theme.of(context).primaryColor,
+        validationFunction: validateForm,
+        onSubmit: onSubmit,
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -50,9 +74,12 @@ class ActivityState<T extends Activity> extends State<T> {
     super.initState();
   }
 
-  Column getContent(BuildContext context, TripsProvider tripsProvider, TripModel tripModel, int startIndex) {
+  Column getContent(
+      BuildContext context, TripsProvider tripsProvider, TripModel tripModel, int startIndex) {
+    bool isNewModel = true;
+
     // this selects the correct image for editing the activity
-    if(startIndex != 0) {
+    if (startIndex != 0) {
       _selectedIndex = startIndex;
     }
 
@@ -60,6 +87,7 @@ class ActivityState<T extends Activity> extends State<T> {
     ActivityModel model;
     if (tripsProvider.selectedActivity != null) {
       model = tripsProvider.selectedActivity;
+      isNewModel = false;
     } else {
       model = activityModel;
     }
@@ -185,17 +213,7 @@ class ActivityState<T extends Activity> extends State<T> {
                     onChanged: (value) => model.notes = value,
                   ),
                 ),
-                // TODO(antilyas): refactor this out so that I can add 2 different submmit buttons for add/edit
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: SubmitButton(
-                    highlightColor: Theme.of(context).primaryColor,
-                    fillColor: Theme.of(context).primaryColor,
-                    validationFunction: validateForm,
-                    onSubmit: onSubmitBooking(
-                        tripsProvider, model, 'activity-addActivity', context, alertText),
-                  ),
-                ),
+                _getSubmitButton(tripsProvider, model, isNewModel),
                 Padding(
                   padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                   child: CancelButton(
