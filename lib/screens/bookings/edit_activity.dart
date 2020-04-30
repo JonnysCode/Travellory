@@ -29,7 +29,7 @@ class _EditActivityState extends ActivityState<EditActivity> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, _activityModel),
+        child: getContent(context, singleTripProvider, tripModel, _activityModel, false),
       ),
     );
   }
