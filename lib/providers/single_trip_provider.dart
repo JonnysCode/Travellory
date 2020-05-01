@@ -1,6 +1,5 @@
 import 'package:pedantic/pedantic.dart';
 import 'package:collection/collection.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
@@ -145,7 +144,7 @@ class SingleTripProvider {
     notifier.notify();
   }
 
-  void _initDays() {
+  void initSchedule() {
     days = <Day>[];
     var dateTime = getDateTimeFrom(tripModel.startDate);
     var endDateTime = getDateTimeFrom(tripModel.endDate);
@@ -156,6 +155,7 @@ class SingleTripProvider {
       ));
       dateTime = dateTime.add(Duration(days: 1));
     } while (dateTime.compareTo(endDateTime) <= 0);
+    _addBookingToDays();
   }
 
   void _addBookingToDays(){
