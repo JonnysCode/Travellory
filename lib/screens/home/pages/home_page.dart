@@ -124,32 +124,32 @@ class _HomePageState extends State<HomePage> {
                       BoxShadow(blurRadius: 18, color: Colors.black.withOpacity(.2), offset: Offset(0.0, -6.0))
                     ],
                   ),
-                  child: Column(
-                    children: <Widget>[
-                      FashionFetishText(
-                        text: 'California Camper Tour',
-                        size: 20,
-                        height: 1.6,
-                        fontWeight: FashionFontWeight.heavy,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                        child: Container(
-                          height: 1,
-                          color: Colors.black12,
+                  child: Consumer<TripsProvider>(
+                    builder: (_, trips, __) => trips.activeTripInitiated
+                        ? Column(
+                      children: <Widget>[
+                        FashionFetishText(
+                          text: trips.activeTrip.tripModel.name,
+                          size: 20,
+                          height: 1.6,
+                          fontWeight: FashionFontWeight.heavy,
                         ),
-                      ),
-                      Expanded(
-                        child: Consumer<TripsProvider>(
-                          builder: (_, trips, __) => trips.activeTripInitiated
-                              ? Schedule(
-                                key: Key('home_schedule'),
-                                trip: trips.activeTrip,
-                              )
-                              : Loading(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                          child: Container(
+                            height: 1,
+                            color: Colors.black12,
+                          ),
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          child: Schedule(
+                            key: Key('home_schedule'),
+                            trip: trips.activeTrip,
+                          ),
+                        ),
+                      ],
+                    )
+                        : Loading(),
                   ),
                 ),
               ),
