@@ -4,6 +4,7 @@ String toDateStringFrom(DateTime dateTime){
 }
 
 DateTime getDateTimeFrom(String date){
+  if(date == null) return null;
   final List<String> dates = date.split('-');
   return DateTime(int.parse(dates[0]), int.parse(dates[1]), int.parse(dates[2]));
 }

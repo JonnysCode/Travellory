@@ -1,5 +1,6 @@
 import 'package:pedantic/pedantic.dart';
 import 'package:collection/collection.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
@@ -157,6 +158,46 @@ class SingleTripProvider {
     } while (dateTime.compareTo(endDateTime) <= 0);
   }
 
+  void _addBookingToDays(){
+    for(var day in days){
+      flights.forEach((flight) {
+        var startDate = getDateTimeFrom(flight.departureDate);
+        var endDate = getDateTimeFrom(flight.arrivalDate) ?? startDate;
+        if(day.isInBetween(startDate, endDate)){
+          day.bookings.add(flight);
+        }
+      });
+      rentalCars.forEach((rentalCar) {
+        var startDate = getDateTimeFrom(rentalCar.pickupDate);
+        var endDate = getDateTimeFrom(rentalCar.returnDate) ?? startDate;
+        if(day.isInBetween(startDate, endDate)){
+          day.bookings.add(rentalCar);
+        }
+      });
+      publicTransports.forEach((publicTransport) {
+        var startDate = getDateTimeFrom(publicTransport.departureDate);
+        var endDate = getDateTimeFrom(publicTransport.arrivalDate) ?? startDate;
+        if(day.isInBetween(startDate, endDate)){
+          day.bookings.add(publicTransport);
+        }
+      });
+      accommodations.forEach((accommodation){
+        var startDate = getDateTimeFrom(accommodation.checkinDate);
+        var endDate = getDateTimeFrom(accommodation.checkoutDate) ?? startDate;
+        if(day.isInBetween(startDate, endDate)){
+          day.bookings.add(accommodation);
+        }
+      });
+      activities.forEach((activity){
+        var startDate = getDateTimeFrom(activity.startDate);
+        var endDate = getDateTimeFrom(activity.endDate) ?? startDate;
+        if(day.isInBetween(startDate, endDate)){
+          day.bookings.add(activity);
+        }
+      });
+    }
+  }
+
   @override
   bool operator ==(o) {
     Function equals = const DeepCollectionEquality().equals;
@@ -168,6 +209,7 @@ class SingleTripProvider {
         && o.isFetchingAccommodations == isFetchingAccommodations
         && o.isFetchingRentalCars == isFetchingRentalCars
         && o.isFetchingPublicTransports == isFetchingPublicTransports
+        && equals(o.days, days)
         && equals(o.flights, flights)
         && equals(o.rentalCars, rentalCars)
         && equals(o.publicTransports, publicTransports)
