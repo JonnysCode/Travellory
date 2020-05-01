@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/activity_model.dart';
+import 'package:travellory/models/day_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
@@ -13,6 +14,7 @@ import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/get_database.dart';
+import 'package:travellory/utils/date_converter.dart';
 
 class SingleTripProvider {
   SingleTripProvider(TripModel trip, NotifyListener notifier){
@@ -34,6 +36,8 @@ class SingleTripProvider {
   NotifyListener notifier;
   TripModel tripModel;
   bool isFetching = false;
+
+  List<Day> days;
 
   List<FlightModel> flights;
   List<AccommodationModel> accommodations;
@@ -138,6 +142,19 @@ class SingleTripProvider {
         tripModel.uid, DatabaseGetter.getPublicTransportations);
     isFetchingPublicTransports = false;
     notifier.notify();
+  }
+
+  void _initDays() {
+    days = <Day>[];
+    var dateTime = getDateTimeFrom(tripModel.startDate);
+    var endDateTime = getDateTimeFrom(tripModel.endDate);
+
+    do {
+      days.add(Day(
+          date: dateTime
+      ));
+      dateTime = dateTime.add(Duration(days: 1));
+    } while (dateTime.compareTo(endDateTime) <= 0);
   }
 
   @override
