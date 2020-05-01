@@ -15,4 +15,8 @@ class Day {
   DateTime date;
   String dateString;
   List<Model> bookings;
+
+  bool isInBetween(DateTime startDate, DateTime endDate) =>
+      date.compareTo(startDate) >= 0
+      && date.compareTo(endDate) <= 0;
 }
