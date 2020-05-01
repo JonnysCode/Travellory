@@ -9,9 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
-import 'package:travellory/screens/bookings/view_accommodation.dart';
 import 'package:travellory/utils/g_map/g_map_border_loader.dart';
-import 'package:travellory/widgets/trip/trip_card.dart';
 
 String _mapStyle;
 final List<String> _userStates = ["switzerland","austria","belgium"];
@@ -55,13 +53,12 @@ class MapSampleState extends State<MapSample> {
   final Map<String, Marker> _markers = {};
   final List<Polygon> _boundaries = [];
 
-  Future<void> test() async {
+  Future<void> loadAccommodations() async {
     final List<SingleTripProvider> trips = await Provider.of<TripsProvider>(context, listen: false).trips;
 
     _markers.clear();
 
     for (final SingleTripProvider trip in trips) {
-      await trip.tripModel.init();
       final List<AccommodationModel> accommodations = await trip.accommodations;
 
       for (final AccommodationModel accommodation in accommodations) {
@@ -72,7 +69,7 @@ class MapSampleState extends State<MapSample> {
             title: accommodation.name,
             snippet: accommodation.address,
             onTap: () {
-              AccommodationView();
+              Navigator.pushNamed( context, '/view/accommodation', arguments: accommodation);
             }
           ),
         );
@@ -82,31 +79,10 @@ class MapSampleState extends State<MapSample> {
   }
 
   Future<void> onMapCreated() async {
-    //final googleOffices = await locations.getGoogleOffices();
     final _boundariesTemp = await GMapBorderLoader.generateBorders(_userStates);
 
     setState(() {
-      /*
-      _markers.clear();
-      for (final office in googleOffices.offices) {
-        final marker = Marker(
-          markerId: MarkerId(office.name),
-          position: LatLng(office.lat, office.lng),
-          /*
-          onTap: () {
-            // TODO: open location info page
-          },
-          */
-          infoWindow: InfoWindow(
-            title: office.name,
-            snippet: office.address,
-          ),
-        );
-        _markers[office.name] = marker;
-      }
-       */
-
-      test();
+      loadAccommodations();
 
       if(_boundariesTemp.isNotEmpty){
         _boundaries.clear();
@@ -144,10 +120,10 @@ class MapSampleState extends State<MapSample> {
               alignment: Alignment.topRight,
               children: <Widget>[
                 IconButton(icon: Icon(Icons.home), onPressed: () {
-                  print('Home');
+                  //print('Home');
                 }),
                 IconButton(icon: Icon(Icons.favorite), onPressed: () {
-                  print('Favorite');
+                  //print('Favorite');
                 })
               ]
           ),
