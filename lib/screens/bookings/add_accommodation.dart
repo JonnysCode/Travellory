@@ -283,7 +283,10 @@ class _AccommodationState extends State<Accommodation> {
 
     nameController.text = detail.result.name;
     addressController.text = detail.result.formattedAddress;
-    accommodationModel.location = detail.result.geometry.location;
+    accommodationModel.name = detail.result.name;
+    accommodationModel.address = detail.result.formattedAddress;
+    accommodationModel.latitude = detail.result.geometry.location.lat;
+    accommodationModel.longitude = detail.result.geometry.location.lng;
 
   }
 }
