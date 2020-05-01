@@ -10,11 +10,18 @@ class Day {
     this.bookings
   }){
     dateString = toDateStringFrom(date);
+    isExpanded = true;
+    bookings = <Model>[];
   }
 
   DateTime date;
   String dateString;
   List<Model> bookings;
+  bool isExpanded;
+
+  void toggleExpanded(){
+    isExpanded = !isExpanded;
+  }
 
   bool isInBetween(DateTime startDate, DateTime endDate) =>
       date.compareTo(startDate) >= 0

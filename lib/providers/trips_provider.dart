@@ -42,6 +42,35 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
     }
   }
 
+  Future<bool> addTrip(TripModel tripModel) async {
+    tripModel.userUID = user.uid;
+    final bool added =
+        await _databaseAdder.addModel(tripModel, DatabaseAdder.addTrip);
+    if (added) {
+      unawaited(_fetchTrips());
+    }
+    return added;
+  }
+
+  void selectTrip(TripModel tripModel){
+    _selectedTripIndex = trips.indexWhere((entry) => entry.tripModel.uid == tripModel.uid);
+    unawaited(selectedTrip.initBookings());
+  }
+
+  @override
+  void notify() {
+    notifyListeners();
+  }
+
+  Future<void> _initTrips() async {
+    await _fetchTrips();
+    _setActiveTrip();
+    await activeTrip.initBookings();
+    activeTrip.initSchedule();
+    _activeTripInitiated = true;
+    notifyListeners();
+  }
+
   Future<void> _fetchTrips() async {
     isFetchingTrips = true;
     List<TripModel> tripModels = await _databaseGetter.getEntriesFromDatabase(
@@ -61,32 +90,5 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
     } while(
     getDateTimeFrom(activeTrip.tripModel.endDate).isBefore(DateTime.now())
     );
-  }
-
-  Future<bool> addTrip(TripModel tripModel) async {
-    tripModel.userUID = user.uid;
-    final bool added =
-        await _databaseAdder.addModel(tripModel, DatabaseAdder.addTrip);
-    if (added) {
-      unawaited(_fetchTrips());
-    }
-    return added;
-  }
-
-  void selectTrip(TripModel tripModel){
-    _selectedTripIndex = trips.indexWhere((entry) => entry.tripModel.uid == tripModel.uid);
-    unawaited(selectedTrip.initBookings());
-  }
-
-  Future<void> _initTrips() async {
-    await _fetchTrips();
-    _setActiveTrip();
-    await activeTrip.initBookings();
-    _activeTripInitiated = true;
-  }
-
-  @override
-  void notify() {
-    notifyListeners();
   }
 }

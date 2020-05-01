@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
+import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
@@ -137,8 +140,13 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Expanded(
-                        child: Schedule(
-                          key: Key('home_schedule'),
+                        child: Consumer<TripsProvider>(
+                          builder: (_, trips, __) => trips.activeTripInitiated
+                              ? Schedule(
+                                key: Key('home_schedule'),
+                                trip: trips.activeTrip,
+                              )
+                              : Loading(),
                         ),
                       ),
                     ],
