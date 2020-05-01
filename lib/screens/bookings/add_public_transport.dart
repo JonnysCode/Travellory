@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/utils/list_models.dart';
@@ -200,8 +201,9 @@ class _PublicTransportState extends State<PublicTransport> {
 
   @override
   Widget build(BuildContext context) {
-    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
-    final TripModel tripModel = tripsProvider.selectedTrip;
+    final SingleTripProvider singleTripProvider =
+        Provider.of<TripsProvider>(context, listen: false).selectedTrip;
+    final TripModel tripModel = singleTripProvider.tripModel;
     publicTransportModel.tripUID = tripModel.uid;
 
     // replace widget to get the context
@@ -209,7 +211,7 @@ class _PublicTransportState extends State<PublicTransport> {
         highlightColor: Theme.of(context).primaryColor,
         fillColor: Theme.of(context).primaryColor,
         validationFunction: validateForm,
-        onSubmit: onSubmitBooking(tripsProvider, publicTransportModel,
+        onSubmit: onSubmitBooking(singleTripProvider, publicTransportModel,
             'booking-addPublicTransportation', context, alertText),
         );
 
