@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/utils/date_converter.dart';
+import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class TripCard extends StatefulWidget {
@@ -33,10 +34,8 @@ class _TripCardState extends State<TripCard> {
   TripModel _tripModel;
 
   void _openTrip(){
-    Provider.of<TripsProvider>(context, listen: false)
-        ..selectedTrip = _tripModel
-        ..initBookings();
-    Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
+    Provider.of<TripsProvider>(context, listen: false).selectTrip(_tripModel);
+    Navigator.pushNamed(context, '/viewtrip');
   }
 
   @override
@@ -57,41 +56,61 @@ class _TripCardState extends State<TripCard> {
                   color: Color(0xBBCCD7DD),
                 ),
                 padding: const EdgeInsets.only(left: 50.0, top: 14.0, bottom: 14.0, right: 14.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
+                child: Row(
                   children: <Widget>[
-                    FashionFetishText(
-                      text: _tripModel.name,
-                      size: 18.0,
-                      fontWeight: FashionFontWeight.heavy,
-                      height: 1.1,
-                    ),
-                    Spacer(),
-                    FashionFetishText(
-                      text: '${toShortenedMonthDateFrom( _tripModel.startDate)} - '
-                            '${toShortenedMonthDateFrom( _tripModel.endDate)}',
-                      size: 14.0,
-                      fontWeight: FashionFontWeight.bold,
-                      color: Colors.black54,
-                      height: 1.3,
-                    ),
-                    Spacer(),
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          FontAwesomeIcons.locationArrow,
-                          size: 14,
-                          color: Colors.redAccent,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 6, left: 3),
-                          child: FashionFetishText(
-                            text: _tripModel.destination,
-                            size: 13.0,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          FashionFetishText(
+                            text: _tripModel.name,
+                            size: 18.0,
                             fontWeight: FashionFontWeight.heavy,
-                            color: Colors.black54,
+                            height: 1.1,
                           ),
+                          Spacer(),
+                          FashionFetishText(
+                            text: '${toShortenedMonthDateFrom( _tripModel.startDate)} - '
+                                  '${toShortenedMonthDateFrom( _tripModel.endDate)}',
+                            size: 14.0,
+                            fontWeight: FashionFontWeight.bold,
+                            color: Colors.black54,
+                            height: 1.3,
+                          ),
+                          Spacer(),
+                          Row(
+                            children: <Widget>[
+                              Icon(
+                                FontAwesomeIcons.locationArrow,
+                                size: 14,
+                                color: Colors.redAccent,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 6, left: 3),
+                                child: FashionFetishText(
+                                  text: _tripModel.destination,
+                                  size: 13.0,
+                                  fontWeight: FashionFontWeight.heavy,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    OptionButton(
+                      optionItems: <OptionItem>[
+                        OptionItem(
+                          description: 'Edit',
+                          icon: FontAwesomeIcons.edit,
+                          onTab: () => {}
+                        ),
+                        OptionItem(
+                            description: 'Remove',
+                            icon: FontAwesomeIcons.trashAlt,
+                            onTab: () => {}
                         ),
                       ],
                     ),
@@ -126,3 +145,5 @@ class _TripCardState extends State<TripCard> {
     );
   }
 }
+
+

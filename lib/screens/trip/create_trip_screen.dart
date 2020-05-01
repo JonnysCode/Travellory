@@ -26,7 +26,7 @@ class _CreateTripState extends State<CreateTrip> {
 
   final String alertText =
       "You've just created a new trip. You can see all the information in the home screen. "
-      "Add bookings and costumize your trip with a click on it";
+      "Add bookings and customize your trip with a click on it";
 
   final String cancelText = 'You are about to abort this new trip entry. '
       'Do you want to go back to the previous site and discard your changes?';
