@@ -1,10 +1,4 @@
 import 'package:travellory/models/abstract_model.dart';
-import "package:google_maps_webservice/places.dart";
-import 'package:travellory/services/api/map/locations.dart';
-import 'package:travellory/utils/date_converter.dart';
-
-const double lat = 0.0;
-const double lng = 0.0;
 
 class AccommodationModel extends Model {
   AccommodationModel({this.tripUID = '',
@@ -23,8 +17,8 @@ class AccommodationModel extends Model {
   this.hotelRoomType = '',
   this.airbnbType = '',
   this.notes = '',
-  // ignore: avoid_init_to_null
-  this.location = null});
+  this.latitude = 0.0,
+  this.longitude = 0.0});
 
   AccommodationModel.fromData(accommodation) {
     tripUID = accommodation["tripUID"];
@@ -43,7 +37,8 @@ class AccommodationModel extends Model {
     hotelRoomType = accommodation["hotelRoomType"];
     airbnbType = accommodation["airbnbType"];
     notes = accommodation["notes"];
-    location = accommodation["location"];
+    latitude = accommodation["latitude"];
+    longitude = accommodation["longitude"];
   }
 
   String tripUID;
@@ -62,7 +57,8 @@ class AccommodationModel extends Model {
   String hotelRoomType;
   String airbnbType;
   String notes;
-  Location location;
+  double latitude;
+  double longitude;
 
   @override
   Map<String, dynamic> toMap() {
@@ -82,7 +78,8 @@ class AccommodationModel extends Model {
       "hotelRoomType": hotelRoomType,
       "airbnbType": airbnbType,
       "notes": notes,
-      "location": location
+      "latitude": latitude,
+      "longitude": longitude
     };
   }
 }
