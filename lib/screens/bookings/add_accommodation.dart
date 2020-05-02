@@ -81,14 +81,13 @@ class _AccommodationState extends State<Accommodation> {
           labelText: 'Name *',
           icon: Icon(FontAwesomeIcons.solidBuilding),
           optional: false,
-          controller: nameController,
-          onTap: _openGooglePlacesSearch,
           onChanged: (value) => accommodationModel.name = value),
       TravelloryFormField(
         labelText: 'Address *',
         icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
         controller: addressController,
+        onTap: _openGooglePlacesSearch,
         onChanged: (value) => accommodationModel.address = value,
       ),
       SectionTitle('Check-In Details'),
@@ -260,9 +259,7 @@ class _AccommodationState extends State<Accommodation> {
   Future<void> _openGooglePlacesSearch() async {
     PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
 
-    nameController.text = detail.result.name;
     addressController.text = detail.result.formattedAddress;
-    accommodationModel.name = detail.result.name;
     accommodationModel.address = detail.result.formattedAddress;
     accommodationModel.latitude = detail.result.geometry.location.lat;
     accommodationModel.longitude = detail.result.geometry.location.lng;
