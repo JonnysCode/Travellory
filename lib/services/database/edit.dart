@@ -21,7 +21,7 @@ void editModel(Model model, BuildContext context) {
   } else if (model is AccommodationModel) {
     changeRoute = '/booking/accommodation';
   } else if (model is PublicTransportModel) {
-    changeRoute = '/edit/publictransport';
+    changeRoute = '/booking/publictransport';
   } else if (model is ActivityModel) {
     changeRoute = '/edit/activity';
   } else {

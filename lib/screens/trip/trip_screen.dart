@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/shared/loading.dart';
@@ -188,7 +189,11 @@ class TripScreen extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: _subsection('Transportation', '/booking/publictransport'),
+                        child: _subsection('Transportation', '/booking/publictransport', () {
+                          PublicTransportModel publicTransportModel = PublicTransportModel();
+                          publicTransportModel.tripUID = tripModel.uid;
+                          return publicTransportModel;
+                        }),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),

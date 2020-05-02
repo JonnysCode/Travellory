@@ -75,7 +75,6 @@ class MyApp extends StatelessWidget {
             '/view/activity': (context) => ActivityView(),
             '/edit/rentalcar': (context) => EditRentalCar(),
             '/edit/flight': (context) => EditFlight(),
-            '/edit/publictransport': (context) => EditPublicTransport(),
             '/edit/activity': (context) => EditActivity(),
             '/friends/friends_page': (context) => FriendsPage(),
           },
