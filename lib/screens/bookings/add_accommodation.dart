@@ -31,7 +31,7 @@ class Accommodation extends StatefulWidget {
 class AccommodationState<T extends Accommodation> extends State<T> {
   ListModel<Widget> accommodationList;
   final GlobalKey<FormState> accommodationFormKey = GlobalKey<FormState>();
-  final AccommodationModel accommodationModel = AccommodationModel();
+  final AccommodationModel _accommodationModel = AccommodationModel();
   final DatabaseAdder databaseAdder = DatabaseAdder();
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
@@ -42,8 +42,12 @@ class AccommodationState<T extends Accommodation> extends State<T> {
   Widget airbnbAdditional;
   Widget otherAdditional;
 
-  final nameController = TextEditingController(); /// for accomodation name field
-  final addressController = TextEditingController(); /// for accomodation address field
+  final nameController = TextEditingController();
+
+  /// for accomodation name field
+  final addressController = TextEditingController();
+
+  /// for accomodation address field
 
   bool validateForm() {
     return accommodationFormKey.currentState.validate();
@@ -54,10 +58,11 @@ class AccommodationState<T extends Accommodation> extends State<T> {
     super.initState();
 
     accommodationTypeDropdown = TravelloryDropdownField(
+        initialValue: _accommodationModel.type,
         title: 'Select Accommodation Type',
         types: accommodationTypes,
         onChanged: (value) {
-          accommodationModel.airbnbType = value.name;
+          _accommodationModel.airbnbType = value.name;
           showAdditional(accommodationList, value.name == 'Airbnb', accommodationTypeDropdown,
               airbnbAdditional);
           showAdditional(
@@ -78,20 +83,20 @@ class AccommodationState<T extends Accommodation> extends State<T> {
           labelText: 'Confirmation Number',
           icon: Icon(FontAwesomeIcons.ticketAlt),
           optional: true,
-          onChanged: (value) => accommodationModel.confirmationNr = value),
+          onChanged: (value) => _accommodationModel.confirmationNr = value),
       TravelloryFormField(
           labelText: 'Name *',
           icon: Icon(FontAwesomeIcons.solidBuilding),
           optional: false,
           controller: nameController,
           onTap: _openGooglePlacesSearch,
-          onChanged: (value) => accommodationModel.name = value),
+          onChanged: (value) => _accommodationModel.name = value),
       TravelloryFormField(
         labelText: 'Address *',
         icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
         controller: addressController,
-        onChanged: (value) => accommodationModel.address = value,
+        onChanged: (value) => _accommodationModel.address = value,
       ),
       SectionTitle('Check-In Details'),
       DateFormField(
@@ -99,19 +104,19 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         labelText: 'Check-In Date *',
         icon: Icon(FontAwesomeIcons.calendarAlt),
         optional: false,
-        chosenDateString: (value) => accommodationModel.checkinDate = value,
+        chosenDateString: (value) => _accommodationModel.checkinDate = value,
       ),
       TimeFormField(
         labelText: 'Check-In Time',
         icon: Icon(FontAwesomeIcons.clock),
         optional: true,
-        chosenTimeString: (value) => accommodationModel.checkinTime = value,
+        chosenTimeString: (value) => _accommodationModel.checkinTime = value,
       ),
       TravelloryFormField(
         labelText: 'Nights *',
         icon: Icon(FontAwesomeIcons.solidMoon),
         optional: false,
-        onChanged: (value) => accommodationModel.nights = value,
+        onChanged: (value) => _accommodationModel.nights = value,
       ),
       SectionTitle('Check-Out Details'),
       DateFormField(
@@ -120,20 +125,20 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         beforeDateKey: _checkinDateFormFieldKey,
         optional: false,
         dateValidationMessage: 'Check-out Date cannot be before Check-in Date',
-        chosenDateString: (value) => accommodationModel.checkoutDate = value,
+        chosenDateString: (value) => _accommodationModel.checkoutDate = value,
       ),
       TimeFormField(
         labelText: 'Check-Out Time',
         icon: Icon(FontAwesomeIcons.clock),
         optional: true,
-        chosenTimeString: (value) => accommodationModel.checkoutTime = value,
+        chosenTimeString: (value) => _accommodationModel.checkoutTime = value,
       ),
       SectionTitle('Notes'),
       TravelloryFormField(
         labelText: 'Notes',
         icon: Icon(FontAwesomeIcons.stickyNote),
         optional: true,
-        onChanged: (value) => accommodationModel.notes = value,
+        onChanged: (value) => _accommodationModel.notes = value,
       ),
       SubmitButton(),
       CancelButton(),
@@ -153,7 +158,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
           labelText: 'Specific type of airbnb',
           icon: Icon(FontAwesomeIcons.hotel),
           optional: true,
-          onChanged: (value) => accommodationModel.airbnbType = value,
+          onChanged: (value) => _accommodationModel.airbnbType = value,
         ),
       ],
     );
@@ -165,13 +170,13 @@ class AccommodationState<T extends Accommodation> extends State<T> {
           labelText: 'Room Type',
           icon: Icon(FontAwesomeIcons.hotel),
           optional: true,
-          onChanged: (value) => accommodationModel.hotelRoomType = value,
+          onChanged: (value) => _accommodationModel.hotelRoomType = value,
         ),
         CheckboxFormField(
           initialValue: false,
           label: 'Does your stay include breakfast?',
           onChanged: (value) {
-            accommodationModel.breakfast = value;
+            _accommodationModel.breakfast = value;
           },
         ),
       ],
@@ -183,7 +188,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
           labelText: "Specification of 'Other'",
           icon: Icon(FontAwesomeIcons.bed),
           optional: true,
-          onChanged: (value) => accommodationModel.specificationOther = value,
+          onChanged: (value) => _accommodationModel.specificationOther = value,
         ),
       ],
     );
@@ -203,20 +208,41 @@ class AccommodationState<T extends Accommodation> extends State<T> {
     return FormItem(animation: animation, child: item);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final SingleTripProvider singleTripProvider =
-        Provider.of<TripsProvider>(context, listen: false).selectedTrip;
-    final TripModel tripModel = singleTripProvider.tripModel;
-    accommodationModel.tripUID = tripModel.uid;
+  Column getContent(TripModel tripModel, SingleTripProvider singleTripProvider, BuildContext context) {
+    getButtons(singleTripProvider, context);
 
+    return Column(children: <Widget>[
+      TripHeader(tripModel),
+      Expanded(
+        child: Container(
+          height: double.infinity,
+          child: Form(
+            key: accommodationFormKey,
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: AnimatedList(
+                    key: _listKey,
+                    initialItemCount: accommodationList.length,
+                    itemBuilder: _itemBuilder,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      )
+    ]);
+  }
+
+  void getButtons(SingleTripProvider singleTripProvider, BuildContext context) {
     // replace widget to get the context
     accommodationList[accommodationList.length - 3] = SubmitButton(
       highlightColor: Theme.of(context).primaryColor,
       fillColor: Theme.of(context).primaryColor,
       validationFunction: validateForm,
       onSubmit: onSubmitBooking(
-          singleTripProvider, accommodationModel, 'booking-addAccommodation', context, alertText),
+          singleTripProvider, _accommodationModel, 'booking-addAccommodation', context, alertText),
     );
 
     accommodationList[accommodationList.length - 2] = CancelButton(
@@ -225,36 +251,21 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         cancellingDialog(context, cancelText);
       },
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final SingleTripProvider singleTripProvider =
+        Provider.of<TripsProvider>(context, listen: false).selectedTrip;
+    final TripModel tripModel = singleTripProvider.tripModel;
+    _accommodationModel.tripUID = tripModel.uid;
 
     return Scaffold(
       key: Key('Accommodation'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: Column(
-          children: <Widget>[
-            TripHeader(tripModel),
-            Expanded(
-              //child: Form(
-                child: Container(
-                  height: double.infinity,
-                  child: Form(
-                    key: accommodationFormKey,
-                    child: Column(
-                      children: <Widget>[
-                        Expanded(
-                          child: AnimatedList(
-                            key: _listKey,
-                            initialItemCount: accommodationList.length,
-                            itemBuilder: _itemBuilder,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )),
-          ],
-        ),
+        child: getContent(tripModel, singleTripProvider, context),
       ),
     );
   }
@@ -264,9 +275,9 @@ class AccommodationState<T extends Accommodation> extends State<T> {
 
     nameController.text = detail.result.name;
     addressController.text = detail.result.formattedAddress;
-    accommodationModel.name = detail.result.name;
-    accommodationModel.address = detail.result.formattedAddress;
-    accommodationModel.latitude = detail.result.geometry.location.lat;
-    accommodationModel.longitude = detail.result.geometry.location.lng;
+    _accommodationModel.name = detail.result.name;
+    _accommodationModel.address = detail.result.formattedAddress;
+    _accommodationModel.latitude = detail.result.geometry.location.lat;
+    _accommodationModel.longitude = detail.result.geometry.location.lng;
   }
 }
