@@ -117,7 +117,7 @@ class MapSampleState extends State<MapSample> {
         ),
         Positioned(
           child: FabCircularMenu(
-              alignment: Alignment.topRight,
+              alignment: Alignment.topCenter,
               children: <Widget>[
                 IconButton(icon: Icon(Icons.home), onPressed: () {
                   //print('Home');
