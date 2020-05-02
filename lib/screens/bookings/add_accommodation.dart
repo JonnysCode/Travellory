@@ -5,6 +5,7 @@ import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/utils/list_models.dart';
@@ -118,7 +119,8 @@ class AccommodationState<T extends Accommodation> extends State<T> {
 
   @override
   Widget build(BuildContext context) {
-    AccommodationModel _accommodationModel = ModalRoute.of(context).settings.arguments;
+    ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
+    AccommodationModel _accommodationModel = arguments.model;
 
     Widget hotelAdditional = Column(
       children: <Widget>[
@@ -277,7 +279,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(tripModel, singleTripProvider, context, _accommodationModel, true),
+        child: getContent(tripModel, singleTripProvider, context, _accommodationModel, arguments.isNewModel),
       ),
     );
   }
