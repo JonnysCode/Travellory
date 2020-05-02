@@ -18,6 +18,8 @@ import 'package:travellory/widgets/forms/show_dialog.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
+import 'package:travellory/services/api/google_places.dart';
+import 'package:google_maps_webservice/places.dart';
 
 class Accommodation extends StatefulWidget {
   Accommodation({Key key}) : super(key: key);
@@ -39,6 +41,9 @@ class AccommodationState<T extends Accommodation> extends State<T> {
   Widget hotelAdditional;
   Widget airbnbAdditional;
   Widget otherAdditional;
+
+  final nameController = TextEditingController(); /// for accomodation name field
+  final addressController = TextEditingController(); /// for accomodation address field
 
   bool validateForm() {
     return accommodationFormKey.currentState.validate();
@@ -78,11 +83,14 @@ class AccommodationState<T extends Accommodation> extends State<T> {
           labelText: 'Name *',
           icon: Icon(FontAwesomeIcons.solidBuilding),
           optional: false,
+          controller: nameController,
+          onTap: _openGooglePlacesSearch,
           onChanged: (value) => accommodationModel.name = value),
       TravelloryFormField(
         labelText: 'Address *',
         icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
+        controller: addressController,
         onChanged: (value) => accommodationModel.address = value,
       ),
       SectionTitle('Check-In Details'),
@@ -249,5 +257,16 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         ),
       ),
     );
+  }
+
+  Future<void> _openGooglePlacesSearch() async {
+    PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
+
+    nameController.text = detail.result.name;
+    addressController.text = detail.result.formattedAddress;
+    accommodationModel.name = detail.result.name;
+    accommodationModel.address = detail.result.formattedAddress;
+    accommodationModel.latitude = detail.result.geometry.location.lat;
+    accommodationModel.longitude = detail.result.geometry.location.lng;
   }
 }
