@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/booking_card.dart';
@@ -20,7 +20,7 @@ class TripScreen extends StatelessWidget {
     final TripModel tripModel =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip.tripModel;
 
-    Widget _subsection(String title, String route, [Model Function() passedModel]) {
+    Widget _subsection(String title, String route, [ModifyModelArguments Function() passedModelArguments]) {
       return Container(
         height: 40,
         width: MediaQuery.of(context).size.width,
@@ -50,8 +50,8 @@ class TripScreen extends StatelessWidget {
               right: 0,
               child: GestureDetector(
                 onTap: () => {
-                  if (passedModel != null)
-                    {Navigator.pushNamed(context, route, arguments: passedModel())}
+                  if (passedModelArguments != null)
+                    {Navigator.pushNamed(context, route, arguments: passedModelArguments())}
                   else
                     {Navigator.pushNamed(context, route)}
                 },
@@ -116,7 +116,7 @@ class TripScreen extends StatelessWidget {
                         child: _subsection('Accommodation', '/booking/accommodation', () {
                           AccommodationModel accommodationModel = AccommodationModel();
                           accommodationModel.tripUID = tripModel.uid;
-                          return accommodationModel;
+                          return ModifyModelArguments(model: accommodationModel, isNewModel: false);
                         }),
                       ),
                       Padding(
@@ -192,7 +192,7 @@ class TripScreen extends StatelessWidget {
                         child: _subsection('Transportation', '/booking/publictransport', () {
                           PublicTransportModel publicTransportModel = PublicTransportModel();
                           publicTransportModel.tripUID = tripModel.uid;
-                          return publicTransportModel;
+                          return ModifyModelArguments(model: publicTransportModel, isNewModel: false);
                         }),
                       ),
                       Padding(
