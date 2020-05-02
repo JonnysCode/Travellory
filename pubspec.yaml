@@ -40,6 +40,7 @@ dependencies:
   syncfusion_flutter_calendar: ^18.1.42-beta
   font_awesome_flutter: ^8.7.0
   google_maps_flutter: ^0.5.25+3
+  flutter_google_places: ^0.2.5
   http: ^0.12.0+1
   json_serializable: ^2.0.2
   flutter_rounded_date_picker: 1.0.0
