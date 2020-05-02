@@ -116,7 +116,7 @@ class TripScreen extends StatelessWidget {
                         child: _subsection('Accommodation', '/booking/accommodation', () {
                           AccommodationModel accommodationModel = AccommodationModel();
                           accommodationModel.tripUID = tripModel.uid;
-                          return ModifyModelArguments(model: accommodationModel, isNewModel: false);
+                          return ModifyModelArguments(model: accommodationModel, isNewModel: true);
                         }),
                       ),
                       Padding(
@@ -192,7 +192,7 @@ class TripScreen extends StatelessWidget {
                         child: _subsection('Transportation', '/booking/publictransport', () {
                           PublicTransportModel publicTransportModel = PublicTransportModel();
                           publicTransportModel.tripUID = tripModel.uid;
-                          return ModifyModelArguments(model: publicTransportModel, isNewModel: false);
+                          return ModifyModelArguments(model: publicTransportModel, isNewModel: true);
                         }),
                       ),
                       Padding(
