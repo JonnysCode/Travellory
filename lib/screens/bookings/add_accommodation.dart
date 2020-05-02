@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_webservice/places.dart';
-import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
@@ -20,9 +18,8 @@ import 'package:travellory/widgets/forms/show_dialog.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
-
-// to get places detail (lat/lng)
-GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: 'AIzaSyBTerG6FzsWzMxLZGxkz8KAXqUNCNtwsE0');
+import 'package:travellory/services/api/google_places.dart';
+import 'package:google_maps_webservice/places.dart';
 
 class Accommodation extends StatefulWidget {
   @override
@@ -261,25 +258,7 @@ class _AccommodationState extends State<Accommodation> {
   }
 
   Future<void> _openGooglePlacesSearch() async {
-    // show input autocomplete with selected mode
-    // then get the Prediction selected
-    Prediction p = await PlacesAutocomplete.show(
-      context: context,
-      apiKey: 'AIzaSyBTerG6FzsWzMxLZGxkz8KAXqUNCNtwsE0',
-      //onError: onError,
-      mode: Mode.overlay,
-      language: "en",
-      components: [Component(Component.country, "ch")],
-    );
-
-    PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p.placeId);
-    final lat = detail.result.geometry.location.lat;
-    final lng = detail.result.geometry.location.lng;
-
-    print(detail.result.geometry.toJson());
-
-    print('NameController: ${nameController.value}');
-    print('AddressController: ${addressController.value}');
+    PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
 
     nameController.text = detail.result.name;
     addressController.text = detail.result.formattedAddress;
@@ -287,6 +266,5 @@ class _AccommodationState extends State<Accommodation> {
     accommodationModel.address = detail.result.formattedAddress;
     accommodationModel.latitude = detail.result.geometry.location.lat;
     accommodationModel.longitude = detail.result.geometry.location.lng;
-
   }
 }
