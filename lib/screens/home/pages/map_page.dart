@@ -117,14 +117,23 @@ class MapSampleState extends State<MapSample> {
         ),
         Positioned(
           child: FabCircularMenu(
-              alignment: Alignment.topCenter,
+            ringColor: Theme.of(context).primaryColor,
+              ringWidth: 50.0,
+              ringDiameter: 200.0,
+              alignment: Alignment.topRight,
               children: <Widget>[
                 IconButton(icon: Icon(Icons.home), onPressed: () {
                   //print('Home');
                 }),
                 IconButton(icon: Icon(Icons.favorite), onPressed: () {
                   //print('Favorite');
-                })
+                }),
+                IconButton(icon: Icon(Icons.fastfood), onPressed: () {
+                  //print('Favorite');
+                }),
+                IconButton(icon: Icon(Icons.school), onPressed: () {
+                  //print('Favorite');
+                }),
               ]
           ),
         )
