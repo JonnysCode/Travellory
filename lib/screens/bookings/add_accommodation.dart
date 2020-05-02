@@ -173,13 +173,13 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         title: 'Select Accommodation Type',
         types: accommodationTypes,
         onChanged: (value) {
-          _accommodationModel.airbnbType = value.name;
+          _accommodationModel.type = value.name;
           showAdditional(accommodationList, value.name == 'Airbnb', accommodationTypeDropdown,
               airbnbAdditional);
           showAdditional(
               accommodationList, value.name == 'Hotel', accommodationTypeDropdown, hotelAdditional);
           showAdditional(
-              accommodationList, value.name == 'Other', accommodationTypeDropdown, otherAdditional);
+              accommodationList, value.name == 'Other Accommodation', accommodationTypeDropdown, otherAdditional);
         },
         validatorText: 'Please enter the required information');
 
