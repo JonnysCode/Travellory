@@ -256,7 +256,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, _rentalCarModel, false),
+        child: getContent(context, singleTripProvider, tripModel, _rentalCarModel, true),
       ),
     );
   }
