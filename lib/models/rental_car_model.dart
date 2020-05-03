@@ -8,9 +8,13 @@ class RentalCarModel extends Model {
       this.bookingReference = '',
       this.company = '',
       this.pickupLocation = '',
+      this.pickupLatitude = 0.0,
+      this.pickupLongitude = 0.0,
       this.pickupDate = '',
       this.pickupTime = '',
       this.returnLocation = '',
+      this.returnLatitude = 0.0,
+      this.returnLongitude = 0.0,
       this.returnDate = '',
       this.returnTime = '',
       this.carDescription = '',
@@ -23,9 +27,13 @@ class RentalCarModel extends Model {
     bookingReference = rentalCar["bookingReference"];
     company = rentalCar["company"];
     pickupLocation = rentalCar["pickupLocation"];
+    pickupLatitude = rentalCar["pickupLatitude"];
+    pickupLongitude = rentalCar["pickupLongitude"];
     pickupDate = rentalCar["pickupDate"];
     pickupTime = rentalCar["pickupTime"];
     returnLocation = rentalCar["returnLocation"];
+    returnLatitude = rentalCar["returnLatitude"];
+    returnLongitude = rentalCar["returnLongitude"];
     returnDate = rentalCar["returnDate"];
     returnTime = rentalCar["returnTime"];
     carDescription = rentalCar["carDescription"];
@@ -38,9 +46,13 @@ class RentalCarModel extends Model {
   String bookingReference;
   String company;
   String pickupLocation;
+  double pickupLatitude;
+  double pickupLongitude;
   String pickupDate;
   String pickupTime;
   String returnLocation;
+  double returnLatitude;
+  double returnLongitude;
   String returnDate;
   String returnTime;
   String carDescription;
@@ -54,9 +66,13 @@ class RentalCarModel extends Model {
       "bookingReference": bookingReference,
       "company": company,
       "pickupLocation": pickupLocation,
+      "pickupLatitude": pickupLatitude,
+      "pickupLongitude": pickupLongitude,
       "pickupDate": pickupDate,
       "pickupTime": pickupTime,
       "returnLocation": returnLocation,
+      "returnLatitude": returnLatitude,
+      "returnLongitude": returnLongitude,
       "returnDate": returnDate,
       "returnTime": returnTime,
       "carDescription": carDescription,
