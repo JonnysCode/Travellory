@@ -40,7 +40,7 @@ class TravelloryDropdownFieldState extends State<TravelloryDropdownField>
 
   void _getSelectedType() {
     if(widget.initialValue != null && widget.initialValue != '') {
-      selectedType = getActivityType(widget.initialValue);
+      selectedType = getDropdownBookingType(widget.initialValue);
     } else {
       selectedType = widget.selectedType;
     }
