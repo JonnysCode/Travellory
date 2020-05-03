@@ -5,8 +5,8 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/screens/trip/create_trip_screen.dart';
-import 'package:travellory/widgets/bookings/booking_card.dart';
+import 'package:travellory/models/schedule_entry.dart';
+import 'package:travellory/widgets/trip/schedule/schedule_entry_card.dart';
 
 final PublicTransportModel _publicTransport = PublicTransportModel()
   ..transportationType = 'train'
@@ -46,21 +46,25 @@ void main() {
   }
 
   testWidgets('test if booking is loaded', (WidgetTester tester) async {
-    Widget page = BookingCard(
-      model: _rentalCar,
-      color: getColorAccordingTo(_rentalCar),
-      getSchedule: getScheduleAccordingTo(_rentalCar));
+    Widget page = ScheduleEntryCard(
+      scheduleEntry: ScheduleEntry(
+        booking: _rentalCar,
+        dayType: DayType.single
+      ),
+    );
 
     await tester.pumpWidget(makeTestableWidget(page: page));
 
-    expect(find.byKey(Key('booking_card'),), findsOneWidget);
+    expect(find.byKey(Key('schedule_entry_card')), findsOneWidget);
   });
 
   testWidgets('test if rental car is loaded', (WidgetTester tester) async {
-    Widget page = BookingCard(
-        model: _rentalCar,
-        color: getColorAccordingTo(_rentalCar),
-        getSchedule: getScheduleAccordingTo(_rentalCar));
+    Widget page = ScheduleEntryCard(
+      scheduleEntry: ScheduleEntry(
+          booking: _rentalCar,
+          dayType: DayType.single
+      ),
+    );
 
     await tester.pumpWidget(makeTestableWidget(page: page));
 
@@ -68,10 +72,12 @@ void main() {
   });
 
   testWidgets('test if public transport is loaded', (WidgetTester tester) async {
-    Widget page = BookingCard(
-        model: _publicTransport,
-        color: getColorAccordingTo(_publicTransport),
-        getSchedule: getScheduleAccordingTo(_publicTransport));
+    Widget page = ScheduleEntryCard(
+      scheduleEntry: ScheduleEntry(
+          booking: _publicTransport,
+          dayType: DayType.single
+      ),
+    );
 
     await tester.pumpWidget(makeTestableWidget(page: page));
 
@@ -79,10 +85,12 @@ void main() {
   });
 
   testWidgets('test if flight is loaded', (WidgetTester tester) async {
-    Widget page = BookingCard(
-        model: _flight,
-        color: getColorAccordingTo(_flight),
-        getSchedule: getScheduleAccordingTo(_flight));
+    Widget page = ScheduleEntryCard(
+      scheduleEntry: ScheduleEntry(
+          booking: _flight,
+          dayType: DayType.single
+      ),
+    );
 
     await tester.pumpWidget(makeTestableWidget(page: page));
 
@@ -90,10 +98,12 @@ void main() {
   });
 
   testWidgets('test if activity is loaded', (WidgetTester tester) async {
-    Widget page = BookingCard(
-        model: _activity,
-        color: getColorAccordingTo(_activity),
-        getSchedule: getScheduleAccordingTo(_activity));
+    Widget page = ScheduleEntryCard(
+      scheduleEntry: ScheduleEntry(
+          booking: _activity,
+          dayType: DayType.single
+      ),
+    );
 
     await tester.pumpWidget(makeTestableWidget(page: page));
 
@@ -101,10 +111,12 @@ void main() {
   });
 
   testWidgets('test if accommodation is loaded', (WidgetTester tester) async {
-    Widget page = BookingCard(
-        model: _accommodation,
-        color: getColorAccordingTo(_accommodation),
-        getSchedule: getScheduleAccordingTo(_accommodation));
+    Widget page = ScheduleEntryCard(
+      scheduleEntry: ScheduleEntry(
+          booking: _accommodation,
+          dayType: DayType.single
+      ),
+    );
 
     await tester.pumpWidget(makeTestableWidget(page: page));
 

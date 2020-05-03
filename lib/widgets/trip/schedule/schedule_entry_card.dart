@@ -30,7 +30,7 @@ class ScheduleEntryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      key: Key('booking_card'),
+      key: Key('schedule_entry_card'),
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(6.0),
