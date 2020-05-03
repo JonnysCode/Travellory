@@ -4,7 +4,7 @@ import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 @override
-Widget friendsCard(BuildContext context, List<FriendsModel> list, int index) {
+Widget friendsCard(BuildContext context, FriendsModel friend, Widget button, double topPadding) {
   double cardSize = 70;
 
   return Container(
@@ -24,34 +24,47 @@ Widget friendsCard(BuildContext context, List<FriendsModel> list, int index) {
                 color: Color(0xBBCCD7DD),
               ),
               padding: const EdgeInsets.only(left: 65.0, top: 10.0, bottom: 14.0, right: 14.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+              child: Row(
                 children: <Widget>[
-                  FashionFetishText(
-                    text: '${list[index].username}',
-                    size: 18.0,
-                    fontWeight: FashionFontWeight.heavy,
-                    height: 1.1,
-                  ),
-                  Spacer(),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        FontAwesomeIcons.home,
-                        size: 14,
-                        color: Colors.brown,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 6, left: 3),
-                        child: FashionFetishText(
-                          text: 'Switzerland',
-                          size: 13.0,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        FashionFetishText(
+                          text: friend.username,
+                          size: 18.0,
                           fontWeight: FashionFontWeight.heavy,
-                          color: Colors.black54,
+                          height: 1.1,
                         ),
-                      ),
-                    ],
+                        Spacer(),
+                        Row(
+                          children: <Widget>[
+                            Icon(
+                              FontAwesomeIcons.home,
+                              size: 14,
+                              color: Colors.brown,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6, left: 3),
+                              child: FashionFetishText(
+                                text: 'Switzerland',
+                                size: 13.0,
+                                fontWeight: FashionFontWeight.heavy,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        right: 15,
+                        top: topPadding
+                    ),
+                    child: button,
                   ),
                 ],
               ),

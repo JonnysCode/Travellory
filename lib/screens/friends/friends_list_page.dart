@@ -1,16 +1,19 @@
+import 'dart:io';
+
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
-import 'package:travellory/screens/home/pages/friends_page.dart';
-import 'package:travellory/services/friend_management.dart';
+import 'package:travellory/services/friends/friend_management.dart';
 import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'package:travellory/widgets/friends/friends_card_widget.dart';
 import 'package:travellory/widgets/friends/friends_list_widget.dart';
 
 class FriendListPage extends StatefulWidget {
@@ -19,40 +22,48 @@ class FriendListPage extends StatefulWidget {
 }
 
 class _FriendListPageState extends State<FriendListPage> {
+  void _performSocialAction(
+      String uidSender, String uidReceiver, SocialActionType type) async {
+    await FriendManagement.performSocialAction(uidSender, uidReceiver, type)
+        .then((value) async {
+      bool success = true;
+      String message = _getMessage(type, success);
+      _showSnackBar(message, success);
 
-  void _acceptFriendRequest(String uidSender, String uidReceiver) async {
-    await FriendManagement.acceptFriendRequest(uidSender, uidReceiver)
-        .then((value) {
-      _showSnackBar('You got a new friend. Nice!', true);
-      final friendsProvider =
-      Provider.of<FriendsProvider>(context, listen: false);
-      friendsProvider.update();
+      final FriendsProvider friendsProvider =
+          Provider.of<FriendsProvider>(context, listen: false);
+      await friendsProvider.update();
+      setState(() {});
     }).catchError((error) {
-      _showSnackBar('Failed to accept friend request. Try again', false);
+      bool success = false;
+      print(error.toString());
+      String message = _getMessage(type, success);
+      _showSnackBar(message, success);
     });
   }
 
-  void _declineFriendRequest(String uidSender, String uidReceiver) async {
-    await FriendManagement.declineFriendRequest(uidSender, uidReceiver)
-        .then((value) {
-      _showSnackBar('Declined friend request', true);
-      final friendsProvider =
-      Provider.of<FriendsProvider>(context, listen: false);
-      friendsProvider.update();
-    }).catchError((error) {
-      _showSnackBar('Failed to decline friend request. Try again', false);
-    });
-  }
-
-  void _removeFriend(String uidA, String uidB) async {
-    await FriendManagement.removeFriend(uidA, uidB).then((value) {
-      _showSnackBar('Too bad for them.', true);
-      final friendsProvider =
-      Provider.of<FriendsProvider>(context, listen: false);
-      friendsProvider.update();
-    }).catchError((error) {
-      _showSnackBar('Failed to remove friend. Try again', false);
-    });
+  String _getMessage(SocialActionType type, bool success) {
+    String message;
+    switch (type) {
+      case SocialActionType.acceptFriendRequest:
+        success
+            ? message = 'You got a new friend. Nice!'
+            : message = 'Failed to accept friend request. Try again.';
+        break;
+      case SocialActionType.declineFriendRequest:
+        success
+            ? message = 'Declined friend request'
+            : message = 'Failed to decline friend request. Try again.';
+        break;
+      case SocialActionType.removeFriend:
+        success
+            ? message = 'Too bad for them.'
+            : message = 'Failed to remove friend. Try again.';
+        break;
+      default:
+        message = '';
+    }
+    return message;
   }
 
   Widget _showSnackBar(String message, bool success) {
@@ -62,9 +73,7 @@ class _FriendListPageState extends State<FriendListPage> {
           title: success ? "Success" : "Error",
           message: message,
           backgroundColor:
-          success ? Theme
-              .of(context)
-              .primaryColor : Colors.redAccent,
+              success ? Theme.of(context).primaryColor : Colors.redAccent,
           margin: EdgeInsets.all(8),
           borderRadius: 12,
           duration: Duration(seconds: 3))
@@ -72,9 +81,42 @@ class _FriendListPageState extends State<FriendListPage> {
     );
   }
 
+  Widget friendRequestButtons(String uidSender, String uidReceiver) {
+    return Wrap(
+      children: <Widget>[
+        socialButton(
+            Key('accept_button'),
+            Icons.person_add,
+            Colors.green,
+            () => _performSocialAction(
+                uidSender, uidReceiver, SocialActionType.acceptFriendRequest)),
+        socialButton(
+            Key('decline_button'),
+            Icons.clear,
+            Colors.red,
+            () => _performSocialAction(
+                uidSender, uidReceiver, SocialActionType.declineFriendRequest)),
+      ],
+    );
+  }
+
+  Widget removeFriendButton(String uidSender, String uidReceiver) {
+    return Wrap(
+      children: <Widget>[
+        socialButton(
+            Key('remove_button'),
+            Icons.delete,
+            Colors.red,
+            () => _performSocialAction(
+                uidSender, uidReceiver, SocialActionType.removeFriend)),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
+
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -86,20 +128,18 @@ class _FriendListPageState extends State<FriendListPage> {
               padding: EdgeInsets.only(left: 200, top: 10),
             ),
             FashionFetishText(
-                text: 'Add Friends',
-                size: 16,
-                color: Colors.black54,
-                fontWeight: FashionFontWeight.bold,
-           ),
+              text: 'Add Friends',
+              size: 16,
+              color: Colors.black54,
+              fontWeight: FashionFontWeight.bold,
+            ),
             GestureDetector(
               onTap: () =>
                   Provider.of<FriendsPageProvider>(context, listen: false)
                       .toggleSearching(),
               child: Icon(
                 FontAwesomeIcons.search,
-                color: Theme
-                    .of(context)
-                    .primaryColor,
+                color: Theme.of(context).primaryColor,
                 size: 32,
               ),
             ),
@@ -111,16 +151,10 @@ class _FriendListPageState extends State<FriendListPage> {
                 top: 10,
                 left: 30,
                 right: 90,
-                bottom: MediaQuery
-                    .of(context)
-                    .viewInsets
-                    .bottom),
+                bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Container(
               height: 30,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              width: MediaQuery.of(context).size.width,
               child: FashionFetishText(
                 text: 'Friend requests',
                 size: 22,
@@ -128,35 +162,45 @@ class _FriendListPageState extends State<FriendListPage> {
               ),
             ),
           ),
-          Consumer<FriendsProvider>(
-            builder: (_, friendsProvider, __) =>
-            friendsProvider.isFetching
-                ? Loading()
-                : friendsProvider.friendRequests.isEmpty
-                ? Text('You have no friend requests :(')
-                : friendList(
-                Key('friend_requests_list'),
-                158,
-                friendsProvider.friendRequests,
-//                Wrap(
-//                  children: <Widget>[
-//                    socialButton(
-//                        Key('accept_button'),
-//                        Icons.add_circle,
-//                        Colors.green,
-//                            () => _acceptFriendRequest(
-//                            friendsProvider.friendRequests[0].uid,
-//                            user.uid)),
-//                    socialButton(
-//                        Key('decline_button'),
-//                        Icons.remove_circle,
-//                        Colors.red,
-//                            () => _declineFriendRequest(
-//                            friendsProvider.friendRequests[0].uid,
-//                            user.uid)),
-//                  ],
-//                ),
-                context),
+          Padding(
+            key: Key('friend-requests-list'),
+            padding: EdgeInsets.only(
+                left: 15,
+                right: 20,
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(children: <Widget>[
+              Container(
+                height: 240,
+                child: Scrollbar(
+                    child: Consumer<FriendsProvider>(
+                  builder: (_, friendsProvider, __) => friendsProvider
+                          .isFetching
+                      ? Loading()
+                      : friendsProvider.friendRequests.isEmpty
+                          ? Text('You have no friend requests :(')
+                          : ListView.separated(
+                              padding: EdgeInsets.only(
+                                bottom: 50,
+                              ),
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 12),
+                              itemCount: friendsProvider.friendRequests.length,
+                              itemBuilder: (context, index) {
+                                FriendsModel friend =
+                                    friendsProvider.friendRequests[index];
+                                return friendsCard(
+                                  context,
+                                  friend,
+                                  friendRequestButtons(friend.uid, user.uid),
+                                  10,
+                                );
+                              },
+                            ),
+                )),
+              ),
+            ]),
           ),
           SizedBox(height: 20),
           Padding(
@@ -165,16 +209,10 @@ class _FriendListPageState extends State<FriendListPage> {
                 top: 10,
                 left: 30,
                 right: 90,
-                bottom: MediaQuery
-                    .of(context)
-                    .viewInsets
-                    .bottom),
+                bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Container(
               height: 30,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              width: MediaQuery.of(context).size.width,
               child: FashionFetishText(
                 text: 'Friends',
                 size: 22,
@@ -182,28 +220,45 @@ class _FriendListPageState extends State<FriendListPage> {
               ),
             ),
           ),
-          Consumer<FriendsProvider>(
-            builder: (_, friendsProvider, __) =>
-            friendsProvider.isFetching
-                ? Loading()
-                : friendsProvider.friends.isEmpty
-                ? Text('You have no friends :(')
-                : friendList(
-                Key('friends_list'),
-                240,
-                friendsProvider.friends,
-//                Wrap(
-//                  children: <Widget>[
-//                    socialButton(
-//                        Key('remove_button'),
-//                        Icons.remove_circle,
-//                        Colors.red,
-//                            () => _removeFriend(
-//                            friendsProvider.friendRequests[0].uid,
-//                            user.uid)),
-//                  ],
-//                ),
-                context),
+          Padding(
+            key: Key('friends-list'),
+            padding: EdgeInsets.only(
+                left: 15,
+                right: 20,
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(children: <Widget>[
+              Container(
+                height: 240,
+                child: Scrollbar(
+                    child: Consumer<FriendsProvider>(
+                  builder: (_, friendsProvider, __) =>
+                      friendsProvider.isFetching
+                          ? Loading()
+                          : friendsProvider.friends.isEmpty
+                              ? Text('You have no friends :(')
+                              : ListView.separated(
+                                  padding: EdgeInsets.only(
+                                    bottom: 50,
+                                  ),
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(height: 12),
+                                  itemCount: friendsProvider.friends.length,
+                                  itemBuilder: (context, index) {
+                                    FriendsModel friend =
+                                        friendsProvider.friends[index];
+                                    return friendsCard(
+                                      context,
+                                      friend,
+                                      removeFriendButton(friend.uid, user.uid),
+                                      10,
+                                    );
+                                  },
+                                ),
+                )),
+              ),
+            ]),
           ),
         ],
       ),

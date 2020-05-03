@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
 
-Widget friendList(Key key, double height, List<FriendsModel> list, BuildContext context) {
+Widget friendList(Key key, double height, List<FriendsModel> list, Widget button, double topPadding, BuildContext context) {
   return Padding(
     key: key,
     padding: EdgeInsets.only(
@@ -23,7 +23,7 @@ Widget friendList(Key key, double height, List<FriendsModel> list, BuildContext 
                 separatorBuilder: (context, index) => const SizedBox(height: 12),
                 itemCount: list.length,
                 itemBuilder: (context, index) {
-                  return friendsCard(context, list, index);
+                  return friendsCard(context, list[index], button, topPadding);
                 },
               ),
             ),
