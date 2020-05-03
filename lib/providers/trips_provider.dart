@@ -28,7 +28,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
   bool _tripsInitiated = false;
   bool _activeTripInitiated = false;
 
-  SingleTripProvider get activeTrip => trips[_activeTripIndex];
+  SingleTripProvider get activeTrip => _activeTripIndex == null ? null : trips[_activeTripIndex];
 
   SingleTripProvider get selectedTrip => trips[_selectedTripIndex];
 
@@ -65,7 +65,9 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
   Future<void> _initTrips() async {
     await _fetchTrips();
     _setActiveTrip();
-    await activeTrip.initBookings();
+    if(_activeTripIndex != null){
+      await activeTrip.initBookings();
+    }
     _activeTripInitiated = true;
     notifyListeners();
   }
@@ -81,6 +83,9 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
   }
 
   void _setActiveTrip(){
+    if(trips.isEmpty){
+      return;
+    }
     int index = 0;
     // get the first trip with an end date after the current date
     do {
