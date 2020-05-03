@@ -35,12 +35,34 @@ class FriendManagement {
     return friend;
   }
 
+  static Future<List<FriendsModel>> searchByUsername(String displayName) async {
+    final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+      functionName: 'user-searchByUsername',
+    );
+    final result = await callable.call({'displayName': displayName});
+    return _generateFriendsListFromResult(result);
+  }
+
+  static Future<bool> areFriends(String uidSender, String uidReceiver) async {
+    final result =
+    await _callHttpsCallable(uidSender, uidReceiver, 'friends-areFriends');
+    return result.data['areFriends'];
+  }
+
+  static Future<bool> friendRequestExists(String uidSender, String uidReceiver) async {
+    final result =
+    await _callHttpsCallable(uidSender, uidReceiver, 'friends-friendRequestExists');
+    return result.data['friendRequestExists'];
+  }
+
   static Future<List<FriendsModel>> _generateFriendsListFromResult(
       HttpsCallableResult result) async {
     List<FriendsModel> friendsList = List();
-    for (String uid in result.data) {
-      FriendsModel friend = await getPublicUserInformation(uid);
-      friendsList.add(friend);
+    if(result.data != null) {
+      for (String uid in result.data) {
+        FriendsModel friend = await getPublicUserInformation(uid);
+        friendsList.add(friend);
+      }
     }
     return friendsList;
   }
@@ -48,9 +70,11 @@ class FriendManagement {
   static Future<List<FriendsModel>> _generateFriendRequestListFromResult(
       HttpsCallableResult result) async {
     List<FriendsModel> friendsList = List();
-    for (String uid in result.data.keys) {
-      FriendsModel friend = await getPublicUserInformation(uid);
-      friendsList.add(friend);
+    if(result.data != null) {
+      for (String uid in result.data.keys) {
+        FriendsModel friend = await getPublicUserInformation(uid);
+        friendsList.add(friend);
+      }
     }
     return friendsList;
   }

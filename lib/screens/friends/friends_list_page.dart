@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +12,6 @@ import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
-import 'package:travellory/widgets/friends/friends_list_widget.dart';
 
 class FriendListPage extends StatefulWidget {
   @override
@@ -22,10 +19,18 @@ class FriendListPage extends StatefulWidget {
 }
 
 class _FriendListPageState extends State<FriendListPage> {
+  bool _loading = false;
+
   void _performSocialAction(
       String uidSender, String uidReceiver, SocialActionType type) async {
+
+    setState(() {
+      _loading = true;
+    });
+
     await FriendManagement.performSocialAction(uidSender, uidReceiver, type)
         .then((value) async {
+
       bool success = true;
       String message = _getMessage(type, success);
       _showSnackBar(message, success);
@@ -33,12 +38,15 @@ class _FriendListPageState extends State<FriendListPage> {
       final FriendsProvider friendsProvider =
           Provider.of<FriendsProvider>(context, listen: false);
       await friendsProvider.update();
-      setState(() {});
     }).catchError((error) {
       bool success = false;
       print(error.toString());
       String message = _getMessage(type, success);
       _showSnackBar(message, success);
+    });
+
+    setState(() {
+      _loading = false;
     });
   }
 
@@ -177,7 +185,7 @@ class _FriendListPageState extends State<FriendListPage> {
                           .isFetching
                       ? Loading()
                       : friendsProvider.friendRequests.isEmpty
-                          ? Text('You have no friend requests :(')
+                          ? Text('No pending friend requests')
                           : ListView.separated(
                               padding: EdgeInsets.only(
                                 bottom: 50,
@@ -193,7 +201,10 @@ class _FriendListPageState extends State<FriendListPage> {
                                 return friendsCard(
                                   context,
                                   friend,
-                                  friendRequestButtons(friend.uid, user.uid),
+                                  _loading
+                                      ? CircularProgressIndicator()
+                                      : friendRequestButtons(
+                                          friend.uid, user.uid),
                                   10,
                                 );
                               },
@@ -251,7 +262,10 @@ class _FriendListPageState extends State<FriendListPage> {
                                     return friendsCard(
                                       context,
                                       friend,
-                                      removeFriendButton(friend.uid, user.uid),
+                                      _loading
+                                          ? CircularProgressIndicator()
+                                          : removeFriendButton(
+                                              friend.uid, user.uid),
                                       10,
                                     );
                                   },
