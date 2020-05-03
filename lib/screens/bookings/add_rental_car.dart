@@ -5,7 +5,6 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
-import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
@@ -15,6 +14,8 @@ import 'package:travellory/widgets/forms/section_titles.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
+import 'package:travellory/services/api/google_places.dart';
+import 'package:google_maps_webservice/places.dart';
 
 class RentalCar extends StatefulWidget {
   RentalCar({Key key}) : super(key: key);
@@ -28,6 +29,9 @@ class RentalCarState<T extends RentalCar> extends State<T> {
   RentalCarModel _rentalCarModel = RentalCarModel();
 
   final GlobalKey<DateFormFieldState> _pickUpDateFormFieldKey = GlobalKey<DateFormFieldState>();
+
+  final pickupLocationController = TextEditingController();
+  final returnLocationController = TextEditingController();
 
   bool validateForm() {
     return rentalCarFormKey.currentState.validate();
@@ -89,6 +93,14 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       labelText: 'Pick Up Location',
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
+                      controller: pickupLocationController,
+                      onTap: () async {
+                        PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
+                        pickupLocationController.text = detail.result.formattedAddress;
+                        _rentalCarModel.pickupLocation = detail.result.formattedAddress;
+                        _rentalCarModel.pickupLatitude = detail.result.geometry.location.lat;
+                        _rentalCarModel.pickupLongitude = detail.result.geometry.location.lng;
+                      },
                       onChanged: (value) => _rentalCarModel.pickupLocation = value),
                 ),
                 Padding(
@@ -122,6 +134,15 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       labelText: 'Return Location',
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: true,
+                      controller: returnLocationController,
+                      onTap: () async {
+                        PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context, countryCode: tripModel.countryCode);
+
+                        returnLocationController.text = detail.result.formattedAddress;
+                        _rentalCarModel.returnLocation = detail.result.formattedAddress;
+                        _rentalCarModel.returnLatitude = detail.result.geometry.location.lat;
+                        _rentalCarModel.returnLongitude = detail.result.geometry.location.lng;
+                      },
                       onChanged: (value) => _rentalCarModel.returnLocation = value),
                 ),
                 Padding(

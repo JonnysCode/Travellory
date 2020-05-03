@@ -19,6 +19,9 @@ import 'package:travellory/widgets/forms/show_dialog.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
+import 'package:travellory/services/api/google_places.dart';
+import 'package:google_maps_webservice/places.dart';
+
 
 class PublicTransport extends StatefulWidget {
   PublicTransport({Key key}) : super(key: key);
@@ -50,6 +53,9 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
 
   final String cancelText =
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
+
+  final departureLocationController = TextEditingController();
+  final arrivalLocationController = TextEditingController();
 
   Widget itemBuilder(BuildContext context, int index, Animation<double> animation) {
     return FormItem(animation: animation, child: publicTransportList[index]);
@@ -180,6 +186,15 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         labelText: 'Departure Location *',
         icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
+        controller: departureLocationController,
+        onTap: () async {
+          PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context, countryCode: tripModel.countryCode);
+
+          departureLocationController.text = detail.result.formattedAddress;
+          _publicTransportModel.departureLocation = detail.result.formattedAddress;
+          _publicTransportModel.departureLatitude = detail.result.geometry.location.lat;
+          _publicTransportModel.departureLongitude = detail.result.geometry.location.lng;
+        },
         onChanged: (value) => _publicTransportModel.departureLocation = value,
       ),
       DateFormField(
@@ -201,6 +216,14 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         labelText: 'Arrival Location *',
         icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
+        controller: arrivalLocationController,
+        onTap: () async {
+          PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
+          arrivalLocationController.text = detail.result.formattedAddress;
+          _publicTransportModel.arrivalLocation = detail.result.formattedAddress;
+          _publicTransportModel.arrivalLatitude = detail.result.geometry.location.lat;
+          _publicTransportModel.arrivalLongitude = detail.result.geometry.location.lng;
+        },
         onChanged: (value) => _publicTransportModel.arrivalLocation = value,
       ),
       DateFormField(
@@ -293,5 +316,23 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
             tripModel, singleTripProvider, context, _publicTransportModel, arguments.isNewModel),
       ),
     );
+  }
+
+  Future<void> _openGooglePlacesSearchForDeparture(PublicTransportModel model, TextEditingController controller) async {
+    PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
+
+    controller.text = detail.result.formattedAddress;
+    model.arrivalLocation = detail.result.formattedAddress;
+    model.arrivalLatitude = detail.result.geometry.location.lat;
+    model.arrivalLongitude = detail.result.geometry.location.lng;
+  }
+
+  Future<void> _openGooglePlacesSearchForArrival(PublicTransportModel model, TextEditingController controller) async {
+    PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
+
+    controller.text = detail.result.formattedAddress;
+    model.departureLocation = detail.result.formattedAddress;
+    model.departureLatitude = detail.result.geometry.location.lat;
+    model.departureLongitude = detail.result.geometry.location.lng;
   }
 }
