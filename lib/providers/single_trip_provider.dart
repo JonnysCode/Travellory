@@ -9,7 +9,7 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/NotifyListener.dart';
+import 'package:travellory/providers/notify_listener.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/services/database/edit_database.dart';

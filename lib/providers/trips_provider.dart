@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
-import 'package:travellory/providers/NotifyListener.dart';
+import 'package:travellory/providers/notify_listener.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/delete_database.dart';

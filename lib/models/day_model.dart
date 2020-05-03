@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/utils/date_converter.dart';
 
 import 'abstract_model.dart';
 
@@ -9,13 +8,11 @@ class Day {
     @required this.date,
     this.bookings
   }){
-    dateString = toDateStringFrom(date);
     isExpanded = true;
     bookings = <Model>[];
   }
 
   DateTime date;
-  String dateString;
   List<Model> bookings;
   bool isExpanded;
 

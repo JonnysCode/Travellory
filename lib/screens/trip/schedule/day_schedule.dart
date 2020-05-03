@@ -74,7 +74,7 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
                 right: 0,
                 top: 22,
                 child: FashionFetishText(
-                  text: toShortenedMonthDateFrom(widget.day.dateString),
+                  text: dMMMyyyy(widget.day.date),
                   size: 14,
                   color: Colors.black38,
                   textAlign: TextAlign.center,
