@@ -12,18 +12,39 @@ import 'package:travellory/services/authentication/auth.dart';
 
 class MockAuth extends Mock implements BaseAuthService {}
 class MockFriendsProvider extends Mock implements FriendsProvider {}
+class MockUserModel extends Mock implements UserModel {}
+class FakeAuth extends Fake implements AuthService {
+  final userModel = UserModel(uid: 'uid', displayName: 'name');
+
+  @override
+  Stream<UserModel> get user {
+    return Stream<UserModel>.value(userModel);
+  }
+
+  @override
+  Future getCurrentUser() async {
+    return userModel;
+  }
+}
 
 void main() {
   Widget makeTestableWidget({Widget child}) {
-    FriendsModel friend = FriendsModel('uidFriend', 'friendName');
+    FriendsModel friend = FriendsModel('uidFriend', 'friendName', null);
     FriendsProvider friendsProvider = MockFriendsProvider();
+
+    MockAuth mockAuth = MockAuth();
+    UserModel user = UserModel(uid: 'uid', displayName: 'name');
 
     when(friendsProvider.isFetching)
         .thenReturn(false);
     when(friendsProvider.friends)
-        .thenAnswer((_) => [friend]);
+        .thenReturn([friend]);
     when(friendsProvider.friendRequests)
-        .thenAnswer((_) => [friend]);
+        .thenReturn([friend]);
+    when(mockAuth.user)
+        .thenAnswer((_) => Stream<UserModel>.value(user));
+
+
 
     return MultiProvider(
         providers: [
@@ -31,7 +52,7 @@ void main() {
               value: friendsProvider
           ),
           StreamProvider<UserModel>.value(
-              value: MockAuth().user
+              value: FakeAuth().user
           ),
         ],
         child: MaterialApp(

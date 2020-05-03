@@ -1,13 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:provider/provider.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/screens/friends/search_friend_page.dart';
+import 'package:travellory/services/authentication/auth.dart';
+
+class MockAuth extends Mock implements BaseAuthService {}
 
 void main() {
   Widget makeTestableWidget({Widget child}) {
-    return MaterialApp(
-      home: child,
-    );
+
+    return MultiProvider(
+        providers: [
+          StreamProvider<UserModel>.value(
+              value: MockAuth().user
+          ),
+        ],
+        child: Material(
+            child: child
+        ));
   }
 
   testWidgets('test if search friend page is present',
