@@ -8,14 +8,6 @@ import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
-TripModel _tripModel = TripModel(
-    name: 'California Camper Tour',
-    startDate: '2020-05-11',
-    endDate: '2020-05-19',
-    destination: 'California',
-    imageNr: 5
-);
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -59,108 +51,107 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _tripModel.init();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        key: Key('home_page'),
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              left: 30,
-              top: 30,
-              child: Image(
-                height: 100,
-                image: AssetImage('assets/images/home/011-cloud.png'),
-              ),
-            ),
-            Positioned(
-              top: 100,
-              left: 110,
-              child: FashionFetishText(
-                text: '24\u00B0',
-                size: 24,
-                color: Colors.black87,
-                fontWeight: FashionFontWeight.bold,
-              ),
-            ),
-            Positioned(
-              top: 40,
-              left: 175,
-              right: 20,
-              child: FashionFetishText(
-                text: 'Get ready Bill!',
-                size: 24,
-                fontWeight: FashionFontWeight.heavy,
-                height: 1.2,
-              ),
-            ),
-            Positioned(
-              top: 75,
-              left: 175,
-              right: 40,
-              child: Text(
-                'Your trip to Los Angeles starts in 1 day. Pack your bags now.',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black54,
+      child: Consumer<TripsProvider>(
+        builder: (_, trips, __) => !trips.activeTripInitiated
+            ? Loading()
+            : Container(
+          key: Key('home_page'),
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                left: 30,
+                top: 30,
+                child: Image(
+                  height: 100,
+                  image: AssetImage('assets/images/home/011-cloud.png'),
                 ),
               ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                child: Container(
-                  height: MediaQuery.of(context).size.height*0.8,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(blurRadius: 18, color: Colors.black.withOpacity(.2), offset: Offset(0.0, -6.0))
-                    ],
+              Positioned(
+                top: 100,
+                left: 110,
+                child: FashionFetishText(
+                  text: '24\u00B0',
+                  size: 24,
+                  color: Colors.black87,
+                  fontWeight: FashionFontWeight.bold,
+                ),
+              ),
+              Positioned(
+                top: 40,
+                left: 175,
+                right: 20,
+                child: FashionFetishText(
+                  text: 'Get ready Bill!',
+                  size: 24,
+                  fontWeight: FashionFontWeight.heavy,
+                  height: 1.2,
+                ),
+              ),
+              Positioned(
+                top: 75,
+                left: 175,
+                right: 40,
+                child: Text(
+                  'Your trip to Los Angeles starts in 1 day. Pack your bags now.',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black54,
                   ),
-                  child: Consumer<TripsProvider>(
-                    builder: (_, trips, __) => trips.activeTripInitiated
-                        ? Column(
-                      children: <Widget>[
-                        FashionFetishText(
-                          text: trips.activeTrip.tripModel.name,
-                          size: 20,
-                          height: 1.6,
-                          fontWeight: FashionFontWeight.heavy,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                          child: Container(
-                            height: 1,
-                            color: Colors.black12,
-                          ),
-                        ),
-                        Expanded(
-                          child: Schedule(
-                            key: Key('home_schedule'),
-                            trip: trips.activeTrip,
-                          ),
-                        ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height*0.8,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(blurRadius: 18, color: Colors.black.withOpacity(.2), offset: Offset(0.0, -6.0))
                       ],
-                    )
-                        : Loading(),
+                    ),
+                    child:  Column(
+                        children: <Widget>[
+                          FashionFetishText(
+                            text: trips.activeTrip.tripModel.name,
+                            size: 20,
+                            height: 1.6,
+                            fontWeight: FashionFontWeight.heavy,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                            child: Container(
+                              height: 1,
+                              color: Colors.black12,
+                            ),
+                          ),
+                          Expanded(
+                            child: Schedule(
+                              key: Key('home_schedule'),
+                              trip: trips.activeTrip,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
+              SpeedDialButton(
+                key: Key('home_page_dial'),
+                dials: _dials,
+                tripModel: trips.activeTrip.tripModel,
               ),
-            ),
-            SpeedDialButton(
-              key: Key('home_page_dial'),
-              dials: _dials,
-              tripModel: _tripModel,
-            ),
-          ],
-        ),
+            ],
+          ),
+      ),
       ),
     );
   }
