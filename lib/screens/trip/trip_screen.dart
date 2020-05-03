@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
-import 'package:travellory/shared/loading.dart';
+import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/booking_card.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
@@ -86,7 +86,7 @@ class TripScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: trip.isFetchingFlights
-                          ? Loading()
+                          ? LoadingHeart()
                           : Column(
                         children: trip.flights.map((model) => Padding(
                           padding: const EdgeInsets.only(bottom: 10),
@@ -107,7 +107,7 @@ class TripScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: trip.isFetchingAccommodations
-                          ? Loading()
+                          ? LoadingHeart()
                           : Column(
                         children: trip.accommodations.map((model) => Padding(
                           padding: const EdgeInsets.only(bottom: 10),
@@ -128,7 +128,7 @@ class TripScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: trip.isFetchingActivities
-                          ? Loading()
+                          ? LoadingHeart()
                           : Column(
                         children: trip.activities.map((model) => Padding(
                           padding: const EdgeInsets.only(bottom: 10),
@@ -149,7 +149,7 @@ class TripScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: trip.isFetchingRentalCars
-                          ? Loading()
+                          ? LoadingHeart()
                           : Column(
                           children: trip.rentalCars.map((model) => Padding(
                             padding: const EdgeInsets.only(bottom: 10),
@@ -170,7 +170,7 @@ class TripScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: trip.isFetchingPublicTransports
-                          ? Loading()
+                          ? LoadingHeart()
                           : Column(
                         children: trip.publicTransports.map((model) => Padding(
                           padding: const EdgeInsets.only(bottom: 10),

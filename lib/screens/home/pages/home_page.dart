@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
-import 'package:travellory/shared/loading.dart';
+import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Consumer<TripsProvider>(
         builder: (_, trips, __) => !trips.activeTripInitiated
-            ? Loading()
+            ? LoadingHeart()
             : Container(
           key: Key('home_page'),
           child: Stack(
