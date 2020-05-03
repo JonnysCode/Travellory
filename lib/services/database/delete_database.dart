@@ -28,6 +28,7 @@ class DatabaseDeleter {
     final HttpsCallable callable =
     CloudFunctions.instance.getHttpsCallable(functionName: correspondingFunctionName);
     try {
+      log.d('JSON data for function call ${correspondingFunctionName}: ${model.toMap()}');
       final HttpsCallableResult result = await callable.call(model.toMap());
       log.i(result.data);
       return Future<bool>.value(true);

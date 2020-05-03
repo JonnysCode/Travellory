@@ -12,8 +12,10 @@ class TripModel extends Model{
     this.startDate,
     this.endDate,
     this.destination,
+    this.country,
+    this.countryCode,
     this.imageNr,
-    this.index
+    this.index,
   });
 
   TripModel.fromData(trip) {
@@ -23,6 +25,8 @@ class TripModel extends Model{
     startDate = trip["startDate"];
     endDate = trip["endDate"];
     destination = trip["destination"];
+    country = trip["country"];
+    countryCode = trip["countryCode"];
     imageNr = trip["imageNr"];
     imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
   }
@@ -33,6 +37,8 @@ class TripModel extends Model{
   String startDate;
   String endDate;
   String destination;
+  String country;
+  String countryCode;
   String imagePath;
   int imageNr;
   int index;
@@ -68,6 +74,8 @@ class TripModel extends Model{
         "startDate": startDate,
         "endDate": endDate,
         "destination": destination,
+        "country": country,
+        "countryCode": countryCode,
         "imageNr": imageNr
     };
   }

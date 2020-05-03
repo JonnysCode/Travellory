@@ -16,6 +16,8 @@ import 'package:travellory/widgets/forms/show_dialog.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
+import 'package:travellory/services/api/google_places.dart';
+import 'package:google_maps_webservice/places.dart';
 
 class Activity extends StatefulWidget {
   Activity({Key key}) : super(key: key);
@@ -29,6 +31,8 @@ class ActivityState<T extends Activity> extends State<T> {
   final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
   ActivityModel _activityModel = ActivityModel();
+
+  final locationController = TextEditingController();
 
   static const int _imageItemCount = 13;
 
@@ -143,6 +147,15 @@ class ActivityState<T extends Activity> extends State<T> {
                       labelText: 'Location *',
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
+                      controller: locationController,
+                      onTap: () async {
+                        PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context, countryCode: tripModel.countryCode);
+
+                        locationController.text = detail.result.formattedAddress;
+                        _activityModel.location = detail.result.formattedAddress;
+                        _activityModel.latitude = detail.result.geometry.location.lat;
+                        _activityModel.longitude = detail.result.geometry.location.lng;
+                      },
                       onChanged: (value) => _activityModel.location = value),
                 ),
                 Padding(
@@ -291,5 +304,14 @@ class ActivityState<T extends Activity> extends State<T> {
         ),
       ),
     );
+  }
+
+  Future<void> _openGooglePlacesSearch(ActivityModel model, TextEditingController controller) async {
+    PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
+
+    controller.text = detail.result.formattedAddress;
+    model.location = detail.result.formattedAddress;
+    model.latitude = detail.result.geometry.location.lat;
+    model.longitude = detail.result.geometry.location.lng;
   }
 }
