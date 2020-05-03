@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/schedule_provider.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/screens/trip/schedule/day_schedule.dart';
@@ -15,19 +16,24 @@ class Schedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      shrinkWrap: false,
-      itemCount: trip.days.length+1,
-      itemBuilder: (context, index) {
-        if(index < trip.days.length){
-          return DaySchedule(day: trip.days[index],
-          );
-        } else {
-          return  SizedBox(height: 100);
-        }
-      },
-      separatorBuilder: (context, index) => const SizedBox(height: 8),
+    return ChangeNotifierProvider<ScheduleProvider>(
+      create: (_) => ScheduleProvider(trip),
+      child: Consumer<ScheduleProvider>(
+        builder: (_, schedule, __) => ListView.separated(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          shrinkWrap: false,
+          itemCount: schedule.days.length+1,
+          itemBuilder: (context, index) {
+            if(index < schedule.days.length){
+              return DaySchedule(day: schedule.days[index],
+              );
+            } else {
+              return  SizedBox(height: 100);
+            }
+          },
+          separatorBuilder: (context, index) => const SizedBox(height: 8),
+        ),
+      ),
     );
   }
 }
