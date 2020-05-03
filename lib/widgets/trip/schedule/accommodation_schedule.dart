@@ -45,7 +45,7 @@ class AccommodationSchedule extends StatelessWidget {
                   accommodation.address,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.white70,
+                    color: Colors.black54,
                   ),
                 ),
               ],
@@ -56,7 +56,7 @@ class AccommodationSchedule extends StatelessWidget {
                 'Check in: ${accommodation.checkinTime}',
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.white70,
+                  color: Colors.black54,
                 ),
               ),
             if(dayType == DayType.last && accommodation.checkoutTime.isNotEmpty)
@@ -64,7 +64,7 @@ class AccommodationSchedule extends StatelessWidget {
                 'Check out: ${accommodation.checkoutTime}',
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.white70,
+                  color: Colors.black54,
                 ),
               ),
           ],
