@@ -18,27 +18,37 @@ class FriendManagement {
 
   static Future<List<FriendsModel>> getFriends(String uid) async {
     final result = await _callHttpsCallable(uid, null, 'friends-getFriends');
-    return _generateFriendsListFromHttpsCallableResult(result);
+    return _generateFriendsListFromResult(result);
   }
 
   static Future<List<FriendsModel>> getFriendRequests(String uid) async {
     final result =
         await _callHttpsCallable(uid, null, 'friends-getFriendRequests');
-    return _generateFriendsListFromHttpsCallableResult(result);
+    return _generateFriendRequestListFromResult(result);
   }
 
   static Future<FriendsModel> getPublicUserInformation(String uid) async {
     final result =
         await _callHttpsCallable(uid, null, 'user-getPublicUserInformation');
-    FriendsModel friend =
-        FriendsModel(result.data['uid'], result.data['displayName']);
+    FriendsModel friend = FriendsModel(result.data['uid'],
+        result.data['displayName'], result.data['photoURL']);
     return friend;
   }
 
-  static Future<List<FriendsModel>> _generateFriendsListFromHttpsCallableResult(
+  static Future<List<FriendsModel>> _generateFriendsListFromResult(
       HttpsCallableResult result) async {
     List<FriendsModel> friendsList = List();
     for (String uid in result.data) {
+      FriendsModel friend = await getPublicUserInformation(uid);
+      friendsList.add(friend);
+    }
+    return friendsList;
+  }
+
+  static Future<List<FriendsModel>> _generateFriendRequestListFromResult(
+      HttpsCallableResult result) async {
+    List<FriendsModel> friendsList = List();
+    for (String uid in result.data.keys) {
       FriendsModel friend = await getPublicUserInformation(uid);
       friendsList.add(friend);
     }
@@ -67,7 +77,7 @@ class FriendManagement {
       case SocialActionType.declineFriendRequest:
         return 'friends-declineFriendRequest';
       case SocialActionType.removeFriend:
-        return 'friends-declineFriendRequest';
+        return 'friends-removeFriend';
       default:
         return null;
     }
