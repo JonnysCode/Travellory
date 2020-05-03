@@ -5,6 +5,7 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
+import 'package:travellory/screens/bookings/add_accommodation.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import '../../logger.dart';
@@ -19,16 +20,16 @@ void editModel(Model model, BuildContext context) {
   } else if (model is RentalCarModel) {
     changeRoute = '/edit/rentalcar';
   } else if (model is AccommodationModel) {
-    changeRoute = '/edit/accommodation';
+    changeRoute = '/booking/accommodation';
   } else if (model is PublicTransportModel) {
-    changeRoute = '/edit/publictransport';
+    changeRoute = '/booking/publictransport';
   } else if (model is ActivityModel) {
     changeRoute = '/edit/activity';
   } else {
     log.w('No edit page was found for model');
   }
 
-  Navigator.pushNamed(context, changeRoute, arguments: model);
+  Navigator.pushNamed(context, changeRoute, arguments: ModifyModelArguments(model: model, isNewModel: false));
 }
 
 void showEditedBookingDialog(BuildContext context, String alertText) {
@@ -57,4 +58,11 @@ void showEditedBookingDialog(BuildContext context, String alertText) {
       );
     },
   );
+}
+
+class ModifyModelArguments {
+  ModifyModelArguments({this.model, this.isNewModel});
+
+  final Model model;
+  final bool isNewModel;
 }
