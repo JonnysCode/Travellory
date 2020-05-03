@@ -5,6 +5,7 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/screens/bookings/add_rental_car.dart';
+import 'package:travellory/services/database/edit.dart';
 
 class EditRentalCar extends RentalCar {
   EditRentalCar({
@@ -22,14 +23,16 @@ class _EditRentalCarState extends RentalCarState<EditRentalCar> {
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
 
-    final RentalCarModel _rentalCarModel = ModalRoute.of(context).settings.arguments;
+//    final RentalCarModel _rentalCarModel = ModalRoute.of(context).settings.arguments;
+    ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
+    final RentalCarModel _rentalCarModel = arguments.model;
 
     return Scaffold(
       key: Key('EditRentalCar'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, _rentalCarModel, false),
+        child: getContent(context, singleTripProvider, tripModel, _rentalCarModel, arguments.isNewModel),
       ),
     );
   }
