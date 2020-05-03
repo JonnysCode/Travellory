@@ -106,7 +106,13 @@ class HomePage extends StatelessWidget {
                       BoxShadow(blurRadius: 18, color: Colors.black.withOpacity(.2), offset: Offset(0.0, -6.0))
                     ],
                   ),
-                  child:  Column(
+                  child:  trip == null
+                      ? Center(
+                    child: Text(
+                      'Create a trip first'
+                    ),
+                  )
+                      : Column(
                       children: <Widget>[
                         FashionFetishText(
                           text: trip.tripModel.name,
@@ -132,11 +138,12 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-            SpeedDialButton(
-              key: Key('home_page_dial'),
-              dials: _dials,
-              tripModel: trip.tripModel,
-            ),
+            if(trip != null)
+              SpeedDialButton(
+                key: Key('home_page_dial'),
+                dials: _dials,
+                tripModel: trip.tripModel,
+              ),
           ],
         ),
       ),
