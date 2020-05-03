@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
@@ -10,6 +13,7 @@ import 'package:travellory/services/friends/friend_management.dart';
 import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'package:travellory/widgets/friends/friends_card_widget.dart';
 import 'package:travellory/widgets/friends/friends_list_widget.dart';
 
 class FriendListPage extends StatefulWidget {
@@ -21,12 +25,18 @@ class _FriendListPageState extends State<FriendListPage> {
   void _performSocialAction(
       String uidSender, String uidReceiver, SocialActionType type) async {
     await FriendManagement.performSocialAction(uidSender, uidReceiver, type)
-        .then((value) {
+        .then((value) async {
       bool success = true;
       String message = _getMessage(type, success);
       _showSnackBar(message, success);
+
+      final FriendsProvider friendsProvider =
+          Provider.of<FriendsProvider>(context, listen: false);
+      await friendsProvider.update();
+      setState(() {});
     }).catchError((error) {
       bool success = false;
+      print(error.toString());
       String message = _getMessage(type, success);
       _showSnackBar(message, success);
     });
@@ -68,6 +78,38 @@ class _FriendListPageState extends State<FriendListPage> {
           borderRadius: 12,
           duration: Duration(seconds: 3))
         ..show(context),
+    );
+  }
+
+  Widget friendRequestButtons(String uidSender, String uidReceiver) {
+    return Wrap(
+      children: <Widget>[
+        socialButton(
+            Key('accept_button'),
+            Icons.person_add,
+            Colors.green,
+            () => _performSocialAction(
+                uidSender, uidReceiver, SocialActionType.acceptFriendRequest)),
+        socialButton(
+            Key('decline_button'),
+            Icons.clear,
+            Colors.red,
+            () => _performSocialAction(
+                uidSender, uidReceiver, SocialActionType.declineFriendRequest)),
+      ],
+    );
+  }
+
+  Widget removeFriendButton(String uidSender, String uidReceiver) {
+    return Wrap(
+      children: <Widget>[
+        socialButton(
+            Key('remove_button'),
+            Icons.delete,
+            Colors.red,
+            () => _performSocialAction(
+                uidSender, uidReceiver, SocialActionType.removeFriend)),
+      ],
     );
   }
 
@@ -120,37 +162,45 @@ class _FriendListPageState extends State<FriendListPage> {
               ),
             ),
           ),
-          Consumer<FriendsProvider>(
-            builder: (_, friendsProvider, __) => friendsProvider.isFetching
-                ? Loading()
-                : friendsProvider.friendRequests.isEmpty
-                    ? Text('You have no friend requests :(')
-                    : friendList(
-                        Key('friend_requests_list'),
-                        158,
-                        friendsProvider.friendRequests,
-                        Wrap(
-                          children: <Widget>[
-                            socialButton(
-                                Key('accept_button'),
-                                Icons.person_add,
-                                Colors.green,
-                                () => _performSocialAction(
-                                    friendsProvider.friendRequests[0].uid,
-                                    user.uid,
-                                    SocialActionType.acceptFriendRequest)),
-                            socialButton(
-                                Key('decline_button'),
-                                Icons.clear,
-                                Colors.red,
-                                () => _performSocialAction(
-                                    friendsProvider.friendRequests[0].uid,
-                                    user.uid,
-                                    SocialActionType.declineFriendRequest)),
-                          ],
-                        ),
-                        10,
-                        context),
+          Padding(
+            key: Key('friend-requests-list'),
+            padding: EdgeInsets.only(
+                left: 15,
+                right: 20,
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(children: <Widget>[
+              Container(
+                height: 240,
+                child: Scrollbar(
+                    child: Consumer<FriendsProvider>(
+                  builder: (_, friendsProvider, __) => friendsProvider
+                          .isFetching
+                      ? Loading()
+                      : friendsProvider.friendRequests.isEmpty
+                          ? Text('You have no friend requests :(')
+                          : ListView.separated(
+                              padding: EdgeInsets.only(
+                                bottom: 50,
+                              ),
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 12),
+                              itemCount: friendsProvider.friendRequests.length,
+                              itemBuilder: (context, index) {
+                                FriendsModel friend =
+                                    friendsProvider.friendRequests[index];
+                                return friendsCard(
+                                  context,
+                                  friend,
+                                  friendRequestButtons(friend.uid, user.uid),
+                                  10,
+                                );
+                              },
+                            ),
+                )),
+              ),
+            ]),
           ),
           SizedBox(height: 20),
           Padding(
@@ -170,44 +220,45 @@ class _FriendListPageState extends State<FriendListPage> {
               ),
             ),
           ),
-          Consumer<FriendsProvider>(
-            builder: (_, friendsProvider, __) => friendsProvider.isFetching
-                ? Loading()
-                : friendsProvider.friends.isEmpty
-                    ? Text('You have no friends :(')
-                    : friendList(
-                        Key('friends_list'),
-                        240,
-                        friendsProvider.friends,
-                        Wrap(
-                          children: <Widget>[
-                            socialButton(
-                                Key('remove_button'),
-                                Icons.delete,
-                                Colors.red,
-                                () => _performSocialAction(
-                                    friendsProvider.friends[0].uid,
-                                    user.uid,
-                                    SocialActionType.removeFriend)),
-                          ],
-                        ),
-//                OptionButton(
-//                  optionItems: <OptionItem>[
-//                    OptionItem(
-//                        description: 'Remove',
-//                        icon: FontAwesomeIcons.trash,
-//                        onTab: () => _removeFriend(
-//                            friendsProvider
-//                                .friends[0]
-//                                .uid,
-//                            user.uid
-//                        ),
-//                        color: Colors.red
-//                    ),
-//                  ],
-//                ),
-                        6,
-                        context),
+          Padding(
+            key: Key('friends-list'),
+            padding: EdgeInsets.only(
+                left: 15,
+                right: 20,
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(children: <Widget>[
+              Container(
+                height: 240,
+                child: Scrollbar(
+                    child: Consumer<FriendsProvider>(
+                  builder: (_, friendsProvider, __) =>
+                      friendsProvider.isFetching
+                          ? Loading()
+                          : friendsProvider.friends.isEmpty
+                              ? Text('You have no friends :(')
+                              : ListView.separated(
+                                  padding: EdgeInsets.only(
+                                    bottom: 50,
+                                  ),
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(height: 12),
+                                  itemCount: friendsProvider.friends.length,
+                                  itemBuilder: (context, index) {
+                                    FriendsModel friend =
+                                        friendsProvider.friends[index];
+                                    return friendsCard(
+                                      context,
+                                      friend,
+                                      removeFriendButton(friend.uid, user.uid),
+                                      10,
+                                    );
+                                  },
+                                ),
+                )),
+              ),
+            ]),
           ),
         ],
       ),

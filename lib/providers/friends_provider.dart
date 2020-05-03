@@ -29,8 +29,8 @@ class FriendsProvider extends ChangeNotifier{
     unawaited(_fetchFriends());
   }
 
-  void update() {
-    unawaited(_fetchFriends());
+  void update() async {
+    await _fetchFriends();
   }
 
   Future<void> _fetchFriends() async {

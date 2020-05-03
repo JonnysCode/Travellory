@@ -4,7 +4,7 @@ import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 @override
-Widget friendsCard(BuildContext context, List<FriendsModel> list, Widget button, double topPadding, int index) {
+Widget friendsCard(BuildContext context, FriendsModel friend, Widget button, double topPadding) {
   double cardSize = 70;
 
   return Container(
@@ -32,7 +32,7 @@ Widget friendsCard(BuildContext context, List<FriendsModel> list, Widget button,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         FashionFetishText(
-                          text: '${list[index].username}',
+                          text: friend.username,
                           size: 18.0,
                           fontWeight: FashionFontWeight.heavy,
                           height: 1.1,

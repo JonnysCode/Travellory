@@ -23,7 +23,7 @@ Widget friendList(Key key, double height, List<FriendsModel> list, Widget button
                 separatorBuilder: (context, index) => const SizedBox(height: 12),
                 itemCount: list.length,
                 itemBuilder: (context, index) {
-                  return friendsCard(context, list, button, topPadding, index);
+                  return friendsCard(context, list[index], button, topPadding);
                 },
               ),
             ),
