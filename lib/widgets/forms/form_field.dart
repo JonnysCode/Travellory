@@ -20,7 +20,7 @@ class TravelloryFormField extends StatefulWidget {
   final bool optional;
   final TextEditingController controller;
   final void Function(String) onChanged;
-  final void Function() onTap;
+  final void Function(TextEditingController) onTap;
 
   final String validatorText = 'Please enter the required information';
 
@@ -70,7 +70,7 @@ class TravelloryFormFieldState extends State<TravelloryFormField>
         },
         style: TextStyle(color: Colors.black),
         onChanged: widget.onChanged,
-        onTap: widget.onTap,
+        onTap: () => widget.onTap(controller),
         decoration: InputDecoration(
           labelText: widget.labelText,
           labelStyle: TextStyle(color: Colors.black),

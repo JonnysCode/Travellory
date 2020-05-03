@@ -30,9 +30,6 @@ class RentalCarState<T extends RentalCar> extends State<T> {
 
   final GlobalKey<DateFormFieldState> _pickUpDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
-  final pickupLocationController = TextEditingController();
-  final returnLocationController = TextEditingController();
-
   bool validateForm() {
     return rentalCarFormKey.currentState.validate();
   }
@@ -45,7 +42,6 @@ class RentalCarState<T extends RentalCar> extends State<T> {
 
   Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
       TripModel tripModel, RentalCarModel model, bool isNewModel) {
-
     _rentalCarModel = model;
 
     return Column(
@@ -67,7 +63,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                    initialValue: _rentalCarModel.bookingReference,
+                      initialValue: _rentalCarModel.bookingReference,
                       labelText: 'Booking Reference',
                       icon: Icon(FontAwesomeIcons.ticketAlt),
                       optional: true,
@@ -93,10 +89,10 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       labelText: 'Pick Up Location',
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
-                      controller: pickupLocationController,
-                      onTap: () async {
-                        PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
-                        pickupLocationController.text = detail.result.formattedAddress;
+                      onTap: (controller) async {
+                        PlacesDetailsResponse detail =
+                            await GooglePlaces.openGooglePlacesSearch(context);
+                        controller.text = detail.result.formattedAddress;
                         _rentalCarModel.pickupLocation = detail.result.formattedAddress;
                         _rentalCarModel.pickupLatitude = detail.result.geometry.location.lat;
                         _rentalCarModel.pickupLongitude = detail.result.geometry.location.lng;
@@ -134,11 +130,12 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       labelText: 'Return Location',
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: true,
-                      controller: returnLocationController,
-                      onTap: () async {
-                        PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context, countryCode: tripModel.countryCode);
+                      onTap: (controller) async {
+                        PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
+                            context,
+                            countryCode: tripModel.countryCode);
 
-                        returnLocationController.text = detail.result.formattedAddress;
+                        controller.text = detail.result.formattedAddress;
                         _rentalCarModel.returnLocation = detail.result.formattedAddress;
                         _rentalCarModel.returnLatitude = detail.result.geometry.location.lat;
                         _rentalCarModel.returnLongitude = detail.result.geometry.location.lng;
@@ -227,8 +224,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
     void Function() onSubmit;
     if (isNewModel) {
       onSubmit =
-          onSubmitBooking(
-              singleTripProvider, model, 'booking-addRentalCar', context, alertText);
+          onSubmitBooking(singleTripProvider, model, 'booking-addRentalCar', context, alertText);
     } else {
       onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
     }

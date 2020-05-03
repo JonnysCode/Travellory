@@ -22,7 +22,6 @@ import 'package:travellory/widgets/trip/trip_header.dart';
 import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 
-
 class PublicTransport extends StatefulWidget {
   PublicTransport({Key key}) : super(key: key);
 
@@ -33,8 +32,6 @@ class PublicTransport extends StatefulWidget {
 class PublicTransportState<T extends PublicTransport> extends State<T> {
   ListModel<Widget> publicTransportList;
   final GlobalKey<FormState> publicTransportFormKey = GlobalKey<FormState>();
-
-//  final PublicTransportModel publicTransportModel = PublicTransportModel();
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final GlobalKey<DateFormFieldState> _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
@@ -53,9 +50,6 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
 
   final String cancelText =
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
-
-  final departureLocationController = TextEditingController();
-  final arrivalLocationController = TextEditingController();
 
   Widget itemBuilder(BuildContext context, int index, Animation<double> animation) {
     return FormItem(animation: animation, child: publicTransportList[index]);
@@ -186,11 +180,11 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         labelText: 'Departure Location *',
         icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
-        controller: departureLocationController,
-        onTap: () async {
-          PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context, countryCode: tripModel.countryCode);
+        onTap: (controller) async {
+          PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context,
+              countryCode: tripModel.countryCode);
 
-          departureLocationController.text = detail.result.name;
+          controller.text = detail.result.name;
           _publicTransportModel.departureLocation = detail.result.name;
           _publicTransportModel.departureLatitude = detail.result.geometry.location.lat;
           _publicTransportModel.departureLongitude = detail.result.geometry.location.lng;
@@ -216,11 +210,10 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         labelText: 'Arrival Location *',
         icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
-        controller: arrivalLocationController,
-        onTap: () async {
+        onTap: (controller) async {
           PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
 
-          arrivalLocationController.text = detail.result.name;
+          controller.text = detail.result.name;
           _publicTransportModel.arrivalLocation = detail.result.name;
           _publicTransportModel.arrivalLatitude = detail.result.geometry.location.lat;
           _publicTransportModel.arrivalLongitude = detail.result.geometry.location.lng;

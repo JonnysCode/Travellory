@@ -36,9 +36,6 @@ class AccommodationState<T extends Accommodation> extends State<T> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final GlobalKey<DateFormFieldState> _checkinDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
-  /// for accomodation address field
-  final addressController = TextEditingController();
-
   bool validateForm() {
     return accommodationFormKey.currentState.validate();
   }
@@ -178,8 +175,8 @@ class AccommodationState<T extends Accommodation> extends State<T> {
               airbnbAdditional);
           showAdditional(
               accommodationList, value.name == 'Hotel', accommodationTypeDropdown, hotelAdditional);
-          showAdditional(
-              accommodationList, value.name == 'Other Accommodation', accommodationTypeDropdown, otherAdditional);
+          showAdditional(accommodationList, value.name == 'Other Accommodation',
+              accommodationTypeDropdown, otherAdditional);
         },
         validatorText: 'Please enter the required information');
 
@@ -205,11 +202,11 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         labelText: 'Address *',
         icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
-        controller: addressController,
-        onTap: () async {
-          PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context, countryCode: tripModel.countryCode);
+        onTap: (controller) async {
+          PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context,
+              countryCode: tripModel.countryCode);
 
-          addressController.text = detail.result.formattedAddress;
+          controller.text = detail.result.formattedAddress;
           _accommodationModel.address = detail.result.formattedAddress;
           _accommodationModel.latitude = detail.result.geometry.location.lat;
           _accommodationModel.longitude = detail.result.geometry.location.lng;
@@ -281,7 +278,8 @@ class AccommodationState<T extends Accommodation> extends State<T> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(tripModel, singleTripProvider, context, _accommodationModel, arguments.isNewModel),
+        child: getContent(
+            tripModel, singleTripProvider, context, _accommodationModel, arguments.isNewModel),
       ),
     );
   }
