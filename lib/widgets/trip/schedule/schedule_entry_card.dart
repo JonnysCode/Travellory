@@ -59,7 +59,7 @@ Widget getScheduleAccordingTo(ScheduleEntry scheduleEntry) {
   } else if (model is PublicTransportModel) {
     widget = PublicTransportSchedule(model);
   } else if (model is ActivityModel) {
-    widget = ActivitySchedule(model);
+    widget = ActivitySchedule(scheduleEntry);
   } else {
     widget = Container();
   }
