@@ -4,7 +4,7 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/trip/booking_card.dart';
+import 'package:travellory/widgets/bookings/booking_card.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 
 class TripScreen extends StatelessWidget {
@@ -94,8 +94,6 @@ class TripScreen extends StatelessWidget {
                               model: model,
                               onTap: () => Navigator.pushNamed(
                                   context, '/view/flight', arguments: model),
-                              color: getBookingColorAccordingTo(model),
-                              getSchedule: getBookingsAccordingTo(model),
                             ),
                         )).toList(),
                       ),
@@ -115,8 +113,6 @@ class TripScreen extends StatelessWidget {
                             model: model,
                             onTap: () => Navigator.pushNamed(
                                 context, '/view/accommodation', arguments: model),
-                            color: getBookingColorAccordingTo(model),
-                            getSchedule: getBookingsAccordingTo(model),
                           ),
                         )).toList(),
                       ),
@@ -136,8 +132,6 @@ class TripScreen extends StatelessWidget {
                             model: model,
                             onTap: () => Navigator.pushNamed(
                                 context, '/view/activity', arguments: model),
-                            color: getBookingColorAccordingTo(model),
-                            getSchedule: getBookingsAccordingTo(model),
                           ),
                         )).toList(),
                       ),
@@ -157,8 +151,6 @@ class TripScreen extends StatelessWidget {
                               model: model,
                               onTap: () => Navigator.pushNamed(
                                   context, '/view/rentalcar', arguments: model),
-                              color: getBookingColorAccordingTo(model),
-                              getSchedule: getBookingsAccordingTo(model),
                             ),
                           )).toList(),
                         ),
@@ -178,8 +170,6 @@ class TripScreen extends StatelessWidget {
                             model: model,
                             onTap: () => Navigator.pushNamed(
                                 context, '/view/publictransport', arguments: model),
-                            color: getBookingColorAccordingTo(model),
-                            getSchedule: getBookingsAccordingTo(model),
                           ),
                         )).toList(),
                       ),

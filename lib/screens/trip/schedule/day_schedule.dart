@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/day_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/trip/booking_card.dart';
 import 'package:travellory/widgets/trip/schedule/day_circle.dart';
+import 'package:travellory/widgets/trip/schedule/schedule_entry_card.dart';
 
 class DaySchedule extends StatefulWidget {
   const DaySchedule({
@@ -26,10 +26,8 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
   @override
   void initState() {
     super.initState();
-    bookingsCards = widget.day.bookings.map((model) => BookingCard(
-      model: model,
-      color: getColorAccordingTo(model),
-      getSchedule: getScheduleAccordingTo(model),
+    bookingsCards = widget.day.entries.map((entry) => ScheduleEntryCard(
+      scheduleEntry: entry,
     )).toList();
 
     _isExpanded = widget.day.isExpanded;
