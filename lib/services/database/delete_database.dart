@@ -49,15 +49,15 @@ class DatabaseDeleter {
 String getDeleteFunctionNameBasedOn(Model model) {
   String functionName;
   if (model is FlightModel) {
-    functionName = 'delete-flight';
+    functionName = 'booking-deleteFlight';
   } else if (model is RentalCarModel) {
-    functionName = 'delete-rentalCar';
+    functionName = 'booking-deleteRentalCar';
   } else if (model is AccommodationModel) {
-    functionName = 'delete-accommodation';
+    functionName = 'booking-deleteAccommodation';
   } else if (model is PublicTransportModel) {
-    functionName = 'delete-publicTransport';
+    functionName = 'booking-deletePublicTransportation';
   } else if (model is ActivityModel) {
-    functionName = 'delete-activity';
+    functionName = 'activity-deleteActivity';
   } else {
     functionName = '';
   }
