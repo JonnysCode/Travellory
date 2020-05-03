@@ -47,15 +47,15 @@ class DatabaseEditor {
 String getEditFunctionNameBasedOn(Model model) {
   String functionName;
   if (model is FlightModel) {
-    functionName = 'edit-flight';
+    functionName = 'booking-updateFlight';
   } else if (model is RentalCarModel) {
-    functionName = 'edit-rentalCar';
+    functionName = 'booking-updateRentalCar';
   } else if (model is AccommodationModel) {
-    functionName = 'edit-accommodation';
+    functionName = 'booking-updateAccommodation';
   } else if (model is PublicTransportModel) {
-    functionName = 'edit-publicTransport';
+    functionName = 'booking-updatePublicTransportation';
   } else if (model is ActivityModel) {
-    functionName = 'edit-activity';
+    functionName = 'activity-updateActivity';
   } else {
     functionName = '';
     log.w('No function name was found for model');
