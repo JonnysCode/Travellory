@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/models/schedule_entry.dart';
+import 'package:travellory/widgets/bookings/bookings_card_specifics.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class AccommodationSchedule extends StatelessWidget {
-  const AccommodationSchedule(this.accommodation, {Key key}) : super(key : key);
-  final AccommodationModel accommodation;
+  const AccommodationSchedule(this.scheduleEntry, {Key key}) : super(key: key);
+
+  final ScheduleEntry scheduleEntry;
 
   @override
   Widget build(BuildContext context) {
+    AccommodationModel accommodation = scheduleEntry.booking;
+    DayType dayType = scheduleEntry.dayType;
+    
     return Row(
       key: Key('accommodation'),
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 10, right: 16),
-          child: FaIcon(
-            FontAwesomeIcons.bed,
-            size: 28,
-            color: Colors.black54,
-          ),
+          child: AccommodationIcon(model: accommodation),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,13 +51,22 @@ class AccommodationSchedule extends StatelessWidget {
               ],
             ),
             SizedBox(height: 2),
-            Text(
-              'Check in: ${accommodation.checkinTime}',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.white70,
+            if(dayType == DayType.first && accommodation.checkinTime.isNotEmpty)
+              Text(
+                'Check in: ${accommodation.checkinTime}',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.white70,
+                ),
               ),
-            ),
+            if(dayType == DayType.last && accommodation.checkoutTime.isNotEmpty)
+              Text(
+                'Check out: ${accommodation.checkoutTime}',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.white70,
+                ),
+              ),
           ],
         ),
       ],
