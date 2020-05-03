@@ -32,8 +32,6 @@ class ActivityState<T extends Activity> extends State<T> {
 
   ActivityModel _activityModel = ActivityModel();
 
-  final locationController = TextEditingController();
-
   static const int _imageItemCount = 13;
 
   bool validateForm() {
@@ -147,11 +145,12 @@ class ActivityState<T extends Activity> extends State<T> {
                       labelText: 'Location *',
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
-                      controller: locationController,
-                      onTap: () async {
-                        PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context, countryCode: tripModel.countryCode);
+                      onTap: (controller) async {
+                        PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
+                            context,
+                            countryCode: tripModel.countryCode);
 
-                        locationController.text = detail.result.formattedAddress;
+                        controller.text = detail.result.formattedAddress;
                         _activityModel.location = detail.result.formattedAddress;
                         _activityModel.latitude = detail.result.geometry.location.lat;
                         _activityModel.longitude = detail.result.geometry.location.lng;
@@ -306,7 +305,8 @@ class ActivityState<T extends Activity> extends State<T> {
     );
   }
 
-  Future<void> _openGooglePlacesSearch(ActivityModel model, TextEditingController controller) async {
+  Future<void> _openGooglePlacesSearch(
+      ActivityModel model, TextEditingController controller) async {
     PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
 
     controller.text = detail.result.formattedAddress;

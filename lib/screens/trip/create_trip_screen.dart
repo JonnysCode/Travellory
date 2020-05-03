@@ -26,8 +26,6 @@ class _CreateTripState extends State<CreateTrip> {
   final DatabaseAdder databaseAdder = DatabaseAdder();
   final createTripFormKey = GlobalKey<FormState>();
 
-  final destinationController = TextEditingController();
-
   final String alertText =
       "You've just created a new trip. You can see all the information in the home screen. "
       "Add bookings and customize your trip with a click on it";
@@ -126,12 +124,11 @@ class _CreateTripState extends State<CreateTrip> {
                           labelText: 'Destination *',
                           icon: Icon(Icons.directions_car),
                           optional: false,
-                          controller: destinationController,
-                          onTap: () async {
+                          onTap: (controller) async {
                             PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
                             AddressComponent country = GooglePlaces.getCountryAddressComponent(detail);
 
-                            destinationController.text = detail.result.formattedAddress;
+                            controller.text = detail.result.formattedAddress;
                             tripModel.destination = detail.result.formattedAddress;
                             tripModel.country = country.longName;
                             tripModel.countryCode = country.shortName;
