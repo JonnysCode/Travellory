@@ -13,7 +13,9 @@ class ActivityModel extends Model {
       this.endDate = '',
       this.endTime = '',
       this.imageNr = 1,
-      this.notes = ''});
+      this.notes = '',
+      this.latitude = 0.0,
+      this.longitude = 0.0});
 
   ActivityModel.fromData(activity) {
     tripUID = activity["tripUID"];
@@ -28,6 +30,8 @@ class ActivityModel extends Model {
     endTime = activity["endTime"];
     imageNr = activity["imageNr"];
     notes = activity["notes"];
+    latitude = activity["latitude"];
+    longitude = activity["longitude"];
     imagePath = 'assets/images/activity/activity_${imageNr.toString()}.png';
   }
 
@@ -44,6 +48,8 @@ class ActivityModel extends Model {
   int imageNr;
   String imagePath;
   String notes;
+  double latitude;
+  double longitude;
 
   void init() {
     _initImagePath();
@@ -67,7 +73,9 @@ class ActivityModel extends Model {
       "endDate": endDate,
       "endTime": endTime,
       "imageNr": imageNr,
-      "notes": notes
+      "notes": notes,
+      "latitude": latitude,
+      "longitude": longitude
     };
   }
 }

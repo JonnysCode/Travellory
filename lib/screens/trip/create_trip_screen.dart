@@ -10,6 +10,8 @@ import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
+import 'package:travellory/services/api/google_places.dart';
+import 'package:google_maps_webservice/places.dart';
 
 
 class CreateTrip extends StatefulWidget {
@@ -23,6 +25,8 @@ class _CreateTripState extends State<CreateTrip> {
   final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final DatabaseAdder databaseAdder = DatabaseAdder();
   final createTripFormKey = GlobalKey<FormState>();
+
+  final destinationController = TextEditingController();
 
   final String alertText =
       "You've just created a new trip. You can see all the information in the home screen. "
@@ -119,9 +123,19 @@ class _CreateTripState extends State<CreateTrip> {
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                         child: TravelloryFormField(
-                          labelText: 'Destination(s) *',
+                          labelText: 'Destination *',
                           icon: Icon(Icons.directions_car),
                           optional: false,
+                          controller: destinationController,
+                          onTap: () async {
+                            PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
+                            AddressComponent country = GooglePlaces.getCountryAddressComponent(detail);
+
+                            destinationController.text = detail.result.formattedAddress;
+                            tripModel.destination = detail.result.formattedAddress;
+                            tripModel.country = country.longName;
+                            tripModel.countryCode = country.shortName;
+                          },
                           onChanged: (value) => tripModel.destination = value,
                         ),
                       ),

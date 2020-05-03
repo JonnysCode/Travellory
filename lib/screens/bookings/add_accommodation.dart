@@ -36,12 +36,8 @@ class AccommodationState<T extends Accommodation> extends State<T> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final GlobalKey<DateFormFieldState> _checkinDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
-  final nameController = TextEditingController();
-
-  /// for accomodation name field
-  final addressController = TextEditingController();
-
   /// for accomodation address field
+  final addressController = TextEditingController();
 
   bool validateForm() {
     return accommodationFormKey.currentState.validate();
@@ -122,6 +118,10 @@ class AccommodationState<T extends Accommodation> extends State<T> {
     ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
     AccommodationModel _accommodationModel = arguments.model;
 
+    final SingleTripProvider singleTripProvider =
+        Provider.of<TripsProvider>(context, listen: false).selectedTrip;
+    final TripModel tripModel = singleTripProvider.tripModel;
+
     Widget hotelAdditional = Column(
       children: <Widget>[
         SectionTitle('Further Hotel Details'),
@@ -199,8 +199,6 @@ class AccommodationState<T extends Accommodation> extends State<T> {
           labelText: 'Name *',
           icon: Icon(FontAwesomeIcons.solidBuilding),
           optional: false,
-          controller: nameController,
-          onTap: () => _openGooglePlacesSearch(_accommodationModel),
           onChanged: (value) => _accommodationModel.name = value),
       TravelloryFormField(
         initialValue: _accommodationModel.address,
@@ -208,6 +206,14 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
         controller: addressController,
+        onTap: () async {
+          PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context, countryCode: tripModel.countryCode);
+
+          addressController.text = detail.result.formattedAddress;
+          _accommodationModel.address = detail.result.formattedAddress;
+          _accommodationModel.latitude = detail.result.geometry.location.lat;
+          _accommodationModel.longitude = detail.result.geometry.location.lng;
+        },
         onChanged: (value) => _accommodationModel.address = value,
       ),
       SectionTitle('Check-In Details'),
@@ -270,10 +276,6 @@ class AccommodationState<T extends Accommodation> extends State<T> {
       removedItemBuilder: _removedItemBuilder,
     );
 
-    final SingleTripProvider singleTripProvider =
-        Provider.of<TripsProvider>(context, listen: false).selectedTrip;
-    final TripModel tripModel = singleTripProvider.tripModel;
-
     return Scaffold(
       key: Key('Accommodation'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -282,16 +284,5 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         child: getContent(tripModel, singleTripProvider, context, _accommodationModel, arguments.isNewModel),
       ),
     );
-  }
-
-  Future<void> _openGooglePlacesSearch(AccommodationModel model) async {
-    PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
-
-    nameController.text = detail.result.name;
-    addressController.text = detail.result.formattedAddress;
-    model.name = detail.result.name;
-    model.address = detail.result.formattedAddress;
-    model.latitude = detail.result.geometry.location.lat;
-    model.longitude = detail.result.geometry.location.lng;
   }
 }
