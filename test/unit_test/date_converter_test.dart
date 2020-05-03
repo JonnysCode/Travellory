@@ -78,8 +78,13 @@ void main(){
     final String date3 = '2020-01-31';
     final DateTime dateTime3 = getDateTimeFrom(date3);
 
+    final String date4 = '31-01-2020';
+    final DateTime dateTime4 = getDateTimeFrom(date4);
+
+
     expect(dateTime1, DateTime(2020, 8, 5));
     expect(dateTime2, DateTime(2020, 12, 1));
     expect(dateTime3, DateTime(2020, 1, 31));
+    expect(dateTime4, DateTime(2020, 1, 31));
   });
 }

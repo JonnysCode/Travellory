@@ -155,11 +155,13 @@ class SingleTripProvider {
       ));
       dateTime = dateTime.add(Duration(days: 1));
     } while (dateTime.compareTo(endDateTime) <= 0);
+    print(days);
     _addBookingToDays();
   }
 
   void _addBookingToDays(){
     for(var day in days){
+      print('Date: ' + day.date.toString());
       flights.forEach((flight) {
         var startDate = getDateTimeFrom(flight.departureDate);
         var endDate = getDateTimeFrom(flight.arrivalDate) ?? startDate;
@@ -184,6 +186,7 @@ class SingleTripProvider {
       accommodations.forEach((accommodation){
         var startDate = getDateTimeFrom(accommodation.checkinDate);
         var endDate = getDateTimeFrom(accommodation.checkoutDate) ?? startDate;
+        print('accommodation startDate: ' + startDate.toString() + ' endDate: ' + endDate.toString());
         if(day.isInBetween(startDate, endDate)){
           day.bookings.add(accommodation);
         }
@@ -195,6 +198,7 @@ class SingleTripProvider {
           day.bookings.add(activity);
         }
       });
+      print(day.bookings);
     }
   }
 
