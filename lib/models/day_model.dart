@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-
-import 'abstract_model.dart';
-
+import 'package:travellory/models/schedule_entry.dart';
 
 class Day {
   Day({
     @required this.date,
-    this.bookings
+    this.entries
   }){
     isExpanded = true;
-    bookings = <Model>[];
+    entries = <ScheduleEntry>[];
   }
 
   DateTime date;
-  List<Model> bookings;
+  List<ScheduleEntry> entries;
   bool isExpanded;
 
   void toggleExpanded(){
