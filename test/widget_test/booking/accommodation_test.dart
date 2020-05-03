@@ -42,15 +42,6 @@ class Wrapper extends StatelessWidget {
 }
 
 void main() {
-//  Widget makeTestableWidget(TripsProvider tripsProvider) {
-//    return ChangeNotifierProvider<TripsProvider>.value(
-//      value: tripsProvider,
-//      child: MaterialApp(
-//        home: Accommodation(),
-//      ),
-//    );
-//  }
-
   Widget makeTestableWidget(TripsProvider tripsProvider) {
     return ChangeNotifierProvider<TripsProvider>.value(
       value: tripsProvider,
