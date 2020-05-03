@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/activity_model.dart';
-import 'package:travellory/models/day_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
@@ -14,7 +13,6 @@ import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/get_database.dart';
-import 'package:travellory/utils/date_converter.dart';
 
 class SingleTripProvider {
   SingleTripProvider(TripModel trip, NotifyListener notifier){
@@ -36,8 +34,6 @@ class SingleTripProvider {
   NotifyListener notifier;
   TripModel tripModel;
   bool isFetching = false;
-
-  List<Day> days;
 
   List<FlightModel> flights;
   List<AccommodationModel> accommodations;
@@ -144,64 +140,6 @@ class SingleTripProvider {
     notifier.notify();
   }
 
-  void initSchedule() {
-    days = <Day>[];
-    var dateTime = getDateTimeFrom(tripModel.startDate);
-    var endDateTime = getDateTimeFrom(tripModel.endDate);
-
-    do {
-      days.add(Day(
-          date: dateTime
-      ));
-      dateTime = dateTime.add(Duration(days: 1));
-    } while (dateTime.compareTo(endDateTime) <= 0);
-    print(days);
-    _addBookingToDays();
-  }
-
-  void _addBookingToDays(){
-    for(var day in days){
-      print('Date: ' + day.date.toString());
-      flights.forEach((flight) {
-        var startDate = getDateTimeFrom(flight.departureDate);
-        var endDate = getDateTimeFrom(flight.arrivalDate) ?? startDate;
-        if(day.isInBetween(startDate, endDate)){
-          day.bookings.add(flight);
-        }
-      });
-      rentalCars.forEach((rentalCar) {
-        var startDate = getDateTimeFrom(rentalCar.pickupDate);
-        var endDate = getDateTimeFrom(rentalCar.returnDate) ?? startDate;
-        if(day.isInBetween(startDate, endDate)){
-          day.bookings.add(rentalCar);
-        }
-      });
-      publicTransports.forEach((publicTransport) {
-        var startDate = getDateTimeFrom(publicTransport.departureDate);
-        var endDate = getDateTimeFrom(publicTransport.arrivalDate) ?? startDate;
-        if(day.isInBetween(startDate, endDate)){
-          day.bookings.add(publicTransport);
-        }
-      });
-      accommodations.forEach((accommodation){
-        var startDate = getDateTimeFrom(accommodation.checkinDate);
-        var endDate = getDateTimeFrom(accommodation.checkoutDate) ?? startDate;
-        print('accommodation startDate: ' + startDate.toString() + ' endDate: ' + endDate.toString());
-        if(day.isInBetween(startDate, endDate)){
-          day.bookings.add(accommodation);
-        }
-      });
-      activities.forEach((activity){
-        var startDate = getDateTimeFrom(activity.startDate);
-        var endDate = getDateTimeFrom(activity.endDate) ?? startDate;
-        if(day.isInBetween(startDate, endDate)){
-          day.bookings.add(activity);
-        }
-      });
-      print(day.bookings);
-    }
-  }
-
   @override
   bool operator ==(o) {
     Function equals = const DeepCollectionEquality().equals;
@@ -213,7 +151,6 @@ class SingleTripProvider {
         && o.isFetchingAccommodations == isFetchingAccommodations
         && o.isFetchingRentalCars == isFetchingRentalCars
         && o.isFetchingPublicTransports == isFetchingPublicTransports
-        && equals(o.days, days)
         && equals(o.flights, flights)
         && equals(o.rentalCars, rentalCars)
         && equals(o.publicTransports, publicTransports)

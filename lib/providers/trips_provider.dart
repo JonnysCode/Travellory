@@ -66,7 +66,6 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
     await _fetchTrips();
     _setActiveTrip();
     await activeTrip.initBookings();
-    activeTrip.initSchedule();
     _activeTripInitiated = true;
     notifyListeners();
   }
