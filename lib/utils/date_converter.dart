@@ -1,12 +1,16 @@
+import 'package:intl/intl.dart';
 
 String toDateStringFrom(DateTime dateTime){
   return dateTime.toString().substring(0, 10);
 }
 
 DateTime getDateTimeFrom(String date){
-  if(date == null) return null;
-  final List<String> dates = date.split('-');
-  return DateTime(int.parse(dates[0]), int.parse(dates[1]), int.parse(dates[2]));
+  if(date == null || date.length < 10) return null;
+  if(date.substring(2, 3) == "-"){
+    return DateFormat('dd-MM-yyyy', 'en_US').parse(date);
+  } else {
+    return DateFormat('yyyy-MM-dd').parse(date);
+  }
 }
 
 final List<String> monthsShortened = [
