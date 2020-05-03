@@ -57,7 +57,7 @@ Widget getScheduleAccordingTo(ScheduleEntry scheduleEntry) {
   } else if (model is AccommodationModel) {
     widget = AccommodationSchedule(scheduleEntry);
   } else if (model is PublicTransportModel) {
-    widget = PublicTransportSchedule(model);
+    widget = PublicTransportSchedule(scheduleEntry);
   } else if (model is ActivityModel) {
     widget = ActivitySchedule(scheduleEntry);
   } else {
