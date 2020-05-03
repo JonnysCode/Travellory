@@ -10,7 +10,7 @@ class FriendsProvider extends ChangeNotifier{
     _friendRequests = <FriendsModel>[];
   }
 
-  bool isFetching = true;
+  bool isFetching = false;
 
   List<FriendsModel> _friends;
   List<FriendsModel> _friendRequests;

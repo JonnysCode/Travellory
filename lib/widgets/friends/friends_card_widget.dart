@@ -1,10 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 @override
-Widget friendsCard(BuildContext context, FriendsModel friend, Widget button, double topPadding) {
+Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
+    double topPadding) {
   double cardSize = 70;
 
   return Container(
@@ -23,7 +25,8 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button, dou
                 borderRadius: BorderRadius.circular(40),
                 color: Color(0xBBCCD7DD),
               ),
-              padding: const EdgeInsets.only(left: 65.0, top: 10.0, bottom: 14.0, right: 14.0),
+              padding: const EdgeInsets.only(
+                  left: 65.0, top: 10.0, bottom: 14.0, right: 14.0),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -60,10 +63,7 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button, dou
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                        right: 15,
-                        top: topPadding
-                    ),
+                    padding: EdgeInsets.only(right: 15, top: topPadding),
                     child: button,
                   ),
                 ],
@@ -72,25 +72,63 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button, dou
           ),
         ),
         Align(
-          alignment: Alignment.centerLeft,
-          child: Container(
-            height: cardSize,
-            width: cardSize,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              boxShadow: <BoxShadow>[
-                BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.3), offset: Offset(3.0, 3.0))
-              ],
-              image: DecorationImage(
-                image: AssetImage("assets/images/login/beach.png"),
-                fit: BoxFit.fitWidth,
-                alignment: Alignment.bottomCenter,
-              ),
-            ),
-          ),
-        ),
+            alignment: Alignment.centerLeft,
+            child: friend.photoURL != null
+                ? profilePicture(friend.photoURL, cardSize)
+                : standardPicture(cardSize)),
       ],
     ),
   );
 }
 
+Widget profilePicture(String photoURL, double cardSize) {
+  return Container(
+      height: cardSize,
+      width: cardSize,
+      child: CachedNetworkImage(
+        /// will check local cache first and download from firebase if necessary
+        imageUrl: photoURL,
+        imageBuilder: (context, imageProvider) => Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(40),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  blurRadius: 6,
+                  color: Colors.black.withOpacity(.3),
+                  offset: Offset(3.0, 3.0))
+            ],
+            image: DecorationImage(
+              image: imageProvider,
+              fit: BoxFit.fitWidth,
+              alignment: Alignment.bottomCenter,
+            ),
+            border:
+                Border.all(color: Theme.of(context).primaryColor, width: 2.0),
+          ),
+        ),
+        placeholder: (context, url) => CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor)),
+        errorWidget: (context, url, error) =>  standardPicture(cardSize),
+      ));
+}
+
+Widget standardPicture(double cardSize) {
+  return Container(
+    height: cardSize,
+    width: cardSize,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(40),
+      boxShadow: <BoxShadow>[
+        BoxShadow(
+            blurRadius: 6,
+            color: Colors.black.withOpacity(.3),
+            offset: Offset(3.0, 3.0))
+      ],
+      image: DecorationImage(
+        image: AssetImage("assets/images/login/beach.png"),
+        fit: BoxFit.fitWidth,
+        alignment: Alignment.bottomCenter,
+      ),
+    ),
+  );
+}
