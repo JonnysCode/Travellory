@@ -61,7 +61,7 @@ class FlightSchedule extends StatelessWidget {
               child: FaIcon(
                 FontAwesomeIcons.plane,
                 size: 30,
-                color: Colors.blue[900],
+                color: Colors.black54,
               ),
             ),
           ),
