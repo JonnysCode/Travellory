@@ -190,8 +190,8 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         onTap: () async {
           PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context, countryCode: tripModel.countryCode);
 
-          departureLocationController.text = detail.result.formattedAddress;
-          _publicTransportModel.departureLocation = detail.result.formattedAddress;
+          departureLocationController.text = detail.result.name;
+          _publicTransportModel.departureLocation = detail.result.name;
           _publicTransportModel.departureLatitude = detail.result.geometry.location.lat;
           _publicTransportModel.departureLongitude = detail.result.geometry.location.lng;
         },
@@ -219,8 +219,9 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         controller: arrivalLocationController,
         onTap: () async {
           PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
-          arrivalLocationController.text = detail.result.formattedAddress;
-          _publicTransportModel.arrivalLocation = detail.result.formattedAddress;
+
+          arrivalLocationController.text = detail.result.name;
+          _publicTransportModel.arrivalLocation = detail.result.name;
           _publicTransportModel.arrivalLatitude = detail.result.geometry.location.lat;
           _publicTransportModel.arrivalLongitude = detail.result.geometry.location.lng;
         },
@@ -316,23 +317,5 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
             tripModel, singleTripProvider, context, _publicTransportModel, arguments.isNewModel),
       ),
     );
-  }
-
-  Future<void> _openGooglePlacesSearchForDeparture(PublicTransportModel model, TextEditingController controller) async {
-    PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
-
-    controller.text = detail.result.formattedAddress;
-    model.arrivalLocation = detail.result.formattedAddress;
-    model.arrivalLatitude = detail.result.geometry.location.lat;
-    model.arrivalLongitude = detail.result.geometry.location.lng;
-  }
-
-  Future<void> _openGooglePlacesSearchForArrival(PublicTransportModel model, TextEditingController controller) async {
-    PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
-
-    controller.text = detail.result.formattedAddress;
-    model.departureLocation = detail.result.formattedAddress;
-    model.departureLatitude = detail.result.geometry.location.lat;
-    model.departureLongitude = detail.result.geometry.location.lng;
   }
 }
