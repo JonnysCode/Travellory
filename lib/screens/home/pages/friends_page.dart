@@ -16,7 +16,7 @@ class _FriendsPageState extends State<FriendsPage> {
   @override
   void initState() {
     super.initState();
-    _dev = true;
+    _dev = false;
   }
 
   @override
