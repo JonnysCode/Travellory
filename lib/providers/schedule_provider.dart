@@ -29,7 +29,6 @@ class ScheduleProvider extends ChangeNotifier{
 
   void _addBookingToDays(trip){
     for(var day in days){
-      print('Date: ' + day.date.toString());
       trip.flights.forEach((flight) {
         var startDate = getDateTimeFrom(flight.departureDate);
         var endDate = getDateTimeFrom(flight.arrivalDate) ?? startDate;
@@ -65,7 +64,6 @@ class ScheduleProvider extends ChangeNotifier{
           day.bookings.add(activity);
         }
       });
-      print(day.bookings);
     }
   }
 }
