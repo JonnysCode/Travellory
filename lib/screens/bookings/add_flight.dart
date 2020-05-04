@@ -192,10 +192,10 @@ class FlightState<T extends Flight> extends State<T> {
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
                     initialValue: _flightModel.arrivalDate,
-                    labelText: 'Arrival Date',
+                    labelText: 'Arrival Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     beforeDateKey: _depDateFormFieldKey,
-                    optional: true,
+                    optional: false,
                     tripModel: tripModel,
                     dateValidationMessage: 'Arrival Date cannot be before Departure Date',
                     chosenDateString: (value) => _flightModel.arrivalDate = value,
@@ -205,7 +205,7 @@ class FlightState<T extends Flight> extends State<T> {
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TimeFormField(
                       initialValue: _flightModel.arrivalTime,
-                      labelText: 'Arrival Time',
+                      labelText: 'Arrival Time *',
                       icon: Icon(FontAwesomeIcons.clock),
                       optional: false,
                       chosenTimeString: (value) => _flightModel.arrivalTime = value),
