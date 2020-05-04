@@ -59,7 +59,6 @@ void main() {
     await tester.pumpWidget(makeTestableWidget(child: page));
 
     // Verify that the buttons for friends_request_list is present.
-    expect(find.text('No pending friend requests'), findsOneWidget);
     expect(find.byKey(Key('accept_button')), findsOneWidget);
     expect(find.byKey(Key('decline_button')), findsOneWidget);
   });
