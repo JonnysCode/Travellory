@@ -123,159 +123,157 @@ class _FriendListPageState extends State<FriendListPage> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<FriendsProvider>(context).user;
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(height: 20),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            Padding(
-              padding: EdgeInsets.only(left: 200, top: 10),
-            ),
-            FashionFetishText(
-              text: 'Add Friends',
-              size: 16,
-              color: Colors.black54,
-              fontWeight: FashionFontWeight.bold,
-            ),
-            GestureDetector(
-              onTap: () =>
-                  Provider.of<FriendsPageProvider>(context, listen: false)
-                      .toggleSearching(),
-              child: Icon(
-                FontAwesomeIcons.search,
-                color: Theme.of(context).primaryColor,
-                size: 32,
-              ),
-            ),
-          ]),
-          SizedBox(height: 20),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        SizedBox(height: 20),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Padding(
-            key: Key('friend_requests'),
-            padding: EdgeInsets.only(
-                top: 10,
-                left: 30,
-                right: 90,
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Container(
-              height: 30,
-              width: MediaQuery.of(context).size.width,
-              child: FashionFetishText(
-                text: 'Friend requests',
-                size: 22,
-                fontWeight: FashionFontWeight.heavy,
-              ),
+            padding: EdgeInsets.only(left: 200, top: 10),
+          ),
+          FashionFetishText(
+            text: 'Add Friends',
+            size: 16,
+            color: Colors.black54,
+            fontWeight: FashionFontWeight.bold,
+          ),
+          GestureDetector(
+            onTap: () =>
+                Provider.of<FriendsPageProvider>(context, listen: false)
+                    .toggleSearching(),
+            child: Icon(
+              FontAwesomeIcons.search,
+              color: Theme.of(context).primaryColor,
+              size: 32,
             ),
           ),
-          Padding(
-            key: Key('friend-requests-list'),
-            padding: EdgeInsets.only(
-                left: 15,
-                right: 20,
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Column(children: <Widget>[
-              Container(
-                height: (0.25 * MediaQuery.of(context).size.height),
-                child: Scrollbar(
-                    child: Consumer<FriendsProvider>(
-                      builder: (_, friendsProvider, __) =>
-                      friendsProvider.isFetching
+        ]),
+        SizedBox(height: 20),
+        Padding(
+          key: Key('friend_requests'),
+          padding: EdgeInsets.only(
+              top: 10,
+              left: 30,
+              right: 90,
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Container(
+            height: 30,
+            width: MediaQuery.of(context).size.width,
+            child: FashionFetishText(
+              text: 'Friend requests',
+              size: 22,
+              fontWeight: FashionFontWeight.heavy,
+            ),
+          ),
+        ),
+        Padding(
+          key: Key('friend-requests-list'),
+          padding: EdgeInsets.only(
+              left: 15,
+              right: 20,
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(children: <Widget>[
+            Container(
+              height: 0.25 * MediaQuery.of(context).size.height,
+              child: Scrollbar(
+                  child: Consumer<FriendsProvider>(
+                    builder: (_, friendsProvider, __) =>
+                    friendsProvider.isFetching
                         ? LoadingHeart()
                         : friendsProvider.friendRequests.isEmpty
                         ? Text('No pending friend requests')
                         : ListView.separated(
-                            padding: EdgeInsets.only(
-                              bottom: 50,
-                            ),
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 12),
-                            itemCount: friendsProvider.friendRequests.length,
-                            itemBuilder: (context, index) {
-                              FriendsModel friend =
-                                  friendsProvider.friendRequests[index];
-                              return friendsCard(
-                                context,
-                                friend,
-                                _loading
-                                    ? CircularProgressIndicator()
-                                    : friendRequestButtons(
-                                        friend.uid, user.uid),
-                                10,
-                              );
-                            },
-                        ),
-                    )
-                ),
-              ),
-            ]),
-          ),
-          SizedBox(height: 20),
-          Padding(
-            key: Key('friends'),
-            padding: EdgeInsets.only(
-                top: 10,
-                left: 30,
-                right: 90,
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Container(
-              height: 30,
-              width: MediaQuery.of(context).size.width,
-              child: FashionFetishText(
-                text: 'Friends',
-                size: 22,
-                fontWeight: FashionFontWeight.heavy,
+                      padding: EdgeInsets.only(
+                        bottom: 50,
+                      ),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      separatorBuilder: (context, index) =>
+                      const SizedBox(height: 12),
+                      itemCount: friendsProvider.friendRequests.length,
+                      itemBuilder: (context, index) {
+                        FriendsModel friend =
+                        friendsProvider.friendRequests[index];
+                        return friendsCard(
+                          context,
+                          friend,
+                          _loading
+                              ? CircularProgressIndicator()
+                              : friendRequestButtons(
+                              friend.uid, user.uid),
+                          10,
+                        );
+                      },
+                    ),
+                  )
               ),
             ),
+          ]),
+        ),
+        SizedBox(height: 20),
+        Padding(
+          key: Key('friends'),
+          padding: EdgeInsets.only(
+              top: 10,
+              left: 30,
+              right: 90,
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Container(
+            height: 30,
+            width: MediaQuery.of(context).size.width,
+            child: FashionFetishText(
+              text: 'Friends',
+              size: 22,
+              fontWeight: FashionFontWeight.heavy,
+            ),
           ),
-          Padding(
-            key: Key('friends-list'),
-            padding: EdgeInsets.only(
-                left: 15,
-                right: 20,
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Column(children: <Widget>[
-              Container(
-                height: (0.38 * MediaQuery.of(context).size.height),
-                child: Scrollbar(
-                    child: Consumer<FriendsProvider>(
-                      builder: (_, friendsProvider, __) =>
-                      friendsProvider.isFetching
-                          ? LoadingHeart()
-                          : friendsProvider.friends.isEmpty
-                          ? Text('You have no friends :(')
-                          : ListView.separated(
-                              padding: EdgeInsets.only(
-                                bottom: 50,
-                              ),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 12),
-                              itemCount: friendsProvider.friends.length,
-                              itemBuilder: (context, index) {
-                                FriendsModel friend =
-                                    friendsProvider.friends[index];
-                                return friendsCard(
-                                  context,
-                                  friend,
-                                  _loading
-                                      ? CircularProgressIndicator()
-                                      : removeFriendButton(
-                                          friend.uid, user.uid),
-                                  10,
-                                );
-                              },
-                          ),
-                    )
-                ),
+        ),
+        Padding(
+          key: Key('friends-list'),
+          padding: EdgeInsets.only(
+              left: 15,
+              right: 20,
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(children: <Widget>[
+            Container(
+              height: 0.38 * MediaQuery.of(context).size.height,
+              child: Scrollbar(
+                  child: Consumer<FriendsProvider>(
+                    builder: (_, friendsProvider, __) =>
+                    friendsProvider.isFetching
+                        ? LoadingHeart()
+                        : friendsProvider.friends.isEmpty
+                        ? Text('You have no friends :(')
+                        : ListView.separated(
+                      padding: EdgeInsets.only(
+                        bottom: 50,
+                      ),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      separatorBuilder: (context, index) =>
+                      const SizedBox(height: 12),
+                      itemCount: friendsProvider.friends.length,
+                      itemBuilder: (context, index) {
+                        FriendsModel friend =
+                        friendsProvider.friends[index];
+                        return friendsCard(
+                          context,
+                          friend,
+                          _loading
+                              ? CircularProgressIndicator()
+                              : removeFriendButton(
+                              friend.uid, user.uid),
+                          10,
+                        );
+                      },
+                    ),
+                  )
               ),
-            ]),
-          ),
-        ],
-      ),
+            ),
+          ]),
+        ),
+      ],
     );
   }
 }
