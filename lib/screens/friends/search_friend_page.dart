@@ -10,6 +10,7 @@ import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/services/friends/friend_management.dart';
 import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
 
 class SearchFriendsPage extends StatefulWidget {
@@ -95,54 +96,67 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
         child: Column(
           children: <Widget>[
             Container(
-              child: IconButton(
-                onPressed: () =>
-                    Provider.of<FriendsPageProvider>(context, listen: false)
-                        .toggleSearching(),
-                icon: Icon(FontAwesomeIcons.arrowLeft),
-                iconSize: 28,
-                color: Colors.black38,
-              ),
-            ),
-            Expanded(
-              child: SearchBar(
-                  key: Key('search_bar'),
-                  onSearch: search,
-                  onItemFound: (FriendsModel friend, int index) {
-                    return Padding(
-                        padding: EdgeInsets.only(
-                          bottom: 10,
+                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Material(
+                        child: IconButton(
+                          onPressed: () =>
+                            Provider.of<FriendsPageProvider>(context, listen: false)
+                                .toggleSearching(),
+                          icon: Icon(FontAwesomeIcons.arrowLeft),
+                          iconSize: 28,
+                          color: Colors.black38,
                         ),
-                        child: friendsCard(
-                            context,
-                            friend,
-                            _loading
-                                ? CircularProgressIndicator()
-                                : sendFriendRequestButton(user.uid, friend.uid),
-                            10));
-                  },
-                  loader: Loading(),
-                  searchBarPadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                  headerPadding: EdgeInsets.symmetric(horizontal: 50),
-                  listPadding: EdgeInsets.symmetric(horizontal: 30),
-                  hintText: 'Add friends',
-                  hintStyle: TextStyle(
-                    color: Colors.black45,
+                      ),
+                  FashionFetishText(
+                    text: 'Add Friends',
+                    size: 22,
+                    fontWeight: FashionFontWeight.heavy,
                   ),
-                  icon: Icon(
-                    FontAwesomeIcons.search,
-                    size: 24.0,
-                  ),
-                  iconActiveColor: Colors.black54,
-                  searchBarStyle: SearchBarStyle(
-                    backgroundColor: Colors.black12,
-                    padding: EdgeInsets.fromLTRB(15, 5, 5, 5),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  cancellationWidget: Text(
-                    'Cancel',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
+            ])),
+            Expanded(
+              child: Material(
+                child: SearchBar(
+                    key: Key('search_bar'),
+                    onSearch: search,
+                    onItemFound: (FriendsModel friend, int index) {
+                      return Padding(
+                          padding: EdgeInsets.only(
+                            bottom: 10,
+                          ),
+                          child: friendsCard(
+                              context,
+                              friend,
+                              _loading
+                                  ? CircularProgressIndicator()
+                                  : sendFriendRequestButton(user.uid, friend.uid),
+                              10));
+                    },
+                    loader: Loading(),
+                    searchBarPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    headerPadding: EdgeInsets.symmetric(horizontal: 50),
+                    listPadding: EdgeInsets.symmetric(horizontal: 30),
+                    hintText: 'Add friends',
+                    hintStyle: TextStyle(
+                      color: Colors.black45,
+                    ),
+                    icon: Icon(
+                      FontAwesomeIcons.search,
+                      size: 24.0,
+                    ),
+                    iconActiveColor: Colors.black54,
+                    searchBarStyle: SearchBarStyle(
+                      backgroundColor: Colors.black12,
+                      padding: EdgeInsets.fromLTRB(15, 5, 5, 5),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    cancellationWidget: Text(
+                      'Cancel',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )),
+              )
             ),
           ],
         ));
