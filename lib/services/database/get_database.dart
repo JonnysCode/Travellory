@@ -9,6 +9,14 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 
 class DatabaseGetter {
+  DatabaseGetter._privateConstructor();
+
+  factory DatabaseGetter() {
+    return _instance;
+  }
+
+  static final DatabaseGetter _instance = DatabaseGetter._privateConstructor();
+
   static const String getTrips = 'trips-getTrips';
   static const String getFlights = 'booking-getFlights';
   static const String getAccommodations = 'booking-getAccommodations';
@@ -33,6 +41,7 @@ class DatabaseGetter {
         CloudFunctions.instance.getHttpsCallable(functionName: function);
     List<dynamic> entries = [];
     try {
+      log.d('JSON data for function call ${function}: ${_getMap(uid, function)}');
       final HttpsCallableResult result =
           await callable.call(_getMap(uid, function));
       if (result.data.contains(_emptyResult)) {

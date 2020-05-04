@@ -5,7 +5,7 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class ActivityBookings extends StatelessWidget {
-  const ActivityBookings(this.activity, {Key key}) : super(key : key);
+  const ActivityBookings(this.activity, {Key key}) : super(key: key);
   final ActivityModel activity;
 
   @override
@@ -41,11 +41,15 @@ class ActivityBookings extends StatelessWidget {
                     color: Colors.white70,
                   ),
                   SizedBox(width: 4),
-                  Text(
-                    activity.location,
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.white70,
+                  Expanded(
+                    child: Text(
+                      activity.location,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.white70,
+                      ),
                     ),
                   ),
                 ],
