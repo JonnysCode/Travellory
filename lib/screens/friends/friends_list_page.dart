@@ -123,8 +123,7 @@ class _FriendListPageState extends State<FriendListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserModel>(context);
-
+    final user = Provider.of<FriendsProvider>(context).user;
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
