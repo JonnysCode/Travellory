@@ -196,6 +196,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         key: _depDateFormFieldKey,
         labelText: 'Departure Date *',
         icon: Icon(FontAwesomeIcons.calendarAlt),
+        tripModel: tripModel,
         chosenDateString: (value) => _publicTransportModel.departureDate = value,
       ),
       TimeFormField(
@@ -225,6 +226,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         labelText: 'Arrival Date *',
         icon: Icon(FontAwesomeIcons.calendarAlt),
         beforeDateKey: _depDateFormFieldKey,
+        tripModel: tripModel,
         dateValidationMessage: 'Departure Date cannot be before Arrival Date',
         chosenDateString: (value) => _publicTransportModel.arrivalDate = value,
       ),

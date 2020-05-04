@@ -220,6 +220,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         labelText: 'Check-In Date *',
         icon: Icon(FontAwesomeIcons.calendarAlt),
         optional: false,
+        tripModel: tripModel,
         chosenDateString: (value) => _accommodationModel.checkinDate = value,
       ),
       TimeFormField(
@@ -243,6 +244,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         icon: Icon(FontAwesomeIcons.calendarAlt),
         beforeDateKey: _checkinDateFormFieldKey,
         optional: false,
+        tripModel: tripModel,
         dateValidationMessage: 'Check-out Date cannot be before Check-in Date',
         chosenDateString: (value) => _accommodationModel.checkoutDate = value,
       ),

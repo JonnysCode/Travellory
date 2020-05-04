@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:travellory/models/trip_model.dart';
 
 class DateFormField extends StatefulWidget {
   const DateFormField(
@@ -13,6 +14,7 @@ class DateFormField extends StatefulWidget {
       this.chosenDate,
       this.chosenDateString,
       this.beforeDateKey,
+      this.tripModel,
       this.dateValidationMessage})
       : super(key: key);
 
@@ -24,9 +26,11 @@ class DateFormField extends StatefulWidget {
   final void Function(DateTime) chosenDate;
   final void Function(String) chosenDateString;
   final GlobalKey<DateFormFieldState> beforeDateKey;
+  final TripModel tripModel;
   final String dateValidationMessage;
 
   final String validatorText = 'Please enter the required information';
+  final String dateInTripValidationMessage = 'The chosen date is not in trip date range';
 
   @override
   DateFormFieldState createState() => DateFormFieldState();
@@ -64,6 +68,16 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
     super.dispose();
   }
 
+  bool pickedDateNotInTripRange(DateTime pickedDate) {
+    DateTime tripStartDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.startDate);
+    DateTime tripEndDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.endDate);
+    if ((pickedDate.isAfter(tripStartDate) || pickedDate == tripStartDate) &&
+        (pickedDate.isBefore(tripEndDate) || pickedDate == tripEndDate)) {
+      return false;
+    }
+    return true;
+  }
+
   void selectDate(BuildContext context) async {
     FocusScope.of(context).requestFocus(FocusNode());
     final DateTime pickedDate = await showRoundedDatePicker(
@@ -95,10 +109,11 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
               if (widget.optional) return null;
               if (value.isEmpty) {
                 return widget.validatorText;
+              } else if (pickedDateNotInTripRange(selectedDate)) {
+                return widget.dateInTripValidationMessage;
               } else if (widget.beforeDateKey != null &&
                   selectedDate.isBefore(widget.beforeDateKey.currentState.selectedDate) &&
-                  (controller.text !=
-                      widget.beforeDateKey.currentState.controller.text)) {
+                  (controller.text != widget.beforeDateKey.currentState.controller.text)) {
                 return widget.dateValidationMessage;
               }
               return null;
