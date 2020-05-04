@@ -9,17 +9,7 @@ import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/screens/bookings/edit_activity.dart';
 import 'package:travellory/services/database/edit.dart';
 
-class TripsProviderMock extends Mock implements TripsProvider{}
-
-final ActivityModel activityModel = ActivityModel()
-  ..category = 'Historic'
-  ..title = 'Museum visit'
-  ..imageNr = 9
-  ..imagePath = 'assets/images/activity/activity_9.png'
-  ..location = "100 King's Cross Rd, London WC1X 9DT"
-  ..startDate = '2020-05-01'
-  ..startTime = '12:00'
-  ..endDate = '2020-05-01';
+class TripsProviderMock extends Mock implements TripsProvider {}
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key key}) : super(key: key);
@@ -45,8 +35,19 @@ TripModel tripModel = TripModel(
     destination: 'Munich',
     imageNr: 3);
 
+ActivityModel activityModel = ActivityModel()
+  ..category = 'Historic'
+  ..title = 'Museum visit'
+  ..imageNr = 9
+  ..imagePath = 'assets/images/activity/activity_9.png'
+  ..location = "100 King's Cross Rd, London WC1X 9DT"
+  ..startDate = '2020-05-01'
+  ..startTime = '12:00'
+  ..endDate = '2020-05-01';
+
+
 void main() {
-  Widget makeTestableWidget(TripsProvider tripsProvider) {
+  Widget makeTestableActivityWidget(TripsProvider tripsProvider) {
     return ChangeNotifierProvider<TripsProvider>.value(
       value: tripsProvider,
       child: MaterialApp(
@@ -68,11 +69,9 @@ void main() {
     TripsProviderMock tripsProvider = TripsProviderMock();
 
     tripModel.init();
-    when(tripsProvider.selectedTrip).thenReturn(
-        SingleTripProvider(tripModel, null)
-    );
+    when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
-    await tester.pumpWidget(makeTestableWidget(tripsProvider));
+    await tester.pumpWidget(makeTestableActivityWidget(tripsProvider));
 
     expect(find.text('X'), findsOneWidget);
     expect(find.byKey(testKey, skipOffstage: false), findsNothing);

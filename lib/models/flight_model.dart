@@ -56,6 +56,7 @@ class FlightModel extends Model {
   Map<String, dynamic> toMap() {
     return {
       "tripUID": tripUID,
+      "uid": uid,
       "bookingReference": bookingReference,
       "airline": airline,
       "flightNr": flightNr,
