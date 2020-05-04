@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
@@ -125,24 +126,20 @@ class MapSampleState extends State<MapSample> {
               alignment: Alignment.topRight,
               children: <Widget>[
                 IconButton(
-                    icon: Icon(Icons.home),
+                    icon: Icon(FontAwesomeIcons.home),
                     onPressed: () {
-                      //print('Home');
                     }),
                 IconButton(
-                    icon: Icon(Icons.favorite),
+                    icon: Icon(FontAwesomeIcons.plane),
                     onPressed: () {
-                      //print('Favorite');
                     }),
                 IconButton(
-                    icon: Icon(Icons.fastfood),
+                    icon: Icon(FontAwesomeIcons.theaterMasks),
                     onPressed: () {
-                      //print('Favorite');
                     }),
                 IconButton(
-                    icon: Icon(Icons.school),
+                    icon: Icon(FontAwesomeIcons.bed),
                     onPressed: () {
-                      //print('Favorite');
                     }),
               ])
         ),
