@@ -13,7 +13,7 @@ class GooglePlaces {
     GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: googleApiKey);
     List<Component> country = [];
     if(countryCode != null){
-      country.add(Component(Component.country, "ch"));
+      country.add(Component(Component.country, countryCode));
     }
 
     // show input autocomplete with selected mode
