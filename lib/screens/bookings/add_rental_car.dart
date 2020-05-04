@@ -42,7 +42,6 @@ class RentalCarState<T extends RentalCar> extends State<T> {
   Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
       TripModel tripModel, RentalCarModel model, bool isNewModel) {
     RentalCarModel _editRentalCarModel = RentalCarModel();
-//  _editRentalCarModel = model;
     _editRentalCarModel = RentalCarModel.fromData(model.toMap());
 
     return Column(
@@ -92,7 +91,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       optional: false,
                       onTap: (controller) async {
                         PlacesDetailsResponse detail =
-                            await GooglePlaces.openGooglePlacesSearch(context);
+                            await GooglePlaces.openGooglePlacesSearch(context, );
                         controller.text = detail.result.formattedAddress;
                         _editRentalCarModel.pickupLocation = detail.result.formattedAddress;
                         _editRentalCarModel.pickupLatitude = detail.result.geometry.location.lat;
