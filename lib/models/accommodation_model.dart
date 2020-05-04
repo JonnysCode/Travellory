@@ -1,5 +1,4 @@
 import 'package:travellory/models/abstract_model.dart';
-import 'package:travellory/utils/date_converter.dart';
 
 class AccommodationModel extends Model {
   AccommodationModel({this.tripUID = '',
@@ -17,7 +16,9 @@ class AccommodationModel extends Model {
   this.breakfast = false,
   this.hotelRoomType = '',
   this.airbnbType = '',
-  this.notes = ''});
+  this.notes = '',
+  this.latitude = 0.0,
+  this.longitude = 0.0});
 
   AccommodationModel.fromData(accommodation) {
     tripUID = accommodation["tripUID"];
@@ -36,6 +37,8 @@ class AccommodationModel extends Model {
     hotelRoomType = accommodation["hotelRoomType"];
     airbnbType = accommodation["airbnbType"];
     notes = accommodation["notes"];
+    latitude = accommodation["latitude"];
+    longitude = accommodation["longitude"];
   }
 
   String tripUID;
@@ -54,11 +57,14 @@ class AccommodationModel extends Model {
   String hotelRoomType;
   String airbnbType;
   String notes;
+  double latitude;
+  double longitude;
 
   @override
   Map<String, dynamic> toMap() {
     return {
       "tripUID": tripUID,
+      "uid": uid,
       "type": type,
       "specificationOther": specificationOther,
       "name": name,
@@ -72,7 +78,9 @@ class AccommodationModel extends Model {
       "breakfast": breakfast,
       "hotelRoomType": hotelRoomType,
       "airbnbType": airbnbType,
-      "notes": notes
+      "notes": notes,
+      "latitude": latitude,
+      "longitude": longitude
     };
   }
 }

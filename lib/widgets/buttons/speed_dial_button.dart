@@ -9,12 +9,10 @@ import 'package:travellory/models/trip_model.dart';
 class SpeedDialButton extends StatefulWidget {
   const SpeedDialButton({
     Key key,
-    this.dials,
-    this.tripModel
+    this.dials
   }) : super(key: key);
 
   final List<Dial> dials;
-  final TripModel tripModel;
 
   @override
   _SpeedDialButtonState createState() => _SpeedDialButtonState();
@@ -32,6 +30,8 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
     );
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
             }).toList()
               ..add(
                 FloatingActionButton(
-                  heroTag: 'trip_image${widget.tripModel.index.toString()}',
+                  heroTag: 'trip_image',
                   key: Key('dial_button'),
                   highlightElevation: 3.0,
                   onPressed: () => _toggleFloatingButton(),
@@ -122,8 +122,7 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
                 heroTag: 'dial${index.toString()}',
                 backgroundColor: Colors.white,
                 mini: true,
-                onPressed: () => Navigator.pushNamed(context, dials[index].route,
-                    arguments: widget.tripModel),
+                onPressed: dials[index].onTab,
                 child: Icon(dials[index].icon, color: Colors.black54),
               ),
               const SizedBox(width: 6),
@@ -134,13 +133,13 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
 }
 
 class Dial {
-  const Dial({
+  Dial({
     @required this.icon,
     @required this.description,
-    this.route,
+    @required this.onTab,
   });
 
   final IconData icon;
   final String description;
-  final String route;
+  final Function onTab;
 }

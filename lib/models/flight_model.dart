@@ -1,5 +1,4 @@
 import 'package:travellory/models/abstract_model.dart';
-import 'package:travellory/utils/date_converter.dart';
 
 class FlightModel extends Model {
   FlightModel(
@@ -57,6 +56,7 @@ class FlightModel extends Model {
   Map<String, dynamic> toMap() {
     return {
       "tripUID": tripUID,
+      "uid": uid,
       "bookingReference": bookingReference,
       "airline": airline,
       "flightNr": flightNr,

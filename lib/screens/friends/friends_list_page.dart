@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/friends_model.dart';
-import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/services/friends/friend_management.dart';
-import 'package:travellory/shared/loading.dart';
+import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
@@ -182,7 +181,7 @@ class _FriendListPageState extends State<FriendListPage> {
                     child: Consumer<FriendsProvider>(
                       builder: (_, friendsProvider, __) =>
                       friendsProvider.isFetching
-                        ? Loading()
+                        ? LoadingHeart()
                         : friendsProvider.friendRequests.isEmpty
                         ? Text('No pending friend requests')
                         : ListView.separated(
@@ -244,7 +243,7 @@ class _FriendListPageState extends State<FriendListPage> {
                     child: Consumer<FriendsProvider>(
                       builder: (_, friendsProvider, __) =>
                       friendsProvider.isFetching
-                          ? Loading()
+                          ? LoadingHeart()
                           : friendsProvider.friends.isEmpty
                           ? Text('You have no friends :(')
                           : ListView.separated(
