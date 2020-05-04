@@ -17,8 +17,8 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
           left: 20,
           right: 0,
           child: GestureDetector(
-//              TODO(fluetfab): link to profile-page of the friend
-//              onTap: () => _openFriendsProfile(),
+//            TODO(fluetfab): link to friends profile
+//            onTap: () => _openFriendsProfile(),
             child: Container(
               height: cardSize,
               decoration: BoxDecoration(
@@ -75,7 +75,8 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
             alignment: Alignment.centerLeft,
             child: friend.photoURL != null
                 ? profilePicture(friend.photoURL, cardSize)
-                : standardPicture(cardSize)),
+                : standardPicture(cardSize)
+        ),
       ],
     ),
   );
@@ -102,8 +103,7 @@ Widget profilePicture(String photoURL, double cardSize) {
               fit: BoxFit.fitWidth,
               alignment: Alignment.bottomCenter,
             ),
-            border:
-                Border.all(color: Theme.of(context).primaryColor, width: 2.0),
+            border: Border.all(color: Theme.of(context).primaryColor, width: 2.0),
           ),
         ),
         placeholder: (context, url) => CircularProgressIndicator(
