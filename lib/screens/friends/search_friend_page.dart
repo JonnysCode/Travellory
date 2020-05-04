@@ -10,6 +10,7 @@ import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/services/friends/friend_management.dart';
 import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
 
 class SearchFriendsPage extends StatefulWidget {
@@ -92,22 +93,26 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
 
     return SafeArea(
         key: Key('search_friends'),
-        child: Row(
+        child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
-              child:
-                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                IconButton(
-                  onPressed: () =>
-                      Provider.of<FriendsPageProvider>(context, listen: false)
-                          .toggleSearching(),
-                  icon: Icon(FontAwesomeIcons.arrowLeft),
-                  iconSize: 28,
-                  color: Colors.black38,
+                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[ IconButton(
+                onPressed: () =>
+                    Provider.of<FriendsPageProvider>(context, listen: false)
+                        .toggleSearching(),
+                icon: Icon(FontAwesomeIcons.arrowLeft),
+                iconSize: 28,
+                color: Colors.black38,
+              ),
+                FashionFetishText(
+                  text: 'Add Friends',
+                  size: 22,
+                  fontWeight: FashionFontWeight.heavy,
                 ),
-              ]),
-            ),
+            ])),
             Expanded(
               child: SearchBar(
                   key: Key('search_bar'),
@@ -126,7 +131,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                             10));
                   },
                   loader: Loading(),
-                  searchBarPadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                  searchBarPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   headerPadding: EdgeInsets.symmetric(horizontal: 50),
                   listPadding: EdgeInsets.symmetric(horizontal: 30),
                   hintText: 'Add friends',
