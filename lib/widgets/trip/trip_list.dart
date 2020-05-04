@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
-import 'package:travellory/shared/loading.dart';
+import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/trip_card.dart';
 
@@ -64,7 +64,7 @@ class TripList extends StatelessWidget {
           Expanded(
             child: Consumer<TripsProvider>(
               builder: (_, tripsProvider, __ ) => tripsProvider.isFetchingTrips
-                  ? Loading()
+                  ? LoadingHeart()
                   : ListView.separated(
                 padding: const EdgeInsets.all(10),
                 itemCount: tripsProvider.trips.length + 1,

@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/single_trip_provider.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
+import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
-TripModel _tripModel = TripModel(
-    name: 'California Camper Tour',
-    startDate: '2020-05-11',
-    endDate: '2020-05-19',
-    destination: 'California',
-    imageNr: 5
-);
-
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-
+class HomePage extends StatelessWidget {
   static const List<Dial> _dials = <Dial>[
     Dial(
       icon: FontAwesomeIcons.envelope,
@@ -54,13 +44,8 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    _tripModel.init();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    SingleTripProvider trip = Provider.of<TripsProvider>(context, listen: false).activeTrip;
     return SafeArea(
       child: Container(
         key: Key('home_page'),
@@ -121,36 +106,44 @@ class _HomePageState extends State<HomePage> {
                       BoxShadow(blurRadius: 18, color: Colors.black.withOpacity(.2), offset: Offset(0.0, -6.0))
                     ],
                   ),
-                  child: Column(
-                    children: <Widget>[
-                      FashionFetishText(
-                        text: 'California Camper Tour',
-                        size: 20,
-                        height: 1.6,
-                        fontWeight: FashionFontWeight.heavy,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                        child: Container(
-                          height: 1,
-                          color: Colors.black12,
+                  child:  trip == null
+                      ? Center(
+                    child: Text(
+                      'Create a trip first'
+                    ),
+                  )
+                      : Column(
+                      children: <Widget>[
+                        FashionFetishText(
+                          text: trip.tripModel.name,
+                          size: 20,
+                          height: 1.6,
+                          fontWeight: FashionFontWeight.heavy,
                         ),
-                      ),
-                      Expanded(
-                        child: Schedule(
-                          key: Key('home_schedule'),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                          child: Container(
+                            height: 1,
+                            color: Colors.black12,
+                          ),
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          child: Schedule(
+                            key: Key('home_schedule'),
+                            trip: trip,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            SpeedDialButton(
-              key: Key('home_page_dial'),
-              dials: _dials,
-              tripModel: _tripModel,
-            ),
+            if(trip != null)
+              SpeedDialButton(
+                key: Key('home_page_dial'),
+                dials: _dials,
+                tripModel: trip.tripModel,
+              ),
           ],
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/screens/authenticate/welcome.dart';
 import 'package:travellory/screens/home/home.dart';
+import 'package:travellory/shared/loading_logo.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -19,7 +20,12 @@ class Wrapper extends StatelessWidget {
       if(tripsProvider.user == null || tripsProvider.user != user){
         tripsProvider.init(user);
       }
-      return Home();
+      return Selector<TripsProvider, bool>(
+        selector: (_, tripsProvider) => tripsProvider.activeTripInitiated,
+        builder: (_, initiated, __) => initiated
+            ? Home()
+            : LoadingLogo()
+      );
     }
   }
 }
