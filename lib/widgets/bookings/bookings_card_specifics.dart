@@ -124,11 +124,11 @@ class PublicTransportEntry extends StatelessWidget {
     String displayLocation = location;
     String displayTime = time;
 
-    if(!(location != '' && location != null)) {
+    if (location.isEmpty) {
       displayLocation = 'No location known';
     }
 
-    if(!(time != '' && time != null)) {
+    if (time.isEmpty) {
       displayTime = '?:??';
     }
 
@@ -137,7 +137,7 @@ class PublicTransportEntry extends StatelessWidget {
       children: <Widget>[
         FashionFetishText(
           text: displayTime,
-          size: 19,
+          size: 16,
           fontWeight: FashionFontWeight.bold,
           height: 1.1,
           color: Colors.black54,
@@ -145,6 +145,7 @@ class PublicTransportEntry extends StatelessWidget {
         Text(
           displayLocation,
           textAlign: TextAlign.center,
+          maxLines: 2,
           style: TextStyle(
             fontSize: 14,
             color: Colors.white70,

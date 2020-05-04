@@ -6,6 +6,7 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
@@ -17,14 +18,14 @@ import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 
 class Flight extends StatefulWidget {
+  Flight({Key key}) : super(key: key);
+
   @override
-  _FlightState createState() => _FlightState();
+  FlightState createState() => FlightState();
 }
 
-class _FlightState extends State<Flight> {
+class FlightState<T extends Flight> extends State<T> {
   final GlobalKey<FormState> flightFormKey = GlobalKey<FormState>();
-  final FlightModel flightModel = FlightModel();
-  final DatabaseAdder databaseAdder = DatabaseAdder();
 
   final GlobalKey<DateFormFieldState> _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
@@ -38,187 +39,223 @@ class _FlightState extends State<Flight> {
   final String cancelText =
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
 
+  /* returns either submit new activity booking or edit old booking button */
+  Padding _getSubmitButton(
+      SingleTripProvider singleTripProvider, FlightModel model, bool isNewModel) {
+    void Function() onSubmit;
+    if (isNewModel) {
+      onSubmit =
+          onSubmitBooking(
+              singleTripProvider, model, 'booking-addFlight', context, alertText);
+    } else {
+      onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+      child: SubmitButton(
+        highlightColor: Theme.of(context).primaryColor,
+        fillColor: Theme.of(context).primaryColor,
+        validationFunction: validateForm,
+        onSubmit: onSubmit,
+      ),
+    );
+  }
+
+  Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
+      TripModel tripModel, FlightModel model, bool isNewModel) {
+    FlightModel _editFlightModel = FlightModel();
+    _editFlightModel = FlightModel.fromData(model.toMap());
+
+    return Column(
+      children: <Widget>[
+        TripHeader(tripModel),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Form(
+              key: flightFormKey,
+              child: Column(children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: BookingSiteTitle('Add Flight', FontAwesomeIcons.plane),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: SectionTitle('General Information'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: TravelloryFormField(
+                    initialValue: _editFlightModel.bookingReference,
+                      labelText: 'Booking Reference',
+                      icon: Icon(FontAwesomeIcons.ticketAlt),
+                      optional: true,
+                      onChanged: (value) => _editFlightModel.bookingReference = value),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: TravelloryFormField(
+                      initialValue: _editFlightModel.airline,
+                      labelText: 'Airline *',
+                      icon: Icon(FontAwesomeIcons.plane),
+                      optional: false,
+                      onChanged: (value) => _editFlightModel.airline = value),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: TravelloryFormField(
+                      initialValue: _editFlightModel.flightNr,
+                      labelText: 'Flight Number',
+                      icon: Icon(FontAwesomeIcons.ticketAlt),
+                      optional: true,
+                      onChanged: (value) => _editFlightModel.flightNr = value),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: TravelloryFormField(
+                      initialValue: _editFlightModel.seat,
+                      labelText: 'Seat',
+                      icon: Icon(FontAwesomeIcons.chair),
+                      optional: true,
+                      onChanged: (value) => _editFlightModel.seat = value),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: CheckboxFormField(
+                    initialValue: _editFlightModel.checkedBaggage,
+                    label: 'Does your flight ticket include checked baggage?',
+                    onChanged: (value) {
+                      _editFlightModel.checkedBaggage = value;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: CheckboxFormField(
+                    initialValue: _editFlightModel.excessBaggage,
+                    label: 'Does your flight ticket include excess baggage?',
+                    onChanged: (value) {
+                      _editFlightModel.excessBaggage = value;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: SectionTitle('Pick Up Information'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: TravelloryFormField(
+                      initialValue: _editFlightModel.departureLocation,
+                      labelText: 'Departure Location *',
+                      icon: Icon(FontAwesomeIcons.planeDeparture),
+                      optional: false,
+                      onChanged: (value) => _editFlightModel.departureLocation = value),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: DateFormField(
+                    initialValue: _editFlightModel.departureDate,
+                    key: _depDateFormFieldKey,
+                    labelText: 'Departure Date *',
+                    icon: Icon(FontAwesomeIcons.calendarAlt),
+                    optional: false,
+                    tripModel: tripModel,
+                    chosenDateString: (value) => _editFlightModel.departureDate = value,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: TimeFormField(
+                      initialValue: _editFlightModel.departureTime,
+                      labelText: 'Departure Time *',
+                      icon: Icon(FontAwesomeIcons.clock),
+                      optional: false,
+                      chosenTimeString: (value) => _editFlightModel.departureTime = value),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: SectionTitle('Arrival Information'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: TravelloryFormField(
+                      initialValue: _editFlightModel.arrivalLocation,
+                      labelText: 'Arrival Location *',
+                      icon: Icon(FontAwesomeIcons.planeArrival),
+                      optional: false,
+                      onChanged: (value) => _editFlightModel.arrivalLocation = value),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: DateFormField(
+                    initialValue: _editFlightModel.arrivalDate,
+                    labelText: 'Arrival Date *',
+                    icon: Icon(FontAwesomeIcons.calendarAlt),
+                    beforeDateKey: _depDateFormFieldKey,
+                    optional: false,
+                    tripModel: tripModel,
+                    dateValidationMessage: 'Arrival Date cannot be before Departure Date',
+                    chosenDateString: (value) => _editFlightModel.arrivalDate = value,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: TimeFormField(
+                      initialValue: _editFlightModel.arrivalTime,
+                      labelText: 'Arrival Time *',
+                      icon: Icon(FontAwesomeIcons.clock),
+                      optional: false,
+                      chosenTimeString: (value) => _editFlightModel.arrivalTime = value),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: SectionTitle('Notes'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: TravelloryFormField(
+                    initialValue: _editFlightModel.notes,
+                    labelText: 'Notes',
+                    icon: Icon(FontAwesomeIcons.stickyNote),
+                    optional: true,
+                    onChanged: (value) => _editFlightModel.notes = value,
+                  ),
+                ),
+                _getSubmitButton(singleTripProvider, _editFlightModel, isNewModel),
+                Padding(
+                  padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
+                  child: CancelButton(
+                    text: 'CANCEL',
+                    onCancel: () {
+                      _editFlightModel = model;
+                      cancellingDialog(context, cancelText);
+                    },
+                  ),
+                ),
+                SizedBox(height: 20),
+              ]),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
-    flightModel.tripUID = tripModel.uid;
+    FlightModel _flightModel = FlightModel();
+    _flightModel.tripUID = tripModel.uid;
 
     return Scaffold(
       key: Key('Flight'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: Column(
-          children: <Widget>[
-            TripHeader(tripModel),
-            Expanded(
-              //child: Form(
-              child: SingleChildScrollView(
-                child: Form(
-                  key: flightFormKey,
-                  child: Column(children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: BookingSiteTitle('Add Flight', FontAwesomeIcons.plane),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: SectionTitle('General Information'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: TravelloryFormField(
-                          labelText: 'Booking Reference',
-                          icon: Icon(FontAwesomeIcons.ticketAlt),
-                          optional: true,
-                          onChanged: (value) => flightModel.bookingReference = value),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: TravelloryFormField(
-                          labelText: 'Airline *',
-                          icon: Icon(FontAwesomeIcons.plane),
-                          optional: false,
-                          onChanged: (value) => flightModel.airline = value),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: TravelloryFormField(
-                          labelText: 'Flight Number',
-                          icon: Icon(FontAwesomeIcons.ticketAlt),
-                          optional: true,
-                          onChanged: (value) => flightModel.flightNr = value),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: TravelloryFormField(
-                          labelText: 'Seat',
-                          icon: Icon(FontAwesomeIcons.chair),
-                          optional: true,
-                          onChanged: (value) => flightModel.seat = value),
-                    ),
-                Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: CheckboxFormField(
-                    initialValue: false,
-                    label: 'Does your flight ticket include checked baggage?',
-                    onChanged: (value) {
-                      flightModel.checkedBaggage = value;
-                    },
-                  ),
-                ),
-                Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                    child: CheckboxFormField(
-                      initialValue: false,
-                      label: 'Does your flight ticket include excess baggage?',
-                      onChanged: (value) {
-                        flightModel.excessBaggage = value;
-                      },
-                    ),
-                ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: SectionTitle('Pick Up Information'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: TravelloryFormField(
-                          labelText: 'Departure Location *',
-                          icon: Icon(FontAwesomeIcons.planeDeparture),
-                          optional: false,
-                          onChanged: (value) => flightModel.departureLocation = value),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: DateFormField(
-                        key: _depDateFormFieldKey,
-                        labelText: 'Departure Date *',
-                        icon: Icon(FontAwesomeIcons.calendarAlt),
-                        optional: false,
-                        chosenDateString: (value) => flightModel.departureDate = value,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: TimeFormField(
-                          labelText: 'Departure Time *',
-                          icon: Icon(FontAwesomeIcons.clock),
-                          optional: false,
-                          chosenTimeString: (value) => flightModel.departureTime = value),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: SectionTitle('Arrival Information'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: TravelloryFormField(
-                          labelText: 'Arrival Location *',
-                          icon: Icon(FontAwesomeIcons.planeArrival),
-                          optional: false,
-                          onChanged: (value) => flightModel.arrivalLocation = value),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: DateFormField(
-                        labelText: 'Arrival Date',
-                        icon: Icon(FontAwesomeIcons.calendarAlt),
-                        beforeDateKey: _depDateFormFieldKey,
-                        optional: true,
-                        dateValidationMessage: 'Arrival Date cannot be before Departure Date',
-                        chosenDateString: (value) => flightModel.arrivalDate = value,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: TimeFormField(
-                          labelText: 'Arrival Time',
-                          icon: Icon(FontAwesomeIcons.clock),
-                          optional: false,
-                          chosenTimeString: (value) => flightModel.arrivalTime = value),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: SectionTitle('Notes'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: TravelloryFormField(
-                        labelText: 'Notes',
-                        icon: Icon(FontAwesomeIcons.stickyNote),
-                        optional: true,
-                        onChanged: (value) => flightModel.notes = value,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: SubmitButton(
-                          highlightColor: Theme.of(context).primaryColor,
-                          fillColor: Theme.of(context).primaryColor,
-                          validationFunction: validateForm,
-                          onSubmit: onSubmitBooking(singleTripProvider, flightModel,
-                              'booking-addFlight', context, alertText),
-                        ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                        child: CancelButton(
-                          text: 'CANCEL',
-                          onCancel: () {
-                            cancellingDialog(context, cancelText);
-                          },
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                  ]),
-                ),
-              ),
-            ),
-          ],
-        ),
+        child: getContent(context, singleTripProvider, tripModel, _flightModel, true),
       ),
     );
   }

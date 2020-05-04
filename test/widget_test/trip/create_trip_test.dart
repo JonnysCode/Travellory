@@ -44,7 +44,7 @@ void main() {
     expect(find.text('Trip Details'), findsOneWidget);
     expect(find.text('General Information'), findsOneWidget);
     expect(find.text('End Date *'), findsOneWidget);
-    expect(find.text('Destination(s) *'), findsOneWidget);
+    expect(find.text('Destination *'), findsOneWidget);
     expect(find.text('Trip Title *'), findsOneWidget);
     expect(find.text('General Information'), findsOneWidget);
   });
