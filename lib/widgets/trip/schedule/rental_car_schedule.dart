@@ -26,6 +26,7 @@ class RentalCarSchedule extends StatelessWidget {
             ),
             SizedBox(height: 3),
             Row(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 FaIcon(
                   FontAwesomeIcons.locationArrow,
@@ -33,7 +34,8 @@ class RentalCarSchedule extends StatelessWidget {
                   color: Colors.white70,
                 ),
                 SizedBox(width: 6),
-                Expanded(
+                Flexible(
+                  fit: FlexFit.loose,
                   child: Text(
                     rentalCar.pickupLocation,
                     overflow: TextOverflow.ellipsis,
@@ -70,6 +72,7 @@ class RentalCarSchedule extends StatelessWidget {
             SizedBox(height: 3),
             if (rentalCar.returnLocation.isNotEmpty)
               Row(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   FaIcon(
                     FontAwesomeIcons.locationArrow,
@@ -77,11 +80,16 @@ class RentalCarSchedule extends StatelessWidget {
                     color: Colors.white70,
                   ),
                   SizedBox(width: 6),
-                  Text(
-                    rentalCar.returnLocation,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white70,
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: Text(
+                      rentalCar.returnLocation,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
                     ),
                   ),
                 ],

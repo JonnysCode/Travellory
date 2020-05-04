@@ -38,6 +38,7 @@ class ActivitySchedule extends StatelessWidget {
               ),
               SizedBox(height: 4),
               Row(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   FaIcon(
                     FontAwesomeIcons.locationArrow,
@@ -45,7 +46,8 @@ class ActivitySchedule extends StatelessWidget {
                     color: Colors.white70,
                   ),
                   SizedBox(width: 4),
-                  Expanded(
+                  Flexible(
+                    fit: FlexFit.loose,
                     child: Text(
                       activity.location,
                       overflow: TextOverflow.ellipsis,
