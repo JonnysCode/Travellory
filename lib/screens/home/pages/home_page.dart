@@ -10,42 +10,61 @@ import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class HomePage extends StatelessWidget {
-  static const List<Dial> _dials = <Dial>[
-    Dial(
-      icon: FontAwesomeIcons.envelope,
-      description: 'Manage forwarded bookings',
-    ),
-    Dial(
-        icon: FontAwesomeIcons.theaterMasks,
-        description: 'Add Activity',
-        route: '/booking/activity'
-    ),
-    Dial(
-        icon: FontAwesomeIcons.car,
-        description: 'Add Rental Car',
-        route: '/booking/rentalcar'
-    ),
-    Dial(
-        icon: FontAwesomeIcons.bus,
-        description: 'Add Public Transportation',
-        route: '/booking/publictransport'
-
-    ),
-    Dial(
-        icon: FontAwesomeIcons.bed,
-        description: 'Add Accommodation',
-        route: '/booking/accommodation'
-    ),
-    Dial(
-        icon: FontAwesomeIcons.plane,
-        description: 'Add Flight',
-        route: '/booking/flight',
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
-    SingleTripProvider trip = Provider.of<TripsProvider>(context, listen: false).activeTrip;
+    TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
+    SingleTripProvider trip = tripsProvider.activeTrip;
+
+    List<Dial> _dials = <Dial>[
+      Dial(
+        icon: FontAwesomeIcons.envelope,
+        description: 'Manage forwarded bookings',
+        onTab: (){}
+      ),
+      Dial(
+          icon: FontAwesomeIcons.theaterMasks,
+          description: 'Add Activity',
+          onTab: (){
+            tripsProvider.selectTrip(trip.tripModel);
+            Navigator.pushNamed(context, '/booking/activity');
+          }
+      ),
+      Dial(
+          icon: FontAwesomeIcons.car,
+          description: 'Add Rental Car',
+          onTab: (){
+            tripsProvider.selectTrip(trip.tripModel);
+            Navigator.pushNamed(context, '/booking/rentalcar');
+          }
+      ),
+      Dial(
+          icon: FontAwesomeIcons.bus,
+          description: 'Add Public Transportation',
+          onTab: (){
+            tripsProvider.selectTrip(trip.tripModel);
+            Navigator.pushNamed(context, '/booking/publictransport');
+          }
+
+      ),
+      Dial(
+          icon: FontAwesomeIcons.bed,
+          description: 'Add Accommodation',
+          onTab: (){
+            tripsProvider.selectTrip(trip.tripModel);
+            Navigator.pushNamed(context, '/booking/accommodation');
+          }
+      ),
+      Dial(
+        icon: FontAwesomeIcons.plane,
+        description: 'Add Flight',
+          onTab: (){
+            tripsProvider.selectTrip(trip.tripModel);
+            Navigator.pushNamed(context, '/booking/flight');
+          }
+      ),
+    ];
+
     return SafeArea(
       child: Container(
         key: Key('home_page'),
@@ -141,8 +160,7 @@ class HomePage extends StatelessWidget {
             if(trip != null)
               SpeedDialButton(
                 key: Key('home_page_dial'),
-                dials: _dials,
-                tripModel: trip.tripModel,
+                dials: _dials
               ),
           ],
         ),
