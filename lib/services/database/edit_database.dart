@@ -63,7 +63,8 @@ String getEditFunctionNameBasedOn(Model model) {
   return functionName;
 }
 
-void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model, BuildContext context, String errorMessage) {
+void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model,
+    BuildContext context, String errorMessage) {
   String functionName = getEditFunctionNameBasedOn(model);
 
   const String alertText =

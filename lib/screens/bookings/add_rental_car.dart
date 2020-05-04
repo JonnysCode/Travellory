@@ -26,7 +26,6 @@ class RentalCar extends StatefulWidget {
 
 class RentalCarState<T extends RentalCar> extends State<T> {
   final GlobalKey<FormState> rentalCarFormKey = GlobalKey<FormState>();
-  RentalCarModel _rentalCarModel = RentalCarModel();
 
   final GlobalKey<DateFormFieldState> _pickUpDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
@@ -42,7 +41,9 @@ class RentalCarState<T extends RentalCar> extends State<T> {
 
   Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
       TripModel tripModel, RentalCarModel model, bool isNewModel) {
-    _rentalCarModel = model;
+    RentalCarModel _editRentalCarModel = RentalCarModel();
+//  _editRentalCarModel = model;
+    _editRentalCarModel = RentalCarModel.fromData(model.toMap());
 
     return Column(
       children: <Widget>[
@@ -63,20 +64,20 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: _rentalCarModel.bookingReference,
+                      initialValue: _editRentalCarModel.bookingReference,
                       labelText: 'Booking Reference',
                       icon: Icon(FontAwesomeIcons.ticketAlt),
                       optional: true,
-                      onChanged: (value) => _rentalCarModel.bookingReference = value),
+                      onChanged: (value) => _editRentalCarModel.bookingReference = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: _rentalCarModel.company,
+                      initialValue: _editRentalCarModel.company,
                       labelText: 'Company *',
                       icon: Icon(FontAwesomeIcons.solidBuilding),
                       optional: false,
-                      onChanged: (value) => _rentalCarModel.company = value),
+                      onChanged: (value) => _editRentalCarModel.company = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -85,40 +86,40 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: _rentalCarModel.pickupLocation,
-                      labelText: 'Pick Up Location',
+                      initialValue: _editRentalCarModel.pickupLocation,
+                      labelText: 'Pick Up Location *',
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
                       onTap: (controller) async {
                         PlacesDetailsResponse detail =
                             await GooglePlaces.openGooglePlacesSearch(context);
                         controller.text = detail.result.formattedAddress;
-                        _rentalCarModel.pickupLocation = detail.result.formattedAddress;
-                        _rentalCarModel.pickupLatitude = detail.result.geometry.location.lat;
-                        _rentalCarModel.pickupLongitude = detail.result.geometry.location.lng;
+                        _editRentalCarModel.pickupLocation = detail.result.formattedAddress;
+                        _editRentalCarModel.pickupLatitude = detail.result.geometry.location.lat;
+                        _editRentalCarModel.pickupLongitude = detail.result.geometry.location.lng;
                       },
-                      onChanged: (value) => _rentalCarModel.pickupLocation = value),
+                      onChanged: (value) => _editRentalCarModel.pickupLocation = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
-                    initialValue: _rentalCarModel.pickupDate,
+                    initialValue: _editRentalCarModel.pickupDate,
                     key: _pickUpDateFormFieldKey,
                     labelText: 'Pick Up Date *',
                     optional: false,
                     tripModel: tripModel,
                     icon: Icon(FontAwesomeIcons.calendarAlt),
-                    chosenDateString: (value) => _rentalCarModel.pickupDate = value,
+                    chosenDateString: (value) => _editRentalCarModel.pickupDate = value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TimeFormField(
-                      initialValue: _rentalCarModel.pickupTime,
+                      initialValue: _editRentalCarModel.pickupTime,
                       labelText: 'Pick Up Time',
                       icon: Icon(FontAwesomeIcons.clock),
                       optional: true,
-                      chosenTimeString: (value) => _rentalCarModel.pickupTime = value),
+                      chosenTimeString: (value) => _editRentalCarModel.pickupTime = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -127,7 +128,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: _rentalCarModel.returnLocation,
+                      initialValue: _editRentalCarModel.returnLocation,
                       labelText: 'Return Location',
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: true,
@@ -137,33 +138,33 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                             countryCode: tripModel.countryCode);
 
                         controller.text = detail.result.formattedAddress;
-                        _rentalCarModel.returnLocation = detail.result.formattedAddress;
-                        _rentalCarModel.returnLatitude = detail.result.geometry.location.lat;
-                        _rentalCarModel.returnLongitude = detail.result.geometry.location.lng;
+                        _editRentalCarModel.returnLocation = detail.result.formattedAddress;
+                        _editRentalCarModel.returnLatitude = detail.result.geometry.location.lat;
+                        _editRentalCarModel.returnLongitude = detail.result.geometry.location.lng;
                       },
-                      onChanged: (value) => _rentalCarModel.returnLocation = value),
+                      onChanged: (value) => _editRentalCarModel.returnLocation = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
-                    initialValue: _rentalCarModel.returnDate,
+                    initialValue: _editRentalCarModel.returnDate,
                     labelText: 'Return Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     beforeDateKey: _pickUpDateFormFieldKey,
                     optional: false,
                     tripModel: tripModel,
                     dateValidationMessage: 'Return Date cannot be before Pick Up Date',
-                    chosenDateString: (value) => _rentalCarModel.returnDate = value,
+                    chosenDateString: (value) => _editRentalCarModel.returnDate = value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TimeFormField(
-                      initialValue: _rentalCarModel.returnTime,
+                      initialValue: _editRentalCarModel.returnTime,
                       labelText: 'Return Time',
                       icon: Icon(FontAwesomeIcons.clock),
                       optional: true,
-                      chosenTimeString: (value) => _rentalCarModel.returnTime = value),
+                      chosenTimeString: (value) => _editRentalCarModel.returnTime = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -172,20 +173,20 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: _rentalCarModel.carDescription,
+                      initialValue: _editRentalCarModel.carDescription,
                       labelText: 'Car Description',
                       icon: Icon(FontAwesomeIcons.car),
                       optional: true,
-                      onChanged: (value) => _rentalCarModel.carDescription = value),
+                      onChanged: (value) => _editRentalCarModel.carDescription = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: _rentalCarModel.carNumberPlate,
+                      initialValue: _editRentalCarModel.carNumberPlate,
                       labelText: 'Car Plate',
                       icon: Icon(FontAwesomeIcons.car),
                       optional: true,
-                      onChanged: (value) => _rentalCarModel.carNumberPlate = value),
+                      onChanged: (value) => _editRentalCarModel.carNumberPlate = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -194,19 +195,21 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                    initialValue: _rentalCarModel.notes,
+                    initialValue: _editRentalCarModel.notes,
                     labelText: 'Notes',
                     icon: Icon(FontAwesomeIcons.stickyNote),
                     optional: true,
-                    onChanged: (value) => _rentalCarModel.notes = value,
+                    onChanged: (value) => _editRentalCarModel.notes = value,
                   ),
                 ),
-                _getSubmitButton(singleTripProvider, model, isNewModel),
+                _getSubmitButton(singleTripProvider, _editRentalCarModel, isNewModel),
                 Padding(
                   padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                   child: CancelButton(
                     text: 'CANCEL',
                     onCancel: () {
+                      // If cancel, then model shouldn't be saved
+                      _editRentalCarModel = model;
                       cancellingDialog(context, cancelText);
                     },
                   ),
@@ -247,6 +250,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
+    RentalCarModel _rentalCarModel = RentalCarModel();
     _rentalCarModel.tripUID = tripModel.uid;
 
     return Scaffold(

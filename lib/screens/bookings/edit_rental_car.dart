@@ -23,7 +23,6 @@ class _EditRentalCarState extends RentalCarState<EditRentalCar> {
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
 
-//    final RentalCarModel _rentalCarModel = ModalRoute.of(context).settings.arguments;
     ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
     final RentalCarModel _rentalCarModel = arguments.model;
 
