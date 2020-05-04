@@ -1,38 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/activity_model.dart';
+import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/services/database/edit.dart';
-import 'add_activity.dart';
+import 'add_flight.dart';
 
-class EditActivity extends Activity {
-  EditActivity({
+class EditFlight extends Flight {
+  EditFlight({
     Key key,
   }) : super(key: key);
 
   @override
-  _EditActivityState createState() => _EditActivityState();
+  _EditFlightState createState() => _EditFlightState();
 }
 
-class _EditActivityState extends ActivityState<EditActivity> {
+class _EditFlightState extends FlightState<EditFlight> {
   @override
   Widget build(BuildContext context) {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
 
-//    final ActivityModel _activityModel = ModalRoute.of(context).settings.arguments;
+//    final FlightModel _flightModel = ModalRoute.of(context).settings.arguments;
     ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
-    final ActivityModel _activityModel = arguments.model;
+    final FlightModel _flightModel = arguments.model;
 
     return Scaffold(
-      key: Key('EditActivity'),
+      key: Key('EditFlight'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, _activityModel, arguments.isNewModel),
+        child: getContent(context, singleTripProvider, tripModel, _flightModel, arguments.isNewModel),
       ),
     );
   }

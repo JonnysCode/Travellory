@@ -2,14 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/activity_model.dart';
+import 'package:travellory/models/schedule_entry.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class ActivitySchedule extends StatelessWidget {
-  const ActivitySchedule(this.activity, {Key key}) : super(key : key);
-  final ActivityModel activity;
+  const ActivitySchedule(this.scheduleEntry, {Key key}) : super(key: key);
+
+  final ScheduleEntry scheduleEntry;
 
   @override
   Widget build(BuildContext context) {
+    ActivityModel activity = scheduleEntry.booking;
+
     return Row(
       key: Key('activity'),
       children: <Widget>[
@@ -26,7 +30,7 @@ class ActivitySchedule extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               FashionFetishText(
-                text: activity.description,
+                text: activity.title,
                 size: 15,
                 fontWeight: FashionFontWeight.heavy,
                 height: 1.2,
@@ -34,6 +38,7 @@ class ActivitySchedule extends StatelessWidget {
               ),
               SizedBox(height: 4),
               Row(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   FaIcon(
                     FontAwesomeIcons.locationArrow,
@@ -41,11 +46,16 @@ class ActivitySchedule extends StatelessWidget {
                     color: Colors.white70,
                   ),
                   SizedBox(width: 4),
-                  Text(
-                    activity.location,
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.white70,
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: Text(
+                      activity.location,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.black54,
+                      ),
                     ),
                   ),
                 ],
@@ -58,19 +68,27 @@ class ActivitySchedule extends StatelessWidget {
             width: 75,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'from ${activity.startTime}',
+                  '${activity.startTime}',
                   style: TextStyle(
                     color: Colors.black38,
                   ),
                 ),
                 Text(
-                  'to ${activity.endTime}',
+                  'to',
                   style: TextStyle(
                     color: Colors.black38,
                   ),
                 ),
+                if (activity.endTime.isNotEmpty)
+                  Text(
+                    '${activity.endTime}',
+                    style: TextStyle(
+                      color: Colors.black38,
+                    ),
+                  ),
               ],
             ),
           ),
