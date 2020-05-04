@@ -26,8 +26,6 @@ class Flight extends StatefulWidget {
 
 class FlightState<T extends Flight> extends State<T> {
   final GlobalKey<FormState> flightFormKey = GlobalKey<FormState>();
-  FlightModel _flightModel = FlightModel();
-  final DatabaseAdder databaseAdder = DatabaseAdder();
 
   final GlobalKey<DateFormFieldState> _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
@@ -66,8 +64,8 @@ class FlightState<T extends Flight> extends State<T> {
 
   Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
       TripModel tripModel, FlightModel model, bool isNewModel) {
-    // set activityModel instance to edit or new model
-    _flightModel = model;
+    FlightModel _editFlightModel = FlightModel();
+    _editFlightModel = FlightModel.fromData(model.toMap());
 
     return Column(
       children: <Widget>[
@@ -88,56 +86,56 @@ class FlightState<T extends Flight> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                    initialValue: _flightModel.bookingReference,
+                    initialValue: _editFlightModel.bookingReference,
                       labelText: 'Booking Reference',
                       icon: Icon(FontAwesomeIcons.ticketAlt),
                       optional: true,
-                      onChanged: (value) => _flightModel.bookingReference = value),
+                      onChanged: (value) => _editFlightModel.bookingReference = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: _flightModel.airline,
+                      initialValue: _editFlightModel.airline,
                       labelText: 'Airline *',
                       icon: Icon(FontAwesomeIcons.plane),
                       optional: false,
-                      onChanged: (value) => _flightModel.airline = value),
+                      onChanged: (value) => _editFlightModel.airline = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: _flightModel.flightNr,
+                      initialValue: _editFlightModel.flightNr,
                       labelText: 'Flight Number',
                       icon: Icon(FontAwesomeIcons.ticketAlt),
                       optional: true,
-                      onChanged: (value) => _flightModel.flightNr = value),
+                      onChanged: (value) => _editFlightModel.flightNr = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: _flightModel.seat,
+                      initialValue: _editFlightModel.seat,
                       labelText: 'Seat',
                       icon: Icon(FontAwesomeIcons.chair),
                       optional: true,
-                      onChanged: (value) => _flightModel.seat = value),
+                      onChanged: (value) => _editFlightModel.seat = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: CheckboxFormField(
-                    initialValue: _flightModel.checkedBaggage,
+                    initialValue: _editFlightModel.checkedBaggage,
                     label: 'Does your flight ticket include checked baggage?',
                     onChanged: (value) {
-                      _flightModel.checkedBaggage = value;
+                      _editFlightModel.checkedBaggage = value;
                     },
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: CheckboxFormField(
-                    initialValue: _flightModel.excessBaggage,
+                    initialValue: _editFlightModel.excessBaggage,
                     label: 'Does your flight ticket include excess baggage?',
                     onChanged: (value) {
-                      _flightModel.excessBaggage = value;
+                      _editFlightModel.excessBaggage = value;
                     },
                   ),
                 ),
@@ -148,32 +146,32 @@ class FlightState<T extends Flight> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: _flightModel.departureLocation,
+                      initialValue: _editFlightModel.departureLocation,
                       labelText: 'Departure Location *',
                       icon: Icon(FontAwesomeIcons.planeDeparture),
                       optional: false,
-                      onChanged: (value) => _flightModel.departureLocation = value),
+                      onChanged: (value) => _editFlightModel.departureLocation = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
-                    initialValue: _flightModel.departureDate,
+                    initialValue: _editFlightModel.departureDate,
                     key: _depDateFormFieldKey,
                     labelText: 'Departure Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     optional: false,
                     tripModel: tripModel,
-                    chosenDateString: (value) => _flightModel.departureDate = value,
+                    chosenDateString: (value) => _editFlightModel.departureDate = value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TimeFormField(
-                      initialValue: _flightModel.departureTime,
+                      initialValue: _editFlightModel.departureTime,
                       labelText: 'Departure Time *',
                       icon: Icon(FontAwesomeIcons.clock),
                       optional: false,
-                      chosenTimeString: (value) => _flightModel.departureTime = value),
+                      chosenTimeString: (value) => _editFlightModel.departureTime = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -182,33 +180,33 @@ class FlightState<T extends Flight> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                      initialValue: _flightModel.arrivalLocation,
+                      initialValue: _editFlightModel.arrivalLocation,
                       labelText: 'Arrival Location *',
                       icon: Icon(FontAwesomeIcons.planeArrival),
                       optional: false,
-                      onChanged: (value) => _flightModel.arrivalLocation = value),
+                      onChanged: (value) => _editFlightModel.arrivalLocation = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
-                    initialValue: _flightModel.arrivalDate,
+                    initialValue: _editFlightModel.arrivalDate,
                     labelText: 'Arrival Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     beforeDateKey: _depDateFormFieldKey,
                     optional: false,
                     tripModel: tripModel,
                     dateValidationMessage: 'Arrival Date cannot be before Departure Date',
-                    chosenDateString: (value) => _flightModel.arrivalDate = value,
+                    chosenDateString: (value) => _editFlightModel.arrivalDate = value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TimeFormField(
-                      initialValue: _flightModel.arrivalTime,
+                      initialValue: _editFlightModel.arrivalTime,
                       labelText: 'Arrival Time *',
                       icon: Icon(FontAwesomeIcons.clock),
                       optional: false,
-                      chosenTimeString: (value) => _flightModel.arrivalTime = value),
+                      chosenTimeString: (value) => _editFlightModel.arrivalTime = value),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -217,19 +215,20 @@ class FlightState<T extends Flight> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                    initialValue: _flightModel.notes,
+                    initialValue: _editFlightModel.notes,
                     labelText: 'Notes',
                     icon: Icon(FontAwesomeIcons.stickyNote),
                     optional: true,
-                    onChanged: (value) => _flightModel.notes = value,
+                    onChanged: (value) => _editFlightModel.notes = value,
                   ),
                 ),
-                _getSubmitButton(singleTripProvider, _flightModel, isNewModel),
+                _getSubmitButton(singleTripProvider, _editFlightModel, isNewModel),
                 Padding(
                   padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                   child: CancelButton(
                     text: 'CANCEL',
                     onCancel: () {
+                      _editFlightModel = model;
                       cancellingDialog(context, cancelText);
                     },
                   ),
@@ -248,6 +247,7 @@ class FlightState<T extends Flight> extends State<T> {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
+    FlightModel _flightModel = FlightModel();
     _flightModel.tripUID = tripModel.uid;
 
     return Scaffold(
