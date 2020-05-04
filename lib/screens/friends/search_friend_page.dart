@@ -92,17 +92,21 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
 
     return SafeArea(
         key: Key('search_friends'),
-        child: Column(
+        child: Row(
           children: <Widget>[
             Container(
-              child: IconButton(
-                onPressed: () =>
-                    Provider.of<FriendsPageProvider>(context, listen: false)
-                        .toggleSearching(),
-                icon: Icon(FontAwesomeIcons.arrowLeft),
-                iconSize: 28,
-                color: Colors.black38,
-              ),
+              margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+              child:
+                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                IconButton(
+                  onPressed: () =>
+                      Provider.of<FriendsPageProvider>(context, listen: false)
+                          .toggleSearching(),
+                  icon: Icon(FontAwesomeIcons.arrowLeft),
+                  iconSize: 28,
+                  color: Colors.black38,
+                ),
+              ]),
             ),
             Expanded(
               child: SearchBar(
