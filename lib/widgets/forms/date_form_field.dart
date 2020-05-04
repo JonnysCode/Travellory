@@ -52,7 +52,7 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
   }
 
   DateTime getInitialDate() {
-    if (widget.initialValue != '' && widget.initialValue != null) {
+    if (widget.initialValue != null && widget.initialValue != '') {
       controller..text = (widget.initialValue);
       initialDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.initialValue);
       selectedDate = initialDate;
@@ -68,11 +68,23 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
     super.dispose();
   }
 
-  bool pickedDateNotInTripRange(DateTime pickedDate) {
-    DateTime tripStartDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.startDate);
-    DateTime tripEndDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.endDate);
-    if ((pickedDate.isAfter(tripStartDate) || pickedDate == tripStartDate) &&
-        (pickedDate.isBefore(tripEndDate) || pickedDate == tripEndDate)) {
+  bool pickedDateInTripRange(DateTime pickedDate) {
+    if (widget.tripModel != null) {
+      DateTime tripStartDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.startDate);
+      DateTime tripEndDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.endDate);
+      if ((pickedDate.isAfter(tripStartDate) || pickedDate == tripStartDate) &&
+          (pickedDate.isBefore(tripEndDate) || pickedDate == tripEndDate)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  bool secondDateInRange(DateTime pickedDate) {
+    if (pickedDate.isBefore(widget.beforeDateKey.currentState.selectedDate) &&
+        (controller.text != widget.beforeDateKey.currentState.controller.text)) {
       return false;
     }
     return true;
@@ -109,11 +121,9 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
               if (widget.optional) return null;
               if (value.isEmpty) {
                 return widget.validatorText;
-              } else if (pickedDateNotInTripRange(selectedDate)) {
+              } else if (!pickedDateInTripRange(selectedDate)) {
                 return widget.dateInTripValidationMessage;
-              } else if (widget.beforeDateKey != null &&
-                  selectedDate.isBefore(widget.beforeDateKey.currentState.selectedDate) &&
-                  (controller.text != widget.beforeDateKey.currentState.controller.text)) {
+              } else if (widget.beforeDateKey != null && !secondDateInRange(selectedDate)) {
                 return widget.dateValidationMessage;
               }
               return null;
