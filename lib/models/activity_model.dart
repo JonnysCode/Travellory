@@ -64,6 +64,7 @@ class ActivityModel extends Model {
   Map<String, dynamic> toMap() {
     return {
       "tripUID": tripUID,
+      "uid": uid,
       "category": category,
       "title": title,
       "description": description,

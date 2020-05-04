@@ -76,6 +76,7 @@ class PublicTransportModel extends Model {
   Map<String, dynamic> toMap() {
     return {
       "tripUID": tripUID,
+      "uid": uid,
       "transportationType": transportationType,
       "publicTransportCompany": publicTransportCompany,
       "specificType": specificType,
