@@ -12,7 +12,7 @@ import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 
 String _mapStyle;
-final List<String> _userStates = ["switzerland","austria","belgium"];
+final List<String> _userStates = ["switzerland", "austria", "belgium"];
 
 class MapPage extends StatefulWidget {
   @override
@@ -54,7 +54,8 @@ class MapSampleState extends State<MapSample> {
   final List<Polygon> _boundaries = [];
 
   Future<void> loadAccommodations() async {
-    final List<SingleTripProvider> trips = await Provider.of<TripsProvider>(context, listen: false).trips;
+    final List<SingleTripProvider> trips =
+        await Provider.of<TripsProvider>(context, listen: false).trips;
 
     _markers.clear();
 
@@ -66,12 +67,11 @@ class MapSampleState extends State<MapSample> {
           markerId: MarkerId(accommodation.name),
           position: LatLng(accommodation.latitude, accommodation.longitude),
           infoWindow: InfoWindow(
-            title: accommodation.name,
-            snippet: accommodation.address,
-            onTap: () {
-              Navigator.pushNamed( context, '/view/accommodation', arguments: accommodation);
-            }
-          ),
+              title: accommodation.name,
+              snippet: accommodation.address,
+              onTap: () {
+                Navigator.pushNamed(context, '/view/accommodation', arguments: accommodation);
+              }),
         );
         _markers[accommodation.tripUID] = marker;
       }
@@ -84,7 +84,7 @@ class MapSampleState extends State<MapSample> {
     setState(() {
       loadAccommodations();
 
-      if(_boundariesTemp.isNotEmpty){
+      if (_boundariesTemp.isNotEmpty) {
         _boundaries.clear();
         _boundariesTemp.forEach(_boundaries.add);
       }
@@ -117,25 +117,33 @@ class MapSampleState extends State<MapSample> {
         ),
         Positioned(
           child: FabCircularMenu(
-            ringColor: Theme.of(context).primaryColor,
+              key: Key('FabCircularMenu'),
+              ringColor: Theme.of(context).primaryColor,
               ringWidth: 50.0,
               ringDiameter: 200.0,
               alignment: Alignment.topRight,
               children: <Widget>[
-                IconButton(icon: Icon(Icons.home), onPressed: () {
-                  //print('Home');
-                }),
-                IconButton(icon: Icon(Icons.favorite), onPressed: () {
-                  //print('Favorite');
-                }),
-                IconButton(icon: Icon(Icons.fastfood), onPressed: () {
-                  //print('Favorite');
-                }),
-                IconButton(icon: Icon(Icons.school), onPressed: () {
-                  //print('Favorite');
-                }),
-              ]
-          ),
+                IconButton(
+                    icon: Icon(Icons.home),
+                    onPressed: () {
+                      //print('Home');
+                    }),
+                IconButton(
+                    icon: Icon(Icons.favorite),
+                    onPressed: () {
+                      //print('Favorite');
+                    }),
+                IconButton(
+                    icon: Icon(Icons.fastfood),
+                    onPressed: () {
+                      //print('Favorite');
+                    }),
+                IconButton(
+                    icon: Icon(Icons.school),
+                    onPressed: () {
+                      //print('Favorite');
+                    }),
+              ]),
         )
       ],
     );
