@@ -67,7 +67,7 @@ void main() {
     await tester.pumpWidget(makeTestableWidget(child: page));
 
     // Verify that the friends_request_list page is present.
-    expect(find.byKey(Key('friend_requests_list')), findsOneWidget);
+    expect(find.byKey(Key('friend-requests-list')), findsOneWidget);
   });
 
   testWidgets('test if friends_list is present', (WidgetTester tester) async {
@@ -77,7 +77,7 @@ void main() {
     await tester.pumpWidget(makeTestableWidget(child: page));
 
     // Verify that the friends_request_list page is present.
-    expect(find.byKey(Key('friends_list')), findsOneWidget);
+    expect(find.byKey(Key('friends-list')), findsOneWidget);
   });
 
   testWidgets('test if buttons for friends requests are present', (WidgetTester tester) async {
@@ -87,8 +87,8 @@ void main() {
     await tester.pumpWidget(makeTestableWidget(child: page));
 
     // Verify that the buttons for friends_request_list is present.
-    expect(find.byKey(Key('accept_button')), findsNWidgets(4));
-    expect(find.byKey(Key('decline_button')), findsNWidgets(4));
+    expect(find.byKey(Key('accept_button')), findsOneWidget);
+    expect(find.byKey(Key('decline_button')), findsOneWidget);
   });
 
   testWidgets('test if button for removing friends', (WidgetTester tester) async {
@@ -98,7 +98,7 @@ void main() {
     await tester.pumpWidget(makeTestableWidget(child: page));
 
     // Verify that the button for friend_list is present.
-    expect(find.byKey(Key('accept_button')), findsNWidgets(4));
+    expect(find.byKey(Key('remove_button')), findsOneWidget);
   });
 
 }
