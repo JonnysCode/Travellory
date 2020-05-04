@@ -124,11 +124,11 @@ class PublicTransportEntry extends StatelessWidget {
     String displayLocation = location;
     String displayTime = time;
 
-    if (!(location != '' && location != null)) {
+    if (location.isEmpty) {
       displayLocation = 'No location known';
     }
 
-    if (!(time != '' && time != null)) {
+    if (location.isEmpty) {
       displayTime = '?:??';
     }
 
