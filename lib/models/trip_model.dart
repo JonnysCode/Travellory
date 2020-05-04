@@ -36,28 +36,13 @@ class TripModel extends Model{
   String imagePath;
   int imageNr;
   int index;
-  List<Day> days;
 
   void init(){
     _initImagePath();
-    _initDays();
   }
 
   void _initImagePath(){
     imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
-  }
-
-  void _initDays() {
-    days = <Day>[];
-    var dateTime = getDateTimeFrom(startDate);
-    var endDateTime = getDateTimeFrom(endDate);
-
-    do {
-      days.add(Day(
-          date: dateTime
-      ));
-      dateTime = dateTime.add(Duration(days: 1));
-    } while (dateTime.compareTo(endDateTime) <= 0);
   }
 
   @override
