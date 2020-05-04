@@ -28,6 +28,7 @@ class FlightState<T extends Flight> extends State<T> {
   final GlobalKey<FormState> flightFormKey = GlobalKey<FormState>();
 
   final GlobalKey<DateFormFieldState> _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _arrDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
   bool validateForm() {
     return flightFormKey.currentState.validate();
@@ -157,10 +158,15 @@ class FlightState<T extends Flight> extends State<T> {
                   child: DateFormField(
                     initialValue: _editFlightModel.departureDate,
                     key: _depDateFormFieldKey,
+                    listenerKey: _arrDateFormFieldKey,
                     labelText: 'Departure Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     optional: false,
                     tripModel: tripModel,
+//                      chosenDateString: (value) {
+//                        _editFlightModel.departureDate = value;
+//                        setState(() {});
+//                      }
                     chosenDateString: (value) => _editFlightModel.departureDate = value,
                   ),
                 ),
@@ -189,6 +195,7 @@ class FlightState<T extends Flight> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
+                    key: _arrDateFormFieldKey,
                     initialValue: _editFlightModel.arrivalDate,
                     labelText: 'Arrival Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
