@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
@@ -18,8 +19,8 @@ void main() {
               value: MockAuth().user
           ),
         ],
-        child: Material(
-            child: child
+        child: MaterialApp(
+          home: child,
         ));
   }
 
@@ -51,7 +52,7 @@ void main() {
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page));
-    var backIcon = find.byIcon(Icons.arrow_back);
+    var backIcon = find.byIcon(FontAwesomeIcons.arrowLeft);
 
     // Verify that page has arrow back.
     expect(backIcon, findsOneWidget);
@@ -66,7 +67,7 @@ void main() {
     await tester.pumpWidget(makeTestableWidget(child: page));
     var textAddFriends = find.text('Add friends');
     var textCancel = find.text('Cancel');
-    var searchIcon = find.byIcon(Icons.search);
+    var searchIcon = find.byIcon(FontAwesomeIcons.search);
 
     // Verify that a search Icon, cancel text and hint text is present.
     expect(textAddFriends, findsOneWidget);
