@@ -2,14 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/activity_model.dart';
+import 'package:travellory/models/schedule_entry.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class ActivitySchedule extends StatelessWidget {
-  const ActivitySchedule(this.activity, {Key key}) : super(key : key);
-  final ActivityModel activity;
+  const ActivitySchedule(this.scheduleEntry, {Key key}) : super(key: key);
+
+  final ScheduleEntry scheduleEntry;
 
   @override
   Widget build(BuildContext context) {
+    ActivityModel activity = scheduleEntry.booking;
+
     return Row(
       key: Key('activity'),
       children: <Widget>[
@@ -26,7 +30,7 @@ class ActivitySchedule extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               FashionFetishText(
-                text: activity.description,
+                text: activity.title,
                 size: 15,
                 fontWeight: FashionFontWeight.heavy,
                 height: 1.2,
@@ -45,7 +49,7 @@ class ActivitySchedule extends StatelessWidget {
                     activity.location,
                     style: TextStyle(
                       fontSize: 13,
-                      color: Colors.white70,
+                      color: Colors.black54,
                     ),
                   ),
                 ],
@@ -58,19 +62,21 @@ class ActivitySchedule extends StatelessWidget {
             width: 75,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'from ${activity.startTime}',
+                  activity.startTime,
                   style: TextStyle(
                     color: Colors.black38,
                   ),
                 ),
-                Text(
-                  'to ${activity.endTime}',
-                  style: TextStyle(
-                    color: Colors.black38,
+                if(activity.endTime.isNotEmpty)
+                  Text(
+                    'to ${activity.endTime}',
+                    style: TextStyle(
+                      color: Colors.black38,
+                    ),
                   ),
-                ),
               ],
             ),
           ),

@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/utils/date_converter.dart';
-
+import 'package:travellory/models/schedule_entry.dart';
 
 class Day {
   Day({
     @required this.date,
+    this.entries
   }){
-    dateString = toDateStringFrom(date);
+    isExpanded = true;
+    entries = <ScheduleEntry>[];
   }
 
   DateTime date;
-  String dateString;
+  List<ScheduleEntry> entries;
+  bool isExpanded;
+
+  void toggleExpanded(){
+    isExpanded = !isExpanded;
+  }
+
+  bool isInBetween(DateTime startDate, DateTime endDate) =>
+      date.compareTo(startDate) >= 0
+      && date.compareTo(endDate) <= 0;
 }
