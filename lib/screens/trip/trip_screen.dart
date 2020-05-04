@@ -6,7 +6,6 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/services/database/edit.dart';
-import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/bookings/booking_card.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
