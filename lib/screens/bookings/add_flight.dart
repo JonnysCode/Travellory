@@ -73,7 +73,6 @@ class FlightState<T extends Flight> extends State<T> {
       children: <Widget>[
         TripHeader(tripModel),
         Expanded(
-          //child: Form(
           child: SingleChildScrollView(
             child: Form(
               key: flightFormKey,
@@ -163,6 +162,7 @@ class FlightState<T extends Flight> extends State<T> {
                     labelText: 'Departure Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     optional: false,
+                    tripModel: tripModel,
                     chosenDateString: (value) => _flightModel.departureDate = value,
                   ),
                 ),
@@ -196,6 +196,7 @@ class FlightState<T extends Flight> extends State<T> {
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     beforeDateKey: _depDateFormFieldKey,
                     optional: true,
+                    tripModel: tripModel,
                     dateValidationMessage: 'Arrival Date cannot be before Departure Date',
                     chosenDateString: (value) => _flightModel.arrivalDate = value,
                   ),
