@@ -121,7 +121,7 @@ class MapSampleState extends State<MapSample> {
               ringColor: Theme.of(context).primaryColor,
               ringWidth: 50.0,
               ringDiameter: 200.0,
-              fabMargin: EdgeInsets.only(right: 50.0),
+              fabMargin: EdgeInsets.only(right: 50.0, top: 20.0),
               alignment: Alignment.topRight,
               children: <Widget>[
                 IconButton(
