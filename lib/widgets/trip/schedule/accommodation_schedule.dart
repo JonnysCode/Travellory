@@ -34,6 +34,7 @@ class AccommodationSchedule extends StatelessWidget {
             ),
             SizedBox(height: 2),
             Row(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 FaIcon(
                   FontAwesomeIcons.locationArrow,
@@ -41,7 +42,8 @@ class AccommodationSchedule extends StatelessWidget {
                   color: Colors.white70,
                 ),
                 SizedBox(width: 4),
-                Expanded(
+                Flexible(
+                  fit: FlexFit.loose,
                   child: Text(
                     accommodation.address,
                     overflow: TextOverflow.ellipsis,
