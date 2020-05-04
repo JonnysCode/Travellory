@@ -136,7 +136,7 @@ class GMapBorderLoader{
     }
 
     final Map jsonResult = await json.decode(data);
-    print(stateName);
+    //print(stateName);
     //print(jsonResult["features"][0]["geometry"]["coordinates"][0] as List);
 
 
