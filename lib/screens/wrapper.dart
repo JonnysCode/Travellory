@@ -22,13 +22,9 @@ class Wrapper extends StatelessWidget {
       if(tripsProvider.user == null || tripsProvider.user != user){
         tripsProvider.init(user);
       }
-
-
-//      if(friendsProvider.user == null || friendsProvider.user != user) {
-//        friendsProvider.init(user);
-//      }
-//      return Home();
-
+      if(friendsProvider.user == null || friendsProvider.user != user) {
+        friendsProvider.init(user);
+      }
       return Selector<TripsProvider, bool>(
         selector: (_, tripsProvider) => tripsProvider.activeTripInitiated,
         builder: (_, initiated, __) => initiated
