@@ -63,6 +63,7 @@ class RentalCarModel extends Model {
   Map<String, dynamic> toMap() {
     return {
       "tripUID": tripUID,
+      "uid": uid,
       "bookingReference": bookingReference,
       "company": company,
       "pickupLocation": pickupLocation,

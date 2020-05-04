@@ -64,6 +64,7 @@ class AccommodationModel extends Model {
   Map<String, dynamic> toMap() {
     return {
       "tripUID": tripUID,
+      "uid": uid,
       "type": type,
       "specificationOther": specificationOther,
       "name": name,
