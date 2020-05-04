@@ -12,7 +12,7 @@ import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 
 String _mapStyle;
-final List<String> _userStates = ["germany","switzerland","austria","belgium"];
+final List<String> _userStates = ["switzerland", "austria", "belgium"];
 
 class MapPage extends StatefulWidget {
   @override
@@ -93,8 +93,8 @@ class MapSampleState extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
+    return Scaffold(
+      body: Stack(children: <Widget>[
         GoogleMap(
           key: Key('google_map_widget'),
           mapType: MapType.normal,
@@ -116,36 +116,42 @@ class MapSampleState extends State<MapSample> {
           polygons: _boundaries.toSet(),
         ),
         Positioned(
-          child: FabCircularMenu(
-              key: Key('FabCircularMenu'),
-              ringColor: Theme.of(context).primaryColor,
-              ringWidth: 50.0,
-              ringDiameter: 200.0,
-              alignment: Alignment.topRight,
-              children: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.home),
-                    onPressed: () {
-                      //print('Home');
-                    }),
-                IconButton(
-                    icon: Icon(Icons.favorite),
-                    onPressed: () {
-                      //print('Favorite');
-                    }),
-                IconButton(
-                    icon: Icon(Icons.fastfood),
-                    onPressed: () {
-                      //print('Favorite');
-                    }),
-                IconButton(
-                    icon: Icon(Icons.school),
-                    onPressed: () {
-                      //print('Favorite');
-                    }),
-              ]),
-        )
-      ],
+          child: Align(
+            /// this doesn't seem to work
+            alignment: Alignment(0.8, -1.0),
+            child: FabCircularMenu(
+                key: Key('FabCircularMenu'),
+                ringColor: Theme.of(context).primaryColor,
+                ringWidth: 50.0,
+                ringDiameter: 200.0,
+                /// this is how I want it positioned, but then the icons are weird
+//              alignment: Alignment(0.8, -1.0),
+                alignment: Alignment.topRight,
+                children: <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.home),
+                      onPressed: () {
+                        //print('Home');
+                      }),
+                  IconButton(
+                      icon: Icon(Icons.favorite),
+                      onPressed: () {
+                        //print('Favorite');
+                      }),
+                  IconButton(
+                      icon: Icon(Icons.fastfood),
+                      onPressed: () {
+                        //print('Favorite');
+                      }),
+                  IconButton(
+                      icon: Icon(Icons.school),
+                      onPressed: () {
+                        //print('Favorite');
+                      }),
+                ]),
+          ),
+        ),
+      ]),
     );
   }
 }
