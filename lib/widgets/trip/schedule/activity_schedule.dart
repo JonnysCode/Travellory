@@ -38,6 +38,7 @@ class ActivitySchedule extends StatelessWidget {
               ),
               SizedBox(height: 4),
               Row(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   FaIcon(
                     FontAwesomeIcons.locationArrow,
@@ -45,11 +46,16 @@ class ActivitySchedule extends StatelessWidget {
                     color: Colors.white70,
                   ),
                   SizedBox(width: 4),
-                  Text(
-                    activity.location,
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.black54,
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: Text(
+                      activity.location,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.black54,
+                      ),
                     ),
                   ),
                 ],
@@ -65,14 +71,20 @@ class ActivitySchedule extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  activity.startTime,
+                  '${activity.startTime}',
                   style: TextStyle(
                     color: Colors.black38,
                   ),
                 ),
-                if(activity.endTime.isNotEmpty)
+                Text(
+                  'to',
+                  style: TextStyle(
+                    color: Colors.black38,
+                  ),
+                ),
+                if (activity.endTime.isNotEmpty)
                   Text(
-                    'to ${activity.endTime}',
+                    '${activity.endTime}',
                     style: TextStyle(
                       color: Colors.black38,
                     ),
