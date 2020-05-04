@@ -178,7 +178,7 @@ class _FriendListPageState extends State<FriendListPage> {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Column(children: <Widget>[
               Container(
-                height: 240,
+                height: 158,
                 child: Scrollbar(
                     child: Consumer<FriendsProvider>(
                   builder: (_, friendsProvider, __) => friendsProvider
@@ -188,7 +188,7 @@ class _FriendListPageState extends State<FriendListPage> {
                           ? Text('No pending friend requests')
                           : ListView.separated(
                               padding: EdgeInsets.only(
-                                bottom: 50,
+                                bottom: 30,
                               ),
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,

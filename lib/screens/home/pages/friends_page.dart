@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/screens/friends/friends_list_page.dart';
-import 'package:travellory/screens/friends/friends_list_page_dev.dart';
 import 'package:travellory/screens/friends/search_friend_page.dart';
 
 class FriendsPage extends StatefulWidget {
@@ -47,10 +46,7 @@ class _FriendsPageState extends State<FriendsPage> {
                               friendsPageProvider.isSearching,
                           builder: (_, isSearching, __) => isSearching
                               ? Container(child: SearchFriendsPage())
-                              : Container(
-                                  child: _dev
-                                      ? Container(child: FriendListPageDev())
-                                      : Container(child: FriendListPage())),
+                              : Container(child: FriendListPage())
                         )),
                   ),
                 ),
