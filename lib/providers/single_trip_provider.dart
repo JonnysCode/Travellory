@@ -8,7 +8,7 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/NotifyListener.dart';
+import 'package:travellory/providers/notify_listener.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
@@ -48,15 +48,17 @@ class SingleTripProvider {
 
   bool _bookingsInitiated = false;
 
-
+  // Fetches booking parallel and waits for them to finish
   Future<void> initBookings() async {
     if(!_bookingsInitiated){
-      unawaited(_fetchFlights());
-      unawaited(_fetchAccommodation());
-      unawaited(_fetchActivities());
-      unawaited(_fetchPublicTransportation());
-      unawaited(_fetchRentalCars());
       _bookingsInitiated = true;
+      await Future.wait([
+        _fetchFlights(),
+        _fetchAccommodation(),
+        _fetchActivities(),
+        _fetchPublicTransportation(),
+        _fetchRentalCars()
+      ]);
     }
   }
 
