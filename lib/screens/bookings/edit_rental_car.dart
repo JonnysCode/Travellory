@@ -1,38 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/activity_model.dart';
+import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/screens/bookings/add_rental_car.dart';
 import 'package:travellory/services/database/edit.dart';
-import 'add_activity.dart';
 
-class EditActivity extends Activity {
-  EditActivity({
+class EditRentalCar extends RentalCar {
+  EditRentalCar({
     Key key,
   }) : super(key: key);
 
   @override
-  _EditActivityState createState() => _EditActivityState();
+  _EditRentalCarState createState() => _EditRentalCarState();
 }
 
-class _EditActivityState extends ActivityState<EditActivity> {
+class _EditRentalCarState extends RentalCarState<EditRentalCar> {
   @override
   Widget build(BuildContext context) {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
 
-//    final ActivityModel _activityModel = ModalRoute.of(context).settings.arguments;
     ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
-    final ActivityModel _activityModel = arguments.model;
+    final RentalCarModel _rentalCarModel = arguments.model;
 
     return Scaffold(
-      key: Key('EditActivity'),
+      key: Key('EditRentalCar'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, _activityModel, arguments.isNewModel),
+        child: getContent(context, singleTripProvider, tripModel, _rentalCarModel, arguments.isNewModel),
       ),
     );
   }

@@ -14,7 +14,7 @@ class AccommodationSchedule extends StatelessWidget {
   Widget build(BuildContext context) {
     AccommodationModel accommodation = scheduleEntry.booking;
     DayType dayType = scheduleEntry.dayType;
-    
+
     return Row(
       key: Key('accommodation'),
       children: <Widget>[
@@ -34,6 +34,7 @@ class AccommodationSchedule extends StatelessWidget {
             ),
             SizedBox(height: 2),
             Row(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 FaIcon(
                   FontAwesomeIcons.locationArrow,
@@ -41,17 +42,22 @@ class AccommodationSchedule extends StatelessWidget {
                   color: Colors.white70,
                 ),
                 SizedBox(width: 4),
-                Text(
-                  accommodation.address,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.black54,
+                Flexible(
+                  fit: FlexFit.loose,
+                  child: Text(
+                    accommodation.address,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.black54,
+                    ),
                   ),
                 ),
               ],
             ),
             SizedBox(height: 2),
-            if(dayType == DayType.first && accommodation.checkinTime.isNotEmpty)
+            if (dayType == DayType.first && accommodation.checkinTime.isNotEmpty)
               Text(
                 'Check in: ${accommodation.checkinTime}',
                 style: TextStyle(
@@ -59,7 +65,7 @@ class AccommodationSchedule extends StatelessWidget {
                   color: Colors.black54,
                 ),
               ),
-            if(dayType == DayType.last && accommodation.checkoutTime.isNotEmpty)
+            if (dayType == DayType.last && accommodation.checkoutTime.isNotEmpty)
               Text(
                 'Check out: ${accommodation.checkoutTime}',
                 style: TextStyle(
