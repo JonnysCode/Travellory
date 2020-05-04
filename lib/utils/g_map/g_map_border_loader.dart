@@ -68,7 +68,7 @@ class GMapBorderLoader{
 
        */
       return_polygons.add(Polygon(
-        polygonId: PolygonId(stateName),
+        polygonId: PolygonId(stateName+"_"+i.toString()),
         consumeTapEvents: false,
         fillColor: Color.fromRGBO(255, 0, 0, 0.35),
         geodesic: false,

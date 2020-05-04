@@ -116,40 +116,35 @@ class MapSampleState extends State<MapSample> {
           polygons: _boundaries.toSet(),
         ),
         Positioned(
-          child: Align(
-            /// this doesn't seem to work
-            alignment: Alignment(0.8, -1.0),
-            child: FabCircularMenu(
-                key: Key('FabCircularMenu'),
-                ringColor: Theme.of(context).primaryColor,
-                ringWidth: 50.0,
-                ringDiameter: 200.0,
-                /// this is how I want it positioned, but then the icons are weird
-//              alignment: Alignment(0.8, -1.0),
-                alignment: Alignment.topRight,
-                children: <Widget>[
-                  IconButton(
-                      icon: Icon(Icons.home),
-                      onPressed: () {
-                        //print('Home');
-                      }),
-                  IconButton(
-                      icon: Icon(Icons.favorite),
-                      onPressed: () {
-                        //print('Favorite');
-                      }),
-                  IconButton(
-                      icon: Icon(Icons.fastfood),
-                      onPressed: () {
-                        //print('Favorite');
-                      }),
-                  IconButton(
-                      icon: Icon(Icons.school),
-                      onPressed: () {
-                        //print('Favorite');
-                      }),
-                ]),
-          ),
+          child: FabCircularMenu(
+              key: Key('FabCircularMenu'),
+              ringColor: Theme.of(context).primaryColor,
+              ringWidth: 50.0,
+              ringDiameter: 200.0,
+              fabMargin: EdgeInsets.only(right: 50.0),
+              alignment: Alignment.topRight,
+              children: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.home),
+                    onPressed: () {
+                      //print('Home');
+                    }),
+                IconButton(
+                    icon: Icon(Icons.favorite),
+                    onPressed: () {
+                      //print('Favorite');
+                    }),
+                IconButton(
+                    icon: Icon(Icons.fastfood),
+                    onPressed: () {
+                      //print('Favorite');
+                    }),
+                IconButton(
+                    icon: Icon(Icons.school),
+                    onPressed: () {
+                      //print('Favorite');
+                    }),
+              ])
         ),
       ]),
     );
