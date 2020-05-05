@@ -52,7 +52,7 @@ build_script:
   - sh: flutter build apk --verbose
 
 test_script:
-  - sh: flutter test --coverage && flutter test --machine > tests.output
+  - sh: flutter test --coverage --no-test-assets && flutter test --machine --no-test-assets > tests.output
 
 after_test:
   - sh: $SONAR_BUILD_PARAMS
