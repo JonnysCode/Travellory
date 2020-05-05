@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/utils/date_converter.dart';
+import 'package:travellory/widgets/bookings/edit_delete_dialogs.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
@@ -29,9 +30,13 @@ class TripCard extends StatefulWidget {
 class _TripCardState extends State<TripCard> {
   _TripCardState(TripModel tripModel){
     _tripModel = tripModel;
+    _deleteAlertText = 'You are about to delete the '
+        'trip \" ${tripModel.name} \" and all its bookings. '
+        'Are you sure you want to continue? This action cannot be undone!';
   }
-
   TripModel _tripModel;
+  String _deleteAlertText;
+
 
   void _openTrip(){
     Provider.of<TripsProvider>(context, listen: false).selectTrip(_tripModel);
@@ -105,12 +110,12 @@ class _TripCardState extends State<TripCard> {
                         OptionItem(
                           description: 'Edit',
                           icon: FontAwesomeIcons.edit,
-                          onTab: () => {}
+                          onTab: () {}
                         ),
                         OptionItem(
                             description: 'Remove',
                             icon: FontAwesomeIcons.trashAlt,
-                            onTab: () => {}
+                            onTab: () => showDeleteDialog(_tripModel, context, _deleteAlertText)
                         ),
                       ],
                     ),
