@@ -5,7 +5,6 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
-import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
