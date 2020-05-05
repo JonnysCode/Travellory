@@ -12,12 +12,9 @@ class MockAuth extends Mock implements BaseAuthService {}
 
 void main() {
   Widget makeTestableWidget({Widget child}) {
-
     return MultiProvider(
         providers: [
-          StreamProvider<UserModel>.value(
-              value: MockAuth().user
-          ),
+          StreamProvider<UserModel>.value(value: MockAuth().user),
         ],
         child: MaterialApp(
           home: child,
@@ -70,7 +67,7 @@ void main() {
     var searchIcon = find.byIcon(FontAwesomeIcons.search);
 
     // Verify that a search Icon, cancel text and hint text is present.
-    expect(textAddFriends, findsOneWidget);
+    expect(textAddFriends, findsNWidgets(2));
     expect(textCancel, findsOneWidget);
     expect(searchIcon, findsOneWidget);
   });
