@@ -18,14 +18,13 @@ class GMapBorderLoader{
       return_polygons.add(Polygon(
         polygonId: PolygonId(stateName+"_"+i.toString()),
         consumeTapEvents: false,
-        fillColor: Color.fromRGBO(0, 255, 0, 0.35),
+        fillColor: Color.fromRGBO(255, 0, 0, 0.35),
         geodesic: false,
         points: points,
-        strokeColor: Color.fromRGBO(0, 255, 0, 0.8),
+        strokeColor: Color.fromRGBO(255, 0, 0, 0.8),
         strokeWidth: 2,
         visible: true,
         zIndex: 0,
-
         //onTap: (){print("Tapped!");},
       ));
     }

@@ -82,7 +82,6 @@ void main() {
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
-    // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText));
 
     expect(find.byType(DeleteButton), findsOneWidget);
