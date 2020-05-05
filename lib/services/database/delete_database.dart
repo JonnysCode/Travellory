@@ -24,7 +24,7 @@ class DatabaseDeleter {
   }
 
   static final DatabaseDeleter _instance = DatabaseDeleter._privateConstructor();
-  static final deleteTripName = 'trip-deleteTrip';
+  static final deleteTripName = 'trips-deleteTrip';
 
   Future<bool> deleteModel(Model model, String correspondingFunctionName) async {
     final HttpsCallable callable =
