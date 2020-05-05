@@ -60,18 +60,17 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
   void initState() {
     super.initState();
     controller = widget.controller != null ? widget.controller : TextEditingController();
-    getInitialDate();
+    setInitialDate();
   }
 
-  DateTime getInitialDate() {
+  void setInitialDate() {
     if (widget.initialValue != null && widget.initialValue != '') {
       controller..text = (widget.initialValue);
       initialDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.initialValue);
       selectedDate = initialDate;
-      return initialDate;
-    } else {
+    }
+    if (widget.tripModel != null && widget.initialValue == '') {
       initialDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.startDate);
-      return initialDate;
     }
   }
 
