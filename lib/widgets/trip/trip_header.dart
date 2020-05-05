@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
@@ -67,24 +68,30 @@ class _TripHeaderState extends State<TripHeader> {
                   maxHeight: 100.0,
                   maxWidth: MediaQuery.of(context).size.width - 200
               ),
-              child: FashionFetishText(
-                text: _tripModel.name,
-                size: 24,
-                fontWeight: FashionFontWeight.heavy,
-                height: 1.05,
+              child: Text(
+                _tripModel.name,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: TextStyle(
+                    fontFamily: 'FashionFetish',
+                    fontSize: 22,
+                    height: 1.1,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -2
+                ),
               ),
             ),
           ),
           Positioned(
-            top: 110,
+            top: 100,
             left: 190,
+            right: 10,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 FashionFetishText(
-                    text: 'From: ${dMMMyyyy(getDateTimeFrom(_tripModel.startDate))}'
-                          '\n'
+                    text: 'From: ${dMMMyyyy(getDateTimeFrom(_tripModel.startDate))}\n'
                           'To: ${dMMMyyyy(getDateTimeFrom(_tripModel.endDate))}',
                     color: Colors.black54,
                     fontWeight: FashionFontWeight.bold,
@@ -92,22 +99,35 @@ class _TripHeaderState extends State<TripHeader> {
                     height: 1.25
                 ),
                 SizedBox(
-                  height: 12,
+                  height: 10,
                 ),
                 Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Icon(
                       FontAwesomeIcons.locationArrow,
                       size: 15,
                       color: Colors.redAccent,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 6, left: 3),
-                      child: FashionFetishText(
-                        text: _tripModel.destination,
-                        size: 14,
-                        fontWeight: FashionFontWeight.heavy,
-                        color: Colors.black54,
+                    SizedBox(
+                      width: 6,
+                    ),
+                    SizedBox(
+                      width: 160,
+                      child: Text(
+                        _tripModel.destination,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontFamily: 'FashionFetish',
+                          fontSize: 13,
+                          height: 1.15,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: -1,
+                          color: Colors.black54
+                        ),
                       ),
                     ),
                   ],

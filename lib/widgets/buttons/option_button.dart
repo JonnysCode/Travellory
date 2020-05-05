@@ -17,10 +17,10 @@ class OptionButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0)
           ),
-          onSelected: (OptionItem option) => option.onTab,
           itemBuilder: (_) => optionItems.map((optionItem) =>
               PopupMenuItem<OptionItem>(
                 child: ListTile(
+                  onTap: optionItem.onTab,
                   leading: Icon(
                     optionItem.icon,
                     color: optionItem.color,
