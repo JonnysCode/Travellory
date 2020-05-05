@@ -72,7 +72,7 @@ void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model
           "However, it might take a moment to see the changes on your profile. ";
 
   return () async {
-    final bool edited = await singleTripProvider.editModel(model, functionName);
+    final bool edited = await singleTripProvider.editBooking(model, functionName);
     if (edited) {
       showEditedBookingDialog(context, alertText);
       log.i('onEditBooking was performed');
