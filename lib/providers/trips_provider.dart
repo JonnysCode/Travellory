@@ -86,6 +86,11 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
     if(trips.isEmpty){
       return;
     }
+    // the last trip ends before the current Date
+    if(getDateTimeFrom(trips.last.tripModel.endDate).isBefore(DateTime.now())){
+      return;
+    }
+    
     int index = 0;
     // get the first trip with an end date after the current date
     do {
