@@ -37,10 +37,9 @@ class _FriendListPageState extends State<FriendListPage> {
 
       final FriendsProvider friendsProvider =
           Provider.of<FriendsProvider>(context, listen: false);
-      await friendsProvider.update();
+      await friendsProvider.update(type);
     }).catchError((error) {
       bool success = false;
-      print(error.toString());
       String message = _getMessage(type, success);
       _showSnackBar(message, success);
     });
@@ -194,7 +193,8 @@ class _FriendListPageState extends State<FriendListPage> {
               height: 0.25 * MediaQuery.of(context).size.height,
               child: Scrollbar(
                   child: Consumer<FriendsProvider>(
-                builder: (_, friendsProvider, __) => friendsProvider.isFetching
+                builder: (_, friendsProvider, __) => friendsProvider
+                        .isFetchingFriendRequests
                     ? LoadingHeart()
                     : friendsProvider.friendRequests.isEmpty
                         ? Text('No pending friend requests')
@@ -255,33 +255,34 @@ class _FriendListPageState extends State<FriendListPage> {
               height: 0.38 * MediaQuery.of(context).size.height,
               child: Scrollbar(
                   child: Consumer<FriendsProvider>(
-                builder: (_, friendsProvider, __) => friendsProvider.isFetching
-                    ? LoadingHeart()
-                    : friendsProvider.friends.isEmpty
-                        ? Text('You have no friends :(')
-                        : ListView.separated(
-                            padding: EdgeInsets.only(
-                              bottom: 50,
-                            ),
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 12),
-                            itemCount: friendsProvider.friends.length,
-                            itemBuilder: (context, index) {
-                              final friend = friendsProvider.friends[index];
-                              _loadingFriends.add(false);
-                              return friendsCard(
-                                context,
-                                friend,
-                                _loadingFriends[index]
-                                    ? CircularProgressIndicator()
-                                    : removeFriendButton(
-                                        friend.uid, user.uid, index),
-                                10,
-                              );
-                            },
-                          ),
+                builder: (_, friendsProvider, __) =>
+                    friendsProvider.isFetchingFriends
+                        ? LoadingHeart()
+                        : friendsProvider.friends.isEmpty
+                            ? Text('You have no friends :(')
+                            : ListView.separated(
+                                padding: EdgeInsets.only(
+                                  bottom: 50,
+                                ),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(height: 12),
+                                itemCount: friendsProvider.friends.length,
+                                itemBuilder: (context, index) {
+                                  final friend = friendsProvider.friends[index];
+                                  _loadingFriends.add(false);
+                                  return friendsCard(
+                                    context,
+                                    friend,
+                                    _loadingFriends[index]
+                                        ? CircularProgressIndicator()
+                                        : removeFriendButton(
+                                            friend.uid, user.uid, index),
+                                    10,
+                                  );
+                                },
+                              ),
               )),
             ),
           ]),
