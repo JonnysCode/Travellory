@@ -83,7 +83,7 @@ class _PublicTransportViewState extends State<PublicTransportView> {
             Theme.of(context).primaryColor),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SizedBox(height: 10),
-        bottomBar(context),
+        bottomBar(context, publicTransportModels[0]),
       ]),
     );
   }

@@ -8,10 +8,11 @@ import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/services/friends/friend_management.dart';
-import 'package:travellory/shared/loading.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
+import 'package:travellory/shared/loading_heart.dart';
+
 
 class SearchFriendsPage extends StatefulWidget {
   @override
@@ -132,7 +133,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                                 : sendFriendRequestButton(user.uid, friend.uid),
                             10));
                   },
-                  loader: Loading(),
+                  loader: LoadingHeart(),
                   searchBarPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   headerPadding: EdgeInsets.symmetric(horizontal: 50),
                   listPadding: EdgeInsets.symmetric(horizontal: 30),

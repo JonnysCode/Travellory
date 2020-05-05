@@ -4,40 +4,38 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 
-const List<Dial> _dials = <Dial>[
+List<Dial> _dials = <Dial>[
   Dial(
       icon: FontAwesomeIcons.envelope,
-      description: 'Manage forwarded bookings'
+      description: 'Manage forwarded bookings',
+      onTab: (){}
   ),
   Dial(
       icon: FontAwesomeIcons.theaterMasks,
-      description: 'Add Attraction'
+      description: 'Add Attraction',
+      onTab: (){}
   ),
   Dial(
       icon: FontAwesomeIcons.car,
-      description: 'Add Rental Car'
+      description: 'Add Rental Car',
+      onTab: (){}
   ),
   Dial(
       icon: FontAwesomeIcons.bus,
-      description: 'Add Public Transportation'
+      description: 'Add Public Transportation',
+      onTab: (){}
   ),
   Dial(
       icon: FontAwesomeIcons.bed,
-      description: 'Add Accommodation'
+      description: 'Add Accommodation',
+      onTab: (){}
   ),
   Dial(
       icon: FontAwesomeIcons.plane,
-      description: 'Add Flight'
+      description: 'Add Flight',
+      onTab: (){}
   ),
 ];
-
-TripModel _tripModel = TripModel(
-    name: 'Castle Discovery',
-    startDate: '2020-05-11',
-    endDate: '2020-05-19',
-    destination: 'Munich',
-    imageNr: 3
-);
 
 void main(){
   Widget makeTestableWidget({Widget child}){
@@ -49,7 +47,6 @@ void main(){
   testWidgets('test if SpeedDial is rendered', (WidgetTester tester) async {
     Widget page = SpeedDialButton(
       dials: _dials,
-      tripModel: _tripModel,
     );
 
     // Build our app and trigger a frame.
@@ -62,7 +59,6 @@ void main(){
   testWidgets('test if all dials are present', (WidgetTester tester) async {
     Widget page = SpeedDialButton(
       dials: _dials,
-      tripModel: _tripModel,
     );
 
     // Build our app and trigger a frame.

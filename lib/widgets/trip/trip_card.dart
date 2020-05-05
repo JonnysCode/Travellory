@@ -34,10 +34,8 @@ class _TripCardState extends State<TripCard> {
   TripModel _tripModel;
 
   void _openTrip(){
-    Provider.of<TripsProvider>(context, listen: false)
-        ..selectedTrip = _tripModel
-        ..initBookings();
-    Navigator.pushNamed(context, '/viewtrip', arguments: _tripModel);
+    Provider.of<TripsProvider>(context, listen: false).selectTrip(_tripModel);
+    Navigator.pushNamed(context, '/viewtrip');
   }
 
   @override
@@ -73,8 +71,8 @@ class _TripCardState extends State<TripCard> {
                           ),
                           Spacer(),
                           FashionFetishText(
-                            text: '${toShortenedMonthDateFrom( _tripModel.startDate)} - '
-                                  '${toShortenedMonthDateFrom( _tripModel.endDate)}',
+                            text: '${dMMMyyyy(getDateTimeFrom(_tripModel.startDate))} - '
+                                  '${dMMMyyyy(getDateTimeFrom(_tripModel.endDate))}',
                             size: 14.0,
                             fontWeight: FashionFontWeight.bold,
                             color: Colors.black54,
@@ -105,13 +103,13 @@ class _TripCardState extends State<TripCard> {
                     OptionButton(
                       optionItems: <OptionItem>[
                         OptionItem(
-                          description: 'Accept',
-                          icon: FontAwesomeIcons.check,
+                          description: 'Edit',
+                          icon: FontAwesomeIcons.edit,
                           onTab: () => {}
                         ),
                         OptionItem(
-                            description: 'Decline',
-                            icon: FontAwesomeIcons.times,
+                            description: 'Remove',
+                            icon: FontAwesomeIcons.trashAlt,
                             onTab: () => {}
                         ),
                       ],
