@@ -167,18 +167,20 @@ class EditButton extends StatelessWidget {
 }
 
 Widget socialButton(Key key, IconData icon, Color color, void function()) {
-  return IconButton(
-    key: key,
-    padding: EdgeInsets.only(
-      top: 0,
-    ),
-    alignment: Alignment.topRight,
-    iconSize: 30,
-    icon: Icon(
-      icon,
-      color: color,
-    ),
-    onPressed: function,
+  return Material(
+      child: IconButton(
+        key: key,
+        padding: EdgeInsets.only(
+          top: 0,
+        ),
+        alignment: Alignment.topRight,
+        iconSize: 30,
+        icon: Icon(
+          icon,
+          color: color,
+        ),
+        onPressed: () => function(),
+      )
   );
 }
 
