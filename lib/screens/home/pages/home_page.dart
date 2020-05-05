@@ -14,12 +14,12 @@ import 'package:travellory/widgets/font_widgets.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
-    SingleTripProvider trip = tripsProvider.activeTrip;
-    TripModel tripModel = trip != null ? trip.tripModel : null;
+    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
+    final SingleTripProvider trip = tripsProvider.activeTrip;
+    final TripModel tripModel = trip != null ? trip.tripModel : null;
 
     ModifyModelArguments passPublicTransportModel() {
-      PublicTransportModel publicTransportModel = PublicTransportModel();
+      final PublicTransportModel publicTransportModel = PublicTransportModel();
       if (tripModel != null) {
         publicTransportModel.tripUID = tripModel.uid;
       }
@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
     }
 
     ModifyModelArguments passAccommodationModel() {
-      AccommodationModel accommodationModel = AccommodationModel();
+      final AccommodationModel accommodationModel = AccommodationModel();
       if (tripModel != null) {
         accommodationModel.tripUID = tripModel.uid;
       }

@@ -20,8 +20,6 @@ import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class Activity extends StatefulWidget {
-  Activity({Key key}) : super(key: key);
-
   @override
   ActivityState createState() => ActivityState();
 }
@@ -29,6 +27,8 @@ class Activity extends StatefulWidget {
 class ActivityState<T extends Activity> extends State<T> {
   final GlobalKey<FormState> activityFormKey = GlobalKey<FormState>();
   final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _endDateFormFieldKey = GlobalKey<DateFormFieldState>();
+
 
   ActivityModel _activityModel = ActivityModel();
 
@@ -148,7 +148,7 @@ class ActivityState<T extends Activity> extends State<T> {
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
                       onTap: (controller) async {
-                        PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
+                        final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
                             context,
                             countryCode: tripModel.countryCode);
 
@@ -164,10 +164,12 @@ class ActivityState<T extends Activity> extends State<T> {
                   child: DateFormField(
                     initialValue: _editActivityModel.startDate,
                     key: _startDateFormFieldKey,
+                    listenerKey: _endDateFormFieldKey,
                     labelText: 'Start Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     optional: false,
                     tripModel: tripModel,
+                    model: _editActivityModel,
                     chosenDateString: (value) => _editActivityModel.startDate = value,
                   ),
                 ),
@@ -183,12 +185,14 @@ class ActivityState<T extends Activity> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
+                    key: _endDateFormFieldKey,
                     initialValue: _editActivityModel.endDate,
                     labelText: 'End Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     beforeDateKey: _startDateFormFieldKey,
                     optional: false,
                     tripModel: tripModel,
+                    model: _editActivityModel,
                     dateValidationMessage: 'End Date cannot be before Start Date',
                     chosenDateString: (value) => _editActivityModel.endDate = value,
                   ),
