@@ -18,8 +18,6 @@ import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class RentalCar extends StatefulWidget {
-  RentalCar({Key key}) : super(key: key);
-
   @override
   RentalCarState createState() => RentalCarState();
 }
@@ -92,7 +90,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
                       onTap: (controller) async {
-                        PlacesDetailsResponse detail =
+                        final PlacesDetailsResponse detail =
                             await GooglePlaces.openGooglePlacesSearch(context, );
                         controller.text = detail.result.formattedAddress;
                         _editRentalCarModel.pickupLocation = detail.result.formattedAddress;
@@ -136,7 +134,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: true,
                       onTap: (controller) async {
-                        PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
+                        final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
                             context,
                             countryCode: tripModel.countryCode);
 
@@ -255,7 +253,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
-    RentalCarModel _rentalCarModel = RentalCarModel();
+    final RentalCarModel _rentalCarModel = RentalCarModel();
     _rentalCarModel.tripUID = tripModel.uid;
 
     return Scaffold(

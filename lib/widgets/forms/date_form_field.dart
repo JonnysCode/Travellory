@@ -83,8 +83,8 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
 
   bool pickedDateInTripRange(DateTime pickedDate) {
     if (widget.tripModel != null) {
-      DateTime tripStartDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.startDate);
-      DateTime tripEndDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.endDate);
+      final DateTime tripStartDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.startDate);
+      final DateTime tripEndDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.endDate);
       if ((pickedDate.isAfter(tripStartDate) || pickedDate == tripStartDate) &&
           (pickedDate.isBefore(tripEndDate) || pickedDate == tripEndDate)) {
         return true;
