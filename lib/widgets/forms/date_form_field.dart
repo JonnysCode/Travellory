@@ -70,7 +70,8 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
       selectedDate = initialDate;
       return initialDate;
     } else {
-      return DateTime.now();
+      initialDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.startDate);
+      return initialDate;
     }
   }
 
