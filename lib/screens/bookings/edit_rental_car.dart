@@ -8,10 +8,6 @@ import 'package:travellory/screens/bookings/add_rental_car.dart';
 import 'package:travellory/services/database/edit.dart';
 
 class EditRentalCar extends RentalCar {
-  EditRentalCar({
-    Key key,
-  }) : super(key: key);
-
   @override
   _EditRentalCarState createState() => _EditRentalCarState();
 }
@@ -23,7 +19,7 @@ class _EditRentalCarState extends RentalCarState<EditRentalCar> {
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
 
-    ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
+    final ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
     final RentalCarModel _rentalCarModel = arguments.model;
 
     return Scaffold(
