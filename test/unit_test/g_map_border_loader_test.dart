@@ -8,13 +8,6 @@ void main() async{
   final String _state_name = "Switzerland";
   final int _n_points = 749;
 
-
-  test('Try to get switzerland borders', () async {
-    List<Polygon> border = await GMapBorderLoader.generateBorders([_state_name]);
-
-    expect(border[0].points.length, _n_points);
-  });
-
   test('Test random single polygon', () async {
     final List<Polygon> polygons = <Polygon>[];
     List randomPolygon = [[0.8,1.9],[0.2,0.3]];
