@@ -3,6 +3,7 @@ import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
@@ -141,7 +142,9 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
         widget.listenerKey.currentState.otherDateFieldChanged(pickedDate);
       }
       if (widget.listenerKey != null &&
-          (widget.model is FlightModel || widget.model is PublicTransportModel)) {
+          (widget.model is FlightModel ||
+              widget.model is PublicTransportModel ||
+              widget.model is ActivityModel)) {
 //        && (widget.controller.text == null || widget.controller.text == '')) {
         widget.listenerKey.currentState.sameDateFieldChanged(pickedDate);
       }
