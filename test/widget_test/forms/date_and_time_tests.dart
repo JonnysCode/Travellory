@@ -50,7 +50,7 @@ void main() {
     Future<void> checkEmptyText() async {
       await tester.tap(find.byType(TextFormField));
       bool validate = validateForm();
-      expect(testModel.pickupDate, equals(null));
+      expect(testModel.pickupDate, equals(''));
       expect(validate, isFalse);
     }
 
@@ -100,7 +100,7 @@ void main() {
     Future<void> checkEmptyText() async {
       await tester.tap(find.byType(TextFormField));
       bool validate = validateForm();
-      expect(testModel.pickupDate, equals(null));
+      expect(testModel.pickupDate, equals(''));
       expect(validate, isTrue);
     }
 
@@ -151,7 +151,7 @@ void main() {
     Future<void> checkEmptyText() async {
       await tester.tap(find.byType(TextFormField));
       bool validate = validateForm();
-      expect(testModel.pickupTime, equals(null));
+      expect(testModel.pickupTime, equals(''));
       expect(validate, isFalse);
     }
 
@@ -202,7 +202,7 @@ void main() {
     Future<void> checkEmptyText() async {
       await tester.tap(find.byType(TextFormField));
       bool validate = validateForm();
-      expect(testModel.pickupTime, equals(null));
+      expect(testModel.pickupTime, equals(''));
       expect(validate, isTrue);
     }
 
