@@ -21,8 +21,17 @@ class OptionButton extends StatelessWidget {
           itemBuilder: (_) => optionItems.map((optionItem) =>
               PopupMenuItem<OptionItem>(
                 child: ListTile(
-                  leading: Icon(optionItem.icon),
-                  title: Text(optionItem.description),
+                  leading: Icon(
+                    optionItem.icon,
+                    color: optionItem.color,
+                  ),
+                  title: Text(
+                    optionItem.description,
+                    style: TextStyle(
+                      color: optionItem.color,
+                      fontSize: 18
+                    ),
+                  ),
                 ),
               )).toList(),
           icon: Icon(
@@ -39,9 +48,11 @@ class OptionItem{
     @required this.icon,
     @required this.description,
     this.onTab,
+    this.color,
   });
 
   final IconData icon;
   final String description;
   final Function onTab;
+  final Color color;
 }

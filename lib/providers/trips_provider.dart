@@ -47,7 +47,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
     final bool added =
         await _databaseAdder.addModel(tripModel, DatabaseAdder.addTrip);
     if (added) {
-      unawaited(_fetchTrips());
+      unawaited(_initTrips());
     }
     return added;
   }

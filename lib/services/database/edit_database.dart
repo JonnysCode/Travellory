@@ -27,6 +27,7 @@ class DatabaseEditor {
     final HttpsCallable callable =
         CloudFunctions.instance.getHttpsCallable(functionName: correspondingFunctionName);
     try {
+      log.d('JSON data for function call ${correspondingFunctionName}: ${model.toMap()}');
       final HttpsCallableResult result = await callable.call(model.toMap());
       log.i(result.data);
       return Future<bool>.value(true);
@@ -46,15 +47,15 @@ class DatabaseEditor {
 String getEditFunctionNameBasedOn(Model model) {
   String functionName;
   if (model is FlightModel) {
-    functionName = 'edit-flight';
+    functionName = 'booking-updateFlight';
   } else if (model is RentalCarModel) {
-    functionName = 'edit-rentalCar';
+    functionName = 'booking-updateRentalCar';
   } else if (model is AccommodationModel) {
-    functionName = 'edit-accommodation';
+    functionName = 'booking-updateAccommodation';
   } else if (model is PublicTransportModel) {
-    functionName = 'edit-publicTransport';
+    functionName = 'booking-updatePublicTransportation';
   } else if (model is ActivityModel) {
-    functionName = 'edit-activity';
+    functionName = 'activity-updateActivity';
   } else {
     functionName = '';
     log.w('No function name was found for model');
@@ -62,8 +63,8 @@ String getEditFunctionNameBasedOn(Model model) {
   return functionName;
 }
 
-// TODO this isn't getting performed, why??
-void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model, BuildContext context, String errorMessage) {
+void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model,
+    BuildContext context, String errorMessage) {
   String functionName = getEditFunctionNameBasedOn(model);
 
   const String alertText =
@@ -72,7 +73,7 @@ void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model
 
   return () async {
     final bool edited = await singleTripProvider.editModel(model, functionName);
-    if (true) {
+    if (edited) {
       showEditedBookingDialog(context, alertText);
       log.i('onEditBooking was performed');
     } else {

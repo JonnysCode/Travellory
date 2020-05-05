@@ -13,7 +13,7 @@ import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 
 String _mapStyle;
-final List<String> _userStates = ["switzerland", "austria", "belgium", "germany", "italy", "norway"];
+final List<String> _userStates = ["switzerland", "austria", "belgium"];
 
 class MapPage extends StatefulWidget {
   @override
