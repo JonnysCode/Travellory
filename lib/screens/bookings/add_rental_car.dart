@@ -28,6 +28,8 @@ class RentalCarState<T extends RentalCar> extends State<T> {
   final GlobalKey<FormState> rentalCarFormKey = GlobalKey<FormState>();
 
   final GlobalKey<DateFormFieldState> _pickUpDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _returnDateFormFieldKey = GlobalKey<DateFormFieldState>();
+
 
   bool validateForm() {
     return rentalCarFormKey.currentState.validate();
@@ -104,10 +106,12 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                   child: DateFormField(
                     initialValue: _editRentalCarModel.pickupDate,
                     key: _pickUpDateFormFieldKey,
+                    listenerKey: _returnDateFormFieldKey,
                     labelText: 'Pick Up Date *',
                     optional: false,
                     tripModel: tripModel,
                     icon: Icon(FontAwesomeIcons.calendarAlt),
+                    model: _editRentalCarModel,
                     chosenDateString: (value) => _editRentalCarModel.pickupDate = value,
                   ),
                 ),
@@ -146,12 +150,14 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
+                    key: _returnDateFormFieldKey,
                     initialValue: _editRentalCarModel.returnDate,
                     labelText: 'Return Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     beforeDateKey: _pickUpDateFormFieldKey,
                     optional: false,
                     tripModel: tripModel,
+                    model: _editRentalCarModel,
                     dateValidationMessage: 'Return Date cannot be before Pick Up Date',
                     chosenDateString: (value) => _editRentalCarModel.returnDate = value,
                   ),
