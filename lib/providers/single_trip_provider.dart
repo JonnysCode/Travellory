@@ -84,7 +84,7 @@ class SingleTripProvider {
     return added;
   }
 
-    Future<bool> deleteModel(Model model, String functionName) async {
+  Future<bool> deleteBooking(Model model, String functionName) async {
     final bool deleted = await _databaseDeleter.deleteModel(model, functionName);
     if(deleted) {
       _updateBookings(model);
@@ -92,7 +92,7 @@ class SingleTripProvider {
     return deleted;
   }
 
-  Future<bool> editModel(Model model, String functionName) async {
+  Future<bool> editBooking(Model model, String functionName) async {
     final bool edited = await _databaseEditor.editModel(model, functionName);
     if(edited) {
       _updateBookings(model);

@@ -28,7 +28,7 @@ class DatabaseDeleter {
     final HttpsCallable callable =
     CloudFunctions.instance.getHttpsCallable(functionName: correspondingFunctionName);
     try {
-      log.d('JSON data for function call ${correspondingFunctionName}: ${model.toMap()}');
+      log.d('JSON data for function call $correspondingFunctionName: ${model.toMap()}');
       final HttpsCallableResult result = await callable.call(model.toMap());
       log.i(result.data);
       return Future<bool>.value(true);
@@ -74,7 +74,7 @@ void Function() onDeleteBooking(Model model, BuildContext context, String errorM
       "You've just deleted this entry. Your booking overview has been updated. ";
 
   return () async {
-    final bool deleted = await singleTripProvider.deleteModel(model, functionName);
+    final bool deleted = await singleTripProvider.deleteBooking(model, functionName);
     if (deleted) {
       showDeletedBookingDialog(context, alertText);
       log.i('onDeleteBooking was performed');
