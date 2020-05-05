@@ -13,21 +13,21 @@ import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
 import 'package:travellory/shared/loading_heart.dart';
 
-
 class SearchFriendsPage extends StatefulWidget {
   @override
   _SearchFriendsPageState createState() => _SearchFriendsPageState();
 }
 
 class _SearchFriendsPageState extends State<SearchFriendsPage> {
-  bool _loading = false;
+  final _loading = List();
 
-  void _sendFriendRequest(String uidSender, String uidReceiver) async {
+  void _sendFriendRequest(
+      String uidSender, String uidReceiver, int index) async {
     String message;
     bool success;
 
     setState(() {
-      _loading = true;
+      _loading[index] = true;
     });
 
     if (uidSender == uidReceiver) {
@@ -50,16 +50,17 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       });
     }
     setState(() {
-      _loading = false;
+      _loading[index] = false;
     });
     _showSnackBar(message, success);
   }
 
-  Widget sendFriendRequestButton(String uidSender, String uidReceiver) {
+  Widget sendFriendRequestButton(
+      String uidSender, String uidReceiver, int index) {
     return Wrap(
       children: <Widget>[
         socialButton(Key('send_request_button'), Icons.person_add, Colors.green,
-            () => _sendFriendRequest(uidSender, uidReceiver)),
+            () => _sendFriendRequest(uidSender, uidReceiver, index)),
       ],
     );
   }
@@ -121,6 +122,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                   key: Key('search_bar'),
                   onSearch: search,
                   onItemFound: (FriendsModel friend, int index) {
+                    _loading.add(false);
                     return Padding(
                         padding: EdgeInsets.only(
                           bottom: 10,
@@ -128,9 +130,10 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                         child: friendsCard(
                             context,
                             friend,
-                            _loading
+                            _loading[index]
                                 ? CircularProgressIndicator()
-                                : sendFriendRequestButton(user.uid, friend.uid),
+                                : sendFriendRequestButton(
+                                    user.uid, friend.uid, index),
                             10));
                   },
                   loader: LoadingHeart(),
