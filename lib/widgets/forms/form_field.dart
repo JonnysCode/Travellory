@@ -69,7 +69,11 @@ class TravelloryFormFieldState extends State<TravelloryFormField>
         },
         style: TextStyle(color: Colors.black),
         onChanged: widget.onChanged,
-        onTap: () => widget.onTap(controller),
+        onTap: () {
+          if (widget.onTap != null) {
+            widget.onTap(controller);
+          }
+        },
         decoration: InputDecoration(
           labelText: widget.labelText,
           labelStyle: TextStyle(color: Colors.black),
