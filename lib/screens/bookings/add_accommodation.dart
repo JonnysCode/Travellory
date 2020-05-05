@@ -36,7 +36,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final GlobalKey<DateFormFieldState> _checkinDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final GlobalKey<DateFormFieldState> _checkoutDateFormFieldKey = GlobalKey<DateFormFieldState>();
-
+  final GlobalKey<DateFormFieldState> _nightsFormFieldKey = GlobalKey<DateFormFieldState>();
 
   bool validateForm() {
     return accommodationFormKey.currentState.validate();
@@ -220,6 +220,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         initialValue: _accommodationModel.checkinDate,
         key: _checkinDateFormFieldKey,
         listenerKey: _checkoutDateFormFieldKey,
+        secondListenerKey: _nightsFormFieldKey,
         labelText: 'Check-In Date *',
         icon: Icon(FontAwesomeIcons.calendarAlt),
         optional: false,
@@ -234,12 +235,14 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         optional: true,
         chosenTimeString: (value) => _accommodationModel.checkinTime = value,
       ),
-      TravelloryFormField(
+      DateFormField(
         initialValue: _accommodationModel.nights,
-        labelText: 'Nights *',
+        key: _nightsFormFieldKey,
+        labelText: 'Nights',
         icon: Icon(FontAwesomeIcons.solidMoon),
-        optional: false,
-        onChanged: (value) => _accommodationModel.nights = value,
+        optional: true,
+        model: _accommodationModel,
+        chosenDateString: (value) => _accommodationModel.nights = value,
       ),
       SectionTitle('Check-Out Details'),
       DateFormField(
