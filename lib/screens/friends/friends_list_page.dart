@@ -123,6 +123,7 @@ class _FriendListPageState extends State<FriendListPage> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<FriendsProvider>(context).user;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -133,7 +134,7 @@ class _FriendListPageState extends State<FriendListPage> {
             padding: EdgeInsets.only(left: 200, top: 10),
           ),
           FashionFetishText(
-            text: 'Add Friends',
+            text: 'Add friends',
             size: 16,
             color: Colors.black54,
             fontWeight: FashionFontWeight.bold,

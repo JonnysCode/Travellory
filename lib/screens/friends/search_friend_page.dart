@@ -8,10 +8,11 @@ import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/services/friends/friend_management.dart';
-import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
+import 'package:travellory/shared/loading_heart.dart';
+
 
 class SearchFriendsPage extends StatefulWidget {
   @override
@@ -97,67 +98,64 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
           children: <Widget>[
             Container(
                 margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Material(
-                        child: IconButton(
-                          onPressed: () =>
-                            Provider.of<FriendsPageProvider>(context, listen: false)
-                                .toggleSearching(),
-                          icon: Icon(FontAwesomeIcons.arrowLeft),
-                          iconSize: 28,
-                          color: Colors.black38,
-                        ),
-                      ),
+                child: Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
+                  Material(
+                    child: IconButton(
+                      onPressed: () => Provider.of<FriendsPageProvider>(context,
+                              listen: false)
+                          .toggleSearching(),
+                      icon: Icon(FontAwesomeIcons.arrowLeft),
+                      iconSize: 28,
+                      color: Colors.black38,
+                    ),
+                  ),
                   FashionFetishText(
-                    text: 'Add Friends',
+                    text: 'Add friends',
                     size: 22,
                     fontWeight: FashionFontWeight.heavy,
                   ),
-            ])),
+                ])),
             Expanded(
-              child: Material(
-                child: SearchBar(
-                    key: Key('search_bar'),
-                    onSearch: search,
-                    onItemFound: (FriendsModel friend, int index) {
-                      return Padding(
-                          padding: EdgeInsets.only(
-                            bottom: 10,
-                          ),
-                          child: friendsCard(
-                              context,
-                              friend,
-                              _loading
-                                  ? CircularProgressIndicator()
-                                  : sendFriendRequestButton(user.uid, friend.uid),
-                              10));
-                    },
-                    loader: LoadingHeart(),
-                    searchBarPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    headerPadding: EdgeInsets.symmetric(horizontal: 50),
-                    listPadding: EdgeInsets.symmetric(horizontal: 30),
-                    hintText: 'Add friends',
-                    hintStyle: TextStyle(
-                      color: Colors.black45,
-                    ),
-                    icon: Icon(
-                      FontAwesomeIcons.search,
-                      size: 24.0,
-                    ),
-                    iconActiveColor: Colors.black54,
-                    searchBarStyle: SearchBarStyle(
-                      backgroundColor: Colors.black12,
-                      padding: EdgeInsets.fromLTRB(15, 5, 5, 5),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    cancellationWidget: Text(
-                      'Cancel',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )),
-              )
-            ),
+                child: Material(
+              child: SearchBar(
+                  key: Key('search_bar'),
+                  onSearch: search,
+                  onItemFound: (FriendsModel friend, int index) {
+                    return Padding(
+                        padding: EdgeInsets.only(
+                          bottom: 10,
+                        ),
+                        child: friendsCard(
+                            context,
+                            friend,
+                            _loading
+                                ? CircularProgressIndicator()
+                                : sendFriendRequestButton(user.uid, friend.uid),
+                            10));
+                  },
+                  loader: LoadingHeart(),
+                  searchBarPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  headerPadding: EdgeInsets.symmetric(horizontal: 50),
+                  listPadding: EdgeInsets.symmetric(horizontal: 30),
+                  hintText: 'Add friends',
+                  hintStyle: TextStyle(
+                    color: Colors.black45,
+                  ),
+                  icon: Icon(
+                    FontAwesomeIcons.search,
+                    size: 24.0,
+                  ),
+                  iconActiveColor: Colors.black54,
+                  searchBarStyle: SearchBarStyle(
+                    backgroundColor: Colors.black12,
+                    padding: EdgeInsets.fromLTRB(15, 5, 5, 5),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  cancellationWidget: Text(
+                    'Cancel',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+            )),
           ],
         ));
   }
