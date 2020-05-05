@@ -35,6 +35,8 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final GlobalKey<DateFormFieldState> _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _arrDateFormFieldKey = GlobalKey<DateFormFieldState>();
+
 
   bool validateForm() {
     return publicTransportFormKey.currentState.validate();
@@ -194,9 +196,11 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
       DateFormField(
         initialValue: _publicTransportModel.departureDate,
         key: _depDateFormFieldKey,
+        listenerKey: _arrDateFormFieldKey,
         labelText: 'Departure Date *',
         icon: Icon(FontAwesomeIcons.calendarAlt),
         tripModel: tripModel,
+        model: _publicTransportModel,
         chosenDateString: (value) => _publicTransportModel.departureDate = value,
       ),
       TimeFormField(
@@ -222,11 +226,13 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         onChanged: (value) => _publicTransportModel.arrivalLocation = value,
       ),
       DateFormField(
+        key: _arrDateFormFieldKey,
         initialValue: _publicTransportModel.arrivalDate,
         labelText: 'Arrival Date *',
         icon: Icon(FontAwesomeIcons.calendarAlt),
         beforeDateKey: _depDateFormFieldKey,
         tripModel: tripModel,
+        model: _publicTransportModel,
         dateValidationMessage: 'Departure Date cannot be before Arrival Date',
         chosenDateString: (value) => _publicTransportModel.arrivalDate = value,
       ),
