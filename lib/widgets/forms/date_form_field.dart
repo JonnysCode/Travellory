@@ -82,8 +82,10 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
 
   bool pickedDateInTripRange(DateTime pickedDate) {
     if (widget.tripModel != null) {
-      final DateTime tripStartDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.startDate);
-      final DateTime tripEndDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.endDate);
+      final DateTime tripStartDate =
+          DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.startDate);
+      final DateTime tripEndDate =
+          DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.endDate);
       if ((pickedDate.isAfter(tripStartDate) || pickedDate == tripStartDate) &&
           (pickedDate.isBefore(tripEndDate) || pickedDate == tripEndDate)) {
         return true;
@@ -103,7 +105,9 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
   }
 
   void sameDateFieldChanged(DateTime selectedListenerDate) {
-    if (widget.initialValue != null) {
+    if (widget.initialValue != null &&
+        selectedListenerDate != null &&
+        (controller.text == null || controller.text == '')) {
       setState(() {
         selectedDate = selectedListenerDate;
         controller.text = DateFormat("dd-MM-yyyy").format(selectedListenerDate);
@@ -155,16 +159,11 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
       if (widget.listenerKey != null &&
           (widget.model is RentalCarModel || widget.model is AccommodationModel)) {
         widget.listenerKey.currentState.otherDateFieldChanged(pickedDate);
-//        if (widget.secondListenerKey != null) {
-//          widget.secondListenerKey.currentState
-//              .calculateNights(selectedDate, widget.listenerKey.currentState.selectedDate);
-//        }
       }
       if (widget.listenerKey != null &&
           (widget.model is FlightModel ||
               widget.model is PublicTransportModel ||
               widget.model is ActivityModel)) {
-//        && (widget.controller.text == null || widget.controller.text == '')) {
         widget.listenerKey.currentState.sameDateFieldChanged(pickedDate);
       }
     }
