@@ -43,7 +43,7 @@ void showDeleteDialog(Model model, BuildContext context, String alertText) {
   );
 }
 
-void showDeletedBookingDialog(BuildContext context, String alertText) {
+void showDeletedBookingDialog(BuildContext context, String alertText, {hasBackButton: true}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -61,11 +61,12 @@ void showDeletedBookingDialog(BuildContext context, String alertText) {
           alertButton('Home', Colors.transparent, context, () async {
             Navigator.of(context).popUntil((route) => route.isFirst);
           }),
-          alertButton('Back To Overview', Theme.of(context).hintColor, context, () async {
-            Navigator.pop(context);
-            Navigator.pop(context);
-            Navigator.pop(context);
-          }),
+          if(hasBackButton)
+              alertButton('Back To Trip', Theme.of(context).hintColor, context, () async {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
+            }),
         ],
       );
     },
