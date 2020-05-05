@@ -18,8 +18,6 @@ import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 
 class Flight extends StatefulWidget {
-  Flight({Key key}) : super(key: key);
-
   @override
   FlightState createState() => FlightState();
 }
@@ -252,7 +250,7 @@ class FlightState<T extends Flight> extends State<T> {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
-    FlightModel _flightModel = FlightModel();
+    final FlightModel _flightModel = FlightModel();
     _flightModel.tripUID = tripModel.uid;
 
     return Scaffold(

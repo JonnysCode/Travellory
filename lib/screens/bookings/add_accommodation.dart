@@ -23,8 +23,6 @@ import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class Accommodation extends StatefulWidget {
-  Accommodation({Key key}) : super(key: key);
-
   @override
   AccommodationState createState() => AccommodationState();
 }
@@ -114,14 +112,19 @@ class AccommodationState<T extends Accommodation> extends State<T> {
 
   @override
   Widget build(BuildContext context) {
-    ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
-    AccommodationModel _accommodationModel = arguments.model;
+    final ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
+    final AccommodationModel _accommodationModel = arguments.model;
 
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
 
-    Widget hotelAdditional = Column(
+    Widget hotelAdditional;
+    Widget airbnbAdditional;
+    Widget otherAdditional;
+    TravelloryDropdownField accommodationTypeDropdown;
+
+    hotelAdditional = Column(
       children: <Widget>[
         SectionTitle('Further Hotel Details'),
         TravelloryFormField(
@@ -141,7 +144,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
       ],
     );
 
-    Widget airbnbAdditional = Column(
+    airbnbAdditional = Column(
       children: <Widget>[
         TravelloryFormField(
           initialValue: _accommodationModel.airbnbType,
@@ -153,7 +156,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
       ],
     );
 
-    Widget otherAdditional = Column(
+    otherAdditional = Column(
       children: <Widget>[
         TravelloryFormField(
           initialValue: _accommodationModel.specificationOther,
@@ -164,8 +167,6 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         ),
       ],
     );
-
-    TravelloryDropdownField accommodationTypeDropdown;
 
     accommodationTypeDropdown = TravelloryDropdownField(
         initialValue: _accommodationModel.type,
@@ -205,7 +206,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
         onTap: (controller) async {
-          PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context,
+          final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context,
               countryCode: tripModel.countryCode);
 
           controller.text = detail.result.formattedAddress;

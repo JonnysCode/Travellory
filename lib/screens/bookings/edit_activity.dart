@@ -8,10 +8,6 @@ import 'package:travellory/services/database/edit.dart';
 import 'add_activity.dart';
 
 class EditActivity extends Activity {
-  EditActivity({
-    Key key,
-  }) : super(key: key);
-
   @override
   _EditActivityState createState() => _EditActivityState();
 }
@@ -23,8 +19,7 @@ class _EditActivityState extends ActivityState<EditActivity> {
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
 
-//    final ActivityModel _activityModel = ModalRoute.of(context).settings.arguments;
-    ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
+    final ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
     final ActivityModel _activityModel = arguments.model;
 
     return Scaffold(

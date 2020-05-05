@@ -20,8 +20,6 @@ import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class Activity extends StatefulWidget {
-  Activity({Key key}) : super(key: key);
-
   @override
   ActivityState createState() => ActivityState();
 }
@@ -150,7 +148,7 @@ class ActivityState<T extends Activity> extends State<T> {
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
                       onTap: (controller) async {
-                        PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
+                        final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
                             context,
                             countryCode: tripModel.countryCode);
 

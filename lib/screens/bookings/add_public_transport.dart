@@ -23,8 +23,6 @@ import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class PublicTransport extends StatefulWidget {
-  PublicTransport({Key key}) : super(key: key);
-
   @override
   PublicTransportState createState() => PublicTransportState();
 }
@@ -124,8 +122,8 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
 
-    ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
-    PublicTransportModel _publicTransportModel = arguments.model;
+    final ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
+    final PublicTransportModel _publicTransportModel = arguments.model;
 
     TravelloryDropdownField transportTypeDropdown;
     CheckboxFormField bookingMadeCheckbox;
@@ -183,7 +181,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
         onTap: (controller) async {
-          PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context,
+          final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context,
               countryCode: tripModel.countryCode);
 
           controller.text = detail.result.name;
@@ -216,7 +214,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         icon: Icon(FontAwesomeIcons.mapMarkerAlt),
         optional: false,
         onTap: (controller) async {
-          PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
+          final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
 
           controller.text = detail.result.name;
           _publicTransportModel.arrivalLocation = detail.result.name;
