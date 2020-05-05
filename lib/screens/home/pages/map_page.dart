@@ -1,17 +1,19 @@
 import 'dart:async';
+import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/providers/single_trip_provider.dart';
+import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/utils/g_map/g_map_border_loader.dart';
-import 'package:travellory/services/api/map/locations.dart' as locations;
 
 String _mapStyle;
-final List<String> _userCities = ["switzerland","germany","austria","belgium"];
-final Completer<GoogleMapController> _controller = Completer();
-final Map<String, Marker> markers = {};
-final List<Polygon> boundaries = [];
+final List<String> _userStates = ["switzerland", "austria", "belgium", "germany", "italy", "norway"];
 
 class MapPage extends StatefulWidget {
   @override
@@ -48,36 +50,52 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
+  final Completer<GoogleMapController> _controller = Completer();
+  final Map<String, Marker> _markers = {};
+  final List<Polygon> _boundaries = [];
+
+  Future<void> loadAccommodations() async {
+    final List<SingleTripProvider> trips =
+        await Provider.of<TripsProvider>(context, listen: false).trips;
+
+    _markers.clear();
+
+    for (final SingleTripProvider trip in trips) {
+      final List<AccommodationModel> accommodations = await trip.accommodations;
+
+      for (final AccommodationModel accommodation in accommodations) {
+        final marker = Marker(
+          markerId: MarkerId(accommodation.name),
+          position: LatLng(accommodation.latitude, accommodation.longitude),
+          infoWindow: InfoWindow(
+              title: accommodation.name,
+              snippet: accommodation.address,
+              onTap: () {
+                Navigator.pushNamed(context, '/view/accommodation', arguments: accommodation);
+              }),
+        );
+        _markers[accommodation.tripUID] = marker;
+      }
+    }
+  }
 
   Future<void> onMapCreated() async {
-    final googleOffices = await locations.getGoogleOffices();
-    final boundariesTemp = await GMapBorderLoader.generateBorders(_userCities);
+    final _boundariesTemp = await GMapBorderLoader.generateBorders(_userStates);
 
     setState(() {
-      markers.clear();
-      for (final office in googleOffices.offices) {
-        final marker = Marker(
-          markerId: MarkerId(office.name),
-          position: LatLng(office.lat, office.lng),
-          infoWindow: InfoWindow(
-            title: office.name,
-            snippet: office.address,
-          ),
-        );
-        markers[office.name] = marker;
-      }
+      loadAccommodations();
 
-      if(boundariesTemp.isNotEmpty){
-        boundaries.clear();
-        boundariesTemp.forEach(boundaries.add);
+      if (_boundariesTemp.isNotEmpty) {
+        _boundaries.clear();
+        _boundariesTemp.forEach(_boundaries.add);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
+    return Scaffold(
+      body: Stack(children: <Widget>[
         GoogleMap(
           key: Key('google_map_widget'),
           mapType: MapType.normal,
@@ -95,10 +113,37 @@ class MapSampleState extends State<MapSample> {
             onMapCreated();
             _controller.complete(controller);
           },
-          markers: markers.values.toSet(),
-          polygons: boundaries.toSet(),
+          markers: _markers.values.toSet(),
+          polygons: _boundaries.toSet(),
         ),
-      ],
+        Positioned(
+          child: FabCircularMenu(
+              key: Key('FabCircularMenu'),
+              ringColor: Theme.of(context).primaryColor,
+              ringWidth: 50.0,
+              ringDiameter: 200.0,
+              fabMargin: EdgeInsets.only(right: 50.0, top: 20.0),
+              alignment: Alignment.topRight,
+              children: <Widget>[
+                IconButton(
+                    icon: Icon(FontAwesomeIcons.home),
+                    onPressed: () {
+                    }),
+                IconButton(
+                    icon: Icon(FontAwesomeIcons.plane),
+                    onPressed: () {
+                    }),
+                IconButton(
+                    icon: Icon(FontAwesomeIcons.theaterMasks),
+                    onPressed: () {
+                    }),
+                IconButton(
+                    icon: Icon(FontAwesomeIcons.bed),
+                    onPressed: () {
+                    }),
+              ])
+        ),
+      ]),
     );
   }
 }
