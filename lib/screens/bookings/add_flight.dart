@@ -163,10 +163,7 @@ class FlightState<T extends Flight> extends State<T> {
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     optional: false,
                     tripModel: tripModel,
-//                      chosenDateString: (value) {
-//                        _editFlightModel.departureDate = value;
-//                        setState(() {});
-//                      }
+                    model: _editFlightModel,
                     chosenDateString: (value) => _editFlightModel.departureDate = value,
                   ),
                 ),
@@ -202,6 +199,7 @@ class FlightState<T extends Flight> extends State<T> {
                     beforeDateKey: _depDateFormFieldKey,
                     optional: false,
                     tripModel: tripModel,
+                    model: _editFlightModel,
                     dateValidationMessage: 'Arrival Date cannot be before Departure Date',
                     chosenDateString: (value) => _editFlightModel.arrivalDate = value,
                   ),
