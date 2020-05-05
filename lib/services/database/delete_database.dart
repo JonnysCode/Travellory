@@ -97,7 +97,7 @@ void Function() onDeleteTrip(TripModel tripModel, BuildContext context, String e
   return () async {
     final bool deleted = await tripsProvider.deleteTrip(tripModel);
     if (deleted) {
-      showDeletedBookingDialog(context, alertText);
+      showDeletedBookingDialog(context, alertText, hasBackButton: false);
       log.i('onDeleteBooking was performed');
     } else {
       addToDataBaseFailedDialog(context, errorMessage);
