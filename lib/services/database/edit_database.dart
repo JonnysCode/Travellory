@@ -65,7 +65,7 @@ String getEditFunctionNameBasedOn(Model model) {
 
 void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model,
     BuildContext context, String errorMessage) {
-  String functionName = getEditFunctionNameBasedOn(model);
+  final String functionName = getEditFunctionNameBasedOn(model);
 
   const String alertText =
       "You've just edited this entry. Your booking overview has been updated. " +

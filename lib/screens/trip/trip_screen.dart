@@ -109,7 +109,7 @@ class TripScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: _subsection('Accommodation', '/booking/accommodation', () {
-                        AccommodationModel accommodationModel = AccommodationModel();
+                        final AccommodationModel accommodationModel = AccommodationModel();
                         accommodationModel.tripUID = tripModel.uid;
                         return ModifyModelArguments(model: accommodationModel, isNewModel: true);
                       }),
@@ -170,7 +170,7 @@ class TripScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: _subsection('Transportation', '/booking/publictransport', () {
-                        PublicTransportModel publicTransportModel = PublicTransportModel();
+                        final PublicTransportModel publicTransportModel = PublicTransportModel();
                         publicTransportModel.tripUID = tripModel.uid;
                         return ModifyModelArguments(model: publicTransportModel, isNewModel: true);
                       }),

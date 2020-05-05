@@ -8,10 +8,6 @@ import 'package:travellory/services/database/edit.dart';
 import 'add_flight.dart';
 
 class EditFlight extends Flight {
-  EditFlight({
-    Key key,
-  }) : super(key: key);
-
   @override
   _EditFlightState createState() => _EditFlightState();
 }
@@ -23,8 +19,7 @@ class _EditFlightState extends FlightState<EditFlight> {
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
 
-//    final FlightModel _flightModel = ModalRoute.of(context).settings.arguments;
-    ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
+    final ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
     final FlightModel _flightModel = arguments.model;
 
     return Scaffold(
