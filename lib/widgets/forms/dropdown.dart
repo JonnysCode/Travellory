@@ -52,8 +52,7 @@ class TravelloryDropdownFieldState extends State<TravelloryDropdownField>
     return ListTile(
       key: Key('Dropdown Menu'),
       leading: Icon(FontAwesomeIcons.listUl),
-      title: Container(
-        child: Theme(
+      title: Theme(
           data: Theme.of(context).copyWith(
             canvasColor: Colors.white,
           ),
@@ -90,7 +89,6 @@ class TravelloryDropdownFieldState extends State<TravelloryDropdownField>
               );
             }).toList(),
           ),
-        ),
       ),
     );
   }

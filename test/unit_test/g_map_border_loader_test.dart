@@ -6,24 +6,23 @@ void main() async{
   TestWidgetsFlutterBinding.ensureInitialized();
 
   final String _state_name = "Switzerland";
-  final int _n_points = 11608;
+  final int _n_points = 749;
 
-  test('Try to get switzerland borders', () async {
-    List<Polygon> border = await GMapBorderLoader.generateBorders([_state_name]);
+  test('Test random single polygon', () async {
+    final List<Polygon> polygons = <Polygon>[];
+    List randomPolygon = [[0.8,1.9],[0.2,0.3]];
+    await GMapBorderLoader.readPolygon(randomPolygon,polygons,"state_name");
 
-    expect(border[0].points.length, _n_points);
+    expect(polygons[0].points.length, 2);
   });
 
-  test('Try if right polygon gets generated', () async {
-    Polygon polygon = await GMapBorderLoader.doPolygon(_state_name);
+  test('Test random multi polygon', () async {
+    final List<Polygon> polygons = <Polygon>[];
+    List randomPolygon = [[[[0.8,1.9],[0.2,0.3]]],[[[0.8,1.9],[0.2,0.3]]]];
+    await GMapBorderLoader.readMultiPolygon(randomPolygon,polygons,"state_name");
 
-    expect(polygon.points.length, _n_points);
-    expect(polygon.polygonId.value, _state_name);
-  });
-
-  test('Try to generate borders', () async {
-    List<LatLng> points = await GMapBorderLoader.doPoints(_state_name);
-
-    expect(points.length, 11608);
+    expect(polygons.length, 2);
+    expect(polygons[0].points.length, 2);
+    expect(polygons[1].points.length, 2);
   });
 }
