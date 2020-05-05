@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:travellory/models/abstract_model.dart';
+import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
+import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 
 class DateFormField extends StatefulWidget {
@@ -97,11 +99,22 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
     return true;
   }
 
-  void otherDateFieldChanged(DateTime selectedListenerDate) {
+  void sameDateFieldChanged(DateTime selectedListenerDate) {
     if (widget.initialValue != null) {
       setState(() {
         selectedDate = selectedListenerDate;
         controller.text = DateFormat("dd-MM-yyyy").format(selectedListenerDate);
+        if (widget.chosenDate != null) widget.chosenDate(selectedDate);
+        if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
+      });
+    }
+  }
+
+  void otherDateFieldChanged(DateTime selectedListenerDate) {
+    if (widget.initialValue != null) {
+      setState(() {
+        selectedDate = selectedListenerDate.add(Duration(days: 1));
+        controller.text = DateFormat("dd-MM-yyyy").format(selectedDate);
         if (widget.chosenDate != null) widget.chosenDate(selectedDate);
         if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
       });
@@ -124,9 +137,13 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
       if (widget.chosenDate != null) widget.chosenDate(selectedDate);
       if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
       if (widget.listenerKey != null &&
+          (widget.model is RentalCarModel || widget.model is AccommodationModel)) {
+        widget.listenerKey.currentState.otherDateFieldChanged(pickedDate);
+      }
+      if (widget.listenerKey != null &&
           (widget.model is FlightModel || widget.model is PublicTransportModel)) {
 //        && (widget.controller.text == null || widget.controller.text == '')) {
-        widget.listenerKey.currentState.otherDateFieldChanged(pickedDate);
+        widget.listenerKey.currentState.sameDateFieldChanged(pickedDate);
       }
     }
   }
