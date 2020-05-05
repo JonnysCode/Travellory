@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
-import 'package:travellory/logger.dart';
+import 'package:travellory/utils/logger.dart';
 
 const googleApiKey = 'AIzaSyBTerG6FzsWzMxLZGxkz8KAXqUNCNtwsE0'; /// maybe have it somewhere else
 
