@@ -10,12 +10,10 @@ class FriendsPage extends StatefulWidget {
 }
 
 class _FriendsPageState extends State<FriendsPage> {
-  bool _dev;
 
   @override
   void initState() {
     super.initState();
-    _dev = false;
   }
 
   @override
