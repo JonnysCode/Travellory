@@ -357,7 +357,7 @@ void main() {
     expect(find.byKey(testDateFieldTwoKey, skipOffstage: false), findsOneWidget);
 
     await enterDate('01-05-2020', testDateFieldOneKey, tester);
-    await tester.pumpWidget(makeTestableWidget());
+    await tester.pump();
     expect(find.text('01-05-2020', skipOffstage: false), findsOneWidget);
   });
 }
