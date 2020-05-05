@@ -135,7 +135,7 @@ class _FriendListPageState extends State<FriendListPage> {
               padding: EdgeInsets.only(left: 200, top: 10),
             ),
             FashionFetishText(
-              text: 'Add Friends',
+              text: 'Add friends',
               size: 16,
               color: Colors.black54,
               fontWeight: FashionFontWeight.bold,
