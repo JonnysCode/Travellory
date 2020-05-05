@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -68,11 +69,20 @@ class _TripCardState extends State<TripCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          FashionFetishText(
-                            text: _tripModel.name,
-                            size: 18.0,
-                            fontWeight: FashionFontWeight.heavy,
-                            height: 1.1,
+                          SizedBox(
+                            height: 20,
+                            child: Text(
+                              _tripModel.name,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+                                  fontFamily: 'FashionFetish',
+                                  fontSize: 18,
+                                  height: 1.1,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: -1
+                              ),
+                            ),
                           ),
                           Spacer(),
                           FashionFetishText(
@@ -91,13 +101,22 @@ class _TripCardState extends State<TripCard> {
                                 size: 14,
                                 color: Colors.redAccent,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 6, left: 3),
-                                child: FashionFetishText(
-                                  text: _tripModel.destination,
-                                  size: 13.0,
-                                  fontWeight: FashionFontWeight.heavy,
-                                  color: Colors.black54,
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 6, left: 3),
+                                  child: Text(
+                                    _tripModel.destination,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontFamily: 'FashionFetish',
+                                      fontSize: 13,
+                                      height: 1.2,
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.black54,
+                                      letterSpacing: -1
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -115,6 +134,7 @@ class _TripCardState extends State<TripCard> {
                         OptionItem(
                             description: 'Remove',
                             icon: FontAwesomeIcons.trashAlt,
+                            color: Colors.redAccent,
                             onTab: () => showDeleteDialog(_tripModel, context, _deleteAlertText)
                         ),
                       ],
