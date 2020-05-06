@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/single_trip_provider.dart';
-import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 
 import '../../utils/logger.dart';

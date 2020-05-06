@@ -11,8 +11,9 @@ class FlightSchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlightModel flight = scheduleEntry.booking;
-    DayType dayType = scheduleEntry.dayType;
+    final FlightModel flight = scheduleEntry.booking;
+    final DayType dayType = scheduleEntry.dayType;
+
     return Row(
       key: Key('flight'),
       children: <Widget>[
