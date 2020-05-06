@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/widgets/bookings/view_booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/forms/checkbox_form_field.dart';
-import 'package:travellory/widgets/forms/section_titles.dart';
 import 'package:getflutter/getflutter.dart';
 
 class AchievementsView extends StatefulWidget {
@@ -14,7 +11,7 @@ class AchievementsView extends StatefulWidget {
 }
 
 class _AchievementsViewState extends State<AchievementsView> {
-  final String bannerUrl = 'assets/images/bookings/plane_banner.png';
+  final String bannerUrl = 'assets/images/bookings/achievements_banner.jpg';
   final String headerTitle = 'Your Travel Progress';
 
   final List<String> entries = <String>[
@@ -36,6 +33,7 @@ class _AchievementsViewState extends State<AchievementsView> {
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         for (int i = 0; i < entries.length; i++)
           Container(
+              key: Key(entries[i]),
               height: 81,
               child: Stack(children: <Widget>[
                 Padding(
@@ -54,12 +52,10 @@ class _AchievementsViewState extends State<AchievementsView> {
                       progressBarColor: Theme.of(context).primaryColor,
                       width: MediaQuery.of(context).size.width - 86,
                       lineHeight: 40.0,
-                      animateFromLastPercentage: true,
-                      animation: true,
                       child: Padding(
                         padding: EdgeInsets.only(top: 7),
                         child: Text(
-                          '${(percentages[i] * 100).toInt()}%',
+                          '${(percentages[i] * 100.0).round()}%',
                           textAlign: TextAlign.start,
                           style: TextStyle(fontSize: 22, color: Colors.white),
                         ),

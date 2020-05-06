@@ -150,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage>
                 OptionItem(
                   description: 'Change password',
                   icon: FontAwesomeIcons.userEdit,
-                  onTab: () => print("test"),
+                  onTab: () => Navigator.pushNamed(context, '/password'),
                 ),
                 OptionItem(
                     description: 'Logout',
