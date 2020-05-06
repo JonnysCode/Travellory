@@ -1,5 +1,5 @@
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:travellory/logger.dart';
+import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 
 class DatabaseAdder {
