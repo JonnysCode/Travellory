@@ -9,10 +9,10 @@ import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/services/friends/friend_management.dart';
+import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
-import 'package:travellory/shared/loading_heart.dart';
 
 class SearchFriendsPage extends StatefulWidget {
   @override
@@ -20,6 +20,7 @@ class SearchFriendsPage extends StatefulWidget {
 }
 
 class _SearchFriendsPageState extends State<SearchFriendsPage> {
+  String searchWord = '';
   final _loadingResults = List();
   final _loadingRequests = List();
 
@@ -121,7 +122,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     return SnackBar(
       content: Flushbar(
           flushbarStyle: FlushbarStyle.FLOATING,
-          title: success ? "Success" : "Error",
+          title: success ? 'Success' : 'Error',
           message: message,
           backgroundColor:
               success ? Theme.of(context).primaryColor : Colors.redAccent,
@@ -138,6 +139,10 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
   }
 
   Future<List<FriendsModel>> search(String search) async {
+    setState(() {
+      searchWord = search;
+    });
+
     return FriendManagement.searchByUsername(search);
   }
 
@@ -196,6 +201,12 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                           10);
                     },
                     loader: LoadingHeart(),
+                    minimumChars: 1,
+                    emptyWidget: Center(
+                      child: Text('No user starting with "' +
+                          searchWord +
+                          '" was found'),
+                    ),
                     hintText: 'Add friends',
                     hintStyle: TextStyle(
                       color: Colors.black45,
