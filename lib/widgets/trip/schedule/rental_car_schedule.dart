@@ -14,63 +14,19 @@ class RentalCarSchedule extends StatelessWidget {
     RentalCarModel rentalCar = scheduleEntry.booking;
     DayType dayType = scheduleEntry.dayType;
 
-    Widget firstDay() => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            FashionFetishText(
-              text: 'Pick up your car here:',
-              size: 16,
-              fontWeight: FashionFontWeight.heavy,
-              height: 1.2,
-              color: Colors.black54,
-            ),
-            SizedBox(height: 3),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                FaIcon(
-                  FontAwesomeIcons.locationArrow,
-                  size: 14,
-                  color: Colors.white70,
-                ),
-                SizedBox(width: 6),
-                Flexible(
-                  fit: FlexFit.loose,
-                  child: Text(
-                    rentalCar.pickupLocation,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        );
-
-    Widget middleDay() => FashionFetishText(
-          text: 'You have a car today',
-          size: 16,
-          fontWeight: FashionFontWeight.heavy,
-          height: 1.2,
-          color: Colors.black54,
-        );
-
-    Widget lastDay() => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            FashionFetishText(
-              text: rentalCar.returnLocation.isEmpty ? 'Return your car' : 'Return your car here:',
-              size: 16,
-              fontWeight: FashionFontWeight.heavy,
-              height: 1.2,
-              color: Colors.black54,
-            ),
-            SizedBox(height: 3),
-            if (rentalCar.returnLocation.isNotEmpty)
+    Widget firstDay() => 
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              FashionFetishText(
+                text: 'Pick up your car here:',
+                size: 16,
+                fontWeight: FashionFontWeight.heavy,
+                height: 1.2,
+                color: Colors.black54,
+              ),
+              SizedBox(height: 3),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -83,7 +39,7 @@ class RentalCarSchedule extends StatelessWidget {
                   Flexible(
                     fit: FlexFit.loose,
                     child: Text(
-                      rentalCar.returnLocation,
+                      rentalCar.pickupLocation,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: TextStyle(
@@ -94,8 +50,57 @@ class RentalCarSchedule extends StatelessWidget {
                   ),
                 ],
               ),
-          ],
+            ],
+          ),
         );
+
+    Widget middleDay() => FashionFetishText(
+          text: 'You have a car today',
+          size: 16,
+          fontWeight: FashionFontWeight.heavy,
+          height: 1.2,
+          color: Colors.black54,
+        );
+
+    Widget lastDay() => Expanded(
+      child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              FashionFetishText(
+                text: rentalCar.returnLocation.isEmpty ? 'Return your car' : 'Return your car here:',
+                size: 16,
+                fontWeight: FashionFontWeight.heavy,
+                height: 1.2,
+                color: Colors.black54,
+              ),
+              SizedBox(height: 3),
+              if (rentalCar.returnLocation.isNotEmpty)
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    FaIcon(
+                      FontAwesomeIcons.locationArrow,
+                      size: 14,
+                      color: Colors.white70,
+                    ),
+                    SizedBox(width: 6),
+                    Flexible(
+                      fit: FlexFit.loose,
+                      child: Text(
+                        rentalCar.returnLocation,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+    );
 
     return Row(
       key: Key('rental_car'),
