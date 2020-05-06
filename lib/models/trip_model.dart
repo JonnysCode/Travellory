@@ -13,6 +13,7 @@ class TripModel extends Model {
     this.destination = '',
     this.country = '',
     this.countryCode = '',
+    this.continent = '',
     this.imageNr,
     this.index,
   });
@@ -26,6 +27,7 @@ class TripModel extends Model {
     destination = trip["destination"];
     country = trip["country"];
     countryCode = trip["countryCode"];
+    continent = trip["continent"];
     imageNr = trip["imageNr"];
     imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
   }
@@ -38,6 +40,7 @@ class TripModel extends Model {
   String destination;
   String country;
   String countryCode;
+  String continent;
   String imagePath;
   int imageNr;
   int index;
@@ -61,6 +64,7 @@ class TripModel extends Model {
       "destination": destination,
       "country": country,
       "countryCode": countryCode,
+      "continent": continent,
       "imageNr": imageNr
     };
   }
