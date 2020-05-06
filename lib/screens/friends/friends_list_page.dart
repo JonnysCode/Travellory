@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/services/friends/friend_management.dart';
