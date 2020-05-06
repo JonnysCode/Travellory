@@ -27,6 +27,7 @@ void main() async{
     expect(polygons[1].points.length, 2);
   });
 
+  /*
   test('Test fetchPolygons', () async {
     List<Polygon> polygons;
     polygons = await _gMapBorderLoader.fetchPolygons(_state_name);
@@ -42,6 +43,6 @@ void main() async{
     expect(polygons.length, 1);
     expect(polygons[0].points.length, _n_points);
   });
-
+  */
 
 }
