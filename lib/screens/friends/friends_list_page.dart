@@ -17,8 +17,8 @@ class FriendListPage extends StatefulWidget {
 }
 
 class _FriendListPageState extends State<FriendListPage> {
-  final _loadingRequests = List();
-  final _loadingFriends = List();
+  final _loadingRequests = [];
+  final _loadingFriends = [];
 
   void _performSocialAction(String uidSender, String uidReceiver,
       SocialActionType type, int index) async {
