@@ -134,7 +134,7 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
   void calculateNights(DateTime firstDate, DateTime secondDate) {
     if (widget.initialValue != null) {
       setState(() {
-        Duration calculatedDays = firstDate.difference(secondDate);
+        final Duration calculatedDays = firstDate.difference(secondDate);
         controller.text = calculatedDays.inDays.toString();
         if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
       });
