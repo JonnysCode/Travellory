@@ -5,6 +5,7 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
+import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 
@@ -28,19 +29,21 @@ void showDeleteDialog(Model model, BuildContext context, String alertText) {
         ),
         content: Text(alertText),
         actions: <Widget>[
-          alertButton("CANCEL", Theme.of(context).hintColor, context, () async {
+          alertButton('CANCEL', Theme.of(context).hintColor, context, () async {
             Navigator.of(context).pop();
           }),
-          alertButton('DELETE', Theme.of(context).accentColor, context,
-            onDeleteBooking(model, context, errorMessage),
-          ),
+          model is TripModel
+              ?  alertButton('DELETE', Theme.of(context).accentColor, context,
+                  onDeleteTrip(model, context, errorMessage))
+              : alertButton('DELETE', Theme.of(context).accentColor, context,
+                  onDeleteBooking(model, context, errorMessage))
         ],
       );
     },
   );
 }
 
-void showDeletedBookingDialog(BuildContext context, String alertText) {
+void showDeletedBookingDialog(BuildContext context, String alertText, {hasBackButton: true}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -58,11 +61,12 @@ void showDeletedBookingDialog(BuildContext context, String alertText) {
           alertButton('Home', Colors.transparent, context, () async {
             Navigator.of(context).popUntil((route) => route.isFirst);
           }),
-          alertButton('Back To Trip', Theme.of(context).hintColor, context, () async {
-            Navigator.pop(context);
-            Navigator.pop(context);
-            Navigator.pop(context);
-          }),
+          if(hasBackButton)
+              alertButton('Back To Trip', Theme.of(context).hintColor, context, () async {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
+            }),
         ],
       );
     },

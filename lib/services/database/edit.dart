@@ -7,7 +7,7 @@ import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import '../../logger.dart';
+import '../../utils/logger.dart';
 
 final log = getLogger('Edit');
 

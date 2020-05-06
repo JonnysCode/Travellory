@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
@@ -18,6 +19,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   final DatabaseAdder _databaseAdder = DatabaseAdder();
   final DatabaseGetter _databaseGetter = DatabaseGetter();
+  final DatabaseDeleter _databaseDeleter = DatabaseDeleter();
 
   UserModel user;
   List<SingleTripProvider> trips;
@@ -52,6 +54,15 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
     return added;
   }
 
+  Future<bool> deleteTrip(TripModel tripModel) async {
+    final bool deleted =
+      await _databaseDeleter.deleteModel(tripModel, DatabaseDeleter.deleteTripName);
+    if (deleted) {
+      unawaited(_initTrips());
+    }
+    return deleted;
+  }
+
   void selectTrip(TripModel tripModel){
     _selectedTripIndex = trips.indexWhere((entry) => entry.tripModel.uid == tripModel.uid);
     unawaited(selectedTrip.initBookings());
@@ -74,6 +85,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   Future<void> _fetchTrips() async {
     isFetchingTrips = true;
+    trips = <SingleTripProvider>[];
     List<TripModel> tripModels = await _databaseGetter.getEntriesFromDatabase(
         user.uid, DatabaseGetter.getTrips);
     trips = tripModels.map((tripModel) =>
@@ -86,6 +98,11 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
     if(trips.isEmpty){
       return;
     }
+    // the last trip ends before the current Date
+    if(getDateTimeFrom(trips.last.tripModel.endDate).isBefore(DateTime.now())){
+      return;
+    }
+
     int index = 0;
     // get the first trip with an end date after the current date
     do {

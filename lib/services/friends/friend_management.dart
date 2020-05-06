@@ -11,7 +11,7 @@ enum SocialActionType {
 class FriendManagement {
   static Future<HttpsCallableResult> performSocialAction(
       String uidSender, String uidReceiver, SocialActionType type) {
-    String functionName = _getFunctionName(type);
+    final functionName = _getFunctionName(type);
 
     return _callHttpsCallable(uidSender, uidReceiver, functionName);
   }
@@ -27,10 +27,17 @@ class FriendManagement {
     return _generateFriendRequestListFromResult(result);
   }
 
+  static Future<List<FriendsModel>> getSentFriendRequests(String uid) async {
+    final result =
+    await _callHttpsCallable(uid, null, 'friends-getSentFriendRequests');
+    return _generateFriendsListFromResult(result);
+  }
+
+
   static Future<FriendsModel> getPublicUserInformation(String uid) async {
     final result =
         await _callHttpsCallable(uid, null, 'user-getPublicUserInformation');
-    FriendsModel friend = FriendsModel(result.data['uid'],
+    final friend = FriendsModel(result.data['uid'],
         result.data['displayName'], result.data['photoURL']);
     return friend;
   }
@@ -57,10 +64,10 @@ class FriendManagement {
 
   static Future<List<FriendsModel>> _generateFriendsListFromResult(
       HttpsCallableResult result) async {
-    List<FriendsModel> friendsList = List();
+    List<FriendsModel> friendsList = [];
     if(result.data != null) {
-      for (String uid in result.data) {
-        FriendsModel friend = await getPublicUserInformation(uid);
+      for (final uid in result.data) {
+        final friend = await getPublicUserInformation(uid);
         friendsList.add(friend);
       }
     }
@@ -69,10 +76,10 @@ class FriendManagement {
 
   static Future<List<FriendsModel>> _generateFriendRequestListFromResult(
       HttpsCallableResult result) async {
-    List<FriendsModel> friendsList = List();
+    List<FriendsModel> friendsList = [];
     if(result.data != null) {
-      for (String uid in result.data.keys) {
-        FriendsModel friend = await getPublicUserInformation(uid);
+      for (final uid in result.data.keys) {
+        final friend = await getPublicUserInformation(uid);
         friendsList.add(friend);
       }
     }
