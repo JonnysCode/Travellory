@@ -90,7 +90,7 @@ class _FriendListPageState extends State<FriendListPage> {
     return SnackBar(
       content: Flushbar(
           flushbarStyle: FlushbarStyle.FLOATING,
-          title: success ? "Success" : "Error",
+          title: success ? 'Success' : 'Error',
           message: message,
           backgroundColor:
               success ? Theme.of(context).primaryColor : Colors.redAccent,

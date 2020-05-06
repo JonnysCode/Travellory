@@ -76,14 +76,4 @@ void main() {
     expect(searchIcon, findsOneWidget);
   });
 
-  testWidgets('test if sent_friend_requests_list is present', (WidgetTester tester) async {
-    SearchFriendsPage page = SearchFriendsPage();
-
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(makeTestableWidget(child: page));
-
-    // Verify that the friends_request_list page is present.
-    expect(find.byKey(Key('sent_friend_requests_list')), findsOneWidget);
-  });
-
 }
