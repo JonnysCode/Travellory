@@ -133,48 +133,52 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                 ])),
             Expanded(
               flex: 7,
-                child: Material(
-              child: SearchBar(
-                  key: Key('search_bar'),
-                  onSearch: search,
-                  onItemFound: (FriendsModel friend, int index) {
-                    _loading.add(false);
-                    return Padding(
-                        padding: EdgeInsets.only(
-                          bottom: 10,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 15,
+                    right: 20,
+                  ),
+                  child: Material(
+                    child: SearchBar(
+                        key: Key('search_bar'),
+                        onSearch: search,
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 10,
+                        onItemFound: (FriendsModel friend, int index) {
+                          _loading.add(false);
+                          return friendsCard(
+                              context,
+                              friend,
+                              _loading[index]
+                                  ? CircularProgressIndicator()
+                                  : sendFriendRequestButton(
+                                  user.uid, friend.uid, index),
+                              10
+                          );
+                        },
+                        loader: LoadingHeart(),
+                        hintText: 'Add friends',
+                        hintStyle: TextStyle(
+                          color: Colors.black45,
                         ),
-                        child: friendsCard(
-                            context,
-                            friend,
-                            _loading[index]
-                                ? CircularProgressIndicator()
-                                : sendFriendRequestButton(
-                                    user.uid, friend.uid, index),
-                            10));
-                  },
-                  loader: LoadingHeart(),
-                  searchBarPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  headerPadding: EdgeInsets.symmetric(horizontal: 50),
-                  listPadding: EdgeInsets.symmetric(horizontal: 30),
-                  hintText: 'Add friends',
-                  hintStyle: TextStyle(
-                    color: Colors.black45,
+                        icon: Icon(
+                          FontAwesomeIcons.search,
+                          size: 24.0,
+                        ),
+                        iconActiveColor: Colors.black54,
+                        searchBarStyle: SearchBarStyle(
+                          backgroundColor: Colors.black12,
+                          padding: EdgeInsets.fromLTRB(15, 5, 5, 5),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        cancellationWidget: Text(
+                          'Cancel',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                    ),
                   ),
-                  icon: Icon(
-                    FontAwesomeIcons.search,
-                    size: 24.0,
-                  ),
-                  iconActiveColor: Colors.black54,
-                  searchBarStyle: SearchBarStyle(
-                    backgroundColor: Colors.black12,
-                    padding: EdgeInsets.fromLTRB(15, 5, 5, 5),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  cancellationWidget: Text(
-                    'Cancel',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
-            )),
+                ),
+            ),
             SizedBox(height: 20),
             Divider(
               thickness: 1,
@@ -221,7 +225,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               separatorBuilder: (context, index) =>
-                              const SizedBox(height: 12),
+                                const SizedBox(height: 12),
                               // TODO(hessgia1): replace friends with friend-request-list
                               itemCount: friendsProvider.friends.length,
                               itemBuilder: (context, index) {
@@ -235,7 +239,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                                       ? CircularProgressIndicator()
                                       : removeFriendRequestButton(
                                       friend.uid, user.uid, index),
-                                  10,
+                                  10
                                 );
                               },
                           ),
@@ -245,6 +249,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
             ),
             SizedBox(height: 50),
           ],
-        ));
+        )
+    );
   }
 }
