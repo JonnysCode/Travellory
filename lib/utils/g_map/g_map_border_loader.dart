@@ -65,10 +65,10 @@ class GMapBorderLoader{
 
     switch (jsonResult["features"][0]["geometry"]["type"]){
       case "Polygon":
-        await readPolygon(jsonResult["features"][0]["geometry"]["coordinates"][0] as List, polygons, stateName);
+        readPolygon(jsonResult["features"][0]["geometry"]["coordinates"][0] as List, polygons, stateName);
         break;
       case "MultiPolygon":
-        await readMultiPolygon(jsonResult["features"][0]["geometry"]["coordinates"] as List, polygons, stateName);
+        readMultiPolygon(jsonResult["features"][0]["geometry"]["coordinates"] as List, polygons, stateName);
         break;
       default:
         return polygons;
@@ -86,7 +86,7 @@ class GMapBorderLoader{
     for(final stateName in states) {
       final List<Polygon> state = await fetchPolygons(stateName);
       if(state.isNotEmpty){
-        await state.forEach(borders.add);
+        state.forEach(borders.add);
       }
     }
 
