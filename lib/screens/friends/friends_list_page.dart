@@ -23,6 +23,8 @@ class _FriendListPageState extends State<FriendListPage> {
   void _performSocialAction(String uidSender, String uidReceiver,
       SocialActionType type, int index) async {
     final loading = _getLoadingList(type);
+    bool success;
+    String message;
 
     setState(() {
       loading[index] = true;
@@ -30,16 +32,16 @@ class _FriendListPageState extends State<FriendListPage> {
 
     await FriendManagement.performSocialAction(uidSender, uidReceiver, type)
         .then((value) async {
-      final success = true;
-      final message = _getMessage(type, success);
+      success = true;
+      message = _getMessage(type, success);
       _showSnackBar(message, success);
 
       final FriendsProvider friendsProvider =
           Provider.of<FriendsProvider>(context, listen: false);
-      friendsProvider.update(type);
+      await friendsProvider.update(type);
     }).catchError((error) {
-      final success = false;
-      final message = _getMessage(type, success);
+      success = false;
+      message = _getMessage(type, success);
       _showSnackBar(message, success);
     });
 
