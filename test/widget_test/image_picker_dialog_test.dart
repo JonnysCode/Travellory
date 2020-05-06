@@ -34,7 +34,7 @@ void main() {
     return Provider<UserModel>.value(
       value: user,
       child: MaterialApp(
-        home: child,
+        home: Scaffold(body: child),
       ),
     );
   }

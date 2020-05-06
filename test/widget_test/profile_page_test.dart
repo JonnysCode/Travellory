@@ -26,7 +26,7 @@ void main() {
     return Provider<UserModel>.value(
       value: user,
       child: MaterialApp(
-        home: child,
+        home: Scaffold(body: child),
       ),
     );
   }
@@ -90,7 +90,6 @@ void main() {
     await tester.pumpWidget(await makeTestableWidget(child: page, auth: mockAuth));
 
     // Verify that the ProfilePage has a change password and a logout button.
-    expect(find.byKey(Key('change-pw')), findsOneWidget);
-    expect(find.byKey(Key('logout')), findsOneWidget);
+    expect(find.byKey(Key('achievements')), findsOneWidget);
   });
 }
