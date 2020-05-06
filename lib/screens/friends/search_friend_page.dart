@@ -32,28 +32,19 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       _loadingResults[index] = true;
     });
 
-    if (uidSender == uidReceiver) {
-      message = "You can't send a friend request to yourself";
+    await FriendManagement.performSocialAction(
+            uidSender, uidReceiver, SocialActionType.sendFriendRequest)
+        .then((value) async {
+      message = "Friend request sent";
+      success = true;
+      final FriendsProvider friendsProvider =
+          Provider.of<FriendsProvider>(context, listen: false);
+      await friendsProvider.update(SocialActionType.sendFriendRequest);
+    }).catchError((error) {
+      message = "There was an error. Try again.";
       success = false;
-    } else if (await FriendManagement.areFriends(uidSender, uidReceiver) ||
-        await FriendManagement.friendRequestExists(uidSender, uidReceiver)) {
-      message =
-          "You are already friends with that person or a friend request has already been sent.";
-      success = false;
-    } else {
-      await FriendManagement.performSocialAction(
-              uidSender, uidReceiver, SocialActionType.sendFriendRequest)
-          .then((value) async {
-        message = "Friend request sent";
-        success = true;
-        final FriendsProvider friendsProvider =
-        Provider.of<FriendsProvider>(context, listen: false);
-        await friendsProvider.update(SocialActionType.sendFriendRequest);
-      }).catchError((error) {
-        message = "There was an error. Try again.";
-        success = false;
-      });
-    }
+    });
+
     setState(() {
       _loadingResults[index] = false;
     });
@@ -75,7 +66,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       message = "Friend request withdrawn";
       success = true;
       final FriendsProvider friendsProvider =
-      Provider.of<FriendsProvider>(context, listen: false);
+          Provider.of<FriendsProvider>(context, listen: false);
       await friendsProvider.update(SocialActionType.declineFriendRequest);
     }).catchError((error) {
       message = "There was an error. Try again.";
@@ -86,6 +77,24 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       _loadingRequests[index] = false;
     });
     _showSnackBar(message, success);
+  }
+
+  bool _isFriendOrHasFriendRequest(FriendsModel friend) {
+    final FriendsProvider friendsProvider =
+        Provider.of<FriendsProvider>(context, listen: false);
+    final friends = friendsProvider.friends;
+    final friendRequests = friendsProvider.friendRequests;
+    final sentFriendRequests = friendsProvider.sentFriendRequests;
+    final areFriends = friends.firstWhere(
+        (itemToCheck) => itemToCheck.uid == friend.uid,
+        orElse: () => null);
+    final hasRequest = friendRequests.firstWhere(
+        (itemToCheck) => itemToCheck.uid == friend.uid,
+        orElse: () => null);
+    final sentRequest = sentFriendRequests.firstWhere(
+        (itemToCheck) => itemToCheck.uid == friend.uid,
+        orElse: () => null);
+    return (areFriends != null || hasRequest != null || sentRequest != null);
   }
 
   Widget sendFriendRequestButton(
@@ -179,8 +188,11 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                           friend,
                           _loadingResults[index]
                               ? CircularProgressIndicator()
-                              : sendFriendRequestButton(
-                                  user.uid, friend.uid, index),
+                              : (user.uid == friend.uid ||
+                                      _isFriendOrHasFriendRequest(friend))
+                                  ? null
+                                  : sendFriendRequestButton(
+                                      user.uid, friend.uid, index),
                           10);
                     },
                     loader: LoadingHeart(),
