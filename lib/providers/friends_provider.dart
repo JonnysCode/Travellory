@@ -37,6 +37,7 @@ class FriendsProvider extends ChangeNotifier{
     _user = user;
     unawaited(_fetchFriendRequests());
     unawaited(_fetchFriends());
+    unawaited(_fetchSentFriendRequests());
   }
 
   void update(SocialActionType type) async {
@@ -44,6 +45,7 @@ class FriendsProvider extends ChangeNotifier{
       case SocialActionType.sendFriendRequest:
       case SocialActionType.declineFriendRequest:
         await _fetchFriendRequests();
+        await _fetchSentFriendRequests();
         break;
       case SocialActionType.removeFriend:
         await _fetchFriends();
