@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/day_model.dart';
 import 'package:travellory/models/schedule_entry.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/single_trip_provider.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/utils/date_converter.dart';
 
 

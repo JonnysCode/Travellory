@@ -8,8 +8,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/providers/single_trip_provider.dart';
-import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 
 String _mapStyle;
