@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/services/friends/friend_management.dart';
@@ -183,48 +182,46 @@ class _FriendListPageState extends State<FriendListPage> {
             ),
           ),
         ),
-        Padding(
-          key: Key('friend-requests-list'),
-          padding: EdgeInsets.only(
-              left: 15,
-              right: 20,
-              bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Column(children: <Widget>[
-            Container(
-              height: 0.25 * MediaQuery.of(context).size.height,
-              child: Scrollbar(
-                  child: Consumer<FriendsProvider>(
-                builder: (_, friendsProvider, __) => friendsProvider.isFetching
-                    ? LoadingHeart()
-                    : friendsProvider.friendRequests.isEmpty
-                        ? Text('No pending friend requests')
-                        : ListView.separated(
-                            padding: EdgeInsets.only(
-                              bottom: 50,
-                            ),
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            separatorBuilder: (context, index) =>
+        Expanded(
+          flex: 3,
+          child: Padding(
+            key: Key('friend-requests-list'),
+            padding: EdgeInsets.only(
+                left: 15,
+                right: 20,
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Scrollbar(
+                    child: Consumer<FriendsProvider>(
+                      builder: (_, friendsProvider, __) => friendsProvider.isFetching
+                          ? LoadingHeart()
+                          : friendsProvider.friendRequests.isEmpty
+                          ? Text('No pending friend requests')
+                          : ListView.separated(
+                              padding: EdgeInsets.only(
+                                bottom: 50,
+                              ),
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) =>
                                 const SizedBox(height: 12),
-                            itemCount: friendsProvider.friendRequests.length,
-                            itemBuilder: (context, index) {
-                              final friend =
-                                  friendsProvider.friendRequests[index];
-                              _loadingRequests.add(false);
-                              return friendsCard(
-                                context,
-                                friend,
-                                _loadingRequests[index]
-                                    ? CircularProgressIndicator()
-                                    : friendRequestButtons(
-                                        friend.uid, user.uid, index),
-                                10,
-                              );
-                            },
+                              itemCount: friendsProvider.friendRequests.length,
+                              itemBuilder: (context, index) {
+                                final friend = friendsProvider.friendRequests[index];
+                                _loadingRequests.add(false);
+                                return friendsCard(
+                                  context,
+                                  friend,
+                                  _loadingRequests[index]
+                                      ? CircularProgressIndicator()
+                                      : friendRequestButtons(
+                                          friend.uid, user.uid, index),
+                                  10,
+                                );
+                              },
                           ),
-              )),
-            ),
-          ]),
+                    )
+                ),
+          ),
         ),
         SizedBox(height: 20),
         Padding(
@@ -244,48 +241,48 @@ class _FriendListPageState extends State<FriendListPage> {
             ),
           ),
         ),
-        Padding(
-          key: Key('friends-list'),
-          padding: EdgeInsets.only(
-              left: 15,
-              right: 20,
-              bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Column(children: <Widget>[
-            Container(
-              height: 0.38 * MediaQuery.of(context).size.height,
-              child: Scrollbar(
-                  child: Consumer<FriendsProvider>(
-                builder: (_, friendsProvider, __) => friendsProvider.isFetching
-                    ? LoadingHeart()
-                    : friendsProvider.friends.isEmpty
-                        ? Text('You have no friends :(')
-                        : ListView.separated(
-                            padding: EdgeInsets.only(
-                              bottom: 50,
-                            ),
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 12),
-                            itemCount: friendsProvider.friends.length,
-                            itemBuilder: (context, index) {
-                              final friend = friendsProvider.friends[index];
-                              _loadingFriends.add(false);
-                              return friendsCard(
-                                context,
-                                friend,
-                                _loadingFriends[index]
-                                    ? CircularProgressIndicator()
-                                    : removeFriendButton(
-                                        friend.uid, user.uid, index),
-                                10,
-                              );
-                            },
+        Expanded(
+          flex: 7,
+          child: Padding(
+            key: Key('friends-list'),
+            padding: EdgeInsets.only(
+                left: 15,
+                right: 20,
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Scrollbar(
+                child: Consumer<FriendsProvider>(
+                  builder: (_, friendsProvider, __) => friendsProvider.isFetching
+                      ? LoadingHeart()
+                      : friendsProvider.friends.isEmpty
+                      ? Text('You have no friends :(')
+                      : ListView.separated(
+                          padding: EdgeInsets.only(
+                            bottom: 50,
                           ),
-              )),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) =>
+                            const SizedBox(height: 12),
+                          itemCount: friendsProvider.friends.length,
+                          itemBuilder: (context, index) {
+                            final friend = friendsProvider.friends[index];
+                            _loadingFriends.add(false);
+                            return friendsCard(
+                              context,
+                              friend,
+                              _loadingFriends[index]
+                                  ? CircularProgressIndicator()
+                                  : removeFriendButton(
+                                  friend.uid, user.uid, index),
+                              10,
+                            );
+                          },
+                      ),
+                )
             ),
-          ]),
+          ),
         ),
+        SizedBox(height: 50),
       ],
     );
   }

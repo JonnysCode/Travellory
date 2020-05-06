@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/models/user_model.dart';
+import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/services/friends/friend_management.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
@@ -65,6 +66,20 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     );
   }
 
+  Widget removeFriendRequestButton(String uidSender, String uidReceiver, int index) {
+    return Wrap(
+      children: <Widget>[
+        socialButton(
+            Key('remove_button'),
+            Icons.clear,
+            Colors.red,
+            // TODO(hessgia1): call function to remove friend-request
+            () => {},
+        ),
+      ],
+    );
+  }
+
   Widget _showSnackBar(String message, bool success) {
     return SnackBar(
       content: Flushbar(
@@ -117,49 +132,124 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                   ),
                 ])),
             Expanded(
-                child: Material(
-              child: SearchBar(
-                  key: Key('search_bar'),
-                  onSearch: search,
-                  onItemFound: (FriendsModel friend, int index) {
-                    _loading.add(false);
-                    return Padding(
-                        padding: EdgeInsets.only(
-                          bottom: 10,
+              flex: 7,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 15,
+                    right: 20,
+                  ),
+                  child: Material(
+                    child: SearchBar(
+                        key: Key('search_bar'),
+                        onSearch: search,
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 10,
+                        onItemFound: (FriendsModel friend, int index) {
+                          _loading.add(false);
+                          return friendsCard(
+                              context,
+                              friend,
+                              _loading[index]
+                                  ? CircularProgressIndicator()
+                                  : sendFriendRequestButton(
+                                  user.uid, friend.uid, index),
+                              10
+                          );
+                        },
+                        loader: LoadingHeart(),
+                        hintText: 'Add friends',
+                        hintStyle: TextStyle(
+                          color: Colors.black45,
                         ),
-                        child: friendsCard(
-                            context,
-                            friend,
-                            _loading[index]
-                                ? CircularProgressIndicator()
-                                : sendFriendRequestButton(
-                                    user.uid, friend.uid, index),
-                            10));
-                  },
-                  loader: LoadingHeart(),
-                  searchBarPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  headerPadding: EdgeInsets.symmetric(horizontal: 50),
-                  listPadding: EdgeInsets.symmetric(horizontal: 30),
-                  hintText: 'Add friends',
-                  hintStyle: TextStyle(
-                    color: Colors.black45,
+                        icon: Icon(
+                          FontAwesomeIcons.search,
+                          size: 24.0,
+                        ),
+                        iconActiveColor: Colors.black54,
+                        searchBarStyle: SearchBarStyle(
+                          backgroundColor: Colors.black12,
+                          padding: EdgeInsets.fromLTRB(15, 5, 5, 5),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        cancellationWidget: Text(
+                          'Cancel',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                    ),
                   ),
-                  icon: Icon(
-                    FontAwesomeIcons.search,
-                    size: 24.0,
-                  ),
-                  iconActiveColor: Colors.black54,
-                  searchBarStyle: SearchBarStyle(
-                    backgroundColor: Colors.black12,
-                    padding: EdgeInsets.fromLTRB(15, 5, 5, 5),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  cancellationWidget: Text(
-                    'Cancel',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
-            )),
+                ),
+            ),
+            SizedBox(height: 20),
+            Divider(
+              thickness: 1,
+              indent: 25,
+              endIndent: 25,
+              color: Colors.grey,
+            ),
+            Padding(
+              key: Key('sent_friend_requests'),
+              padding: EdgeInsets.only(
+                  top: 10,
+                  left: 30,
+                  right: 90,
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Container(
+                height: 30,
+                width: MediaQuery.of(context).size.width,
+                child: FashionFetishText(
+                  text: 'Sent friend requests',
+                  size: 22,
+                  fontWeight: FashionFontWeight.heavy,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Padding(
+                key: Key('sent_friend_requests_list'),
+                padding: EdgeInsets.only(
+                    left: 15,
+                    right: 20,
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Scrollbar(
+                    child: Consumer<FriendsProvider>(
+                      builder: (_, friendsProvider, __) => friendsProvider.isFetching
+                          ? LoadingHeart()
+                          // TODO(hessgia1): replace friends with friend-request-list
+                          : friendsProvider.friends.isEmpty
+                          ? Text('You have sent no friend requests :(')
+                          : ListView.separated(
+                              padding: EdgeInsets.only(
+                                bottom: 50,
+                              ),
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) =>
+                                const SizedBox(height: 12),
+                              // TODO(hessgia1): replace friends with friend-request-list
+                              itemCount: friendsProvider.friends.length,
+                              itemBuilder: (context, index) {
+                                // TODO(hessgia1): replace friends with friend-request-list
+                                final friend = friendsProvider.friends[index];
+                                _loading.add(false);
+                                return friendsCard(
+                                  context,
+                                  friend,
+                                  _loading[index]
+                                      ? CircularProgressIndicator()
+                                      : removeFriendRequestButton(
+                                      friend.uid, user.uid, index),
+                                  10
+                                );
+                              },
+                          ),
+                    )
+                ),
+              ),
+            ),
+            SizedBox(height: 50),
           ],
-        ));
+        )
+    );
   }
 }
