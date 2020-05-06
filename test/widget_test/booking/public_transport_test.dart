@@ -4,8 +4,8 @@ import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/single_trip_provider.dart';
-import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/bookings/add_public_transport.dart';
 import 'package:travellory/services/database/edit.dart';
 

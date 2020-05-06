@@ -12,8 +12,8 @@ class PublicTransportSchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PublicTransportModel publicTransport = scheduleEntry.booking;
-    DayType dayType = scheduleEntry.dayType;
+    final PublicTransportModel publicTransport = scheduleEntry.booking;
+    final DayType dayType = scheduleEntry.dayType;
 
     return Row(
       key: Key('public_transport'),

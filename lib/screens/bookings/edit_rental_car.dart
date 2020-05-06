@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/single_trip_provider.dart';
-import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/bookings/add_rental_car.dart';
 import 'package:travellory/services/database/edit.dart';
 

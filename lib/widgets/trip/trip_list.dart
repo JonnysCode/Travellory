@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/trip_card.dart';

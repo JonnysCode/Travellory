@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/models/day_model.dart';
 import 'package:travellory/models/schedule_entry.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/single_trip_provider.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/utils/date_converter.dart';
 
 
@@ -17,7 +17,7 @@ class ScheduleProvider extends ChangeNotifier{
   void _initDays(TripModel tripModel) {
     days = <Day>[];
     var dateTime = getDateTimeFrom(tripModel.startDate);
-    var endDateTime = getDateTimeFrom(tripModel.endDate);
+    final endDateTime = getDateTimeFrom(tripModel.endDate);
 
     do {
       days.add(Day(
@@ -28,10 +28,10 @@ class ScheduleProvider extends ChangeNotifier{
   }
 
   void _addBookingToDays(trip){
-    for(var day in days){
+    for(final day in days){
       trip.flights.forEach((flight) {
-        var startDate = getDateTimeFrom(flight.departureDate);
-        var endDate = getDateTimeFrom(flight.arrivalDate) ?? startDate;
+        final startDate = getDateTimeFrom(flight.departureDate);
+        final endDate = getDateTimeFrom(flight.arrivalDate) ?? startDate;
         if(day.isInBetween(startDate, endDate)){
           day.entries.add(ScheduleEntry(
             booking: flight,
@@ -40,8 +40,8 @@ class ScheduleProvider extends ChangeNotifier{
         }
       });
       trip.rentalCars.forEach((rentalCar) {
-        var startDate = getDateTimeFrom(rentalCar.pickupDate);
-        var endDate = getDateTimeFrom(rentalCar.returnDate) ?? startDate;
+        final startDate = getDateTimeFrom(rentalCar.pickupDate);
+        final endDate = getDateTimeFrom(rentalCar.returnDate) ?? startDate;
         if(day.isInBetween(startDate, endDate)) {
           day.entries.add(ScheduleEntry(
               booking: rentalCar,
@@ -50,8 +50,8 @@ class ScheduleProvider extends ChangeNotifier{
         }
       });
       trip.publicTransports.forEach((publicTransport) {
-        var startDate = getDateTimeFrom(publicTransport.departureDate);
-        var endDate = getDateTimeFrom(publicTransport.arrivalDate) ?? startDate;
+        final startDate = getDateTimeFrom(publicTransport.departureDate);
+        final endDate = getDateTimeFrom(publicTransport.arrivalDate) ?? startDate;
         if(day.isInBetween(startDate, endDate)) {
           day.entries.add(ScheduleEntry(
               booking: publicTransport,
@@ -60,8 +60,8 @@ class ScheduleProvider extends ChangeNotifier{
         }
       });
       trip.accommodations.forEach((accommodation){
-        var startDate = getDateTimeFrom(accommodation.checkinDate);
-        var endDate = getDateTimeFrom(accommodation.checkoutDate) ?? startDate;
+        final startDate = getDateTimeFrom(accommodation.checkinDate);
+        final endDate = getDateTimeFrom(accommodation.checkoutDate) ?? startDate;
         if(day.isInBetween(startDate, endDate)) {
           day.entries.add(ScheduleEntry(
               booking: accommodation,
@@ -70,8 +70,8 @@ class ScheduleProvider extends ChangeNotifier{
         }
       });
       trip.activities.forEach((activity){
-        var startDate = getDateTimeFrom(activity.startDate);
-        var endDate = getDateTimeFrom(activity.endDate) ?? startDate;
+        final startDate = getDateTimeFrom(activity.startDate);
+        final endDate = getDateTimeFrom(activity.endDate) ?? startDate;
         if(day.isInBetween(startDate, endDate)) {
           day.entries.add(ScheduleEntry(
               booking: activity,
