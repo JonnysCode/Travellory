@@ -41,7 +41,7 @@ class DatabaseGetter {
         CloudFunctions.instance.getHttpsCallable(functionName: function);
     List<dynamic> entries = [];
     try {
-      log.d('JSON data for function call ${function}: ${_getMap(uid, function)}');
+      log.d('JSON data for function call $function: ${_getMap(uid, function)}');
       final HttpsCallableResult result =
           await callable.call(_getMap(uid, function));
       if (result.data.contains(_emptyResult)) {
