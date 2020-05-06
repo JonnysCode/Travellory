@@ -182,8 +182,8 @@ class _FriendListPageState extends State<FriendListPage> {
             ),
           ),
         ),
-        Expanded(
-          flex: 3,
+        Container(
+          constraints: BoxConstraints(minHeight: 35, maxHeight: 150),
           child: Padding(
             key: Key('friend-requests-list'),
             padding: EdgeInsets.only(
@@ -195,10 +195,15 @@ class _FriendListPageState extends State<FriendListPage> {
                       builder: (_, friendsProvider, __) => friendsProvider.isFetching
                           ? LoadingHeart()
                           : friendsProvider.friendRequests.isEmpty
-                          ? Text('No pending friend requests')
+                          ? Padding(
+                              padding: EdgeInsets.only(
+                                top: 5,
+                              ),
+                              child: Text('No pending friend requests')
+                            )
                           : ListView.separated(
                               padding: EdgeInsets.only(
-                                bottom: 50,
+                                bottom: 30,
                               ),
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
@@ -242,7 +247,6 @@ class _FriendListPageState extends State<FriendListPage> {
           ),
         ),
         Expanded(
-          flex: 7,
           child: Padding(
             key: Key('friends-list'),
             padding: EdgeInsets.only(
@@ -257,7 +261,7 @@ class _FriendListPageState extends State<FriendListPage> {
                       ? Text('You have no friends :(')
                       : ListView.separated(
                           padding: EdgeInsets.only(
-                            bottom: 50,
+                            bottom: 30,
                           ),
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
