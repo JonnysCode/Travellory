@@ -12,7 +12,7 @@ class ActivitySchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ActivityModel activity = scheduleEntry.booking;
+    final ActivityModel activity = scheduleEntry.booking;
 
     return Row(
       key: Key('activity'),
