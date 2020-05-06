@@ -1,5 +1,4 @@
 import 'package:pedantic/pedantic.dart';
-import 'package:collection/collection.dart';
 
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
