@@ -8,8 +8,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/providers/single_trip_provider.dart';
-import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 
 String _mapStyle;
@@ -94,8 +94,7 @@ class MapSampleState extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(children: <Widget>[
+    return Stack(children: <Widget>[
         GoogleMap(
           key: Key('google_map_widget'),
           mapType: MapType.normal,
@@ -116,34 +115,46 @@ class MapSampleState extends State<MapSample> {
           markers: _markers.values.toSet(),
           polygons: _boundaries.toSet(),
         ),
-        Positioned(
-          child: FabCircularMenu(
-              key: Key('FabCircularMenu'),
-              ringColor: Theme.of(context).primaryColor,
-              ringWidth: 50.0,
-              ringDiameter: 200.0,
-              fabMargin: EdgeInsets.only(right: 50.0, top: 20.0),
-              alignment: Alignment.topRight,
-              children: <Widget>[
-                IconButton(
-                    icon: Icon(FontAwesomeIcons.home),
-                    onPressed: () {
-                    }),
-                IconButton(
-                    icon: Icon(FontAwesomeIcons.plane),
-                    onPressed: () {
-                    }),
-                IconButton(
-                    icon: Icon(FontAwesomeIcons.theaterMasks),
-                    onPressed: () {
-                    }),
-                IconButton(
-                    icon: Icon(FontAwesomeIcons.bed),
-                    onPressed: () {
-                    }),
-              ])
+        FabCircularMenu(
+            key: Key('FabCircularMenu'),
+            ringColor: Colors.black38,
+            ringWidth: 50.0,
+            ringDiameter: 220.0,
+            fabColor: Theme.of(context).accentColor,
+            fabOpenIcon: Icon(
+              FontAwesomeIcons.bars,
+              color: Colors.white,
+            ),
+            fabCloseIcon: Icon(
+              FontAwesomeIcons.times,
+              color: Colors.white,
+            ),
+            fabMargin: EdgeInsets.only(right: 20.0, bottom: 70),
+            alignment: Alignment.bottomRight,
+            children: <Widget>[
+              IconButton(
+                  icon: Icon(FontAwesomeIcons.home),
+                  color: Colors.white,
+                  onPressed: () {
+                  }),
+              IconButton(
+                  icon: Icon(FontAwesomeIcons.plane),
+                  color: Colors.white,
+                  onPressed: () {
+                  }),
+              IconButton(
+                  icon: Icon(FontAwesomeIcons.theaterMasks),
+                  color: Colors.white,
+                  onPressed: () {
+                  }),
+              IconButton(
+                  icon: Icon(FontAwesomeIcons.bed),
+                  color: Colors.white,
+                  onPressed: () {
+                  }),
+            ]
         ),
-      ]),
+      ]
     );
   }
 }
