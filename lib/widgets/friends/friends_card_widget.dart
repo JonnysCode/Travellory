@@ -17,8 +17,8 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
           left: 20,
           right: 0,
           child: GestureDetector(
-//            TODO (fluetfab): link to friends profile
-//            onTap: () => _openFriendsProfile(),
+            // TODO (fluetfab): link to friends profile
+            //  onTap: () => _openFriendsProfile(),
             child: Container(
               height: cardSize,
               decoration: BoxDecoration(
@@ -28,7 +28,6 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
               padding: const EdgeInsets.only(
                   left: 65.0, top: 10.0, bottom: 14.0, right: 14.0),
               child: Row(
-//                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Expanded(
                     child: Column(

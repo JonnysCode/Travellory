@@ -71,7 +71,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       children: <Widget>[
         socialButton(
             Key('remove_button'),
-            Icons.delete,
+            Icons.clear,
             Colors.red,
             // TODO(hessgia1): call function to remove friend-request
             () => {},
@@ -176,6 +176,12 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                   )),
             )),
             SizedBox(height: 20),
+            Divider(
+              thickness: 1,
+              indent: 25,
+              endIndent: 25,
+              color: Colors.grey,
+            ),
             Padding(
               key: Key('sent_friend_requests'),
               padding: EdgeInsets.only(
