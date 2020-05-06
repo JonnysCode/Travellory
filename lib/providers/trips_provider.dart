@@ -86,7 +86,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
   Future<void> _fetchTrips() async {
     isFetchingTrips = true;
     trips = <SingleTripProvider>[];
-    List<TripModel> tripModels = await _databaseGetter.getEntriesFromDatabase(
+    final List<TripModel> tripModels = await _databaseGetter.getEntriesFromDatabase(
         user.uid, DatabaseGetter.getTrips);
     trips = tripModels.map((tripModel) =>
         SingleTripProvider(tripModel, this)).toList();

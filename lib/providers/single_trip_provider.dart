@@ -139,23 +139,4 @@ class SingleTripProvider {
     isFetchingPublicTransports = false;
     notifier.notify();
   }
-
-  @override
-  bool operator ==(o) {
-    Function equals = const DeepCollectionEquality().equals;
-    return o is SingleTripProvider
-        && o.tripModel == tripModel
-        && o.isFetching == isFetching
-        && o.isFetchingFlights == isFetchingFlights
-        && o.isFetchingActivities == isFetchingActivities
-        && o.isFetchingAccommodations == isFetchingAccommodations
-        && o.isFetchingRentalCars == isFetchingRentalCars
-        && o.isFetchingPublicTransports == isFetchingPublicTransports
-        && equals(o.flights, flights)
-        && equals(o.rentalCars, rentalCars)
-        && equals(o.publicTransports, publicTransports)
-        && equals(o.activities, activities)
-        && equals(o.accommodations, accommodations);
-  }
-
 }
