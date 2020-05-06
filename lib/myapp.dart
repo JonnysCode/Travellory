@@ -19,6 +19,7 @@ import 'package:travellory/screens/bookings/edit_rental_car.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
 import 'package:travellory/screens/bookings/view_activity.dart';
 import 'package:travellory/screens/bookings/view_flight.dart';
+import 'package:travellory/screens/bookings/view_achievements.dart';
 import 'package:travellory/screens/bookings/view_public_transport.dart';
 import 'package:travellory/screens/bookings/view_rental_car.dart';
 import 'package:travellory/screens/home/home.dart';
@@ -30,6 +31,8 @@ import 'package:travellory/services/authentication/auth.dart';
 import 'package:travellory/shared/loading_heart.dart';
 
 class MyApp extends StatelessWidget {
+  MyApp({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AuthProvider(
@@ -72,6 +75,7 @@ class MyApp extends StatelessWidget {
             '/view/rentalcar': (context) => RentalCarView(),
             '/view/publictransport': (context) => PublicTransportView(),
             '/view/activity': (context) => ActivityView(),
+            '/view/achievements': (context) => AchievementsView(),
             '/edit/rentalcar': (context) => EditRentalCar(),
             '/edit/flight': (context) => EditFlight(),
             '/edit/activity': (context) => EditActivity(),
