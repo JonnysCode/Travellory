@@ -11,6 +11,7 @@ import 'package:travellory/services/authentication/auth.dart';
 import 'package:travellory/services/storage.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/logger.dart';
 
@@ -109,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage>
                         child: UserInformation(user: user)),
                     SizedBox(height: 10),
                     Padding(
-                      key: Key('change-pw'),
+                      key: Key('achievements'),
                       padding: EdgeInsets.only(
                           top: 10,
                           left: 90,
@@ -119,32 +120,12 @@ class _ProfilePageState extends State<ProfilePage>
                         height: 40,
                         width: MediaQuery.of(context).size.width,
                         child: filledButton(
-                            "Change password",
+                            "Achievements",
                             Colors.white,
                             Theme.of(context).primaryColor,
                             Theme.of(context).primaryColor,
                             Colors.white, () {
-                          Navigator.pushNamed(context, '/password');
-                        }),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      key: Key('logout'),
-                      padding: EdgeInsets.only(
-                          left: 90,
-                          right: 90,
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: Container(
-                        height: 40,
-                        width: MediaQuery.of(context).size.width,
-                        child: filledButton(
-                            "Logout",
-                            Colors.white,
-                            Theme.of(context).primaryColor,
-                            Theme.of(context).primaryColor,
-                            Colors.white, () async {
-                          await _signOut();
+                          Navigator.pushNamed(context, '/view/achievements');
                         }),
                       ),
                     ),
@@ -160,7 +141,25 @@ class _ProfilePageState extends State<ProfilePage>
               image: AssetImage('assets/images/logo/travellory_icon.png'),
               height: 80,
             ),
+          ),
+          Positioned(
+            top: 50,
+            right: 35,
+            child: OptionButton(
+              optionItems: <OptionItem>[
+                OptionItem(
+                  description: 'Change password',
+                  icon: FontAwesomeIcons.userEdit,
+                  onTab: () => print("test"),
+                ),
+                OptionItem(
+                    description: 'Logout',
+                    icon: FontAwesomeIcons.signOutAlt,
+                    onTab: () async => {await _signOut()}),
+              ],
+            ),
           )
+
         ],
       ),
     );
