@@ -43,7 +43,7 @@ class ScheduleEntryCard extends StatelessWidget {
 }
 
 Widget getScheduleAccordingTo(ScheduleEntry scheduleEntry) {
-  Model model = scheduleEntry.booking;
+  final Model model = scheduleEntry.booking;
   Widget widget;
   if (model is FlightModel) {
     widget = FlightSchedule(scheduleEntry);
@@ -62,7 +62,7 @@ Widget getScheduleAccordingTo(ScheduleEntry scheduleEntry) {
 }
 
 Color getColorAccordingTo(ScheduleEntry scheduleEntry) {
-  Model model = scheduleEntry.booking;
+  final Model model = scheduleEntry.booking;
   Color color;
   if (model is FlightModel) {
     color = Colors.blue[100];

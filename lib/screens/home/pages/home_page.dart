@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/single_trip_provider.dart';
-import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
 import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
@@ -16,7 +16,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
     final SingleTripProvider trip = tripsProvider.activeTrip;
-    final TripModel tripModel = trip != null ? trip.tripModel : null;
+    TripModel tripModel;
+    if (trip != null) tripModel = trip.tripModel;
 
     ModifyModelArguments passPublicTransportModel() {
       final PublicTransportModel publicTransportModel = PublicTransportModel();
@@ -34,8 +35,12 @@ class HomePage extends StatelessWidget {
       return ModifyModelArguments(model: accommodationModel, isNewModel: true);
     }
 
-    List<Dial> _dials = <Dial>[
-      Dial(icon: FontAwesomeIcons.envelope, description: 'Manage forwarded bookings', onTab: () {}),
+    final List<Dial> _dials = <Dial>[
+      Dial(
+          icon: FontAwesomeIcons.envelope,
+          description: 'Manage forwarded bookings',
+          onTab: () {}
+          ),
       Dial(
           icon: FontAwesomeIcons.theaterMasks,
           description: 'Add Activity',
