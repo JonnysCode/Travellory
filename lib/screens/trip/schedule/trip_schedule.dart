@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/schedule_provider.dart';
-import 'package:travellory/providers/single_trip_provider.dart';
-import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/providers/trips/schedule_provider.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/screens/trip/schedule/day_schedule.dart';
 
 class Schedule extends StatelessWidget {
