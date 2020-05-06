@@ -27,6 +27,13 @@ class FriendManagement {
     return _generateFriendRequestListFromResult(result);
   }
 
+  static Future<List<FriendsModel>> getSentFriendRequests(String uid) async {
+    final result =
+    await _callHttpsCallable(uid, null, 'friends-getSentFriendRequests');
+    return _generateFriendsListFromResult(result);
+  }
+
+
   static Future<FriendsModel> getPublicUserInformation(String uid) async {
     final result =
         await _callHttpsCallable(uid, null, 'user-getPublicUserInformation');
