@@ -11,16 +11,16 @@ class TripHeader extends StatefulWidget {
   final TripModel tripModel;
 
   @override
-  _TripHeaderState createState() => _TripHeaderState(tripModel);
+  _TripHeaderState createState() => _TripHeaderState();
 }
 
 class _TripHeaderState extends State<TripHeader> {
-  _TripHeaderState(this._tripModel);
-
-  final TripModel _tripModel;
+  TripModel _tripModel;
 
   @override
   Widget build(BuildContext context) {
+    _tripModel = widget.tripModel;
+
     return Container(
       height: 190,
       width: MediaQuery.of(context).size.width,

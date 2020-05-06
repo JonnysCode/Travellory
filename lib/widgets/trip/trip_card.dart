@@ -19,7 +19,7 @@ class TripCard extends StatefulWidget {
   final TripModel tripModel;
 
   @override
-  _TripCardState createState() => _TripCardState(tripModel);
+  _TripCardState createState() => _TripCardState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties){
@@ -29,12 +29,6 @@ class TripCard extends StatefulWidget {
 }
 
 class _TripCardState extends State<TripCard> {
-  _TripCardState(TripModel tripModel){
-    _tripModel = tripModel;
-    _deleteAlertText = 'You are about to delete the '
-        'trip \" ${tripModel.name} \" and all its bookings. '
-        'Are you sure you want to continue? This action cannot be undone!';
-  }
   TripModel _tripModel;
   String _deleteAlertText;
 
@@ -46,6 +40,11 @@ class _TripCardState extends State<TripCard> {
 
   @override
   Widget build(BuildContext context) {
+    _tripModel = widget.tripModel;
+    _deleteAlertText = 'You are about to delete the '
+        'trip \" ${_tripModel.name} \" and all its bookings. '
+        'Are you sure you want to continue? This action cannot be undone!';
+
     return Container(
       height: 100,
       child: Stack(
