@@ -20,7 +20,8 @@ void main() {
     FriendsProvider friendsProvider = MockFriendsProvider();
 
     when(friendsProvider.user).thenReturn(user);
-    when(friendsProvider.isFetching).thenReturn(false);
+    when(friendsProvider.isFetchingFriends).thenReturn(false);
+    when(friendsProvider.isFetchingFriendRequests).thenReturn(false);
     when(friendsProvider.friends).thenReturn([friend]);
     when(friendsProvider.friendRequests).thenReturn([friend]);
 
