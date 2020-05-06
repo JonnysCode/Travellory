@@ -63,7 +63,8 @@ class ActivitySchedule extends StatelessWidget {
             ],
           ),
         ),
-        Center(
+        if (activity.startTime.isNotEmpty)
+          Center(
           child: SizedBox(
             width: 75,
             child: Column(
@@ -76,12 +77,13 @@ class ActivitySchedule extends StatelessWidget {
                     color: Colors.black38,
                   ),
                 ),
-                Text(
-                  'to',
-                  style: TextStyle(
-                    color: Colors.black38,
+                if (activity.endTime.isNotEmpty)
+                  Text(
+                    'to',
+                    style: TextStyle(
+                      color: Colors.black38,
+                    ),
                   ),
-                ),
                 if (activity.endTime.isNotEmpty)
                   Text(
                     '${activity.endTime}',
