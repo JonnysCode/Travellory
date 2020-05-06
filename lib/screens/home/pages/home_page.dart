@@ -16,7 +16,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
     final SingleTripProvider trip = tripsProvider.activeTrip;
-    final TripModel tripModel = trip != null ? trip.tripModel : null;
+    TripModel tripModel;
+    if (trip != null) tripModel = trip.tripModel;
 
     ModifyModelArguments passPublicTransportModel() {
       final PublicTransportModel publicTransportModel = PublicTransportModel();
@@ -34,8 +35,12 @@ class HomePage extends StatelessWidget {
       return ModifyModelArguments(model: accommodationModel, isNewModel: true);
     }
 
-    List<Dial> _dials = <Dial>[
-      Dial(icon: FontAwesomeIcons.envelope, description: 'Manage forwarded bookings', onTab: () {}),
+    final List<Dial> _dials = <Dial>[
+      Dial(
+          icon: FontAwesomeIcons.envelope,
+          description: 'Manage forwarded bookings',
+          onTab: () {}
+          ),
       Dial(
           icon: FontAwesomeIcons.theaterMasks,
           description: 'Add Activity',

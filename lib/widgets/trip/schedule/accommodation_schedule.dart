@@ -12,8 +12,8 @@ class AccommodationSchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AccommodationModel accommodation = scheduleEntry.booking;
-    DayType dayType = scheduleEntry.dayType;
+    final AccommodationModel accommodation = scheduleEntry.booking;
+    final DayType dayType = scheduleEntry.dayType;
 
     return Row(
       key: Key('accommodation'),

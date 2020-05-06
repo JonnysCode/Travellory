@@ -84,7 +84,7 @@ class TripScreen extends StatelessWidget {
             Expanded(
               child: Consumer<TripsProvider>(
                 builder: (_, tripsProvider, __) {
-                  var trip = tripsProvider.selectedTrip;
+                  final trip = tripsProvider.selectedTrip;
                   return ListView(
                   children: <Widget>[
                     Padding(

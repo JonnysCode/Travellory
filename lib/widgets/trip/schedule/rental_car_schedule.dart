@@ -11,8 +11,8 @@ class RentalCarSchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RentalCarModel rentalCar = scheduleEntry.booking;
-    DayType dayType = scheduleEntry.dayType;
+    final RentalCarModel rentalCar = scheduleEntry.booking;
+    final DayType dayType = scheduleEntry.dayType;
 
     Widget firstDay() => 
         Expanded(
