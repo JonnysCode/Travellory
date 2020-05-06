@@ -20,7 +20,8 @@ class SearchFriendsPage extends StatefulWidget {
 }
 
 class _SearchFriendsPageState extends State<SearchFriendsPage> {
-  final _loading = List();
+  final _loadingResults = List();
+  final _loadingRequests = List();
 
   void _sendFriendRequest(
       String uidSender, String uidReceiver, int index) async {
@@ -28,32 +29,72 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     bool success;
 
     setState(() {
-      _loading[index] = true;
+      _loadingResults[index] = true;
     });
 
-    if (uidSender == uidReceiver) {
-      message = "You can't send a friend request to yourself";
+    await FriendManagement.performSocialAction(
+            uidSender, uidReceiver, SocialActionType.sendFriendRequest)
+        .then((value) async {
+      message = "Friend request sent";
+      success = true;
+      final FriendsProvider friendsProvider =
+          Provider.of<FriendsProvider>(context, listen: false);
+      await friendsProvider.update(SocialActionType.sendFriendRequest);
+    }).catchError((error) {
+      message = "There was an error. Try again.";
       success = false;
-    } else if (await FriendManagement.areFriends(uidSender, uidReceiver) ||
-        await FriendManagement.friendRequestExists(uidSender, uidReceiver)) {
-      message =
-          "You are already friends with that person or a friend request has already been sent.";
-      success = false;
-    } else {
-      await FriendManagement.performSocialAction(
-              uidSender, uidReceiver, SocialActionType.sendFriendRequest)
-          .then((value) async {
-        message = "Friend request sent";
-        success = true;
-      }).catchError((error) {
-        message = "There was an error. Try again.";
-        success = false;
-      });
-    }
+    });
+
     setState(() {
-      _loading[index] = false;
+      _loadingResults[index] = false;
     });
     _showSnackBar(message, success);
+  }
+
+  void _withdrawFriendRequest(
+      String uidSender, String uidReceiver, int index) async {
+    String message;
+    bool success;
+
+    setState(() {
+      _loadingRequests[index] = true;
+    });
+
+    await FriendManagement.performSocialAction(
+            uidReceiver, uidSender, SocialActionType.declineFriendRequest)
+        .then((value) async {
+      message = "Friend request withdrawn";
+      success = true;
+      final FriendsProvider friendsProvider =
+          Provider.of<FriendsProvider>(context, listen: false);
+      await friendsProvider.update(SocialActionType.declineFriendRequest);
+    }).catchError((error) {
+      message = "There was an error. Try again.";
+      success = false;
+    });
+
+    setState(() {
+      _loadingRequests[index] = false;
+    });
+    _showSnackBar(message, success);
+  }
+
+  bool _isFriendOrHasFriendRequest(FriendsModel friend) {
+    final FriendsProvider friendsProvider =
+        Provider.of<FriendsProvider>(context, listen: false);
+    final friends = friendsProvider.friends;
+    final friendRequests = friendsProvider.friendRequests;
+    final sentFriendRequests = friendsProvider.sentFriendRequests;
+    final areFriends = friends.firstWhere(
+        (itemToCheck) => itemToCheck.uid == friend.uid,
+        orElse: () => null);
+    final hasRequest = friendRequests.firstWhere(
+        (itemToCheck) => itemToCheck.uid == friend.uid,
+        orElse: () => null);
+    final sentRequest = sentFriendRequests.firstWhere(
+        (itemToCheck) => itemToCheck.uid == friend.uid,
+        orElse: () => null);
+    return (areFriends != null || hasRequest != null || sentRequest != null);
   }
 
   Widget sendFriendRequestButton(
@@ -66,16 +107,12 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     );
   }
 
-  Widget removeFriendRequestButton(String uidSender, String uidReceiver, int index) {
+  Widget withdrawFriendRequestButton(
+      String uidSender, String uidReceiver, int index) {
     return Wrap(
       children: <Widget>[
-        socialButton(
-            Key('remove_button'),
-            Icons.clear,
-            Colors.red,
-            // TODO(hessgia1): call function to remove friend-request
-            () => {},
-        ),
+        socialButton(Key('remove_button'), Icons.clear, Colors.red,
+            () => _withdrawFriendRequest(uidSender, uidReceiver, index)),
       ],
     );
   }
@@ -133,51 +170,53 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                 ])),
             Expanded(
               flex: 7,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 15,
-                    right: 20,
-                  ),
-                  child: Material(
-                    child: SearchBar(
-                        key: Key('search_bar'),
-                        onSearch: search,
-                        mainAxisSpacing: 12,
-                        crossAxisSpacing: 10,
-                        onItemFound: (FriendsModel friend, int index) {
-                          _loading.add(false);
-                          return friendsCard(
-                              context,
-                              friend,
-                              _loading[index]
-                                  ? CircularProgressIndicator()
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 15,
+                  right: 20,
+                ),
+                child: Material(
+                  child: SearchBar(
+                    key: Key('search_bar'),
+                    onSearch: search,
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 10,
+                    onItemFound: (FriendsModel friend, int index) {
+                      _loadingResults.add(false);
+                      return friendsCard(
+                          context,
+                          friend,
+                          _loadingResults[index]
+                              ? CircularProgressIndicator()
+                              : (user.uid == friend.uid ||
+                                      _isFriendOrHasFriendRequest(friend))
+                                  ? null
                                   : sendFriendRequestButton(
-                                  user.uid, friend.uid, index),
-                              10
-                          );
-                        },
-                        loader: LoadingHeart(),
-                        hintText: 'Add friends',
-                        hintStyle: TextStyle(
-                          color: Colors.black45,
-                        ),
-                        icon: Icon(
-                          FontAwesomeIcons.search,
-                          size: 24.0,
-                        ),
-                        iconActiveColor: Colors.black54,
-                        searchBarStyle: SearchBarStyle(
-                          backgroundColor: Colors.black12,
-                          padding: EdgeInsets.fromLTRB(15, 5, 5, 5),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        cancellationWidget: Text(
-                          'Cancel',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
+                                      user.uid, friend.uid, index),
+                          10);
+                    },
+                    loader: LoadingHeart(),
+                    hintText: 'Add friends',
+                    hintStyle: TextStyle(
+                      color: Colors.black45,
+                    ),
+                    icon: Icon(
+                      FontAwesomeIcons.search,
+                      size: 24.0,
+                    ),
+                    iconActiveColor: Colors.black54,
+                    searchBarStyle: SearchBarStyle(
+                      backgroundColor: Colors.black12,
+                      padding: EdgeInsets.fromLTRB(15, 5, 5, 5),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    cancellationWidget: Text(
+                      'Cancel',
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
+              ),
             ),
             SizedBox(height: 20),
             Divider(
@@ -213,11 +252,11 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: Scrollbar(
                     child: Consumer<FriendsProvider>(
-                      builder: (_, friendsProvider, __) => friendsProvider.isFetching
-                          ? LoadingHeart()
-                          // TODO(hessgia1): replace friends with friend-request-list
-                          : friendsProvider.friends.isEmpty
-                          ? Text('You have sent no friend requests :(')
+                  builder: (_, friendsProvider, __) => friendsProvider
+                          .isFetchingSentFriendRequests
+                      ? LoadingHeart()
+                      : friendsProvider.sentFriendRequests.isEmpty
+                          ? Text('No sent friend requests')
                           : ListView.separated(
                               padding: EdgeInsets.only(
                                 bottom: 50,
@@ -225,31 +264,28 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               separatorBuilder: (context, index) =>
-                                const SizedBox(height: 12),
-                              // TODO(hessgia1): replace friends with friend-request-list
-                              itemCount: friendsProvider.friends.length,
+                                  const SizedBox(height: 12),
+                              itemCount:
+                                  friendsProvider.sentFriendRequests.length,
                               itemBuilder: (context, index) {
-                                // TODO(hessgia1): replace friends with friend-request-list
-                                final friend = friendsProvider.friends[index];
-                                _loading.add(false);
+                                final friend =
+                                    friendsProvider.sentFriendRequests[index];
+                                _loadingRequests.add(false);
                                 return friendsCard(
-                                  context,
-                                  friend,
-                                  _loading[index]
-                                      ? CircularProgressIndicator()
-                                      : removeFriendRequestButton(
-                                      friend.uid, user.uid, index),
-                                  10
-                                );
+                                    context,
+                                    friend,
+                                    _loadingRequests[index]
+                                        ? CircularProgressIndicator()
+                                        : withdrawFriendRequestButton(
+                                            friend.uid, user.uid, index),
+                                    10);
                               },
-                          ),
-                    )
-                ),
+                            ),
+                )),
               ),
             ),
             SizedBox(height: 50),
           ],
-        )
-    );
+        ));
   }
 }
