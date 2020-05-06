@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/logger.dart';
+import 'package:travellory/utils/logger.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/authentication/auth.dart';
 import 'package:travellory/services/authentication/user_management.dart';

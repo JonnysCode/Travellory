@@ -1,6 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:travellory/logger.dart';
+import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/activity_model.dart';
@@ -72,7 +72,7 @@ void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model
           "However, it might take a moment to see the changes on your profile. ";
 
   return () async {
-    final bool edited = await singleTripProvider.editModel(model, functionName);
+    final bool edited = await singleTripProvider.editBooking(model, functionName);
     if (edited) {
       showEditedBookingDialog(context, alertText);
       log.i('onEditBooking was performed');
