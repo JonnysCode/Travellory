@@ -1,7 +1,10 @@
+import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:travellory/logger.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 const googleApiKey = 'AIzaSyBTerG6FzsWzMxLZGxkz8KAXqUNCNtwsE0'; /// maybe have it somewhere else
 
@@ -34,11 +37,21 @@ class GooglePlaces {
   }
 
   static AddressComponent getCountryAddressComponent(PlacesDetailsResponse detail){
+    AddressComponent addr;
     for(AddressComponent add in detail.result.addressComponents){
+      log.d('Country: ${add.longName} CountryCode: ${add.shortName}');
       if(add.types.contains('country')){
-        log.d('Country: ${add.longName} CountryCode: ${add.shortName}');
-        return add;
+        addr = add;
       }
     }
+    return addr;
+  }
+
+  static String getContinentFromCountryCode(String countryCode){
+    rootBundle.loadString('assets/g_map/continents.json').then((string) => json.decode(string))
+        .then((jsonData) {
+      print("Continent: ${jsonData[countryCode]}");
+    });
+
   }
 }
