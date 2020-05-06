@@ -30,16 +30,16 @@ class _FriendListPageState extends State<FriendListPage> {
 
     await FriendManagement.performSocialAction(uidSender, uidReceiver, type)
         .then((value) async {
-      bool success = true;
-      String message = _getMessage(type, success);
+      final success = true;
+      final message = _getMessage(type, success);
       _showSnackBar(message, success);
 
       final FriendsProvider friendsProvider =
           Provider.of<FriendsProvider>(context, listen: false);
-      await friendsProvider.update(type);
+      friendsProvider.update(type);
     }).catchError((error) {
-      bool success = false;
-      String message = _getMessage(type, success);
+      final success = false;
+      final message = _getMessage(type, success);
       _showSnackBar(message, success);
     });
 
