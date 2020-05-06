@@ -43,8 +43,8 @@ class _FriendsPageState extends State<FriendsPage> {
                           selector: (_, friendsPageProvider) =>
                               friendsPageProvider.isSearching,
                           builder: (_, isSearching, __) => isSearching
-                              ? Container(child: SearchFriendsPage())
-                              : Container(child: FriendListPage())
+                              ? SearchFriendsPage()
+                              : FriendListPage()
                         )),
                   ),
                 ),
