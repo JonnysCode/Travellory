@@ -188,12 +188,12 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                   right: 90,
                   bottom: MediaQuery.of(context).viewInsets.bottom),
               child: Container(
-                height: 30,
+                height: 18,
                 width: MediaQuery.of(context).size.width,
                 child: Text(
                   'Sent friend requests',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: Colors.grey
                   ),
                 ),
