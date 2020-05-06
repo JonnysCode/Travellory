@@ -78,7 +78,7 @@ void main() {
     // Verify that the profile page has a circleAvatar.
     expect(find.byIcon(FontAwesomeIcons.user), findsOneWidget);
     expect(find.byIcon(FontAwesomeIcons.envelope), findsOneWidget);
-    expect(find.byIcon(FontAwesomeIcons.calendarAlt), findsOneWidget);
+    expect(find.byIcon(FontAwesomeIcons.home), findsOneWidget);
   });
 
   testWidgets('test if profile page has the two buttons: change-pw and logout',
