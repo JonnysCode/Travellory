@@ -56,12 +56,12 @@ class MapSampleState extends State<MapSample> {
 
   Future<void> loadAccommodations() async {
     final List<SingleTripProvider> trips =
-        await Provider.of<TripsProvider>(context, listen: false).trips;
+        Provider.of<TripsProvider>(context, listen: false).trips;
 
     _markers.clear();
 
     for (final SingleTripProvider trip in trips) {
-      final List<AccommodationModel> accommodations = await trip.accommodations;
+      final List<AccommodationModel> accommodations = trip.accommodations;
 
       for (final AccommodationModel accommodation in accommodations) {
         final marker = Marker(
