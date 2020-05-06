@@ -4,7 +4,7 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/services/database/delete_database.dart';
+import 'package:travellory/services/database/edit_database.dart';
 
 final PublicTransportModel _publicTransport = PublicTransportModel()
   ..transportationType = 'train'
@@ -35,13 +35,13 @@ final RentalCarModel _rentalCar = RentalCarModel()
   ..pickupLocation = 'Los Angeles Airport';
 
 void main(){
-  test('test getDeleteFunctionNameBasedOn model', () async {
+  test('test getEditDeleteFunctionNameBasedOn model', () async {
 
-    expect('booking-deleteFlight', getDeleteFunctionNameBasedOn(_flight));
-    expect('booking-deleteRentalCar', getDeleteFunctionNameBasedOn(_rentalCar));
-    expect('booking-deleteAccommodation', getDeleteFunctionNameBasedOn(_accommodation));
-    expect('booking-deletePublicTransportation', getDeleteFunctionNameBasedOn(_publicTransport));
-    expect('activity-deleteActivity', getDeleteFunctionNameBasedOn(_activity));
+    expect('booking-updateFlight', getEditFunctionNameBasedOn(_flight));
+    expect('booking-updateRentalCar', getEditFunctionNameBasedOn(_rentalCar));
+    expect('booking-updateAccommodation', getEditFunctionNameBasedOn(_accommodation));
+    expect('booking-updatePublicTransportation', getEditFunctionNameBasedOn(_publicTransport));
+    expect('activity-updateActivity', getEditFunctionNameBasedOn(_activity));
   });
 
 
