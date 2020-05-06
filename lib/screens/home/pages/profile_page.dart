@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:path/path.dart' as path;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -238,25 +239,32 @@ class UserInformation extends StatelessWidget {
               height: 1.1,
             ),
           ]),
-      SizedBox(height: 8),
       Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
-              FontAwesomeIcons.calendarAlt,
+              FontAwesomeIcons.home,
               color: Theme.of(context).primaryColor,
               size: 32,
             ),
             SizedBox(width: 10),
             FashionFetishText(
-              text: user != null
-                  ? DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)
-                  : '',
+              text: 'Switzerland',
               size: 18,
               fontWeight: FashionFontWeight.bold,
-              height: 1.2,
+              height: 1.1,
             ),
+            SizedBox(width: 10),
+            IconButton(
+              // TODO(fluetfab): add action to edit field
+              onPressed: null,
+              iconSize: 18,
+              icon: Icon(
+                FontAwesomeIcons.pen,
+                color: Theme.of(context).primaryColor,
+              ),
+            )
           ]),
     ]);
   }
