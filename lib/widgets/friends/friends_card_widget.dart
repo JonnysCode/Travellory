@@ -46,7 +46,7 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
                             Icon(
                               FontAwesomeIcons.home,
                               size: 14,
-                              color: Colors.brown,
+                              color: Theme.of(context).primaryColor,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 6, left: 3),

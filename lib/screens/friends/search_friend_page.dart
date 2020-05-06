@@ -230,12 +230,6 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
               ),
             ),
             SizedBox(height: 20),
-            Divider(
-              thickness: 1,
-              indent: 25,
-              endIndent: 25,
-              color: Colors.grey,
-            ),
             Padding(
               key: Key('sent_friend_requests'),
               padding: EdgeInsets.only(
@@ -244,14 +238,22 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                   right: 90,
                   bottom: MediaQuery.of(context).viewInsets.bottom),
               child: Container(
-                height: 30,
+                height: 18,
                 width: MediaQuery.of(context).size.width,
-                child: FashionFetishText(
-                  text: 'Sent friend requests',
-                  size: 22,
-                  fontWeight: FashionFontWeight.heavy,
+                child: Text(
+                  'Sent friend requests',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey
+                  ),
                 ),
               ),
+            ),
+            Divider(
+              thickness: 1,
+              indent: 25,
+              endIndent: 25,
+              color: Colors.grey,
             ),
             Expanded(
               flex: 3,
@@ -270,7 +272,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                           ? Text('No sent friend requests')
                           : ListView.separated(
                               padding: EdgeInsets.only(
-                                bottom: 50,
+                                bottom: 30,
                               ),
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,

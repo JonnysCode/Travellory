@@ -3,7 +3,6 @@ import 'package:path/path.dart' as path;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
@@ -243,18 +242,16 @@ class UserInformation extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
-              FontAwesomeIcons.calendarAlt,
+              FontAwesomeIcons.home,
               color: Theme.of(context).primaryColor,
               size: 32,
             ),
             SizedBox(width: 10),
             FashionFetishText(
-              text: user != null
-                  ? DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)
-                  : '',
+              text: 'Switzerland',
               size: 18,
               fontWeight: FashionFontWeight.bold,
-              height: 1.2,
+              height: 1.1,
             ),
           ]),
     ]);
