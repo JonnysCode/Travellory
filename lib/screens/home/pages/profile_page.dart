@@ -1,10 +1,8 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'package:path/path.dart' as path;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
@@ -239,6 +237,7 @@ class UserInformation extends StatelessWidget {
               height: 1.1,
             ),
           ]),
+      SizedBox(height: 8),
       Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -255,16 +254,6 @@ class UserInformation extends StatelessWidget {
               fontWeight: FashionFontWeight.bold,
               height: 1.1,
             ),
-            SizedBox(width: 10),
-            IconButton(
-              // TODO(fluetfab): add action to edit field
-              onPressed: null,
-              iconSize: 18,
-              icon: Icon(
-                FontAwesomeIcons.pen,
-                color: Theme.of(context).primaryColor,
-              ),
-            )
           ]),
     ]);
   }
