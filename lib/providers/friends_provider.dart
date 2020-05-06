@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:travellory/logger.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:travellory/services/friends/friend_management.dart';
+import 'package:travellory/utils/logger.dart';
 
 class FriendsProvider extends ChangeNotifier{
   FriendsProvider(){
