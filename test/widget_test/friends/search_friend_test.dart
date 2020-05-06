@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
+import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/screens/friends/search_friend_page.dart';
 import 'package:travellory/services/authentication/auth.dart';
 
@@ -15,6 +16,9 @@ void main() {
     return MultiProvider(
         providers: [
           StreamProvider<UserModel>.value(value: MockAuth().user),
+          ChangeNotifierProvider<FriendsProvider>(
+              create: (context) => FriendsProvider()
+          ),
         ],
         child: MaterialApp(
           home: child,
