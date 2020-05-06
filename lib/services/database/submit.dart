@@ -5,7 +5,7 @@ import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 
-import '../../logger.dart';
+import '../../utils/logger.dart';
 
 const String errorMessage = "Seems like there's a connection problem. "
     "Please check your internet connection and try submitting again.";

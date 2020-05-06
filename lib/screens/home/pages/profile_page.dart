@@ -11,7 +11,7 @@ import 'package:travellory/services/storage.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/logger.dart';
+import 'package:travellory/utils/logger.dart';
 
 class ProfilePage extends StatefulWidget {
   @override

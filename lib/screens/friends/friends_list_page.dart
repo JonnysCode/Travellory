@@ -30,17 +30,16 @@ class _FriendListPageState extends State<FriendListPage> {
 
     await FriendManagement.performSocialAction(uidSender, uidReceiver, type)
         .then((value) async {
-      bool success = true;
-      String message = _getMessage(type, success);
+      final success = true;
+      final message = _getMessage(type, success);
       _showSnackBar(message, success);
 
       final FriendsProvider friendsProvider =
           Provider.of<FriendsProvider>(context, listen: false);
-      await friendsProvider.update();
+      friendsProvider.update(type);
     }).catchError((error) {
-      bool success = false;
-      print(error.toString());
-      String message = _getMessage(type, success);
+      final success = false;
+      final message = _getMessage(type, success);
       _showSnackBar(message, success);
     });
 
@@ -91,7 +90,7 @@ class _FriendListPageState extends State<FriendListPage> {
     return SnackBar(
       content: Flushbar(
           flushbarStyle: FlushbarStyle.FLOATING,
-          title: success ? "Success" : "Error",
+          title: success ? 'Success' : 'Error',
           message: message,
           backgroundColor:
               success ? Theme.of(context).primaryColor : Colors.redAccent,
@@ -192,7 +191,7 @@ class _FriendListPageState extends State<FriendListPage> {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: Scrollbar(
                     child: Consumer<FriendsProvider>(
-                      builder: (_, friendsProvider, __) => friendsProvider.isFetching
+                      builder: (_, friendsProvider, __) => friendsProvider.isFetchingFriendRequests
                           ? LoadingHeart()
                           : friendsProvider.friendRequests.isEmpty
                           ? Padding(
@@ -208,10 +207,11 @@ class _FriendListPageState extends State<FriendListPage> {
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               separatorBuilder: (context, index) =>
-                                const SizedBox(height: 12),
+                                  const SizedBox(height: 12),
                               itemCount: friendsProvider.friendRequests.length,
                               itemBuilder: (context, index) {
-                                final friend = friendsProvider.friendRequests[index];
+                                final friend =
+                                    friendsProvider.friendRequests[index];
                                 _loadingRequests.add(false);
                                 return friendsCard(
                                   context,
@@ -223,9 +223,8 @@ class _FriendListPageState extends State<FriendListPage> {
                                   10,
                                 );
                               },
-                          ),
-                    )
-                ),
+                            ),
+            )),
           ),
         ),
         SizedBox(height: 20),
@@ -255,7 +254,8 @@ class _FriendListPageState extends State<FriendListPage> {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Scrollbar(
                 child: Consumer<FriendsProvider>(
-                  builder: (_, friendsProvider, __) => friendsProvider.isFetching
+              builder: (_, friendsProvider, __) =>
+                  friendsProvider.isFetchingFriends
                       ? LoadingHeart()
                       : friendsProvider.friends.isEmpty
                       ? Text('You have no friends :(')
