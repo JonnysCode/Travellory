@@ -32,18 +32,19 @@ void showDeleteDialog(Model model, BuildContext context, String alertText) {
           alertButton('CANCEL', Theme.of(context).hintColor, context, () async {
             Navigator.of(context).pop();
           }),
-          model is TripModel
-              ?  alertButton('DELETE', Theme.of(context).accentColor, context,
-                  onDeleteTrip(model, context, errorMessage))
-              : alertButton('DELETE', Theme.of(context).accentColor, context,
-                  onDeleteBooking(model, context, errorMessage))
+          if (model is TripModel)
+            alertButton('DELETE', Theme.of(context).accentColor, context,
+              onDeleteTrip(model, context, errorMessage))
+          else
+            alertButton('DELETE', Theme.of(context).accentColor, context,
+              onDeleteBooking(model, context, errorMessage))
         ],
       );
     },
   );
 }
 
-void showDeletedBookingDialog(BuildContext context, String alertText, {hasBackButton: true}) {
+void showDeletedBookingDialog(BuildContext context, String alertText, {hasBackButton = true}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
