@@ -6,9 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GMapBorderLoader{
-  static String data;
-
-  static void readMultiPolygon(List multiPolygon, List<Polygon> return_polygons, String stateName) async {
+  void readMultiPolygon(List multiPolygon, List<Polygon> return_polygons, String stateName) async {
 
     for(int i=0; i<multiPolygon.length; i++){
       final List<LatLng> points = <LatLng>[];
@@ -16,7 +14,7 @@ class GMapBorderLoader{
         points.add(LatLng(multiPolygon[i][0][j][1].toDouble(),multiPolygon[i][0][j][0].toDouble()));
       }
       return_polygons.add(Polygon(
-        polygonId: PolygonId(stateName+"_"+i.toString()),
+        polygonId: PolygonId('${stateName}_${i.toString()}'),
         consumeTapEvents: false,
         fillColor: Color.fromRGBO(255, 0, 0, 0.35),
         geodesic: false,
@@ -30,7 +28,7 @@ class GMapBorderLoader{
     }
   }
 
-  static void readPolygon(List polygon, List<Polygon> return_polygons, String stateName) async {
+  void readPolygon(List polygon, List<Polygon> return_polygons, String stateName) async {
     final List<LatLng> points = <LatLng>[];
 
     for(final dynamic dots in polygon) {
@@ -52,12 +50,13 @@ class GMapBorderLoader{
   }
 
 
-  static Future<List<Polygon>> fetchPolygons(String stateName) async {
+  Future<List<Polygon>> fetchPolygons(String stateName) async {
+    String data;
     final List<Polygon> polygons = <Polygon>[];
 
     try {
       data = await rootBundle.loadString('assets/g_map/border_points/${stateName.toLowerCase()}.json');
-    }catch(_){
+    }on Exception catch(_){
       return polygons;
     }
 
@@ -79,7 +78,7 @@ class GMapBorderLoader{
   }
 
 
-  static Future<List<Polygon>> generateBorders (List<String> states) async {
+  Future<List<Polygon>> generateBorders (List<String> states) async {
 
     final List<Polygon> borders = <Polygon>[];
 
