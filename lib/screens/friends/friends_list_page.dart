@@ -18,18 +18,19 @@ class FriendListPage extends StatefulWidget {
 }
 
 class _FriendListPageState extends State<FriendListPage> {
-  bool _loading = false;
+  final _loadingRequests = List();
+  final _loadingFriends = List();
 
-  void _performSocialAction(
-      String uidSender, String uidReceiver, SocialActionType type) async {
+  void _performSocialAction(String uidSender, String uidReceiver,
+      SocialActionType type, int index) async {
+    final loading = _getLoadingList(type);
 
     setState(() {
-      _loading = true;
+      loading[index] = true;
     });
 
     await FriendManagement.performSocialAction(uidSender, uidReceiver, type)
         .then((value) async {
-
       bool success = true;
       String message = _getMessage(type, success);
       _showSnackBar(message, success);
@@ -45,7 +46,7 @@ class _FriendListPageState extends State<FriendListPage> {
     });
 
     setState(() {
-      _loading = false;
+      loading[index] = false;
     });
   }
 
@@ -73,6 +74,20 @@ class _FriendListPageState extends State<FriendListPage> {
     return message;
   }
 
+  List _getLoadingList(SocialActionType type) {
+    switch (type) {
+      case SocialActionType.declineFriendRequest:
+      case SocialActionType.acceptFriendRequest:
+        return _loadingRequests;
+        break;
+      case SocialActionType.removeFriend:
+        return _loadingFriends;
+        break;
+      default:
+        return null;
+    }
+  }
+
   Widget _showSnackBar(String message, bool success) {
     return SnackBar(
       content: Flushbar(
@@ -88,26 +103,26 @@ class _FriendListPageState extends State<FriendListPage> {
     );
   }
 
-  Widget friendRequestButtons(String uidSender, String uidReceiver) {
+  Widget friendRequestButtons(String uidSender, String uidReceiver, int index) {
     return Wrap(
       children: <Widget>[
         socialButton(
             Key('accept_button'),
             Icons.person_add,
             Colors.green,
-            () => _performSocialAction(
-                uidSender, uidReceiver, SocialActionType.acceptFriendRequest)),
+            () => _performSocialAction(uidSender, uidReceiver,
+                SocialActionType.acceptFriendRequest, index)),
         socialButton(
             Key('decline_button'),
             Icons.clear,
             Colors.red,
-            () => _performSocialAction(
-                uidSender, uidReceiver, SocialActionType.declineFriendRequest)),
+            () => _performSocialAction(uidSender, uidReceiver,
+                SocialActionType.declineFriendRequest, index)),
       ],
     );
   }
 
-  Widget removeFriendButton(String uidSender, String uidReceiver) {
+  Widget removeFriendButton(String uidSender, String uidReceiver, int index) {
     return Wrap(
       children: <Widget>[
         socialButton(
@@ -115,7 +130,7 @@ class _FriendListPageState extends State<FriendListPage> {
             Icons.delete,
             Colors.red,
             () => _performSocialAction(
-                uidSender, uidReceiver, SocialActionType.removeFriend)),
+                uidSender, uidReceiver, SocialActionType.removeFriend, index)),
       ],
     );
   }
@@ -178,8 +193,7 @@ class _FriendListPageState extends State<FriendListPage> {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: Scrollbar(
                     child: Consumer<FriendsProvider>(
-                      builder: (_, friendsProvider, __) =>
-                      friendsProvider.isFetching
+                      builder: (_, friendsProvider, __) => friendsProvider.isFetching
                           ? LoadingHeart()
                           : friendsProvider.friendRequests.isEmpty
                           ? Text('No pending friend requests')
@@ -190,18 +204,18 @@ class _FriendListPageState extends State<FriendListPage> {
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               separatorBuilder: (context, index) =>
-                              const SizedBox(height: 12),
+                                const SizedBox(height: 12),
                               itemCount: friendsProvider.friendRequests.length,
                               itemBuilder: (context, index) {
-                                FriendsModel friend =
-                                friendsProvider.friendRequests[index];
+                                final friend = friendsProvider.friendRequests[index];
+                                _loadingRequests.add(false);
                                 return friendsCard(
                                   context,
                                   friend,
-                                  _loading
+                                  _loadingRequests[index]
                                       ? CircularProgressIndicator()
                                       : friendRequestButtons(
-                                      friend.uid, user.uid),
+                                          friend.uid, user.uid, index),
                                   10,
                                 );
                               },
@@ -238,8 +252,7 @@ class _FriendListPageState extends State<FriendListPage> {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Scrollbar(
                 child: Consumer<FriendsProvider>(
-                  builder: (_, friendsProvider, __) =>
-                  friendsProvider.isFetching
+                  builder: (_, friendsProvider, __) => friendsProvider.isFetching
                       ? LoadingHeart()
                       : friendsProvider.friends.isEmpty
                       ? Text('You have no friends :(')
@@ -250,18 +263,18 @@ class _FriendListPageState extends State<FriendListPage> {
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           separatorBuilder: (context, index) =>
-                          const SizedBox(height: 12),
+                            const SizedBox(height: 12),
                           itemCount: friendsProvider.friends.length,
                           itemBuilder: (context, index) {
-                            FriendsModel friend =
-                            friendsProvider.friends[index];
+                            final friend = friendsProvider.friends[index];
+                            _loadingFriends.add(false);
                             return friendsCard(
                               context,
                               friend,
-                              _loading
+                              _loadingFriends[index]
                                   ? CircularProgressIndicator()
                                   : removeFriendButton(
-                                  friend.uid, user.uid),
+                                  friend.uid, user.uid, index),
                               10,
                             );
                           },
