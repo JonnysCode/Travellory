@@ -7,7 +7,7 @@ import 'package:travellory/widgets/font_widgets.dart';
 @override
 Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
     double topPadding) {
-  final double cardSize = 70;
+  const double cardSize = 70;
 
   return Container(
     height: cardSize,
@@ -17,7 +17,7 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
           left: 20,
           right: 0,
           child: GestureDetector(
-            // TODO (fluetfab): link to friends profile
+            // TODO(fluetfab): link to friends profile
             //  onTap: () => _openFriendsProfile(),
             child: Container(
               height: cardSize,
