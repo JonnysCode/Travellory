@@ -18,8 +18,6 @@ import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class RentalCar extends StatefulWidget {
-  RentalCar({Key key}) : super(key: key);
-
   @override
   RentalCarState createState() => RentalCarState();
 }
@@ -28,6 +26,8 @@ class RentalCarState<T extends RentalCar> extends State<T> {
   final GlobalKey<FormState> rentalCarFormKey = GlobalKey<FormState>();
 
   final GlobalKey<DateFormFieldState> _pickUpDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _returnDateFormFieldKey = GlobalKey<DateFormFieldState>();
+
 
   bool validateForm() {
     return rentalCarFormKey.currentState.validate();
@@ -90,7 +90,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
                       onTap: (controller) async {
-                        PlacesDetailsResponse detail =
+                        final PlacesDetailsResponse detail =
                             await GooglePlaces.openGooglePlacesSearch(context, );
                         controller.text = detail.result.formattedAddress;
                         _editRentalCarModel.pickupLocation = detail.result.formattedAddress;
@@ -104,10 +104,12 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                   child: DateFormField(
                     initialValue: _editRentalCarModel.pickupDate,
                     key: _pickUpDateFormFieldKey,
+                    listenerKey: _returnDateFormFieldKey,
                     labelText: 'Pick Up Date *',
                     optional: false,
                     tripModel: tripModel,
                     icon: Icon(FontAwesomeIcons.calendarAlt),
+                    model: _editRentalCarModel,
                     chosenDateString: (value) => _editRentalCarModel.pickupDate = value,
                   ),
                 ),
@@ -132,7 +134,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: true,
                       onTap: (controller) async {
-                        PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
+                        final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
                             context,
                             countryCode: tripModel.countryCode);
 
@@ -146,12 +148,14 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
+                    key: _returnDateFormFieldKey,
                     initialValue: _editRentalCarModel.returnDate,
                     labelText: 'Return Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     beforeDateKey: _pickUpDateFormFieldKey,
                     optional: false,
                     tripModel: tripModel,
+                    model: _editRentalCarModel,
                     dateValidationMessage: 'Return Date cannot be before Pick Up Date',
                     chosenDateString: (value) => _editRentalCarModel.returnDate = value,
                   ),
@@ -249,7 +253,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
-    RentalCarModel _rentalCarModel = RentalCarModel();
+    final RentalCarModel _rentalCarModel = RentalCarModel();
     _rentalCarModel.tripUID = tripModel.uid;
 
     return Scaffold(

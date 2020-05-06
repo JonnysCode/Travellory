@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:travellory/models/abstract_model.dart';
+import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/models/activity_model.dart';
+import 'package:travellory/models/flight_model.dart';
+import 'package:travellory/models/public_transport_model.dart';
+import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 
 class DateFormField extends StatefulWidget {
@@ -14,7 +20,10 @@ class DateFormField extends StatefulWidget {
       this.chosenDate,
       this.chosenDateString,
       this.beforeDateKey,
+      this.listenerKey,
       this.tripModel,
+      this.model,
+      this.secondListenerKey,
       this.dateValidationMessage})
       : super(key: key);
 
@@ -26,7 +35,10 @@ class DateFormField extends StatefulWidget {
   final void Function(DateTime) chosenDate;
   final void Function(String) chosenDateString;
   final GlobalKey<DateFormFieldState> beforeDateKey;
+  final GlobalKey<DateFormFieldState> listenerKey;
+  final GlobalKey<DateFormFieldState> secondListenerKey;
   final TripModel tripModel;
+  final Model model;
   final String dateValidationMessage;
 
   final String validatorText = 'Please enter the required information';
@@ -48,17 +60,17 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
   void initState() {
     super.initState();
     controller = widget.controller != null ? widget.controller : TextEditingController();
-    getInitialDate();
+    setInitialDate();
   }
 
-  DateTime getInitialDate() {
+  void setInitialDate() {
     if (widget.initialValue != null && widget.initialValue != '') {
       controller..text = (widget.initialValue);
       initialDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.initialValue);
       selectedDate = initialDate;
-      return initialDate;
-    } else {
-      return DateTime.now();
+    }
+    if (widget.tripModel != null && widget.initialValue == '') {
+      initialDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.startDate);
     }
   }
 
@@ -70,8 +82,10 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
 
   bool pickedDateInTripRange(DateTime pickedDate) {
     if (widget.tripModel != null) {
-      DateTime tripStartDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.startDate);
-      DateTime tripEndDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.endDate);
+      final DateTime tripStartDate =
+          DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.startDate);
+      final DateTime tripEndDate =
+          DateFormat("dd-MM-yyyy", "en_US").parse(widget.tripModel.endDate);
       if ((pickedDate.isAfter(tripStartDate) || pickedDate == tripStartDate) &&
           (pickedDate.isBefore(tripEndDate) || pickedDate == tripEndDate)) {
         return true;
@@ -90,6 +104,43 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
     return true;
   }
 
+  void sameDateFieldChanged(DateTime selectedListenerDate) {
+    if (widget.initialValue != null &&
+        selectedListenerDate != null &&
+        (controller.text == null || controller.text == '')) {
+      setState(() {
+        selectedDate = selectedListenerDate;
+        controller.text = DateFormat("dd-MM-yyyy").format(selectedListenerDate);
+        if (widget.chosenDate != null) widget.chosenDate(selectedDate);
+        if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
+      });
+    }
+  }
+
+  void otherDateFieldChanged(DateTime selectedListenerDate) {
+    if (widget.initialValue != null) {
+      setState(() {
+        selectedDate = selectedListenerDate.add(Duration(days: 1));
+        controller.text = DateFormat("dd-MM-yyyy").format(selectedDate);
+        if (widget.chosenDate != null) widget.chosenDate(selectedDate);
+        if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
+        if (widget.secondListenerKey != null) {
+          widget.secondListenerKey.currentState.calculateNights(selectedListenerDate, selectedDate);
+        }
+      });
+    }
+  }
+
+  void calculateNights(DateTime firstDate, DateTime secondDate) {
+    if (widget.initialValue != null) {
+      setState(() {
+        Duration calculatedDays = firstDate.difference(secondDate);
+        controller.text = calculatedDays.inDays.toString();
+        if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
+      });
+    }
+  }
+
   void selectDate(BuildContext context) async {
     FocusScope.of(context).requestFocus(FocusNode());
     final DateTime pickedDate = await showRoundedDatePicker(
@@ -105,6 +156,16 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
       controller.text = DateFormat("dd-MM-yyyy").format(pickedDate);
       if (widget.chosenDate != null) widget.chosenDate(selectedDate);
       if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
+      if (widget.listenerKey != null &&
+          (widget.model is RentalCarModel || widget.model is AccommodationModel)) {
+        widget.listenerKey.currentState.otherDateFieldChanged(pickedDate);
+      }
+      if (widget.listenerKey != null &&
+          (widget.model is FlightModel ||
+              widget.model is PublicTransportModel ||
+              widget.model is ActivityModel)) {
+        widget.listenerKey.currentState.sameDateFieldChanged(pickedDate);
+      }
     }
   }
 

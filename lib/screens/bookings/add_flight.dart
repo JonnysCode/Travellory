@@ -5,7 +5,6 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/single_trip_provider.dart';
 import 'package:travellory/providers/trips_provider.dart';
-import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
@@ -18,8 +17,6 @@ import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 
 class Flight extends StatefulWidget {
-  Flight({Key key}) : super(key: key);
-
   @override
   FlightState createState() => FlightState();
 }
@@ -28,6 +25,7 @@ class FlightState<T extends Flight> extends State<T> {
   final GlobalKey<FormState> flightFormKey = GlobalKey<FormState>();
 
   final GlobalKey<DateFormFieldState> _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
+  final GlobalKey<DateFormFieldState> _arrDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
   bool validateForm() {
     return flightFormKey.currentState.validate();
@@ -157,10 +155,12 @@ class FlightState<T extends Flight> extends State<T> {
                   child: DateFormField(
                     initialValue: _editFlightModel.departureDate,
                     key: _depDateFormFieldKey,
+                    listenerKey: _arrDateFormFieldKey,
                     labelText: 'Departure Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     optional: false,
                     tripModel: tripModel,
+                    model: _editFlightModel,
                     chosenDateString: (value) => _editFlightModel.departureDate = value,
                   ),
                 ),
@@ -189,12 +189,14 @@ class FlightState<T extends Flight> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: DateFormField(
+                    key: _arrDateFormFieldKey,
                     initialValue: _editFlightModel.arrivalDate,
                     labelText: 'Arrival Date *',
                     icon: Icon(FontAwesomeIcons.calendarAlt),
                     beforeDateKey: _depDateFormFieldKey,
                     optional: false,
                     tripModel: tripModel,
+                    model: _editFlightModel,
                     dateValidationMessage: 'Arrival Date cannot be before Departure Date',
                     chosenDateString: (value) => _editFlightModel.arrivalDate = value,
                   ),
@@ -247,7 +249,7 @@ class FlightState<T extends Flight> extends State<T> {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
-    FlightModel _flightModel = FlightModel();
+    final FlightModel _flightModel = FlightModel();
     _flightModel.tripUID = tripModel.uid;
 
     return Scaffold(

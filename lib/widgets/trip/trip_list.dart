@@ -73,7 +73,10 @@ class TripList extends StatelessWidget {
                     final tripModel = tripsProvider.trips[index].tripModel
                       ..index = index
                       ..init();
-                    return TripCard(tripModel: tripModel);
+                    return TripCard(
+                      key: UniqueKey(),
+                      tripModel: tripModel,
+                    );
                   } else {
                     return  _bottomMargin();
                   }
