@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_core/core.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/utils/date_converter.dart';
 
 class Calendar extends StatefulWidget {

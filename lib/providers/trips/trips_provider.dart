@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/notify_listener.dart';
-import 'package:travellory/providers/single_trip_provider.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/delete_database.dart';
-import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/get_database.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:travellory/utils/date_converter.dart';
@@ -19,7 +16,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   final DatabaseAdder _databaseAdder = DatabaseAdder();
   final DatabaseGetter _databaseGetter = DatabaseGetter();
-  final DatabaseDeleter _databaseDeleter = DatabaseDeleter();
+  final DatabaseDeleter  _databaseDeleter = DatabaseDeleter();
 
   UserModel user;
   List<SingleTripProvider> trips;
@@ -36,6 +33,8 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   bool get activeTripInitiated => _activeTripInitiated;
 
+  // Fetches all trips from the database and initiates the upcoming one.
+  // Meaning it fetches all its Bookings from the database as well.
   void init(UserModel user) {
     this.user = user;
     if(!_tripsInitiated){
@@ -86,7 +85,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
   Future<void> _fetchTrips() async {
     isFetchingTrips = true;
     trips = <SingleTripProvider>[];
-    List<TripModel> tripModels = await _databaseGetter.getEntriesFromDatabase(
+    final List<TripModel> tripModels = await _databaseGetter.getEntriesFromDatabase(
         user.uid, DatabaseGetter.getTrips);
     trips = tripModels.map((tripModel) =>
         SingleTripProvider(tripModel, this)).toList();

@@ -54,7 +54,7 @@ class _RegisterState extends State<Register> {
         Navigator.pop(context);
         setState(() {
           _error =
-              e.message == null ? 'Something went wrong. Try again' : e.message;
+              e.message ?? 'Something went wrong. Try again';
         });
       });
     }

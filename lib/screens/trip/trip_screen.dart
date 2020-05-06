@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/widgets/font_widgets.dart';
@@ -84,7 +84,7 @@ class TripScreen extends StatelessWidget {
             Expanded(
               child: Consumer<TripsProvider>(
                 builder: (_, tripsProvider, __) {
-                  var trip = tripsProvider.selectedTrip;
+                  final trip = tripsProvider.selectedTrip;
                   return ListView(
                   children: <Widget>[
                     Padding(
