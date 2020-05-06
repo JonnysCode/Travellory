@@ -68,7 +68,7 @@ void Function() onDeleteBooking(Model model, BuildContext context, String errorM
   final SingleTripProvider singleTripProvider =
       Provider.of<TripsProvider>(context, listen: false).selectedTrip;
 
-  String functionName = getDeleteFunctionNameBasedOn(model);
+  final String functionName = getDeleteFunctionNameBasedOn(model);
 
   const String alertText =
       "You've just deleted this entry. Your booking overview has been updated. ";
