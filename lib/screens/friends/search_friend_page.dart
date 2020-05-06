@@ -13,7 +13,6 @@ import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
 import 'package:travellory/shared/loading_heart.dart';
 
-
 class SearchFriendsPage extends StatefulWidget {
   @override
   _SearchFriendsPageState createState() => _SearchFriendsPageState();
@@ -134,6 +133,10 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                             10));
                   },
                   loader: LoadingHeart(),
+                  minimumChars: 3,
+                  emptyWidget: Center(
+                    child: Text('No user was found'),
+                  ),
                   searchBarPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   headerPadding: EdgeInsets.symmetric(horizontal: 50),
                   listPadding: EdgeInsets.symmetric(horizontal: 30),
