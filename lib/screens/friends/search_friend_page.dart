@@ -21,6 +21,7 @@ class SearchFriendsPage extends StatefulWidget {
 
 class _SearchFriendsPageState extends State<SearchFriendsPage> {
   final _loading = List();
+  String searchWord = '';
 
   void _sendFriendRequest(
       String uidSender, String uidReceiver, int index) async {
@@ -84,7 +85,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     return SnackBar(
       content: Flushbar(
           flushbarStyle: FlushbarStyle.FLOATING,
-          title: success ? "Success" : "Error",
+          title: success ? 'Success' : 'Error',
           message: message,
           backgroundColor:
               success ? Theme.of(context).primaryColor : Colors.redAccent,
@@ -101,6 +102,10 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
   }
 
   Future<List<FriendsModel>> search(String search) async {
+    setState(() {
+      searchWord = search;
+    });
+
     return FriendManagement.searchByUsername(search);
   }
 
@@ -159,7 +164,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                         loader: LoadingHeart(),
                         minimumChars: 3,
                         emptyWidget: Center(
-                        child: Text('No user was found'),
+                        child: Text('No user starting with "' + searchWord + '" was found'),
                         ),
                         hintText: 'Add friends',
                         hintStyle: TextStyle(

@@ -81,9 +81,12 @@ void main() {
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(child: page));
+    var successText = find.text('Success');
 
     // Verify that the friends_request_list page is present.
-    expect(find.byKey(Key('sent_friend_requests_list')), findsOneWidget);
+    expect(successText, findsOneWidget);
   });
+
+
 
 }
