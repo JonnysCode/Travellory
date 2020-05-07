@@ -4,16 +4,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/friends_model.dart';
 
 class FriendsProfileHeader extends StatefulWidget {
-  const FriendsProfileHeader(this.friendsModel, {Key key}) : super(key: key);
+  const FriendsProfileHeader({Key key, this.friend}) : super(key: key);
 
-  final FriendsModel friendsModel;
+  final friend;
+
+//  final FriendsModel friend;
 
   @override
   _FriendsHeaderState createState() => _FriendsHeaderState();
 }
 
 class _FriendsHeaderState extends State<FriendsProfileHeader> {
-  FriendsModel _friendsModel;
+//  get friend => null;
+
+//  FriendsModel _friendsModel;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +52,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
                 width: 220,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(_friendsModel.photoURL),
+                    image: AssetImage(widget.friend.photoURL),
                     fit: BoxFit.fitWidth,
                     alignment: Alignment.bottomCenter,
                   ),
@@ -67,7 +71,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
                   maxWidth: MediaQuery.of(context).size.width - 200
               ),
               child: Text(
-                _friendsModel.username,
+                widget.friend.username,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style: TextStyle(
