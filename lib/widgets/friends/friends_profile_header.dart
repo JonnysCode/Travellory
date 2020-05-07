@@ -59,7 +59,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
           Positioned(
             left: widget.headerSize + 20,
             child: Container(
-              padding: EdgeInsets.only(top: 40, left: 10, right: 10),
+              padding: EdgeInsets.only(top: 50, left: 10, right: 10),
               alignment: Alignment.topLeft,
               width: MediaQuery.of(context).size.width,
               constraints: BoxConstraints(
@@ -79,7 +79,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
             ),
           ),
           Positioned(
-            top: 100,
+            top: 85,
             left: widget.headerSize + 30,
             right: 10,
             child: Column(
@@ -94,7 +94,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
                     Icon(
                       FontAwesomeIcons.home,
                       size: 15,
-                      color: Colors.redAccent,
+                      color: Theme.of(context).primaryColor,
                     ),
                     SizedBox(
                       width: 6,
@@ -107,7 +107,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
                         maxLines: 2,
                         style: TextStyle(
                             fontFamily: 'FashionFetish',
-                            fontSize: 13,
+                            fontSize: 14,
                             height: 1.15,
                             fontWeight: FontWeight.w900,
                             letterSpacing: -1,
