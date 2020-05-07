@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
-// TODO(fluetfab): refactor friends_card_widget
 void _openFriendsProfile(BuildContext context, FriendsModel friend){
 //  FriendsProfileHeader(friend)
   Navigator.pushNamed(context, '/friends/friends_profile', arguments: friend);
