@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/models/friends_model.dart';
 
 class FriendsProfileHeader extends StatefulWidget {
-  const FriendsProfileHeader({Key key, this.friend}) : super(key: key);
+  const FriendsProfileHeader({Key key, this.friend, double headerSize}) : super(key: key);
 
   final friend;
+  final double headerSize = 140;
 
   @override
   _FriendsHeaderState createState() => _FriendsHeaderState();
@@ -16,10 +16,10 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 190,
+      height: widget.headerSize,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80)),
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(widget.headerSize/2)),
         color: Color(0xFFCCD7DD),
       ),
       child: Stack(
@@ -35,16 +35,20 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
             ),
           ),
           Positioned(
-            top: -30,
-            left: -40,
             child: Hero(
               tag: widget.friend.uid,
               child: Container(
-                height: 220,
-                width: 220,
+                height: widget.headerSize,
+                width: widget.headerSize,
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(widget.headerSize/2)),
                   image: DecorationImage(
-                    image: AssetImage(widget.friend.photoURL),
+//                    image: AssetImage(widget.friend.photoURL),
+
+//                      friend.photoURL != null
+//                          ? profilePicture(friend.photoURL, cardSize)
+//                          : standardPicture(cardSize)
+                    image: AssetImage('assets/images/login/beach.png'),
                     fit: BoxFit.fitWidth,
                     alignment: Alignment.bottomCenter,
                   ),
@@ -53,7 +57,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
             ),
           ),
           Positioned(
-            left: 180,
+            left: widget.headerSize + 20,
             child: Container(
               padding: EdgeInsets.only(top: 40, left: 10, right: 10),
               alignment: Alignment.topLeft,
@@ -76,7 +80,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
           ),
           Positioned(
             top: 100,
-            left: 190,
+            left: widget.headerSize + 30,
             right: 10,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,22 +99,22 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
                     SizedBox(
                       width: 6,
                     ),
-//                    SizedBox(
-//                      width: 160,
-//                      child: Text(
-//                        _friendsModel.hometown,
-//                        overflow: TextOverflow.ellipsis,
-//                        maxLines: 2,
-//                        style: TextStyle(
-//                            fontFamily: 'FashionFetish',
-//                            fontSize: 13,
-//                            height: 1.15,
-//                            fontWeight: FontWeight.w900,
-//                            letterSpacing: -1,
-//                            color: Colors.black54
-//                        ),
-//                      ),
-//                    ),
+                    SizedBox(
+                      width: 160,
+                      child: Text(
+                        'Switzerland',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                            fontFamily: 'FashionFetish',
+                            fontSize: 13,
+                            height: 1.15,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: -1,
+                            color: Colors.black54
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],
