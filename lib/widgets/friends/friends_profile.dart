@@ -4,22 +4,17 @@ import 'friends_profile_header.dart';
 
 class FriendsProfile extends StatefulWidget {
   FriendsProfile({
-    Key key, this.friend,
+    Key key,
   }) : super(key: key);
-
-  final FriendsModel friend;
 
   @override
   _FriendsProfileState createState() => _FriendsProfileState();
 }
 
 class _FriendsProfileState extends State<FriendsProfile> {
-
-
   @override
   Widget build(BuildContext context) {
-//    final FriendsModel friendsModel = Provider.of(context, listen: false).selectedFriend.friendsModel;
-
+    final FriendsModel friend = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       key: Key('friends_profile'),
@@ -27,12 +22,10 @@ class _FriendsProfileState extends State<FriendsProfile> {
         color: Colors.white,
         child: Column(
           children: <Widget>[
-            FriendsProfileHeader(friend: widget.friend),
+            FriendsProfileHeader(friend: friend),
           ],
         ),
       ),
     );
   }
-
-
 }
