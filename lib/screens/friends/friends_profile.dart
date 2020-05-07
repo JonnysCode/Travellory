@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/friends_model.dart';
-import '../font_widgets.dart';
-import 'friends_profile_header.dart';
+import '../../widgets/font_widgets.dart';
+import '../../widgets/friends/friends_profile_header.dart';
 
 class FriendsProfile extends StatefulWidget {
   FriendsProfile({
