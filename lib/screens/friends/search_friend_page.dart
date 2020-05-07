@@ -21,8 +21,8 @@ class SearchFriendsPage extends StatefulWidget {
 
 class _SearchFriendsPageState extends State<SearchFriendsPage> {
   String searchWord = '';
-  final _loadingResults = List();
-  final _loadingRequests = List();
+  final _loadingResults = [];
+  final _loadingRequests = [];
 
   void _sendFriendRequest(
       String uidSender, String uidReceiver, int index) async {
@@ -95,7 +95,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     final sentRequest = sentFriendRequests.firstWhere(
         (itemToCheck) => itemToCheck.uid == friend.uid,
         orElse: () => null);
-    return (areFriends != null || hasRequest != null || sentRequest != null);
+    return areFriends != null || hasRequest != null || sentRequest != null;
   }
 
   Widget sendFriendRequestButton(
@@ -203,9 +203,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                     loader: LoadingHeart(),
                     minimumChars: 1,
                     emptyWidget: Center(
-                      child: Text('No user starting with "' +
-                          searchWord +
-                          '" was found'),
+                      child: Text('No user starting with $searchWord was found'),
                     ),
                     hintText: 'Add friends',
                     hintStyle: TextStyle(
