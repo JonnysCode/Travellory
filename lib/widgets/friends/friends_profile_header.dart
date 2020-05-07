@@ -8,21 +8,13 @@ class FriendsProfileHeader extends StatefulWidget {
 
   final friend;
 
-//  final FriendsModel friend;
-
   @override
   _FriendsHeaderState createState() => _FriendsHeaderState();
 }
 
 class _FriendsHeaderState extends State<FriendsProfileHeader> {
-//  get friend => null;
-
-//  FriendsModel _friendsModel;
-
   @override
   Widget build(BuildContext context) {
-//    _friendsModel = widget.friendsModel;
-
     return Container(
       height: 190,
       width: MediaQuery.of(context).size.width,
@@ -46,7 +38,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
             top: -30,
             left: -40,
             child: Hero(
-//              tag: 'friend_image${_friendsModel.index.toString()}',
+              tag: widget.friend.uid,
               child: Container(
                 height: 220,
                 width: 220,
@@ -68,8 +60,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
               width: MediaQuery.of(context).size.width,
               constraints: BoxConstraints(
                   maxHeight: 100.0,
-                  maxWidth: MediaQuery.of(context).size.width - 200
-              ),
+                  maxWidth: MediaQuery.of(context).size.width - 200),
               child: Text(
                 widget.friend.username,
                 overflow: TextOverflow.ellipsis,
@@ -79,8 +70,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
                     fontSize: 22,
                     height: 1.1,
                     fontWeight: FontWeight.w900,
-                    letterSpacing: -2
-                ),
+                    letterSpacing: -2),
               ),
             ),
           ),
