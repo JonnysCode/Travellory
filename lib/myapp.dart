@@ -31,8 +31,6 @@ import 'package:travellory/services/authentication/auth.dart';
 import 'package:travellory/shared/loading_heart.dart';
 
 class MyApp extends StatelessWidget {
-  MyApp({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return AuthProvider(
