@@ -6,7 +6,7 @@ Widget inputAuthentication(Icon icon, String hint, Color decorationColor, TextEd
   return Container(
     padding: EdgeInsets.only(left: 20, right: 20),
     child: TextFormField(
-      key: Key(hint.toLowerCase().trim() + 'Field'),
+      key: Key('${hint.toLowerCase().trim()}Field'),
       controller: controller,
       focusNode: focusNode,
       obscureText: obscure,
@@ -35,11 +35,11 @@ Widget inputAuthentication(Icon icon, String hint, Color decorationColor, TextEd
             ),
           ),
           prefixIcon: Padding(
+            padding: EdgeInsets.only(left: 30, right: 10),
             child: IconTheme(
               data: IconThemeData(color: decorationColor),
               child: icon,
             ),
-            padding: EdgeInsets.only(left: 30, right: 10),
           )),
     ),
   );
