@@ -6,7 +6,7 @@ import 'package:travellory/widgets/font_widgets.dart';
 import 'package:getflutter/getflutter.dart';
 
 class AchievementsView extends StatefulWidget {
-  AchievementsView({Key key}) : super(key: key);
+  const AchievementsView({Key key}) : super(key: key);
   @override
   _AchievementsViewState createState() => _AchievementsViewState();
 }
