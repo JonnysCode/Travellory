@@ -5,8 +5,9 @@ import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 // TODO(fluetfab): refactor friends_card_widget
-void _openFriendsProfile(){
-//  Navigator.pushNamed(context, '/friends/friends_profile');
+void _openFriendsProfile(BuildContext context, FriendsModel friend){
+//  FriendsProfileHeader(friend)
+  Navigator.pushNamed(context, '/friends/friends_profile', arguments: friend);
 }
 
 @override
@@ -22,7 +23,7 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
           left: 20,
           right: 0,
           child: GestureDetector(
-              onTap: () => _openFriendsProfile(),
+              onTap: () => _openFriendsProfile(context, friend),
             child: Container(
               height: cardSize,
               decoration: BoxDecoration(
