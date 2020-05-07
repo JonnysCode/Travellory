@@ -4,6 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
+// TODO(fluetfab): refactor friends_card_widget
+void _openFriendsProfile(){
+//  Navigator.pushNamed(context, '/friends/friends_profile');
+}
+
 @override
 Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
     double topPadding) {
@@ -17,8 +22,7 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
           left: 20,
           right: 0,
           child: GestureDetector(
-            // TODO(fluetfab): link to friends profile
-            //  onTap: () => _openFriendsProfile(),
+              onTap: () => _openFriendsProfile(),
             child: Container(
               height: cardSize,
               decoration: BoxDecoration(
