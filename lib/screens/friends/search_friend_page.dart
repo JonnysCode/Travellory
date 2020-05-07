@@ -174,7 +174,6 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                   ),
                 ])),
             Expanded(
-              flex: 7,
               child: Padding(
                 padding: EdgeInsets.only(
                   left: 15,
@@ -253,8 +252,8 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
               endIndent: 25,
               color: Colors.grey,
             ),
-            Expanded(
-              flex: 3,
+            Container(
+              constraints: BoxConstraints(minHeight: 50, maxHeight: 150),
               child: Padding(
                 key: Key('sent_friend_requests_list'),
                 padding: EdgeInsets.only(
