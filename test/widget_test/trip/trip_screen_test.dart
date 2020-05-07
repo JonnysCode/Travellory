@@ -5,7 +5,7 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/widgets/trip/booking_card.dart';
+import 'package:travellory/widgets/bookings/booking_card.dart';
 
 final PublicTransportModel _publicTransport = PublicTransportModel()
   ..transportationType = 'Taxi'
@@ -51,8 +51,7 @@ void main() {
   testWidgets('test if booking is loaded', (WidgetTester tester) async {
     Widget page = BookingCard(
         model: _rentalCar,
-        color: getBookingColorAccordingTo(_rentalCar),
-        getSchedule: getBookingsAccordingTo(_rentalCar));
+    );
 
     await tester.pumpWidget(makeTestableWidget(page: page));
 
@@ -62,8 +61,7 @@ void main() {
   testWidgets('test if rental car is loaded', (WidgetTester tester) async {
     Widget page = BookingCard(
         model: _rentalCar,
-        color: getBookingColorAccordingTo(_rentalCar),
-        getSchedule: getBookingsAccordingTo(_rentalCar));
+    );
 
     await tester.pumpWidget(makeTestableWidget(page: page));
 
@@ -73,8 +71,7 @@ void main() {
   testWidgets('test if activity is loaded', (WidgetTester tester) async {
     Widget page = BookingCard(
         model: _activity,
-        color: getBookingColorAccordingTo(_activity),
-        getSchedule: getBookingsAccordingTo(_activity));
+    );
 
     await tester.pumpWidget(makeTestableWidget(page: page));
 
@@ -84,8 +81,7 @@ void main() {
   testWidgets('test if public transport is loaded', (WidgetTester tester) async {
     Widget page = BookingCard(
         model: _publicTransport,
-        color: getBookingColorAccordingTo(_publicTransport),
-        getSchedule: getBookingsAccordingTo(_publicTransport));
+    );
 
     await tester.pumpWidget(makeTestableWidget(page: page));
 
@@ -95,8 +91,7 @@ void main() {
   testWidgets('test if flight is loaded', (WidgetTester tester) async {
     Widget page = BookingCard(
         model: _flight,
-        color: getBookingColorAccordingTo(_flight),
-        getSchedule: getBookingsAccordingTo(_flight));
+    );
 
     await tester.pumpWidget(makeTestableWidget(page: page));
 
@@ -106,8 +101,7 @@ void main() {
   testWidgets('test if accommodation is loaded', (WidgetTester tester) async {
     Widget page = BookingCard(
         model: _accommodation,
-        color: getBookingColorAccordingTo(_accommodation),
-        getSchedule: getBookingsAccordingTo(_accommodation));
+    );
 
     await tester.pumpWidget(makeTestableWidget(page: page));
 

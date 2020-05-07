@@ -83,7 +83,7 @@ class _PublicTransportViewState extends State<PublicTransportView> {
             Theme.of(context).primaryColor),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SizedBox(height: 10),
-        bottomBar(context),
+        bottomBar(context, publicTransportModels[0]),
       ]),
     );
   }
@@ -105,16 +105,7 @@ class _PublicTransportViewState extends State<PublicTransportView> {
             publicTransportViewPage(),
           ),
         ),
-        Positioned(
-          top: 15,
-          right: 10,
-          child: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: FaIcon(FontAwesomeIcons.times),
-            iconSize: 26,
-            color: Colors.red,
-          ),
-        ),
+        exitViewPage(context),
       ]),
     );
   }

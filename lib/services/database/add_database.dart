@@ -1,8 +1,16 @@
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:travellory/logger.dart';
+import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 
 class DatabaseAdder {
+  factory DatabaseAdder() {
+    return _instance;
+  }
+
+  DatabaseAdder._privateConstructor();
+
+  static final DatabaseAdder _instance = DatabaseAdder._privateConstructor();
+
   static const int _maxCount = 50;
   static const String addTrip = 'trips-addTrip';
 
@@ -19,6 +27,7 @@ class DatabaseAdder {
     final HttpsCallable callable =
         CloudFunctions.instance.getHttpsCallable(functionName: correspondingFunctionName);
     try {
+      log.d('JSON data for function call $correspondingFunctionName: ${model.toMap()}');
       final HttpsCallableResult result = await callable.call(model.toMap());
       log.i(result.data);
       return Future<bool>.value(true);

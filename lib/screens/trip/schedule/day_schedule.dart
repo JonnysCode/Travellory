@@ -1,61 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/models/abstract_model.dart';
-import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/day_model.dart';
-import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/trip/booking_card.dart';
 import 'package:travellory/widgets/trip/schedule/day_circle.dart';
-
-final PublicTransportModel _publicTransport = PublicTransportModel()
-  ..transportationType = 'train'
-  ..departureLocation = 'Los Angeles'
-  ..departureTime = '13:35'
-  ..arrivalLocation = 'Las Vegas'
-  ..arrivalTime = '15:40';
-
-final AccommodationModel _accommodation = AccommodationModel()
-  ..type = 'hotel'
-  ..name = 'Novotel Suites'
-  ..address = 'Bluff Street 102, 28343 Los Angeles'
-  ..checkinTime = '13:00';
-
-final ActivityModel _activity = ActivityModel()
-  ..description = 'Surfing Class'
-  ..location = 'Long Beach'
-  ..startTime = '14:00'
-  ..endTime = '18:00';
-
-final FlightModel _flight = FlightModel()
-  ..departureLocation = 'Zürich'
-  ..departureTime = '9:30'
-  ..arrivalLocation = 'Los Angeles'
-  ..arrivalTime = '12:20';
-
-final RentalCarModel _rentalCar = RentalCarModel()
-  ..pickupLocation = 'Los Angeles Airport';
-
-List<Model> _models = <Model>[
-  _rentalCar,
-  _flight,
-  _publicTransport,
-  _accommodation,
-  _activity,
-];
-
+import 'package:travellory/widgets/trip/schedule/schedule_entry_card.dart';
 
 class DaySchedule extends StatefulWidget {
   const DaySchedule({
     Key key,
-    @required this.isExpanded,
     @required this.day,
   }) : super(key: key);
 
-  final bool isExpanded;
   final Day day;
 
   @override
@@ -66,18 +21,16 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
   bool _isExpanded;
   AnimationController _controller;
 
-  List<Widget> bookings;
+  List<Widget> bookingsCards;
 
   @override
   void initState() {
     super.initState();
-    bookings = _models.map((model) => BookingCard(
-      model: model,
-      color: getColorAccordingTo(model),
-      getSchedule: getScheduleAccordingTo(model),
+    bookingsCards = widget.day.entries.map((entry) => ScheduleEntryCard(
+      scheduleEntry: entry,
     )).toList();
 
-    _isExpanded = widget.isExpanded;
+    _isExpanded = widget.day.isExpanded;
     _controller = AnimationController(
       vsync: this, // the SingleTickerProviderStateMixin
       duration: Duration(milliseconds: 200),
@@ -119,7 +72,7 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
                 right: 0,
                 top: 22,
                 child: FashionFetishText(
-                  text: toShortenedMonthDateFrom(widget.day.dateString),
+                  text: dMMMyyyy(widget.day.date),
                   size: 14,
                   color: Colors.black38,
                   textAlign: TextAlign.center,
@@ -160,7 +113,7 @@ class _DayScheduleState extends State<DaySchedule> with SingleTickerProviderStat
                     padding: const EdgeInsets.only(right: 8),
                     child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                      children: bookings.map((booking) => Padding(
+                      children: bookingsCards.map((booking) => Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: booking,
                       )).toList(),

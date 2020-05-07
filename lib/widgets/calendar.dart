@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_core/core.dart';
 import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/utils/date_converter.dart';
 
 class Calendar extends StatefulWidget {
@@ -22,7 +22,7 @@ class _CalendarState extends State<Calendar> {
     final meetings = <Meeting>[];
     for(final trip in trips){
       final Meeting meeting = Meeting(trip.name, getDateTimeFrom(trip.startDate),
-          getDateTimeFrom(trip.endDate), tripColor, true);
+          getDateTimeFrom(trip.endDate), tripColor, isAllDay: true);
       meetings.add(meeting);
     }
 
@@ -76,7 +76,9 @@ class _CalendarState extends State<Calendar> {
               backgroundColor: Colors.transparent,
               todayHighlightColor: Colors.black54,
               initialDisplayDate: DateTime.utc(today.year, today.month, 1),
-              dataSource: MeetingDataSource(_getDataSource(tripsProvider.trips)),
+              dataSource: MeetingDataSource(_getDataSource(
+                  tripsProvider.trips.map((trip) => trip.tripModel).toList()
+              )),
               selectionDecoration: BoxDecoration(
                 color: Colors.black12,
                 shape: BoxShape.circle,
@@ -188,7 +190,7 @@ class MeetingDataSource extends CalendarDataSource {
 }
 
 class Meeting {
-  Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay);
+  Meeting(this.eventName, this.from, this.to, this.background, {this.isAllDay});
 
   final String eventName;
   final DateTime from;

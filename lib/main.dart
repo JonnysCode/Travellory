@@ -3,6 +3,6 @@ import 'package:logger/logger.dart';
 import 'myapp.dart';
 
 void main() {
-  Logger.level = Level.info;
+  Logger.level = Level.debug;
   runApp(MyApp());
 }

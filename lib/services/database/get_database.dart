@@ -1,5 +1,5 @@
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:travellory/logger.dart';
+import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/activity_model.dart';
@@ -9,6 +9,14 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 
 class DatabaseGetter {
+  factory DatabaseGetter() {
+    return _instance;
+  }
+
+  DatabaseGetter._privateConstructor();
+
+  static final DatabaseGetter _instance = DatabaseGetter._privateConstructor();
+
   static const String getTrips = 'trips-getTrips';
   static const String getFlights = 'booking-getFlights';
   static const String getAccommodations = 'booking-getAccommodations';
@@ -33,6 +41,7 @@ class DatabaseGetter {
         CloudFunctions.instance.getHttpsCallable(functionName: function);
     List<dynamic> entries = [];
     try {
+      log.d('JSON data for function call $function: ${_getMap(uid, function)}');
       final HttpsCallableResult result =
           await callable.call(_getMap(uid, function));
       if (result.data.contains(_emptyResult)) {

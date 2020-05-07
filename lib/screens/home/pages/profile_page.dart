@@ -3,7 +3,6 @@ import 'package:path/path.dart' as path;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
@@ -11,8 +10,9 @@ import 'package:travellory/services/authentication/auth.dart';
 import 'package:travellory/services/storage.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/logger.dart';
+import 'package:travellory/utils/logger.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -109,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage>
                         child: UserInformation(user: user)),
                     SizedBox(height: 10),
                     Padding(
-                      key: Key('change-pw'),
+                      key: Key('achievements'),
                       padding: EdgeInsets.only(
                           top: 10,
                           left: 90,
@@ -119,32 +119,12 @@ class _ProfilePageState extends State<ProfilePage>
                         height: 40,
                         width: MediaQuery.of(context).size.width,
                         child: filledButton(
-                            "Change password",
+                            "Achievements",
                             Colors.white,
                             Theme.of(context).primaryColor,
                             Theme.of(context).primaryColor,
                             Colors.white, () {
-                          Navigator.pushNamed(context, '/password');
-                        }),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      key: Key('logout'),
-                      padding: EdgeInsets.only(
-                          left: 90,
-                          right: 90,
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: Container(
-                        height: 40,
-                        width: MediaQuery.of(context).size.width,
-                        child: filledButton(
-                            "Logout",
-                            Colors.white,
-                            Theme.of(context).primaryColor,
-                            Theme.of(context).primaryColor,
-                            Colors.white, () async {
-                          await _signOut();
+                          Navigator.pushNamed(context, '/view/achievements');
                         }),
                       ),
                     ),
@@ -160,7 +140,25 @@ class _ProfilePageState extends State<ProfilePage>
               image: AssetImage('assets/images/logo/travellory_icon.png'),
               height: 80,
             ),
+          ),
+          Positioned(
+            top: 50,
+            right: 35,
+            child: OptionButton(
+              optionItems: <OptionItem>[
+                OptionItem(
+                  description: 'Change password',
+                  icon: FontAwesomeIcons.userEdit,
+                  onTab: () => Navigator.pushNamed(context, '/password'),
+                ),
+                OptionItem(
+                    description: 'Logout',
+                    icon: FontAwesomeIcons.signOutAlt,
+                    onTab: () async => {await _signOut()}),
+              ],
+            ),
           )
+
         ],
       ),
     );
@@ -244,18 +242,16 @@ class UserInformation extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
-              FontAwesomeIcons.calendarAlt,
+              FontAwesomeIcons.home,
               color: Theme.of(context).primaryColor,
               size: 32,
             ),
             SizedBox(width: 10),
             FashionFetishText(
-              text: user != null
-                  ? DateFormat('dd.MM.yyyy').format(user.metadata.creationTime)
-                  : '',
+              text: 'Switzerland',
               size: 18,
               fontWeight: FashionFontWeight.bold,
-              height: 1.2,
+              height: 1.1,
             ),
           ]),
     ]);

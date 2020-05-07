@@ -40,6 +40,7 @@ dependencies:
   syncfusion_flutter_calendar: ^18.1.42-beta
   font_awesome_flutter: ^8.7.0
   google_maps_flutter: ^0.5.25+3
+  flutter_google_places: ^0.2.5
   http: ^0.12.0+1
   json_serializable: ^2.0.2
   flutter_rounded_date_picker: 1.0.0
@@ -47,10 +48,13 @@ dependencies:
   custom_navigation_bar: ^0.2.6
   flushbar: 1.8.0
   logger: ^0.6.0
+  flappy_search_bar: 1.7.2
   tuple: ^1.0.3
   path_provider: 1.5.1
   cached_network_image: 2.0.0
   firebase_auth_mocks: ^0.1.3
+  fab_circular_menu: ^1.0.0
+  getflutter: ^1.0.11
 
 dev_dependencies:
   flutter_test:

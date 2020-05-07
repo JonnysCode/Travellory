@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/trip/create_trip_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
@@ -44,7 +44,7 @@ void main() {
     expect(find.text('Trip Details'), findsOneWidget);
     expect(find.text('General Information'), findsOneWidget);
     expect(find.text('End Date *'), findsOneWidget);
-    expect(find.text('Destination(s) *'), findsOneWidget);
+    expect(find.text('Destination *'), findsOneWidget);
     expect(find.text('Trip Title *'), findsOneWidget);
     expect(find.text('General Information'), findsOneWidget);
   });
