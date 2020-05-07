@@ -3,11 +3,11 @@ import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 
 class DatabaseAdder {
-  DatabaseAdder._privateConstructor();
-
   factory DatabaseAdder() {
     return _instance;
   }
+
+  DatabaseAdder._privateConstructor();
 
   static final DatabaseAdder _instance = DatabaseAdder._privateConstructor();
 

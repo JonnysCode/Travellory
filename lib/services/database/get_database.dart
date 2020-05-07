@@ -9,11 +9,11 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 
 class DatabaseGetter {
-  DatabaseGetter._privateConstructor();
-
   factory DatabaseGetter() {
     return _instance;
   }
+
+  DatabaseGetter._privateConstructor();
 
   static final DatabaseGetter _instance = DatabaseGetter._privateConstructor();
 

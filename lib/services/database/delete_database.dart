@@ -17,11 +17,11 @@ import 'package:travellory/widgets/forms/show_dialog.dart';
 final log = getLogger('DatabaseDeleter');
 
 class DatabaseDeleter {
-  DatabaseDeleter._privateConstructor();
-
   factory DatabaseDeleter() {
     return _instance;
   }
+
+  DatabaseDeleter._privateConstructor();
 
   static final DatabaseDeleter _instance = DatabaseDeleter._privateConstructor();
 
