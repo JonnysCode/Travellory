@@ -22,7 +22,7 @@ class _CalendarState extends State<Calendar> {
     final meetings = <Meeting>[];
     for(final trip in trips){
       final Meeting meeting = Meeting(trip.name, getDateTimeFrom(trip.startDate),
-          getDateTimeFrom(trip.endDate), tripColor, true);
+          getDateTimeFrom(trip.endDate), tripColor, isAllDay: true);
       meetings.add(meeting);
     }
 
@@ -190,7 +190,7 @@ class MeetingDataSource extends CalendarDataSource {
 }
 
 class Meeting {
-  Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay);
+  Meeting(this.eventName, this.from, this.to, this.background, {this.isAllDay});
 
   final String eventName;
   final DateTime from;
