@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:travellory/logger.dart';
+import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/authentication/user_management.dart';
 

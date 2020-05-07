@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:path/path.dart' as path;
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:travellory/logger.dart';
+import 'package:travellory/utils/logger.dart';
 
 const String userProfilePicturesDir = 'profile-pictures/';
 const String defaultUserProfilePicture =

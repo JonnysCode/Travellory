@@ -6,14 +6,14 @@ class UserManagement {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'user-setUsername',
     );
-    return callable.call({'uid': '${user.uid}', 'displayName': '${user.displayName}'});
+    return callable.call({'uid': user.uid, 'displayName': user.displayName});
   }
 
   static Future<bool> isUsernameAvailable(String username) async {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'user-isUsernameAvailable',
     );
-    final dynamic result = await callable.call({'displayName': '$username'});
+    final dynamic result = await callable.call({'displayName': username});
     return result.data['isAvailable'];
   }
 }

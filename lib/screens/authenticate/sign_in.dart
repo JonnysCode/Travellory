@@ -37,7 +37,7 @@ class _SignInState extends State<SignIn> {
         Navigator.pop(context);
         setState(() {
           _error =
-              e.message == null ? 'Something went wrong. Try again' : e.message;
+              e.message ?? 'Something went wrong. Try again';
         });
       });
     }

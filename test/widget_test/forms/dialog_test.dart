@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/providers/trips_provider.dart';
+import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
@@ -20,7 +21,8 @@ void main() {
           child: SubmitButton(
             highlightColor: Theme.of(context).primaryColor,
             fillColor: Theme.of(context).primaryColor,
-            onSubmit: onSubmitBooking(TripsProvider(), testModel, 'booking-addTest', context, alertText),
+            onSubmit: onSubmitBooking(SingleTripProvider(TripModel(), null),
+                testModel, 'booking-addTest', context, alertText),
           ),
         );
       })));
