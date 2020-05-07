@@ -29,7 +29,7 @@ import 'package:travellory/screens/trip/trip_screen.dart';
 import 'package:travellory/screens/wrapper.dart';
 import 'package:travellory/services/authentication/auth.dart';
 import 'package:travellory/shared/loading_heart.dart';
-import 'package:travellory/widgets/friends/friends_profile.dart';
+import 'package:travellory/screens/friends/friends_profile.dart';
 
 class MyApp extends StatelessWidget {
   @override
