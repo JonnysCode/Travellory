@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 
-class Authenticate extends StatefulWidget {
-  @override
-  _AuthenticateState createState() => _AuthenticateState();
-}
-
-class _AuthenticateState extends State<Authenticate> {
+class Authenticate extends StatelessWidget {
+  static final route = '/auth';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override

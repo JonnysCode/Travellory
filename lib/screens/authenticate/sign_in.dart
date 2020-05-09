@@ -8,9 +8,7 @@ import 'package:travellory/widgets/input_widgets.dart';
 import 'package:pedantic/pedantic.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({this.toggleView});
-
-  final Function toggleView;
+  static final route = '/login';
 
   @override
   _SignInState createState() => _SignInState();

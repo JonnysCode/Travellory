@@ -10,9 +10,7 @@ import 'package:travellory/widgets/input_widgets.dart';
 import 'package:pedantic/pedantic.dart';
 
 class Register extends StatefulWidget {
-  const Register({this.toggleView});
-
-  final Function toggleView;
+  static final route = '/register';
 
   @override
   _RegisterState createState() => _RegisterState();

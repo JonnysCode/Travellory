@@ -22,6 +22,8 @@ List<RentalCarModel> rentalCarModels = <RentalCarModel>[
 ];
 
 class RentalCarView extends StatefulWidget {
+  static final route = '/view/rentalcar';
+
   @override
   _RentalCarViewState createState() => _RentalCarViewState();
 }

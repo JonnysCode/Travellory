@@ -15,6 +15,8 @@ class TripScreen extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
+  static final route = '/viewtrip';
+
   @override
   Widget build(BuildContext context) {
     final TripModel tripModel =
