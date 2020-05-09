@@ -28,7 +28,6 @@ import 'package:travellory/screens/trip/create_trip_screen.dart';
 import 'package:travellory/screens/trip/trip_screen.dart';
 import 'package:travellory/screens/wrapper.dart';
 import 'package:travellory/services/authentication/auth.dart';
-import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/shared/loading_logo.dart';
 
 class MyApp extends StatelessWidget {

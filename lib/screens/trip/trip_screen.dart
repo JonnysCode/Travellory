@@ -4,6 +4,16 @@ import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/screens/bookings/add_accommodation.dart';
+import 'package:travellory/screens/bookings/add_activity.dart';
+import 'package:travellory/screens/bookings/add_flight.dart';
+import 'package:travellory/screens/bookings/add_public_transport.dart';
+import 'package:travellory/screens/bookings/add_rental_car.dart';
+import 'package:travellory/screens/bookings/view_accommodation.dart';
+import 'package:travellory/screens/bookings/view_activity.dart';
+import 'package:travellory/screens/bookings/view_flight.dart';
+import 'package:travellory/screens/bookings/view_public_transport.dart';
+import 'package:travellory/screens/bookings/view_rental_car.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/widgets/font_widgets.dart';
@@ -91,7 +101,7 @@ class TripScreen extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _subsection('Flights', '/booking/flight'),
+                      child: _subsection('Flights', Flight.route),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -103,14 +113,14 @@ class TripScreen extends StatelessWidget {
                           child: BookingCard(
                               model: model,
                               onTap: () => Navigator.pushNamed(
-                                  context, '/view/flight', arguments: model),
+                                  context, FlightView.route, arguments: model),
                             ),
                         )).toList(),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _subsection('Accommodation', '/booking/accommodation', () {
+                      child: _subsection('Accommodation', Accommodation.route, () {
                         final AccommodationModel accommodationModel = AccommodationModel();
                         accommodationModel.tripUID = tripModel.uid;
                         return ModifyModelArguments(model: accommodationModel, isNewModel: true);
@@ -126,14 +136,14 @@ class TripScreen extends StatelessWidget {
                           child: BookingCard(
                             model: model,
                             onTap: () => Navigator.pushNamed(
-                                context, '/view/accommodation', arguments: model),
+                                context, AccommodationView.route, arguments: model),
                           ),
                         )).toList(),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _subsection('Activities', '/booking/activity'),
+                      child: _subsection('Activities', Activity.route),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -145,14 +155,14 @@ class TripScreen extends StatelessWidget {
                           child: BookingCard(
                             model: model,
                             onTap: () => Navigator.pushNamed(
-                                context, '/view/activity', arguments: model),
+                                context, ActivityView.route, arguments: model),
                           ),
                         )).toList(),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _subsection('Car rental', '/booking/rentalcar'),
+                      child: _subsection('Car rental', RentalCar.route),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -164,14 +174,14 @@ class TripScreen extends StatelessWidget {
                             child: BookingCard(
                               model: model,
                               onTap: () => Navigator.pushNamed(
-                                  context, '/view/rentalcar', arguments: model),
+                                  context, RentalCarView.route, arguments: model),
                             ),
                           )).toList(),
                         ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _subsection('Transportation', '/booking/publictransport', () {
+                      child: _subsection('Transportation', PublicTransport.route, () {
                         final PublicTransportModel publicTransportModel = PublicTransportModel();
                         publicTransportModel.tripUID = tripModel.uid;
                         return ModifyModelArguments(model: publicTransportModel, isNewModel: true);
@@ -187,7 +197,7 @@ class TripScreen extends StatelessWidget {
                           child: BookingCard(
                             model: model,
                             onTap: () => Navigator.pushNamed(
-                                context, '/view/publictransport', arguments: model),
+                                context, PublicTransportView.route, arguments: model),
                           ),
                         )).toList(),
                       ),

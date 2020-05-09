@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/screens/authenticate/register.dart';
+import 'package:travellory/screens/authenticate/sign_in.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 
 class Authenticate extends StatelessWidget {
@@ -106,7 +108,7 @@ class Authenticate extends StatelessWidget {
                               width: MediaQuery.of(context).size.width,
                               child: filledButton("LOGIN", Colors.white, Theme.of(context).primaryColor,
                                   Theme.of(context).primaryColor, Colors.white, () {
-                                    Navigator.pushNamed(context, '/login');
+                                    Navigator.pushNamed(context, SignIn.route);
                                   }),
                             ),
                           ),
@@ -123,7 +125,7 @@ class Authenticate extends StatelessWidget {
                               width: MediaQuery.of(context).size.width,
                               child: filledButton("REGISTER", Colors.white, Theme.of(context).primaryColor,
                                   Theme.of(context).primaryColor, Colors.white, () {
-                                    Navigator.pushNamed(context, '/register');
+                                    Navigator.pushNamed(context, Register.route);
                                   }),
                             ),
                           ),
