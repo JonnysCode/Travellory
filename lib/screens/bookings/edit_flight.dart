@@ -8,6 +8,8 @@ import 'package:travellory/services/database/edit.dart';
 import 'add_flight.dart';
 
 class EditFlight extends Flight {
+  static final route = '/edit/flight';
+
   @override
   _EditFlightState createState() => _EditFlightState();
 }

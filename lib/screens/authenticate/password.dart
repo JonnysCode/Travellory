@@ -9,8 +9,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:pedantic/pedantic.dart';
 
 class ChangePassword extends StatefulWidget {
-  const ChangePassword({this.toggleView});
-  final Function toggleView;
+  static final route = '/password';
 
   @override
   _RegisterState createState() => _RegisterState();

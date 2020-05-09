@@ -7,6 +7,8 @@ import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
 class FlightView extends StatefulWidget {
+  static final route = '/view/flight';
+
   @override
   _FlightViewState createState() => _FlightViewState();
 }
