@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/authentication/auth.dart';
+import 'package:travellory/shared/loading_logo.dart';
 import 'package:travellory/utils/input_validator.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/input_widgets.dart';
@@ -28,7 +29,7 @@ class _RegisterState extends State<ChangePassword> {
 
   Future _validateAndChangePW() async {
     if (_formKey.currentState.validate()) {
-      unawaited(Navigator.pushNamed(context, '/loading'));
+      unawaited(Navigator.pushNamed(context, LoadingLogo.route));
 
       await _changePassword().then((value) async {
         setState(() => _changePwError = null);

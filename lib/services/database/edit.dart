@@ -5,6 +5,11 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
+import 'package:travellory/screens/bookings/add_accommodation.dart';
+import 'package:travellory/screens/bookings/add_public_transport.dart';
+import 'package:travellory/screens/bookings/edit_activity.dart';
+import 'package:travellory/screens/bookings/edit_flight.dart';
+import 'package:travellory/screens/bookings/edit_rental_car.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import '../../utils/logger.dart';
@@ -15,15 +20,15 @@ void editModel(Model model, BuildContext context) {
   String changeRoute = '';
 
   if (model is FlightModel) {
-    changeRoute = '/edit/flight';
+    changeRoute = EditFlight.route;
   } else if (model is RentalCarModel) {
-    changeRoute = '/edit/rentalcar';
+    changeRoute = EditRentalCar.route;
   } else if (model is AccommodationModel) {
-    changeRoute = '/booking/accommodation';
+    changeRoute = Accommodation.route;
   } else if (model is PublicTransportModel) {
-    changeRoute = '/booking/publictransport';
+    changeRoute = PublicTransport.route;
   } else if (model is ActivityModel) {
-    changeRoute = '/edit/activity';
+    changeRoute = EditActivity.route;
   } else {
     log.w('No edit page was found for model');
   }

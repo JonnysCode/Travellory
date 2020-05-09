@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/screens/bookings/view_accommodation.dart';
 import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 
 String _mapStyle;
@@ -71,7 +72,7 @@ class MapSampleState extends State<MapSample> {
               title: accommodation.name,
               snippet: accommodation.address,
               onTap: () {
-                Navigator.pushNamed(context, '/view/accommodation', arguments: accommodation);
+                Navigator.pushNamed(context, AccommodationView.route, arguments: accommodation);
               }),
         );
         _markers[accommodation.tripUID] = marker;
