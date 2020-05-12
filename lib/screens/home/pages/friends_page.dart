@@ -5,6 +5,8 @@ import 'package:travellory/screens/friends/friends_list_page.dart';
 import 'package:travellory/screens/friends/search_friend_page.dart';
 
 class FriendsPage extends StatefulWidget {
+  static final route = '/friends/friends_page';
+
   @override
   _FriendsPageState createState() => _FriendsPageState();
 }

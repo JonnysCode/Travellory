@@ -6,6 +6,11 @@ import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/screens/bookings/add_accommodation.dart';
+import 'package:travellory/screens/bookings/add_activity.dart';
+import 'package:travellory/screens/bookings/add_flight.dart';
+import 'package:travellory/screens/bookings/add_public_transport.dart';
+import 'package:travellory/screens/bookings/add_rental_car.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
 import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
@@ -46,21 +51,21 @@ class HomePage extends StatelessWidget {
           description: 'Add Activity',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, '/booking/activity');
+            Navigator.pushNamed(context, Activity.route);
           }),
       Dial(
           icon: FontAwesomeIcons.car,
           description: 'Add Rental Car',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, '/booking/rentalcar');
+            Navigator.pushNamed(context, RentalCar.route);
           }),
       Dial(
           icon: FontAwesomeIcons.bus,
           description: 'Add Public Transportation',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, '/booking/publictransport',
+            Navigator.pushNamed(context, PublicTransport.route,
                 arguments: passPublicTransportModel());
           }),
       Dial(
@@ -68,7 +73,7 @@ class HomePage extends StatelessWidget {
           description: 'Add Accommodation',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, '/booking/accommodation',
+            Navigator.pushNamed(context, Accommodation.route,
                 arguments: passAccommodationModel());
           }),
       Dial(
@@ -76,7 +81,7 @@ class HomePage extends StatelessWidget {
           description: 'Add Flight',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, '/booking/flight');
+            Navigator.pushNamed(context, Flight.route);
           }),
     ];
 

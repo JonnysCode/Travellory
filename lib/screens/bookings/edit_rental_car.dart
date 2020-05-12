@@ -8,6 +8,8 @@ import 'package:travellory/screens/bookings/add_rental_car.dart';
 import 'package:travellory/services/database/edit.dart';
 
 class EditRentalCar extends RentalCar {
+  static final route = '/edit/rentalcar';
+
   @override
   _EditRentalCarState createState() => _EditRentalCarState();
 }
