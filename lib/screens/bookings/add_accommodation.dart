@@ -23,6 +23,8 @@ import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class Accommodation extends StatefulWidget {
+  static final route = '/booking/accommodation';
+
   @override
   AccommodationState createState() => AccommodationState();
 }

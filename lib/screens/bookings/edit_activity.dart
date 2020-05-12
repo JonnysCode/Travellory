@@ -8,6 +8,8 @@ import 'package:travellory/services/database/edit.dart';
 import 'add_activity.dart';
 
 class EditActivity extends Activity {
+  static final route = '/edit/activity';
+
   @override
   _EditActivityState createState() => _EditActivityState();
 }

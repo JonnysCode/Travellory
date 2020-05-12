@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/screens/trip/create_trip_screen.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/trip_card.dart';
@@ -42,7 +43,7 @@ class TripList extends StatelessWidget {
                     top: 11,
                     right: 0,
                     child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, '/createtrip'),
+                      onTap: () => Navigator.pushNamed(context, CreateTrip.route),
                       child: Container(
                         height: 32,
                         width: 32,

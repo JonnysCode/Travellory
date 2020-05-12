@@ -8,6 +8,8 @@ import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
 class AccommodationView extends StatefulWidget {
+  static final route = '/view/accommodation';
+
   @override
   _AccommodationViewState createState() => _AccommodationViewState();
 }
