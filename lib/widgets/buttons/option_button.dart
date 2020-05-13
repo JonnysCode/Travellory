@@ -5,9 +5,11 @@ class OptionButton extends StatelessWidget {
   const OptionButton({
     Key key,
     this.optionItems,
+    this.icon = FontAwesomeIcons.ellipsisV,
   }) : super(key: key);
 
   final List<OptionItem> optionItems;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class OptionButton extends StatelessWidget {
                 ),
               )).toList(),
           icon: Icon(
-            FontAwesomeIcons.ellipsisV,
+            icon,
             color: Colors.black54,
           ),
         )
