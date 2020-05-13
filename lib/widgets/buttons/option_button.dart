@@ -23,10 +23,12 @@ class OptionButton extends StatelessWidget {
               PopupMenuItem<OptionItem>(
                 child: ListTile(
                   onTap: optionItem.onTab,
-                  leading: Icon(
-                    optionItem.icon,
-                    color: optionItem.color,
-                  ),
+                  leading: optionItem.icon != null
+                      ? Icon(
+                        optionItem.icon,
+                        color: optionItem.color,
+                      )
+                      : null,
                   title: Text(
                     optionItem.description,
                     style: TextStyle(
@@ -47,8 +49,8 @@ class OptionButton extends StatelessWidget {
 
 class OptionItem{
   const OptionItem({
-    @required this.icon,
     @required this.description,
+    this.icon,
     this.onTab,
     this.color,
   });
