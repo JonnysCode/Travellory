@@ -11,6 +11,7 @@ import 'package:travellory/screens/bookings/add_activity.dart';
 import 'package:travellory/screens/bookings/add_flight.dart';
 import 'package:travellory/screens/bookings/add_public_transport.dart';
 import 'package:travellory/screens/bookings/add_rental_car.dart';
+import 'package:travellory/screens/bookings/email_parsed_bookings.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
 import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
@@ -44,8 +45,9 @@ class HomePage extends StatelessWidget {
       Dial(
           icon: FontAwesomeIcons.envelope,
           description: 'Manage forwarded bookings',
-          onTab: () {}
-          ),
+          onTab: () {
+            Navigator.pushNamed(context, EmailParsedBookingsScreen.route);
+          }),
       Dial(
           icon: FontAwesomeIcons.theaterMasks,
           description: 'Add Activity',
