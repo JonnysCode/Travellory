@@ -5,22 +5,6 @@ import 'package:travellory/widgets/bookings/view_booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
-List<RentalCarModel> rentalCarModels = <RentalCarModel>[
-  RentalCarModel(
-    bookingReference: 'R1',
-    company: 'Hertz',
-    pickupLocation: 'London',
-    pickupDate: '2020-05-01',
-    pickupTime: '15:10:00',
-    returnLocation: 'London',
-    returnDate: '2020-05-04',
-    returnTime: '17:00:00',
-    carDescription: 'Audi',
-    carNumberPlate: 'FAB123',
-    notes: null,
-  ),
-];
-
 class RentalCarView extends StatefulWidget {
   static final route = '/view/rentalcar';
 
