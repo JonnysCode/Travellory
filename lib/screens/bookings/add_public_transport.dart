@@ -169,7 +169,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
     // don't put in build because it will be recreated on every build
     // with state changes this is not appreciated
     final List<Widget> shown = [
-      BookingSiteTitle('Add Public Transport', FontAwesomeIcons.train),
+      BookingSiteTitle('Public Transport', FontAwesomeIcons.train),
       SectionTitle('Type of Transportation'),
       transportTypeDropdown,
       TravelloryFormField(

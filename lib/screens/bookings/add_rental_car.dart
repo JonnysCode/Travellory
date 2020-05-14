@@ -56,7 +56,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
               child: Column(children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: BookingSiteTitle('Add Rental Car', FontAwesomeIcons.car),
+                  child: BookingSiteTitle('Rental Car', FontAwesomeIcons.car),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),

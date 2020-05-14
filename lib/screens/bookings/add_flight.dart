@@ -77,7 +77,7 @@ class FlightState<T extends Flight> extends State<T> {
               child: Column(children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: BookingSiteTitle('Add Flight', FontAwesomeIcons.plane),
+                  child: BookingSiteTitle('Flight', FontAwesomeIcons.plane),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),

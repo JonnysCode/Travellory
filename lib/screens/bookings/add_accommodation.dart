@@ -188,7 +188,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         validatorText: 'Please enter the required information');
 
     final List<Widget> shown = [
-      BookingSiteTitle('Add Accommodation', FontAwesomeIcons.bed),
+      BookingSiteTitle('Accommodation', FontAwesomeIcons.bed),
       SectionTitle('Accommodation Type'),
       accommodationTypeDropdown,
       SectionTitle('General Information'),
