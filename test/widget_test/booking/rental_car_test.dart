@@ -113,6 +113,6 @@ void main() {
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
     // Verify that form is present.
-    expect(find.byKey(Key('CancelButton')), findsOneWidget);
+    expect(find.byKey(Key('BookingButton')), findsOneWidget);
   });
 }
