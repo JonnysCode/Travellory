@@ -26,6 +26,11 @@ class DatabaseDeleter {
   static final DatabaseDeleter _instance = DatabaseDeleter._privateConstructor();
 
   static const deleteTripName = 'trips-deleteTrip';
+  static const deleteFlightName = 'booking-deleteFlight';
+  static const deleteRentalCarName = 'booking-deleteRentalCar';
+  static const deleteAccommodationName = 'booking-deleteAccommodation';
+  static const deletePublicTransportationName = 'booking-deletePublicTransportation';
+  static const deleteActivityName = 'booking-deleteActivity';
 
   Future<bool> deleteModel(Model model, String correspondingFunctionName) async {
     final HttpsCallable callable =
@@ -52,15 +57,15 @@ class DatabaseDeleter {
 String getDeleteFunctionNameBasedOn(Model model) {
   String functionName;
   if (model is FlightModel) {
-    functionName = 'booking-deleteFlight';
+    functionName = DatabaseDeleter.deleteFlightName;
   } else if (model is RentalCarModel) {
-    functionName = 'booking-deleteRentalCar';
+    functionName = DatabaseDeleter.deleteRentalCarName;
   } else if (model is AccommodationModel) {
-    functionName = 'booking-deleteAccommodation';
+    functionName = DatabaseDeleter.deleteAccommodationName;
   } else if (model is PublicTransportModel) {
-    functionName = 'booking-deletePublicTransportation';
+    functionName = DatabaseDeleter.deletePublicTransportationName;
   } else if (model is ActivityModel) {
-    functionName = 'activity-deleteActivity';
+    functionName = DatabaseDeleter.deleteActivityName;
   } else {
     functionName = '';
   }
