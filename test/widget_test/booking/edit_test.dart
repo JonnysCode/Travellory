@@ -36,10 +36,10 @@ void main() {
         home: Material(child: Builder(
           builder: (BuildContext context) {
             return Center(
-              child: EditButton(
+              child: BookingButton(
                 highlightColor: Theme.of(context).primaryColor,
                 fillColor: Theme.of(context).primaryColor,
-                onEdit: () {
+                onPressed: () {
                   showEditedBookingDialog(context, alertText);
                 },
               ),
@@ -51,15 +51,15 @@ void main() {
   }
 
   testWidgets('Test edit button exists', (WidgetTester tester) async {
-    final testKey = Key('EditButton');
+    final testKey = Key('BookingButton');
 
     Widget makeOwnTestableWidget() {
       return MaterialApp(home: Material(child: Builder(builder: (BuildContext context) {
         return Center(
-          child: EditButton(
+          child: BookingButton(
             highlightColor: Theme.of(context).primaryColor,
             fillColor: Theme.of(context).primaryColor,
-            onEdit: () {
+            onPressed: () {
               // no onEdit function
             },
           ),
@@ -70,7 +70,7 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeOwnTestableWidget());
 
-    expect(find.byType(EditButton, skipOffstage: false), findsOneWidget);
+    expect(find.byType(BookingButton, skipOffstage: false), findsOneWidget);
     expect(find.byKey(testKey), findsOneWidget);
   });
 
@@ -85,8 +85,8 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText));
 
-    expect(find.byType(EditButton), findsOneWidget);
-    await tester.tap(find.byType(EditButton));
+    expect(find.byType(BookingButton), findsOneWidget);
+    await tester.tap(find.byType(BookingButton));
     await tester.pump();
     expect(find.text(alertText), findsOneWidget);
     expect(find.byKey(testKey), findsOneWidget);
