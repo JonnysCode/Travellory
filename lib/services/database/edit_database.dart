@@ -1,5 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
@@ -22,6 +23,8 @@ class DatabaseEditor {
   DatabaseEditor._privateConstructor();
 
   static final DatabaseEditor _instance = DatabaseEditor._privateConstructor();
+
+  static const editTripName = 'trips-updateTrip';
 
   Future<bool> editModel(Model model, String correspondingFunctionName) async {
     final HttpsCallable callable =
@@ -63,18 +66,33 @@ String getEditFunctionNameBasedOn(Model model) {
   return functionName;
 }
 
+const String onEditSuccessfulText =
+    "You've just edited this entry. Your trip overview has been updated. " +
+        "However, it might take a moment to see the changes on your profile. ";
+
 void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model,
     BuildContext context, String errorMessage) {
   final String functionName = getEditFunctionNameBasedOn(model);
 
-  const String alertText =
-      "You've just edited this entry. Your booking overview has been updated. " +
-          "However, it might take a moment to see the changes on your profile. ";
-
   return () async {
     final bool edited = await singleTripProvider.editBooking(model, functionName);
     if (edited) {
-      showEditedBookingDialog(context, alertText);
+      showEditedBookingDialog(context, onEditSuccessfulText);
+      log.i('onEditBooking was performed');
+    } else {
+      addToDataBaseFailedDialog(context, errorMessage);
+      log.i('onEditBooking did not work');
+    }
+  };
+}
+
+void Function() onEditTrip(TripsProvider trips, Model model,
+    BuildContext context, String errorMessage) {
+
+  return () async {
+    final bool edited = await trips.editTrip(model);
+    if (edited) {
+      showEditedBookingDialog(context, onEditSuccessfulText);
       log.i('onEditBooking was performed');
     } else {
       addToDataBaseFailedDialog(context, errorMessage);
