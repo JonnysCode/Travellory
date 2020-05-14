@@ -31,7 +31,6 @@ class ActivityState<T extends Activity> extends State<T> {
   final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final GlobalKey<DateFormFieldState> _endDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
-
   ActivityModel _activityModel = ActivityModel();
 
   static const int _imageItemCount = 13;
@@ -150,9 +149,9 @@ class ActivityState<T extends Activity> extends State<T> {
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
                       onTap: (controller) async {
-                        final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
-                            context,
-                            countryCode: tripModel.countryCode);
+                        final PlacesDetailsResponse detail =
+                            await GooglePlaces.openGooglePlacesSearch(context,
+                                countryCode: tripModel.countryCode);
 
                         controller.text = detail.result.formattedAddress;
                         _editActivityModel.location = detail.result.formattedAddress;
