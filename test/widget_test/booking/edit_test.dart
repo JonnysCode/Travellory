@@ -37,6 +37,7 @@ void main() {
           builder: (BuildContext context) {
             return Center(
               child: BookingButton(
+                buttonTitle: 'EditButtonTest',
                 highlightColor: Theme.of(context).primaryColor,
                 fillColor: Theme.of(context).primaryColor,
                 onPressed: () {
@@ -57,6 +58,7 @@ void main() {
       return MaterialApp(home: Material(child: Builder(builder: (BuildContext context) {
         return Center(
           child: BookingButton(
+            buttonTitle: 'EditButtonTest',
             highlightColor: Theme.of(context).primaryColor,
             fillColor: Theme.of(context).primaryColor,
             onPressed: () {
