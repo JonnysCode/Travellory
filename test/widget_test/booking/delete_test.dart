@@ -36,10 +36,11 @@ void main() {
         home: Material(child: Builder(
           builder: (BuildContext context) {
             return Center(
-              child: DeleteButton(
+              child: BookingButton(
+                buttonTitle: 'DeleteButtonTest',
                 highlightColor: Theme.of(context).primaryColor,
                 fillColor: Theme.of(context).primaryColor,
-                onDelete: () {
+                onPressed: () {
                   showDeleteDialog(activityModel, context, alertText);
                 },
               ),
@@ -51,15 +52,16 @@ void main() {
   }
 
   testWidgets('Test delete button exists', (WidgetTester tester) async {
-    final testKey = Key('DeleteButton');
+    final testKey = Key('BookingButton');
 
     Widget makeOwnTestableWidget() {
       return MaterialApp(home: Material(child: Builder(builder: (BuildContext context) {
         return Center(
-          child: DeleteButton(
+          child: BookingButton(
+            buttonTitle: 'DeleteButtonTest',
             highlightColor: Theme.of(context).primaryColor,
             fillColor: Theme.of(context).primaryColor,
-            onDelete: () {
+            onPressed: () {
               // no onDelete function
             },
           ),
@@ -70,7 +72,7 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeOwnTestableWidget());
 
-    expect(find.byType(DeleteButton, skipOffstage: false), findsOneWidget);
+    expect(find.byType(BookingButton, skipOffstage: false), findsOneWidget);
     expect(find.byKey(testKey), findsOneWidget);
   });
 
@@ -84,8 +86,8 @@ void main() {
 
     await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText));
 
-    expect(find.byType(DeleteButton), findsOneWidget);
-    await tester.tap(find.byType(DeleteButton));
+    expect(find.byType(BookingButton), findsOneWidget);
+    await tester.tap(find.byType(BookingButton));
     await tester.pump();
     expect(find.text(alertText), findsOneWidget);
     expect(find.byKey(testKey), findsOneWidget);
@@ -104,8 +106,8 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText));
 
-    expect(find.byType(DeleteButton), findsOneWidget);
-    await tester.tap(find.byType(DeleteButton));
+    expect(find.byType(BookingButton), findsOneWidget);
+    await tester.tap(find.byType(BookingButton));
     await tester.pump();
     expect(find.text(alertText), findsOneWidget);
 
