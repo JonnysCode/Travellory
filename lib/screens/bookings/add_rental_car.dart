@@ -210,9 +210,11 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                 _getSubmitButton(singleTripProvider, _editRentalCarModel, isNewModel),
                 Padding(
                   padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                  child: CancelButton(
-                    text: 'CANCEL',
-                    onCancel: () {
+                  child: BookingButton(
+                    buttonTitle: 'CANCEL',
+                    highlightColor: Theme.of(context).primaryColor,
+                    fillColor: Color(0xFFF48FB1),
+                    onPressed: () {
                       // If cancel, then model shouldn't be saved
                       _editRentalCarModel = model;
                       cancellingDialog(context, cancelText);

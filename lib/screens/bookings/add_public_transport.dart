@@ -62,9 +62,11 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
   }
 
   void _getCancelButton(BuildContext context) {
-    publicTransportList[publicTransportList.length - 2] = CancelButton(
-      text: 'CANCEL',
-      onCancel: () {
+    publicTransportList[publicTransportList.length - 2] = BookingButton(
+      buttonTitle: 'CANCEL',
+      highlightColor: Theme.of(context).primaryColor,
+      fillColor: Color(0xFFF48FB1),
+      onPressed: () {
         cancellingDialog(context, cancelText);
       },
     );
@@ -255,7 +257,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         onChanged: (value) => _publicTransportModel.notes = value,
       ),
       SubmitButton(),
-      CancelButton(),
+      BookingButton(),
       SizedBox(height: 20),
     ];
 

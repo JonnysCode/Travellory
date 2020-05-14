@@ -31,7 +31,6 @@ class ActivityState<T extends Activity> extends State<T> {
   final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final GlobalKey<DateFormFieldState> _endDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
-
   ActivityModel _activityModel = ActivityModel();
 
   static const int _imageItemCount = 13;
@@ -150,9 +149,9 @@ class ActivityState<T extends Activity> extends State<T> {
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
                       onTap: (controller) async {
-                        final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
-                            context,
-                            countryCode: tripModel.countryCode);
+                        final PlacesDetailsResponse detail =
+                            await GooglePlaces.openGooglePlacesSearch(context,
+                                countryCode: tripModel.countryCode);
 
                         controller.text = detail.result.formattedAddress;
                         _editActivityModel.location = detail.result.formattedAddress;
@@ -225,9 +224,11 @@ class ActivityState<T extends Activity> extends State<T> {
                 _getSubmitButton(singleTripProvider, _editActivityModel, isNewModel),
                 Padding(
                   padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                  child: CancelButton(
-                    text: 'CANCEL',
-                    onCancel: () {
+                  child: BookingButton(
+                    buttonTitle: 'CANCEL',
+                    highlightColor: Theme.of(context).primaryColor,
+                    fillColor: Color(0xFFF48FB1),
+                    onPressed: () {
                       _editActivityModel = model;
                       cancellingDialog(context, cancelText);
                     },

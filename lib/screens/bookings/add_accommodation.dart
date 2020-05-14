@@ -86,9 +86,11 @@ class AccommodationState<T extends Accommodation> extends State<T> {
   }
 
   void _getCancelButton(BuildContext context) {
-    accommodationList[accommodationList.length - 2] = CancelButton(
-      text: 'CANCEL',
-      onCancel: () {
+    accommodationList[accommodationList.length - 2] = BookingButton(
+      buttonTitle: 'CANCEL',
+      highlightColor: Theme.of(context).primaryColor,
+      fillColor: Color(0xFFF48FB1),
+      onPressed: () {
         cancellingDialog(context, cancelText);
       },
     );
@@ -276,7 +278,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         onChanged: (value) => _accommodationModel.notes = value,
       ),
       SubmitButton(),
-      CancelButton(),
+      BookingButton(),
       SizedBox(height: 20),
     ];
 

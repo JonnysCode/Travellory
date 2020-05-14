@@ -229,9 +229,11 @@ class FlightState<T extends Flight> extends State<T> {
                 _getSubmitButton(singleTripProvider, _editFlightModel, isNewModel),
                 Padding(
                   padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                  child: CancelButton(
-                    text: 'CANCEL',
-                    onCancel: () {
+                  child: BookingButton(
+                    buttonTitle: 'CANCEL',
+                    highlightColor: Theme.of(context).primaryColor,
+                    fillColor: Color(0xFFF48FB1),
+                    onPressed: () {
                       _editFlightModel = model;
                       cancellingDialog(context, cancelText);
                     },
