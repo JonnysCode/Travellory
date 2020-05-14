@@ -43,10 +43,11 @@ Container bottomBar(BuildContext context, Model model) {
           child: Container(
             height: 32,
             width: 120,
-            child: EditButton(
+            child: BookingButton(
+              buttonTitle: 'EDIT',
               highlightColor: Theme.of(context).primaryColor,
               fillColor: Theme.of(context).primaryColor,
-              onEdit: () {
+              onPressed: () {
                 editModel(model, context);
               },
             ),
