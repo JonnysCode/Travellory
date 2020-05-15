@@ -5,6 +5,7 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
@@ -46,7 +47,7 @@ class FlightState<T extends Flight> extends State<T> {
     void Function() onSubmit;
     if (isNewModel) {
       onSubmit =
-          onSubmitBooking(singleTripProvider, model, 'booking-addFlight', context, alertText);
+          onSubmitBooking(singleTripProvider, model, DatabaseAdder.addFlight, context, alertText);
     } else {
       onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
     }
