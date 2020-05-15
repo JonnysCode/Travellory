@@ -58,7 +58,7 @@ void main() {
   }
 
   testWidgets('test if edit rental car page is loaded', (WidgetTester tester) async {
-    final testKey = Key('EditRentalCar');
+    final testKey = Key('Rental Car');
     TripsProviderMock tripsProvider = TripsProviderMock();
 
     tripModel.init();
