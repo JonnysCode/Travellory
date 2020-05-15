@@ -6,7 +6,7 @@ import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/screens/bookings/add_public_transport.dart';
+import 'package:travellory/screens/bookings/public_transport.dart';
 import 'package:travellory/services/database/edit.dart';
 
 class TripsProviderMock extends Mock implements TripsProvider{}
