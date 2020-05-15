@@ -4,7 +4,7 @@ import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
-import 'edit.dart';
+import '../../widgets/bookings/edit.dart';
 
 final log = getLogger('DatabaseEditor');
 

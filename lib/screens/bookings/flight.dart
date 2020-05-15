@@ -15,7 +15,7 @@ import 'package:travellory/widgets/forms/show_dialog.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
-import 'package:travellory/services/database/edit.dart';
+import 'package:travellory/widgets/bookings/edit.dart';
 
 class Flight extends StatefulWidget {
   static final route = '/booking/flight';
