@@ -4,13 +4,14 @@ import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
+import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/bookings/add_accommodation.dart';
 import 'package:travellory/screens/bookings/activity.dart';
 import 'package:travellory/screens/bookings/flight.dart';
 import 'package:travellory/screens/bookings/add_public_transport.dart';
-import 'package:travellory/screens/bookings/add_rental_car.dart';
+import 'package:travellory/screens/bookings/rental_car.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
 import 'package:travellory/screens/bookings/view_activity.dart';
 import 'package:travellory/screens/bookings/view_flight.dart';
@@ -182,7 +183,11 @@ class TripScreen extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: _subsection('Car rental', RentalCar.route),
+                        child: _subsection('Car rental', RentalCar.route, () {
+                          final RentalCarModel rentalCarModel = RentalCarModel();
+                          rentalCarModel.tripUID = tripModel.uid;
+                          return ModifyModelArguments(model: rentalCarModel, isNewModel: true);
+                        }),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),

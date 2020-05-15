@@ -5,6 +5,7 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
@@ -29,7 +30,6 @@ class RentalCarState<T extends RentalCar> extends State<T> {
 
   final GlobalKey<DateFormFieldState> _pickUpDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final GlobalKey<DateFormFieldState> _returnDateFormFieldKey = GlobalKey<DateFormFieldState>();
-
 
   bool validateForm() {
     return rentalCarFormKey.currentState.validate();
@@ -93,7 +93,9 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       optional: false,
                       onTap: (controller) async {
                         final PlacesDetailsResponse detail =
-                            await GooglePlaces.openGooglePlacesSearch(context, );
+                            await GooglePlaces.openGooglePlacesSearch(
+                          context,
+                        );
                         controller.text = detail.result.formattedAddress;
                         _editRentalCarModel.pickupLocation = detail.result.formattedAddress;
                         _editRentalCarModel.pickupLatitude = detail.result.geometry.location.lat;
@@ -136,9 +138,9 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: true,
                       onTap: (controller) async {
-                        final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
-                            context,
-                            countryCode: tripModel.countryCode);
+                        final PlacesDetailsResponse detail =
+                            await GooglePlaces.openGooglePlacesSearch(context,
+                                countryCode: tripModel.countryCode);
 
                         controller.text = detail.result.formattedAddress;
                         _editRentalCarModel.returnLocation = detail.result.formattedAddress;
@@ -257,15 +259,17 @@ class RentalCarState<T extends RentalCar> extends State<T> {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
-    final RentalCarModel _rentalCarModel = RentalCarModel();
-    _rentalCarModel.tripUID = tripModel.uid;
+
+    final ModifyModelArguments _arguments = ModalRoute.of(context).settings.arguments;
+    final RentalCarModel _rentalCarModel = _arguments.model;
 
     return Scaffold(
       key: Key('Rental Car'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, _rentalCarModel, true),
+        child: getContent(
+            context, singleTripProvider, tripModel, _rentalCarModel, _arguments.isNewModel),
       ),
     );
   }
