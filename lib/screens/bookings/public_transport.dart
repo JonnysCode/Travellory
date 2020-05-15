@@ -11,6 +11,7 @@ import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/services/database/submit.dart';
+import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
@@ -37,7 +38,6 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final GlobalKey<DateFormFieldState> _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final GlobalKey<DateFormFieldState> _arrDateFormFieldKey = GlobalKey<DateFormFieldState>();
-
 
   bool validateForm() {
     return publicTransportFormKey.currentState.validate();
@@ -73,27 +73,22 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
     );
   }
 
-  void _getSubmitButton(SingleTripProvider singleTripProvider, BuildContext context,
-      PublicTransportModel model, bool isNewModel) {
-    void Function() onSubmit;
-    if (isNewModel) {
-      onSubmit = onSubmitBooking(
-          singleTripProvider, model, DatabaseAdder.addPublicTransportation, context, alertText);
-    } else {
-      onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
-    }
-
-    publicTransportList[publicTransportList.length - 3] = SubmitButton(
-      highlightColor: Theme.of(context).primaryColor,
-      fillColor: Theme.of(context).primaryColor,
-      validationFunction: validateForm,
-      onSubmit: onSubmit,
-    );
+  void _setSubmitButton(SingleTripProvider singleTripProvider, BuildContext context,
+      PublicTransportModel publicTransportModel, bool isNewModel) {
+    publicTransportList[publicTransportList.length - 3] = getSubmitButton(
+        context,
+        singleTripProvider,
+        publicTransportModel,
+        isNewModel,
+        DatabaseAdder.addPublicTransportation,
+        alertText,
+        errorMessage,
+        validateForm);
   }
 
-  Column getContent(TripModel tripModel, SingleTripProvider singleTripProvider,
-      BuildContext context, PublicTransportModel model, bool isNewModel) {
-    _getSubmitButton(singleTripProvider, context, model, isNewModel);
+  Column _getPublicTransportContent(TripModel tripModel, SingleTripProvider singleTripProvider,
+      BuildContext context, PublicTransportModel publicTransportModel, bool isNewModel) {
+    _setSubmitButton(singleTripProvider, context, publicTransportModel, isNewModel);
     _getCancelButton(context);
 
     return Column(
@@ -317,7 +312,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(
+        child: _getPublicTransportContent(
             tripModel, singleTripProvider, context, _publicTransportModel, arguments.isNewModel),
       ),
     );

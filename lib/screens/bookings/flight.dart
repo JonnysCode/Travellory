@@ -8,6 +8,7 @@ import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/submit.dart';
+import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
@@ -40,28 +41,6 @@ class FlightState<T extends Flight> extends State<T> {
 
   final String cancelText =
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
-
-  /* returns either submit new activity booking or edit old booking button */
-  Padding _getSubmitButton(
-      SingleTripProvider singleTripProvider, FlightModel model, bool isNewModel) {
-    void Function() onSubmit;
-    if (isNewModel) {
-      onSubmit =
-          onSubmitBooking(singleTripProvider, model, DatabaseAdder.addFlight, context, alertText);
-    } else {
-      onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-      child: SubmitButton(
-        highlightColor: Theme.of(context).primaryColor,
-        fillColor: Theme.of(context).primaryColor,
-        validationFunction: validateForm,
-        onSubmit: onSubmit,
-      ),
-    );
-  }
 
   Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
       TripModel tripModel, FlightModel model, bool isNewModel) {
@@ -227,7 +206,11 @@ class FlightState<T extends Flight> extends State<T> {
                     onChanged: (value) => _editFlightModel.notes = value,
                   ),
                 ),
-                _getSubmitButton(singleTripProvider, _editFlightModel, isNewModel),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: getSubmitButton(context, singleTripProvider, _editFlightModel, isNewModel,
+                      DatabaseAdder.addFlight, alertText, errorMessage, validateForm),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                   child: BookingButton(
