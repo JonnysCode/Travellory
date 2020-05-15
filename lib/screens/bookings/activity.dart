@@ -251,14 +251,12 @@ class ActivityState<T extends Activity> extends State<T> {
 
   @override
   Widget build(BuildContext context) {
-    final ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
-    final ActivityModel _activityModel = arguments.model;
-
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
 
-
+    final ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
+    final ActivityModel _activityModel = arguments.model;
 
     return Scaffold(
       key: Key('Activity'),
