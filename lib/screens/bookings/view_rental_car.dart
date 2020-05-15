@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/rental_car_model.dart';
+import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/widgets/bookings/view_booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
@@ -66,7 +67,7 @@ class _RentalCarViewState extends State<RentalCarView> {
             Theme.of(context).primaryColor),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SizedBox(height: 10),
-        bottomBar(context, rentalCarModels[0]),
+        bottomBar(context, rentalCarModels[0], DatabaseDeleter.deleteRentalCar),
       ]),
     );
   }

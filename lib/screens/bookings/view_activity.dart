@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/activity_model.dart';
+import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/widgets/bookings/view_booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';
@@ -99,7 +100,7 @@ class _ActivityViewState extends State<ActivityView> {
             Theme.of(context).primaryColor),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SizedBox(height: 10),
-        bottomBar(context, activityModel),
+        bottomBar(context, activityModel, DatabaseDeleter.deleteActivity),
       ]),
     );
   }

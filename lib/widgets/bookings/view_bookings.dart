@@ -21,7 +21,7 @@ Container bookingView(SingleChildScrollView child) {
   );
 }
 
-Container bottomBar(BuildContext context, Model model) {
+Container bottomBar(BuildContext context, Model model, String deleteFunctionName) {
   final String modelText = getDeleteTextBasedOn(model);
   final String deleteAlertText = 'You are about to delete your ' +
       modelText +
@@ -62,7 +62,7 @@ Container bottomBar(BuildContext context, Model model) {
               highlightColor: Theme.of(context).primaryColor,
               fillColor: Theme.of(context).primaryColor,
               onPressed: () {
-                showDeleteDialog(model, context, deleteAlertText);
+                showDeleteDialog(model, context, deleteAlertText, deleteFunctionName);
               },
             ),
           ),

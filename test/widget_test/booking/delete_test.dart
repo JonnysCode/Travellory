@@ -6,6 +6,7 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/widgets/bookings/edit_delete_dialogs.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 
@@ -29,7 +30,7 @@ TripModel tripModel = TripModel(
     imageNr: 3);
 
 void main() {
-  Widget makeTestableWidget(TripsProvider tripsProvider, String alertText) {
+  Widget makeTestableWidget(TripsProvider tripsProvider, String alertText, String functionName) {
     return ChangeNotifierProvider<TripsProvider>.value(
       value: tripsProvider,
       child: MaterialApp(
@@ -41,7 +42,7 @@ void main() {
                 highlightColor: Theme.of(context).primaryColor,
                 fillColor: Theme.of(context).primaryColor,
                 onPressed: () {
-                  showDeleteDialog(activityModel, context, alertText);
+                  showDeleteDialog(activityModel, context, alertText, functionName);
                 },
               ),
             );
@@ -81,10 +82,13 @@ void main() {
     final Key testKey = Key('ShowDeleteDialog');
     TripsProviderMock tripsProvider = TripsProviderMock();
 
+    // This functionName just serves as placeholder for this test
+    final String functionName = DatabaseDeleter.deleteActivity;
+
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
-    await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText));
+    await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText, functionName));
 
     expect(find.byType(BookingButton), findsOneWidget);
     await tester.tap(find.byType(BookingButton));
@@ -98,13 +102,16 @@ void main() {
     final String alertText = 'TestOnDelete';
     final Key testKey = Key('deleteButton');
 
+    // This functionName just serves as placeholder for this test
+    final String functionName = DatabaseDeleter.deleteActivity;
+
     TripsProviderMock tripsProvider = TripsProviderMock();
 
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText));
+    await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText, functionName));
 
     expect(find.byType(BookingButton), findsOneWidget);
     await tester.tap(find.byType(BookingButton));

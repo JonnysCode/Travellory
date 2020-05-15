@@ -11,7 +11,7 @@ import 'package:travellory/widgets/buttons/buttons.dart';
 
 import '../font_widgets.dart';
 
-void showDeleteDialog(Model model, BuildContext context, String alertText) {
+void showDeleteDialog(Model model, BuildContext context, String alertText, String functionName) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -34,7 +34,7 @@ void showDeleteDialog(Model model, BuildContext context, String alertText) {
               onDeleteTrip(model, context))
           else
             alertButton('DELETE', Theme.of(context).accentColor, context,
-              onDeleteBooking(model, context))
+              onDeleteBooking(model, context, functionName))
         ],
       );
     },
