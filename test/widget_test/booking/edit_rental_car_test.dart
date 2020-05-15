@@ -6,7 +6,7 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/screens/bookings/edit_rental_car.dart';
+import 'package:travellory/screens/bookings/rental_car.dart';
 import 'package:travellory/services/database/edit.dart';
 
 class TripsProviderMock extends Mock implements TripsProvider {}
@@ -46,7 +46,7 @@ void main() {
       child: MaterialApp(
         routes: <String, WidgetBuilder>{
           '/': (context) => const Wrapper(),
-          '/edit/rentalcar': (context) => EditRentalCar()
+          '/booking/rentalcar': (context) => RentalCar()
         },
       ),
     );
