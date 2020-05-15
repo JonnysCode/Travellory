@@ -15,7 +15,7 @@ import 'package:travellory/screens/bookings/flight.dart';
 import 'package:travellory/screens/bookings/public_transport.dart';
 import 'package:travellory/screens/bookings/rental_car.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
-import 'package:travellory/services/database/edit.dart';
+import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 

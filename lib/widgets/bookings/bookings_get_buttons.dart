@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
+import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
-import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/submit_button.dart';
 import 'package:travellory/widgets/buttons/booking_button.dart';
 
