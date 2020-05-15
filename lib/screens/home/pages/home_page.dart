@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/models/activity_model.dart';
+import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
+import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
@@ -24,7 +27,7 @@ class HomePage extends StatelessWidget {
     TripModel tripModel;
     if (trip != null) tripModel = trip.tripModel;
 
-    ModifyModelArguments passPublicTransportModel() {
+    ModifyModelArguments _passPublicTransportModel() {
       final PublicTransportModel publicTransportModel = PublicTransportModel();
       if (tripModel != null) {
         publicTransportModel.tripUID = tripModel.uid;
@@ -32,7 +35,7 @@ class HomePage extends StatelessWidget {
       return ModifyModelArguments(model: publicTransportModel, isNewModel: true);
     }
 
-    ModifyModelArguments passAccommodationModel() {
+    ModifyModelArguments _passAccommodationModel() {
       final AccommodationModel accommodationModel = AccommodationModel();
       if (tripModel != null) {
         accommodationModel.tripUID = tripModel.uid;
@@ -40,25 +43,45 @@ class HomePage extends StatelessWidget {
       return ModifyModelArguments(model: accommodationModel, isNewModel: true);
     }
 
+    ModifyModelArguments _passActivityModel() {
+      final ActivityModel activityModel = ActivityModel();
+      if (tripModel != null) {
+        activityModel.tripUID = tripModel.uid;
+      }
+      return ModifyModelArguments(model: activityModel, isNewModel: true);
+    }
+
+    ModifyModelArguments _passFlightModel() {
+      final FlightModel flightModel = FlightModel();
+      if (tripModel != null) {
+        flightModel.tripUID = tripModel.uid;
+      }
+      return ModifyModelArguments(model: flightModel, isNewModel: true);
+    }
+
+    ModifyModelArguments _passRentalCarModel() {
+      final RentalCarModel rentalCarModel = RentalCarModel();
+      if (tripModel != null) {
+        rentalCarModel.tripUID = tripModel.uid;
+      }
+      return ModifyModelArguments(model: rentalCarModel, isNewModel: true);
+    }
+
     final List<Dial> _dials = <Dial>[
-      Dial(
-          icon: FontAwesomeIcons.envelope,
-          description: 'Manage forwarded bookings',
-          onTab: () {}
-          ),
+      Dial(icon: FontAwesomeIcons.envelope, description: 'Manage forwarded bookings', onTab: () {}),
       Dial(
           icon: FontAwesomeIcons.theaterMasks,
           description: 'Add Activity',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, Activity.route);
+            Navigator.pushNamed(context, Activity.route, arguments: _passActivityModel());
           }),
       Dial(
           icon: FontAwesomeIcons.car,
           description: 'Add Rental Car',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, RentalCar.route);
+            Navigator.pushNamed(context, RentalCar.route, arguments: _passRentalCarModel);
           }),
       Dial(
           icon: FontAwesomeIcons.bus,
@@ -66,22 +89,21 @@ class HomePage extends StatelessWidget {
           onTab: () {
             tripsProvider.selectTrip(tripModel);
             Navigator.pushNamed(context, PublicTransport.route,
-                arguments: passPublicTransportModel());
+                arguments: _passPublicTransportModel());
           }),
       Dial(
           icon: FontAwesomeIcons.bed,
           description: 'Add Accommodation',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, Accommodation.route,
-                arguments: passAccommodationModel());
+            Navigator.pushNamed(context, Accommodation.route, arguments: _passAccommodationModel());
           }),
       Dial(
           icon: FontAwesomeIcons.plane,
           description: 'Add Flight',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, Flight.route);
+            Navigator.pushNamed(context, Flight.route, arguments: _passFlightModel);
           }),
     ];
 
