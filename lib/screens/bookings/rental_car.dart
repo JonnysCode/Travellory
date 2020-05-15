@@ -7,8 +7,6 @@ import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit.dart';
-import 'package:travellory/services/database/submit.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
@@ -42,7 +40,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
   final String cancelText =
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
 
-  Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
+  Column _getRentalCarContent(BuildContext context, SingleTripProvider singleTripProvider,
       TripModel tripModel, RentalCarModel model, bool isNewModel) {
     RentalCarModel _editRentalCarModel = RentalCarModel();
     _editRentalCarModel = RentalCarModel.fromData(model.toMap());
@@ -219,7 +217,6 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       isNewModel,
                       DatabaseAdder.addRentalCar,
                       alertText,
-                      errorMessage,
                       validateForm),
                 ),
                 Padding(
@@ -254,7 +251,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(
+        child: _getRentalCarContent(
             context, singleTripProvider, tripModel, _rentalCarModel, _arguments.isNewModel),
       ),
     );

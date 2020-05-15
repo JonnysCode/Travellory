@@ -6,10 +6,7 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
-import 'package:travellory/services/database/edit_database.dart';
-import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
@@ -37,12 +34,14 @@ class FlightState<T extends Flight> extends State<T> {
   }
 
   final String alertText =
-      "You've just submitted the booking information for your flight booking. You can see all the information in the trip overview";
+      "You've just submitted the booking information for your flight booking. "
+      "You can see all the information in the trip overview";
 
   final String cancelText =
-      'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
+      'You are about to abort this booking entry. '
+      'Do you want to go back to the previous site and discard your changes?';
 
-  Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
+  Column _getFlightContent(BuildContext context, SingleTripProvider singleTripProvider,
       TripModel tripModel, FlightModel model, bool isNewModel) {
     FlightModel _editFlightModel = FlightModel();
     _editFlightModel = FlightModel.fromData(model.toMap());
@@ -209,7 +208,7 @@ class FlightState<T extends Flight> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: getSubmitButton(context, singleTripProvider, _editFlightModel, isNewModel,
-                      DatabaseAdder.addFlight, alertText, errorMessage, validateForm),
+                      DatabaseAdder.addFlight, alertText, validateForm),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
@@ -244,7 +243,7 @@ class FlightState<T extends Flight> extends State<T> {
       body: Container(
         color: Colors.white,
         child:
-            getContent(context, singleTripProvider, tripModel, _flightModel, _arguments.isNewModel),
+            _getFlightContent(context, singleTripProvider, tripModel, _flightModel, _arguments.isNewModel),
       ),
     );
   }

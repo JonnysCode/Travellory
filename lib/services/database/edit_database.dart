@@ -64,7 +64,7 @@ String getEditFunctionNameBasedOn(Model model) {
 }
 
 void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model,
-    BuildContext context, String errorMessage) {
+    BuildContext context) {
   final String functionName = getEditFunctionNameBasedOn(model);
 
   const String alertText =
@@ -77,7 +77,7 @@ void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model
       showEditedBookingDialog(context, alertText);
       log.i('onEditBooking was performed');
     } else {
-      addToDataBaseFailedDialog(context, errorMessage);
+      addToDataBaseFailedDialog(context);
       log.i('onEditBooking did not work');
     }
   };

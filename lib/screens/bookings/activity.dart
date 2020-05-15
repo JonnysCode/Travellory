@@ -7,11 +7,8 @@ import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit.dart';
-import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
-import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
@@ -47,10 +44,8 @@ class ActivityState<T extends Activity> extends State<T> {
       "You can see all the information in the trip overview";
 
   final String cancelText =
-      'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
-
-  final String errorMessage = "Seems like there's a connection problem. "
-      "Please check your internet connection and try submitting again.";
+      'You are about to abort this booking entry. '
+      'Do you want to go back to the previous site and discard your changes?';
 
   int _selectedIndex;
 
@@ -210,7 +205,7 @@ class ActivityState<T extends Activity> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: getSubmitButton(context, singleTripProvider, _editActivityModel,
-                      isNewModel, DatabaseAdder.addActivity, alertText, errorMessage, validateForm),
+                      isNewModel, DatabaseAdder.addActivity, alertText, validateForm),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 2, left: 15, right: 15),

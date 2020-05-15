@@ -7,10 +7,8 @@ import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit.dart';
-import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/utils/list_models.dart';
-import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
@@ -49,10 +47,12 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
   }
 
   final String alertText =
-      "You've just submitted the booking information for your public transportation booking. You can see all the information in the trip overview";
+      "You've just submitted the booking information for your public transportation booking. "
+      "You can see all the information in the trip overview";
 
   final String cancelText =
-      'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
+      'You are about to abort this booking entry. '
+      'Do you want to go back to the previous site and discard your changes?';
 
   Widget itemBuilder(BuildContext context, int index, Animation<double> animation) {
     return FormItem(animation: animation, child: publicTransportList[index]);
@@ -80,7 +80,6 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         isNewModel,
         DatabaseAdder.addPublicTransportation,
         alertText,
-        errorMessage,
         validateForm);
   }
 
