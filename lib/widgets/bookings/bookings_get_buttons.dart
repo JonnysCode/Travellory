@@ -5,7 +5,7 @@ import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 
-/* returns either submit new activity booking or edit old booking button */
+/// Returns submit button either for adding or editing a booking
 SubmitButton getSubmitButton(
     BuildContext context,
     SingleTripProvider singleTripProvider,
@@ -26,6 +26,8 @@ SubmitButton getSubmitButton(
   );
 }
 
+/// Returns either onSubmit method for new submits,
+/// or onEdit method for old bookings
 void Function() getOnAddEditSubmitFunction(
     BuildContext context,
     SingleTripProvider singleTripProvider,
@@ -43,6 +45,7 @@ void Function() getOnAddEditSubmitFunction(
   return onSubmit;
 }
 
+/// Returns CancelButton for Add and Edit bookings
 BookingButton getBookingCancelButton(BuildContext context, Function() onPressed) {
   return BookingButton(
     buttonTitle: 'CANCEL',
