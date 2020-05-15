@@ -63,45 +63,73 @@ class _ActivityViewState extends State<ActivityView> {
   SingleChildScrollView flightViewPage(ActivityModel activityModel) {
     return SingleChildScrollView(
       key: Key('ActivityViewPage'),
-      child: Column(children: [
-        _getHeader(headerTitle, activityModel.imageNr),
-        SizedBox(height: 20),
-        SectionTitle('Activity Details'),
-        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-        displayDropdownField(
-            'Category', activityTypes, activityModels[0].category, Theme.of(context).primaryColor),
-        Divider(),
-        displayField(FontAwesomeIcons.star, 'Activity Title', activityModels[0].title,
-            Theme.of(context).primaryColor),
-        Divider(),
-        displayField(FontAwesomeIcons.info, 'Description', activityModels[0].description,
-            Theme.of(context).primaryColor),
-        Padding(padding: const EdgeInsets.only(top: 15, left: 15, right: 15)),
-        SectionTitle('Schedule'),
-        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-        displayField(FontAwesomeIcons.mapMarkerAlt, 'Location', activityModels[0].location,
-            Theme.of(context).primaryColor),
-        Divider(),
-        displayField(FontAwesomeIcons.calendarAlt, 'Start Date', activityModels[0].startDate,
-            Theme.of(context).primaryColor),
-        Divider(),
-        displayField(FontAwesomeIcons.clock, 'Start Time', activityModels[0].startTime,
-            Theme.of(context).primaryColor),
-        Divider(),
-        displayField(FontAwesomeIcons.calendarAlt, 'End Date', activityModels[0].endDate,
-            Theme.of(context).primaryColor),
-        Divider(),
-        displayField(FontAwesomeIcons.clock, 'End Time', activityModels[0].endTime,
-            Theme.of(context).primaryColor),
-        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-        SectionTitle('Notes'),
-        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-        displayField(FontAwesomeIcons.stickyNote, 'Notes', activityModels[0].notes,
-            Theme.of(context).primaryColor),
-        Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
-        SizedBox(height: 10),
-        bottomBar(context, activityModel, DatabaseDeleter.deleteActivity),
-      ]),
+      child: Stack(
+        children: <Widget>[
+          Column(children: [
+            _getHeader(headerTitle, activityModel.imageNr),
+            SizedBox(height: 20),
+            SectionTitle('Activity Details'),
+            Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+            displayDropdownField('Category', activityTypes, activityModels[0].category,
+                Theme.of(context).primaryColor),
+            Divider(),
+            displayField(FontAwesomeIcons.star, 'Activity Title', activityModels[0].title,
+                Theme.of(context).primaryColor),
+            Divider(),
+            displayField(FontAwesomeIcons.info, 'Description', activityModels[0].description,
+                Theme.of(context).primaryColor),
+            Padding(padding: const EdgeInsets.only(top: 15, left: 15, right: 15)),
+            SectionTitle('Schedule'),
+            Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+            displayField(FontAwesomeIcons.mapMarkerAlt, 'Location', activityModels[0].location,
+                Theme.of(context).primaryColor),
+            Divider(),
+            displayField(FontAwesomeIcons.calendarAlt, 'Start Date', activityModels[0].startDate,
+                Theme.of(context).primaryColor),
+            Divider(),
+            displayField(FontAwesomeIcons.clock, 'Start Time', activityModels[0].startTime,
+                Theme.of(context).primaryColor),
+            Divider(),
+            displayField(FontAwesomeIcons.calendarAlt, 'End Date', activityModels[0].endDate,
+                Theme.of(context).primaryColor),
+            Divider(),
+            displayField(FontAwesomeIcons.clock, 'End Time', activityModels[0].endTime,
+                Theme.of(context).primaryColor),
+            Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+            SectionTitle('Notes'),
+            Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+            displayField(FontAwesomeIcons.stickyNote, 'Notes', activityModels[0].notes,
+                Theme.of(context).primaryColor),
+            Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
+            SizedBox(height: 10),
+            bottomBar(context, activityModel, DatabaseDeleter.deleteActivity),
+          ]),
+          _activityIcon(activityModel),
+        ],
+      ),
+    );
+  }
+
+  Positioned _activityIcon(ActivityModel activityModel) {
+    return Positioned(
+      key: Key('ActivityIcon'),
+      top: 160,
+      left: 20,
+      child: Container(
+        height: 80,
+        width: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40),
+          boxShadow: <BoxShadow>[
+            BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.3), offset: Offset(3.0, 3.0))
+          ],
+          image: DecorationImage(
+            image: AssetImage(activityModel.imagePath),
+            fit: BoxFit.fitWidth,
+            alignment: Alignment.bottomCenter,
+          ),
+        ),
+      ),
     );
   }
 
@@ -120,26 +148,6 @@ class _ActivityViewState extends State<ActivityView> {
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
           child: bookingView(
             flightViewPage(activityModel),
-          ),
-        ),
-        Positioned(
-          top: 180,
-          left: 25,
-          child: Container(
-            height: 80,
-            width: 80,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    blurRadius: 6, color: Colors.black.withOpacity(.3), offset: Offset(3.0, 3.0))
-              ],
-              image: DecorationImage(
-                image: AssetImage(activityModel.imagePath),
-                fit: BoxFit.fitWidth,
-                alignment: Alignment.bottomCenter,
-              ),
-            ),
           ),
         ),
         exitViewPage(context),

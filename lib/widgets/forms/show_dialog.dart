@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
-
 import '../font_widgets.dart';
 
 void showSubmittedBookingDialog(BuildContext context, String alertText) {
