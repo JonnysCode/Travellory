@@ -5,7 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/screens/trip/create_trip_screen.dart';
 import 'package:travellory/screens/trip/edit_trip_screen.dart';
 import 'package:travellory/screens/trip/trip_screen.dart';
 import 'package:travellory/utils/date_converter.dart';
@@ -41,8 +40,7 @@ class _TripCardState extends State<TripCard> {
   }
 
   void _editTrip() {
-    Provider.of<TripsProvider>(context, listen: false).selectTrip(_tripModel, initBookings: false);
-    Navigator.pushNamed(context, EditTrip.route);
+    Navigator.pushNamed(context, EditTrip.route, arguments: _tripModel);
   }
 
   @override
