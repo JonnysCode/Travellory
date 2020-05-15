@@ -52,7 +52,7 @@ void main() {
     );
   }
 
-  Future<void> pumpEditActivity(WidgetTester tester) async {
+  Future<void> pumpEditRentalCar(WidgetTester tester) async {
     await tester.tap(find.text('X'));
     await tester.pump();
   }
@@ -69,7 +69,7 @@ void main() {
     expect(find.text('X'), findsOneWidget);
     expect(find.byKey(testKey, skipOffstage: false), findsNothing);
 
-    await pumpEditActivity(tester);
+    await pumpEditRentalCar(tester);
 
     expect(find.byKey(testKey, skipOffstage: false), findsOneWidget);
   });
