@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
@@ -32,7 +33,8 @@ class TripScreen extends StatelessWidget {
     final TripModel tripModel =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip.tripModel;
 
-    Widget _subsection(String title, String route, [ModifyModelArguments Function() passedModelArguments]) {
+    Widget _subsection(String title, String route,
+        [ModifyModelArguments Function() passedModelArguments]) {
       return Container(
         height: 40,
         width: MediaQuery.of(context).size.width,
@@ -98,115 +100,136 @@ class TripScreen extends StatelessWidget {
                 builder: (_, tripsProvider, __) {
                   final trip = tripsProvider.selectedTrip;
                   return ListView(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _subsection('Flights', Flight.route),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: trip.isFetchingFlights
-                          ? LoadingHeart()
-                          : Column(
-                        children: trip.flights.map((model) => Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: BookingCard(
-                              model: model,
-                              onTap: () => Navigator.pushNamed(
-                                  context, FlightView.route, arguments: model),
-                            ),
-                        )).toList(),
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                        child: _subsection('Flights', Flight.route),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _subsection('Accommodation', Accommodation.route, () {
-                        final AccommodationModel accommodationModel = AccommodationModel();
-                        accommodationModel.tripUID = tripModel.uid;
-                        return ModifyModelArguments(model: accommodationModel, isNewModel: true);
-                      }),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: trip.isFetchingAccommodations
-                          ? LoadingHeart()
-                          : Column(
-                        children: trip.accommodations.map((model) => Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: BookingCard(
-                            model: model,
-                            onTap: () => Navigator.pushNamed(
-                                context, AccommodationView.route, arguments: model),
-                          ),
-                        )).toList(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                        child: trip.isFetchingFlights
+                            ? LoadingHeart()
+                            : Column(
+                                children: trip.flights
+                                    .map((model) => Padding(
+                                          padding: const EdgeInsets.only(bottom: 10),
+                                          child: BookingCard(
+                                            model: model,
+                                            onTap: () => Navigator.pushNamed(
+                                                context, FlightView.route,
+                                                arguments: model),
+                                          ),
+                                        ))
+                                    .toList(),
+                              ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _subsection('Activities', Activity.route),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: trip.isFetchingActivities
-                          ? LoadingHeart()
-                          : Column(
-                        children: trip.activities.map((model) => Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: BookingCard(
-                            model: model,
-                            onTap: () => Navigator.pushNamed(
-                                context, ActivityView.route, arguments: model),
-                          ),
-                        )).toList(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                        child: _subsection('Accommodation', Accommodation.route, () {
+                          final AccommodationModel accommodationModel = AccommodationModel();
+                          accommodationModel.tripUID = tripModel.uid;
+                          return ModifyModelArguments(model: accommodationModel, isNewModel: true);
+                        }),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _subsection('Car rental', RentalCar.route),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: trip.isFetchingRentalCars
-                          ? LoadingHeart()
-                          : Column(
-                          children: trip.rentalCars.map((model) => Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: BookingCard(
-                              model: model,
-                              onTap: () => Navigator.pushNamed(
-                                  context, RentalCarView.route, arguments: model),
-                            ),
-                          )).toList(),
-                        ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: _subsection('Transportation', PublicTransport.route, () {
-                        final PublicTransportModel publicTransportModel = PublicTransportModel();
-                        publicTransportModel.tripUID = tripModel.uid;
-                        return ModifyModelArguments(model: publicTransportModel, isNewModel: true);
-                      }),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: trip.isFetchingPublicTransports
-                          ? LoadingHeart()
-                          : Column(
-                        children: trip.publicTransports.map((model) => Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: BookingCard(
-                            model: model,
-                            onTap: () => Navigator.pushNamed(
-                                context, PublicTransportView.route, arguments: model),
-                          ),
-                        )).toList(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                        child: trip.isFetchingAccommodations
+                            ? LoadingHeart()
+                            : Column(
+                                children: trip.accommodations
+                                    .map((model) => Padding(
+                                          padding: const EdgeInsets.only(bottom: 10),
+                                          child: BookingCard(
+                                            model: model,
+                                            onTap: () => Navigator.pushNamed(
+                                                context, AccommodationView.route,
+                                                arguments: model),
+                                          ),
+                                        ))
+                                    .toList(),
+                              ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                );},
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                        child: _subsection('Activities', Activity.route, () {
+                          final ActivityModel activityModel = ActivityModel();
+                          activityModel.tripUID = tripModel.uid;
+                          return ModifyModelArguments(model: activityModel, isNewModel: true);
+                        }),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                        child: trip.isFetchingActivities
+                            ? LoadingHeart()
+                            : Column(
+                                children: trip.activities
+                                    .map((model) => Padding(
+                                          padding: const EdgeInsets.only(bottom: 10),
+                                          child: BookingCard(
+                                            model: model,
+                                            onTap: () => Navigator.pushNamed(
+                                                context, ActivityView.route,
+                                                arguments: model),
+                                          ),
+                                        ))
+                                    .toList(),
+                              ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                        child: _subsection('Car rental', RentalCar.route),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                        child: trip.isFetchingRentalCars
+                            ? LoadingHeart()
+                            : Column(
+                                children: trip.rentalCars
+                                    .map((model) => Padding(
+                                          padding: const EdgeInsets.only(bottom: 10),
+                                          child: BookingCard(
+                                            model: model,
+                                            onTap: () => Navigator.pushNamed(
+                                                context, RentalCarView.route,
+                                                arguments: model),
+                                          ),
+                                        ))
+                                    .toList(),
+                              ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                        child: _subsection('Transportation', PublicTransport.route, () {
+                          final PublicTransportModel publicTransportModel = PublicTransportModel();
+                          publicTransportModel.tripUID = tripModel.uid;
+                          return ModifyModelArguments(
+                              model: publicTransportModel, isNewModel: true);
+                        }),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                        child: trip.isFetchingPublicTransports
+                            ? LoadingHeart()
+                            : Column(
+                                children: trip.publicTransports
+                                    .map((model) => Padding(
+                                          padding: const EdgeInsets.only(bottom: 10),
+                                          child: BookingCard(
+                                            model: model,
+                                            onTap: () => Navigator.pushNamed(
+                                                context, PublicTransportView.route,
+                                                arguments: model),
+                                          ),
+                                        ))
+                                    .toList(),
+                              ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  );
+                },
               ),
             )
           ],

@@ -6,8 +6,8 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/screens/bookings/add_accommodation.dart';
+import 'package:travellory/screens/bookings/add_activity.dart';
 import 'package:travellory/screens/bookings/add_public_transport.dart';
-import 'package:travellory/screens/bookings/edit_activity.dart';
 import 'package:travellory/screens/bookings/edit_flight.dart';
 import 'package:travellory/screens/bookings/edit_rental_car.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
@@ -28,7 +28,7 @@ void editModel(Model model, BuildContext context) {
   } else if (model is PublicTransportModel) {
     changeRoute = PublicTransport.route;
   } else if (model is ActivityModel) {
-    changeRoute = EditActivity.route;
+    changeRoute = Activity.route;
   } else {
     log.w('No edit page was found for model');
   }
