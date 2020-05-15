@@ -5,11 +5,11 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/widgets/bookings/bookings_accommodation.dart';
-import 'package:travellory/widgets/bookings/bookings_activity.dart';
-import 'package:travellory/widgets/bookings/bookings_flight.dart';
-import 'package:travellory/widgets/bookings/bookings_publict_transport.dart';
-import 'package:travellory/widgets/bookings/bookings_rental_car.dart';
+import 'package:travellory/widgets/booking_cards/bookings_accommodation.dart';
+import 'package:travellory/widgets/booking_cards/bookings_activity.dart';
+import 'package:travellory/widgets/booking_cards/bookings_flight.dart';
+import 'package:travellory/widgets/booking_cards/bookings_publict_transport.dart';
+import 'package:travellory/widgets/booking_cards/bookings_rental_car.dart';
 
 class BookingCard extends StatelessWidget {
   const BookingCard({

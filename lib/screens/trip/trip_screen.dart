@@ -20,7 +20,7 @@ import 'package:travellory/screens/bookings/view_rental_car.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/widgets/font_widgets.dart';
-import 'package:travellory/widgets/bookings/booking_card.dart';
+import 'package:travellory/widgets/booking_cards/booking_card.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 
 class TripScreen extends StatelessWidget {
