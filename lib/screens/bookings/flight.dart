@@ -212,17 +212,14 @@ class FlightState<T extends Flight> extends State<T> {
                       DatabaseAdder.addFlight, alertText, errorMessage, validateForm),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                  child: BookingButton(
-                    buttonTitle: 'CANCEL',
-                    highlightColor: Theme.of(context).primaryColor,
-                    fillColor: Color(0xFFF48FB1),
-                    onPressed: () {
-                      _editFlightModel = model;
-                      cancellingDialog(context, cancelText);
-                    },
-                  ),
-                ),
+                    padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
+                    child: getBookingCancelButton(
+                      context,
+                      () {
+                        _editFlightModel = model;
+                        cancellingDialog(context, cancelText);
+                      },
+                    )),
                 SizedBox(height: 20),
               ]),
             ),

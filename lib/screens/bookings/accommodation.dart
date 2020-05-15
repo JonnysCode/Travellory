@@ -61,7 +61,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
   Column _getAccommodationContent(TripModel tripModel, SingleTripProvider singleTripProvider,
       BuildContext context, AccommodationModel model, bool isNewModel) {
     _setSubmitButton(singleTripProvider, context, model, isNewModel);
-    _getCancelButton(context);
+    _setCancelButton(context);
 
     return Column(children: <Widget>[
       TripHeader(tripModel),
@@ -87,12 +87,10 @@ class AccommodationState<T extends Accommodation> extends State<T> {
     ]);
   }
 
-  void _getCancelButton(BuildContext context) {
-    accommodationList[accommodationList.length - 2] = BookingButton(
-      buttonTitle: 'CANCEL',
-      highlightColor: Theme.of(context).primaryColor,
-      fillColor: Color(0xFFF48FB1),
-      onPressed: () {
+  void _setCancelButton(BuildContext context) {
+    accommodationList[accommodationList.length - 2] = getBookingCancelButton(
+      context,
+      () {
         cancellingDialog(context, cancelText);
       },
     );
