@@ -67,7 +67,7 @@ String getDeleteFunctionNameBasedOn(Model model) {
   return functionName;
 }
 
-void Function() onDeleteBooking(Model model, BuildContext context, String errorMessage) {
+void Function() onDeleteBooking(Model model, BuildContext context) {
   final SingleTripProvider singleTripProvider =
       Provider.of<TripsProvider>(context, listen: false).selectedTrip;
 
@@ -82,13 +82,13 @@ void Function() onDeleteBooking(Model model, BuildContext context, String errorM
       showDeletedBookingDialog(context, alertText);
       log.i('onDeleteBooking was performed');
     } else {
-      addToDataBaseFailedDialog(context, errorMessage);
+      addToDataBaseFailedDialog(context);
       log.i('onDeleteBooking did not work');
     }
   };
 }
 
-void Function() onDeleteTrip(TripModel tripModel, BuildContext context, String errorMessage) {
+void Function() onDeleteTrip(TripModel tripModel, BuildContext context) {
   final TripsProvider tripsProvider = 
     Provider.of<TripsProvider>(context, listen: false);
 
@@ -101,7 +101,7 @@ void Function() onDeleteTrip(TripModel tripModel, BuildContext context, String e
       showDeletedBookingDialog(context, alertText, hasBackButton: false);
       log.i('onDeleteBooking was performed');
     } else {
-      addToDataBaseFailedDialog(context, errorMessage);
+      addToDataBaseFailedDialog(context);
       log.i('onDeleteBooking did not work');
     }
   };

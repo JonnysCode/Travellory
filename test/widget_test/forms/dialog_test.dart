@@ -126,13 +126,11 @@ void main() {
   });
 
   testWidgets('Test addToDataBaseFailedDialog is created', (WidgetTester tester) async {
-    final String alertText = 'Test';
-
     Widget makeTestableWidget() {
       return MaterialApp(home: Material(child: Builder(builder: (BuildContext context) {
         return Center(
           child: RaisedButton(
-            onPressed: () => addToDataBaseFailedDialog(context, alertText),
+            onPressed: () => addToDataBaseFailedDialog(context),
           ),
         );
       })));
