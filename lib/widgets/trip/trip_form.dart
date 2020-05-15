@@ -19,17 +19,19 @@ enum TripFormType{
 
 class TripForm extends StatefulWidget {
   const TripForm.edit({
+    @required this.tripModel,
     this.tripFormType = TripFormType.edit,
     Key key,
   }) : super(key: key);
 
   const TripForm.create({
+    @required this.tripModel,
     this.tripFormType = TripFormType.create,
     Key key,
   }) : super(key: key);
 
-
   final TripFormType tripFormType;
+  final TripModel tripModel;
 
   @override
   _TripFormState createState() => _TripFormState();
@@ -55,11 +57,8 @@ class _TripFormState extends State<TripForm> {
   @override
   void initState() {
     super.initState();
-    _selectedIndex = 0;
-    if(widget.tripFormType == TripFormType.create){
-      _tripModel = TripModel()
-          ..imageNr = 1;
-    }
+    _tripModel = widget.tripModel;
+    _selectedIndex = _tripModel.imageNr == null ? 0 : _tripModel.imageNr-1;
   }
 
   @override
@@ -70,21 +69,18 @@ class _TripFormState extends State<TripForm> {
 
   @override
   Widget build(BuildContext context) {
-    final TripsProvider trips = Provider.of<TripsProvider>(context, listen: false);
-    if(widget.tripFormType == TripFormType.edit){
-      _tripModel = trips.selectedTrip.tripModel;
-    }
 
     bool _validateForm() {
       return createTripFormKey.currentState.validate();
     }
 
-    SubmitButton _getSubmitButton(TripsProvider trips, TripModel model) {
+    SubmitButton _getSubmitButton() {
+      TripsProvider trips = Provider.of<TripsProvider>(context, listen: false);
       void Function() onSubmit;
       if (widget.tripFormType == TripFormType.create) {
-        onSubmit = onSubmitTrip(trips, model, context, alertText);
+        onSubmit = onSubmitTrip(trips, _tripModel, context, alertText);
       } else {
-        onSubmit = onEditTrip(trips, model, context, errorMessage);
+        onSubmit = onEditTrip(trips, _tripModel, context, errorMessage);
       }
 
       return SubmitButton(
@@ -209,7 +205,7 @@ class _TripFormState extends State<TripForm> {
                     child: Container(
                       height: 32,
                       width: 120,
-                      child: _getSubmitButton(trips, _tripModel),
+                      child: _getSubmitButton(),
                     )),
                 SizedBox(
                   height: 10,
