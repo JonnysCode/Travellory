@@ -23,6 +23,8 @@ class DatabaseGetter {
   static const String getActivities = 'activity-getActivities';
   static const String getRentalCars = 'booking-getRentalCars';
   static const String getPublicTransportations = 'booking-getPublicTransportations';
+  static const String getTemporaryAccommodations = 'getTempAccommodations';
+
   static const String _emptyResult = 'no-data';
   static const int _maxCount = 200;
 
@@ -90,6 +92,9 @@ class DatabaseGetter {
       case 'trips-getTrips':
         entries = <TripModel>[];
         break;
+      case getTemporaryAccommodations:
+        entries = <AccommodationModel>[];
+        break;
     }
     return entries;
   }
@@ -114,6 +119,9 @@ class DatabaseGetter {
         break;
       case 'trips-getTrips':
         entries = _createTrips(dbEntries);
+        break;
+      case getTemporaryAccommodations :
+        entries = _createAccommodations(dbEntries);
         break;
     }
     return entries;
