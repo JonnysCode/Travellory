@@ -62,12 +62,10 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
     return FormItem(animation: animation, child: item);
   }
 
-  void _getCancelButton(BuildContext context) {
-    publicTransportList[publicTransportList.length - 2] = BookingButton(
-      buttonTitle: 'CANCEL',
-      highlightColor: Theme.of(context).primaryColor,
-      fillColor: Color(0xFFF48FB1),
-      onPressed: () {
+  void _setCancelButton(BuildContext context) {
+    publicTransportList[publicTransportList.length - 2] = getBookingCancelButton(
+      context,
+      () {
         cancellingDialog(context, cancelText);
       },
     );
@@ -89,7 +87,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
   Column _getPublicTransportContent(TripModel tripModel, SingleTripProvider singleTripProvider,
       BuildContext context, PublicTransportModel publicTransportModel, bool isNewModel) {
     _setSubmitButton(singleTripProvider, context, publicTransportModel, isNewModel);
-    _getCancelButton(context);
+    _setCancelButton(context);
 
     return Column(
       children: <Widget>[

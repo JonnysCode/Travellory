@@ -42,3 +42,12 @@ void Function() getOnAddEditSubmitFunction(
   }
   return onSubmit;
 }
+
+BookingButton getBookingCancelButton(BuildContext context, Function() onPressed) {
+  return BookingButton(
+    buttonTitle: 'CANCEL',
+    highlightColor: Theme.of(context).primaryColor,
+    fillColor: Color(0xFFF48FB1),
+    onPressed: onPressed,
+  );
+}

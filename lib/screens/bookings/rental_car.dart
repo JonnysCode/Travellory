@@ -223,18 +223,14 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       validateForm),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                  child: BookingButton(
-                    buttonTitle: 'CANCEL',
-                    highlightColor: Theme.of(context).primaryColor,
-                    fillColor: Color(0xFFF48FB1),
-                    onPressed: () {
-                      // If cancel, then model shouldn't be saved
-                      _editRentalCarModel = model;
-                      cancellingDialog(context, cancelText);
-                    },
-                  ),
-                ),
+                    padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
+                    child: getBookingCancelButton(
+                      context,
+                      () {
+                        _editRentalCarModel = model;
+                        cancellingDialog(context, cancelText);
+                      },
+                    )),
                 SizedBox(height: 20),
               ]),
             ),
