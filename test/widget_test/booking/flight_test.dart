@@ -3,12 +3,31 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
+import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/screens/bookings/add_flight.dart';
+import 'package:travellory/screens/bookings/flight.dart';
+import 'package:travellory/services/database/edit.dart';
 
 class TripsProviderMock extends Mock implements TripsProvider{}
+
+class Wrapper extends StatelessWidget {
+  const Wrapper({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, Flight.route, arguments: createFlightModel());
+      },
+      child: Container(
+        color: const Color(0xFFFFFF00),
+        child: const Text('X'),
+      ),
+    );
+  }
+}
 
 TripModel tripModel = TripModel(
     name: 'Castle Discovery',
@@ -17,16 +36,29 @@ TripModel tripModel = TripModel(
     destination: 'Munich',
     imageNr: 3);
 
+ModifyModelArguments createFlightModel() {
+  final FlightModel flightTestModel = FlightModel();
+  flightTestModel.tripUID = tripModel.uid;
+  return ModifyModelArguments(model: flightTestModel, isNewModel: true);
+}
+
 void main() {
   Widget makeTestableWidget(TripsProvider tripsProvider) {
     return ChangeNotifierProvider<TripsProvider>.value(
       value: tripsProvider,
       child: MaterialApp(
-        home: Flight(),
+        routes: <String, WidgetBuilder>{
+          '/': (context) => const Wrapper(),
+          '/booking/flight': (context) => Flight()
+        },
       ),
     );
   }
 
+  Future<void> pumpFlight(WidgetTester tester) async {
+    await tester.tap(find.text('X'));
+    await tester.pump();
+  }
 
   testWidgets('test if Flight page is loaded', (WidgetTester tester) async {
     final testKey = Key('Flight');
@@ -38,8 +70,9 @@ void main() {
         SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
+    await pumpFlight(tester);
 
-    expect(find.byKey(testKey), findsOneWidget);
+    expect(find.byKey(testKey, skipOffstage: false), findsOneWidget);
   });
 
   testWidgets('test if form instance is found', (WidgetTester tester) async {
@@ -51,9 +84,10 @@ void main() {
         SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
+    await pumpFlight(tester);
 
     // verify that form is present
-    expect(find.byType(Form), findsOneWidget);
+    expect(find.byType(Form, skipOffstage: false), findsOneWidget);
   });
 
 
@@ -65,6 +99,7 @@ void main() {
         SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
+    await pumpFlight(tester);
 
     expect(find.byKey(Key('BookingSiteTitle'), skipOffstage: false), findsOneWidget);
     expect(find.byKey(Key('SectionTitle'), skipOffstage: false), findsNWidgets(4));
@@ -87,8 +122,10 @@ void main() {
         SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
+    await pumpFlight(tester);
+
     // Verify that form is present.
-    expect(find.byKey(Key('SubmitButton')), findsOneWidget);
+    expect(find.byKey(Key('SubmitButton'), skipOffstage: false), findsOneWidget);
   });
 
   testWidgets('test if submit button is tapped', (WidgetTester tester) async {
@@ -100,9 +137,11 @@ void main() {
         SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
+    await pumpFlight(tester);
+
     // Verify that form is present.
-    expect(find.byKey(Key('SubmitButton')), findsOneWidget);
-    await tester.tap(find.byKey(Key('SubmitButton')));
+    expect(find.byKey(Key('SubmitButton'), skipOffstage: false), findsOneWidget);
+    await tester.tap(find.byKey(Key('SubmitButton'), skipOffstage: false));
   });
 
 
@@ -115,8 +154,9 @@ void main() {
         SingleTripProvider(tripModel, null)
     );
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
+    await pumpFlight(tester);
 
     // Verify that form is present.
-    expect(find.byKey(Key('BookingButton')), findsOneWidget);
+    expect(find.byKey(Key('BookingButton'), skipOffstage: false), findsOneWidget);
   });
 }
