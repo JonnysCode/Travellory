@@ -71,9 +71,11 @@ class TripsProvider extends ChangeNotifier implements NotifyListener {
     return edited;
   }
 
-  void selectTrip(TripModel tripModel) {
+  void selectTrip(TripModel tripModel, {initBookings = true}) {
     _selectedTripIndex = trips.indexWhere((entry) => entry.tripModel.uid == tripModel.uid);
-    unawaited(selectedTrip.initBookings());
+    if(initBookings){
+      unawaited(selectedTrip.initBookings());
+    }
   }
 
   @override
