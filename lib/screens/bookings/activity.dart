@@ -65,6 +65,11 @@ class ActivityState<T extends Activity> extends State<T> {
     _editActivityModel = ActivityModel.fromData(model.toMap());
     _activityModel = _editActivityModel;
 
+    // need to set selecetedIndex for editModel
+    if(!isNewModel) {
+      _selectedIndex = _editActivityModel.imageNr - 1;
+    }
+
     return Column(
       children: <Widget>[
         TripHeader(tripModel),
