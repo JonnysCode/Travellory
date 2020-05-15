@@ -35,8 +35,8 @@ class TripScreen extends StatelessWidget {
     final TripModel tripModel =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip.tripModel;
 
-    Widget _subsection(String title, String route,
-        [ModifyModelArguments Function() passedModelArguments]) {
+    Widget _subsection(
+        String title, String route, ModifyModelArguments Function() passedModelArguments) {
       return Container(
         height: 40,
         width: MediaQuery.of(context).size.width,
@@ -65,12 +65,8 @@ class TripScreen extends StatelessWidget {
               top: 6,
               right: 0,
               child: GestureDetector(
-                onTap: () => {
-                  if (passedModelArguments != null)
-                    {Navigator.pushNamed(context, route, arguments: passedModelArguments())}
-                  else
-                    {Navigator.pushNamed(context, route)}
-                },
+                onTap: () =>
+                    {Navigator.pushNamed(context, route, arguments: passedModelArguments())},
                 child: Container(
                   height: 28,
                   width: 28,
