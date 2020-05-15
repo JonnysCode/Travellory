@@ -11,6 +11,7 @@ import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/services/database/submit.dart';
+import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
@@ -57,9 +58,9 @@ class AccommodationState<T extends Accommodation> extends State<T> {
     return FormItem(animation: animation, child: item);
   }
 
-  Column getContent(TripModel tripModel, SingleTripProvider singleTripProvider,
+  Column _getAccommodationContent(TripModel tripModel, SingleTripProvider singleTripProvider,
       BuildContext context, AccommodationModel model, bool isNewModel) {
-    _getSubmitButton(singleTripProvider, context, model, isNewModel);
+    _setSubmitButton(singleTripProvider, context, model, isNewModel);
     _getCancelButton(context);
 
     return Column(children: <Widget>[
@@ -97,22 +98,17 @@ class AccommodationState<T extends Accommodation> extends State<T> {
     );
   }
 
-  void _getSubmitButton(SingleTripProvider singleTripProvider, BuildContext context,
-      AccommodationModel model, bool isNewModel) {
-    void Function() onSubmit;
-    if (isNewModel) {
-      onSubmit = onSubmitBooking(
-          singleTripProvider, model, DatabaseAdder.addAccommodation, context, alertText);
-    } else {
-      onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
-    }
-
-    accommodationList[accommodationList.length - 3] = SubmitButton(
-      highlightColor: Theme.of(context).primaryColor,
-      fillColor: Theme.of(context).primaryColor,
-      validationFunction: validateForm,
-      onSubmit: onSubmit,
-    );
+  void _setSubmitButton(SingleTripProvider singleTripProvider, BuildContext context,
+      AccommodationModel accommodationModel, bool isNewModel) {
+    accommodationList[accommodationList.length - 3] = getSubmitButton(
+        context,
+        singleTripProvider,
+        accommodationModel,
+        isNewModel,
+        DatabaseAdder.addAccommodation,
+        alertText,
+        errorMessage,
+        validateForm);
   }
 
   @override
@@ -295,7 +291,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(
+        child: _getAccommodationContent(
             tripModel, singleTripProvider, context, _accommodationModel, arguments.isNewModel),
       ),
     );

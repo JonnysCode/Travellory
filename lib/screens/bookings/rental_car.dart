@@ -7,7 +7,6 @@ import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit.dart';
-import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
@@ -18,6 +17,7 @@ import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
 
 class RentalCar extends StatefulWidget {
   static final route = '/booking/rentalcar';
@@ -210,7 +210,18 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                     onChanged: (value) => _editRentalCarModel.notes = value,
                   ),
                 ),
-                _getSubmitButton(singleTripProvider, _editRentalCarModel, isNewModel),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: getSubmitButton(
+                      context,
+                      singleTripProvider,
+                      _editRentalCarModel,
+                      isNewModel,
+                      DatabaseAdder.addRentalCar,
+                      alertText,
+                      errorMessage,
+                      validateForm),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
                   child: BookingButton(
@@ -230,28 +241,6 @@ class RentalCarState<T extends RentalCar> extends State<T> {
           ),
         ),
       ],
-    );
-  }
-
-  /* returns either submit new activity booking or edit old booking button */
-  Padding _getSubmitButton(
-      SingleTripProvider singleTripProvider, RentalCarModel model, bool isNewModel) {
-    void Function() onSubmit;
-    if (isNewModel) {
-      onSubmit =
-          onSubmitBooking(singleTripProvider, model, DatabaseAdder.addRentalCar, context, alertText);
-    } else {
-      onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-      child: SubmitButton(
-        highlightColor: Theme.of(context).primaryColor,
-        fillColor: Theme.of(context).primaryColor,
-        validationFunction: validateForm,
-        onSubmit: onSubmit,
-      ),
     );
   }
 
