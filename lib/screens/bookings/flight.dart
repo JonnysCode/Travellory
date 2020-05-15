@@ -15,6 +15,7 @@ import 'package:travellory/widgets/forms/show_dialog.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
+import 'package:travellory/services/database/edit.dart';
 
 class Flight extends StatefulWidget {
   static final route = '/booking/flight';
@@ -45,8 +46,7 @@ class FlightState<T extends Flight> extends State<T> {
     void Function() onSubmit;
     if (isNewModel) {
       onSubmit =
-          onSubmitBooking(
-              singleTripProvider, model, 'booking-addFlight', context, alertText);
+          onSubmitBooking(singleTripProvider, model, 'booking-addFlight', context, alertText);
     } else {
       onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
     }
@@ -86,7 +86,7 @@ class FlightState<T extends Flight> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                    initialValue: _editFlightModel.bookingReference,
+                      initialValue: _editFlightModel.bookingReference,
                       labelText: 'Booking Reference',
                       icon: Icon(FontAwesomeIcons.ticketAlt),
                       optional: true,
@@ -253,15 +253,17 @@ class FlightState<T extends Flight> extends State<T> {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
-    final FlightModel _flightModel = FlightModel();
-    _flightModel.tripUID = tripModel.uid;
+
+    final ModifyModelArguments _arguments = ModalRoute.of(context).settings.arguments;
+    final FlightModel _flightModel = _arguments.model;
 
     return Scaffold(
       key: Key('Flight'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, _flightModel, true),
+        child:
+            getContent(context, singleTripProvider, tripModel, _flightModel, _arguments.isNewModel),
       ),
     );
   }
