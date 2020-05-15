@@ -38,6 +38,7 @@ Widget alertButton(String text, Color fillColor, BuildContext context, void func
   );
 }
 
+// TODO (antilyas): delete this after merge with edit trip
 class CancelButton extends StatelessWidget {
   const CancelButton({Key key, this.text, this.onCancel}) : super(key: key);
 
