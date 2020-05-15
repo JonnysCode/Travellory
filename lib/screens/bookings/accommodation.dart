@@ -5,6 +5,7 @@ import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
@@ -101,7 +102,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
     void Function() onSubmit;
     if (isNewModel) {
       onSubmit = onSubmitBooking(
-          singleTripProvider, model, 'booking-addAccommodation', context, alertText);
+          singleTripProvider, model, DatabaseAdder.addAccommodation, context, alertText);
     } else {
       onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
     }
