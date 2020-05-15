@@ -41,7 +41,7 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                   height: 6
               ),
               Text(
-                'travellory@gmail.com',
+                'travellory@in.parseur.com',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontFamily: 'fashionFetish',
@@ -78,27 +78,47 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                           blurRadius: 6, color: Colors.black.withOpacity(.15), offset: Offset(3.0, 3.0))
                     ],
                   ),
-                  child: ListView.separated(
-                    separatorBuilder: (_, __) => const Divider(),
-                    itemCount: bookings.length,
-                    itemBuilder: (context, index) => Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: BookingCard(
-                            model: bookings[index],
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'Accommodations',
+                        style: TextStyle(
+                          fontFamily: 'fashionFetish',
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black,
+                          height: 1.2,
+                          fontSize: 22,
+                          letterSpacing: -2
+                        ),
+                      ),
+                      const SizedBox(
+                          height: 10
+                      ),
+                      Expanded(
+                        child: ListView.separated(
+                          separatorBuilder: (_, __) => const Divider(),
+                          itemCount: bookings.length,
+                          itemBuilder: (context, index) => Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: BookingCard(
+                                  model: bookings[index],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 30,
+                                child: OptionButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  optionItems: tripsProvider.trips.map((trip) => OptionItem(
+                                    description: trip.tripModel.name
+                                  )).toList(),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          width: 30,
-                          child: OptionButton(
-                            icon: FontAwesomeIcons.plus,
-                            optionItems: tripsProvider.trips.map((trip) => OptionItem(
-                              description: trip.tripModel.name
-                            )).toList(),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
