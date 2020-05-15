@@ -9,7 +9,7 @@ import 'package:travellory/screens/authenticate/password.dart';
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
 import 'package:travellory/screens/bookings/add_accommodation.dart';
-import 'package:travellory/screens/bookings/add_activity.dart';
+import 'package:travellory/screens/bookings/activity.dart';
 import 'package:travellory/screens/bookings/add_flight.dart';
 import 'package:travellory/screens/bookings/add_public_transport.dart';
 import 'package:travellory/screens/bookings/add_rental_car.dart';
