@@ -12,6 +12,7 @@ import 'package:travellory/widgets/forms/section_titles.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:travellory/widgets/buttons/submit_button.dart';
 
 
 class CreateTrip extends StatefulWidget {

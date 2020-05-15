@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/services/database/edit.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/buttons/booking_button.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
 import '../font_widgets.dart';
 import 'edit_delete_dialogs.dart';
