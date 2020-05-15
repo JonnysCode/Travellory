@@ -54,14 +54,7 @@ void main() {
       ),
     );
   }
-//  Widget makeTestableWidget(TripsProvider tripsProvider) {
-//    return ChangeNotifierProvider<TripsProvider>.value(
-//      value: tripsProvider,
-//      child: MaterialApp(
-//        home: Activity(),
-//      ),
-//    );
-//  }
+
   Future<void> pumpActivity(WidgetTester tester) async {
     await tester.tap(find.text('X'));
     await tester.pump();

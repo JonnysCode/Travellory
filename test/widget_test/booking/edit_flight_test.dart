@@ -6,7 +6,7 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/screens/bookings/edit_flight.dart';
+import 'package:travellory/screens/bookings/flight.dart';
 import 'package:travellory/services/database/edit.dart';
 
 class TripsProviderMock extends Mock implements TripsProvider {}
@@ -50,7 +50,7 @@ void main() {
       child: MaterialApp(
         routes: <String, WidgetBuilder>{
           '/': (context) => const Wrapper(),
-          '/edit/flight': (context) => EditFlight()
+          '/booking/flight': (context) => Flight()
         },
       ),
     );
@@ -62,7 +62,7 @@ void main() {
   }
 
   testWidgets('test if edit flight page is loaded', (WidgetTester tester) async {
-    final testKey = Key('EditFlight');
+    final testKey = Key('Flight');
     TripsProviderMock tripsProvider = TripsProviderMock();
 
     tripModel.init();
