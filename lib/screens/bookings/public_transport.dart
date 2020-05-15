@@ -11,7 +11,7 @@ import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/buttons/booking_button.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
@@ -22,6 +22,8 @@ import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:travellory/widgets/buttons/submit_button.dart';
+
 
 class PublicTransport extends StatefulWidget {
   static final route = '/booking/publictransport';

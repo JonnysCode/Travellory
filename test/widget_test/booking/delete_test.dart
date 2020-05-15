@@ -8,7 +8,7 @@ import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/widgets/bookings/edit_delete_dialogs.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/buttons/booking_button.dart';
 
 final ActivityModel activityModel = ActivityModel()
   ..category = 'Historic'
