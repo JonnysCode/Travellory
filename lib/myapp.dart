@@ -13,7 +13,6 @@ import 'package:travellory/screens/bookings/add_activity.dart';
 import 'package:travellory/screens/bookings/add_flight.dart';
 import 'package:travellory/screens/bookings/add_public_transport.dart';
 import 'package:travellory/screens/bookings/add_rental_car.dart';
-import 'package:travellory/screens/bookings/edit_activity.dart';
 import 'package:travellory/screens/bookings/edit_flight.dart';
 import 'package:travellory/screens/bookings/edit_rental_car.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
@@ -76,7 +75,6 @@ class MyApp extends StatelessWidget {
             AchievementsView.route: (_) => AchievementsView(),
             EditRentalCar.route: (_) => EditRentalCar(),
             EditFlight.route: (_) => EditFlight(),
-            EditActivity.route: (_) => EditActivity(),
             FriendsPage.route: (_) => FriendsPage(),
           },
         ),

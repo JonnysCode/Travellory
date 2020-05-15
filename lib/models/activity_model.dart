@@ -12,7 +12,7 @@ class ActivityModel extends Model {
       this.startTime = '',
       this.endDate = '',
       this.endTime = '',
-      this.imageNr = 1,
+      this.imageNr,
       this.notes = '',
       this.latitude = 0.0,
       this.longitude = 0.0});
