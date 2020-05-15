@@ -3,11 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
-import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/models/activity_model.dart';
-import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
@@ -26,10 +21,15 @@ class DatabaseDeleter {
   static final DatabaseDeleter _instance = DatabaseDeleter._privateConstructor();
 
   static const deleteTripName = 'trips-deleteTrip';
+  static const deleteFlight = 'booking-deleteFlight';
+  static const deleteRentalCar = 'booking-deleteRentalCar';
+  static const deleteAccommodation = 'booking-deleteAccommodation';
+  static const deletePublicTransportation = 'booking-deletePublicTransportation';
+  static const deleteActivity = 'activity-deleteActivity';
 
   Future<bool> deleteModel(Model model, String correspondingFunctionName) async {
     final HttpsCallable callable =
-    CloudFunctions.instance.getHttpsCallable(functionName: correspondingFunctionName);
+        CloudFunctions.instance.getHttpsCallable(functionName: correspondingFunctionName);
     try {
       log.d('JSON data for function call $correspondingFunctionName: ${model.toMap()}');
       final HttpsCallableResult result = await callable.call(model.toMap());
@@ -48,30 +48,9 @@ class DatabaseDeleter {
   }
 }
 
-// method to get database function names for delete function based on model
-String getDeleteFunctionNameBasedOn(Model model) {
-  String functionName;
-  if (model is FlightModel) {
-    functionName = 'booking-deleteFlight';
-  } else if (model is RentalCarModel) {
-    functionName = 'booking-deleteRentalCar';
-  } else if (model is AccommodationModel) {
-    functionName = 'booking-deleteAccommodation';
-  } else if (model is PublicTransportModel) {
-    functionName = 'booking-deletePublicTransportation';
-  } else if (model is ActivityModel) {
-    functionName = 'activity-deleteActivity';
-  } else {
-    functionName = '';
-  }
-  return functionName;
-}
-
-void Function() onDeleteBooking(Model model, BuildContext context) {
+void Function() onDeleteBooking(Model model, BuildContext context, String functionName) {
   final SingleTripProvider singleTripProvider =
       Provider.of<TripsProvider>(context, listen: false).selectedTrip;
-
-  final String functionName = getDeleteFunctionNameBasedOn(model);
 
   const String alertText =
       "You've just deleted this entry. Your booking overview has been updated. ";
@@ -89,11 +68,9 @@ void Function() onDeleteBooking(Model model, BuildContext context) {
 }
 
 void Function() onDeleteTrip(TripModel tripModel, BuildContext context) {
-  final TripsProvider tripsProvider = 
-    Provider.of<TripsProvider>(context, listen: false);
+  final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
 
-  const String alertText =
-      "You've just deleted this trip and all corresponding bookings ";
+  const String alertText = "You've just deleted this trip and all corresponding bookings ";
 
   return () async {
     final bool deleted = await tripsProvider.deleteTrip(tripModel);
