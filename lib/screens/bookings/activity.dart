@@ -7,6 +7,7 @@ import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit.dart';
+import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
@@ -205,7 +206,8 @@ class ActivityState<T extends Activity> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: getSubmitButton(context, singleTripProvider, _editActivityModel,
-                      isNewModel, DatabaseAdder.addActivity, alertText, validateForm),
+                      isNewModel, DatabaseAdder.addActivity, DatabaseEditor.editActivity,
+                      alertText, validateForm),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 2, left: 15, right: 15),

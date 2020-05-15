@@ -11,11 +11,12 @@ SubmitButton getSubmitButton(
     SingleTripProvider singleTripProvider,
     Model model,
     bool isNewModel,
-    String functionName,
+    String submitFunctionName,
+    String editFunctionName,
     String alertText,
     bool Function() validationFunction) {
   void Function() onSubmit = getOnAddEditSubmitFunction(
-      context, singleTripProvider, model, isNewModel, functionName, alertText);
+      context, singleTripProvider, model, isNewModel, submitFunctionName, editFunctionName, alertText);
 
   return SubmitButton(
     highlightColor: Theme.of(context).primaryColor,
@@ -32,14 +33,15 @@ void Function() getOnAddEditSubmitFunction(
     SingleTripProvider singleTripProvider,
     Model model,
     bool isNewModel,
-    String functionName,
+    String submitFunctionName,
+    String editFunctionName,
     String alertText) {
   void Function() onSubmit;
 
   if (isNewModel) {
-    onSubmit = onSubmitBooking(singleTripProvider, model, functionName, context, alertText);
+    onSubmit = onSubmitBooking(singleTripProvider, model, submitFunctionName, context, alertText);
   } else {
-    onSubmit = onEditBooking(singleTripProvider, model, context);
+    onSubmit = onEditBooking(singleTripProvider, model, context, editFunctionName);
   }
   return onSubmit;
 }

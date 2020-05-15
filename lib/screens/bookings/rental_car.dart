@@ -7,6 +7,7 @@ import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit.dart';
+import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
@@ -216,6 +217,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       _editRentalCarModel,
                       isNewModel,
                       DatabaseAdder.addRentalCar,
+                      DatabaseEditor.editRentalCar,
                       alertText,
                       validateForm),
                 ),
