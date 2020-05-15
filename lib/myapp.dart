@@ -10,10 +10,9 @@ import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
 import 'package:travellory/screens/bookings/add_accommodation.dart';
 import 'package:travellory/screens/bookings/activity.dart';
-import 'package:travellory/screens/bookings/add_flight.dart';
+import 'package:travellory/screens/bookings/flight.dart';
 import 'package:travellory/screens/bookings/add_public_transport.dart';
 import 'package:travellory/screens/bookings/add_rental_car.dart';
-import 'package:travellory/screens/bookings/edit_flight.dart';
 import 'package:travellory/screens/bookings/edit_rental_car.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
 import 'package:travellory/screens/bookings/view_activity.dart';
@@ -74,7 +73,6 @@ class MyApp extends StatelessWidget {
             ActivityView.route: (_) => ActivityView(),
             AchievementsView.route: (_) => AchievementsView(),
             EditRentalCar.route: (_) => EditRentalCar(),
-            EditFlight.route: (_) => EditFlight(),
             FriendsPage.route: (_) => FriendsPage(),
           },
         ),

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/activity_model.dart';
+import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/bookings/add_accommodation.dart';
 import 'package:travellory/screens/bookings/activity.dart';
-import 'package:travellory/screens/bookings/add_flight.dart';
+import 'package:travellory/screens/bookings/flight.dart';
 import 'package:travellory/screens/bookings/add_public_transport.dart';
 import 'package:travellory/screens/bookings/add_rental_car.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
@@ -103,7 +104,11 @@ class TripScreen extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: _subsection('Flights', Flight.route),
+                        child: _subsection('Flights', Flight.route, () {
+                          final FlightModel flightModel = FlightModel();
+                          flightModel.tripUID = tripModel.uid;
+                          return ModifyModelArguments(model: flightModel, isNewModel: true);
+                        }),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),

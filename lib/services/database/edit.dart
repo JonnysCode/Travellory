@@ -8,7 +8,7 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/screens/bookings/add_accommodation.dart';
 import 'package:travellory/screens/bookings/activity.dart';
 import 'package:travellory/screens/bookings/add_public_transport.dart';
-import 'package:travellory/screens/bookings/edit_flight.dart';
+import 'package:travellory/screens/bookings/flight.dart';
 import 'package:travellory/screens/bookings/edit_rental_car.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
@@ -20,7 +20,7 @@ void editModel(Model model, BuildContext context) {
   String changeRoute = '';
 
   if (model is FlightModel) {
-    changeRoute = EditFlight.route;
+    changeRoute = Flight.route;
   } else if (model is RentalCarModel) {
     changeRoute = EditRentalCar.route;
   } else if (model is AccommodationModel) {
