@@ -12,8 +12,7 @@ import 'package:travellory/screens/bookings/add_accommodation.dart';
 import 'package:travellory/screens/bookings/activity.dart';
 import 'package:travellory/screens/bookings/flight.dart';
 import 'package:travellory/screens/bookings/add_public_transport.dart';
-import 'package:travellory/screens/bookings/add_rental_car.dart';
-import 'package:travellory/screens/bookings/edit_rental_car.dart';
+import 'package:travellory/screens/bookings/rental_car.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
 import 'package:travellory/screens/bookings/view_activity.dart';
 import 'package:travellory/screens/bookings/view_flight.dart';
@@ -72,7 +71,6 @@ class MyApp extends StatelessWidget {
             PublicTransportView.route: (_) => PublicTransportView(),
             ActivityView.route: (_) => ActivityView(),
             AchievementsView.route: (_) => AchievementsView(),
-            EditRentalCar.route: (_) => EditRentalCar(),
             FriendsPage.route: (_) => FriendsPage(),
           },
         ),

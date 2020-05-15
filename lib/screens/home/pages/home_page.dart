@@ -10,7 +10,7 @@ import 'package:travellory/screens/bookings/add_accommodation.dart';
 import 'package:travellory/screens/bookings/activity.dart';
 import 'package:travellory/screens/bookings/flight.dart';
 import 'package:travellory/screens/bookings/add_public_transport.dart';
-import 'package:travellory/screens/bookings/add_rental_car.dart';
+import 'package:travellory/screens/bookings/rental_car.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
 import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
