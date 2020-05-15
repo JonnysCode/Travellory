@@ -7,6 +7,7 @@ import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit.dart';
+import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
@@ -79,6 +80,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         publicTransportModel,
         isNewModel,
         DatabaseAdder.addPublicTransportation,
+        DatabaseEditor.editPublicTransportation,
         alertText,
         validateForm);
   }

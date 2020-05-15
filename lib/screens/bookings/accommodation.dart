@@ -7,6 +7,7 @@ import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit.dart';
+import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/utils/list_models.dart';
 import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
@@ -105,6 +106,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         accommodationModel,
         isNewModel,
         DatabaseAdder.addAccommodation,
+        DatabaseEditor.editAccommodation,
         alertText,
         validateForm);
   }
