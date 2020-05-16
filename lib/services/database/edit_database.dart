@@ -23,8 +23,7 @@ class DatabaseEditor {
   static const String editFlight = 'booking-updateFlight';
   static const String editPublicTransportation = 'booking-updatePublicTransportation';
   static const String editRentalCar = 'booking-updateRentalCar';
-
-  static const editTripName = 'trips-updateTrip';
+  static const String editTripName = 'trips-updateTrip';
 
   Future<bool> editModel(Model model, String correspondingFunctionName) async {
     final HttpsCallable callable =
@@ -53,9 +52,6 @@ const String onEditSuccessfulText =
 
 void Function() onEditBooking(
     SingleTripProvider singleTripProvider, Model model, BuildContext context, String functionName) {
-  const String alertText =
-      "You've just edited this entry. Your booking overview has been updated. " +
-          "However, it might take a moment to see the changes on your profile. ";
 
   return () async {
     final bool edited = await singleTripProvider.editBooking(model, functionName);
