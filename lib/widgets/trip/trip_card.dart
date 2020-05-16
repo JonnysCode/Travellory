@@ -5,11 +5,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/screens/trip/create_trip_screen.dart';
 import 'package:travellory/screens/trip/trip_screen.dart';
 import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/utils/date_converter.dart';
-import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/widgets/bookings/edit_delete_dialogs.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
@@ -49,6 +47,7 @@ class _TripCardState extends State<TripCard> {
         'Are you sure you want to continue? This action cannot be undone!';
 
     return Container(
+      key: Key('TripCard'),
       height: 100,
       child: Stack(
         children: <Widget>[
@@ -126,14 +125,6 @@ class _TripCardState extends State<TripCard> {
                     ),
                     OptionButton(
                       optionItems: <OptionItem>[
-                        OptionItem(
-                            description: 'Edit',
-                            icon: FontAwesomeIcons.edit,
-                            onTab: () {
-                              Navigator.pushNamed(context, CreateTrip.route,
-                                  arguments:
-                                      ModifyModelArguments(model: _tripModel, isNewModel: false));
-                            }),
                         OptionItem(
                             description: 'Remove',
                             icon: FontAwesomeIcons.trashAlt,
