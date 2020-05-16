@@ -70,7 +70,7 @@ Color getBookingColorAccordingTo(Model model) {
   } else if (model is PublicTransportModel) {
     color = Colors.grey;
   } else if (model is ActivityModel) {
-    color = Colors.teal[300];
+    color = Colors.green[300];
   } else {
     color = Colors.grey;
   }
