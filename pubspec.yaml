@@ -95,7 +95,7 @@ flutter:
     - assets/images/logo/
     - assets/images/bookings/
     - assets/images/home/trip/
-    - assets/images/home/
+    - assets/images/home/weather/
     - assets/images/activity/
     - assets/photo_camera.png
     - assets/g_map/

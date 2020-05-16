@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -29,39 +30,46 @@ class _WeatherState extends State<Weather> {
   }
 
   String selectImage(String description) {
+    String path;
     switch (description) {
       case 'clear sky':
-        return 'assets/images/home/weather/041-clear_sky.png';
+        path = 'assets/images/home/weather/041-clear_sky.png';
         break;
       case 'few clouds':
-        return 'assets/images/home/weather/011-few_clouds.png';
+        path = 'assets/images/home/weather/011-few_clouds.png';
         break;
       case 'scattered clouds':
-        return 'assets/images/home/weather/013-scattered_clouds.png';
+        path = 'assets/images/home/weather/013-scattered_clouds.png';
         break;
       case 'broken clouds':
-        return 'assets/images/home/weather/025-broken_clouds.png';
+        path = 'assets/images/home/weather/025-broken_clouds.png';
         break;
       case 'overcast clouds':
-        return 'assets/images/home/weather/014-overcast_cloud.png';
+        path = 'assets/images/home/weather/014-overcast_cloud.png';
         break;
       case 'shower rain':
-        return 'assets/images/home/weather/060-shower_rain.png';
+        path = 'assets/images/home/weather/060-shower_rain.png';
         break;
       case 'rain':
-        return 'assets/images/home/weather/002-rain.png';
+        path = 'assets/images/home/weather/002-rain.png';
         break;
       case 'thunderstorm':
-        return 'assets/images/home/weather/003-thunderstorm.png';
+        path = 'assets/images/home/weather/003-thunderstorm.png';
         break;
       case 'snow':
-        return 'assets/images/home/weather/033-snow.png';
+        path = 'assets/images/home/weather/033-snow.png';
         break;
       case 'mist':
-        return 'assets/images/home/weather/016-mist.png';
+        path = 'assets/images/home/weather/016-mist.png';
+        break;
+      case 'haze':
+        path = 'assets/images/home/weather/016-mist.png';
+        break;
+      default:
+        path = 'assets/images/home/weather/011-few_clouds.png';
         break;
     }
-    return '';
+    return path;
   }
 
   @override
@@ -76,33 +84,45 @@ class _WeatherState extends State<Weather> {
     print(description);
     print(widget.location);
     getWeather(widget.location);
-    return Positioned(
-      left: 30,
-      top: 30,
-      child: Column(
-        children: <Widget>[
-          Image(
-            height: 100,
-            image: AssetImage(selectImage(description)),
-          ),
-          Text(
-            widget.location,
-            style: TextStyle(
-              fontSize: 24,
-              color: Colors.black87,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          Text(
-            temperature.toString() + '\u00B0',
-            style: TextStyle(
-              fontSize: 24,
-              color: Colors.black87,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
+    return Stack(children: <Widget>[
+      Positioned(
+        left: 25,
+        top: 15,
+        child: Image(
+          height: 100,
+          image: AssetImage(selectImage(description)),
+        ),
       ),
-    );
+      Positioned(
+        top: 70,
+        left: 100,
+        child: Text(
+          temperature.toString() + '\u00B0',
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.black87,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+      Positioned(
+        top: 107,
+        left: 20,
+        child: Container(
+            height: 30,
+            width: 140,
+            child: Center(
+              child: AutoSizeText(
+                widget.location,
+                style: TextStyle(
+                  fontSize: 24.0,
+                  //fontFamily: 'FashionFetish',
+                  fontWeight: FontWeight.w900,
+                ),
+                maxLines: 1,
+              ),
+            )),
+      ),
+    ]);
   }
 }

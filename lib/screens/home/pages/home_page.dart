@@ -101,7 +101,7 @@ class _HomePage extends State<HomePage> {
       now = DateTime.now();
       String startDateFormatted = yyyyMMdd(tripModel.startDate);
       startDate = DateTime.parse(startDateFormatted);
-      timeTripStart = startDate.difference(now).inDays+1;
+      timeTripStart = startDate.difference(now).inDays + 1;
     }
 
     String cutUsername(String username) {
@@ -116,25 +116,17 @@ class _HomePage extends State<HomePage> {
         key: Key('home_page'),
         child: Stack(
           children: <Widget>[
-            Weather('London'),
-            /*Positioned(
-              left: 30,
-              top: 30,
-              child: Image(
-                height: 100,
-                image: AssetImage('assets/images/home/011-cloud.png'),
-              ),
-            ),
-            Positioned(
-              top: 100,
-              left: 110,
-              child: FashionFetishText(
-                text: '24\u00B0',
-                size: 24,
-                color: Colors.black87,
-                fontWeight: FashionFontWeight.bold,
-              ),
-            ),*/
+            trip == null
+                ? Positioned(
+                    left: 30,
+                    top: 30,
+                    child: Image(
+                      height: 100,
+                      image: AssetImage(
+                          'assets/images/home/weather/011-few_clouds.png'),
+                    ),
+                  )
+                : Weather(tripModel.destination),
             trip == null
                 ? Positioned(
                     top: 20,
