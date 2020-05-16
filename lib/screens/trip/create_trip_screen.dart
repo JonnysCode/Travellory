@@ -5,6 +5,7 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
+import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
@@ -108,8 +109,6 @@ class _CreateTripState extends State<CreateTrip> {
                         top: 0,
                         right: 0,
                         child: IconButton(
-                          // TODO (grussjon): this probably causes the error
-//                          onPressed: () => Navigator.popUntil(context, ModalRoute.withName(Home.route)),
                           onPressed: () => Navigator.pop(context),
                           icon: FaIcon(FontAwesomeIcons.times),
                           iconSize: 30,
@@ -209,11 +208,12 @@ class _CreateTripState extends State<CreateTrip> {
                         child: Container(
                           height: 32,
                           width: 120,
-                          child: CancelButton(
-                              text: 'CANCEL',
-                              onCancel: () {
-                                cancellingDialog(context, cancelText);
-                              }),
+                          child: getBookingCancelButton(
+                            context,
+                            () {
+                              cancellingDialog(context, cancelText);
+                            },
+                          ),
                         ),
                       ),
                       SizedBox(height: 12),
