@@ -32,29 +32,6 @@ class TripScreen extends StatelessWidget {
 
   static final route = '/viewtrip';
 
-  Padding _editBar(BuildContext context, TripModel model) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 40),
-      child: Container(
-        key: Key('EditBar'),
-        padding: EdgeInsets.all(20.0),
-        height: 60.0,
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(40.0),
-        ),
-        child: EditTripButton(
-          highlightColor: Theme.of(context).primaryColor,
-          fillColor: Theme.of(context).primaryColor,
-          onPressed: () {
-            Navigator.pushNamed(context, CreateTrip.route,
-                arguments: ModifyModelArguments(model: model, isNewModel: false));
-          },
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final TripModel tripModel =
@@ -256,7 +233,6 @@ class TripScreen extends StatelessWidget {
                                     .toList(),
                               ),
                       ),
-                      _editBar(context, tripModel),
                       SizedBox(
                         height: 20,
                       ),
