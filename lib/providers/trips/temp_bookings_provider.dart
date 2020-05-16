@@ -15,7 +15,7 @@ class TempBookingsProvider extends ChangeNotifier {
 
   Future<List<AccommodationModel>> fetchAccommodations() async {
     accommodations = await _databaseGetter.getEntriesFromDatabase(
-        _user.uid, DatabaseGetter.getAccommodations);
+        _user.uid, DatabaseGetter.getTempAccommodations);
     return accommodations;
   }
 
