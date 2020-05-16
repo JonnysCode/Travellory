@@ -18,5 +18,4 @@ class TempBookingsProvider extends ChangeNotifier {
         _user.uid, DatabaseGetter.getTempAccommodations);
     return accommodations;
   }
-
 }
