@@ -24,6 +24,7 @@ class _TripHeaderState extends State<TripHeader> {
     _tripModel = widget.tripModel;
 
     return Container(
+      key: Key('TripHeader'),
       height: 190,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -143,8 +144,8 @@ class _TripHeaderState extends State<TripHeader> {
               },
               icon: Icon(
                 FontAwesomeIcons.edit,
-                size: 35.0,
-                color: Colors.white,
+                size: 25.0,
+                color: Colors.black54,
               ),
             ),
           ),
