@@ -11,6 +11,7 @@ import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
 import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/utils/date_converter.dart';
+import 'package:travellory/utils/weather.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
@@ -90,6 +91,9 @@ class _HomePage extends State<HomePage> {
           }),
     ];
 
+    // TODO weather
+    print(tripModel.destination);
+
     var now;
     var timeTripStart;
     DateTime startDate;
@@ -112,7 +116,8 @@ class _HomePage extends State<HomePage> {
         key: Key('home_page'),
         child: Stack(
           children: <Widget>[
-            Positioned(
+            Weather('London'),
+            /*Positioned(
               left: 30,
               top: 30,
               child: Image(
@@ -129,7 +134,7 @@ class _HomePage extends State<HomePage> {
                 color: Colors.black87,
                 fontWeight: FashionFontWeight.bold,
               ),
-            ),
+            ),*/
             trip == null
                 ? Positioned(
                     top: 20,
