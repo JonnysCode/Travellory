@@ -79,7 +79,6 @@ void main() {
     final Key testKey = Key('ShowEditedBookingDialog');
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
     // Build our app and trigger a frame.

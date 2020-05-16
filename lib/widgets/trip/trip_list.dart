@@ -72,8 +72,7 @@ class TripList extends StatelessWidget {
                 itemBuilder: (context, index) {
                   if(index < tripsProvider.trips.length){
                     final tripModel = tripsProvider.trips[index].tripModel
-                      ..index = index
-                      ..init();
+                      ..index = index;
                     return TripCard(
                       key: UniqueKey(),
                       tripModel: tripModel,
