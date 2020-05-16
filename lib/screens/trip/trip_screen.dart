@@ -19,9 +19,12 @@ import 'package:travellory/screens/bookings/view_public_transport.dart';
 import 'package:travellory/screens/bookings/view_rental_car.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
+import 'package:travellory/widgets/buttons/booking_button.dart';
+import 'package:travellory/widgets/buttons/edit_trip_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/booking_cards/booking_card.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
+import 'create_trip_screen.dart';
 
 class TripScreen extends StatelessWidget {
   const TripScreen({
@@ -29,6 +32,29 @@ class TripScreen extends StatelessWidget {
   }) : super(key: key);
 
   static final route = '/viewtrip';
+
+  Padding _editBar(BuildContext context, TripModel model) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 40),
+      child: Container(
+        key: Key('EditBar'),
+        padding: EdgeInsets.all(20.0),
+        height: 60.0,
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(40.0),
+        ),
+        child: EditTripButton(
+          highlightColor: Theme.of(context).primaryColor,
+          fillColor: Theme.of(context).primaryColor,
+          onPressed: () {
+            Navigator.pushNamed(context, CreateTrip.route,
+                arguments: ModifyModelArguments(model: model, isNewModel: false));
+          },
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +64,7 @@ class TripScreen extends StatelessWidget {
     Widget _subsection(
         String title, String route, ModifyModelArguments Function() passedModelArguments) {
       return Container(
+        key: Key('SubSection'),
         height: 40,
         width: MediaQuery.of(context).size.width,
         child: Stack(
@@ -230,6 +257,7 @@ class TripScreen extends StatelessWidget {
                                     .toList(),
                               ),
                       ),
+                      _editBar(context, tripModel),
                       SizedBox(
                         height: 20,
                       ),
