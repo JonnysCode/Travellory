@@ -36,35 +36,6 @@ Widget alertButton(String text, Color fillColor, BuildContext context, void func
   );
 }
 
-// TODO (antilyas): delete this after merge with edit trip
-class CancelButton extends StatelessWidget {
-  const CancelButton({Key key, this.text, this.onCancel}) : super(key: key);
-
-  final String text;
-  final void Function() onCancel;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: RaisedButton(
-        key: Key('CancelButton'),
-        highlightElevation: 0.0,
-        splashColor: Colors.white,
-        highlightColor: Theme.of(context).primaryColor,
-        elevation: 0.0,
-        color: Color(0xFFF48FB1),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        onPressed: onCancel,
-        child: Text(
-          text,
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 20),
-        ),
-      ),
-    );
-  }
-}
-
 Widget socialButton(Key key, IconData icon, Color color, void function()) {
   return Material(
       child: IconButton(
