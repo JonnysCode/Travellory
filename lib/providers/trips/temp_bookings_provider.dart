@@ -5,19 +5,18 @@ import 'package:travellory/services/database/get_database.dart';
 
 class TempBookingsProvider extends ChangeNotifier {
   TempBookingsProvider(UserModel user){
-    this.user = user;
+    this._user = user;
   }
 
   final DatabaseGetter _databaseGetter = DatabaseGetter();
 
-  UserModel user;
+  UserModel _user;
   List<AccommodationModel> accommodations;
 
-  Future<void> fetchAccommodations() async {
-    accommodations = <AccommodationModel>[];
+  Future<List<AccommodationModel>> fetchAccommodations() async {
     accommodations = await _databaseGetter.getEntriesFromDatabase(
-        user.uid, DatabaseGetter.getAccommodations);
-    notifyListeners();
+        _user.uid, DatabaseGetter.getAccommodations);
+    return accommodations;
   }
 
 }
