@@ -8,7 +8,6 @@ import 'package:travellory/widgets/buttons/booking_button.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 import 'package:travellory/widgets/buttons/submit_button.dart';
 
-
 void main() {
   testWidgets('Test submit button exists', (WidgetTester tester) async {
     final testKey = Key('ShowSubmittedBookingDialog');
