@@ -65,7 +65,6 @@ void main() {
     final testKey = Key('EditFlight');
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
     await tester.pumpWidget(makeTestableWidget(tripsProvider));

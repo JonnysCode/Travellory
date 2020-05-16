@@ -1,7 +1,4 @@
-import 'package:travellory/utils/date_converter.dart';
-
 import 'abstract_model.dart';
-import 'day_model.dart';
 
 class TripModel extends Model {
   TripModel({
@@ -29,7 +26,6 @@ class TripModel extends Model {
     countryCode = trip["countryCode"];
     continent = trip["continent"];
     imageNr = trip["imageNr"];
-    imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
   }
 
   String userUID;
@@ -41,17 +37,10 @@ class TripModel extends Model {
   String country;
   String countryCode;
   String continent;
-  String imagePath;
   int imageNr;
   int index;
 
-  void init() {
-    _initImagePath();
-  }
-
-  void _initImagePath() {
-    imagePath = 'assets/images/home/trip/trip_${imageNr.toString()}.png';
-  }
+  String get imagePath => 'assets/images/home/trip/trip_${imageNr.toString()}.png';
 
   @override
   Map<String, dynamic> toMap() {
