@@ -9,12 +9,14 @@ import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/providers/trips/temp_bookings_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/bookings/booking_card.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
 
 class EmailParsedBookingsScreen extends StatelessWidget {
   static final String route = '/booking/emailparsed';
+  static final String _forwardMail = 'travellory@in.parseur.com';
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                     height: 6
                 ),
                 Text(
-                  'travellory@in.parseur.com',
+                  _forwardMail,
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontFamily: 'fashionFetish',
@@ -117,7 +119,11 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                                     child: OptionButton(
                                       icon: FontAwesomeIcons.plus,
                                       optionItems: tripsProvider.trips.map((trip) => OptionItem(
-                                        description: trip.tripModel.name
+                                        description: trip.tripModel.name,
+                                        onTab: () {
+                                          tripsProvider.selectedTrip.addBooking(
+                                              accommodations[index], DatabaseAdder.addAccommodation);
+                                        }
                                       )).toList(),
                                     ),
                                   ),

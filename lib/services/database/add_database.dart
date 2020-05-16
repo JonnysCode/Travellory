@@ -13,6 +13,7 @@ class DatabaseAdder {
 
   static const int _maxCount = 50;
   static const String addTrip = 'trips-addTrip';
+  static const String addAccommodation = 'booking-addAccommodation';
 
   static int _count = 0;
 
