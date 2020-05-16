@@ -4,9 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
-import 'package:travellory/services/database/edit.dart';
 import 'package:travellory/services/database/edit_database.dart';
-import 'package:travellory/services/database/submit.dart';
+import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
@@ -70,7 +69,7 @@ class _CreateTripState extends State<CreateTrip> {
       if (isNewModel) {
         onSubmit = onSubmitTrip(trips, model, context, alertText);
       } else {
-        onSubmit = onEditTrip(trips, model, context, errorMessage);
+        onSubmit = onEditTrip(trips, model, context);
       }
 
       return SubmitButton(
