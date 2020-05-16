@@ -19,7 +19,6 @@ import 'package:travellory/screens/bookings/view_public_transport.dart';
 import 'package:travellory/screens/bookings/view_rental_car.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
-import 'package:travellory/widgets/buttons/booking_button.dart';
 import 'package:travellory/widgets/buttons/edit_trip_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/booking_cards/booking_card.dart';
