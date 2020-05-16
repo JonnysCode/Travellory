@@ -70,7 +70,7 @@ void Function() onEditBooking(
 }
 
 void Function() onEditTrip(TripsProvider trips, Model model,
-    BuildContext context, String errorMessage) {
+    BuildContext context) {
 
   return () async {
     final bool edited = await trips.editTrip(model);
