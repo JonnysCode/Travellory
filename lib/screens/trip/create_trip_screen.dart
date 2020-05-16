@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
-import 'package:travellory/services/database/submit.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
@@ -12,6 +11,7 @@ import 'package:travellory/widgets/forms/section_titles.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:travellory/widgets/buttons/submit_button.dart';
 
 
 class CreateTrip extends StatefulWidget {

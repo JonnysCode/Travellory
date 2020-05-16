@@ -2,15 +2,9 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
-import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/models/activity_model.dart';
-import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
-
-import 'edit.dart';
+import '../../widgets/bookings/edit.dart';
 
 final log = getLogger('DatabaseEditor');
 
@@ -22,6 +16,12 @@ class DatabaseEditor {
   DatabaseEditor._privateConstructor();
 
   static final DatabaseEditor _instance = DatabaseEditor._privateConstructor();
+
+  static const String editAccommodation = 'booking-updateAccommodation';
+  static const String editActivity = 'activity-updateActivity';
+  static const String editFlight = 'booking-updateFlight';
+  static const String editPublicTransportation = 'booking-updatePublicTransportation';
+  static const String editRentalCar = 'booking-updateRentalCar';
 
   Future<bool> editModel(Model model, String correspondingFunctionName) async {
     final HttpsCallable callable =
@@ -44,29 +44,8 @@ class DatabaseEditor {
   }
 }
 
-String getEditFunctionNameBasedOn(Model model) {
-  String functionName;
-  if (model is FlightModel) {
-    functionName = 'booking-updateFlight';
-  } else if (model is RentalCarModel) {
-    functionName = 'booking-updateRentalCar';
-  } else if (model is AccommodationModel) {
-    functionName = 'booking-updateAccommodation';
-  } else if (model is PublicTransportModel) {
-    functionName = 'booking-updatePublicTransportation';
-  } else if (model is ActivityModel) {
-    functionName = 'activity-updateActivity';
-  } else {
-    functionName = '';
-    log.w('No function name was found for model');
-  }
-  return functionName;
-}
-
-void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model,
-    BuildContext context, String errorMessage) {
-  final String functionName = getEditFunctionNameBasedOn(model);
-
+void Function() onEditBooking(
+    SingleTripProvider singleTripProvider, Model model, BuildContext context, String functionName) {
   const String alertText =
       "You've just edited this entry. Your booking overview has been updated. " +
           "However, it might take a moment to see the changes on your profile. ";
@@ -77,7 +56,7 @@ void Function() onEditBooking(SingleTripProvider singleTripProvider, Model model
       showEditedBookingDialog(context, alertText);
       log.i('onEditBooking was performed');
     } else {
-      addToDataBaseFailedDialog(context, errorMessage);
+      addToDataBaseFailedDialog(context);
       log.i('onEditBooking did not work');
     }
   };
