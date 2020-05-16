@@ -93,36 +93,40 @@ class _WeatherState extends State<Weather> {
           image: AssetImage(selectImage(description)),
         ),
       ),
-      Positioned(
-        top: 70,
-        left: 100,
-        child: Text(
-          temperature.toString() + '\u00B0',
-          style: TextStyle(
-            fontSize: 24,
-            color: Colors.black87,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
-      Positioned(
-        top: 107,
-        left: 20,
-        child: Container(
-            height: 30,
-            width: 140,
-            child: Center(
-              child: AutoSizeText(
-                widget.location,
+      temperature != null
+          ? Positioned(
+              top: 70,
+              left: 100,
+              child: Text(
+                temperature.toString() + '\u00B0',
                 style: TextStyle(
-                  fontSize: 24.0,
-                  //fontFamily: 'FashionFetish',
-                  fontWeight: FontWeight.w900,
+                  fontSize: 24,
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w600,
                 ),
-                maxLines: 1,
               ),
-            )),
-      ),
+            )
+          : Container(),
+      temperature != null
+          ? Positioned(
+              top: 107,
+              left: 20,
+              child: Container(
+                  height: 30,
+                  width: 140,
+                  child: Center(
+                    child: AutoSizeText(
+                      widget.location,
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        //fontFamily: 'FashionFetish',
+                        fontWeight: FontWeight.w900,
+                      ),
+                      maxLines: 1,
+                    ),
+                  )),
+            )
+          : Container(),
     ]);
   }
 }

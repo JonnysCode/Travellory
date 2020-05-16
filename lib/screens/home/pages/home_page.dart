@@ -111,6 +111,12 @@ class _HomePage extends State<HomePage> {
       return username;
     }
 
+    String cutDestinationName(String destination) {
+      List firstWord;
+      firstWord = destination.split(',');
+      return firstWord[0];
+    }
+
     return SafeArea(
       child: Container(
         key: Key('home_page'),
@@ -126,7 +132,7 @@ class _HomePage extends State<HomePage> {
                           'assets/images/home/weather/011-few_clouds.png'),
                     ),
                   )
-                : Weather(tripModel.destination),
+                : Weather(cutDestinationName(tripModel.destination)),
             trip == null
                 ? Positioned(
                     top: 20,
