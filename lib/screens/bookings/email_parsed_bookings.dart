@@ -33,42 +33,64 @@ class EmailParsedBookingsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  'Forward your booking confirmation mails to',
-                  style: TextStyle(
-                    fontFamily: 'fashionFetish',
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                    height: 1.4,
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(
-                    height: 6
-                ),
-                Text(
-                  _forwardMail,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: 'fashionFetish',
-                    fontWeight: FontWeight.bold,
-                    color: Colors.amberAccent,
-                    height: 1.2,
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(
-                    height: 6
-                ),
-                Text(
-                  'and add them to a trip here.',
-                  style: TextStyle(
-                    fontFamily: 'fashionFetish',
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                    height: 1.2,
-                    fontSize: 18,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      iconSize: 30,
+                      icon: Icon(
+                        FontAwesomeIcons.chevronLeft,
+                        color: Colors.black38,
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Forward your booking confirmation mails to',
+                            style: TextStyle(
+                              fontFamily: 'fashionFetish',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                              height: 1.4,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(
+                              height: 6
+                          ),
+                          Text(
+                            _forwardMail,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontFamily: 'fashionFetish',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.amberAccent,
+                              height: 1.2,
+                              fontSize: 18,
+                            ),
+                          ),
+                          const SizedBox(
+                              height: 6
+                          ),
+                          Text(
+                            'and add them to a trip here.',
+                            style: TextStyle(
+                              fontFamily: 'fashionFetish',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                              height: 1.2,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                     height: 16
@@ -93,7 +115,7 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                             fontWeight: FontWeight.w900,
                             color: Colors.black,
                             height: 1.2,
-                            fontSize: 22,
+                            fontSize: 20,
                             letterSpacing: -2
                           ),
                         ),
