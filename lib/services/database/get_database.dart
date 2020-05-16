@@ -23,7 +23,7 @@ class DatabaseGetter {
   static const String getActivities = 'activity-getActivities';
   static const String getRentalCars = 'booking-getRentalCars';
   static const String getPublicTransportations = 'booking-getPublicTransportations';
-  static const String getTemporaryAccommodations = 'getTempAccommodations';
+  static const String getTempAccommodations = 'booking-getTempAccommodations';
 
   static const String _emptyResult = 'no-data';
   static const int _maxCount = 200;
@@ -65,6 +65,7 @@ class DatabaseGetter {
   Map<String, dynamic> _getMap(String uid, String function) {
     switch (function) {
       case 'trips-getTrips':
+      case getTempAccommodations:
         return {"userUID": uid};
         break;
     }
@@ -92,7 +93,7 @@ class DatabaseGetter {
       case 'trips-getTrips':
         entries = <TripModel>[];
         break;
-      case getTemporaryAccommodations:
+      case getTempAccommodations:
         entries = <AccommodationModel>[];
         break;
     }
@@ -120,7 +121,7 @@ class DatabaseGetter {
       case 'trips-getTrips':
         entries = _createTrips(dbEntries);
         break;
-      case getTemporaryAccommodations :
+      case getTempAccommodations :
         entries = _createAccommodations(dbEntries);
         break;
     }
