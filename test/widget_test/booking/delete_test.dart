@@ -6,8 +6,9 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/widgets/bookings/edit_delete_dialogs.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/buttons/booking_button.dart';
 
 final ActivityModel activityModel = ActivityModel()
   ..category = 'Historic'
@@ -29,18 +30,19 @@ TripModel tripModel = TripModel(
     imageNr: 3);
 
 void main() {
-  Widget makeTestableWidget(TripsProvider tripsProvider, String alertText) {
+  Widget makeTestableWidget(TripsProvider tripsProvider, String alertText, String functionName) {
     return ChangeNotifierProvider<TripsProvider>.value(
       value: tripsProvider,
       child: MaterialApp(
         home: Material(child: Builder(
           builder: (BuildContext context) {
             return Center(
-              child: DeleteButton(
+              child: BookingButton(
+                buttonTitle: 'DeleteButtonTest',
                 highlightColor: Theme.of(context).primaryColor,
                 fillColor: Theme.of(context).primaryColor,
-                onDelete: () {
-                  showDeleteDialog(activityModel, context, alertText);
+                onPressed: () {
+                  showDeleteDialog(activityModel, context, alertText, functionName);
                 },
               ),
             );
@@ -51,15 +53,16 @@ void main() {
   }
 
   testWidgets('Test delete button exists', (WidgetTester tester) async {
-    final testKey = Key('DeleteButton');
+    final testKey = Key('BookingButton');
 
     Widget makeOwnTestableWidget() {
       return MaterialApp(home: Material(child: Builder(builder: (BuildContext context) {
         return Center(
-          child: DeleteButton(
+          child: BookingButton(
+            buttonTitle: 'DeleteButtonTest',
             highlightColor: Theme.of(context).primaryColor,
             fillColor: Theme.of(context).primaryColor,
-            onDelete: () {
+            onPressed: () {
               // no onDelete function
             },
           ),
@@ -70,7 +73,7 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeOwnTestableWidget());
 
-    expect(find.byType(DeleteButton, skipOffstage: false), findsOneWidget);
+    expect(find.byType(BookingButton, skipOffstage: false), findsOneWidget);
     expect(find.byKey(testKey), findsOneWidget);
   });
 
@@ -79,13 +82,16 @@ void main() {
     final Key testKey = Key('ShowDeleteDialog');
     TripsProviderMock tripsProvider = TripsProviderMock();
 
+    // This functionName just serves as placeholder for this test
+    final String functionName = DatabaseDeleter.deleteActivity;
+
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
-    await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText));
+    await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText, functionName));
 
-    expect(find.byType(DeleteButton), findsOneWidget);
-    await tester.tap(find.byType(DeleteButton));
+    expect(find.byType(BookingButton), findsOneWidget);
+    await tester.tap(find.byType(BookingButton));
     await tester.pump();
     expect(find.text(alertText), findsOneWidget);
     expect(find.byKey(testKey), findsOneWidget);
@@ -96,16 +102,19 @@ void main() {
     final String alertText = 'TestOnDelete';
     final Key testKey = Key('deleteButton');
 
+    // This functionName just serves as placeholder for this test
+    final String functionName = DatabaseDeleter.deleteActivity;
+
     TripsProviderMock tripsProvider = TripsProviderMock();
 
     tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText));
+    await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText, functionName));
 
-    expect(find.byType(DeleteButton), findsOneWidget);
-    await tester.tap(find.byType(DeleteButton));
+    expect(find.byType(BookingButton), findsOneWidget);
+    await tester.tap(find.byType(BookingButton));
     await tester.pump();
     expect(find.text(alertText), findsOneWidget);
 

@@ -7,7 +7,7 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/trip/create_trip_screen.dart';
 import 'package:travellory/screens/trip/trip_screen.dart';
-import 'package:travellory/services/database/edit.dart';
+import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/bookings/edit_delete_dialogs.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
@@ -137,7 +137,8 @@ class _TripCardState extends State<TripCard> {
                             description: 'Remove',
                             icon: FontAwesomeIcons.trashAlt,
                             color: Colors.redAccent,
-                            onTab: () => showDeleteDialog(_tripModel, context, _deleteAlertText)),
+                            onTab: () => showDeleteDialog(_tripModel, context, _deleteAlertText,
+                                DatabaseDeleter.deleteTripName)),
                       ],
                     ),
                   ],

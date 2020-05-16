@@ -5,9 +5,9 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
-import 'package:travellory/services/database/submit.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
@@ -15,6 +15,7 @@ import 'package:travellory/widgets/forms/show_dialog.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
+import 'package:travellory/widgets/bookings/edit.dart';
 
 class Flight extends StatefulWidget {
   static final route = '/booking/flight';
@@ -34,35 +35,14 @@ class FlightState<T extends Flight> extends State<T> {
   }
 
   final String alertText =
-      "You've just submitted the booking information for your flight booking. You can see all the information in the trip overview";
+      "You've just submitted the booking information for your flight booking. "
+      "You can see all the information in the trip overview";
 
   final String cancelText =
-      'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
+      'You are about to abort this booking entry. '
+      'Do you want to go back to the previous site and discard your changes?';
 
-  /* returns either submit new activity booking or edit old booking button */
-  Padding _getSubmitButton(
-      SingleTripProvider singleTripProvider, FlightModel model, bool isNewModel) {
-    void Function() onSubmit;
-    if (isNewModel) {
-      onSubmit =
-          onSubmitBooking(
-              singleTripProvider, model, 'booking-addFlight', context, alertText);
-    } else {
-      onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-      child: SubmitButton(
-        highlightColor: Theme.of(context).primaryColor,
-        fillColor: Theme.of(context).primaryColor,
-        validationFunction: validateForm,
-        onSubmit: onSubmit,
-      ),
-    );
-  }
-
-  Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
+  Column _getFlightContent(BuildContext context, SingleTripProvider singleTripProvider,
       TripModel tripModel, FlightModel model, bool isNewModel) {
     FlightModel _editFlightModel = FlightModel();
     _editFlightModel = FlightModel.fromData(model.toMap());
@@ -77,7 +57,7 @@ class FlightState<T extends Flight> extends State<T> {
               child: Column(children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: BookingSiteTitle('Add Flight', FontAwesomeIcons.plane),
+                  child: BookingSiteTitle('Flight', FontAwesomeIcons.plane),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -86,7 +66,7 @@ class FlightState<T extends Flight> extends State<T> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
-                    initialValue: _editFlightModel.bookingReference,
+                      initialValue: _editFlightModel.bookingReference,
                       labelText: 'Booking Reference',
                       icon: Icon(FontAwesomeIcons.ticketAlt),
                       optional: true,
@@ -226,17 +206,20 @@ class FlightState<T extends Flight> extends State<T> {
                     onChanged: (value) => _editFlightModel.notes = value,
                   ),
                 ),
-                _getSubmitButton(singleTripProvider, _editFlightModel, isNewModel),
                 Padding(
-                  padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                  child: CancelButton(
-                    text: 'CANCEL',
-                    onCancel: () {
-                      _editFlightModel = model;
-                      cancellingDialog(context, cancelText);
-                    },
-                  ),
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: getSubmitButton(context, singleTripProvider, _editFlightModel, isNewModel,
+                      DatabaseAdder.addFlight, DatabaseEditor.editFlight, alertText, validateForm),
                 ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
+                    child: getBookingCancelButton(
+                      context,
+                      () {
+                        _editFlightModel = model;
+                        cancellingDialog(context, cancelText);
+                      },
+                    )),
                 SizedBox(height: 20),
               ]),
             ),
@@ -251,15 +234,17 @@ class FlightState<T extends Flight> extends State<T> {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
-    final FlightModel _flightModel = FlightModel();
-    _flightModel.tripUID = tripModel.uid;
+
+    final ModifyModelArguments _arguments = ModalRoute.of(context).settings.arguments;
+    final FlightModel _flightModel = _arguments.model;
 
     return Scaffold(
       key: Key('Flight'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, _flightModel, true),
+        child:
+            _getFlightContent(context, singleTripProvider, tripModel, _flightModel, _arguments.isNewModel),
       ),
     );
   }
