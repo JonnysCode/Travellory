@@ -5,12 +5,13 @@ import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/services/database/edit.dart';
+import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/utils/list_models.dart';
-import 'package:travellory/services/database/submit.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
+import 'package:travellory/widgets/buttons/booking_button.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
@@ -21,6 +22,8 @@ import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:travellory/widgets/buttons/submit_button.dart';
+
 
 class PublicTransport extends StatefulWidget {
   static final route = '/booking/publictransport';
@@ -37,7 +40,6 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
   final GlobalKey<DateFormFieldState> _depDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final GlobalKey<DateFormFieldState> _arrDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
-
   bool validateForm() {
     return publicTransportFormKey.currentState.validate();
   }
@@ -48,10 +50,12 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
   }
 
   final String alertText =
-      "You've just submitted the booking information for your public transportation booking. You can see all the information in the trip overview";
+      "You've just submitted the booking information for your public transportation booking. "
+      "You can see all the information in the trip overview";
 
   final String cancelText =
-      'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
+      'You are about to abort this booking entry. '
+      'Do you want to go back to the previous site and discard your changes?';
 
   Widget itemBuilder(BuildContext context, int index, Animation<double> animation) {
     return FormItem(animation: animation, child: publicTransportList[index]);
@@ -61,37 +65,32 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
     return FormItem(animation: animation, child: item);
   }
 
-  void _getCancelButton(BuildContext context) {
-    publicTransportList[publicTransportList.length - 2] = CancelButton(
-      text: 'CANCEL',
-      onCancel: () {
+  void _setCancelButton(BuildContext context) {
+    publicTransportList[publicTransportList.length - 2] = getBookingCancelButton(
+      context,
+      () {
         cancellingDialog(context, cancelText);
       },
     );
   }
 
-  void _getSubmitButton(SingleTripProvider singleTripProvider, BuildContext context,
-      PublicTransportModel model, bool isNewModel) {
-    void Function() onSubmit;
-    if (isNewModel) {
-      onSubmit = onSubmitBooking(
-          singleTripProvider, model, 'booking-addPublicTransportation', context, alertText);
-    } else {
-      onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
-    }
-
-    publicTransportList[publicTransportList.length - 3] = SubmitButton(
-      highlightColor: Theme.of(context).primaryColor,
-      fillColor: Theme.of(context).primaryColor,
-      validationFunction: validateForm,
-      onSubmit: onSubmit,
-    );
+  void _setSubmitButton(SingleTripProvider singleTripProvider, BuildContext context,
+      PublicTransportModel publicTransportModel, bool isNewModel) {
+    publicTransportList[publicTransportList.length - 3] = getSubmitButton(
+        context,
+        singleTripProvider,
+        publicTransportModel,
+        isNewModel,
+        DatabaseAdder.addPublicTransportation,
+        DatabaseEditor.editPublicTransportation,
+        alertText,
+        validateForm);
   }
 
-  Column getContent(TripModel tripModel, SingleTripProvider singleTripProvider,
-      BuildContext context, PublicTransportModel model, bool isNewModel) {
-    _getSubmitButton(singleTripProvider, context, model, isNewModel);
-    _getCancelButton(context);
+  Column _getPublicTransportContent(TripModel tripModel, SingleTripProvider singleTripProvider,
+      BuildContext context, PublicTransportModel publicTransportModel, bool isNewModel) {
+    _setSubmitButton(singleTripProvider, context, publicTransportModel, isNewModel);
+    _setCancelButton(context);
 
     return Column(
       children: <Widget>[
@@ -167,7 +166,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
     // don't put in build because it will be recreated on every build
     // with state changes this is not appreciated
     final List<Widget> shown = [
-      BookingSiteTitle('Add Public Transport', FontAwesomeIcons.train),
+      BookingSiteTitle('Public Transport', FontAwesomeIcons.train),
       SectionTitle('Type of Transportation'),
       transportTypeDropdown,
       TravelloryFormField(
@@ -255,7 +254,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         onChanged: (value) => _publicTransportModel.notes = value,
       ),
       SubmitButton(),
-      CancelButton(),
+      BookingButton(),
       SizedBox(height: 20),
     ];
 
@@ -314,7 +313,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(
+        child: _getPublicTransportContent(
             tripModel, singleTripProvider, context, _publicTransportModel, arguments.isNewModel),
       ),
     );

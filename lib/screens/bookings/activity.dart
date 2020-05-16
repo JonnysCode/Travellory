@@ -5,10 +5,11 @@ import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
-import 'package:travellory/services/database/submit.dart';
+import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
@@ -31,8 +32,7 @@ class ActivityState<T extends Activity> extends State<T> {
   final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final GlobalKey<DateFormFieldState> _endDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
-
-  ActivityModel _activityModel = ActivityModel();
+  ActivityModel _activityModel;
 
   static const int _imageItemCount = 13;
 
@@ -45,44 +45,30 @@ class ActivityState<T extends Activity> extends State<T> {
       "You can see all the information in the trip overview";
 
   final String cancelText =
-      'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
-
-  final String errorMessage = "Seems like there's a connection problem. "
-      "Please check your internet connection and try submitting again.";
+      'You are about to abort this booking entry. '
+      'Do you want to go back to the previous site and discard your changes?';
 
   int _selectedIndex;
 
-  /* returns either submit new activity booking or edit old booking button */
-  Padding _getSubmitButton(
-      SingleTripProvider singleTripProvider, ActivityModel model, bool isNewModel) {
-    void Function() onSubmit;
-    if (isNewModel) {
-      onSubmit =
-          onSubmitBooking(singleTripProvider, model, 'activity-addActivity', context, alertText);
-    } else {
-      onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-      child: SubmitButton(
-        highlightColor: Theme.of(context).primaryColor,
-        fillColor: Theme.of(context).primaryColor,
-        validationFunction: validateForm,
-        onSubmit: onSubmit,
-      ),
-    );
+  @override
+  void initState() {
+    _activityModel = ActivityModel();
+    _selectedIndex = 0;
+    _activityModel.imageNr = 1;
+    super.initState();
   }
 
-  Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
+  Column _getActivityContent(BuildContext context, SingleTripProvider singleTripProvider,
       TripModel tripModel, ActivityModel model, bool isNewModel) {
     // set activityModel instance to edit or new model
     ActivityModel _editActivityModel = ActivityModel();
     _editActivityModel = ActivityModel.fromData(model.toMap());
     _activityModel = _editActivityModel;
 
-    // this selects the correct image for editing or adding the activity
-    _selectedIndex = _editActivityModel.imageNr - 1;
+    // need to set selecetedIndex for editModel
+    if(!isNewModel) {
+      _selectedIndex = _editActivityModel.imageNr - 1;
+    }
 
     return Column(
       children: <Widget>[
@@ -95,7 +81,7 @@ class ActivityState<T extends Activity> extends State<T> {
               child: Column(children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: BookingSiteTitle('Add Activity', FontAwesomeIcons.fortAwesome),
+                  child: BookingSiteTitle('Activity', FontAwesomeIcons.fortAwesome),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -150,9 +136,9 @@ class ActivityState<T extends Activity> extends State<T> {
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: false,
                       onTap: (controller) async {
-                        final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
-                            context,
-                            countryCode: tripModel.countryCode);
+                        final PlacesDetailsResponse detail =
+                            await GooglePlaces.openGooglePlacesSearch(context,
+                                countryCode: tripModel.countryCode);
 
                         controller.text = detail.result.formattedAddress;
                         _editActivityModel.location = detail.result.formattedAddress;
@@ -222,17 +208,21 @@ class ActivityState<T extends Activity> extends State<T> {
                     onChanged: (value) => _editActivityModel.notes = value,
                   ),
                 ),
-                _getSubmitButton(singleTripProvider, _editActivityModel, isNewModel),
                 Padding(
-                  padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                  child: CancelButton(
-                    text: 'CANCEL',
-                    onCancel: () {
-                      _editActivityModel = model;
-                      cancellingDialog(context, cancelText);
-                    },
-                  ),
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: getSubmitButton(context, singleTripProvider, _editActivityModel,
+                      isNewModel, DatabaseAdder.addActivity, DatabaseEditor.editActivity,
+                      alertText, validateForm),
                 ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
+                    child: getBookingCancelButton(
+                      context,
+                      () {
+                        _editActivityModel = model;
+                        cancellingDialog(context, cancelText);
+                      },
+                    )),
                 SizedBox(height: 20),
               ]),
             ),
@@ -248,14 +238,16 @@ class ActivityState<T extends Activity> extends State<T> {
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
 
-    _activityModel.tripUID = tripModel.uid;
+    final ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
+    final ActivityModel _activityModel = arguments.model;
 
     return Scaffold(
       key: Key('Activity'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, _activityModel, true),
+        child: _getActivityContent(
+            context, singleTripProvider, tripModel, _activityModel, arguments.isNewModel),
       ),
     );
   }

@@ -5,9 +5,9 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/services/database/edit_database.dart';
-import 'package:travellory/services/database/submit.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
@@ -16,6 +16,7 @@ import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
 
 class RentalCar extends StatefulWidget {
   static final route = '/booking/rentalcar';
@@ -30,7 +31,6 @@ class RentalCarState<T extends RentalCar> extends State<T> {
   final GlobalKey<DateFormFieldState> _pickUpDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final GlobalKey<DateFormFieldState> _returnDateFormFieldKey = GlobalKey<DateFormFieldState>();
 
-
   bool validateForm() {
     return rentalCarFormKey.currentState.validate();
   }
@@ -41,7 +41,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
   final String cancelText =
       'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
 
-  Column getContent(BuildContext context, SingleTripProvider singleTripProvider,
+  Column _getRentalCarContent(BuildContext context, SingleTripProvider singleTripProvider,
       TripModel tripModel, RentalCarModel model, bool isNewModel) {
     RentalCarModel _editRentalCarModel = RentalCarModel();
     _editRentalCarModel = RentalCarModel.fromData(model.toMap());
@@ -56,7 +56,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
               child: Column(children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: BookingSiteTitle('Add Rental Car', FontAwesomeIcons.car),
+                  child: BookingSiteTitle('Rental Car', FontAwesomeIcons.car),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -93,7 +93,9 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       optional: false,
                       onTap: (controller) async {
                         final PlacesDetailsResponse detail =
-                            await GooglePlaces.openGooglePlacesSearch(context, );
+                            await GooglePlaces.openGooglePlacesSearch(
+                          context,
+                        );
                         controller.text = detail.result.formattedAddress;
                         _editRentalCarModel.pickupLocation = detail.result.formattedAddress;
                         _editRentalCarModel.pickupLatitude = detail.result.geometry.location.lat;
@@ -136,9 +138,9 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
                       optional: true,
                       onTap: (controller) async {
-                        final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(
-                            context,
-                            countryCode: tripModel.countryCode);
+                        final PlacesDetailsResponse detail =
+                            await GooglePlaces.openGooglePlacesSearch(context,
+                                countryCode: tripModel.countryCode);
 
                         controller.text = detail.result.formattedAddress;
                         _editRentalCarModel.returnLocation = detail.result.formattedAddress;
@@ -207,18 +209,27 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                     onChanged: (value) => _editRentalCarModel.notes = value,
                   ),
                 ),
-                _getSubmitButton(singleTripProvider, _editRentalCarModel, isNewModel),
                 Padding(
-                  padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-                  child: CancelButton(
-                    text: 'CANCEL',
-                    onCancel: () {
-                      // If cancel, then model shouldn't be saved
-                      _editRentalCarModel = model;
-                      cancellingDialog(context, cancelText);
-                    },
-                  ),
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: getSubmitButton(
+                      context,
+                      singleTripProvider,
+                      _editRentalCarModel,
+                      isNewModel,
+                      DatabaseAdder.addRentalCar,
+                      DatabaseEditor.editRentalCar,
+                      alertText,
+                      validateForm),
                 ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
+                    child: getBookingCancelButton(
+                      context,
+                      () {
+                        _editRentalCarModel = model;
+                        cancellingDialog(context, cancelText);
+                      },
+                    )),
                 SizedBox(height: 20),
               ]),
             ),
@@ -228,42 +239,22 @@ class RentalCarState<T extends RentalCar> extends State<T> {
     );
   }
 
-  /* returns either submit new activity booking or edit old booking button */
-  Padding _getSubmitButton(
-      SingleTripProvider singleTripProvider, RentalCarModel model, bool isNewModel) {
-    void Function() onSubmit;
-    if (isNewModel) {
-      onSubmit =
-          onSubmitBooking(singleTripProvider, model, 'booking-addRentalCar', context, alertText);
-    } else {
-      onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-      child: SubmitButton(
-        highlightColor: Theme.of(context).primaryColor,
-        fillColor: Theme.of(context).primaryColor,
-        validationFunction: validateForm,
-        onSubmit: onSubmit,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
     final TripModel tripModel = singleTripProvider.tripModel;
-    final RentalCarModel _rentalCarModel = RentalCarModel();
-    _rentalCarModel.tripUID = tripModel.uid;
+
+    final ModifyModelArguments _arguments = ModalRoute.of(context).settings.arguments;
+    final RentalCarModel _rentalCarModel = _arguments.model;
 
     return Scaffold(
       key: Key('Rental Car'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(context, singleTripProvider, tripModel, _rentalCarModel, true),
+        child: _getRentalCarContent(
+            context, singleTripProvider, tripModel, _rentalCarModel, _arguments.isNewModel),
       ),
     );
   }

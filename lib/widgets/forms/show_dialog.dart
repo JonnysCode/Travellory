@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
-
 import '../font_widgets.dart';
 
 void showSubmittedBookingDialog(BuildContext context, String alertText) {
@@ -108,7 +107,10 @@ void missingFormFieldInformationDialog(BuildContext context) {
   );
 }
 
-void addToDataBaseFailedDialog(BuildContext context, String alertText) {
+void addToDataBaseFailedDialog(BuildContext context) {
+  final String errorMessage = "Seems like there's a connection problem. "
+      "Please check your internet connection and try submitting again.";
+
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -121,7 +123,7 @@ void addToDataBaseFailedDialog(BuildContext context, String alertText) {
           fontWeight: FashionFontWeight.heavy,
           height: 1.05,
         ),
-        content: Text(alertText),
+        content: Text(errorMessage),
         actions: <Widget>[
           alertButton("Try Again", Theme.of(context).hintColor, context, () async {
             Navigator.pop(context);

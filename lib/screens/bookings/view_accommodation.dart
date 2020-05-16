@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/widgets/bookings/view_booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';
@@ -84,7 +85,7 @@ class _AccommodationViewState extends State<AccommodationView> {
             Theme.of(context).primaryColor),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SizedBox(height: 10),
-        bottomBar(context, accommodationModels[0]),
+        bottomBar(context, accommodationModels[0], DatabaseDeleter.deleteAccommodation),
       ]),
     );
   }

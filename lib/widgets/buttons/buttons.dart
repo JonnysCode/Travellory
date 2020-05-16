@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/widgets/forms/show_dialog.dart';
-
 import '../font_widgets.dart';
 
 Widget filledButton(String text, Color splashColor, Color highlightColor, Color fillColor,
@@ -38,6 +36,7 @@ Widget alertButton(String text, Color fillColor, BuildContext context, void func
   );
 }
 
+// TODO (antilyas): delete this after merge with edit trip
 class CancelButton extends StatelessWidget {
   const CancelButton({Key key, this.text, this.onCancel}) : super(key: key);
 
@@ -60,106 +59,6 @@ class CancelButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 20),
-        ),
-      ),
-    );
-  }
-}
-
-class SubmitButton extends StatelessWidget {
-  const SubmitButton(
-      {Key key, this.highlightColor, this.fillColor, this.validationFunction, this.onSubmit})
-      : super(key: key);
-
-  final Color highlightColor;
-  final Color fillColor;
-  final bool Function() validationFunction;
-  final void Function() onSubmit;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: RaisedButton(
-        key: Key('SubmitButton'),
-        highlightElevation: 0.0,
-        splashColor: Colors.white,
-        highlightColor: highlightColor,
-        elevation: 0.0,
-        color: fillColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        onPressed: () {
-          if (validationFunction()) {
-            onSubmit();
-          } else {
-            missingFormFieldInformationDialog(context);
-          }
-        },
-        child: Text(
-          'SUBMIT',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
-        ),
-      ),
-    );
-  }
-}
-
-class DeleteButton extends StatelessWidget {
-  const DeleteButton({Key key, this.highlightColor, this.fillColor, this.text, this.onDelete})
-      : super(key: key);
-
-  final Color highlightColor;
-  final Color fillColor;
-  final String text;
-  final void Function() onDelete;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: RaisedButton(
-        key: Key('DeleteButton'),
-        highlightElevation: 0.0,
-        splashColor: Colors.white,
-        highlightColor: highlightColor,
-        elevation: 0.0,
-        color: fillColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        onPressed: onDelete,
-        child: Text(
-          'DELETE',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
-        ),
-      ),
-    );
-  }
-}
-
-class EditButton extends StatelessWidget {
-  const EditButton({Key key, this.highlightColor, this.fillColor, this.text, this.onEdit})
-      : super(key: key);
-
-  final Color highlightColor;
-  final Color fillColor;
-  final String text;
-  final void Function() onEdit;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: RaisedButton(
-        key: Key('EditButton'),
-        highlightElevation: 0.0,
-        splashColor: Colors.white,
-        highlightColor: highlightColor,
-        elevation: 0.0,
-        color: fillColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        onPressed: onEdit,
-        child: Text(
-          'EDIT',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
         ),
       ),
     );
