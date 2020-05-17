@@ -7,7 +7,6 @@ import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/forms/date_form_field.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
@@ -41,9 +40,8 @@ class _CreateTripState extends State<CreateTrip> {
   TripModel _tripModel;
   int _selectedIndex;
 
-  void init() {
-    _selectedIndex = 0;
-    _tripModel.imageNr = 1;
+  @override
+  void initState() {
     super.initState();
   }
 
@@ -51,26 +49,27 @@ class _CreateTripState extends State<CreateTrip> {
   Widget build(BuildContext context) {
     final TripsProvider trips = Provider.of<TripsProvider>(context, listen: false);
     final ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
-    _tripModel = arguments.model;
 
-    TripModel _editTripModel = TripModel();
-    _editTripModel = TripModel.fromData(_tripModel.toMap());
+    _tripModel = TripModel.fromData(arguments.model.toMap());
     final bool isNewModel = arguments.isNewModel;
 
     if (!isNewModel) {
       _selectedIndex = _tripModel.imageNr - 1;
+    } else {
+      _selectedIndex = 0;
+      _tripModel.imageNr = 1;
     }
 
     bool _validateForm() {
       return createTripFormKey.currentState.validate();
     }
 
-    SubmitButton _getSubmitButton(TripsProvider trips, TripModel model, bool isNewModel) {
+    SubmitButton _getSubmitButton() {
       void Function() onSubmit;
       if (isNewModel) {
-        onSubmit = onSubmitTrip(trips, model, context, alertText);
+        onSubmit = onSubmitTrip(trips, _tripModel, context, alertText);
       } else {
-        onSubmit = onEditTrip(trips, model, context);
+        onSubmit = onEditTrip(trips, _tripModel, context);
       }
 
       return SubmitButton(
@@ -129,30 +128,30 @@ class _CreateTripState extends State<CreateTrip> {
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                         child: DateFormField(
-                          initialValue: _editTripModel.startDate,
+                          initialValue: _tripModel.startDate,
                           key: _startDateFormFieldKey,
                           labelText: 'Start Date *',
                           icon: Icon(Icons.date_range),
                           optional: false,
-                          chosenDateString: (value) => _editTripModel.startDate = value,
+                          chosenDateString: (value) => _tripModel.startDate = value,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                         child: DateFormField(
-                          initialValue: _editTripModel.endDate,
+                          initialValue: _tripModel.endDate,
                           labelText: 'End Date *',
                           icon: Icon(Icons.date_range),
                           beforeDateKey: _startDateFormFieldKey,
                           optional: false,
                           dateValidationMessage: 'End Date cannot be before Start Date',
-                          chosenDateString: (value) => _editTripModel.endDate = value,
+                          chosenDateString: (value) => _tripModel.endDate = value,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                         child: TravelloryFormField(
-                          initialValue: _editTripModel.destination,
+                          initialValue: _tripModel.destination,
                           labelText: 'Destination *',
                           icon: Icon(Icons.directions_car),
                           optional: false,
@@ -166,12 +165,12 @@ class _CreateTripState extends State<CreateTrip> {
                                 GooglePlaces.getContinentFromCountryCode(country.shortName);
 
                             locationController.text = detail.result.formattedAddress;
-                            _editTripModel.destination = detail.result.formattedAddress;
-                            _editTripModel.country = country.longName;
-                            _editTripModel.countryCode = country.shortName;
-                            _editTripModel.continent = continent;
+                            _tripModel.destination = detail.result.formattedAddress;
+                            _tripModel.country = country.longName;
+                            _tripModel.countryCode = country.shortName;
+                            _tripModel.continent = continent;
                           },
-                          onChanged: (value) => _editTripModel.destination = value,
+                          onChanged: (value) => _tripModel.destination = value,
                         ),
                       ),
                       Padding(
@@ -181,11 +180,11 @@ class _CreateTripState extends State<CreateTrip> {
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                         child: TravelloryFormField(
-                          initialValue: _editTripModel.name,
+                          initialValue: _tripModel.name,
                           labelText: 'Trip Title *',
                           icon: Icon(Icons.supervised_user_circle),
                           optional: false,
-                          onChanged: (value) => _editTripModel.name = value,
+                          onChanged: (value) => {print(_tripModel.name = value)},
                         ),
                       ),
                       Padding(
@@ -199,7 +198,7 @@ class _CreateTripState extends State<CreateTrip> {
                           child: Container(
                         height: 32,
                         width: 120,
-                        child: _getSubmitButton(trips, _editTripModel, isNewModel),
+                        child: _getSubmitButton(),
                       )),
                       SizedBox(
                         height: 10,
