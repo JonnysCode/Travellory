@@ -180,7 +180,7 @@ class _CreateTripState extends State<CreateTrip> {
                         child: ImageSelector(
                           images: _images,
                           initialValue: _tripModel.imageNr,
-                          onChanged: (value) => _tripModel.imageNr = value,
+                          onChanged: (value) => _tripModel.imageNr = value+1,
                         ),
                       ),
                       SizedBox(
