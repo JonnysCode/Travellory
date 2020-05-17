@@ -97,8 +97,29 @@ class TripsProvider extends ChangeNotifier implements NotifyListener {
     final List<TripModel> tripModels =
         await _databaseGetter.getEntriesFromDatabase(user.uid, DatabaseGetter.getTrips);
     trips = tripModels.map((tripModel) => SingleTripProvider(tripModel, this)).toList();
+    trips.forEach((singleTrip) => print(singleTrip.tripModel.name));
+    _sortTrips();
     isFetchingTrips = false;
     notifyListeners();
+  }
+
+  // Sort trips using bubble sort
+  void _sortTrips(){
+    if(trips.isEmpty){
+      return;
+    }
+
+    int n = trips.length;
+    for (int i = 0; i < n-1; i++){
+      for (int j = 0; j < n-i-1; j++){
+        if (getDateTimeFrom(trips[j].tripModel.startDate)
+            .isAfter(getDateTimeFrom(trips[j+1].tripModel.startDate))) {
+          var temp = trips[j];
+          trips[j] = trips[j+1];
+          trips[j+1] = temp;
+        }
+      }
+    }
   }
 
   void _setActiveTrip() {
