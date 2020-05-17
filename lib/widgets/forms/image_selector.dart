@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class ImageSelector extends StatefulWidget {
   const ImageSelector(
       {Key key,
+        @required this.images,
         this.initialValue,
         this.onChanged,
       })
@@ -11,6 +12,7 @@ class ImageSelector extends StatefulWidget {
 
   final int initialValue;
   final ValueChanged<int> onChanged;
+  final List<ImageProvider> images;
 
   @override
   _ImageSelectorState createState() => _ImageSelectorState();
@@ -21,14 +23,12 @@ class _ImageSelectorState extends State<ImageSelector>
   @override
   bool get wantKeepAlive => true;
 
-  static const int _imageItemCount = 11;
-
   TabController controller;
 
   @override
   void initState() {
     super.initState();
-    controller = TabController(vsync: this, length: _imageItemCount);
+    controller = TabController(vsync: this, length: widget.images.length);
     controller.index = widget.initialValue ?? 0;
   }
 
@@ -49,7 +49,7 @@ class _ImageSelectorState extends State<ImageSelector>
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
-          itemCount: _imageItemCount,
+          itemCount: widget.images.length,
           itemBuilder: (context, index) {
             return _imageItem(index);
           },
@@ -83,7 +83,7 @@ class _ImageSelectorState extends State<ImageSelector>
             key: Key('image_icon'),
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/home/trip/trip_${(index + 1).toString()}.png'),
+                image: widget.images[index],
                 fit: BoxFit.fitWidth,
               ),
               borderRadius: BorderRadius.circular(33.0),
