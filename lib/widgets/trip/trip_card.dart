@@ -7,7 +7,6 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/trip/trip_screen.dart';
 import 'package:travellory/services/database/delete_database.dart';
-import 'package:travellory/screens/trip/edit_trip_screen.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/bookings/edit_delete_dialogs.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
@@ -38,10 +37,6 @@ class _TripCardState extends State<TripCard> {
   void _openTrip() {
     Provider.of<TripsProvider>(context, listen: false).selectTrip(_tripModel);
     Navigator.pushNamed(context, TripScreen.route);
-  }
-
-  void _editTrip() {
-    Navigator.pushNamed(context, EditTrip.route, arguments: _tripModel);
   }
 
   @override

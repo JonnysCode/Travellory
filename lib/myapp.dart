@@ -22,7 +22,6 @@ import 'package:travellory/screens/bookings/view_rental_car.dart';
 import 'package:travellory/screens/home/home.dart';
 import 'package:travellory/screens/home/pages/friends_page.dart';
 import 'package:travellory/screens/trip/create_trip_screen.dart';
-import 'package:travellory/screens/trip/edit_trip_screen.dart';
 import 'package:travellory/screens/trip/trip_screen.dart';
 import 'package:travellory/screens/wrapper.dart';
 import 'package:travellory/services/authentication/auth.dart';
@@ -61,7 +60,6 @@ class MyApp extends StatelessWidget {
             Home.route: (_) => Home(),
             TripScreen.route: (_) => TripScreen(),
             CreateTrip.route: (_) => CreateTrip(),
-            EditTrip.route: (_) => EditTrip(),
             RentalCar.route: (_) => RentalCar(),
             Accommodation.route: (_) => Accommodation(),
             Flight.route: (_) => Flight(),
