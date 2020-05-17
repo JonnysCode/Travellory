@@ -14,7 +14,8 @@ import 'package:travellory/screens/bookings/view_accommodation.dart';
 import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 
 String _mapStyle;
-final List<String> _userStates = ["switzerland", "austria", "belgium"];
+// ["switzerland", "austria", "belgium"]
+final List<String> _userStates = List<String>();
 
 class MapPage extends StatefulWidget {
   @override
@@ -64,6 +65,12 @@ class MapSampleState extends State<MapSample> {
 
     for (final SingleTripProvider trip in trips) {
       final List<AccommodationModel> accommodations = trip.accommodations;
+
+      if(!_userStates.contains(trip.tripModel.country)){
+        _userStates.add(trip.tripModel.country);
+      }
+
+      //print(trip.tripModel.country);
 
       for (final AccommodationModel accommodation in accommodations) {
         final marker = Marker(
