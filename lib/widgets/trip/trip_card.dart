@@ -47,6 +47,7 @@ class _TripCardState extends State<TripCard> {
         'Are you sure you want to continue? This action cannot be undone!';
 
     return Container(
+      key: Key('TripCard'),
       height: 100,
       child: Stack(
         children: <Widget>[
@@ -124,7 +125,6 @@ class _TripCardState extends State<TripCard> {
                     ),
                     OptionButton(
                       optionItems: <OptionItem>[
-                        OptionItem(description: 'Edit', icon: FontAwesomeIcons.edit, onTab: () {}),
                         OptionItem(
                             description: 'Remove',
                             icon: FontAwesomeIcons.trashAlt,
