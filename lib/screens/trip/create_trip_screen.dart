@@ -24,10 +24,8 @@ class CreateTrip extends StatefulWidget {
 }
 
 class _CreateTripState extends State<CreateTrip> {
-  static const int _imageItemCount = 11;
 
   final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
-  final DatabaseAdder databaseAdder = DatabaseAdder();
   final createTripFormKey = GlobalKey<FormState>();
   TextEditingController locationController = TextEditingController();
 
@@ -37,6 +35,8 @@ class _CreateTripState extends State<CreateTrip> {
 
   final String cancelText = 'You are about to abort this new trip entry. '
       'Do you want to go back to the previous site and discard your changes?';
+
+  final List<ImageProvider> _images = List.generate(11, (index) => AssetImage('assets/images/home/trip/trip_${(index + 1).toString()}.png'));
 
   TripModel _tripModel;
 
@@ -178,6 +178,7 @@ class _CreateTripState extends State<CreateTrip> {
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                         child: ImageSelector(
+                          images: _images,
                           initialValue: _tripModel.imageNr,
                           onChanged: (value) => _tripModel.imageNr = value,
                         ),
