@@ -5,6 +5,7 @@ import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/screens/authenticate/welcome.dart';
 import 'package:travellory/screens/home/home.dart';
+import 'package:travellory/services/notifications/message_handler.dart';
 import 'package:travellory/shared/loading_logo.dart';
 
 class Wrapper extends StatelessWidget {
@@ -16,6 +17,9 @@ class Wrapper extends StatelessWidget {
     final UserModel user = Provider.of<UserModel>(context);
     final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
     final FriendsProvider friendsProvider = Provider.of<FriendsProvider>(context, listen: false);
+
+    // configure the message handler to receive push notifications
+    MessageHandler.configure(context);
 
     // return either home or authentication
     if(user == null){
