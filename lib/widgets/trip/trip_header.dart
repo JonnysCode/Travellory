@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/screens/trip/create_trip_screen.dart';
 import 'package:travellory/utils/date_converter.dart';
+import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
 class TripHeader extends StatefulWidget {
@@ -22,6 +24,7 @@ class _TripHeaderState extends State<TripHeader> {
     _tripModel = widget.tripModel;
 
     return Container(
+      key: Key('TripHeader'),
       height: 190,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -65,9 +68,7 @@ class _TripHeaderState extends State<TripHeader> {
               alignment: Alignment.topLeft,
               width: MediaQuery.of(context).size.width,
               constraints: BoxConstraints(
-                  maxHeight: 100.0,
-                  maxWidth: MediaQuery.of(context).size.width - 200
-              ),
+                  maxHeight: 100.0, maxWidth: MediaQuery.of(context).size.width - 200),
               child: Text(
                 _tripModel.name,
                 overflow: TextOverflow.ellipsis,
@@ -77,8 +78,7 @@ class _TripHeaderState extends State<TripHeader> {
                     fontSize: 22,
                     height: 1.1,
                     fontWeight: FontWeight.w900,
-                    letterSpacing: -2
-                ),
+                    letterSpacing: -2),
               ),
             ),
           ),
@@ -92,12 +92,11 @@ class _TripHeaderState extends State<TripHeader> {
               children: <Widget>[
                 FashionFetishText(
                     text: 'From: ${dMMMyyyy(getDateTimeFrom(_tripModel.startDate))}\n'
-                          'To: ${dMMMyyyy(getDateTimeFrom(_tripModel.endDate))}',
+                        'To: ${dMMMyyyy(getDateTimeFrom(_tripModel.endDate))}',
                     color: Colors.black54,
                     fontWeight: FashionFontWeight.bold,
                     size: 14,
-                    height: 1.25
-                ),
+                    height: 1.25),
                 SizedBox(
                   height: 10,
                 ),
@@ -121,18 +120,33 @@ class _TripHeaderState extends State<TripHeader> {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: TextStyle(
-                          fontFamily: 'FashionFetish',
-                          fontSize: 13,
-                          height: 1.15,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: -1,
-                          color: Colors.black54
-                        ),
+                            fontFamily: 'FashionFetish',
+                            fontSize: 13,
+                            height: 1.15,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: -1,
+                            color: Colors.black54),
                       ),
                     ),
                   ],
                 ),
               ],
+            ),
+          ),
+          Positioned(
+            top: 125,
+            left: 330,
+            right: 10,
+            child: IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, CreateTrip.route,
+                    arguments: ModifyModelArguments(model: widget.tripModel, isNewModel: false));
+              },
+              icon: Icon(
+                FontAwesomeIcons.edit,
+                size: 25.0,
+                color: Colors.black54,
+              ),
             ),
           ),
         ],

@@ -6,8 +6,8 @@ import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/screens/bookings/add_accommodation.dart';
-import 'package:travellory/services/database/edit.dart';
+import 'package:travellory/screens/bookings/accommodation.dart';
+import 'package:travellory/widgets/bookings/edit.dart';
 
 class TripsProviderMock extends Mock implements TripsProvider {}
 

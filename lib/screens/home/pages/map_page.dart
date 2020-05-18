@@ -52,6 +52,7 @@ class MapSample extends StatefulWidget {
 
 class MapSampleState extends State<MapSample> {
   final Completer<GoogleMapController> _controller = Completer();
+  final GMapBorderLoader _gMapBorderLoader = GMapBorderLoader();
   final Map<String, Marker> _markers = {};
   final List<Polygon> _boundaries = [];
 
@@ -81,7 +82,7 @@ class MapSampleState extends State<MapSample> {
   }
 
   Future<void> onMapCreated() async {
-    final _boundariesTemp = await GMapBorderLoader.generateBorders(_userStates);
+    final _boundariesTemp = await _gMapBorderLoader.generateBorders(_userStates);
 
     setState(() {
       loadAccommodations();
