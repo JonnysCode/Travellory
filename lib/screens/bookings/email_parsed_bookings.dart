@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/temp_bookings_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
@@ -16,18 +15,25 @@ class EmailParsedBookingsScreen extends StatelessWidget {
   static final String route = '/booking/emailparsed';
   static final String _forwardMail = 'travellory@in.parseur.com';
 
-  List<OptionItem> getAvailableTripOptions(TripsProvider tripsProvider, AccommodationModel model, TempBookingsProvider tempBookingsProvider, BuildContext context){
+  List<OptionItem> getAvailableTripOptions(
+      TripsProvider tripsProvider,
+      AccommodationModel model,
+      TempBookingsProvider tempBookingsProvider,
+      BuildContext context) {
     var trips = <OptionItem>[];
     tripsProvider.trips.forEach((trip) => {
-      if (isInTimeFrame(getDateTimeFrom(model.checkinDate), getDateTimeFrom(model.checkoutDate),
-          getDateTimeFrom(trip.tripModel.startDate), getDateTimeFrom(trip.tripModel.endDate))) {
-        trips.add(OptionItem(
-            description: trip.tripModel.name,
-            onTab: onSubmitTempAccommodation(
-                tempBookingsProvider, trip, model, context)
-        ))
-      }
-    });
+          if (isInTimeFrame(
+              getDateTimeFrom(model.checkinDate),
+              getDateTimeFrom(model.checkoutDate),
+              getDateTimeFrom(trip.tripModel.startDate),
+              getDateTimeFrom(trip.tripModel.endDate)))
+            {
+              trips.add(OptionItem(
+                  description: trip.tripModel.name,
+                  onTab: onSubmitTempAccommodation(
+                      tempBookingsProvider, trip, model, context)))
+            }
+        });
 
     return trips;
   }
@@ -35,11 +41,13 @@ class EmailParsedBookingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TripsProvider tripsProvider = Provider.of<TripsProvider>(context);
-    TempBookingsProvider tempBookingsProvider = TempBookingsProvider(tripsProvider.user);
+    TempBookingsProvider tempBookingsProvider =
+        TempBookingsProvider(tripsProvider.user)
+        ..fetchAccommodations();
     var trips;
 
-    return FutureProvider<List<AccommodationModel>>(
-      create: (_) => tempBookingsProvider.fetchAccommodations(),
+    return ChangeNotifierProvider<TempBookingsProvider>.value(
+      value: tempBookingsProvider,
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Theme.of(context).primaryColor,
@@ -76,9 +84,7 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                               fontSize: 16,
                             ),
                           ),
-                          const SizedBox(
-                              height: 6
-                          ),
+                          const SizedBox(height: 6),
                           Text(
                             _forwardMail,
                             textAlign: TextAlign.left,
@@ -90,9 +96,7 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                               fontSize: 18,
                             ),
                           ),
-                          const SizedBox(
-                              height: 6
-                          ),
+                          const SizedBox(height: 6),
                           Text(
                             'and add them to a trip here.',
                             style: TextStyle(
@@ -108,9 +112,7 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                    height: 16
-                ),
+                const SizedBox(height: 16),
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.all(10.0),
@@ -119,7 +121,9 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                       color: Colors.white,
                       boxShadow: <BoxShadow>[
                         BoxShadow(
-                            blurRadius: 6, color: Colors.black.withOpacity(.15), offset: Offset(3.0, 3.0))
+                            blurRadius: 6,
+                            color: Colors.black.withOpacity(.15),
+                            offset: Offset(3.0, 3.0))
                       ],
                     ),
                     child: Column(
@@ -127,46 +131,57 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                         Text(
                           'Accommodations',
                           style: TextStyle(
-                            fontFamily: 'fashionFetish',
-                            fontWeight: FontWeight.w900,
-                            color: Colors.black,
-                            height: 1.2,
-                            fontSize: 20,
-                            letterSpacing: -2
-                          ),
+                              fontFamily: 'fashionFetish',
+                              fontWeight: FontWeight.w900,
+                              color: Colors.black,
+                              height: 1.2,
+                              fontSize: 20,
+                              letterSpacing: -2),
                         ),
-                        const SizedBox(
-                            height: 10
-                        ),
+                        const SizedBox(height: 10),
                         Expanded(
-                          child: Consumer<List<AccommodationModel>>(
-                            builder: (_, accommodations, __) => accommodations == null
-                                ? LoadingHeart()
-                                : ListView.separated(
-                              separatorBuilder: (_, __) => const Divider(),
-                              itemCount: accommodations.length,
-                              itemBuilder: (context, index) => Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: BookingCard(
-                                      model: accommodations[index],
-                                      onTap: () => Navigator.pushNamed(
-                                          context, AccommodationView.route,
-                                          arguments: accommodations[index]),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 30,
-                                    child: OptionButton(
-                                      icon: FontAwesomeIcons.plus,
-                                      optionItems: (trips = getAvailableTripOptions(tripsProvider, accommodations[index], tempBookingsProvider, context)).isEmpty
-                                          ? <OptionItem>[OptionItem(description: 'We could not find a trip in that time.', color: Colors.red)]
-                                          : trips,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          child: Consumer<TempBookingsProvider>(
+                            builder: (_, bookings, __) =>
+                                bookings.accommodations == null
+                                    ? LoadingHeart()
+                                    : ListView.separated(
+                                        separatorBuilder: (_, __) =>
+                                            const Divider(),
+                                        itemCount: bookings.accommodations.length,
+                                        itemBuilder: (context, index) => Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              child: BookingCard(
+                                                model: bookings.accommodations[index],
+                                                onTap: () =>
+                                                    Navigator.pushNamed(context,
+                                                        AccommodationView.route,
+                                                        arguments: bookings.accommodations[index]),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 30,
+                                              child: OptionButton(
+                                                icon: FontAwesomeIcons.plus,
+                                                optionItems: (trips =
+                                                            getAvailableTripOptions(
+                                                                tripsProvider,
+                                                                bookings.accommodations[index],
+                                                                tempBookingsProvider,
+                                                                context))
+                                                        .isEmpty
+                                                    ? <OptionItem>[
+                                                        OptionItem(
+                                                            description:
+                                                                'We could not find a trip in that time.',
+                                                            color: Colors.red)
+                                                      ]
+                                                    : trips,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                           ),
                         ),
                       ],

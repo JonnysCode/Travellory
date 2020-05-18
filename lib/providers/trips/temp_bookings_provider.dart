@@ -17,14 +17,15 @@ class TempBookingsProvider extends ChangeNotifier {
   UserModel _user;
   List<AccommodationModel> accommodations;
 
-  Future<List<AccommodationModel>> fetchAccommodations() async {
+  Future<void> fetchAccommodations() async {
     accommodations = await _databaseGetter.getEntriesFromDatabase(
         _user.uid, DatabaseGetter.getTempAccommodations);
-    return accommodations;
+    notifyListeners();
   }
 
   Future<bool> deleteAccommodation(AccommodationModel model) async {
-    final bool deleted = await _databaseDeleter.deleteModel(model, DatabaseDeleter.deleteTempAccommodation);
+    //final bool deleted = await _databaseDeleter.deleteModel(model, DatabaseDeleter.deleteTempAccommodation);
+    bool deleted = true;
     if(deleted) {
       await fetchAccommodations();
       notifyListeners();
