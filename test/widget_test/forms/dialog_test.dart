@@ -3,9 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
-import 'package:travellory/services/database/submit.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/widgets/buttons/booking_button.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
+import 'package:travellory/widgets/buttons/submit_button.dart';
 
 void main() {
   testWidgets('Test submit button exists', (WidgetTester tester) async {
@@ -21,8 +22,8 @@ void main() {
           child: SubmitButton(
             highlightColor: Theme.of(context).primaryColor,
             fillColor: Theme.of(context).primaryColor,
-            onSubmit: onSubmitBooking(SingleTripProvider(TripModel(), null),
-                testModel, 'booking-addTest', context, alertText),
+            onSubmit: onSubmitBooking(SingleTripProvider(TripModel(), null), testModel,
+                'booking-addTest', context, alertText),
           ),
         );
       })));
@@ -40,20 +41,23 @@ void main() {
     Widget makeTestableWidget() {
       return MaterialApp(home: Material(child: Builder(builder: (BuildContext context) {
         return Center(
-            child: CancelButton(
-          text: 'CANCEL',
-          onCancel: () {
-            cancellingDialog(context, cancelText);
-          },
-        ));
+          child: BookingButton(
+            buttonTitle: 'CANCEL',
+            highlightColor: Theme.of(context).primaryColor,
+            fillColor: Color(0xFFF48FB1),
+            onPressed: () {
+              cancellingDialog(context, cancelText);
+            },
+          ),
+        );
       })));
     }
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget());
 
-    expect(find.byType(CancelButton), findsOneWidget);
-    await tester.tap(find.byType(CancelButton));
+    expect(find.byType(BookingButton), findsOneWidget);
+    await tester.tap(find.byType(BookingButton));
     await tester.pump();
     expect(find.text(cancelText), findsOneWidget);
   });
@@ -103,7 +107,6 @@ void main() {
   });
 
   testWidgets('Test missingFormFieldInformationDialog is created', (WidgetTester tester) async {
-
     Widget makeTestableWidget() {
       return MaterialApp(home: Material(child: Builder(builder: (BuildContext context) {
         return Center(
@@ -124,13 +127,11 @@ void main() {
   });
 
   testWidgets('Test addToDataBaseFailedDialog is created', (WidgetTester tester) async {
-    final String alertText = 'Test';
-
     Widget makeTestableWidget() {
       return MaterialApp(home: Material(child: Builder(builder: (BuildContext context) {
         return Center(
           child: RaisedButton(
-            onPressed: () => addToDataBaseFailedDialog(context, alertText),
+            onPressed: () => addToDataBaseFailedDialog(context),
           ),
         );
       })));

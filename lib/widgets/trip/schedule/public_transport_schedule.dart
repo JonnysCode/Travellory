@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/schedule_entry.dart';
-import 'package:travellory/widgets/bookings/bookings_card_specifics.dart';
+import 'package:travellory/widgets/booking_cards/bookings_card_specifics.dart';
 
 class PublicTransportSchedule extends StatelessWidget {
   const PublicTransportSchedule(this.scheduleEntry, {Key key}) : super(key: key);
