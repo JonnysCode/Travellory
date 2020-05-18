@@ -55,7 +55,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   Future<bool> deleteTrip(TripModel tripModel) async {
     final bool deleted =
-      await _databaseDeleter.deleteModel(tripModel, DatabaseDeleter.deleteTripName);
+      await _databaseDeleter.deleteModel(tripModel, DatabaseDeleter.deleteTrip);
     if (deleted) {
       unawaited(_initTrips());
     }
