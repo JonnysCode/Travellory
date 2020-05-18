@@ -1,6 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
+import 'package:travellory/providers/weather_provider.dart';
 import 'package:travellory/services/api/openWeatherAPI.dart';
 
 class Weather extends StatefulWidget {
@@ -12,6 +15,8 @@ class Weather extends StatefulWidget {
 }
 
 class _WeatherState extends State<Weather> {
+
+  WeatherProvider _weatherProvider;
 
   String selectImage(String description) {
     String path;
@@ -65,62 +70,71 @@ class _WeatherState extends State<Weather> {
   @override
   void initState() {
     super.initState();
-    OpenWeatherAPI.getWeather(widget.location);
+    _weatherProvider = WeatherProvider(OpenWeatherAPI(), widget.location)
+      ..initWeather();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO DELETE
-    print(OpenWeatherAPI.getTemperature());
-    print(OpenWeatherAPI.getDescription());
-    print(widget.location);
-    OpenWeatherAPI.getWeather(widget.location);
-
-    return Stack(
-        key: Key('weather_page'),
-        children: <Widget>[
-      Positioned(
-        left: 25,
-        top: 15,
-        child: Image(
-          height: 100,
-          image: AssetImage(selectImage(OpenWeatherAPI.getDescription())),
+    return ChangeNotifierProvider<WeatherProvider>.value(
+      value: _weatherProvider,
+      child: Stack(
+          key: Key('weather_page'),
+          children: <Widget>[
+        Selector<WeatherProvider, String>(
+          selector: (_, weather) => weather.description,
+          builder: (_, description, __) => description == null
+              ? SpinKitCircle(color: Colors.black38)
+              : Positioned(
+            left: 25,
+            top: 15,
+            child: Image(
+              height: 100,
+              image: AssetImage(selectImage(description)),
+            ),
+          ),
         ),
-      ),
-      OpenWeatherAPI.getTemperature() != null
-          ? Positioned(
-              top: 70,
-              left: 100,
-              child: Text(
-                OpenWeatherAPI.getTemperature().toString() + '\u00B0',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.black87,
-                  fontWeight: FontWeight.w600,
+      Selector<WeatherProvider, String>(
+          selector: (_, weather) => weather.temperature,
+          builder: (_, temperature, __) => temperature == null
+              ? Container()
+              : Positioned(
+                top: 70,
+                left: 100,
+                child: Text(
+                  '$temperature\u00B0',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            )
-          : Container(),
-          OpenWeatherAPI.getTemperature() != null
-          ? Positioned(
-              top: 107,
-              left: 20,
-              child: Container(
-                  height: 30,
-                  width: 140,
-                  child: Center(
-                    child: AutoSizeText(
-                      cutDestinationName(widget.location),
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontFamily: 'FashionFetish',
-                        fontWeight: FontWeight.w900,
+      ),
+      Selector<WeatherProvider, String>(
+          selector: (_, weather) => weather.temperature,
+          builder: (_, temperature, __) => temperature == null
+              ? Container()
+              : Positioned(
+                top: 107,
+                left: 20,
+                child: Container(
+                    height: 30,
+                    width: 140,
+                    child: Center(
+                      child: AutoSizeText(
+                        cutDestinationName(widget.location),
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: 'FashionFetish',
+                          fontWeight: FontWeight.w900,
+                        ),
+                        maxLines: 1,
                       ),
-                      maxLines: 1,
-                    ),
-                  )),
-            )
-          : Container(),
-    ]);
+                    )),
+              ),
+      )
+      ]),
+    );
   }
 }

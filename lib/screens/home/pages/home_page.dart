@@ -155,7 +155,7 @@ class _HomePage extends State<HomePage> {
                           'assets/images/home/weather/011-few_clouds.png'),
                     ),
                   )
-                : Weather(tripModel.destination),
+                : Weather('Winterthur'),
             trip == null
                 ? Positioned(
                     top: 20,
