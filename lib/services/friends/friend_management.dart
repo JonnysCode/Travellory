@@ -38,7 +38,7 @@ class FriendManagement {
     final result =
         await _callHttpsCallable(uid, null, 'user-getPublicUserInformation');
     final friend = FriendsModel(result.data['uid'],
-        result.data['displayName'], result.data['photoURL']);
+        result.data['displayName'], result.data['photoURL'], result.data['hometown']);
     return friend;
   }
 
