@@ -240,7 +240,6 @@ class UserInformation extends StatelessWidget {
             ),
           ]
       ),
-//      SizedBox(height: 8),
       ProfileHometown(),
     ]);
   }

@@ -7,19 +7,17 @@ class ProfileHometown extends StatefulWidget {
 }
 
 class _TextInputValueState extends State<ProfileHometown> {
-  TextEditingController _textInputController = TextEditingController();
-  String _showText = "";
+  String _hometown = "Switzerland";
+  bool visible = false;
 
-  _onPressed() {
+  void _setVisibility(){
     setState(() {
-      _showText = _textInputController.text;
+      visible = !visible;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    bool visible = false;
-
     return Column(
       children: <Widget>[
       Row(
@@ -37,7 +35,7 @@ class _TextInputValueState extends State<ProfileHometown> {
               child: Row(
                 children: <Widget>[
                   FashionFetishText(
-                    text: "$_showText",
+                    text: "$_hometown",
                     size: 18,
                     fontWeight: FashionFontWeight.bold,
                     height: 1.1,
@@ -46,20 +44,37 @@ class _TextInputValueState extends State<ProfileHometown> {
                   IconButton(
                     icon: Icon(
                         FontAwesomeIcons.pen,
-                        color: Colors.red,
+                        color: Colors.grey,
                         size: 20
                     ),
-                    onPressed: null,
+                    onPressed: _setVisibility,
                   )
                 ],
               ),
               replacement: Row(
                 children: <Widget>[
-                  FashionFetishText(
-                    text: "$_showText",
-                    size: 18,
-                    fontWeight: FashionFontWeight.bold,
-                    height: 1.1,
+                  SizedBox(
+                    width: 200,
+                      child: TextField(
+                        autofocus: true,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'FashionFetish',
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: -1.0,
+                          height: 1.1
+                        ),
+                        decoration: InputDecoration(
+                          hintText: "$_hometown",
+                          hintStyle: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'FashionFetish',
+                            color: Colors.grey
+                          ),
+                          border: InputBorder.none,
+                        ),
+                      ),
                   ),
                   SizedBox(width: 10),
                   IconButton(
@@ -68,7 +83,7 @@ class _TextInputValueState extends State<ProfileHometown> {
                         color: Theme.of(context).primaryColor,
                         size: 20
                     ),
-                    onPressed: null,
+                    onPressed: _setVisibility,
                   )
                 ],
               ),
