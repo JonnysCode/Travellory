@@ -78,7 +78,7 @@ class GMapBorderLoader{
   }
 
 
-  Future<List<Polygon>> generateBorders (List<String> states) async {
+  Future<List<Polygon>> generateBorders(List<String> states) async {
 
     final List<Polygon> borders = <Polygon>[];
 
