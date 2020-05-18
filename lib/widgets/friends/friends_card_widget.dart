@@ -1,11 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'friends_profile_picture.dart';
 
 void _openFriendsProfile(BuildContext context, FriendsModel friend){
-//  FriendsProfileHeader(friend)
   Navigator.pushNamed(context, '/friends/friends_profile', arguments: friend);
 }
 
@@ -78,61 +77,10 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
         Align(
             alignment: Alignment.centerLeft,
             child: friend.photoURL != null
-                ? profilePicture(friend.photoURL, cardSize)
-                : standardPicture(cardSize)
+                ? profilePicture(friend.photoURL, cardSize: cardSize)
+                : standardPicture(cardSize: cardSize)
         ),
       ],
-    ),
-  );
-}
-
-Widget profilePicture(String photoURL, double cardSize) {
-  return Container(
-      height: cardSize,
-      width: cardSize,
-      child: CachedNetworkImage(
-        /// will check local cache first and download from firebase if necessary
-        imageUrl: photoURL,
-        imageBuilder: (context, imageProvider) => Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(40),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  blurRadius: 6,
-                  color: Colors.black.withOpacity(.3),
-                  offset: Offset(3.0, 3.0))
-            ],
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.fitWidth,
-              alignment: Alignment.bottomCenter,
-            ),
-            border: Border.all(color: Theme.of(context).primaryColor, width: 2.0),
-          ),
-        ),
-        placeholder: (context, url) => CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor)),
-        errorWidget: (context, url, error) =>  standardPicture(cardSize),
-      ));
-}
-
-Widget standardPicture(double cardSize) {
-  return Container(
-    height: cardSize,
-    width: cardSize,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(40),
-      boxShadow: <BoxShadow>[
-        BoxShadow(
-            blurRadius: 6,
-            color: Colors.black.withOpacity(.3),
-            offset: Offset(3.0, 3.0))
-      ],
-      image: DecorationImage(
-        image: AssetImage("assets/images/login/beach.png"),
-        fit: BoxFit.fitWidth,
-        alignment: Alignment.bottomCenter,
-      ),
     ),
   );
 }
