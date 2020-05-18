@@ -8,9 +8,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
+import 'package:travellory/screens/bookings/view_activity.dart';
 import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 
 String _mapStyle;
@@ -56,41 +58,72 @@ class MapSampleState extends State<MapSample> {
   final Map<String, Marker> _markers = {};
   final List<Polygon> _boundaries = [];
 
-  Future<void> loadAccommodations() async {
+  Future<void> fetchMarkers(String activityType) async {
     final List<SingleTripProvider> trips =
         Provider.of<TripsProvider>(context, listen: false).trips;
 
     _markers.clear();
 
     for (final SingleTripProvider trip in trips) {
-      final List<AccommodationModel> accommodations = trip.accommodations;
-
       if(!_userStates.contains(trip.tripModel.country)){
         _userStates.add(trip.tripModel.country);
       }
 
-      for (final AccommodationModel accommodation in accommodations) {
-        final marker = Marker(
-          markerId: MarkerId(accommodation.name),
-          position: LatLng(accommodation.latitude, accommodation.longitude),
-          infoWindow: InfoWindow(
-              title: accommodation.name,
-              snippet: accommodation.address,
-              onTap: () {
-                Navigator.pushNamed(context, AccommodationView.route, arguments: accommodation);
-              }),
-        );
-        _markers[accommodation.tripUID] = marker;
+      switch(activityType){
+        case "accommodations": {
+          final List<AccommodationModel> accommodations = trip.accommodations;
+          for (final AccommodationModel accommodation in accommodations) {
+            final marker = Marker(
+              markerId: MarkerId(accommodation.name),
+              position: LatLng(accommodation.latitude, accommodation.longitude),
+              infoWindow: InfoWindow(
+                  title: accommodation.name,
+                  snippet: accommodation.address,
+                  onTap: () {
+                    Navigator.pushNamed(context, AccommodationView.route, arguments: accommodation);
+                  }),
+            );
+            _markers[accommodation.tripUID] = marker;
+          }
+        }
+        break;
+
+        case "activities": {
+          final List<ActivityModel> activities = trip.activities;
+          for (final ActivityModel activity in activities) {
+            final marker = Marker(
+              markerId: MarkerId(activity.title),
+              position: LatLng(activity.latitude, activity.longitude),
+              infoWindow: InfoWindow(
+                  title: activity.title,
+                  snippet: activity.location,
+                  onTap: () {
+                    Navigator.pushNamed(context, ActivityView.route, arguments: activity);
+                  }),
+            );
+            _markers[activity.tripUID] = marker;
+          }
+        }
+        break;
+
+        default: {
+          return;
+        }
+        break;
       }
     }
   }
 
+  Future<void> refreshMarkers(String activityType) async {
+    await fetchMarkers(activityType);
+    setState(() {});
+  }
+
   Future<void> onMapCreated() async {
+    await fetchMarkers("accommodations");
     final _boundariesTemp = await _gMapBorderLoader.generateBorders(_userStates);
 
     setState(() {
-      loadAccommodations();
-
       if (_boundariesTemp.isNotEmpty) {
         _boundaries.clear();
         _boundariesTemp.forEach(_boundaries.add);
@@ -152,11 +185,13 @@ class MapSampleState extends State<MapSample> {
                   icon: Icon(FontAwesomeIcons.theaterMasks),
                   color: Colors.white,
                   onPressed: () {
+                    refreshMarkers("activities");
                   }),
               IconButton(
                   icon: Icon(FontAwesomeIcons.bed),
                   color: Colors.white,
                   onPressed: () {
+                    refreshMarkers("accommodations");
                   }),
             ]
         ),
