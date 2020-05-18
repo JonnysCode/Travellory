@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'friends_profile_picture.dart';
 
 class FriendsProfileHeader extends StatefulWidget {
   const FriendsProfileHeader({Key key, this.friend, double headerSize}) : super(key: key);
@@ -42,17 +43,10 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
                 width: widget.headerSize,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(widget.headerSize/2)),
-                  image: DecorationImage(
-//                    image: AssetImage(widget.friend.photoURL),
-
-//                      friend.photoURL != null
-//                          ? profilePicture(friend.photoURL, cardSize)
-//                          : standardPicture(cardSize)
-                    image: AssetImage('assets/images/login/beach.png'),
-                    fit: BoxFit.fitWidth,
-                    alignment: Alignment.bottomCenter,
-                  ),
                 ),
+                child: widget.friend.photoURL != null
+                    ? profilePicture(widget.friend.photoURL)
+                    : standardPicture(),
               ),
             ),
           ),
