@@ -5,6 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/screens/trip/trip_screen.dart';
+import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/widgets/bookings/edit_delete_dialogs.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
@@ -22,7 +24,7 @@ class TripCard extends StatefulWidget {
   _TripCardState createState() => _TripCardState();
 
   @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties){
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(DiagnosticsProperty<TripModel>('tripModel', tripModel));
   }
@@ -32,10 +34,9 @@ class _TripCardState extends State<TripCard> {
   TripModel _tripModel;
   String _deleteAlertText;
 
-
-  void _openTrip(){
+  void _openTrip() {
     Provider.of<TripsProvider>(context, listen: false).selectTrip(_tripModel);
-    Navigator.pushNamed(context, '/viewtrip');
+    Navigator.pushNamed(context, TripScreen.route);
   }
 
   @override
@@ -46,6 +47,7 @@ class _TripCardState extends State<TripCard> {
         'Are you sure you want to continue? This action cannot be undone!';
 
     return Container(
+      key: Key('TripCard'),
       height: 100,
       child: Stack(
         children: <Widget>[
@@ -79,14 +81,13 @@ class _TripCardState extends State<TripCard> {
                                   fontSize: 18,
                                   height: 1.1,
                                   fontWeight: FontWeight.w900,
-                                  letterSpacing: -1
-                              ),
+                                  letterSpacing: -1),
                             ),
                           ),
                           Spacer(),
                           FashionFetishText(
                             text: '${dMMMyyyy(getDateTimeFrom(_tripModel.startDate))} - '
-                                  '${dMMMyyyy(getDateTimeFrom(_tripModel.endDate))}',
+                                '${dMMMyyyy(getDateTimeFrom(_tripModel.endDate))}',
                             size: 14.0,
                             fontWeight: FashionFontWeight.bold,
                             color: Colors.black54,
@@ -108,13 +109,12 @@ class _TripCardState extends State<TripCard> {
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     style: TextStyle(
-                                      fontFamily: 'FashionFetish',
-                                      fontSize: 13,
-                                      height: 1.2,
-                                      fontWeight: FontWeight.w900,
-                                      color: Colors.black54,
-                                      letterSpacing: -1
-                                    ),
+                                        fontFamily: 'FashionFetish',
+                                        fontSize: 13,
+                                        height: 1.2,
+                                        fontWeight: FontWeight.w900,
+                                        color: Colors.black54,
+                                        letterSpacing: -1),
                                   ),
                                 ),
                               ),
@@ -126,16 +126,11 @@ class _TripCardState extends State<TripCard> {
                     OptionButton(
                       optionItems: <OptionItem>[
                         OptionItem(
-                          description: 'Edit',
-                          icon: FontAwesomeIcons.edit,
-                          onTab: () {}
-                        ),
-                        OptionItem(
                             description: 'Remove',
                             icon: FontAwesomeIcons.trashAlt,
                             color: Colors.redAccent,
-                            onTab: () => showDeleteDialog(_tripModel, context, _deleteAlertText)
-                        ),
+                            onTab: () => showDeleteDialog(_tripModel, context, _deleteAlertText,
+                                DatabaseDeleter.deleteTripName)),
                       ],
                     ),
                   ],
@@ -153,7 +148,10 @@ class _TripCardState extends State<TripCard> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
                   boxShadow: <BoxShadow>[
-                    BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.3), offset: Offset(3.0, 3.0))
+                    BoxShadow(
+                        blurRadius: 6,
+                        color: Colors.black.withOpacity(.3),
+                        offset: Offset(3.0, 3.0))
                   ],
                   image: DecorationImage(
                     image: AssetImage(_tripModel.imagePath),
@@ -169,5 +167,3 @@ class _TripCardState extends State<TripCard> {
     );
   }
 }
-
-
