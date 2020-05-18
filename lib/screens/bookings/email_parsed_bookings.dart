@@ -143,8 +143,7 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                                       optionItems: tripsProvider.trips.map((trip) => OptionItem(
                                         description: trip.tripModel.name,
                                         onTab: () {
-                                          tripsProvider.selectedTrip.addBooking(
-                                              accommodations[index], DatabaseAdder.addAccommodation);
+                                          trip.addBooking(accommodations[index], DatabaseAdder.addAccommodation);
                                         }
                                       )).toList(),
                                     ),
