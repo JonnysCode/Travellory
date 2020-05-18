@@ -13,12 +13,14 @@ import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
 class MockAuth extends Mock implements BaseAuthService {}
 class MockFirebaseUserFirebaseUserMetadata extends Mock implements FirebaseUserMetadata {
+  @override
   DateTime get creationTime => DateTime.now();
+  @override
   DateTime get lastSignInTime => DateTime.now();
 }
 
 void main() {
-  Future<Widget> makeTestableWidget({Widget child, BaseAuthService auth}) async {
+  Future<Widget> makeTestableWidget({Widget child}) async {
     final auth = MockFirebaseAuth(signedIn: true);
     FirebaseUser firebaseUser = await auth.currentUser();
     FirebaseUserMetadata metadata = MockFirebaseUserFirebaseUserMetadata();
@@ -32,11 +34,10 @@ void main() {
   }
 
   testWidgets('test if page is the profile page', (WidgetTester tester) async {
-    MockAuth mockAuth = MockAuth();
     ProfilePage page = ProfilePage();
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(await makeTestableWidget(child: page, auth: mockAuth));
+    await tester.pumpWidget(await makeTestableWidget(child: page));
 
     // Verify that the profile page is present.
     expect(find.byKey(Key('profile_page')), findsOneWidget);
@@ -44,11 +45,10 @@ void main() {
 
   testWidgets('test if profile page use user information class',
       (WidgetTester tester) async {
-    MockAuth mockAuth = MockAuth();
-    UserInformation page = UserInformation();
+    ProfilePage page = ProfilePage();
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(await makeTestableWidget(child: page, auth: mockAuth));
+    await tester.pumpWidget(await makeTestableWidget(child: page));
 
     // Verify that the profile page use user information class
     expect(find.byKey(Key('display_user')), findsOneWidget);
@@ -56,11 +56,10 @@ void main() {
 
   testWidgets('test if profile page has a cached network image',
       (WidgetTester tester) async {
-    MockAuth mockAuth = MockAuth();
     ProfilePage page = ProfilePage();
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(await makeTestableWidget(child: page, auth: mockAuth));
+    await tester.pumpWidget(await makeTestableWidget(child: page));
     var cachedNetworkImage = find.byType(CachedNetworkImage);
 
     // Verify that the profile page has a cachedNetworkImage.
@@ -70,10 +69,10 @@ void main() {
   testWidgets('test if profile page has three icons',
       (WidgetTester tester) async {
     MockAuth mockAuth = MockAuth();
-    UserInformation page = UserInformation();
+    ProfilePage page = ProfilePage();
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(await makeTestableWidget(child: page, auth: mockAuth));
+    await tester.pumpWidget(await makeTestableWidget(child: page));
 
     // Verify that the profile page has a circleAvatar.
     expect(find.byIcon(FontAwesomeIcons.user), findsOneWidget);
@@ -87,7 +86,7 @@ void main() {
     ProfilePage page = ProfilePage();
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(await makeTestableWidget(child: page, auth: mockAuth));
+    await tester.pumpWidget(await makeTestableWidget(child: page));
 
     // Verify that the ProfilePage has a change password and a logout button.
     expect(find.byKey(Key('achievements')), findsOneWidget);
