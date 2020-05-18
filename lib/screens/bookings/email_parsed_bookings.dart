@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/models/activity_model.dart';
-import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/providers/trips/temp_bookings_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/shared/loading_heart.dart';
-import 'package:travellory/widgets/bookings/booking_card.dart';
+import 'package:travellory/widgets/booking_cards/booking_card.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
 
 class EmailParsedBookingsScreen extends StatelessWidget {
