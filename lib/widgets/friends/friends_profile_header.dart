@@ -96,6 +96,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
                     SizedBox(
                       width: 160,
                       child: Text(
+                        // TODO(fluetfab): load hometown of the user
                         'Switzerland',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,

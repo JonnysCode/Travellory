@@ -15,6 +15,15 @@ class FriendsProfile extends StatefulWidget {
 }
 
 class _FriendsProfileState extends State<FriendsProfile> {
+  final List<String> achievements = <String>[
+    'World     20%',
+    'Europe   50%',
+    'Asia',
+    'North America',
+    'South America',
+    'South Africa'
+  ];
+
   @override
   Widget build(BuildContext context) {
     final FriendsModel friend = ModalRoute.of(context).settings.arguments;
@@ -24,43 +33,97 @@ class _FriendsProfileState extends State<FriendsProfile> {
       body: Container(
         color: Colors.white,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             FriendsProfileHeader(friend: friend),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              child: Stack(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 30,
-                      left: 20,
-                    ),
-                    child: FashionFetishText(
-                      text: 'Trips of ${friend.username}' ,
-                      size: 22,
-                      fontWeight: FashionFontWeight.heavy,
-                    ),
-                  ),
-                ],
+            Padding(
+              key: Key('friends_trips'),
+              padding: EdgeInsets.only(
+                top: 30,
+                left: 20,
+                right: 90,
+                bottom: MediaQuery.of(context).viewInsets.bottom
+              ),
+              child: Container(
+                height: 30,
+                width: MediaQuery.of(context).size.width,
+                child: FashionFetishText(
+                  text: 'Trips' ,
+                  size: 22,
+                  fontWeight: FashionFontWeight.heavy,
+                ),
               ),
             ),
-            SizedBox(height: 300),
             Container(
-              width: MediaQuery.of(context).size.width,
-              child: Stack(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 30,
+              constraints: BoxConstraints(minHeight: 20, maxHeight: 300),
+              child: Padding(
+                key: Key('friends_trips_list'),
+                  padding: EdgeInsets.only(
+                      top: 5,
                       left: 20,
+                      bottom: MediaQuery.of(context).viewInsets.bottom
+                  ),
+                  child: Text("Your friend hasn't created any trips yet.")
+              ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              key: Key('friends_achievements'),
+              padding: EdgeInsets.only(
+                  top: 30,
+                  left: 20,
+                  right: 90,
+                  bottom: MediaQuery.of(context).viewInsets.bottom
+              ),
+              child: Container(
+                height: 30,
+                width: MediaQuery.of(context).size.width,
+                child: FashionFetishText(
+                  text: 'Achievements' ,
+                  size: 22,
+                  fontWeight: FashionFontWeight.heavy,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                key: Key('friends_achievements_list'),
+                padding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Scrollbar(
+                  child: Visibility(
+                    visible: true,
+                    child: ListView.separated(
+                      padding: EdgeInsets.only(
+                        bottom: 30,
+                      ),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      separatorBuilder: (context, index) =>
+                      const SizedBox(height: 12),
+                      itemCount: achievements.length,
+                      itemBuilder: (context, index) {
+                        return Text(
+                          '${achievements[index]}',
+                          style: TextStyle(
+                            fontSize: 18
+                          ),
+                        );
+                      },
                     ),
-                    child: FashionFetishText(
-                      text: 'Achievements of ${friend.username}',
-                      size: 22,
-                      fontWeight: FashionFontWeight.heavy,
+                    replacement: Padding(
+                        key: Key('friends_achievements_list'),
+                        padding: EdgeInsets.only(
+                            top: 5,
+                            bottom: MediaQuery.of(context).viewInsets.bottom
+                        ),
+                        child: Text("Your friend has no archievements so far.")
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ],
