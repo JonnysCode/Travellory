@@ -1,13 +1,10 @@
-import 'dart:convert';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:travellory/services/api/openWeatherAPI.dart';
 
 class Weather extends StatefulWidget {
   Weather(this.location);
-
   final String location;
 
   @override
@@ -15,19 +12,6 @@ class Weather extends StatefulWidget {
 }
 
 class _WeatherState extends State<Weather> {
-  var temperature;
-  var description;
-
-  Future getWeather(String city) async {
-    http.Response response = await http.get(
-        'https://api.openweathermap.org/data/2.5/weather?q=$city&APPID=c27dae6ae632670cbed96f9173b8529f');
-    var result = jsonDecode(response.body);
-    setState(() {
-      this.temperature = result['main']['temp'];
-      temperature = (temperature - 273.15).toStringAsFixed(1);
-      this.description = result['weather'][0]['description'];
-    });
-  }
 
   String selectImage(String description) {
     String path;
@@ -72,33 +56,42 @@ class _WeatherState extends State<Weather> {
     return path;
   }
 
+  String cutDestinationName(String destination) {
+    List firstWord;
+    firstWord = destination.split(',');
+    return firstWord[0];
+  }
+
   @override
   void initState() {
     super.initState();
-    getWeather(widget.location);
+    OpenWeatherAPI.getWeather(widget.location);
   }
 
   @override
   Widget build(BuildContext context) {
-    print(temperature);
-    print(description);
+    // TODO DELETE
+    print(OpenWeatherAPI.getTemperature());
+    print(OpenWeatherAPI.getDescription());
     print(widget.location);
-    getWeather(widget.location);
-    return Stack(children: <Widget>[
+    OpenWeatherAPI.getWeather(widget.location);
+    return Stack(
+        key: Key('weather_page'),
+        children: <Widget>[
       Positioned(
         left: 25,
         top: 15,
         child: Image(
           height: 100,
-          image: AssetImage(selectImage(description)),
+          image: AssetImage(selectImage(OpenWeatherAPI.getDescription())),
         ),
       ),
-      temperature != null
+      OpenWeatherAPI.getTemperature() != null
           ? Positioned(
               top: 70,
               left: 100,
               child: Text(
-                temperature.toString() + '\u00B0',
+                OpenWeatherAPI.getTemperature().toString() + '\u00B0',
                 style: TextStyle(
                   fontSize: 24,
                   color: Colors.black87,
@@ -107,7 +100,7 @@ class _WeatherState extends State<Weather> {
               ),
             )
           : Container(),
-      temperature != null
+          OpenWeatherAPI.getTemperature() != null
           ? Positioned(
               top: 107,
               left: 20,
@@ -116,10 +109,10 @@ class _WeatherState extends State<Weather> {
                   width: 140,
                   child: Center(
                     child: AutoSizeText(
-                      widget.location,
+                      cutDestinationName(widget.location),
                       style: TextStyle(
-                        fontSize: 24.0,
-                        //fontFamily: 'FashionFetish',
+                        fontSize: 20.0,
+                        fontFamily: 'FashionFetish',
                         fontWeight: FontWeight.w900,
                       ),
                       maxLines: 1,
