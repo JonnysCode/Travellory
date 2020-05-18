@@ -103,23 +103,13 @@ class TripsProvider extends ChangeNotifier implements NotifyListener {
     notifyListeners();
   }
 
-  // Sort trips using bubble sort
-  void _sortTrips(){
-    if(trips.isEmpty){
+  void _sortTrips() {
+    if (trips.isEmpty) {
       return;
     }
 
-    int n = trips.length;
-    for (int i = 0; i < n-1; i++){
-      for (int j = 0; j < n-i-1; j++){
-        if (getDateTimeFrom(trips[j].tripModel.startDate)
-            .isAfter(getDateTimeFrom(trips[j+1].tripModel.startDate))) {
-          var temp = trips[j];
-          trips[j] = trips[j+1];
-          trips[j+1] = temp;
-        }
-      }
-    }
+    trips.sort((a, b) =>
+        getDateTimeFrom(a.tripModel.startDate).compareTo(getDateTimeFrom(b.tripModel.startDate)));
   }
 
   void _setActiveTrip() {
