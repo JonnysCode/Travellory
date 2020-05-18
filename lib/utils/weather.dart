@@ -84,7 +84,7 @@ class _WeatherState extends State<Weather> {
         Selector<WeatherProvider, String>(
           selector: (_, weather) => weather.description,
           builder: (_, description, __) => description == null
-              ? SpinKitCircle(color: Colors.black38)
+              ? Container()
               : Positioned(
             left: 25,
             top: 15,

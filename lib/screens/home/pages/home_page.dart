@@ -120,9 +120,6 @@ class _HomePage extends State<HomePage> {
           }),
     ];
 
-    // TODO weather
-    print(tripModel.destination);
-
     var now;
     var timeTripStart;
     DateTime startDate;
@@ -145,7 +142,7 @@ class _HomePage extends State<HomePage> {
         key: Key('home_page'),
         child: Stack(
           children: <Widget>[
-            trip == null
+            tripModel == null
                 ? Positioned(
                     left: 30,
                     top: 30,
@@ -155,8 +152,8 @@ class _HomePage extends State<HomePage> {
                           'assets/images/home/weather/011-few_clouds.png'),
                     ),
                   )
-                : Weather('Winterthur'),
-            trip == null
+                : Weather(tripModel.destination),
+            tripModel == null
                 ? Positioned(
                     top: 20,
                     left: 170,

@@ -6,19 +6,16 @@ class OpenWeatherAPI {
   var result;
 
   String get temperature {
-    if(result == null){
-      print('result == null');
+    if(result == null || result['main']){
       return null;
     }
-    print(result);
     var temperature = result['main']['temp'];
     temperature = (temperature - 273.15).toStringAsFixed(1);
     return temperature;
   }
 
   String get description {
-    if(result == null){
-      print('result == null');
+    if(result == null || result['weather'] == null){
       return null;
     }
     var description = result['weather'][0]['description'];
