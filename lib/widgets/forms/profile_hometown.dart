@@ -12,11 +12,13 @@ class ProfileHometown extends StatefulWidget {
 }
 
 class _TextInputValueState extends State<ProfileHometown> {
-  String _hometown = "Switzerland";
+  TextEditingController _textEditingController = TextEditingController();
   bool showHometown = true;
+  String newHometown = "";
 
-  void _setVisibility(){
+  void _editHometown(){
     setState(() {
+      newHometown = _textEditingController.text;
       showHometown = !showHometown;
     });
   }
@@ -26,74 +28,77 @@ class _TextInputValueState extends State<ProfileHometown> {
     return Column(
       children: <Widget>[
         Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                FontAwesomeIcons.home,
-                color: Theme.of(context).primaryColor,
-                size: 32,
-              ),
-              SizedBox(width: 10),
-              Visibility(
-                visible: showHometown,
-                child: Row(
-                  children: <Widget>[
-                    FashionFetishText(
-                      text: widget.user.hometown,
-                      size: 18,
-                      fontWeight: FashionFontWeight.bold,
-                      height: 1.1,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              FontAwesomeIcons.home,
+              color: Theme.of(context).primaryColor,
+              size: 32,
+            ),
+            SizedBox(width: 10),
+            Visibility(
+              visible: showHometown,
+              child: Row(
+                key: Key('show_hometown'),
+                children: [
+                  FashionFetishText(
+                    text: newHometown,
+                    size: 18,
+                    fontWeight: FashionFontWeight.bold,
+                    height: 1.1,
+                  ),
+                  SizedBox(width: 10),
+                  IconButton(
+                    icon: Icon(
+                        FontAwesomeIcons.pen,
+                        color: Colors.grey,
+                        size: 20
                     ),
-                    SizedBox(width: 10),
-                    IconButton(
-                      icon: Icon(
-                          FontAwesomeIcons.pen,
-                          color: Colors.grey,
-                          size: 20
+                    onPressed: _editHometown,
+                  )
+                ],
+              ),
+              replacement: Row(
+                key: Key('edit_hometown'),
+                children: [
+                  SizedBox(
+                    width: 200,
+                    child: TextField(
+                      controller: _textEditingController,
+                      autofocus: true,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'FashionFetish',
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: -1.0,
+                          height: 1.1
                       ),
-                      onPressed: _setVisibility,
-                    )
-                  ],
-                ),
-                replacement: Row(
-                  children: <Widget>[
-                    SizedBox(
-                      width: 200,
-                      child: TextField(
-                        autofocus: true,
-                        style: TextStyle(
+                      decoration: InputDecoration(
+                        hintText: widget.user.hometown,
+                        hintStyle: TextStyle(
                             fontSize: 18,
                             fontFamily: 'FashionFetish',
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -1.0,
-                            height: 1.1
+                            color: Colors.grey,
                         ),
-                        decoration: InputDecoration(
-                          hintText: "$_hometown",
-                          hintStyle: TextStyle(
-                              fontSize: 18,
-                              fontFamily: 'FashionFetish',
-                              color: Colors.grey,
-                          ),
-                          border: InputBorder.none,
-                        ),
+                        border: InputBorder.none,
                       ),
                     ),
-                    SizedBox(width: 10),
-                    IconButton(
-                      icon: Icon(
-                          FontAwesomeIcons.save,
-                          color: Theme.of(context).primaryColor,
-                          size: 20
-                      ),
-                      onPressed: _setVisibility,
-                    )
-                  ],
-                ),
-              )
-            ]
+                  ),
+                  SizedBox(width: 10),
+                  IconButton(
+                    icon: Icon(
+                        FontAwesomeIcons.save,
+                        color: Theme.of(context).primaryColor,
+                        size: 20
+                    ),
+                    onPressed: _editHometown,
+                  )
+                ],
+              ),
+            )
+          ]
         ),
       ]
     );

@@ -7,7 +7,7 @@ class UserModel {
         this.displayName = firebaseUser?.displayName ?? displayName,
         this.photoUrl = firebaseUser?.photoUrl ?? photoUrl,
         // TODO(hessgia1): fetch hometown from db
-        this.hometown = "Switzerland",
+        this.hometown = "Hometown",
         this.metadata = firebaseUser?.metadata ?? metadata;
 
   FirebaseUser firebaseUser;
