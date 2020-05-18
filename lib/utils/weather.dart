@@ -75,6 +75,7 @@ class _WeatherState extends State<Weather> {
     print(OpenWeatherAPI.getDescription());
     print(widget.location);
     OpenWeatherAPI.getWeather(widget.location);
+
     return Stack(
         key: Key('weather_page'),
         children: <Widget>[
