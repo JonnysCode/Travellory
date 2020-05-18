@@ -64,7 +64,7 @@ class DatabaseGetter {
 
   Map<String, dynamic> _getMap(String uid, String function) {
     switch (function) {
-      case 'trips-getTrips':
+      case getTrips:
       case getTempAccommodations:
         return {"userUID": uid};
         break;
@@ -75,22 +75,22 @@ class DatabaseGetter {
   List<Model> _getEmptyEntries(function) {
     List<Model> entries = <Model>[];
     switch (function) {
-      case 'booking-getFlights':
+      case getFlights:
         entries = <FlightModel>[];
         break;
-      case 'booking-getAccommodations':
+      case getAccommodations:
         entries = <AccommodationModel>[];
         break;
-      case 'booking-getRentalCars':
+      case getRentalCars:
         entries = <RentalCarModel>[];
         break;
-      case 'booking-getPublicTransportations':
+      case getPublicTransportations:
         entries = <PublicTransportModel>[];
         break;
-      case 'activity-getActivities':
+      case getActivities:
         entries = <ActivityModel>[];
         break;
-      case 'trips-getTrips':
+      case getTrips:
         entries = <TripModel>[];
         break;
       case getTempAccommodations:
@@ -103,22 +103,22 @@ class DatabaseGetter {
   List<Model> _createEntries(dbEntries, function) {
     List<Model> entries = <Model>[];
     switch (function) {
-      case 'booking-getFlights':
+      case getFlights:
         entries = _createFlights(dbEntries);
         break;
-      case 'booking-getAccommodations':
+      case getAccommodations:
         entries = _createAccommodations(dbEntries);
         break;
-      case 'booking-getRentalCars':
+      case getRentalCars:
         entries = _createRentalCars(dbEntries);
         break;
-      case 'booking-getPublicTransportations':
+      case getPublicTransportations:
         entries = _createPublicTransports(dbEntries);
         break;
-      case 'activity-getActivities':
+      case getActivities:
         entries = _createActivities(dbEntries);
         break;
-      case 'trips-getTrips':
+      case getTrips:
         entries = _createTrips(dbEntries);
         break;
       case getTempAccommodations :
