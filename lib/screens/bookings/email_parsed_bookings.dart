@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/providers/trips/temp_bookings_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/screens/bookings/view_accommodation.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/booking_cards/booking_card.dart';
@@ -16,9 +17,10 @@ class EmailParsedBookingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TripsProvider tripsProvider = Provider.of<TripsProvider>(context);
+    TempBookingsProvider tempBookingsProvider = TempBookingsProvider(tripsProvider.user);
 
     return FutureProvider<List<AccommodationModel>>(
-      create: (_) => TempBookingsProvider(tripsProvider.user).fetchAccommodations(),
+      create: (_) => tempBookingsProvider.fetchAccommodations(),
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Theme.of(context).primaryColor,
@@ -129,6 +131,9 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                                   Expanded(
                                     child: BookingCard(
                                       model: accommodations[index],
+                                      onTap: () => Navigator.pushNamed(
+                                          context, AccommodationView.route,
+                                          arguments: accommodations[index]),
                                     ),
                                   ),
                                   SizedBox(
@@ -137,9 +142,8 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                                       icon: FontAwesomeIcons.plus,
                                       optionItems: tripsProvider.trips.map((trip) => OptionItem(
                                         description: trip.tripModel.name,
-                                        onTab: () {
-                                          trip.addBooking(accommodations[index], DatabaseAdder.addAccommodation);
-                                        }
+                                        onTab: onSubmitTempAccommodation(
+                                            tempBookingsProvider, trip, accommodations[index], context)
                                       )).toList(),
                                     ),
                                   ),
