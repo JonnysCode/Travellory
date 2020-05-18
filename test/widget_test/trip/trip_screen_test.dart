@@ -1,11 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/activity_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/widgets/bookings/booking_card.dart';
+import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/screens/trip/trip_screen.dart';
+import 'package:travellory/widgets/booking_cards/booking_card.dart';
+
+class TripsProviderMock extends Mock implements TripsProvider {}
+
+class Wrapper extends StatelessWidget {
+  const Wrapper({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/viewtrip');
+      },
+      child: Container(
+        color: const Color(0xFFFFFF00),
+        child: const Text('X'),
+      ),
+    );
+  }
+}
 
 final PublicTransportModel _publicTransport = PublicTransportModel()
   ..transportationType = 'Taxi'
@@ -41,12 +66,69 @@ final RentalCarModel _rentalCar = RentalCarModel()
   ..pickupLocation = 'London City'
   ..pickupDate = '2020-05-02';
 
+TripModel tripModel = TripModel(
+    name: 'Castle Discovery',
+    startDate: '2020-05-12',
+    endDate: '2020-05-25',
+    destination: 'Munich',
+    imageNr: 3);
+
 void main() {
   Widget makeTestableWidget({Widget page}) {
     return MaterialApp(
       home: Material(child: page),
     );
   }
+
+  Widget makeTestableWidgetWithProvider(TripsProvider tripsProvider) {
+    return ChangeNotifierProvider<TripsProvider>.value(
+      value: tripsProvider,
+      child: MaterialApp(
+        routes: <String, WidgetBuilder>{
+          '/': (context) => const Wrapper(),
+          '/viewtrip': (context) => TripScreen()
+        },
+      ),
+    );
+  }
+
+  Future<void> pumpTrip(WidgetTester tester) async {
+    await tester.tap(find.text('X'));
+    await tester.pump();
+  }
+
+  testWidgets('test if tripscreen is loaded', (WidgetTester tester) async {
+    TripsProviderMock tripsProvider = TripsProviderMock();
+    tripModel.init();
+    when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
+
+    await tester.pumpWidget(makeTestableWidgetWithProvider(tripsProvider));
+    await pumpTrip(tester);
+
+    expect(find.byKey(Key('TripScreen'), skipOffstage: false), findsOneWidget);
+  });
+
+  testWidgets('test if sub section instances are found', (WidgetTester tester) async {
+    TripsProviderMock tripsProvider = TripsProviderMock();
+    tripModel.init();
+    when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
+
+    await tester.pumpWidget(makeTestableWidgetWithProvider(tripsProvider));
+    await pumpTrip(tester);
+
+    expect(find.byKey(Key('SubSection'), skipOffstage: false), findsNWidgets(5));
+  });
+
+  testWidgets('test if trip header instance is found', (WidgetTester tester) async {
+    TripsProviderMock tripsProvider = TripsProviderMock();
+    tripModel.init();
+    when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
+
+    await tester.pumpWidget(makeTestableWidgetWithProvider(tripsProvider));
+    await pumpTrip(tester);
+
+    expect(find.byKey(Key('TripHeader'), skipOffstage: false), findsOneWidget);
+  });
 
   testWidgets('test if booking is loaded', (WidgetTester tester) async {
     Widget page = BookingCard(
