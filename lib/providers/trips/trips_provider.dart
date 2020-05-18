@@ -58,7 +58,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener {
     final bool deleted =
         await _databaseDeleter.deleteModel(tripModel, DatabaseDeleter.deleteTripName);
     if (deleted) {
-      unawaited(_initTrips());
+      await _initTrips();
     }
     return deleted;
   }
@@ -66,7 +66,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener {
   Future<bool> editTrip(TripModel tripModel) async {
     final bool edited = await _databaseEditor.editModel(tripModel, DatabaseEditor.editTripName);
     if (edited) {
-      unawaited(_initTrips());
+      await _initTrips();
     }
     return edited;
   }
