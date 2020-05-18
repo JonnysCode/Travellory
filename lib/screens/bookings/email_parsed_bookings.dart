@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/temp_bookings_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/shared/loading_heart.dart';
+import 'package:travellory/utils/date_handler.dart';
 import 'package:travellory/widgets/booking_cards/booking_card.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
 
@@ -14,10 +16,27 @@ class EmailParsedBookingsScreen extends StatelessWidget {
   static final String route = '/booking/emailparsed';
   static final String _forwardMail = 'travellory@in.parseur.com';
 
+  List<OptionItem> getAvailableTripOptions(TripsProvider tripsProvider, AccommodationModel model, TempBookingsProvider tempBookingsProvider, BuildContext context){
+    var trips = <OptionItem>[];
+    tripsProvider.trips.forEach((trip) => {
+      if (isInTimeFrame(getDateTimeFrom(model.checkinDate), getDateTimeFrom(model.checkoutDate),
+          getDateTimeFrom(trip.tripModel.startDate), getDateTimeFrom(trip.tripModel.endDate))) {
+        trips.add(OptionItem(
+            description: trip.tripModel.name,
+            onTab: onSubmitTempAccommodation(
+                tempBookingsProvider, trip, model, context)
+        ))
+      }
+    });
+
+    return trips;
+  }
+
   @override
   Widget build(BuildContext context) {
     TripsProvider tripsProvider = Provider.of<TripsProvider>(context);
     TempBookingsProvider tempBookingsProvider = TempBookingsProvider(tripsProvider.user);
+    var trips;
 
     return FutureProvider<List<AccommodationModel>>(
       create: (_) => tempBookingsProvider.fetchAccommodations(),
@@ -140,11 +159,9 @@ class EmailParsedBookingsScreen extends StatelessWidget {
                                     width: 30,
                                     child: OptionButton(
                                       icon: FontAwesomeIcons.plus,
-                                      optionItems: tripsProvider.trips.map((trip) => OptionItem(
-                                        description: trip.tripModel.name,
-                                        onTab: onSubmitTempAccommodation(
-                                            tempBookingsProvider, trip, accommodations[index], context)
-                                      )).toList(),
+                                      optionItems: (trips = getAvailableTripOptions(tripsProvider, accommodations[index], tempBookingsProvider, context)).isEmpty
+                                          ? <OptionItem>[OptionItem(description: 'We could not find a trip in that time.', color: Colors.red)]
+                                          : trips,
                                     ),
                                   ),
                                 ],
