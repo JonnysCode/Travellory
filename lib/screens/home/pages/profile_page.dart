@@ -161,7 +161,6 @@ class _ProfilePageState extends State<ProfilePage>
               ],
             ),
           )
-
         ],
       ),
     );
@@ -240,7 +239,7 @@ class UserInformation extends StatelessWidget {
             ),
           ]
       ),
-      ProfileHometown(),
+      ProfileHometown(user: user),
     ]);
   }
 }
