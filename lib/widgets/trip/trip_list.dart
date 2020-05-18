@@ -10,7 +10,8 @@ import 'package:travellory/widgets/trip/trip_card.dart';
 
 class TripList extends StatelessWidget {
   ModifyModelArguments passNewTripModel() {
-    final TripModel _newTripModel = TripModel();
+    final TripModel _newTripModel = TripModel()
+        ..imageNr = 1;
     return ModifyModelArguments(model: _newTripModel, isNewModel: true);
   }
 

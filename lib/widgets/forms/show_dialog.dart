@@ -150,7 +150,7 @@ void showSubmittedTempBookingDialog(BuildContext context) {
         content: Text('We have added your booking to the trip.'),
         actions: <Widget>[
           alertButton('Home', Colors.transparent, context, () async {
-            Navigator.of(context).;
+            Navigator.of(context).popUntil((route) => route.isFirst);
           }),
           alertButton("OK", Theme.of(context).hintColor, context, () async {
             Navigator.of(context).pop();
