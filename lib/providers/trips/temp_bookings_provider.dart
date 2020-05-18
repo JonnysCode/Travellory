@@ -33,6 +33,7 @@ class TempBookingsProvider extends ChangeNotifier {
   }
 
   Future<bool> addAccommodationToTrip(AccommodationModel model, SingleTripProvider trip) async {
+    model.tripUID = trip.tripModel.uid;
     final added = await trip.addBooking(model, DatabaseAdder.addAccommodation);
     if(added){
       return await deleteAccommodation(model);
