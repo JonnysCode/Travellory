@@ -64,7 +64,7 @@ class FriendManagement {
 
   static Future<List<FriendsModel>> _generateFriendsListFromResult(
       HttpsCallableResult result) async {
-    List<FriendsModel> friendsList = [];
+    final List<FriendsModel> friendsList = [];
     if(result.data != null) {
       for (final uid in result.data) {
         final friend = await getPublicUserInformation(uid);
@@ -76,7 +76,7 @@ class FriendManagement {
 
   static Future<List<FriendsModel>> _generateFriendRequestListFromResult(
       HttpsCallableResult result) async {
-    List<FriendsModel> friendsList = [];
+    final List<FriendsModel> friendsList = [];
     if(result.data != null) {
       for (final uid in result.data.keys) {
         final friend = await getPublicUserInformation(uid);

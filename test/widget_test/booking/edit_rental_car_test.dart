@@ -6,8 +6,8 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/screens/bookings/edit_rental_car.dart';
-import 'package:travellory/services/database/edit.dart';
+import 'package:travellory/screens/bookings/rental_car.dart';
+import 'package:travellory/widgets/bookings/edit.dart';
 
 class TripsProviderMock extends Mock implements TripsProvider {}
 
@@ -46,19 +46,19 @@ void main() {
       child: MaterialApp(
         routes: <String, WidgetBuilder>{
           '/': (context) => const Wrapper(),
-          '/edit/rentalcar': (context) => EditRentalCar()
+          '/booking/rentalcar': (context) => RentalCar()
         },
       ),
     );
   }
 
-  Future<void> pumpEditActivity(WidgetTester tester) async {
+  Future<void> pumpEditRentalCar(WidgetTester tester) async {
     await tester.tap(find.text('X'));
     await tester.pump();
   }
 
   testWidgets('test if edit rental car page is loaded', (WidgetTester tester) async {
-    final testKey = Key('EditRentalCar');
+    final testKey = Key('Rental Car');
     TripsProviderMock tripsProvider = TripsProviderMock();
 
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
@@ -68,7 +68,7 @@ void main() {
     expect(find.text('X'), findsOneWidget);
     expect(find.byKey(testKey, skipOffstage: false), findsNothing);
 
-    await pumpEditActivity(tester);
+    await pumpEditRentalCar(tester);
 
     expect(find.byKey(testKey, skipOffstage: false), findsOneWidget);
   });

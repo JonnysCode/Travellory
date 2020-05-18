@@ -1,6 +1,14 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
+import 'package:flutter/material.dart';
+import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/providers/trips/single_trip_provider.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/widgets/forms/show_dialog.dart';
+import '../../utils/logger.dart';
+
+final log = getLogger('DatabaseAdder');
 
 class DatabaseAdder {
   factory DatabaseAdder() {
@@ -14,12 +22,15 @@ class DatabaseAdder {
   static const int _maxCount = 50;
   static const String addTrip = 'trips-addTrip';
   static const String addAccommodation = 'booking-addAccommodation';
+  static const String addActivity = 'activity-addActivity';
+  static const String addFlight = 'booking-addFlight';
+  static const String addPublicTransportation = 'booking-addPublicTransportation';
+  static const String addRentalCar = 'booking-addRentalCar';
 
   static int _count = 0;
 
   final log = getLogger('DatabaseAdder');
 
-  // adds Model to the database
   Future<bool> addModel(Model model, String correspondingFunctionName) async {
     if(_count++ >= _maxCount){
       log.w('maxCount exceeded in AddModel');
@@ -43,4 +54,30 @@ class DatabaseAdder {
     }
     return Future<bool>.value(true);
   }
+}
+
+Function() onSubmitBooking(SingleTripProvider singleTripProvider, Model model,
+    String functionName, BuildContext context, alertText) {
+  return () async {
+    final bool added = await singleTripProvider.addBooking(model, functionName);
+    if (added) {
+      showSubmittedBookingDialog(context, alertText);
+    } else {
+      addToDataBaseFailedDialog(context);
+      log.i('onSubmitBooking did not work');
+    }
+  };
+}
+
+void Function() onSubmitTrip(
+    TripsProvider tripsProvider,TripModel tripModel, BuildContext context, alertText) {
+  return () async {
+    final bool added = await tripsProvider.addTrip(tripModel);
+    if (added) {
+      showSubmittedTripDialog(context, alertText);
+    } else {
+      addToDataBaseFailedDialog(context);
+      log.i('onSubmitTrip did not work');
+    }
+  };
 }
