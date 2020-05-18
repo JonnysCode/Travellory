@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/shared/loading_logo.dart';
 import 'package:travellory/utils/logger.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/authentication/auth.dart';
@@ -10,9 +11,7 @@ import 'package:travellory/widgets/input_widgets.dart';
 import 'package:pedantic/pedantic.dart';
 
 class Register extends StatefulWidget {
-  const Register({this.toggleView});
-
-  final Function toggleView;
+  static final route = '/register';
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -43,7 +42,7 @@ class _RegisterState extends State<Register> {
 
   Future _validateRegister() async {
     if (_formKey.currentState.validate() && _isUsernameAvailable) {
-      unawaited(Navigator.pushNamed(context, '/loading'));
+      unawaited(Navigator.pushNamed(context, LoadingLogo.route));
       await _register().then((_) {
         log.i('User successfully registered');
         Navigator.popUntil(

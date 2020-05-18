@@ -8,6 +8,8 @@ class FriendsProfile extends StatefulWidget {
     Key key,
   }) : super(key: key);
 
+  static final route = '/friends/friends_profile';
+
   @override
   _FriendsProfileState createState() => _FriendsProfileState();
 }

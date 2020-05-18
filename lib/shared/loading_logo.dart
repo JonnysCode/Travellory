@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingLogo extends StatelessWidget {
+  static final route = '/loading';
+
   @override
   Widget build(BuildContext context) {
     return Container(

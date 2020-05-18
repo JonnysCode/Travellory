@@ -6,6 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
+import 'package:travellory/screens/authenticate/password.dart';
+import 'package:travellory/screens/bookings/view_achievements.dart';
 import 'package:travellory/services/authentication/auth.dart';
 import 'package:travellory/services/storage.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
@@ -124,7 +126,7 @@ class _ProfilePageState extends State<ProfilePage>
                             Theme.of(context).primaryColor,
                             Theme.of(context).primaryColor,
                             Colors.white, () {
-                          Navigator.pushNamed(context, '/view/achievements');
+                          Navigator.pushNamed(context, AchievementsView.route);
                         }),
                       ),
                     ),
@@ -149,7 +151,7 @@ class _ProfilePageState extends State<ProfilePage>
                 OptionItem(
                   description: 'Change password',
                   icon: FontAwesomeIcons.userEdit,
-                  onTab: () => Navigator.pushNamed(context, '/password'),
+                  onTab: () => Navigator.pushNamed(context, ChangePassword.route),
                 ),
                 OptionItem(
                     description: 'Logout',
