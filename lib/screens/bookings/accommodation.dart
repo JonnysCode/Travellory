@@ -5,12 +5,13 @@ import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/services/database/edit.dart';
+import 'package:travellory/services/database/add_database.dart';
+import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/shared/lists_of_types.dart';
 import 'package:travellory/utils/list_models.dart';
-import 'package:travellory/services/database/submit.dart';
-import 'package:travellory/widgets/buttons/buttons.dart';
+import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
+import 'package:travellory/widgets/buttons/booking_button.dart';
 import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/dropdown.dart';
 import 'package:travellory/widgets/forms/form_field.dart';
@@ -21,8 +22,12 @@ import 'package:travellory/widgets/forms/time_form_field.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:travellory/widgets/buttons/submit_button.dart';
+
 
 class Accommodation extends StatefulWidget {
+  static final route = '/booking/accommodation';
+
   @override
   AccommodationState createState() => AccommodationState();
 }
@@ -41,10 +46,11 @@ class AccommodationState<T extends Accommodation> extends State<T> {
   }
 
   final String alertText =
-      "You've just submitted the booking information for your accommodation booking. You can see all the information in the trip overview";
+      "You've just submitted the booking information for your accommodation booking. "
+      "You can see all the information in the trip overview";
 
-  final String cancelText =
-      'You are about to abort this booking entry. Do you want to go back to the previous site and discard your changes?';
+  final String cancelText = 'You are about to abort this booking entry. '
+      'Do you want to go back to the previous site and discard your changes?';
 
   Widget _itemBuilder(BuildContext context, int index, Animation<double> animation) {
     return FormItem(animation: animation, child: accommodationList[index]);
@@ -54,10 +60,10 @@ class AccommodationState<T extends Accommodation> extends State<T> {
     return FormItem(animation: animation, child: item);
   }
 
-  Column getContent(TripModel tripModel, SingleTripProvider singleTripProvider,
+  Column _getAccommodationContent(TripModel tripModel, SingleTripProvider singleTripProvider,
       BuildContext context, AccommodationModel model, bool isNewModel) {
-    _getSubmitButton(singleTripProvider, context, model, isNewModel);
-    _getCancelButton(context);
+    _setSubmitButton(singleTripProvider, context, model, isNewModel);
+    _setCancelButton(context);
 
     return Column(children: <Widget>[
       TripHeader(tripModel),
@@ -83,37 +89,34 @@ class AccommodationState<T extends Accommodation> extends State<T> {
     ]);
   }
 
-  void _getCancelButton(BuildContext context) {
-    accommodationList[accommodationList.length - 2] = CancelButton(
-      text: 'CANCEL',
-      onCancel: () {
+  /// Sets the Cancel Button after Animations have been built
+  void _setCancelButton(BuildContext context) {
+    accommodationList[accommodationList.length - 2] = getBookingCancelButton(
+      context,
+      () {
         cancellingDialog(context, cancelText);
       },
     );
   }
 
-  void _getSubmitButton(SingleTripProvider singleTripProvider, BuildContext context,
-      AccommodationModel model, bool isNewModel) {
-    void Function() onSubmit;
-    if (isNewModel) {
-      onSubmit = onSubmitBooking(
-          singleTripProvider, model, 'booking-addAccommodation', context, alertText);
-    } else {
-      onSubmit = onEditBooking(singleTripProvider, model, context, errorMessage);
-    }
-
-    accommodationList[accommodationList.length - 3] = SubmitButton(
-      highlightColor: Theme.of(context).primaryColor,
-      fillColor: Theme.of(context).primaryColor,
-      validationFunction: validateForm,
-      onSubmit: onSubmit,
-    );
+  /// Sets the Submit Button after Animations have been built
+  void _setSubmitButton(SingleTripProvider singleTripProvider, BuildContext context,
+      AccommodationModel accommodationModel, bool isNewModel) {
+    accommodationList[accommodationList.length - 3] = getSubmitButton(
+        context,
+        singleTripProvider,
+        accommodationModel,
+        isNewModel,
+        DatabaseAdder.addAccommodation,
+        DatabaseEditor.editAccommodation,
+        alertText,
+        validateForm);
   }
 
   @override
   Widget build(BuildContext context) {
-    final ModifyModelArguments arguments = ModalRoute.of(context).settings.arguments;
-    final AccommodationModel _accommodationModel = arguments.model;
+    final ModifyModelArguments _arguments = ModalRoute.of(context).settings.arguments;
+    final AccommodationModel _accommodationModel = _arguments.model;
 
     final SingleTripProvider singleTripProvider =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip;
@@ -184,7 +187,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         validatorText: 'Please enter the required information');
 
     final List<Widget> shown = [
-      BookingSiteTitle('Add Accommodation', FontAwesomeIcons.bed),
+      BookingSiteTitle('Accommodation', FontAwesomeIcons.bed),
       SectionTitle('Accommodation Type'),
       accommodationTypeDropdown,
       SectionTitle('General Information'),
@@ -274,7 +277,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         onChanged: (value) => _accommodationModel.notes = value,
       ),
       SubmitButton(),
-      CancelButton(),
+      BookingButton(),
       SizedBox(height: 20),
     ];
 
@@ -290,8 +293,8 @@ class AccommodationState<T extends Accommodation> extends State<T> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child: getContent(
-            tripModel, singleTripProvider, context, _accommodationModel, arguments.isNewModel),
+        child: _getAccommodationContent(
+            tripModel, singleTripProvider, context, _accommodationModel, _arguments.isNewModel),
       ),
     );
   }

@@ -5,18 +5,20 @@ import 'package:travellory/providers/notify_listener.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/delete_database.dart';
+import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/get_database.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:travellory/utils/date_converter.dart';
 
-class TripsProvider extends ChangeNotifier implements NotifyListener{
+class TripsProvider extends ChangeNotifier implements NotifyListener {
   TripsProvider() {
     trips = <SingleTripProvider>[];
   }
 
   final DatabaseAdder _databaseAdder = DatabaseAdder();
   final DatabaseGetter _databaseGetter = DatabaseGetter();
-  final DatabaseDeleter  _databaseDeleter = DatabaseDeleter();
+  final DatabaseDeleter _databaseDeleter = DatabaseDeleter();
+  final DatabaseEditor _databaseEditor = DatabaseEditor();
 
   UserModel user;
   List<SingleTripProvider> trips;
@@ -37,7 +39,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
   // Meaning it fetches all its Bookings from the database as well.
   void init(UserModel user) {
     this.user = user;
-    if(!_tripsInitiated){
+    if (!_tripsInitiated) {
       unawaited(_initTrips());
       _tripsInitiated = true;
     }
@@ -45,8 +47,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   Future<bool> addTrip(TripModel tripModel) async {
     tripModel.userUID = user.uid;
-    final bool added =
-        await _databaseAdder.addModel(tripModel, DatabaseAdder.addTrip);
+    final bool added = await _databaseAdder.addModel(tripModel, DatabaseAdder.addTrip);
     if (added) {
       unawaited(_initTrips());
     }
@@ -55,14 +56,22 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
 
   Future<bool> deleteTrip(TripModel tripModel) async {
     final bool deleted =
-      await _databaseDeleter.deleteModel(tripModel, DatabaseDeleter.deleteTripName);
+        await _databaseDeleter.deleteModel(tripModel, DatabaseDeleter.deleteTripName);
     if (deleted) {
-      unawaited(_initTrips());
+      await _initTrips();
     }
     return deleted;
   }
 
-  void selectTrip(TripModel tripModel){
+  Future<bool> editTrip(TripModel tripModel) async {
+    final bool edited = await _databaseEditor.editModel(tripModel, DatabaseEditor.editTripName);
+    if (edited) {
+      await _initTrips();
+    }
+    return edited;
+  }
+
+  void selectTrip(TripModel tripModel) {
     _selectedTripIndex = trips.indexWhere((entry) => entry.tripModel.uid == tripModel.uid);
     unawaited(selectedTrip.initBookings());
   }
@@ -77,7 +86,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
     _activeTripIndex = null;
     _selectedTripIndex = null;
     _setActiveTrip();
-    if(_activeTripIndex != null){
+    if (_activeTripIndex != null) {
       await activeTrip.initBookings();
     }
     _activeTripInitiated = true;
@@ -87,20 +96,21 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
   Future<void> _fetchTrips() async {
     isFetchingTrips = true;
     trips = <SingleTripProvider>[];
-    final List<TripModel> tripModels = await _databaseGetter.getEntriesFromDatabase(
-        user.uid, DatabaseGetter.getTrips);
-    trips = tripModels.map((tripModel) =>
-        SingleTripProvider(tripModel, this)).toList();
+    final List<TripModel> tripModels =
+        await _databaseGetter.getEntriesFromDatabase(user.uid, DatabaseGetter.getTrips);
+    trips = tripModels.map((tripModel) => SingleTripProvider(tripModel, this)).toList();
+    trips.sort((a, b) =>
+        getDateTimeFrom(a.tripModel.startDate).compareTo(getDateTimeFrom(b.tripModel.startDate)));
     isFetchingTrips = false;
     notifyListeners();
   }
 
-  void _setActiveTrip(){
-    if(trips.isEmpty){
+  void _setActiveTrip() {
+    if (trips.isEmpty) {
       return;
     }
     // the last trip ends before the current Date
-    if(getDateTimeFrom(trips.last.tripModel.endDate).isBefore(DateTime.now())){
+    if (getDateTimeFrom(trips.last.tripModel.endDate).isBefore(DateTime.now())) {
       return;
     }
 
@@ -109,8 +119,6 @@ class TripsProvider extends ChangeNotifier implements NotifyListener{
     do {
       _activeTripIndex = index;
       index++;
-    } while(
-    getDateTimeFrom(activeTrip.tripModel.endDate).isBefore(DateTime.now())
-    );
+    } while (getDateTimeFrom(activeTrip.tripModel.endDate).isBefore(DateTime.now()));
   }
 }

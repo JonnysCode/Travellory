@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/screens/authenticate/authenticate.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 
 class Welcome extends StatefulWidget {
@@ -38,7 +39,7 @@ class _WelcomeState extends State<Welcome> {
                     Colors.white, () {
                       Navigator.pushNamed(
                         context,
-                        '/auth'
+                        Authenticate.route
                       );
                     }),
               ),
