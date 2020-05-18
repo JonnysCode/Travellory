@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/screens/trip/create_trip_screen.dart';
 import 'package:travellory/shared/loading_heart.dart';
+import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/trip/trip_card.dart';
 
 class TripList extends StatelessWidget {
+  ModifyModelArguments passNewTripModel() {
+    final TripModel _newTripModel = TripModel();
+    return ModifyModelArguments(model: _newTripModel, isNewModel: true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,7 +50,8 @@ class TripList extends StatelessWidget {
                     top: 11,
                     right: 0,
                     child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, '/createtrip'),
+                      onTap: () => Navigator.pushNamed(context, CreateTrip.route,
+                          arguments: passNewTripModel()),
                       child: Container(
                         height: 32,
                         width: 32,
@@ -63,26 +72,26 @@ class TripList extends StatelessWidget {
           ),
           Expanded(
             child: Consumer<TripsProvider>(
-              builder: (_, tripsProvider, __ ) => tripsProvider.isFetchingTrips
+              builder: (_, tripsProvider, __) => tripsProvider.isFetchingTrips
                   ? LoadingHeart()
                   : ListView.separated(
-                padding: const EdgeInsets.all(10),
-                itemCount: tripsProvider.trips.length + 1,
-                itemBuilder: (context, index) {
-                  if(index < tripsProvider.trips.length){
-                    final tripModel = tripsProvider.trips[index].tripModel
-                      ..index = index
-                      ..init();
-                    return TripCard(
-                      key: UniqueKey(),
-                      tripModel: tripModel,
-                    );
-                  } else {
-                    return  _bottomMargin();
-                  }
-                },
-                separatorBuilder: (context, index) => const SizedBox(height: 12),
-              ),
+                      padding: const EdgeInsets.all(10),
+                      itemCount: tripsProvider.trips.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index < tripsProvider.trips.length) {
+                          final tripModel = tripsProvider.trips[index].tripModel
+                            ..index = index
+                            ..init();
+                          return TripCard(
+                            key: UniqueKey(),
+                            tripModel: tripModel,
+                          );
+                        } else {
+                          return _bottomMargin();
+                        }
+                      },
+                      separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    ),
             ),
           ),
         ],
@@ -90,10 +99,9 @@ class TripList extends StatelessWidget {
     );
   }
 
-  Widget _bottomMargin(){
+  Widget _bottomMargin() {
     return SizedBox(
       height: 40,
     );
   }
 }
-
