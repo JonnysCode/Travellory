@@ -202,44 +202,48 @@ class UserInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(key: Key('display_user'), children: [
-      Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              FontAwesomeIcons.user,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            SizedBox(width: 10),
-            FashionFetishText(
-              text: user != null ? user.displayName : '',
-              size: 18,
-              fontWeight: FashionFontWeight.bold,
-              height: 1.1,
-            ),
-          ]),
-      SizedBox(height: 8),
-      Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              FontAwesomeIcons.envelope,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            SizedBox(width: 10),
-            FashionFetishText(
-              text: user != null ? user.email : '',
-              size: 18,
-              fontWeight: FashionFontWeight.bold,
-              height: 1.1,
-            ),
-          ]
-      ),
-      ProfileHometown(user: user),
-    ]);
+    return Column(
+        key: Key('display_user'),
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                FontAwesomeIcons.user,
+                color: Theme.of(context).primaryColor,
+                size: 32,
+              ),
+              SizedBox(width: 10),
+              FashionFetishText(
+                text: user != null ? user.displayName : '',
+                size: 18,
+                fontWeight: FashionFontWeight.bold,
+                height: 1.1,
+              ),
+            ]
+          ),
+          SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                FontAwesomeIcons.envelope,
+                color: Theme.of(context).primaryColor,
+                size: 32,
+              ),
+              SizedBox(width: 10),
+              FashionFetishText(
+                text: user != null ? user.email : '',
+                size: 18,
+                fontWeight: FashionFontWeight.bold,
+                height: 1.1,
+              ),
+            ]
+          ),
+          ProfileHometown(user: user),
+        ]
+    );
   }
 }
