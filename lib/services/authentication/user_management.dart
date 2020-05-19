@@ -16,4 +16,19 @@ class UserManagement {
     final dynamic result = await callable.call({'displayName': username});
     return result.data['isAvailable'];
   }
+
+  static Future<HttpsCallableResult> setHometown(String uid, String hometown) {
+    final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+      functionName: 'user-setHometown',
+    );
+    return callable.call({'uid': uid, 'hometown': hometown});
+  }
+
+  static Future<String> getHometown(String uid) async {
+    final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+      functionName: 'user-getPublicUserInformation',
+    );
+    final result = await callable.call({'uid': uid});
+    return result.data['hometown'];
+  }
 }
