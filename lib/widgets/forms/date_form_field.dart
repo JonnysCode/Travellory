@@ -14,7 +14,7 @@ class DateFormField extends StatefulWidget {
   const DateFormField(
       {Key key,
       this.icon,
-      this.isEditTrip,
+      this.isNewTrip,
       this.initialValue,
       this.labelText,
       this.optional = false,
@@ -30,7 +30,7 @@ class DateFormField extends StatefulWidget {
       : super(key: key);
 
   final Icon icon;
-  final bool isEditTrip;
+  final bool isNewTrip;
   final String initialValue;
   final String labelText;
   final bool optional;
@@ -185,8 +185,8 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
             controller: controller,
             validator: (value) {
               if (widget.optional) return null;
-              if (widget.isEditTrip) {
-                if(!checkTripDateValidityOnEdit(value, context)) {
+              if (!widget.isNewTrip) {
+                if(!tripDateIsValid(value, context)) {
                   return widget.tripEditDateValidationFailedMessage;
                 }
               }
