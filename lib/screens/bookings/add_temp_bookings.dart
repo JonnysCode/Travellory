@@ -11,8 +11,8 @@ import 'package:travellory/utils/date_handler.dart';
 import 'package:travellory/widgets/booking_cards/booking_card.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
 
-class EmailParsedBookingsScreen extends StatelessWidget {
-  static final String route = '/booking/emailparsed';
+class AddTempBookingsScreen extends StatelessWidget {
+  static final String route = '/booking/temp';
   static final String _forwardMail = 'travellory@in.parseur.com';
 
   List<OptionItem> getAvailableTripOptions(
