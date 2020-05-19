@@ -20,7 +20,6 @@ void main(){
   }
 
   testWidgets('test if name and destination are rendered correctly', (WidgetTester tester) async {
-    _tripModel.init();
     Widget page = TripCard(tripModel: _tripModel);
 
     // Build our app and trigger a frame.
