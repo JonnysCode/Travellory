@@ -45,6 +45,7 @@ class CheckboxFormFieldState extends State<CheckboxFormField> with AutomaticKeep
 }
 
 CheckboxListTile displayCheckboxField(String text, bool checkboxValue) {
+  checkboxValue = checkboxValue ?? false;
   if (checkboxValue) {
     return checkedView(text);
   } else {

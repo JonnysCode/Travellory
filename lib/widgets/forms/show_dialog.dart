@@ -133,3 +133,30 @@ void addToDataBaseFailedDialog(BuildContext context) {
     },
   );
 }
+
+void showSubmittedTempBookingDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        key: Key('ShowSubmittedBookingDialog'),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        title: FashionFetishText(
+          text: 'Submit Successful!',
+          size: 18,
+          fontWeight: FashionFontWeight.heavy,
+          height: 1.05,
+        ),
+        content: Text('We have added your booking to the trip.'),
+        actions: <Widget>[
+          alertButton('Home', Colors.transparent, context, () async {
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          }),
+          alertButton("OK", Theme.of(context).hintColor, context, () async {
+            Navigator.of(context).pop();
+          }),
+        ],
+      );
+    },
+  );
+}
