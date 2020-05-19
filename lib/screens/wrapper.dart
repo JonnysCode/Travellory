@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travellory/providers/achievements_provider.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/models/user_model.dart';
@@ -16,6 +17,7 @@ class Wrapper extends StatelessWidget {
     final UserModel user = Provider.of<UserModel>(context);
     final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
     final FriendsProvider friendsProvider = Provider.of<FriendsProvider>(context, listen: false);
+    final AchievementsProvider achievementsProvider = Provider.of<AchievementsProvider>(context, listen: false);
 
     // return either home or authentication
     if(user == null){
@@ -26,6 +28,9 @@ class Wrapper extends StatelessWidget {
       }
       if(friendsProvider.user == null || friendsProvider.user != user) {
         friendsProvider.init(user);
+      }
+      if(achievementsProvider.user == null || achievementsProvider.user != user) {
+        achievementsProvider.init(user);
       }
       return Selector<TripsProvider, bool>(
         selector: (_, tripsProvider) => tripsProvider.activeTripInitiated,

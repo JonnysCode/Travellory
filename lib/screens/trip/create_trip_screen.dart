@@ -145,12 +145,9 @@ class _CreateTripState extends State<CreateTrip> {
                           optional: false,
                           controller: locationController,
                           onTap: (locationController) async {
-                            final PlacesDetailsResponse detail =
-                                await GooglePlaces.openGooglePlacesSearch(context);
-                            final AddressComponent country =
-                                GooglePlaces.getCountryAddressComponent(detail);
-                            final String continent =
-                                GooglePlaces.getContinentFromCountryCode(country.shortName);
+                            final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
+                            final AddressComponent country = GooglePlaces.getCountryAddressComponent(detail);
+                            final String continent = await GooglePlaces.getContinentFromCountryCode(country.shortName);
 
                             locationController.text = detail.result.formattedAddress;
                             _tripModel.destination = detail.result.formattedAddress;
