@@ -5,9 +5,11 @@ class OptionButton extends StatelessWidget {
   const OptionButton({
     Key key,
     this.optionItems,
+    this.icon = FontAwesomeIcons.ellipsisV,
   }) : super(key: key);
 
   final List<OptionItem> optionItems;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,12 @@ class OptionButton extends StatelessWidget {
               PopupMenuItem<OptionItem>(
                 child: ListTile(
                   onTap: optionItem.onTab,
-                  leading: Icon(
-                    optionItem.icon,
-                    color: optionItem.color,
-                  ),
+                  leading: optionItem.icon != null
+                      ? Icon(
+                        optionItem.icon,
+                        color: optionItem.color,
+                      )
+                      : null,
                   title: Text(
                     optionItem.description,
                     style: TextStyle(
@@ -35,7 +39,7 @@ class OptionButton extends StatelessWidget {
                 ),
               )).toList(),
           icon: Icon(
-            FontAwesomeIcons.ellipsisV,
+            icon,
             color: Colors.black54,
           ),
         )
@@ -45,8 +49,8 @@ class OptionButton extends StatelessWidget {
 
 class OptionItem{
   const OptionItem({
-    @required this.icon,
     @required this.description,
+    this.icon,
     this.onTab,
     this.color,
   });
