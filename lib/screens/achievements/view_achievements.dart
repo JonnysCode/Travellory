@@ -11,11 +11,9 @@ import 'package:travellory/widgets/font_widgets.dart';
 import 'package:getflutter/getflutter.dart';
 
 class AchievementsView extends StatefulWidget {
-//  const AchievementsView({Key key}) : super(key: key);
-//
-  static final route = '/view/achievements';
-
   AchievementsView({Key key}) : super(key: key);
+
+  static final route = '/view/achievements';
 
   @override
   _AchievementsViewState createState() => _AchievementsViewState();
