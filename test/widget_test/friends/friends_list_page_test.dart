@@ -16,7 +16,7 @@ class MockAuth extends Mock implements AuthService {}
 void main() {
   Widget makeTestableWidget({Widget child}) {
     UserModel user = UserModel(uid: 'uidUser');
-    FriendsModel friend = FriendsModel('uidFriend', 'friendName', null);
+    FriendsModel friend = FriendsModel('uidFriend', 'friendName', null, '');
     FriendsProvider friendsProvider = MockFriendsProvider();
 
     when(friendsProvider.user).thenReturn(user);

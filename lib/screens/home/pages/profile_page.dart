@@ -15,6 +15,7 @@ import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/utils/logger.dart';
+import 'package:travellory/widgets/forms/profile_hometown.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -160,7 +161,6 @@ class _ProfilePageState extends State<ProfilePage>
               ],
             ),
           )
-
         ],
       ),
     );
@@ -202,60 +202,48 @@ class UserInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(key: Key('display_user'), children: [
-      Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              FontAwesomeIcons.user,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            SizedBox(width: 10),
-            FashionFetishText(
-              text: user != null ? user.displayName : '',
-              size: 18,
-              fontWeight: FashionFontWeight.bold,
-              height: 1.1,
-            ),
-          ]),
-      SizedBox(height: 8),
-      Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              FontAwesomeIcons.envelope,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            SizedBox(width: 10),
-            FashionFetishText(
-              text: user != null ? user.email : '',
-              size: 18,
-              fontWeight: FashionFontWeight.bold,
-              height: 1.1,
-            ),
-          ]),
-      SizedBox(height: 8),
-      Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              FontAwesomeIcons.home,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            SizedBox(width: 10),
-            FashionFetishText(
-              text: 'Switzerland',
-              size: 18,
-              fontWeight: FashionFontWeight.bold,
-              height: 1.1,
-            ),
-          ]),
-    ]);
+    return Column(
+        key: Key('display_user'),
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                FontAwesomeIcons.user,
+                color: Theme.of(context).primaryColor,
+                size: 32,
+              ),
+              SizedBox(width: 10),
+              FashionFetishText(
+                text: user != null ? user.displayName : '',
+                size: 18,
+                fontWeight: FashionFontWeight.bold,
+                height: 1.1,
+              ),
+            ]
+          ),
+          SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                FontAwesomeIcons.envelope,
+                color: Theme.of(context).primaryColor,
+                size: 32,
+              ),
+              SizedBox(width: 10),
+              FashionFetishText(
+                text: user != null ? user.email : '',
+                size: 18,
+                fontWeight: FashionFontWeight.bold,
+                height: 1.1,
+              ),
+            ]
+          ),
+          ProfileHometown(user: user),
+        ]
+    );
   }
 }
