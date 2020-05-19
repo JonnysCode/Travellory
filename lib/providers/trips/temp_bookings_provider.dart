@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
@@ -9,6 +10,7 @@ import 'package:travellory/services/database/get_database.dart';
 class TempBookingsProvider extends ChangeNotifier {
   TempBookingsProvider(UserModel user){
     this._user = user;
+    unawaited(fetchAccommodations());
   }
 
   final DatabaseGetter _databaseGetter = DatabaseGetter();
