@@ -51,15 +51,25 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
                               size: 14,
                               color: Theme.of(context).primaryColor,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 6, left: 3),
-                              child: FashionFetishText(
-                                text: friend.hometown == '' ? 'N/A' : friend.hometown,
-                                size: 13.0,
-                                fontWeight: FashionFontWeight.heavy,
-                                color: Colors.black54,
-                              ),
-                            ),
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 6, left: 3),
+                                child: Text(
+                                  friend.hometown == '' ? 'N/A' : friend.hometown,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: false,
+                                  style: TextStyle(
+                                    height: 1.1,
+                                    fontSize: 13,
+                                    fontFamily: 'FashionFetish',
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.w900,
+                                    letterSpacing: -1,
+                                  ),
+                                ),
+                              )
+                            )
                           ],
                         ),
                       ],
