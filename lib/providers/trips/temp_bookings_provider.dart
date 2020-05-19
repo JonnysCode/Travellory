@@ -24,8 +24,7 @@ class TempBookingsProvider extends ChangeNotifier {
   }
 
   Future<bool> deleteAccommodation(AccommodationModel model) async {
-    //final bool deleted = await _databaseDeleter.deleteModel(model, DatabaseDeleter.deleteTempAccommodation);
-    bool deleted = true;
+    final bool deleted = await _databaseDeleter.deleteModel(model, DatabaseDeleter.deleteTempAccommodation);
     if(deleted) {
       await fetchAccommodations();
       notifyListeners();
