@@ -55,7 +55,7 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 6, left: 3),
                                 child: Text(
-                                  friend.homecountry == '' ? 'N/A' : friend.homecountry,
+                                  friend.homeCountry == '' ? 'N/A' : friend.homeCountry,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   softWrap: false,
