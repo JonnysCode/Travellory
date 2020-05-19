@@ -1,6 +1,7 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/authentication/user_management.dart';
 import '../font_widgets.dart';
 import 'package:pedantic/pedantic.dart';
@@ -8,14 +9,14 @@ import 'package:pedantic/pedantic.dart';
 class ProfileHometown extends StatefulWidget {
   const ProfileHometown({Key key, this.user}) : super(key: key);
 
-  final user;
+  final UserModel user;
 
   @override
   _TextInputValueState createState() => _TextInputValueState();
 }
 
 class _TextInputValueState extends State<ProfileHometown> {
-  TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
   bool showHometown = true;
   String currentHometown = 'loading...';
   String newHometown = '';
@@ -83,26 +84,6 @@ class _TextInputValueState extends State<ProfileHometown> {
             SizedBox(width: 10),
             Visibility(
               visible: showHometown,
-              child: Row(
-                key: Key('show_hometown'),
-                children: [
-                  FashionFetishText(
-                    text: currentHometown,
-                    size: 18,
-                    fontWeight: FashionFontWeight.bold,
-                    height: 1.1,
-                  ),
-                  SizedBox(width: 10),
-                  IconButton(
-                    icon: Icon(
-                        FontAwesomeIcons.pen,
-                        color: Colors.grey,
-                        size: 20
-                    ),
-                    onPressed: _editHometown,
-                  )
-                ],
-              ),
               replacement: Row(
                 key: Key('edit_hometown'),
                 children: [
@@ -122,9 +103,9 @@ class _TextInputValueState extends State<ProfileHometown> {
                       decoration: InputDecoration(
                         hintText: currentHometown,
                         hintStyle: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'FashionFetish',
-                            color: Colors.grey,
+                          fontSize: 18,
+                          fontFamily: 'FashionFetish',
+                          color: Colors.grey,
                         ),
                         border: InputBorder.none,
                       ),
@@ -135,6 +116,26 @@ class _TextInputValueState extends State<ProfileHometown> {
                     icon: Icon(
                         FontAwesomeIcons.save,
                         color: Theme.of(context).primaryColor,
+                        size: 20
+                    ),
+                    onPressed: _editHometown,
+                  )
+                ],
+              ),
+              child: Row(
+                key: Key('show_hometown'),
+                children: [
+                  FashionFetishText(
+                    text: currentHometown,
+                    size: 18,
+                    fontWeight: FashionFontWeight.bold,
+                    height: 1.1,
+                  ),
+                  SizedBox(width: 10),
+                  IconButton(
+                    icon: Icon(
+                        FontAwesomeIcons.pen,
+                        color: Colors.grey,
                         size: 20
                     ),
                     onPressed: _editHometown,
