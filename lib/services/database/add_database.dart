@@ -1,5 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:travellory/models/accommodation_model.dart';
+import 'package:travellory/providers/trips/temp_bookings_provider.dart';
 import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:flutter/material.dart';
@@ -84,6 +85,19 @@ void Function() onSubmitTrip(
     } else {
       addToDataBaseFailedDialog(context);
       log.i('onSubmitTrip did not work');
+    }
+  };
+}
+
+Function() onSubmitTempAccommodation(TempBookingsProvider tempBookingsProvider,
+    SingleTripProvider singleTripProvider, Model model, BuildContext context) {
+  return () async {
+    final bool added = await tempBookingsProvider.addAccommodationToTrip(model, singleTripProvider);
+    if (added) {
+      showSubmittedTempBookingDialog(context);
+    } else {
+      addToDataBaseFailedDialog(context);
+      log.i('onSubmitTempaccommodation did not work');
     }
   };
 }

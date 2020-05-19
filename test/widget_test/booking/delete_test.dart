@@ -85,7 +85,6 @@ void main() {
     // This functionName just serves as placeholder for this test
     final String functionName = DatabaseDeleter.deleteActivity;
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
     await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText, functionName));
@@ -107,7 +106,6 @@ void main() {
 
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
     // Build our app and trigger a frame.

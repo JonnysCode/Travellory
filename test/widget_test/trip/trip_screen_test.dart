@@ -99,7 +99,6 @@ void main() {
 
   testWidgets('test if tripscreen is loaded', (WidgetTester tester) async {
     TripsProviderMock tripsProvider = TripsProviderMock();
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
     await tester.pumpWidget(makeTestableWidgetWithProvider(tripsProvider));
@@ -110,7 +109,6 @@ void main() {
 
   testWidgets('test if sub section instances are found', (WidgetTester tester) async {
     TripsProviderMock tripsProvider = TripsProviderMock();
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
     await tester.pumpWidget(makeTestableWidgetWithProvider(tripsProvider));
@@ -121,7 +119,6 @@ void main() {
 
   testWidgets('test if trip header instance is found', (WidgetTester tester) async {
     TripsProviderMock tripsProvider = TripsProviderMock();
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
     await tester.pumpWidget(makeTestableWidgetWithProvider(tripsProvider));
