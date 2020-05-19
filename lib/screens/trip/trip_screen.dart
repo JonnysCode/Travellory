@@ -19,11 +19,9 @@ import 'package:travellory/screens/bookings/view_public_transport.dart';
 import 'package:travellory/screens/bookings/view_rental_car.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
-import 'package:travellory/widgets/buttons/edit_trip_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/booking_cards/booking_card.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
-import 'create_trip_screen.dart';
 
 class TripScreen extends StatelessWidget {
   const TripScreen({

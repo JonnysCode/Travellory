@@ -8,6 +8,7 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/home/pages/home_page.dart';
@@ -16,7 +17,6 @@ TripModel _tripModel = TripModel(
   name: 'name',
   startDate: '12-05-2020',
   endDate: '20-06-2020',
-  destination: 'destination',
   imageNr: 3,
 );
 
@@ -31,11 +31,14 @@ class SingleTripProviderMock extends Mock implements SingleTripProvider{}
 
 void main(){
   Widget makeTestableWidget({Widget child, TripsProvider tripsProvider}){
-    return ChangeNotifierProvider<TripsProvider>.value(
-      value: tripsProvider,
-      child: MaterialApp(
-        home: Scaffold(
-          body: child,
+    return Provider<UserModel>(
+      create: (_) => UserModel(displayName: 'name'),
+      child: ChangeNotifierProvider<TripsProvider>.value(
+        value: tripsProvider,
+        child: MaterialApp(
+          home: Scaffold(
+            body: child,
+          ),
         ),
       ),
     );
