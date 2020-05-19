@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,7 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/bookings/accommodation.dart';
@@ -15,14 +17,24 @@ import 'package:travellory/screens/bookings/flight.dart';
 import 'package:travellory/screens/bookings/public_transport.dart';
 import 'package:travellory/screens/bookings/rental_car.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
+import 'package:travellory/services/api/openWeatherAPI.dart';
+import 'package:travellory/utils/date_converter.dart';
+import 'package:travellory/utils/weather.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePage createState() => _HomePage();
+}
+
+class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
+    final user = Provider.of<UserModel>(context);
+    final TripsProvider tripsProvider =
+        Provider.of<TripsProvider>(context, listen: false);
     final SingleTripProvider trip = tripsProvider.activeTrip;
     TripModel tripModel;
     if (trip != null) tripModel = trip.tripModel;
@@ -32,7 +44,8 @@ class HomePage extends StatelessWidget {
       if (tripModel != null) {
         publicTransportModel.tripUID = tripModel.uid;
       }
-      return ModifyModelArguments(model: publicTransportModel, isNewModel: true);
+      return ModifyModelArguments(
+          model: publicTransportModel, isNewModel: true);
     }
 
     ModifyModelArguments _passAccommodationModel() {
@@ -68,20 +81,25 @@ class HomePage extends StatelessWidget {
     }
 
     final List<Dial> _dials = <Dial>[
-      Dial(icon: FontAwesomeIcons.envelope, description: 'Manage forwarded bookings', onTab: () {}),
+      Dial(
+          icon: FontAwesomeIcons.envelope,
+          description: 'Manage forwarded bookings',
+          onTab: () {}),
       Dial(
           icon: FontAwesomeIcons.theaterMasks,
           description: 'Add Activity',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, Activity.route, arguments: _passActivityModel());
+            Navigator.pushNamed(context, Activity.route,
+                arguments: _passActivityModel());
           }),
       Dial(
           icon: FontAwesomeIcons.car,
           description: 'Add Rental Car',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, RentalCar.route, arguments: _passRentalCarModel);
+            Navigator.pushNamed(context, RentalCar.route,
+                arguments: _passRentalCarModel);
           }),
       Dial(
           icon: FontAwesomeIcons.bus,
@@ -96,63 +114,158 @@ class HomePage extends StatelessWidget {
           description: 'Add Accommodation',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, Accommodation.route, arguments: _passAccommodationModel());
+            Navigator.pushNamed(context, Accommodation.route,
+                arguments: _passAccommodationModel());
           }),
       Dial(
           icon: FontAwesomeIcons.plane,
           description: 'Add Flight',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, Flight.route, arguments: _passFlightModel);
+            Navigator.pushNamed(context, Flight.route,
+                arguments: _passFlightModel);
           }),
     ];
+
+    var now;
+    var timeTripStart;
+    DateTime startDate;
+    if (trip != null) {
+      now = DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day);
+      String startDateFormatted = yyyyMMdd(tripModel.startDate);
+      startDate = DateTime.parse(startDateFormatted);
+      timeTripStart = startDate.difference(now).inDays;
+    }
+
+    String cutUsername(String username) {
+      if (username.length > 18) {
+        username = username.substring(0, 18) + '...';
+      }
+      return username;
+    }
 
     return SafeArea(
       child: Container(
         key: Key('home_page'),
         child: Stack(
           children: <Widget>[
-            Positioned(
-              left: 30,
-              top: 30,
-              child: Image(
-                height: 100,
-                image: AssetImage('assets/images/home/011-cloud.png'),
-              ),
-            ),
-            Positioned(
-              top: 100,
-              left: 110,
-              child: FashionFetishText(
-                text: '24\u00B0',
-                size: 24,
-                color: Colors.black87,
-                fontWeight: FashionFontWeight.bold,
-              ),
-            ),
-            Positioned(
-              top: 40,
-              left: 175,
-              right: 20,
-              child: FashionFetishText(
-                text: 'Get ready Bill!',
-                size: 24,
-                fontWeight: FashionFontWeight.heavy,
-                height: 1.2,
-              ),
-            ),
-            Positioned(
-              top: 75,
-              left: 175,
-              right: 40,
-              child: Text(
-                'Your trip to Los Angeles starts in 1 day. Pack your bags now.',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black54,
-                ),
-              ),
-            ),
+            tripModel == null || tripModel.destination.isEmpty
+                ? Positioned(
+                    left: 30,
+                    top: 30,
+                    child: Image(
+                      height: 100,
+                      image: AssetImage(
+                          'assets/images/home/weather/011-few_clouds.png'),
+                    ),
+                  )
+                : Weather(tripModel.destination, OpenWeatherAPI()),
+            tripModel == null
+                ? Positioned(
+                    top: 20,
+                    left: 170,
+                    right: 6,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          SizedBox(
+                              height: 35,
+                              child: Text('Hii',
+                                  style: TextStyle(
+                                    fontSize: 30.0,
+                                    fontFamily: 'FashionFetish',
+                                    fontWeight: FontWeight.w900,
+                                  ))),
+                          SizedBox(
+                              height: 30,
+                              child: AutoSizeText(
+                                cutUsername(user.displayName),
+                                style: TextStyle(
+                                  fontSize: 30.0,
+                                  fontFamily: 'FashionFetish',
+                                  fontWeight: FontWeight.w900,
+                                ),
+                                maxLines: 1,
+                              )),
+                          SizedBox(
+                            child: Text(
+                              'You have no trips, so plan or add a trip!',
+                              style: TextStyle(
+                                  fontSize: 14.0,
+                                  height: 1.2,
+                                  fontFamily: 'FashionFetish',
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black54),
+                            ),
+                          )
+                        ]))
+                : Positioned(
+                    top: 20,
+                    left: 170,
+                    right: 6,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          timeTripStart < 0
+                              ? SizedBox(
+                                  height: 35,
+                                  child: Text('Hii',
+                                      style: TextStyle(
+                                        fontSize: 30.0,
+                                        fontFamily: 'FashionFetish',
+                                        fontWeight: FontWeight.w900,
+                                      )))
+                              : SizedBox(
+                                  height: 35,
+                                  child: Text('Get Ready',
+                                      style: TextStyle(
+                                        fontSize: 30.0,
+                                        fontFamily: 'FashionFetish',
+                                        fontWeight: FontWeight.w900,
+                                      ))),
+                          SizedBox(
+                              height: 25,
+                              child: AutoSizeText(
+                                cutUsername(user.displayName),
+                                style: TextStyle(
+                                  fontSize: 30.0,
+                                  fontFamily: 'FashionFetish',
+                                  fontWeight: FontWeight.w900,
+                                ),
+                                maxLines: 1,
+                              )),
+                          SizedBox(
+                            child: AutoSizeText(
+                              timeTripStart == 1
+                                  ? 'Your trip to ' +
+                                      tripModel.destination +
+                                      ' starts in ' +
+                                      timeTripStart.toString() +
+                                      ' day. Pack your bags now.'
+                                  : timeTripStart < 0
+                                      ? 'Add some activities and enjoy your trip!'
+                                      : timeTripStart == 0
+                                          ? 'Your trip to ' +
+                                              tripModel.destination +
+                                              ' starts today. Let\'s go.'
+                                          : 'Your trip to ' +
+                                              tripModel.destination +
+                                              ' starts in ' +
+                                              timeTripStart.toString() +
+                                              ' days.',
+                              style: TextStyle(
+                                  fontSize: 14.0,
+                                  height: 1.2,
+                                  fontFamily: 'FashionFetish',
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black54),
+                              maxLines: 3,
+                            ),
+                          )
+                        ])),
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
@@ -162,7 +275,8 @@ class HomePage extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(40.0)),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
                           blurRadius: 18,
@@ -183,7 +297,8 @@ class HomePage extends StatelessWidget {
                               fontWeight: FashionFontWeight.heavy,
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 3),
                               child: Container(
                                 height: 1,
                                 color: Colors.black12,
@@ -200,7 +315,8 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            if (trip != null) SpeedDialButton(key: Key('home_page_dial'), dials: _dials),
+            if (trip != null)
+              SpeedDialButton(key: Key('home_page_dial'), dials: _dials),
           ],
         ),
       ),
