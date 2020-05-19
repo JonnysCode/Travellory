@@ -96,7 +96,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
                     SizedBox(
                       width: 160,
                       child: Text(
-                        widget.friend.hometown == '' ? 'N/A' : widget.friend.hometown,
+                        widget.friend.homecountry == '' ? 'N/A' : widget.friend.homecountry,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: TextStyle(

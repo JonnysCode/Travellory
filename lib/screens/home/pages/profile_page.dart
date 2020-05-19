@@ -15,7 +15,7 @@ import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/utils/logger.dart';
-import 'package:travellory/widgets/forms/profile_hometown.dart';
+import 'package:travellory/widgets/forms/profile_homecountry.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -242,7 +242,7 @@ class UserInformation extends StatelessWidget {
               ),
             ]
           ),
-          ProfileHometown(user: user),
+          ProfileHomecountry(user: user),
         ]
     );
   }

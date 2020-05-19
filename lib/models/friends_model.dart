@@ -1,8 +1,8 @@
 class FriendsModel {
-  FriendsModel(this.uid, this.username, this.photoURL, this.hometown);
+  FriendsModel(this.uid, this.username, this.photoURL, this.homecountry);
 
   String uid;
   String username;
   String photoURL;
-  String hometown;
+  String homecountry;
 }
