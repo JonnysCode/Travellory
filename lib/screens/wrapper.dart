@@ -18,13 +18,13 @@ class Wrapper extends StatelessWidget {
     final TripsProvider tripsProvider = Provider.of<TripsProvider>(context, listen: false);
     final FriendsProvider friendsProvider = Provider.of<FriendsProvider>(context, listen: false);
 
-    // configure the message handler to receive push notifications
-    MessageHandler.configure(context);
-
     // return either home or authentication
     if(user == null){
       return Welcome();
     } else {
+      // configure the message handler to receive push notifications
+      MessageHandler.configure(context);
+
       if(tripsProvider.user == null || tripsProvider.user != user){
         tripsProvider.init(user);
       }
