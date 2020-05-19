@@ -9,19 +9,27 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 
+/// validates if trip edit date is still in range of all bookings
+/// if booking already have added to the trip, then this will verify if the
+/// trip start date is not set after any of the bookings start and the
+/// trip end date is not set before any of the bookings end
+///
+/// Returns true if both cases are valid
 bool tripDateIsValid(String value, String labelText, BuildContext context) {
   final SingleTripProvider singleTripProvider =
       Provider.of<TripsProvider>(context, listen: false).selectedTrip;
+  final DateTime tripDate = DateFormat("dd-MM-yyyy", "en_US").parse(value);
 
   bool tripIsValidDate;
-  final DateTime tripDate = DateFormat("dd-MM-yyyy", "en_US").parse(value);
-  bool accommodationIsValidated = false;
+
+  /// get lists of all bookings belonging to the trip
   List<AccommodationModel> tripAccommodations = singleTripProvider.accommodations;
   List<ActivityModel> tripActivities = singleTripProvider.activities;
   List<RentalCarModel> tripRentalCars = singleTripProvider.rentalCars;
   List<FlightModel> tripFlights = singleTripProvider.flights;
   List<PublicTransportModel> tripPublicTransports = singleTripProvider.publicTransports;
 
+  bool accommodationIsValidated;
   bool activityIsValidated;
   bool rentalCarIsValidated;
   bool flightIsValidated;
