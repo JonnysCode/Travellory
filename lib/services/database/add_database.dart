@@ -1,10 +1,12 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:flutter/material.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/widgets/forms/calculate_nights.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 import '../../utils/logger.dart';
 
@@ -32,7 +34,7 @@ class DatabaseAdder {
   final log = getLogger('DatabaseAdder');
 
   Future<bool> addModel(Model model, String correspondingFunctionName) async {
-    if(_count++ >= _maxCount){
+    if (_count++ >= _maxCount) {
       log.w('maxCount exceeded in AddModel');
       return false;
     }
@@ -56,9 +58,13 @@ class DatabaseAdder {
   }
 }
 
-Function() onSubmitBooking(SingleTripProvider singleTripProvider, Model model,
-    String functionName, BuildContext context, alertText) {
+Function() onSubmitBooking(SingleTripProvider singleTripProvider, Model model, String functionName,
+    BuildContext context, alertText) {
   return () async {
+    if (model is AccommodationModel) {
+      model = calculateNightsForAccommodation(model);
+    }
+
     final bool added = await singleTripProvider.addBooking(model, functionName);
     if (added) {
       showSubmittedBookingDialog(context, alertText);
@@ -70,7 +76,7 @@ Function() onSubmitBooking(SingleTripProvider singleTripProvider, Model model,
 }
 
 void Function() onSubmitTrip(
-    TripsProvider tripsProvider,TripModel tripModel, BuildContext context, alertText) {
+    TripsProvider tripsProvider, TripModel tripModel, BuildContext context, alertText) {
   return () async {
     final bool added = await tripsProvider.addTrip(tripModel);
     if (added) {
