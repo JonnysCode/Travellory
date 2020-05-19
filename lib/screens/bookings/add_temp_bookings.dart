@@ -42,8 +42,7 @@ class AddTempBookingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TripsProvider tripsProvider = Provider.of<TripsProvider>(context);
     TempBookingsProvider tempBookingsProvider =
-        TempBookingsProvider(tripsProvider.user)
-        ..fetchAccommodations();
+        TempBookingsProvider(tripsProvider.user);
     var trips;
 
     return ChangeNotifierProvider<TempBookingsProvider>.value(
