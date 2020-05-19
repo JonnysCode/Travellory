@@ -17,3 +17,14 @@ String getOnlyDate(String date) {
   final List<String> dateTime = date.split("T");
   return dateTime[0];
 }
+
+bool isInTimeFrame(DateTime startDateTest, DateTime endDateTest, DateTime startDate, DateTime endDate){
+  return startDateTest.compareTo(startDate) >= 0
+      && endDateTest.compareTo(endDate) <= 0;
+}
+
+String yyyyMMdd (String date){
+  var array = date.split("-");
+  String newOrder = array[2] +'-'+ array[1] +'-'+ array[0];
+  return newOrder;
+}

@@ -68,7 +68,6 @@ void main() {
     final testKey = Key('Activity');
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
     await tester.pumpWidget(makeTestableActivityWidget(tripsProvider));

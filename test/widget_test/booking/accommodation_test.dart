@@ -63,7 +63,6 @@ void main() {
     final testKey = Key('Accommodation');
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
 
@@ -76,7 +75,6 @@ void main() {
     // Build our app and trigger a frame.
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
     await pumpAccommodation(tester);
@@ -88,7 +86,6 @@ void main() {
   testWidgets('test if site title instance is found', (WidgetTester tester) async {
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
     await pumpAccommodation(tester);
@@ -101,7 +98,6 @@ void main() {
 
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
     await pumpAccommodation(tester);
@@ -114,7 +110,6 @@ void main() {
 
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
     await pumpAccommodation(tester);
@@ -127,7 +122,6 @@ void main() {
 
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
     await pumpAccommodation(tester);
@@ -143,7 +137,6 @@ void main() {
 
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
     await pumpAccommodation(tester);
@@ -157,7 +150,6 @@ void main() {
 
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
     await pumpAccommodation(tester);
@@ -169,7 +161,6 @@ void main() {
   testWidgets('test if animated list is present', (WidgetTester tester) async {
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
     await pumpAccommodation(tester);
