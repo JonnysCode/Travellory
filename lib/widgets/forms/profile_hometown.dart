@@ -1,3 +1,5 @@
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_pickers.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,14 +18,18 @@ class ProfileHometown extends StatefulWidget {
 }
 
 class _TextInputValueState extends State<ProfileHometown> {
-  final TextEditingController _textEditingController = TextEditingController();
+  Country _selectedDialogCountry =
+    CountryPickerUtils.getCountryByName('Switzerland');
+
+//  final TextEditingController _textEditingController = TextEditingController();
   bool showHometown = true;
   String currentHometown = 'loading...';
   String newHometown = '';
 
   void _editHometown(){
     setState(() {
-      newHometown = _textEditingController.text;
+//      newHometown = _textEditingController.text;
+//      newHometown = _selectedDialogCountry as String;
       showHometown = !showHometown;
     });
 
@@ -61,11 +67,11 @@ class _TextInputValueState extends State<ProfileHometown> {
     );
   }
 
-  @override
-  void dispose() {
-    _textEditingController.dispose();
-    super.dispose();
-  }
+//  @override
+//  void dispose() {
+//    _textEditingController.dispose();
+//    super.dispose();
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,27 +95,31 @@ class _TextInputValueState extends State<ProfileHometown> {
                 children: [
                   SizedBox(
                     width: 200,
-                    child: TextField(
-                      controller: _textEditingController,
-                      autofocus: true,
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'FashionFetish',
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -1.0,
-                          height: 1.1
-                      ),
-                      decoration: InputDecoration(
-                        hintText: currentHometown,
-                        hintStyle: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'FashionFetish',
-                          color: Colors.grey,
-                        ),
-                        border: InputBorder.none,
-                      ),
+                    child: ListTile(
+                      onTap: _openCountryPickerDialog,
+                      title: _buildDialogItem(_selectedDialogCountry),
                     ),
+//                    child: TextField(
+//                      controller: _textEditingController,
+//                      autofocus: true,
+//                      style: TextStyle(
+//                          fontSize: 18,
+//                          fontFamily: 'FashionFetish',
+//                          color: Colors.black,
+//                          fontWeight: FontWeight.w600,
+//                          letterSpacing: -1.0,
+//                          height: 1.1
+//                      ),
+//                      decoration: InputDecoration(
+//                        hintText: currentHometown,
+//                        hintStyle: TextStyle(
+//                          fontSize: 18,
+//                          fontFamily: 'FashionFetish',
+//                          color: Colors.grey,
+//                        ),
+//                        border: InputBorder.none,
+//                      ),
+//                    ),
                   ),
                   SizedBox(width: 10),
                   IconButton(
@@ -148,4 +158,40 @@ class _TextInputValueState extends State<ProfileHometown> {
       ]
     );
   }
+
+  Widget _buildDialogItem(Country country) => Row(
+    children: <Widget>[
+//      SizedBox(width: 8.0),
+      Container(
+        padding: EdgeInsets.only(
+          bottom: 3
+        ),
+        child:Text(
+          country.name,
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: 'FashionFetish',
+            fontWeight: FontWeight.w600,
+            letterSpacing: -1.0
+          )
+        ),
+      ),
+    ],
+  );
+
+  void _openCountryPickerDialog() => showDialog(
+    context: context,
+    builder: (context) => Theme(
+      data: Theme.of(context).copyWith(primaryColor: Colors.black),
+      child: CountryPickerDialog(
+        searchCursorColor: Theme.of(context).primaryColor,
+        searchInputDecoration: InputDecoration(hintText: 'Search...'),
+        isSearchable: true,
+        title: Text('Select your country'),
+        onValuePicked: (Country country) =>
+            setState(() => _selectedDialogCountry = country),
+        itemBuilder: _buildDialogItem,
+      ),
+    ),
+  );
 }

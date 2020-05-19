@@ -96,7 +96,6 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
                     SizedBox(
                       width: 160,
                       child: Text(
-                        // TODO(fluetfab): load hometown of the user
                         widget.friend.hometown == '' ? 'N/A' : widget.friend.hometown,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
