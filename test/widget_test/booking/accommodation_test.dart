@@ -106,7 +106,7 @@ void main() {
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
     await pumpAccommodation(tester);
 
-    expect(find.byKey(testKey, skipOffstage: false), findsNWidgets(3));
+    expect(find.byKey(testKey, skipOffstage: false), findsNWidgets(4));
   });
 
   testWidgets('test if dropdown menu instance is found', (WidgetTester tester) async {
@@ -122,7 +122,7 @@ void main() {
     expect(find.byKey(testKey, skipOffstage: false), findsOneWidget);
   });
 
-  testWidgets('test if first three form field instances are found', (WidgetTester tester) async {
+  testWidgets('test if first confirmation and address form field instances are found', (WidgetTester tester) async {
     final testKey = Key('Form Field');
 
     TripsProviderMock tripsProvider = TripsProviderMock();
@@ -133,10 +133,9 @@ void main() {
     await pumpAccommodation(tester);
 
     expect(find.text('Confirmation Number', skipOffstage: false), findsOneWidget);
-    expect(find.text('Name *', skipOffstage: false), findsOneWidget);
     expect(find.text('Address *', skipOffstage: false), findsOneWidget);
 
-    expect(find.byKey(testKey, skipOffstage: false), findsNWidgets(3));
+    expect(find.byKey(testKey, skipOffstage: false), findsNWidgets(2));
   });
 
   testWidgets('test if check-in date field instance is found', (WidgetTester tester) async {
@@ -150,7 +149,7 @@ void main() {
     await pumpAccommodation(tester);
 
     expect(find.text('Check-In Date *', skipOffstage: false), findsOneWidget);
-    expect(find.byKey(testKey, skipOffstage: false), findsOneWidget);
+    expect(find.byKey(testKey, skipOffstage: false), findsNWidgets(2));
   });
 
   testWidgets('test if check-in time field instance is found', (WidgetTester tester) async {
