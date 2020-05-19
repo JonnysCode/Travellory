@@ -9,19 +9,28 @@ import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 
-
-bool checkTripDateValidityOnEdit(String value, BuildContext context) {
+bool tripDateIsValid(String value, BuildContext context) {
   final SingleTripProvider singleTripProvider =
       Provider.of<TripsProvider>(context, listen: false).selectedTrip;
 
-  bool tripIsValidDate = true;
+  bool tripIsValidDate;
   final DateTime tripDate = DateFormat("dd-MM-yyyy", "en_US").parse(value);
 
-  tripIsValidDate = checkAccommodations(tripDate, singleTripProvider);
-  tripIsValidDate = checkActivities(tripDate, singleTripProvider);
-  tripIsValidDate = checkRentalCars(tripDate, singleTripProvider);
-  tripIsValidDate = checkFlights(tripDate, singleTripProvider);
-  tripIsValidDate = checkPublicTransports(tripDate, singleTripProvider);
+  bool accommodationIsValidated = checkAccommodations(tripDate, singleTripProvider);
+  bool activityIsValidated = checkActivities(tripDate, singleTripProvider);
+  bool rentalCarIsValidated = checkRentalCars(tripDate, singleTripProvider);
+  bool flightIsValidated = checkFlights(tripDate, singleTripProvider);
+  bool publicTransportIsValidated = checkPublicTransports(tripDate, singleTripProvider);
+
+  if (accommodationIsValidated &&
+      activityIsValidated &&
+      rentalCarIsValidated &&
+      flightIsValidated &&
+      publicTransportIsValidated) {
+    tripIsValidDate = true;
+  } else {
+    tripIsValidDate = false;
+  }
 
   return tripIsValidDate;
 }
