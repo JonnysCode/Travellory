@@ -19,7 +19,7 @@ import 'package:travellory/screens/bookings/public_transport.dart';
 import 'package:travellory/screens/bookings/rental_car.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
 import 'package:travellory/services/api/openWeatherAPI.dart';
-import 'package:travellory/utils/date_converter.dart';
+import 'package:travellory/utils/date_handler.dart';
 import 'package:travellory/utils/weather.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
