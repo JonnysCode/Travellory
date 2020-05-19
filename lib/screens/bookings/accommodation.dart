@@ -239,15 +239,6 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         optional: true,
         chosenTimeString: (value) => _accommodationModel.checkinTime = value,
       ),
-      DateFormField(
-        initialValue: _accommodationModel.nights,
-        key: _nightsFormFieldKey,
-        labelText: 'Nights',
-        icon: Icon(FontAwesomeIcons.solidMoon),
-        optional: true,
-        model: _accommodationModel,
-        chosenDateString: (value) => _accommodationModel.nights = value,
-      ),
       SectionTitle('Check-Out Details'),
       DateFormField(
         key: _checkoutDateFormFieldKey,
