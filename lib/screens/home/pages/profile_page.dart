@@ -242,7 +242,7 @@ class UserInformation extends StatelessWidget {
               ),
             ]
           ),
-          ProfileHomecountry(user: user),
+          ProfileHomeCountry(user: user),
         ]
     );
   }
