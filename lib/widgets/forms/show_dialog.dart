@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import '../font_widgets.dart';
 
@@ -156,6 +157,26 @@ void showSubmittedTempBookingDialog(BuildContext context) {
             Navigator.of(context).pop();
           }),
         ],
+      );
+    },
+  );
+}
+
+void showLoadingDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        title: Text(
+          'We are working on it...',
+          textAlign: TextAlign.center,
+        ),
+        content: SizedBox(
+          height: 150,
+          width: 300,
+          child: LoadingHeart()
+        ),
       );
     },
   );
