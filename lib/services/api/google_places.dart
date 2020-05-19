@@ -25,7 +25,7 @@ class GooglePlaces {
       context: context,
       apiKey: googleApiKey,
       //onError: onError,
-      mode: Mode.overlay,
+      mode: Mode.fullscreen,
       language: "en",
       /// for country
       components: country,
