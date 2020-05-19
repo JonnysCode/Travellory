@@ -97,7 +97,7 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
                       width: 160,
                       child: Text(
                         // TODO(fluetfab): load hometown of the user
-                        'Switzerland',
+                        widget.friend.hometown == '' ? 'N/A' : widget.friend.hometown,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: TextStyle(
