@@ -54,7 +54,7 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
                             Padding(
                               padding: const EdgeInsets.only(top: 6, left: 3),
                               child: FashionFetishText(
-                                text: 'Switzerland',
+                                text: friend.hometown == '' ? 'N/A' : friend.hometown,
                                 size: 13.0,
                                 fontWeight: FashionFontWeight.heavy,
                                 color: Colors.black54,
