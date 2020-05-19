@@ -17,55 +17,60 @@ import 'package:travellory/providers/trips/trips_provider.dart';
 /// Returns true if both cases are valid
 bool tripDateIsValid(String value, String labelText, BuildContext context) {
   final SingleTripProvider singleTripProvider =
-      Provider.of<TripsProvider>(context, listen: false).selectedTrip;
+      Provider
+          .of<TripsProvider>(context, listen: false)
+          .selectedTrip;
   final DateTime tripDate = DateFormat("dd-MM-yyyy", "en_US").parse(value);
 
   bool tripIsValidDate;
 
-  /// get lists of all bookings belonging to the trip
-  List<AccommodationModel> tripAccommodations = singleTripProvider.accommodations;
-  List<ActivityModel> tripActivities = singleTripProvider.activities;
-  List<RentalCarModel> tripRentalCars = singleTripProvider.rentalCars;
-  List<FlightModel> tripFlights = singleTripProvider.flights;
-  List<PublicTransportModel> tripPublicTransports = singleTripProvider.publicTransports;
-
-  bool accommodationIsValidated;
-  bool activityIsValidated;
-  bool rentalCarIsValidated;
-  bool flightIsValidated;
-  bool publicTransportIsValidated;
-
   if (labelText == 'Start Date *') {
-    accommodationIsValidated = checkStartDateAccommodations(tripDate, tripAccommodations);
-    activityIsValidated = checkStartDateActivities(tripDate, tripActivities);
-    rentalCarIsValidated = checkPickUpDateRentalCars(tripDate, tripRentalCars);
-    flightIsValidated = checkDepDateFlights(tripDate, tripFlights);
-    publicTransportIsValidated = checkDepDatePublicTransports(tripDate, tripPublicTransports);
+    tripIsValidDate = checkStartTrip(tripDate, singleTripProvider);
   }
 
   if (labelText == 'End Date *') {
-    accommodationIsValidated = checkEndDateAccommodations(tripDate, tripAccommodations);
-    activityIsValidated = checkEndDateActivities(tripDate, tripActivities);
-    rentalCarIsValidated = checkReturnDateRentalCars(tripDate, tripRentalCars);
-    flightIsValidated = checkArrDateFlights(tripDate, tripFlights);
-    publicTransportIsValidated = checkArrDatePublicTransports(tripDate, tripPublicTransports);
-  }
-
-  if (accommodationIsValidated
-      && activityIsValidated &&
-      rentalCarIsValidated &&
-      flightIsValidated &&
-      publicTransportIsValidated
-      ) {
-    tripIsValidDate = true;
-  } else {
-    tripIsValidDate = false;
+    tripIsValidDate = checkEndTrip(tripDate, singleTripProvider);
   }
 
   return tripIsValidDate;
 }
 
-bool checkStartDateAccommodations(DateTime tripDate, List<AccommodationModel> tripAccommodations) {
+bool checkStartTrip(DateTime tripDate, SingleTripProvider singleTripProvider) {
+  bool accommodationIsValidated = checkStartDateAccommodations(tripDate, singleTripProvider);
+  bool activityIsValidated = checkStartDateActivities(tripDate, singleTripProvider);
+  bool rentalCarIsValidated = checkPickUpDateRentalCars(tripDate, singleTripProvider);
+  bool flightIsValidated = checkDepDateFlights(tripDate, singleTripProvider);
+  bool publicTransportIsValidated = checkDepDatePublicTransports(tripDate, singleTripProvider);
+
+  if (accommodationIsValidated &&
+      activityIsValidated &&
+      rentalCarIsValidated &&
+      flightIsValidated &&
+      publicTransportIsValidated) {
+    return true;
+  }
+  return false;
+}
+
+bool checkEndTrip(DateTime tripDate, SingleTripProvider singleTripProvider) {
+  bool accommodationIsValidated = checkEndDateAccommodations(tripDate, singleTripProvider);
+  bool activityIsValidated = checkEndDateActivities(tripDate, singleTripProvider);
+  bool rentalCarIsValidated = checkReturnDateRentalCars(tripDate, singleTripProvider);
+  bool flightIsValidated = checkArrDateFlights(tripDate, singleTripProvider);
+  bool publicTransportIsValidated = checkArrDatePublicTransports(tripDate, singleTripProvider);
+
+  if (accommodationIsValidated &&
+      activityIsValidated &&
+      rentalCarIsValidated &&
+      flightIsValidated &&
+      publicTransportIsValidated) {
+    return true;
+  }
+  return false;
+}
+
+bool checkStartDateAccommodations(DateTime tripDate, SingleTripProvider singleTripProvider) {
+  List<AccommodationModel> tripAccommodations = singleTripProvider.accommodations;
   bool isValid = true;
 
   if (tripAccommodations.isNotEmpty) {
@@ -81,7 +86,8 @@ bool checkStartDateAccommodations(DateTime tripDate, List<AccommodationModel> tr
   return isValid;
 }
 
-bool checkEndDateAccommodations(DateTime tripDate, List<AccommodationModel> tripAccommodations) {
+bool checkEndDateAccommodations(DateTime tripDate, SingleTripProvider singleTripProvider) {
+  List<AccommodationModel> tripAccommodations = singleTripProvider.accommodations;
   bool isValid = true;
 
   if (tripAccommodations.isNotEmpty) {
@@ -97,7 +103,8 @@ bool checkEndDateAccommodations(DateTime tripDate, List<AccommodationModel> trip
   return isValid;
 }
 
-bool checkStartDateActivities(DateTime tripDate, List<ActivityModel> tripActivities) {
+bool checkStartDateActivities(DateTime tripDate, SingleTripProvider singleTripProvider) {
+  List<ActivityModel> tripActivities = singleTripProvider.activities;
   bool isValid = true;
 
   if (tripActivities.isNotEmpty) {
@@ -113,7 +120,8 @@ bool checkStartDateActivities(DateTime tripDate, List<ActivityModel> tripActivit
   return isValid;
 }
 
-bool checkEndDateActivities(DateTime tripDate, List<ActivityModel> tripActivities) {
+bool checkEndDateActivities(DateTime tripDate, SingleTripProvider singleTripProvider) {
+  List<ActivityModel> tripActivities = singleTripProvider.activities;
   bool isValid = true;
 
   if (tripActivities.isNotEmpty) {
@@ -129,7 +137,8 @@ bool checkEndDateActivities(DateTime tripDate, List<ActivityModel> tripActivitie
   return isValid;
 }
 
-bool checkPickUpDateRentalCars(DateTime tripDate, List<RentalCarModel> tripRentalCars) {
+bool checkPickUpDateRentalCars(DateTime tripDate, SingleTripProvider singleTripProvider) {
+  List<RentalCarModel> tripRentalCars = singleTripProvider.rentalCars;
   bool isValid = true;
 
   if (tripRentalCars.isNotEmpty) {
@@ -151,7 +160,8 @@ bool checkPickUpDateRentalCars(DateTime tripDate, List<RentalCarModel> tripRenta
   return isValid;
 }
 
-bool checkReturnDateRentalCars(DateTime tripDate, List<RentalCarModel> tripRentalCars) {
+bool checkReturnDateRentalCars(DateTime tripDate, SingleTripProvider singleTripProvider) {
+  List<RentalCarModel> tripRentalCars = singleTripProvider.rentalCars;
   bool isValid = true;
 
   if (tripRentalCars.isNotEmpty) {
@@ -167,7 +177,8 @@ bool checkReturnDateRentalCars(DateTime tripDate, List<RentalCarModel> tripRenta
   return isValid;
 }
 
-bool checkDepDateFlights(DateTime tripDate, List<FlightModel> tripFlights) {
+bool checkDepDateFlights(DateTime tripDate, SingleTripProvider singleTripProvider) {
+  List<FlightModel> tripFlights = singleTripProvider.flights;
   bool isValid = true;
 
   if (tripFlights.isNotEmpty) {
@@ -183,7 +194,8 @@ bool checkDepDateFlights(DateTime tripDate, List<FlightModel> tripFlights) {
   return isValid;
 }
 
-bool checkArrDateFlights(DateTime tripDate, List<FlightModel> tripFlights) {
+bool checkArrDateFlights(DateTime tripDate, SingleTripProvider singleTripProvider) {
+  List<FlightModel> tripFlights = singleTripProvider.flights;
   bool isValid = true;
 
   if (tripFlights.isNotEmpty) {
@@ -199,8 +211,8 @@ bool checkArrDateFlights(DateTime tripDate, List<FlightModel> tripFlights) {
   return isValid;
 }
 
-bool checkDepDatePublicTransports(
-    DateTime tripDate, List<PublicTransportModel> tripPublicTransports) {
+bool checkDepDatePublicTransports(DateTime tripDate, SingleTripProvider singleTripProvider) {
+  List<PublicTransportModel> tripPublicTransports = singleTripProvider.publicTransports;
   bool isValid = true;
 
   if (tripPublicTransports.isNotEmpty) {
@@ -216,8 +228,8 @@ bool checkDepDatePublicTransports(
   return isValid;
 }
 
-bool checkArrDatePublicTransports(
-    DateTime tripDate, List<PublicTransportModel> tripPublicTransports) {
+bool checkArrDatePublicTransports(DateTime tripDate, SingleTripProvider singleTripProvider) {
+  List<PublicTransportModel> tripPublicTransports = singleTripProvider.publicTransports;
   bool isValid = true;
 
   if (tripPublicTransports.isNotEmpty) {
