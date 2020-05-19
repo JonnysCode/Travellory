@@ -8,11 +8,13 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/utils/trip_date_validity.dart';
 
 class DateFormField extends StatefulWidget {
   const DateFormField(
       {Key key,
       this.icon,
+      this.isEditTrip,
       this.initialValue,
       this.labelText,
       this.optional = false,
@@ -28,6 +30,7 @@ class DateFormField extends StatefulWidget {
       : super(key: key);
 
   final Icon icon;
+  final bool isEditTrip;
   final String initialValue;
   final String labelText;
   final bool optional;
@@ -43,6 +46,8 @@ class DateFormField extends StatefulWidget {
 
   final String validatorText = 'Please enter the required information';
   final String dateInTripValidationMessage = 'The chosen date is not in trip date range';
+  final String tripEditDateValidationFailedMessage =
+      'Trip date cannot start before / end after a booking date';
 
   @override
   DateFormFieldState createState() => DateFormFieldState();
@@ -180,6 +185,11 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
             controller: controller,
             validator: (value) {
               if (widget.optional) return null;
+              if (widget.isEditTrip) {
+                if(!checkTripDateValidityOnEdit(value, context)) {
+                  return widget.tripEditDateValidationFailedMessage;
+                }
+              }
               if (value.isEmpty) {
                 return widget.validatorText;
               } else if (!pickedDateInTripRange(selectedDate)) {
