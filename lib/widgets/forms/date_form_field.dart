@@ -186,7 +186,7 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
             validator: (value) {
               if (widget.optional) return null;
               if (!widget.isNewTrip) {
-                if(!tripDateIsValid(value, context)) {
+                if(!tripDateIsValid(value, widget.labelText, context)) {
                   return widget.tripEditDateValidationFailedMessage;
                 }
               }
