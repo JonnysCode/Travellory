@@ -56,7 +56,7 @@ class GMapBorderLoader{
 
     try {
       data = await rootBundle.loadString('assets/g_map/border_points/${stateName.toLowerCase()}.json');
-    }on Exception catch(_){
+    }catch(_){
       return polygons;
     }
 
@@ -78,7 +78,7 @@ class GMapBorderLoader{
   }
 
 
-  Future<List<Polygon>> generateBorders (List<String> states) async {
+  Future<List<Polygon>> generateBorders(List<String> states) async {
 
     final List<Polygon> borders = <Polygon>[];
 
