@@ -83,6 +83,8 @@ class TripsProvider extends ChangeNotifier implements NotifyListener {
 
   Future<void> _initTrips() async {
     await _fetchTrips();
+    _activeTripIndex = null;
+    _selectedTripIndex = null;
     _setActiveTrip();
     if (_activeTripIndex != null) {
       await activeTrip.initBookings();
