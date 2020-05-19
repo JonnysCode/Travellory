@@ -17,6 +17,7 @@ import 'package:travellory/screens/bookings/flight.dart';
 import 'package:travellory/screens/bookings/public_transport.dart';
 import 'package:travellory/screens/bookings/rental_car.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
+import 'package:travellory/services/api/openWeatherAPI.dart';
 import 'package:travellory/utils/date_converter.dart';
 import 'package:travellory/utils/weather.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
@@ -80,21 +81,25 @@ class _HomePage extends State<HomePage> {
     }
 
     final List<Dial> _dials = <Dial>[
-      Dial(icon: FontAwesomeIcons.envelope, description: 'Manage forwarded bookings', onTab: () {}),
-
+      Dial(
+          icon: FontAwesomeIcons.envelope,
+          description: 'Manage forwarded bookings',
+          onTab: () {}),
       Dial(
           icon: FontAwesomeIcons.theaterMasks,
           description: 'Add Activity',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, Activity.route, arguments: _passActivityModel());
+            Navigator.pushNamed(context, Activity.route,
+                arguments: _passActivityModel());
           }),
       Dial(
           icon: FontAwesomeIcons.car,
           description: 'Add Rental Car',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, RentalCar.route, arguments: _passRentalCarModel);
+            Navigator.pushNamed(context, RentalCar.route,
+                arguments: _passRentalCarModel);
           }),
       Dial(
           icon: FontAwesomeIcons.bus,
@@ -109,14 +114,16 @@ class _HomePage extends State<HomePage> {
           description: 'Add Accommodation',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, Accommodation.route, arguments: _passAccommodationModel());
+            Navigator.pushNamed(context, Accommodation.route,
+                arguments: _passAccommodationModel());
           }),
       Dial(
           icon: FontAwesomeIcons.plane,
           description: 'Add Flight',
           onTab: () {
             tripsProvider.selectTrip(tripModel);
-            Navigator.pushNamed(context, Flight.route, arguments: _passFlightModel);
+            Navigator.pushNamed(context, Flight.route,
+                arguments: _passFlightModel);
           }),
     ];
 
@@ -124,10 +131,11 @@ class _HomePage extends State<HomePage> {
     var timeTripStart;
     DateTime startDate;
     if (trip != null) {
-      now = DateTime.now();
+      now = DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day);
       String startDateFormatted = yyyyMMdd(tripModel.startDate);
       startDate = DateTime.parse(startDateFormatted);
-      timeTripStart = startDate.difference(now).inDays + 1;
+      timeTripStart = startDate.difference(now).inDays;
     }
 
     String cutUsername(String username) {
@@ -142,7 +150,7 @@ class _HomePage extends State<HomePage> {
         key: Key('home_page'),
         child: Stack(
           children: <Widget>[
-            tripModel == null
+            tripModel == null || tripModel.destination.isEmpty
                 ? Positioned(
                     left: 30,
                     top: 30,
@@ -152,7 +160,7 @@ class _HomePage extends State<HomePage> {
                           'assets/images/home/weather/011-few_clouds.png'),
                     ),
                   )
-                : Weather(tripModel.destination),
+                : Weather(tripModel.destination, OpenWeatherAPI()),
             tripModel == null
                 ? Positioned(
                     top: 20,
@@ -201,14 +209,23 @@ class _HomePage extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          SizedBox(
-                              height: 35,
-                              child: Text('Get Ready',
-                                  style: TextStyle(
-                                    fontSize: 30.0,
-                                    fontFamily: 'FashionFetish',
-                                    fontWeight: FontWeight.w900,
-                                  ))),
+                          timeTripStart < 0
+                              ? SizedBox(
+                                  height: 35,
+                                  child: Text('Hii',
+                                      style: TextStyle(
+                                        fontSize: 30.0,
+                                        fontFamily: 'FashionFetish',
+                                        fontWeight: FontWeight.w900,
+                                      )))
+                              : SizedBox(
+                                  height: 35,
+                                  child: Text('Get Ready',
+                                      style: TextStyle(
+                                        fontSize: 30.0,
+                                        fontFamily: 'FashionFetish',
+                                        fontWeight: FontWeight.w900,
+                                      ))),
                           SizedBox(
                               height: 25,
                               child: AutoSizeText(
@@ -221,24 +238,31 @@ class _HomePage extends State<HomePage> {
                                 maxLines: 1,
                               )),
                           SizedBox(
-                            child: Text(
-                              timeTripStart < 2
+                            child: AutoSizeText(
+                              timeTripStart == 1
                                   ? 'Your trip to ' +
                                       tripModel.destination +
                                       ' starts in ' +
                                       timeTripStart.toString() +
                                       ' day. Pack your bags now.'
-                                  : 'Your trip to ' +
-                                      tripModel.destination +
-                                      ' starts in ' +
-                                      timeTripStart.toString() +
-                                      ' days.',
+                                  : timeTripStart < 0
+                                      ? 'Add some activities and enjoy your trip!'
+                                      : timeTripStart == 0
+                                          ? 'Your trip to ' +
+                                              tripModel.destination +
+                                              ' starts today. Let\'s go.'
+                                          : 'Your trip to ' +
+                                              tripModel.destination +
+                                              ' starts in ' +
+                                              timeTripStart.toString() +
+                                              ' days.',
                               style: TextStyle(
                                   fontSize: 14.0,
                                   height: 1.2,
                                   fontFamily: 'FashionFetish',
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black54),
+                              maxLines: 3,
                             ),
                           )
                         ])),

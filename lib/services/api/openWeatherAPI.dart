@@ -1,12 +1,12 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class OpenWeatherAPI {
+import 'package:http/http.dart' as http;
 
+class OpenWeatherAPI {
   var result;
 
   String get temperature {
-    if(result == null || result['main']){
+    if (result == null || result['main'] == null) {
       return null;
     }
     var temperature = result['main']['temp'];
@@ -15,7 +15,7 @@ class OpenWeatherAPI {
   }
 
   String get description {
-    if(result == null || result['weather'] == null){
+    if (result == null || result['weather'] == null) {
       return null;
     }
     var description = result['weather'][0]['description'];
