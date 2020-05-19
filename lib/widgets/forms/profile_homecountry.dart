@@ -7,8 +7,8 @@ import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/authentication/user_management.dart';
 import 'package:pedantic/pedantic.dart';
 
-class ProfileHometown extends StatefulWidget {
-  const ProfileHometown({Key key, this.user}) : super(key: key);
+class ProfileHomecountry extends StatefulWidget {
+  const ProfileHomecountry({Key key, this.user}) : super(key: key);
 
   final UserModel user;
 
@@ -16,36 +16,36 @@ class ProfileHometown extends StatefulWidget {
   _TextInputValueState createState() => _TextInputValueState();
 }
 
-class _TextInputValueState extends State<ProfileHometown> {
+class _TextInputValueState extends State<ProfileHomecountry> {
   Country _selectedDialogCountry =
     CountryPickerUtils.getCountryByName('Switzerland');
 
-  bool showHometown = true;
-  String currentHometown = 'loading...';
-  String newHometown = '';
+  bool showHomecountry = true;
+  String currentHomecountry = 'loading...';
+  String newHomecountry = '';
 
-  void _editHometown(){
+  void _editHomecountry(){
     setState(() {
-      newHometown = _selectedDialogCountry.name.toString();
-      showHometown = !showHometown;
+      newHomecountry = _selectedDialogCountry.name.toString();
+      showHomecountry = !showHomecountry;
     });
 
-    UserManagement.setHometown(widget.user.uid, newHometown)
+    UserManagement.setHomecountry(widget.user.uid, newHomecountry)
     .catchError((error) {
-      _showSnackBar('Setting hometown failed', false);
+      _showSnackBar('Setting homecountry failed', false);
     });
   }
 
-  Future _fetchHometown() async {
-    await UserManagement.getHometown(widget.user.uid)
-        .then((hometown) {
+  Future _fetchHomecountry() async {
+    await UserManagement.getHomecountry(widget.user.uid)
+        .then((homecountry) {
       if(mounted) {
         setState(() {
-          currentHometown = hometown;
+          currentHomecountry = homecountry;
         });
       }
     }).catchError((error) {
-      _showSnackBar('Fetching hometown failed', false);
+      _showSnackBar('Fetching homecountry failed', false);
     });
   }
 
@@ -66,7 +66,7 @@ class _TextInputValueState extends State<ProfileHometown> {
 
   @override
   Widget build(BuildContext context) {
-    unawaited(_fetchHometown());
+    unawaited(_fetchHomecountry());
     return Column(
       children: <Widget>[
         Row(
@@ -80,11 +80,11 @@ class _TextInputValueState extends State<ProfileHometown> {
             ),
             SizedBox(width: 10),
             Visibility(
-              visible: showHometown,
+              visible: showHomecountry,
               replacement: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                key: Key('edit_hometown'),
+                key: Key('edit_homecountry'),
                 children: [
                   Container(
                       padding: EdgeInsets.all(0),
@@ -103,17 +103,17 @@ class _TextInputValueState extends State<ProfileHometown> {
                         color: Theme.of(context).primaryColor,
                         size: 20
                     ),
-                    onPressed: _editHometown,
+                    onPressed: _editHomecountry,
                   )
                 ],
               ),
               child: Expanded(
                 child: Row(
-                  key: Key('show_hometown'),
+                  key: Key('show_homecountry'),
                   children: [
                     Flexible(
                       child: Text(
-                        currentHometown,
+                        currentHomecountry,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                             fontFamily: 'FashionFetish',
@@ -131,7 +131,7 @@ class _TextInputValueState extends State<ProfileHometown> {
                           color: Colors.grey,
                           size: 20
                       ),
-                      onPressed: _editHometown,
+                      onPressed: _editHomecountry,
                     )
                   ],
                 ),
