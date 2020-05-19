@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/screens/bookings/view_achievements.dart';
+import 'package:travellory/screens/achievements/view_achievements.dart';
 
 
 class Wrapper extends StatelessWidget {

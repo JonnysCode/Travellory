@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
+import 'package:travellory/providers/achievements_provider.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
@@ -19,7 +20,7 @@ import 'package:travellory/screens/bookings/edit_rental_car.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
 import 'package:travellory/screens/bookings/view_activity.dart';
 import 'package:travellory/screens/bookings/view_flight.dart';
-import 'package:travellory/screens/bookings/view_achievements.dart';
+import 'package:travellory/screens/achievements/view_achievements.dart';
 import 'package:travellory/screens/bookings/view_public_transport.dart';
 import 'package:travellory/screens/bookings/view_rental_car.dart';
 import 'package:travellory/screens/home/home.dart';
@@ -43,6 +44,8 @@ class MyApp extends StatelessWidget {
               create: (context) => TripsProvider()),
           ChangeNotifierProvider<FriendsProvider>(
               create: (context) => FriendsProvider()),
+          ChangeNotifierProvider<AchievementsProvider>(
+              create: (context) => AchievementsProvider()),
           StreamProvider<UserModel>.value(value: AuthService().user),
         ],
         child: MaterialApp(
