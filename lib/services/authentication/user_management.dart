@@ -17,19 +17,19 @@ class UserManagement {
     return result.data['isAvailable'];
   }
   
-  static Future<HttpsCallableResult> setHomecountry(String uid, String homecountry) {
+  static Future<HttpsCallableResult> setHomeCountry(String uid, String homeCountry) {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
-      functionName: 'user-setHometown',
+      functionName: 'user-setHomeCountry',
     );
-    return callable.call({'uid': uid, 'hometown': homecountry});
+    return callable.call({'uid': uid, 'homeCountry': homeCountry});
   }
 
-  static Future<String> getHomecountry(String uid) async {
+  static Future<String> getHomeCountry(String uid) async {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'user-getPublicUserInformation',
     );
     final result = await callable.call({'uid': uid});
-    return result.data['hometown'];
+    return result.data['homeCountry'];
   }
 
   static Future<dynamic> getAchievements(String userUID) async {
