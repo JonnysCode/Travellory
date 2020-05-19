@@ -131,6 +131,12 @@ class AccommodationState<T extends Accommodation> extends State<T> {
       children: <Widget>[
         SectionTitle('Further Hotel Details'),
         TravelloryFormField(
+            initialValue: _accommodationModel.name,
+            labelText: 'Name',
+            icon: Icon(FontAwesomeIcons.solidBuilding),
+            optional: true,
+            onChanged: (value) => _accommodationModel.name = value),
+        TravelloryFormField(
           initialValue: _accommodationModel.hotelRoomType,
           labelText: 'Room Type',
           icon: Icon(FontAwesomeIcons.hotel),
@@ -197,12 +203,6 @@ class AccommodationState<T extends Accommodation> extends State<T> {
           icon: Icon(FontAwesomeIcons.ticketAlt),
           optional: true,
           onChanged: (value) => _accommodationModel.confirmationNr = value),
-      TravelloryFormField(
-          initialValue: _accommodationModel.name,
-          labelText: 'Name *',
-          icon: Icon(FontAwesomeIcons.solidBuilding),
-          optional: false,
-          onChanged: (value) => _accommodationModel.name = value),
       TravelloryFormField(
         initialValue: _accommodationModel.address,
         labelText: 'Address *',
