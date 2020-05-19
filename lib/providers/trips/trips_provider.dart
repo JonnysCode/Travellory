@@ -65,6 +65,9 @@ class TripsProvider extends ChangeNotifier implements NotifyListener {
 
   Future<bool> editTrip(TripModel tripModel) async {
     final bool edited = await _databaseEditor.editModel(tripModel, DatabaseEditor.editTripName);
+    if (edited) {
+      await _initTrips();
+    }
     return edited;
   }
 
