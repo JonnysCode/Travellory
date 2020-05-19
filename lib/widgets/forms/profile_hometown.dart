@@ -107,33 +107,34 @@ class _TextInputValueState extends State<ProfileHometown> {
                   )
                 ],
               ),
-              child: Row(
-                key: Key('show_hometown'),
-                children: [
-//                  Flexible(
-//                    child: Text(
-                  Text(
-                      currentHometown,
-                      overflow: TextOverflow.fade,
-                      style: TextStyle(
-                          fontFamily: 'FashionFetish',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          height: 1.1,
-                          letterSpacing: -1
+              child: Expanded(
+                child: Row(
+                  key: Key('show_hometown'),
+                  children: [
+                    Flexible(
+                      child: Text(
+                        currentHometown,
+                        overflow: TextOverflow.fade,
+                        style: TextStyle(
+                            fontFamily: 'FashionFetish',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            height: 1.1,
+                            letterSpacing: -1
+                        ),
                       ),
-//                    ),
-                  ),
-                  SizedBox(width: 10),
-                  IconButton(
-                    icon: Icon(
-                        FontAwesomeIcons.pen,
-                        color: Colors.grey,
-                        size: 20
                     ),
-                    onPressed: _editHometown,
-                  )
-                ],
+                    SizedBox(width: 10),
+                    IconButton(
+                      icon: Icon(
+                          FontAwesomeIcons.pen,
+                          color: Colors.grey,
+                          size: 20
+                      ),
+                      onPressed: _editHometown,
+                    )
+                  ],
+                ),
               ),
             )
           ]
@@ -153,7 +154,6 @@ class _TextInputValueState extends State<ProfileHometown> {
             style: TextStyle(
               fontSize: 18,
               fontFamily: 'FashionFetish',
-//              fontWeight: FontWeight.w600,
               fontStyle: FontStyle.italic,
               letterSpacing: -1.0
             )
