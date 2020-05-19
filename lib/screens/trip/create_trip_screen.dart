@@ -179,7 +179,7 @@ class _CreateTripState extends State<CreateTrip> {
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                         child: ImageSelector(
                           images: _images,
-                          initialValue: _tripModel.imageNr,
+                          initialValue: _tripModel.imageNr-1,
                           onChanged: (value) => _tripModel.imageNr = value+1,
                         ),
                       ),

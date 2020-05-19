@@ -67,6 +67,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener {
     final bool edited = await _databaseEditor.editModel(tripModel, DatabaseEditor.editTripName);
     if (edited) {
       await _initTrips();
+      selectTrip(tripModel);
     }
     return edited;
   }
