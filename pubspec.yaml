@@ -55,6 +55,7 @@ dependencies:
   firebase_auth_mocks: ^0.1.3
   fab_circular_menu: ^1.0.0
   getflutter: ^1.0.11
+  auto_size_text: 2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -94,7 +95,7 @@ flutter:
     - assets/images/logo/
     - assets/images/bookings/
     - assets/images/home/trip/
-    - assets/images/home/
+    - assets/images/home/weather/
     - assets/images/activity/
     - assets/photo_camera.png
     - assets/g_map/
