@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,6 +13,7 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
+import 'package:travellory/screens/bookings/temp_bookings.dart';
 import 'package:travellory/screens/bookings/accommodation.dart';
 import 'package:travellory/screens/bookings/activity.dart';
 import 'package:travellory/screens/bookings/flight.dart';
@@ -18,7 +21,7 @@ import 'package:travellory/screens/bookings/public_transport.dart';
 import 'package:travellory/screens/bookings/rental_car.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
 import 'package:travellory/services/api/openWeatherAPI.dart';
-import 'package:travellory/utils/date_converter.dart';
+import 'package:travellory/utils/date_handler.dart';
 import 'package:travellory/utils/weather.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
@@ -84,7 +87,9 @@ class _HomePage extends State<HomePage> {
       Dial(
           icon: FontAwesomeIcons.envelope,
           description: 'Manage forwarded bookings',
-          onTab: () {}),
+          onTab: () {
+            Navigator.pushNamed(context, AddTempBookingsScreen.route);
+          }),
       Dial(
           icon: FontAwesomeIcons.theaterMasks,
           description: 'Add Activity',

@@ -5,7 +5,8 @@ enum SocialActionType {
   sendFriendRequest,
   acceptFriendRequest,
   declineFriendRequest,
-  removeFriend
+  removeFriend,
+  receivedFriendRequest
 }
 
 class FriendManagement {

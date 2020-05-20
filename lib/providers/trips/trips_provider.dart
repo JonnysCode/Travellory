@@ -8,7 +8,7 @@ import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
 import 'package:travellory/services/database/get_database.dart';
 import 'package:pedantic/pedantic.dart';
-import 'package:travellory/utils/date_converter.dart';
+import 'package:travellory/utils/date_handler.dart';
 
 class TripsProvider extends ChangeNotifier implements NotifyListener {
   TripsProvider() {
@@ -56,7 +56,7 @@ class TripsProvider extends ChangeNotifier implements NotifyListener {
 
   Future<bool> deleteTrip(TripModel tripModel) async {
     final bool deleted =
-        await _databaseDeleter.deleteModel(tripModel, DatabaseDeleter.deleteTripName);
+        await _databaseDeleter.deleteModel(tripModel, DatabaseDeleter.deleteTrip);
     if (deleted) {
       await _initTrips();
     }

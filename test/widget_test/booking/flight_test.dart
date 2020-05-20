@@ -65,7 +65,6 @@ void main() {
 
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
         SingleTripProvider(tripModel, null)
     );
@@ -79,7 +78,6 @@ void main() {
     // Build our app and trigger a frame.
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
         SingleTripProvider(tripModel, null)
     );
@@ -94,7 +92,6 @@ void main() {
   testWidgets('test if all form fields are present', (WidgetTester tester) async {
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
         SingleTripProvider(tripModel, null)
     );
@@ -117,7 +114,6 @@ void main() {
     // Build our app and trigger a frame.
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
         SingleTripProvider(tripModel, null)
     );
@@ -132,7 +128,6 @@ void main() {
     // Build our app and trigger a frame.
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
         SingleTripProvider(tripModel, null)
     );
@@ -149,7 +144,6 @@ void main() {
     // Build our app and trigger a frame.
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(
         SingleTripProvider(tripModel, null)
     );
