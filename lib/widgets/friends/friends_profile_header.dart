@@ -96,7 +96,8 @@ class _FriendsHeaderState extends State<FriendsProfileHeader> {
                     SizedBox(
                       width: 160,
                       child: Text(
-                        widget.friend.homeCountry == '' ? 'N/A' : widget.friend.homeCountry,
+                        // TODO(fluetfab): BUG not showing N/A when empty
+                        widget.friend.homeCountry?? 'N/A',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: TextStyle(
