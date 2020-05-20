@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/screens/trip/create_trip_screen.dart';
-import 'package:travellory/utils/date_converter.dart';
+import 'package:travellory/utils/date_handler.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 

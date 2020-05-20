@@ -56,6 +56,8 @@ dependencies:
   fab_circular_menu: ^1.0.0
   getflutter: ^1.0.11
   country_pickers: ^1.2.1
+  firebase_messaging: ^6.0.15
+  auto_size_text: 2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -95,7 +97,7 @@ flutter:
     - assets/images/logo/
     - assets/images/bookings/
     - assets/images/home/trip/
-    - assets/images/home/
+    - assets/images/home/weather/
     - assets/images/activity/
     - assets/photo_camera.png
     - assets/g_map/

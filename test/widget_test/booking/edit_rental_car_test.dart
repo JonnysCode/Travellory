@@ -61,7 +61,6 @@ void main() {
     final testKey = Key('Rental Car');
     TripsProviderMock tripsProvider = TripsProviderMock();
 
-    tripModel.init();
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
     await tester.pumpWidget(makeTestableWidget(tripsProvider));
