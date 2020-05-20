@@ -5,6 +5,7 @@ import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/screens/authenticate/welcome.dart';
 import 'package:travellory/screens/home/home.dart';
+import 'package:travellory/services/notifications/message_handler.dart';
 import 'package:travellory/shared/loading_logo.dart';
 
 class Wrapper extends StatelessWidget {
@@ -21,6 +22,9 @@ class Wrapper extends StatelessWidget {
     if(user == null){
       return Welcome();
     } else {
+      // configure the message handler to receive push notifications
+      MessageHandler.configure(context);
+
       if(tripsProvider.user == null || tripsProvider.user != user){
         tripsProvider.init(user);
       }
