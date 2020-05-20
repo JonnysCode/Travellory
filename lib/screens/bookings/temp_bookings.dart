@@ -12,15 +12,15 @@ import 'package:travellory/widgets/booking_cards/booking_card.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
 
 class AddTempBookingsScreen extends StatelessWidget {
-  static final String route = '/booking/temp';
-  static final String _forwardMail = 'travellory@in.parseur.com';
+  static const String route = '/booking/temp';
+  static const String _forwardMail = 'travellory@in.parseur.com';
 
   List<OptionItem> getAvailableTripOptions(
       TripsProvider tripsProvider,
       AccommodationModel model,
       TempBookingsProvider tempBookingsProvider,
       BuildContext context) {
-    var trips = <OptionItem>[];
+    final trips = <OptionItem>[];
     tripsProvider.trips.forEach((trip) => {
           if (isInTimeFrame(
               getDateTimeFrom(model.checkinDate),
@@ -40,8 +40,8 @@ class AddTempBookingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TripsProvider tripsProvider = Provider.of<TripsProvider>(context);
-    TempBookingsProvider tempBookingsProvider =
+    final TripsProvider tripsProvider = Provider.of<TripsProvider>(context);
+    final TempBookingsProvider tempBookingsProvider =
         TempBookingsProvider(tripsProvider.user);
     var trips;
 

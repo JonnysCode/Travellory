@@ -6,7 +6,7 @@ import 'package:travellory/widgets/auth_background.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 
 class Authenticate extends StatelessWidget {
-  static final route = '/auth';
+  static const route = '/auth';
 
   @override
   Widget build(BuildContext context) {
