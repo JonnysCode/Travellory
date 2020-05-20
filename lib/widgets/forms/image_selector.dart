@@ -42,21 +42,19 @@ class _ImageSelectorState extends State<ImageSelector>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Padding(
+    return Container(
+      height: 96,
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: 96,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemCount: widget.images.length,
-          itemBuilder: (context, index) {
-            return _imageItem(index);
-          },
-          separatorBuilder: (context, index) => const SizedBox(),
-        ),
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        itemCount: widget.images.length,
+        itemBuilder: (context, index) {
+          return _imageItem(index);
+        },
+        separatorBuilder: (context, index) => const SizedBox(),
       ),
-    );;
+    );
   }
 
   void _selectImage(index) {
