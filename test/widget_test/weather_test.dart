@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:provider/provider.dart';
 import 'package:travellory/services/api/openWeatherAPI.dart';
 import 'package:travellory/utils/weather.dart';
 
@@ -27,19 +28,16 @@ void main() {
     expect(find.byKey(Key('weather_page')), findsOneWidget);
   });
 
-  testWidgets('test if page has AssetImage', (WidgetTester tester) async {
+  testWidgets('test if page has 3 parts', (WidgetTester tester) async {
     MockWeather mockWeather = MockWeather();
-    Weather page = Weather('Wrocław',mockWeather);
-    when(mockWeather.getWeather('Wrocław')).thenAnswer((realInvocation) async => data);
+    Weather page = Weather('Winterthur',mockWeather);
+    when(mockWeather.getWeather('Winterthur')).thenAnswer((realInvocation) async => data);
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(await makeTestableWidget(child: page,weatherAPI: mockWeather));
-    var assetImage = find.byType(Container);
+    var container = find.byType(Container);
 
-    // Verify that the weather page is present.
-    expect(assetImage, findsNWidgets(3));
+    // Verify that the weather page has temperature, image and location.
+    expect(container, findsNWidgets(3));
   });
-
-
-
 }
