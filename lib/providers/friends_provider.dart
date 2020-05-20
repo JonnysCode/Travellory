@@ -100,16 +100,4 @@ class FriendsProvider extends ChangeNotifier{
     isFetchingSentFriendRequests = false;
     notifyListeners();
   }
-
-//  Future<void> _fetchFriendsAchievements() async {
-//    isFetchingFriendsAchievements = true;
-//    try {
-//      dynamic result = await UserManagement.getAchievements(_user.uid);
-//      _friendsAchievements = Achievements.fromData(result);
-//    } on PlatformException catch (error) {
-//      log.e(error.code+" "+error.message);
-//    }
-//    isFetchingFriendsAchievements = false;
-//    notifyListeners();
-//  }
 }

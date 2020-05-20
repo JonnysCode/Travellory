@@ -12,7 +12,6 @@ Future<void> _openFriendsProfile(BuildContext context, FriendsModel friend) asyn
   List<Object> arguments = List<Object>();
   arguments.add(friend);
   arguments.add(friendsAchievements);
-//  print("achi: "+friendsAchievements.worldPercentage.toString());
   await Navigator.pushNamed(context, '/friends/friends_profile', arguments: arguments);
 }
 
