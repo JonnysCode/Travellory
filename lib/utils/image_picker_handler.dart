@@ -40,11 +40,11 @@ class ImagePickerHandler {
     _listener.userImage(croppedFile);
   }
 
-  showDialog(BuildContext context) {
+  void showDialog(BuildContext context) {
     imagePicker.getImage(context);
   }
 }
 
 mixin ImagePickerListener {
-  userImage(File _image);
+  void userImage(File _image);
 }
