@@ -15,25 +15,24 @@ class AddTempBookingsScreen extends StatelessWidget {
   static const String route = '/booking/temp';
   static const String _forwardMail = 'travellory@in.parseur.com';
 
-  List<OptionItem> getAvailableTripOptions(
-      TripsProvider tripsProvider,
+  List<OptionItem> getAvailableTripOptions(TripsProvider tripsProvider,
       AccommodationModel model,
       TempBookingsProvider tempBookingsProvider,
       BuildContext context) {
     final trips = <OptionItem>[];
-    tripsProvider.trips.forEach((trip) => {
-          if (isInTimeFrame(
-              getDateTimeFrom(model.checkinDate),
-              getDateTimeFrom(model.checkoutDate),
-              getDateTimeFrom(trip.tripModel.startDate),
-              getDateTimeFrom(trip.tripModel.endDate)))
-            {
-              trips.add(OptionItem(
-                  description: trip.tripModel.name,
-                  onTab: onSubmitTempAccommodation(
-                      tempBookingsProvider, trip, model, context)))
-            }
-        });
+
+    for (final trip in tripsProvider.trips) {
+      if (isInTimeFrame(
+          getDateTimeFrom(model.checkinDate),
+          getDateTimeFrom(model.checkoutDate),
+          getDateTimeFrom(trip.tripModel.startDate),
+          getDateTimeFrom(trip.tripModel.endDate))) {
+        trips.add(OptionItem(
+            description: trip.tripModel.name,
+            onTab: onSubmitTempAccommodation(
+                tempBookingsProvider, trip, model, context)));
+      }
+    }
 
     return trips;
   }
@@ -42,14 +41,16 @@ class AddTempBookingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final TripsProvider tripsProvider = Provider.of<TripsProvider>(context);
     final TempBookingsProvider tempBookingsProvider =
-        TempBookingsProvider(tripsProvider.user);
-    var trips;
+    TempBookingsProvider(tripsProvider.user);
+    List<OptionItem> trips;
 
     return ChangeNotifierProvider<TempBookingsProvider>.value(
       value: tempBookingsProvider,
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme
+              .of(context)
+              .primaryColor,
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -141,46 +142,49 @@ class AddTempBookingsScreen extends StatelessWidget {
                         Expanded(
                           child: Consumer<TempBookingsProvider>(
                             builder: (_, bookings, __) =>
-                                bookings.accommodations == null
-                                    ? LoadingHeart()
-                                    : ListView.separated(
-                                        separatorBuilder: (_, __) =>
-                                            const Divider(),
-                                        itemCount: bookings.accommodations.length,
-                                        itemBuilder: (context, index) => Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: BookingCard(
-                                                model: bookings.accommodations[index],
-                                                onTap: () =>
-                                                    Navigator.pushNamed(context,
-                                                        AccommodationView.route,
-                                                        arguments: bookings.accommodations[index]),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 30,
-                                              child: OptionButton(
-                                                icon: FontAwesomeIcons.plus,
-                                                optionItems: (trips =
-                                                            getAvailableTripOptions(
-                                                                tripsProvider,
-                                                                bookings.accommodations[index],
-                                                                tempBookingsProvider,
-                                                                context))
-                                                        .isEmpty
-                                                    ? <OptionItem>[
-                                                        OptionItem(
-                                                            description:
-                                                                'We could not find a trip in that time.',
-                                                            color: Colors.red)
-                                                      ]
-                                                    : trips,
-                                              ),
-                                            ),
-                                          ],
+                            bookings.accommodations == null
+                                ? LoadingHeart()
+                                : ListView.separated(
+                              separatorBuilder: (_, __) =>
+                              const Divider(),
+                              itemCount: bookings.accommodations.length,
+                              itemBuilder: (context, index) =>
+                                  Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: BookingCard(
+                                          model: bookings.accommodations[index],
+                                          onTap: () =>
+                                              Navigator.pushNamed(context,
+                                                  AccommodationView.route,
+                                                  arguments: bookings
+                                                      .accommodations[index]),
                                         ),
                                       ),
+                                      SizedBox(
+                                        width: 30,
+                                        child: OptionButton(
+                                          icon: FontAwesomeIcons.plus,
+                                          optionItems: (trips =
+                                              getAvailableTripOptions(
+                                                  tripsProvider,
+                                                  bookings
+                                                      .accommodations[index],
+                                                  tempBookingsProvider,
+                                                  context))
+                                              .isEmpty
+                                              ? <OptionItem>[
+                                            OptionItem(
+                                                description:
+                                                'We could not find a trip in that time.',
+                                                color: Colors.red)
+                                          ]
+                                              : trips,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                            ),
                           ),
                         ),
                       ],
