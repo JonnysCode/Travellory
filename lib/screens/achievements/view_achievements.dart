@@ -8,8 +8,6 @@ import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/widgets/achievements_widget.dart';
 import 'package:travellory/widgets/bookings/view_booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';
-import 'package:travellory/widgets/font_widgets.dart';
-import 'package:getflutter/getflutter.dart';
 
 class AchievementsView extends StatefulWidget {
   AchievementsView({Key key}) : super(key: key);
