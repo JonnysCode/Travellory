@@ -26,7 +26,7 @@ import 'package:travellory/widgets/buttons/submit_button.dart';
 
 
 class PublicTransport extends StatefulWidget {
-  static final route = '/booking/publictransport';
+  static const route = '/booking/publictransport';
 
   @override
   PublicTransportState createState() => PublicTransportState();

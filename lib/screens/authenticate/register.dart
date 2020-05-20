@@ -11,7 +11,7 @@ import 'package:travellory/widgets/input_widgets.dart';
 import 'package:pedantic/pedantic.dart';
 
 class Register extends StatefulWidget {
-  static final route = '/register';
+  static const route = '/register';
 
   @override
   _RegisterState createState() => _RegisterState();

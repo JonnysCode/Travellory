@@ -8,7 +8,7 @@ import 'package:travellory/screens/home/home.dart';
 import 'package:travellory/shared/loading_logo.dart';
 
 class Wrapper extends StatelessWidget {
-  static final route = '/';
+  static const route = '/';
 
   @override
   Widget build(BuildContext context) {

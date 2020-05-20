@@ -11,7 +11,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:pedantic/pedantic.dart';
 
 class ChangePassword extends StatefulWidget {
-  static final route = '/password';
+  static const route = '/password';
 
   @override
   _RegisterState createState() => _RegisterState();

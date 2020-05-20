@@ -17,7 +17,7 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:travellory/widgets/buttons/submit_button.dart';
 
 class CreateTrip extends StatefulWidget {
-  static final route = '/createtrip';
+  static const route = '/createtrip';
 
   @override
   _CreateTripState createState() => _CreateTripState();

@@ -9,7 +9,7 @@ import 'package:travellory/widgets/input_widgets.dart';
 import 'package:pedantic/pedantic.dart';
 
 class SignIn extends StatefulWidget {
-  static final route = '/login';
+  static const route = '/login';
 
   @override
   _SignInState createState() => _SignInState();
