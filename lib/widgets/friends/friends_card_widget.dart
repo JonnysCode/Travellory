@@ -63,8 +63,7 @@ Widget friendsCard({@required BuildContext context, @required FriendsModel frien
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 6, left: 3),
                                 child: Text(
-                                  // TODO(fluetfab): BUG not showing N/A when empty
-                                  friend.homeCountry?? 'N/A',
+                                  friend.homeCountry == '' ? 'N/A' : friend.homeCountry,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   softWrap: false,
