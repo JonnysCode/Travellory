@@ -6,7 +6,7 @@ import 'package:travellory/providers/weather_provider.dart';
 import 'package:travellory/services/api/openWeatherAPI.dart';
 
 class Weather extends StatefulWidget {
-  Weather(this.location, this.openWeatherAPI);
+  const Weather(this.location, this.openWeatherAPI);
 
   final String location;
   final OpenWeatherAPI openWeatherAPI;

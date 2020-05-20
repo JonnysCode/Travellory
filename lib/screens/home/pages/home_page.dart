@@ -127,22 +127,25 @@ class _HomePage extends State<HomePage> {
           }),
     ];
 
-    var now;
-    var timeTripStart;
+    var now = DateTime(0);
+    var timeTripStart = 0;
+    var startDateFormatted = '';
     DateTime startDate;
+
     if (trip != null) {
       now = DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day);
-      String startDateFormatted = yyyyMMdd(tripModel.startDate);
+      startDateFormatted = yyyyMMdd(tripModel.startDate);
       startDate = DateTime.parse(startDateFormatted);
       timeTripStart = startDate.difference(now).inDays;
     }
 
     String cutUsername(String username) {
+      var newUsername = username;
       if (username.length > 18) {
-        username = username.substring(0, 18) + '...';
+        newUsername = '${username.substring(0, 18)}...';
       }
-      return username;
+      return newUsername;
     }
 
     return SafeArea(
@@ -150,8 +153,8 @@ class _HomePage extends State<HomePage> {
         key: Key('home_page'),
         child: Stack(
           children: <Widget>[
-            tripModel == null || tripModel.destination.isEmpty
-                ? Positioned(
+           if (tripModel == null || tripModel.destination.isEmpty)
+                 Positioned(
                     left: 30,
                     top: 30,
                     child: Image(
@@ -160,7 +163,7 @@ class _HomePage extends State<HomePage> {
                           'assets/images/home/weather/011-few_clouds.png'),
                     ),
                   )
-                : Weather(tripModel.destination, OpenWeatherAPI()),
+                else Weather(tripModel.destination, OpenWeatherAPI()),
             tripModel == null
                 ? Positioned(
                     top: 20,
@@ -209,8 +212,8 @@ class _HomePage extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          timeTripStart < 0
-                              ? SizedBox(
+                         if (timeTripStart < 0)
+                               SizedBox(
                                   height: 35,
                                   child: Text('Hii',
                                       style: TextStyle(
@@ -218,7 +221,7 @@ class _HomePage extends State<HomePage> {
                                         fontFamily: 'FashionFetish',
                                         fontWeight: FontWeight.w900,
                                       )))
-                              : SizedBox(
+                              else SizedBox(
                                   height: 35,
                                   child: Text('Get Ready',
                                       style: TextStyle(
@@ -240,22 +243,12 @@ class _HomePage extends State<HomePage> {
                           SizedBox(
                             child: AutoSizeText(
                               timeTripStart == 1
-                                  ? 'Your trip to ' +
-                                      tripModel.destination +
-                                      ' starts in ' +
-                                      timeTripStart.toString() +
-                                      ' day. Pack your bags now.'
+                                  ? 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} day. Pack your bags now.'
                                   : timeTripStart < 0
                                       ? 'Add some activities and enjoy your trip!'
                                       : timeTripStart == 0
-                                          ? 'Your trip to ' +
-                                              tripModel.destination +
-                                              ' starts today. Let\'s go.'
-                                          : 'Your trip to ' +
-                                              tripModel.destination +
-                                              ' starts in ' +
-                                              timeTripStart.toString() +
-                                              ' days.',
+                                          ? 'Your trip to ${tripModel.destination} starts today. Let\'s go.'
+                                          : 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} days.',
                               style: TextStyle(
                                   fontSize: 14.0,
                                   height: 1.2,
