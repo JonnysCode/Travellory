@@ -188,16 +188,16 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                     onItemFound: (FriendsModel friend, int index) {
                       _loadingResults.add(false);
                       return friendsCard(
-                          context,
-                          friend,
-                          _loadingResults[index]
+                          context: context,
+                          friend: friend,
+                          button: _loadingResults[index]
                               ? CircularProgressIndicator()
                               : (user.uid == friend.uid ||
                                       _isFriendOrHasFriendRequest(friend))
                                   ? null
                                   : sendFriendRequestButton(
                                       user.uid, friend.uid, index),
-                          10);
+                          topPadding: 10);
                     },
                     loader: LoadingHeart(),
                     minimumChars: 1,
@@ -282,13 +282,13 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                                     friendsProvider.sentFriendRequests[index];
                                 _loadingRequests.add(false);
                                 return friendsCard(
-                                    context,
-                                    friend,
-                                    _loadingRequests[index]
+                                    context: context,
+                                    friend: friend,
+                                    button: _loadingRequests[index]
                                         ? CircularProgressIndicator()
                                         : withdrawFriendRequestButton(
                                             friend.uid, user.uid, index),
-                                    10);
+                                    topPadding: 10);
                               },
                             ),
                 )),

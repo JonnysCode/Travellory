@@ -9,8 +9,8 @@ void _openFriendsProfile(BuildContext context, FriendsModel friend){
 }
 
 @override
-Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
-    double topPadding) {
+Widget friendsCard({@required BuildContext context, @required FriendsModel friend,
+  @required Widget button, @required double topPadding}) {
   const double cardSize = 70;
 
   return Container(
