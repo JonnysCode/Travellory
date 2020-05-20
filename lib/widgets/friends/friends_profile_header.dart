@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/friends_model.dart';
 import 'friends_profile_picture.dart';
 
 class FriendsProfileHeader extends StatefulWidget {
   const FriendsProfileHeader({Key key, this.friend, double headerSize}) : super(key: key);
 
-  final friend;
+  final FriendsModel friend;
   final double headerSize = 140;
 
   @override

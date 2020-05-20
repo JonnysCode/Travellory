@@ -6,7 +6,7 @@ import '../../widgets/font_widgets.dart';
 import '../../widgets/friends/friends_profile_header.dart';
 
 class FriendsProfile extends StatefulWidget {
-  FriendsProfile({
+  const FriendsProfile({
     Key key,
   }) : super(key: key);
 

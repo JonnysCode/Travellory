@@ -7,9 +7,9 @@ import 'package:travellory/widgets/font_widgets.dart';
 import 'friends_profile_picture.dart';
 
 Future<void> _openFriendsProfile(BuildContext context, FriendsModel friend) async {
-  dynamic result = await UserManagement.getAchievements(friend.uid);
-  Achievements friendsAchievements = Achievements.fromData(result);
-  List<Object> arguments = List<Object>();
+  final dynamic result = await UserManagement.getAchievements(friend.uid);
+  final Achievements friendsAchievements = Achievements.fromData(result);
+  final List<Object> arguments = [];
   arguments.add(friend);
   arguments.add(friendsAchievements);
   await Navigator.pushNamed(context, '/friends/friends_profile', arguments: arguments);
