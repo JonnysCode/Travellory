@@ -59,6 +59,9 @@ class FriendsProvider extends ChangeNotifier{
         await _fetchFriends();
         await _fetchFriendRequests();
         break;
+      case SocialActionType.receivedFriendRequest:
+        await _fetchFriendRequests();
+        break;
       default:
         // do nothing
     }
