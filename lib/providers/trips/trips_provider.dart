@@ -35,8 +35,11 @@ class TripsProvider extends ChangeNotifier implements NotifyListener {
 
   bool get activeTripInitiated => _activeTripInitiated;
 
-  // Fetches all trips from the database and initiates the upcoming one.
-  // Meaning it fetches all its Bookings from the database as well.
+  /// Initiate the TripProvider and select the active trip.
+  ///
+  /// Fetches all trips from the database, sorts them after
+  /// its startDate and initiates the upcoming one. Meaning
+  /// it fetches all its Bookings from the database as well.
   void init(UserModel user) {
     this.user = user;
     if (!_tripsInitiated) {
