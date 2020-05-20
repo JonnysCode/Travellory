@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/achievements_model.dart';
 import 'package:travellory/models/friends_model.dart';
+import 'package:travellory/services/authentication/user_management.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'friends_profile_picture.dart';
 
-void _openFriendsProfile(BuildContext context, FriendsModel friend){
-  Navigator.pushNamed(context, '/friends/friends_profile', arguments: friend);
+Future<void> _openFriendsProfile(BuildContext context, FriendsModel friend) async {
+  dynamic result = await UserManagement.getAchievements(friend.uid);
+  Achievements friendsAchievements = Achievements.fromData(result);
+  List<Object> arguments = List<Object>();
+  arguments.add(friend);
+  arguments.add(friendsAchievements);
+//  print("achi: "+friendsAchievements.worldPercentage.toString());
+  await Navigator.pushNamed(context, '/friends/friends_profile', arguments: arguments);
 }
 
 @override
@@ -55,7 +63,8 @@ Widget friendsCard({@required BuildContext context, @required FriendsModel frien
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 6, left: 3),
                                 child: Text(
-                                  friend.homeCountry == '' ? 'N/A' : friend.homeCountry,
+                                  // TODO(fluetfab): BUG not showing N/A when empty
+                                  friend.homeCountry?? 'N/A',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   softWrap: false,

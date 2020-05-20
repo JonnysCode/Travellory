@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:getflutter/components/progress_bar/gf_progress_bar.dart';
-import 'package:provider/provider.dart';
 import 'package:travellory/models/achievements_model.dart';
 import 'package:travellory/models/friends_model.dart';
-import 'package:travellory/providers/achievements_provider.dart';
 import '../../widgets/font_widgets.dart';
 import '../../widgets/friends/friends_profile_header.dart';
 
@@ -21,11 +19,12 @@ class FriendsProfile extends StatefulWidget {
 class _FriendsProfileState extends State<FriendsProfile> {
   @override
   Widget build(BuildContext context) {
-    final FriendsModel friend = ModalRoute.of(context).settings.arguments;
+    final List<Object> arguments = ModalRoute.of(context).settings.arguments;
+    final FriendsModel friend = arguments[0];
+    final Achievements friendAchievements = arguments[1];
+
+//    friend.uid;
     // TODO(bertaben): fetch achievements from friend
-//    Achievements achievementsProvider = Provider.of<AchievementsProvider>(context).achievements;
-//    List<String> achievements = achievementsProvider.achievements;
-//    List<int> percentages = achievementsProvider.percentages;
     final  List<String> achievements = <String>[
       'World',
       'Europe',
@@ -38,10 +37,17 @@ class _FriendsProfileState extends State<FriendsProfile> {
     ];
 
     final List<int> percentages = <int>[
-      3,10,1,5,0,2,0,0
+      friendAchievements.worldPercentage,
+      friendAchievements.europePercentage,
+      friendAchievements.asiaPercentage,
+      friendAchievements.northAmericaPercentage,
+      friendAchievements.southAmericaPercentage,
+      friendAchievements.africaPercentage,
+      friendAchievements.australiaPercentage,
+      friendAchievements.antarcticaPercentage
     ];
 
-    // TODO(bertanben,fluetfab): create a widget out of the achievementsView
+    // TODO(fluetfab): create a widget out of the achievementsView
     return Scaffold(
       key: Key('friends_profile'),
       body: Container(
