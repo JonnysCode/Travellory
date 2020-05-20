@@ -17,12 +17,10 @@ import 'package:travellory/providers/trips/trips_provider.dart';
 /// Returns true if both cases are valid
 bool tripDateIsValid(String value, String labelText, BuildContext context) {
   final SingleTripProvider singleTripProvider =
-      Provider
-          .of<TripsProvider>(context, listen: false)
-          .selectedTrip;
+      Provider.of<TripsProvider>(context, listen: false).selectedTrip;
   final DateTime tripDate = DateFormat("dd-MM-yyyy", "en_US").parse(value);
 
-  bool tripIsValidDate;
+  bool tripIsValidDate = false;
 
   if (labelText == 'Start Date *') {
     tripIsValidDate = checkStartTrip(tripDate, singleTripProvider);
@@ -35,6 +33,7 @@ bool tripDateIsValid(String value, String labelText, BuildContext context) {
   return tripIsValidDate;
 }
 
+/// Returns true if all booking dates begin on or after the new start trip date
 bool checkStartTrip(DateTime tripDate, SingleTripProvider singleTripProvider) {
   bool accommodationIsValidated = checkStartDateAccommodations(tripDate, singleTripProvider);
   bool activityIsValidated = checkStartDateActivities(tripDate, singleTripProvider);
@@ -52,6 +51,7 @@ bool checkStartTrip(DateTime tripDate, SingleTripProvider singleTripProvider) {
   return false;
 }
 
+/// Returns true if all booking dates end on or before the new end trip date
 bool checkEndTrip(DateTime tripDate, SingleTripProvider singleTripProvider) {
   bool accommodationIsValidated = checkEndDateAccommodations(tripDate, singleTripProvider);
   bool activityIsValidated = checkEndDateActivities(tripDate, singleTripProvider);
