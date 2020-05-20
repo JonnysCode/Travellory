@@ -24,7 +24,7 @@ Widget achievementsWidget({BookingHeader bookingHeader, @required BuildContext c
               ),
               SizedBox(height: 10),
               GFProgressBar(
-                percentage: (percentages[i] / 100),
+                percentage: percentages[i] / 100,
                 backgroundColor: Colors.black26,
                 progressBarColor: Theme.of(context).primaryColor,
                 width: MediaQuery.of(context).size.width - 86,
