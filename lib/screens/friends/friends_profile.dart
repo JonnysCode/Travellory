@@ -107,10 +107,14 @@ class _FriendsProfileState extends State<FriendsProfile> {
                       ),
                     ),
                   ),
-                  achievementsWidget(
-                      context: context,
-                      entries: achievements,
-                      percentages: percentages
+                  Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child:
+                    achievementsWidget(
+                        context: context,
+                        entries: achievements,
+                        percentages: percentages
+                    ),
                   ),
                   Padding(padding: EdgeInsets.only(bottom: 50)),
                 ])
