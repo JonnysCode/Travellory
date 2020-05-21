@@ -24,11 +24,7 @@ import 'package:travellory/widgets/booking_cards/booking_card.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
 
 class TripScreen extends StatelessWidget {
-  const TripScreen({
-    Key key,
-  }) : super(key: key);
-
-  static final route = '/viewtrip';
+  static const route = '/viewtrip';
 
   @override
   Widget build(BuildContext context) {
