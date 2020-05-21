@@ -21,80 +21,85 @@ class SearchFriendsPage extends StatefulWidget {
 
 class _SearchFriendsPageState extends State<SearchFriendsPage> {
   String searchWord = '';
-  final _loadingResults = [];
-  final _loadingRequests = [];
+  final _isLoadingResults = [];
+  final _isLoadingRequests = [];
 
   void _sendFriendRequest(
       String uidSender, String uidReceiver, int index) async {
-    String message;
-    bool success;
+    String messageToDisplay;
+    bool wasSuccessful;
 
     setState(() {
-      _loadingResults[index] = true;
+      _isLoadingResults[index] = true;
     });
 
     await FriendManagement.performSocialAction(
             uidSender, uidReceiver, SocialActionType.sendFriendRequest)
         .then((value) async {
-      message = "Friend request sent";
-      success = true;
+      messageToDisplay = "Friend request sent";
+      wasSuccessful = true;
       final FriendsProvider friendsProvider =
           Provider.of<FriendsProvider>(context, listen: false);
       await friendsProvider.update(SocialActionType.sendFriendRequest);
     }).catchError((error) {
-      message = "There was an error. Try again.";
-      success = false;
+      messageToDisplay = "There was an error. Try again.";
+      wasSuccessful = false;
     });
 
     setState(() {
-      _loadingResults[index] = false;
+      _isLoadingResults[index] = false;
     });
-    _showSnackBar(message, success);
+    _showSnackBar(messageToDisplay, wasSuccessful);
   }
 
   void _withdrawFriendRequest(
       String uidSender, String uidReceiver, int index) async {
-    String message;
-    bool success;
+    String messageToDisplay;
+    bool wasSuccessful;
 
     setState(() {
-      _loadingRequests[index] = true;
+      _isLoadingRequests[index] = true;
     });
 
     await FriendManagement.performSocialAction(
             uidReceiver, uidSender, SocialActionType.declineFriendRequest)
         .then((value) async {
-      message = "Friend request withdrawn";
-      success = true;
+      messageToDisplay = "Friend request withdrawn";
+      wasSuccessful = true;
       final FriendsProvider friendsProvider =
           Provider.of<FriendsProvider>(context, listen: false);
       await friendsProvider.update(SocialActionType.declineFriendRequest);
     }).catchError((error) {
-      message = "There was an error. Try again.";
-      success = false;
+      messageToDisplay = "There was an error. Try again.";
+      wasSuccessful = false;
     });
 
     setState(() {
-      _loadingRequests[index] = false;
+      _isLoadingRequests[index] = false;
     });
-    _showSnackBar(message, success);
+    _showSnackBar(messageToDisplay, wasSuccessful);
   }
 
   bool _isFriendOrHasFriendRequest(FriendsModel friend) {
     final FriendsProvider friendsProvider =
         Provider.of<FriendsProvider>(context, listen: false);
+
     final friends = friendsProvider.friends;
     final friendRequests = friendsProvider.friendRequests;
     final sentFriendRequests = friendsProvider.sentFriendRequests;
+
     final areFriends = friends.firstWhere(
         (itemToCheck) => itemToCheck.uid == friend.uid,
         orElse: () => null);
+
     final hasRequest = friendRequests.firstWhere(
         (itemToCheck) => itemToCheck.uid == friend.uid,
         orElse: () => null);
+
     final sentRequest = sentFriendRequests.firstWhere(
         (itemToCheck) => itemToCheck.uid == friend.uid,
         orElse: () => null);
+
     return areFriends != null || hasRequest != null || sentRequest != null;
   }
 
@@ -148,7 +153,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserModel>(context);
+    final UserModel user = Provider.of<UserModel>(context);
 
     return SafeArea(
         key: Key('search_friends'),
@@ -187,11 +192,11 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 10,
                     onItemFound: (FriendsModel friend, int index) {
-                      _loadingResults.add(false);
+                      _isLoadingResults.add(false);
                       return friendsCard(
                           context,
                           friend,
-                          _loadingResults[index]
+                          _isLoadingResults[index]
                               ? CircularProgressIndicator()
                               : (user.uid == friend.uid ||
                                       _isFriendOrHasFriendRequest(friend))
@@ -203,7 +208,8 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                     loader: LoadingHeart(),
                     minimumChars: 1,
                     emptyWidget: Center(
-                      child: Text('No user starting with $searchWord was found'),
+                      child:
+                          Text('No user starting with $searchWord was found'),
                     ),
                     hintText: 'Add friends',
                     hintStyle: TextStyle(
@@ -240,10 +246,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                 width: MediaQuery.of(context).size.width,
                 child: Text(
                   'Sent friend requests',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey
-                  ),
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
               ),
             ),
@@ -281,11 +284,11 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                               itemBuilder: (context, index) {
                                 final friend =
                                     friendsProvider.sentFriendRequests[index];
-                                _loadingRequests.add(false);
+                                _isLoadingRequests.add(false);
                                 return friendsCard(
                                     context,
                                     friend,
-                                    _loadingRequests[index]
+                                    _isLoadingRequests[index]
                                         ? CircularProgressIndicator()
                                         : withdrawFriendRequestButton(
                                             friend.uid, user.uid, index),
