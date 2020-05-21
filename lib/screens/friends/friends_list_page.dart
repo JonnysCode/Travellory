@@ -19,54 +19,59 @@ class FriendListPage extends StatefulWidget {
 }
 
 class _FriendListPageState extends State<FriendListPage> {
-  final List<bool> _isLoadingRequests = [];
-  final List<bool> _isLoadingFriends = [];
+  final List<bool> _isLoadingRequest = [];
+  final List<bool> _isLoadingFriend = [];
 
   void _performSocialAction(String uidSender, String uidReceiver,
-      SocialActionType type, int index) async {
-    final List<bool> isLoading = _getLoadingList(type);
-    bool wasSuccessful;
-    String messageToDisplay;
+      SocialActionType socialActionType, int index) async {
+    // get loading tracking list according to social action type
+    final List<bool> isLoading = _getLoadingList(socialActionType);
 
+    // mark the corresponding widget in the list as loading
     setState(() {
       isLoading[index] = true;
     });
 
-    await FriendManagement.performSocialAction(uidSender, uidReceiver, type)
+    bool isSuccessful;
+    String messageToDisplay;
+
+    await FriendManagement.performSocialAction(
+            uidSender, uidReceiver, socialActionType)
         .then((value) async {
-      wasSuccessful = true;
-      messageToDisplay = _getMessageToDisplay(type, wasSuccessful);
-      _showSnackBar(messageToDisplay, wasSuccessful);
+      isSuccessful = true;
+      messageToDisplay = _getMessageToDisplay(socialActionType, isSuccessful);
+      _showSnackBar(messageToDisplay, isSuccessful);
 
       final FriendsProvider friendsProvider =
           Provider.of<FriendsProvider>(context, listen: false);
-      await friendsProvider.update(type);
+      await friendsProvider.update(socialActionType);
     }).catchError((error) {
-      wasSuccessful = false;
-      messageToDisplay = _getMessageToDisplay(type, wasSuccessful);
-      _showSnackBar(messageToDisplay, wasSuccessful);
+      isSuccessful = false;
+      messageToDisplay = _getMessageToDisplay(socialActionType, isSuccessful);
+      _showSnackBar(messageToDisplay, isSuccessful);
     });
 
+    // mark the corresponding widget in the list as not loading
     setState(() {
       isLoading[index] = false;
     });
   }
 
-  String _getMessageToDisplay(SocialActionType type, bool wasSuccessful) {
+  String _getMessageToDisplay(SocialActionType socialActionType, bool isSuccessful) {
     String messageToDisplay;
-    switch (type) {
+    switch (socialActionType) {
       case SocialActionType.acceptFriendRequest:
-        wasSuccessful
+        isSuccessful
             ? messageToDisplay = 'You got a new friend. Nice!'
             : messageToDisplay = 'Failed to accept friend request. Try again.';
         break;
       case SocialActionType.declineFriendRequest:
-        wasSuccessful
+        isSuccessful
             ? messageToDisplay = 'Declined friend request'
             : messageToDisplay = 'Failed to decline friend request. Try again.';
         break;
       case SocialActionType.removeFriend:
-        wasSuccessful
+        isSuccessful
             ? messageToDisplay = 'Too bad for them.'
             : messageToDisplay = 'Failed to remove friend. Try again.';
         break;
@@ -76,26 +81,26 @@ class _FriendListPageState extends State<FriendListPage> {
     return messageToDisplay;
   }
 
-  List<bool> _getLoadingList(SocialActionType type) {
-    switch (type) {
+  List<bool> _getLoadingList(SocialActionType socialActionType) {
+    switch (socialActionType) {
       case SocialActionType.declineFriendRequest:
       case SocialActionType.acceptFriendRequest:
-        return _isLoadingRequests;
+        return _isLoadingRequest;
       case SocialActionType.removeFriend:
-        return _isLoadingFriends;
+        return _isLoadingFriend;
       default:
         return null;
     }
   }
 
-  Widget _showSnackBar(String message, bool success) {
+  Widget _showSnackBar(String messageToDisplay, bool isSuccessful) {
     return SnackBar(
       content: Flushbar(
           flushbarStyle: FlushbarStyle.FLOATING,
-          title: success ? 'Success' : 'Error',
-          message: message,
+          title: isSuccessful ? 'Success' : 'Error',
+          message: messageToDisplay,
           backgroundColor:
-              success ? Theme.of(context).primaryColor : Colors.redAccent,
+              isSuccessful ? Theme.of(context).primaryColor : Colors.redAccent,
           margin: EdgeInsets.all(8),
           borderRadius: 12,
           duration: Duration(seconds: 3))
@@ -214,11 +219,11 @@ class _FriendListPageState extends State<FriendListPage> {
                               itemBuilder: (context, index) {
                                 final FriendsModel friend =
                                     friendsProvider.friendRequests[index];
-                                _isLoadingRequests.add(false);
+                                _isLoadingRequest.add(false);
                                 return friendsCard(
                                   context,
                                   friend,
-                                  _isLoadingRequests[index]
+                                  _isLoadingRequest[index]
                                       ? CircularProgressIndicator()
                                       : friendRequestButtons(
                                           friend.uid, user.uid, index),
@@ -272,11 +277,11 @@ class _FriendListPageState extends State<FriendListPage> {
                               itemCount: friendsProvider.friends.length,
                               itemBuilder: (context, index) {
                                 final friend = friendsProvider.friends[index];
-                                _isLoadingFriends.add(false);
+                                _isLoadingFriend.add(false);
                                 return friendsCard(
                                   context,
                                   friend,
-                                  _isLoadingFriends[index]
+                                  _isLoadingFriend[index]
                                       ? CircularProgressIndicator()
                                       : removeFriendButton(
                                           friend.uid, user.uid, index),
