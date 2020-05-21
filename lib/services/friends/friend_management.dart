@@ -34,12 +34,11 @@ class FriendManagement {
     return _generateFriendsListFromResult(result);
   }
 
-
   static Future<FriendsModel> getPublicUserInformation(String uid) async {
     final HttpsCallableResult result =
         await _callHttpsCallable(uid, null, 'user-getPublicUserInformation');
     final FriendsModel friend = FriendsModel(result.data['uid'],
-        result.data['displayName'], result.data['photoURL'], result.data['hometown']);
+        result.data['displayName'], result.data['photoURL'], result.data['homeCountry']);
     return friend;
   }
 

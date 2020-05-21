@@ -221,13 +221,13 @@ class _FriendListPageState extends State<FriendListPage> {
                                     friendsProvider.friendRequests[index];
                                 _isLoadingRequest.add(false);
                                 return friendsCard(
-                                  context,
-                                  friend,
-                                  _isLoadingRequest[index]
+                                  context: context,
+                                  friend: friend,
+                                  button: _isLoadingRequest[index]
                                       ? CircularProgressIndicator()
                                       : friendRequestButtons(
                                           friend.uid, user.uid, index),
-                                  10,
+                                  topPadding: 10,
                                 );
                               },
                             ),
@@ -265,31 +265,32 @@ class _FriendListPageState extends State<FriendListPage> {
                   friendsProvider.isFetchingFriends
                       ? LoadingHeart()
                       : friendsProvider.friends.isEmpty
-                          ? Text('You have no friends :(')
-                          : ListView.separated(
-                              padding: EdgeInsets.only(
-                                bottom: 30,
-                              ),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 12),
-                              itemCount: friendsProvider.friends.length,
-                              itemBuilder: (context, index) {
-                                final friend = friendsProvider.friends[index];
-                                _isLoadingFriend.add(false);
-                                return friendsCard(
-                                  context,
-                                  friend,
-                                  _isLoadingFriend[index]
-                                      ? CircularProgressIndicator()
-                                      : removeFriendButton(
-                                          friend.uid, user.uid, index),
-                                  10,
-                                );
-                              },
-                            ),
-            )),
+                      ? Text('You have no friends :(')
+                      : ListView.separated(
+                          padding: EdgeInsets.only(
+                            bottom: 30,
+                          ),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) =>
+                            const SizedBox(height: 12),
+                          itemCount: friendsProvider.friends.length,
+                          itemBuilder: (context, index) {
+                            final FriendsModel friend = friendsProvider.friends[index];
+                            _isLoadingFriend.add(false);
+                            return friendsCard(
+                              context: context,
+                              friend: friend,
+                              button: _isLoadingFriend[index]
+                                  ? CircularProgressIndicator()
+                                  : removeFriendButton(
+                                  friend.uid, user.uid, index),
+                              topPadding: 10,
+                            );
+                          },
+                      ),
+                )
+            ),
           ),
         ),
         SizedBox(height: 50),

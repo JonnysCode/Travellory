@@ -179,7 +179,6 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                   ),
                 ])),
             Expanded(
-              flex: 7,
               child: Padding(
                 padding: EdgeInsets.only(
                   left: 15,
@@ -194,16 +193,16 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                     onItemFound: (FriendsModel friend, int index) {
                       _isLoadingResult.add(false);
                       return friendsCard(
-                          context,
-                          friend,
-                          _isLoadingResult[index]
+                          context: context,
+                          friend: friend,
+                          button: _isLoadingResult[index]
                               ? CircularProgressIndicator()
                               : (user.uid == friend.uid ||
                                       _isFriendOrHasFriendRequest(friend))
                                   ? null
                                   : sendFriendRequestButton(
                                       user.uid, friend.uid, index),
-                          10);
+                          topPadding: 10);
                     },
                     loader: LoadingHeart(),
                     minimumChars: 1,
@@ -256,8 +255,8 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
               endIndent: 25,
               color: Colors.grey,
             ),
-            Expanded(
-              flex: 3,
+            Container(
+              constraints: BoxConstraints(minHeight: 50, maxHeight: 150),
               child: Padding(
                 key: Key('sent_friend_requests_list'),
                 padding: EdgeInsets.only(
@@ -286,13 +285,13 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                                     friendsProvider.sentFriendRequests[index];
                                 _isLoadingRequest.add(false);
                                 return friendsCard(
-                                    context,
-                                    friend,
-                                    _isLoadingRequest[index]
+                                    context: context,
+                                    friend: friend,
+                                    button: _isLoadingRequest[index]
                                         ? CircularProgressIndicator()
                                         : withdrawFriendRequestButton(
                                             friend.uid, user.uid, index),
-                                    10);
+                                    topPadding: 10);
                               },
                             ),
                 )),
