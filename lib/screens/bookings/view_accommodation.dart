@@ -9,7 +9,7 @@ import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
 class AccommodationView extends StatefulWidget {
-  static final route = '/view/accommodation';
+  static const route = '/view/accommodation';
 
   @override
   _AccommodationViewState createState() => _AccommodationViewState();
@@ -58,7 +58,7 @@ class _AccommodationViewState extends State<AccommodationView> {
         // this checks for hotel room type
         displayExtraField(accommodationModels[0].type, 'Hotel', FontAwesomeIcons.hotel, 'Room Type',
             accommodationModels[0].hotelRoomType, Theme.of(context).primaryColor),
-        displayCheckboxField('Breafast Included', accommodationModels[0].breakfast),
+        displayCheckboxField('Breafast Included', accommodationModels[0].breakfast ?? false),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),
         SectionTitle('Check-In Details'),
         Padding(padding: const EdgeInsets.only(top: 10, left: 15, right: 15)),

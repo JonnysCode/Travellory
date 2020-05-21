@@ -26,7 +26,7 @@ import 'package:travellory/widgets/buttons/submit_button.dart';
 
 
 class Accommodation extends StatefulWidget {
-  static final route = '/booking/accommodation';
+  static const route = '/booking/accommodation';
 
   @override
   AccommodationState createState() => AccommodationState();

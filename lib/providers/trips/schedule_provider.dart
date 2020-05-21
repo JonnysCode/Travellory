@@ -5,7 +5,10 @@ import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/utils/date_handler.dart';
 
-
+/// Creates a schedule for a trip based on its bookings.
+///
+/// Splits the bookings into different days and adds
+/// them to the schedule.
 class ScheduleProvider extends ChangeNotifier{
   ScheduleProvider(SingleTripProvider trip){
     _initDays(trip.tripModel);
