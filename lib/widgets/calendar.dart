@@ -13,17 +13,28 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  static const Color tripColor = Colors.orangeAccent;
+  static const List<Color> tripColor = [
+    Colors.orangeAccent,
+    Colors.deepPurple,
+    Colors.lime,
+    Colors.pinkAccent
+  ];
   final DateTime today = DateTime.now();
 
   CalendarController _calendarController;
 
   List<Meeting> _getDataSource(List<TripModel> trips) {
     final meetings = <Meeting>[];
-    for(final trip in trips){
-      final Meeting meeting = Meeting(trip.name, getDateTimeFrom(trip.startDate),
-          getDateTimeFrom(trip.endDate), tripColor, isAllDay: true);
+    int index = 0;
+    for (final trip in trips) {
+      final Meeting meeting = Meeting(
+          trip.name,
+          getDateTimeFrom(trip.startDate),
+          getDateTimeFrom(trip.endDate),
+          tripColor[index],
+          isAllDay: true);
       meetings.add(meeting);
+      index = (index + 1) % tripColor.length;
     }
 
     return meetings;
@@ -66,7 +77,7 @@ class _CalendarState extends State<Calendar> {
         Expanded(
           child: Container(
             key: Key('calendar_page'),
-            height: MediaQuery.of(context).size.height*0.4,
+            height: MediaQuery.of(context).size.height * 0.4,
             width: MediaQuery.of(context).size.width - 60,
             child: SfCalendar(
               key: Key('yearly_calendar'),
@@ -77,13 +88,15 @@ class _CalendarState extends State<Calendar> {
               todayHighlightColor: Colors.black54,
               initialDisplayDate: DateTime.utc(today.year, today.month, 1),
               dataSource: MeetingDataSource(_getDataSource(
-                  tripsProvider.trips.map((trip) => trip.tripModel).toList()
-              )),
+                  tripsProvider.trips.map((trip) => trip.tripModel).toList())),
               selectionDecoration: BoxDecoration(
                 color: Colors.black12,
                 shape: BoxShape.circle,
                 boxShadow: [
-                  BoxShadow(blurRadius: 2, color: Colors.black.withOpacity(.1), offset: Offset(0.0, 0.0))
+                  BoxShadow(
+                      blurRadius: 2,
+                      color: Colors.black.withOpacity(.1),
+                      offset: Offset(0.0, 0.0))
                 ],
               ),
               headerStyle: CalendarHeaderStyle(
@@ -93,8 +106,7 @@ class _CalendarState extends State<Calendar> {
                     fontFamily: 'FashionFetish',
                     fontSize: 24,
                     color: Colors.white,
-                    fontWeight: FontWeight.w600
-                ),
+                    fontWeight: FontWeight.w600),
               ),
               monthViewSettings: MonthViewSettings(
                 showAgenda: false,

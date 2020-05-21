@@ -8,13 +8,10 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
-        key: _scaffoldKey,
         backgroundColor: Theme.of(context).primaryColor,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
