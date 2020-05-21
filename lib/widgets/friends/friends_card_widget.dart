@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/achievements_model.dart';
 import 'package:travellory/models/friend_model.dart';
+import 'package:travellory/screens/friends/friends_profile.dart';
 import 'package:travellory/services/authentication/user_management.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'friends_profile_picture.dart';
@@ -12,7 +13,7 @@ Future<void> _openFriendsProfile(BuildContext context, FriendModel friend) async
   final List<Object> arguments = [];
   arguments.add(friend);
   arguments.add(friendsAchievements);
-  await Navigator.pushNamed(context, '/friends/friends_profile', arguments: arguments);
+  await Navigator.pushNamed(context, FriendsProfile.route, arguments: arguments);
 }
 
 @override
