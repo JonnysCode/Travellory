@@ -1,7 +1,7 @@
 class FriendModel {
   FriendModel(this.uid, this.username, this.photoURL, this.homeCountry);
 
-  FriendModel.fromJson(data)
+  FriendModel.fromData(data)
       : uid = data['uid'],
         username = data['displayName'],
         photoURL = data['photoURL'],
