@@ -1,6 +1,7 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/services/authentication/user_management.dart';
 import '../font_widgets.dart';
 import 'package:pedantic/pedantic.dart';
@@ -8,7 +9,7 @@ import 'package:pedantic/pedantic.dart';
 class ProfileHometown extends StatefulWidget {
   const ProfileHometown({Key key, this.user}) : super(key: key);
 
-  final user;
+  final UserModel user;
 
   @override
   _TextInputValueState createState() => _TextInputValueState();
@@ -32,7 +33,7 @@ class _TextInputValueState extends State<ProfileHometown> {
     });
   }
 
-  Future _fetchHometown() async {
+  Future _getHometown() async {
     await UserManagement.getHometown(widget.user.uid)
         .then((hometown) {
       if(mounted) {
@@ -45,14 +46,14 @@ class _TextInputValueState extends State<ProfileHometown> {
     });
   }
 
-  Widget _showSnackBar(String message, bool success) {
+  Widget _showSnackBar(String messageToDisplay, bool isSuccessful) {
     return SnackBar(
       content: Flushbar(
           flushbarStyle: FlushbarStyle.FLOATING,
-          title: success ? 'Success' : 'Error',
-          message: message,
+          title: isSuccessful ? 'Success' : 'Error',
+          message: messageToDisplay,
           backgroundColor:
-          success ? Theme.of(context).primaryColor : Colors.redAccent,
+          isSuccessful ? Theme.of(context).primaryColor : Colors.redAccent,
           margin: EdgeInsets.all(8),
           borderRadius: 12,
           duration: Duration(seconds: 3))
@@ -68,7 +69,7 @@ class _TextInputValueState extends State<ProfileHometown> {
 
   @override
   Widget build(BuildContext context) {
-    unawaited(_fetchHometown());
+    unawaited(_getHometown());
     return Column(
       children: <Widget>[
         Row(
