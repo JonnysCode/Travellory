@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingHeart extends StatelessWidget {
-  static final route = '/loadingHeart';
+  static const route = '/loadingHeart';
 
   @override
   Widget build(BuildContext context) {
