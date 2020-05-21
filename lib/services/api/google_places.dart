@@ -24,7 +24,7 @@ class GooglePlaces {
       context: context,
       apiKey: googleApiKey,
       //onError: onError,
-      mode: Mode.overlay,
+      mode: Mode.fullscreen,
       language: "en",
       /// for country
       components: country,
@@ -46,11 +46,9 @@ class GooglePlaces {
     return addr;
   }
 
-  static String getContinentFromCountryCode(String countryCode){
-    rootBundle.loadString('assets/g_map/continents.json').then((string) => json.decode(string))
-        .then((jsonData) {
-      print("Continent: ${jsonData[countryCode]}");
-    });
-
+  static Future<String> getContinentFromCountryCode(String countryCode) async {
+    String string = await rootBundle.loadString('assets/g_map/continents.json');
+    dynamic jsonData = json.decode(string);
+    return jsonData[countryCode];
   }
 }
