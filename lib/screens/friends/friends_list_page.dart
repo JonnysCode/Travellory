@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/friends_model.dart';
+import 'package:travellory/models/friend_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
@@ -217,7 +217,7 @@ class _FriendListPageState extends State<FriendListPage> {
                                   const SizedBox(height: 12),
                               itemCount: friendsProvider.friendRequests.length,
                               itemBuilder: (context, index) {
-                                final FriendsModel friend =
+                                final FriendModel friend =
                                     friendsProvider.friendRequests[index];
                                 _isLoadingRequest.add(false);
                                 return friendsCard(
@@ -276,7 +276,7 @@ class _FriendListPageState extends State<FriendListPage> {
                             const SizedBox(height: 12),
                           itemCount: friendsProvider.friends.length,
                           itemBuilder: (context, index) {
-                            final FriendsModel friend = friendsProvider.friends[index];
+                            final FriendModel friend = friendsProvider.friends[index];
                             _isLoadingFriend.add(false);
                             return friendsCard(
                               context: context,

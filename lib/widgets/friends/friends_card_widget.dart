@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/models/achievements_model.dart';
-import 'package:travellory/models/friends_model.dart';
+import 'package:travellory/models/friend_model.dart';
 import 'package:travellory/services/authentication/user_management.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'friends_profile_picture.dart';
 
-Future<void> _openFriendsProfile(BuildContext context, FriendsModel friend) async {
+Future<void> _openFriendsProfile(BuildContext context, FriendModel friend) async {
   final dynamic result = await UserManagement.getAchievements(friend.uid);
   final Achievements friendsAchievements = Achievements.fromData(result);
   final List<Object> arguments = [];
@@ -16,7 +16,7 @@ Future<void> _openFriendsProfile(BuildContext context, FriendsModel friend) asyn
 }
 
 @override
-Widget friendsCard({@required BuildContext context, @required FriendsModel friend,
+Widget friendsCard({@required BuildContext context, @required FriendModel friend,
   @required Widget button, @required double topPadding}) {
   const double cardSize = 70;
 

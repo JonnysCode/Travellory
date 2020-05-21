@@ -4,7 +4,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/friends_model.dart';
+import 'package:travellory/models/friend_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
@@ -80,7 +80,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     _showSnackBar(messageToDisplay, isSuccessful);
   }
 
-  bool _isFriendOrHasFriendRequest(FriendsModel friend) {
+  bool _isFriendOrHasFriendRequest(FriendModel friend) {
     final FriendsProvider friendsProvider =
         Provider.of<FriendsProvider>(context, listen: false);
 
@@ -143,7 +143,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     super.initState();
   }
 
-  Future<List<FriendsModel>> search(String search) async {
+  Future<List<FriendModel>> search(String search) async {
     setState(() {
       searchWord = search;
     });
@@ -190,7 +190,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                     onSearch: search,
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 10,
-                    onItemFound: (FriendsModel friend, int index) {
+                    onItemFound: (FriendModel friend, int index) {
                       _isLoadingResult.add(false);
                       return friendsCard(
                           context: context,
