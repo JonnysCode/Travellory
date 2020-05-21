@@ -38,7 +38,7 @@ class FriendManagement {
   static Future<FriendModel> getPublicUserInformation(String uid) async {
     final HttpsCallableResult result =
         await _callHttpsCallable(uid, null, 'user-getPublicUserInformation');
-    final FriendModel friend = FriendModel.fromJson(result.data);
+    final FriendModel friend = FriendModel.fromData(result.data);
     return friend;
   }
 
