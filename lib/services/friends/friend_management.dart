@@ -12,33 +12,33 @@ enum SocialActionType {
 class FriendManagement {
   static Future<HttpsCallableResult> performSocialAction(
       String uidSender, String uidReceiver, SocialActionType type) {
-    final functionName = _getFunctionName(type);
+    final String functionName = _getFunctionName(type);
 
     return _callHttpsCallable(uidSender, uidReceiver, functionName);
   }
 
   static Future<List<FriendsModel>> getFriends(String uid) async {
-    final result = await _callHttpsCallable(uid, null, 'friends-getFriends');
+    final HttpsCallableResult result = await _callHttpsCallable(uid, null, 'friends-getFriends');
     return _generateFriendsListFromResult(result);
   }
 
   static Future<List<FriendsModel>> getFriendRequests(String uid) async {
-    final result =
+    final HttpsCallableResult result =
         await _callHttpsCallable(uid, null, 'friends-getFriendRequests');
     return _generateFriendRequestListFromResult(result);
   }
 
   static Future<List<FriendsModel>> getSentFriendRequests(String uid) async {
-    final result =
+    final HttpsCallableResult result =
     await _callHttpsCallable(uid, null, 'friends-getSentFriendRequests');
     return _generateFriendsListFromResult(result);
   }
 
 
   static Future<FriendsModel> getPublicUserInformation(String uid) async {
-    final result =
+    final HttpsCallableResult result =
         await _callHttpsCallable(uid, null, 'user-getPublicUserInformation');
-    final friend = FriendsModel(result.data['uid'],
+    final FriendsModel friend = FriendsModel(result.data['uid'],
         result.data['displayName'], result.data['photoURL'], result.data['hometown']);
     return friend;
   }
@@ -47,18 +47,18 @@ class FriendManagement {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'user-searchByUsername',
     );
-    final result = await callable.call({'displayName': displayName});
+    final HttpsCallableResult result = await callable.call({'displayName': displayName});
     return _generateFriendsListFromResult(result);
   }
 
   static Future<bool> areFriends(String uidSender, String uidReceiver) async {
-    final result =
+    final HttpsCallableResult result =
     await _callHttpsCallable(uidSender, uidReceiver, 'friends-areFriends');
     return result.data['areFriends'];
   }
 
   static Future<bool> friendRequestExists(String uidSender, String uidReceiver) async {
-    final result =
+    final HttpsCallableResult result =
     await _callHttpsCallable(uidSender, uidReceiver, 'friends-friendRequestExists');
     return result.data['friendRequestExists'];
   }
@@ -67,8 +67,8 @@ class FriendManagement {
       HttpsCallableResult result) async {
     final List<FriendsModel> friendsList = [];
     if(result.data != null) {
-      for (final uid in result.data) {
-        final friend = await getPublicUserInformation(uid);
+      for (final String uid in result.data) {
+        final FriendsModel friend = await getPublicUserInformation(uid);
         friendsList.add(friend);
       }
     }
@@ -79,8 +79,8 @@ class FriendManagement {
       HttpsCallableResult result) async {
     final List<FriendsModel> friendsList = [];
     if(result.data != null) {
-      for (final uid in result.data.keys) {
-        final friend = await getPublicUserInformation(uid);
+      for (final String uid in result.data.keys) {
+        final FriendsModel friend = await getPublicUserInformation(uid);
         friendsList.add(friend);
       }
     }

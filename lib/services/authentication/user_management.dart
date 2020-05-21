@@ -13,7 +13,8 @@ class UserManagement {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'user-isUsernameAvailable',
     );
-    final dynamic result = await callable.call({'displayName': username});
+    final HttpsCallableResult result =
+        await callable.call({'displayName': username});
     return result.data['isAvailable'];
   }
 
@@ -28,7 +29,7 @@ class UserManagement {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'user-getPublicUserInformation',
     );
-    final result = await callable.call({'uid': uid});
+    final HttpsCallableResult result = await callable.call({'uid': uid});
     return result.data['hometown'];
   }
 }

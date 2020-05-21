@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:travellory/models/friends_model.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/services/friends/friend_management.dart';
@@ -17,72 +19,70 @@ class FriendListPage extends StatefulWidget {
 }
 
 class _FriendListPageState extends State<FriendListPage> {
-  final _loadingRequests = [];
-  final _loadingFriends = [];
+  final List<bool> _isLoadingRequests = [];
+  final List<bool> _isLoadingFriends = [];
 
   void _performSocialAction(String uidSender, String uidReceiver,
       SocialActionType type, int index) async {
-    final loading = _getLoadingList(type);
-    bool success;
-    String message;
+    final List<bool> isLoading = _getLoadingList(type);
+    bool wasSuccessful;
+    String messageToDisplay;
 
     setState(() {
-      loading[index] = true;
+      isLoading[index] = true;
     });
 
     await FriendManagement.performSocialAction(uidSender, uidReceiver, type)
         .then((value) async {
-      success = true;
-      message = _getMessage(type, success);
-      _showSnackBar(message, success);
+      wasSuccessful = true;
+      messageToDisplay = _getMessageToDisplay(type, wasSuccessful);
+      _showSnackBar(messageToDisplay, wasSuccessful);
 
       final FriendsProvider friendsProvider =
           Provider.of<FriendsProvider>(context, listen: false);
       await friendsProvider.update(type);
     }).catchError((error) {
-      success = false;
-      message = _getMessage(type, success);
-      _showSnackBar(message, success);
+      wasSuccessful = false;
+      messageToDisplay = _getMessageToDisplay(type, wasSuccessful);
+      _showSnackBar(messageToDisplay, wasSuccessful);
     });
 
     setState(() {
-      loading[index] = false;
+      isLoading[index] = false;
     });
   }
 
-  String _getMessage(SocialActionType type, bool success) {
-    String message;
+  String _getMessageToDisplay(SocialActionType type, bool wasSuccessful) {
+    String messageToDisplay;
     switch (type) {
       case SocialActionType.acceptFriendRequest:
-        success
-            ? message = 'You got a new friend. Nice!'
-            : message = 'Failed to accept friend request. Try again.';
+        wasSuccessful
+            ? messageToDisplay = 'You got a new friend. Nice!'
+            : messageToDisplay = 'Failed to accept friend request. Try again.';
         break;
       case SocialActionType.declineFriendRequest:
-        success
-            ? message = 'Declined friend request'
-            : message = 'Failed to decline friend request. Try again.';
+        wasSuccessful
+            ? messageToDisplay = 'Declined friend request'
+            : messageToDisplay = 'Failed to decline friend request. Try again.';
         break;
       case SocialActionType.removeFriend:
-        success
-            ? message = 'Too bad for them.'
-            : message = 'Failed to remove friend. Try again.';
+        wasSuccessful
+            ? messageToDisplay = 'Too bad for them.'
+            : messageToDisplay = 'Failed to remove friend. Try again.';
         break;
       default:
-        message = '';
+        messageToDisplay = '';
     }
-    return message;
+    return messageToDisplay;
   }
 
-  List _getLoadingList(SocialActionType type) {
+  List<bool> _getLoadingList(SocialActionType type) {
     switch (type) {
       case SocialActionType.declineFriendRequest:
       case SocialActionType.acceptFriendRequest:
-        return _loadingRequests;
-        break;
+        return _isLoadingRequests;
       case SocialActionType.removeFriend:
-        return _loadingFriends;
-        break;
+        return _isLoadingFriends;
       default:
         return null;
     }
@@ -137,7 +137,7 @@ class _FriendListPageState extends State<FriendListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<FriendsProvider>(context).user;
+    final UserModel user = Provider.of<FriendsProvider>(context).user;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -191,17 +191,17 @@ class _FriendListPageState extends State<FriendListPage> {
                 left: 15,
                 right: 20,
                 bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: Scrollbar(
-                    child: Consumer<FriendsProvider>(
-                      builder: (_, friendsProvider, __) => friendsProvider.isFetchingFriendRequests
-                          ? LoadingHeart()
-                          : friendsProvider.friendRequests.isEmpty
+            child: Scrollbar(
+                child: Consumer<FriendsProvider>(
+              builder: (_, friendsProvider, __) =>
+                  friendsProvider.isFetchingFriendRequests
+                      ? LoadingHeart()
+                      : friendsProvider.friendRequests.isEmpty
                           ? Padding(
                               padding: EdgeInsets.only(
                                 top: 5,
                               ),
-                              child: Text('No pending friend requests')
-                            )
+                              child: Text('No pending friend requests'))
                           : ListView.separated(
                               padding: EdgeInsets.only(
                                 bottom: 30,
@@ -212,13 +212,13 @@ class _FriendListPageState extends State<FriendListPage> {
                                   const SizedBox(height: 12),
                               itemCount: friendsProvider.friendRequests.length,
                               itemBuilder: (context, index) {
-                                final friend =
+                                final FriendsModel friend =
                                     friendsProvider.friendRequests[index];
-                                _loadingRequests.add(false);
+                                _isLoadingRequests.add(false);
                                 return friendsCard(
                                   context,
                                   friend,
-                                  _loadingRequests[index]
+                                  _isLoadingRequests[index]
                                       ? CircularProgressIndicator()
                                       : friendRequestButtons(
                                           friend.uid, user.uid, index),
@@ -260,32 +260,31 @@ class _FriendListPageState extends State<FriendListPage> {
                   friendsProvider.isFetchingFriends
                       ? LoadingHeart()
                       : friendsProvider.friends.isEmpty
-                      ? Text('You have no friends :(')
-                      : ListView.separated(
-                          padding: EdgeInsets.only(
-                            bottom: 30,
-                          ),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) =>
-                            const SizedBox(height: 12),
-                          itemCount: friendsProvider.friends.length,
-                          itemBuilder: (context, index) {
-                            final friend = friendsProvider.friends[index];
-                            _loadingFriends.add(false);
-                            return friendsCard(
-                              context,
-                              friend,
-                              _loadingFriends[index]
-                                  ? CircularProgressIndicator()
-                                  : removeFriendButton(
-                                  friend.uid, user.uid, index),
-                              10,
-                            );
-                          },
-                      ),
-                )
-            ),
+                          ? Text('You have no friends :(')
+                          : ListView.separated(
+                              padding: EdgeInsets.only(
+                                bottom: 30,
+                              ),
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 12),
+                              itemCount: friendsProvider.friends.length,
+                              itemBuilder: (context, index) {
+                                final friend = friendsProvider.friends[index];
+                                _isLoadingFriends.add(false);
+                                return friendsCard(
+                                  context,
+                                  friend,
+                                  _isLoadingFriends[index]
+                                      ? CircularProgressIndicator()
+                                      : removeFriendButton(
+                                          friend.uid, user.uid, index),
+                                  10,
+                                );
+                              },
+                            ),
+            )),
           ),
         ),
         SizedBox(height: 50),
