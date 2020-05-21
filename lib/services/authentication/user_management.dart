@@ -38,7 +38,6 @@ class UserManagement {
       functionName: 'user-getAchievements',
     );
     final dynamic result = await callable.call({'userUID': userUID});
-    print("achievements: "+result.data.toString());
     return result.data;
   }
 }
