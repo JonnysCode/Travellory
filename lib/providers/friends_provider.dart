@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:travellory/models/achievements_model.dart';
-import 'package:travellory/models/friends_model.dart';
+import 'package:travellory/models/friend_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:travellory/services/authentication/user_management.dart';
@@ -10,9 +10,9 @@ import 'package:travellory/utils/logger.dart';
 
 class FriendsProvider extends ChangeNotifier{
   FriendsProvider(){
-    _friends = <FriendsModel>[];
-    _friendRequests = <FriendsModel>[];
-    _sentFriendRequests = <FriendsModel>[];
+    _friends = <FriendModel>[];
+    _friendRequests = <FriendModel>[];
+    _sentFriendRequests = <FriendModel>[];
   }
 
   final log = getLogger('FriendsProvider');
@@ -22,15 +22,15 @@ class FriendsProvider extends ChangeNotifier{
   bool isFetchingSentFriendRequests = false;
   bool isFetchingFriendsAchievements = false;
 
-  List<FriendsModel> _friends;
-  List<FriendsModel> _friendRequests;
-  List<FriendsModel> _sentFriendRequests;
+  List<FriendModel> _friends;
+  List<FriendModel> _friendRequests;
+  List<FriendModel> _sentFriendRequests;
   Achievements _friendsAchievements;
   UserModel _user;
 
-  List<FriendsModel> get friends => _friends;
-  List<FriendsModel> get friendRequests => _friendRequests;
-  List<FriendsModel> get sentFriendRequests => _sentFriendRequests;
+  List<FriendModel> get friends => _friends;
+  List<FriendModel> get friendRequests => _friendRequests;
+  List<FriendModel> get sentFriendRequests => _sentFriendRequests;
   Achievements get friendsAchievements => _friendsAchievements;
   UserModel get user => _user;
 
