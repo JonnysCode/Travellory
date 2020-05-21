@@ -17,7 +17,7 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:travellory/widgets/buttons/submit_button.dart';
 
 class CreateTrip extends StatefulWidget {
-  static final route = '/createtrip';
+  static const route = '/createtrip';
 
   @override
   _CreateTripState createState() => _CreateTripState();
@@ -145,12 +145,9 @@ class _CreateTripState extends State<CreateTrip> {
                           optional: false,
                           controller: locationController,
                           onTap: (locationController) async {
-                            final PlacesDetailsResponse detail =
-                                await GooglePlaces.openGooglePlacesSearch(context);
-                            final AddressComponent country =
-                                GooglePlaces.getCountryAddressComponent(detail);
-                            final String continent =
-                                GooglePlaces.getContinentFromCountryCode(country.shortName);
+                            final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
+                            final AddressComponent country = GooglePlaces.getCountryAddressComponent(detail);
+                            final String continent = await GooglePlaces.getContinentFromCountryCode(country.shortName);
 
                             locationController.text = detail.result.formattedAddress;
                             _tripModel.destination = detail.result.formattedAddress;
@@ -179,7 +176,7 @@ class _CreateTripState extends State<CreateTrip> {
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                         child: ImageSelector(
                           images: _images,
-                          initialValue: _tripModel.imageNr,
+                          initialValue: _tripModel.imageNr-1,
                           onChanged: (value) => _tripModel.imageNr = value+1,
                         ),
                       ),

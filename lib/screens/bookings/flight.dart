@@ -18,7 +18,7 @@ import 'package:travellory/widgets/trip/trip_header.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
 
 class Flight extends StatefulWidget {
-  static final route = '/booking/flight';
+  static const route = '/booking/flight';
 
   @override
   FlightState createState() => FlightState();
