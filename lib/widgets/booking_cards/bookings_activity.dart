@@ -10,6 +10,16 @@ class ActivityBookings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String startDisplayTime = activity.startTime;
+    String endDisplayTime = activity.endTime;
+
+    if (activity.startTime.isEmpty) {
+      startDisplayTime = '?:??';
+    }
+    if (activity.endTime.isEmpty) {
+      endDisplayTime = '?:??';
+    }
+
     return Row(
       key: Key('activityBookings'),
       children: <Widget>[
@@ -64,7 +74,7 @@ class ActivityBookings extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  '${activity.startTime}',
+                  startDisplayTime,
                   style: TextStyle(
                     color: Colors.black38,
                   ),
@@ -76,7 +86,7 @@ class ActivityBookings extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${activity.endTime}',
+                  endDisplayTime,
                   style: TextStyle(
                     color: Colors.black38,
                   ),
