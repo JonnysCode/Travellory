@@ -21,7 +21,7 @@ class FriendManagement {
 
   Future<HttpsCallableResult> performSocialAction(
       String uidSender, String uidReceiver, SocialActionType type) {
-    final String functionName = _getFunctionName(type);
+    final String functionName = getFunctionName(type);
 
     return _callHttpsCallable(uidSender, uidReceiver, functionName);
   }
@@ -97,7 +97,7 @@ class FriendManagement {
     }
   }
 
-  String _getFunctionName(SocialActionType type) {
+  String getFunctionName(SocialActionType type) {
     switch (type) {
       case SocialActionType.sendFriendRequest:
         return 'friends-sendFriendRequest';
