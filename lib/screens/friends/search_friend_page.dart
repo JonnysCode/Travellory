@@ -33,7 +33,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       _isLoadingResult[index] = true;
     });
 
-    await FriendManagement.performSocialAction(
+    await FriendManagement().performSocialAction(
             uidSender, uidReceiver, SocialActionType.sendFriendRequest)
         .then((value) async {
       messageToDisplay = "Friend request sent";
@@ -61,7 +61,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       _isLoadingRequest[index] = true;
     });
 
-    await FriendManagement.performSocialAction(
+    await FriendManagement().performSocialAction(
             uidReceiver, uidSender, SocialActionType.declineFriendRequest)
         .then((value) async {
       messageToDisplay = "Friend request withdrawn";
@@ -148,7 +148,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       searchWord = search;
     });
 
-    return FriendManagement.searchByUsername(search);
+    return FriendManagement().searchByUsername(search);
   }
 
   @override
