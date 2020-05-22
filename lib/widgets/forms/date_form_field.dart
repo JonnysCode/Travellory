@@ -8,11 +8,13 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
+import 'package:travellory/utils/trip_date_validity.dart';
 
 class DateFormField extends StatefulWidget {
   const DateFormField(
       {Key key,
       this.icon,
+      this.isNewTrip = true,
       this.initialValue,
       this.labelText,
       this.optional = false,
@@ -23,11 +25,11 @@ class DateFormField extends StatefulWidget {
       this.listenerKey,
       this.tripModel,
       this.model,
-      this.secondListenerKey,
       this.dateValidationMessage})
       : super(key: key);
 
   final Icon icon;
+  final bool isNewTrip;
   final String initialValue;
   final String labelText;
   final bool optional;
@@ -36,13 +38,14 @@ class DateFormField extends StatefulWidget {
   final void Function(String) chosenDateString;
   final GlobalKey<DateFormFieldState> beforeDateKey;
   final GlobalKey<DateFormFieldState> listenerKey;
-  final GlobalKey<DateFormFieldState> secondListenerKey;
   final TripModel tripModel;
   final Model model;
   final String dateValidationMessage;
 
   final String validatorText = 'Please enter the required information';
   final String dateInTripValidationMessage = 'The chosen date is not in trip date range';
+  final String tripEditDateValidationFailedMessage =
+      'Trip date cannot start before / end after a booking date';
 
   @override
   DateFormFieldState createState() => DateFormFieldState();
@@ -124,19 +127,6 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
         controller.text = DateFormat("dd-MM-yyyy").format(selectedDate);
         if (widget.chosenDate != null) widget.chosenDate(selectedDate);
         if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
-        if (widget.secondListenerKey != null) {
-          widget.secondListenerKey.currentState.calculateNights(selectedListenerDate, selectedDate);
-        }
-      });
-    }
-  }
-
-  void calculateNights(DateTime firstDate, DateTime secondDate) {
-    if (widget.initialValue != null) {
-      setState(() {
-        final Duration calculatedDays = firstDate.difference(secondDate);
-        controller.text = calculatedDays.inDays.toString();
-        if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
       });
     }
   }
@@ -180,6 +170,11 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
             controller: controller,
             validator: (value) {
               if (widget.optional) return null;
+              if (!widget.isNewTrip) {
+                if(!tripDateIsValid(value, widget.labelText, context)) {
+                  return widget.tripEditDateValidationFailedMessage;
+                }
+              }
               if (value.isEmpty) {
                 return widget.validatorText;
               } else if (!pickedDateInTripRange(selectedDate)) {
