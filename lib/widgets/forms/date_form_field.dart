@@ -25,7 +25,6 @@ class DateFormField extends StatefulWidget {
       this.listenerKey,
       this.tripModel,
       this.model,
-      this.secondListenerKey,
       this.dateValidationMessage})
       : super(key: key);
 
@@ -39,7 +38,6 @@ class DateFormField extends StatefulWidget {
   final void Function(String) chosenDateString;
   final GlobalKey<DateFormFieldState> beforeDateKey;
   final GlobalKey<DateFormFieldState> listenerKey;
-  final GlobalKey<DateFormFieldState> secondListenerKey;
   final TripModel tripModel;
   final Model model;
   final String dateValidationMessage;
@@ -128,19 +126,6 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
         selectedDate = selectedListenerDate.add(Duration(days: 1));
         controller.text = DateFormat("dd-MM-yyyy").format(selectedDate);
         if (widget.chosenDate != null) widget.chosenDate(selectedDate);
-        if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
-        if (widget.secondListenerKey != null) {
-          widget.secondListenerKey.currentState.calculateNights(selectedListenerDate, selectedDate);
-        }
-      });
-    }
-  }
-
-  void calculateNights(DateTime firstDate, DateTime secondDate) {
-    if (widget.initialValue != null) {
-      setState(() {
-        final Duration calculatedDays = firstDate.difference(secondDate);
-        controller.text = calculatedDays.inDays.toString();
         if (widget.chosenDateString != null) widget.chosenDateString(controller.text);
       });
     }

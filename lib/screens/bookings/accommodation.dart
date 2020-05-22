@@ -39,7 +39,6 @@ class AccommodationState<T extends Accommodation> extends State<T> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final GlobalKey<DateFormFieldState> _checkinDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final GlobalKey<DateFormFieldState> _checkoutDateFormFieldKey = GlobalKey<DateFormFieldState>();
-  final GlobalKey<DateFormFieldState> _nightsFormFieldKey = GlobalKey<DateFormFieldState>();
 
   bool validateForm() {
     return accommodationFormKey.currentState.validate();
@@ -224,7 +223,6 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         initialValue: _accommodationModel.checkinDate,
         key: _checkinDateFormFieldKey,
         listenerKey: _checkoutDateFormFieldKey,
-        secondListenerKey: _nightsFormFieldKey,
         labelText: 'Check-In Date *',
         icon: Icon(FontAwesomeIcons.calendarAlt),
         optional: false,
