@@ -14,7 +14,7 @@ class DateFormField extends StatefulWidget {
   const DateFormField(
       {Key key,
       this.icon,
-      this.isNewTrip,
+      this.isNewTrip = true,
       this.initialValue,
       this.labelText,
       this.optional = false,
