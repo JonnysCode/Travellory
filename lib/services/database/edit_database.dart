@@ -1,9 +1,11 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
+import 'package:travellory/widgets/forms/calculate_nights.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
 import '../../widgets/bookings/edit.dart';
 
@@ -55,6 +57,10 @@ void Function() onEditBooking(
 
   return () async {
     showLoadingDialog(context);
+    if (model is AccommodationModel) {
+      model = calculateNightsForAccommodation(model);
+    }
+
     final bool edited = await singleTripProvider.editBooking(model, functionName);
     Navigator.pop(context);
     if (edited) {
