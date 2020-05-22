@@ -6,6 +6,11 @@ import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/schedule_entry.dart';
+import 'package:travellory/screens/bookings/view_accommodation.dart';
+import 'package:travellory/screens/bookings/view_activity.dart';
+import 'package:travellory/screens/bookings/view_flight.dart';
+import 'package:travellory/screens/bookings/view_public_transport.dart';
+import 'package:travellory/screens/bookings/view_rental_car.dart';
 import 'package:travellory/widgets/trip/schedule/accommodation_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/activity_schedule.dart';
 import 'package:travellory/widgets/trip/schedule/flight_schedule.dart';
@@ -16,24 +21,27 @@ class ScheduleEntryCard extends StatelessWidget {
   const ScheduleEntryCard({
     Key key,
     @required this.scheduleEntry,
-    this.onTap,
   }) : super(key: key);
 
   final ScheduleEntry scheduleEntry;
-  final Function onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       key: Key('schedule_entry_card'),
-      onTap: onTap,
+      onTap: () => Navigator.pushNamed(
+          context, getRouteAccordingTo(scheduleEntry),
+          arguments: scheduleEntry.booking),
       child: Container(
         padding: const EdgeInsets.all(6.0),
         decoration: BoxDecoration(
           color: getColorAccordingTo(scheduleEntry),
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
-            BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(.2), offset: Offset(0.0, 6.0))
+            BoxShadow(
+                blurRadius: 6,
+                color: Colors.black.withOpacity(.2),
+                offset: Offset(0.0, 6.0))
           ],
         ),
         child: getScheduleAccordingTo(scheduleEntry),
@@ -78,4 +86,23 @@ Color getColorAccordingTo(ScheduleEntry scheduleEntry) {
     color = Colors.grey;
   }
   return color;
+}
+
+String getRouteAccordingTo(ScheduleEntry scheduleEntry) {
+  final Model model = scheduleEntry.booking;
+  String route;
+  if (model is FlightModel) {
+    route = FlightView.route;
+  } else if (model is RentalCarModel) {
+    route = RentalCarView.route;
+  } else if (model is AccommodationModel) {
+    route = AccommodationView.route;
+  } else if (model is PublicTransportModel) {
+    route = PublicTransportView.route;
+  } else if (model is ActivityModel) {
+    route = ActivityView.route;
+  } else {
+    route = '';
+  }
+  return route;
 }

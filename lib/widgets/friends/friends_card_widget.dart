@@ -1,12 +1,23 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travellory/models/achievements_model.dart';
 import 'package:travellory/models/friends_model.dart';
+import 'package:travellory/services/authentication/user_management.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'friends_profile_picture.dart';
+
+Future<void> _openFriendsProfile(BuildContext context, FriendsModel friend) async {
+  final dynamic result = await UserManagement.getAchievements(friend.uid);
+  final Achievements friendsAchievements = Achievements.fromData(result);
+  final List<Object> arguments = [];
+  arguments.add(friend);
+  arguments.add(friendsAchievements);
+  await Navigator.pushNamed(context, '/friends/friends_profile', arguments: arguments);
+}
 
 @override
-Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
-    double topPadding) {
+Widget friendsCard({@required BuildContext context, @required FriendsModel friend,
+  @required Widget button, @required double topPadding}) {
   const double cardSize = 70;
 
   return Container(
@@ -17,8 +28,7 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
           left: 20,
           right: 0,
           child: GestureDetector(
-            // TODO(fluetfab): link to friends profile
-            //  onTap: () => _openFriendsProfile(),
+              onTap: () => _openFriendsProfile(context, friend),
             child: Container(
               height: cardSize,
               decoration: BoxDecoration(
@@ -48,15 +58,25 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
                               size: 14,
                               color: Theme.of(context).primaryColor,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 6, left: 3),
-                              child: FashionFetishText(
-                                text: friend.hometown == '' ? 'N/A' : friend.hometown,
-                                size: 13.0,
-                                fontWeight: FashionFontWeight.heavy,
-                                color: Colors.black54,
-                              ),
-                            ),
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 6, left: 3),
+                                child: Text(
+                                  friend.homeCountry == '' ? 'N/A' : friend.homeCountry,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: false,
+                                  style: TextStyle(
+                                    height: 1.1,
+                                    fontSize: 13,
+                                    fontFamily: 'FashionFetish',
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.w900,
+                                    letterSpacing: -1,
+                                  ),
+                                ),
+                              )
+                            )
                           ],
                         ),
                       ],
@@ -74,61 +94,10 @@ Widget friendsCard(BuildContext context, FriendsModel friend, Widget button,
         Align(
             alignment: Alignment.centerLeft,
             child: friend.photoURL != null
-                ? profilePicture(friend.photoURL, cardSize)
-                : standardPicture(cardSize)
+                ? profilePicture(friend.photoURL, cardSize: cardSize)
+                : standardPicture(cardSize: cardSize)
         ),
       ],
-    ),
-  );
-}
-
-Widget profilePicture(String photoURL, double cardSize) {
-  return Container(
-      height: cardSize,
-      width: cardSize,
-      child: CachedNetworkImage(
-        /// will check local cache first and download from firebase if necessary
-        imageUrl: photoURL,
-        imageBuilder: (context, imageProvider) => Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(40),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  blurRadius: 6,
-                  color: Colors.black.withOpacity(.3),
-                  offset: Offset(3.0, 3.0))
-            ],
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.fitWidth,
-              alignment: Alignment.bottomCenter,
-            ),
-            border: Border.all(color: Theme.of(context).primaryColor, width: 2.0),
-          ),
-        ),
-        placeholder: (context, url) => CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor)),
-        errorWidget: (context, url, error) =>  standardPicture(cardSize),
-      ));
-}
-
-Widget standardPicture(double cardSize) {
-  return Container(
-    height: cardSize,
-    width: cardSize,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(40),
-      boxShadow: <BoxShadow>[
-        BoxShadow(
-            blurRadius: 6,
-            color: Colors.black.withOpacity(.3),
-            offset: Offset(3.0, 3.0))
-      ],
-      image: DecorationImage(
-        image: AssetImage("assets/images/login/beach.png"),
-        fit: BoxFit.fitWidth,
-        alignment: Alignment.bottomCenter,
-      ),
     ),
   );
 }

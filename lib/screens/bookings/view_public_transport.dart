@@ -9,7 +9,7 @@ import 'package:travellory/widgets/forms/checkbox_form_field.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
 class PublicTransportView extends StatefulWidget {
-  static final route = '/view/publictransport';
+  static const route = '/view/publictransport';
 
   @override
   _PublicTransportViewState createState() => _PublicTransportViewState();
