@@ -18,7 +18,7 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _RegisterState extends State<ChangePassword> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final String alertText = "You've successfully changed your password.";
 
   final TextEditingController _oldPasswordController = TextEditingController();
@@ -37,7 +37,7 @@ class _RegisterState extends State<ChangePassword> {
         _showSnackBar();
       }).catchError((error) {
         setState(
-                () => _changePwError = 'Password could not be changed. Try again.');
+            () => _changePwError = 'Password could not be changed. Try again.');
         Navigator.pop(context);
       });
     }
@@ -63,8 +63,8 @@ class _RegisterState extends State<ChangePassword> {
           backgroundColor: Theme.of(context).primaryColor,
           margin: EdgeInsets.all(8),
           borderRadius: 12,
-          duration: Duration(seconds: 3)
-      )..show(context),
+          duration: Duration(seconds: 3))
+        ..show(context),
     );
   }
 
@@ -89,9 +89,7 @@ class _RegisterState extends State<ChangePassword> {
                 'Please first enter the old password',
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontSize: 16
-                ),
+                style: TextStyle(fontSize: 16),
               ),
             ),
             Form(
@@ -108,8 +106,7 @@ class _RegisterState extends State<ChangePassword> {
                         null,
                         ValidatorType.password,
                         true,
-                        _reauthError
-                    ),
+                        _reauthError),
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 20),
@@ -121,16 +118,13 @@ class _RegisterState extends State<ChangePassword> {
                         null,
                         ValidatorType.password,
                         true,
-                        _changePwError
-                    ),
+                        _changePwError),
                   ),
                   Padding(
                     padding: EdgeInsets.only(
                         left: 20,
                         right: 20,
-                        bottom: MediaQuery.of(context)
-                            .viewInsets.bottom
-                    ),
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Container(
                       height: 50,
                       width: MediaQuery.of(context).size.width,
@@ -140,8 +134,7 @@ class _RegisterState extends State<ChangePassword> {
                           Theme.of(context).primaryColor,
                           Theme.of(context).primaryColor,
                           Colors.white,
-                          _validateAndChangePW
-                      ),
+                          _validateAndChangePW),
                     ),
                   ),
                 ],

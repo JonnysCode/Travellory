@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/models/achievements_model.dart';
-import 'package:travellory/models/friends_model.dart';
+import 'package:travellory/models/friend_model.dart';
 import 'package:travellory/widgets/achievements_widget.dart';
 import '../../widgets/font_widgets.dart';
 import '../../widgets/friends/friends_profile_header.dart';
@@ -20,7 +20,7 @@ class _FriendsProfileState extends State<FriendsProfile> {
   @override
   Widget build(BuildContext context) {
     final List<Object> arguments = ModalRoute.of(context).settings.arguments;
-    final FriendsModel friend = arguments[0];
+    final FriendModel friend = arguments[0];
     final Achievements friendAchievements = arguments[1];
 
     final  List<String> achievements = <String>[

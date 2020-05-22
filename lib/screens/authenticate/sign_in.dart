@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
 import 'package:travellory/services/authentication/auth.dart';
 import 'package:travellory/shared/loading_logo.dart';
@@ -17,7 +18,7 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -35,8 +36,7 @@ class _SignInState extends State<SignIn> {
       }).catchError((e) {
         Navigator.pop(context);
         setState(() {
-          _error =
-              e.message ?? 'Something went wrong. Try again';
+          _error = e.message ?? 'Something went wrong. Try again';
         });
       });
     }
@@ -44,7 +44,7 @@ class _SignInState extends State<SignIn> {
 
   Future _signIn() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    final user = await _auth
+    final UserModel user = await _auth
         .signInWithEmailAndPassword(
             _emailController.text, _passwordController.text)
         .catchError((e) {
@@ -108,8 +108,7 @@ class _SignInState extends State<SignIn> {
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding:
-                        EdgeInsets.only(bottom: 10, top: 40),
+                    padding: EdgeInsets.only(bottom: 10, top: 40),
                     child: inputAuthentication(
                         Icon(Icons.email),
                         "EMAIL",
@@ -136,13 +135,10 @@ class _SignInState extends State<SignIn> {
                     padding: EdgeInsets.only(
                         left: 20,
                         right: 20,
-                        bottom: MediaQuery.of(context)
-                            .viewInsets
-                            .bottom),
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Container(
                       height: 50,
-                      width:
-                          MediaQuery.of(context).size.width,
+                      width: MediaQuery.of(context).size.width,
                       child: filledButton(
                           "LOGIN",
                           Colors.white,
@@ -160,8 +156,7 @@ class _SignInState extends State<SignIn> {
             ),
             Text(
               _error,
-              style:
-                  TextStyle(color: Colors.red, fontSize: 14.0),
+              style: TextStyle(color: Colors.red, fontSize: 14.0),
             )
           ],
         ),
