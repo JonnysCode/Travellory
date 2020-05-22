@@ -58,7 +58,9 @@ void Function() onDeleteBooking(Model model, BuildContext context, String functi
       "You've just deleted this entry. Your booking overview has been updated. ";
 
   return () async {
+    showLoadingDialog(context);
     final bool deleted = await singleTripProvider.deleteBooking(model, functionName);
+    Navigator.pop(context);
     if (deleted) {
       showDeletedBookingDialog(context, alertText);
       log.i('onDeleteBooking was performed');
@@ -75,7 +77,9 @@ void Function() onDeleteTrip(TripModel tripModel, BuildContext context) {
   const String alertText = "You've just deleted this trip and all corresponding bookings ";
 
   return () async {
+    showLoadingDialog(context);
     final bool deleted = await tripsProvider.deleteTrip(tripModel);
+    Navigator.pop(context);
     if (deleted) {
       showDeletedBookingDialog(context, alertText, hasBackButton: false);
       log.i('onDeleteBooking was performed');

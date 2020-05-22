@@ -8,7 +8,7 @@ import 'package:travellory/screens/home/pages/map_page.dart';
 import 'package:travellory/screens/home/pages/profile_page.dart';
 
 class Home extends StatefulWidget {
-  static final route = '/home';
+  static const route = '/home';
 
   @override
   _HomeState createState() => _HomeState();

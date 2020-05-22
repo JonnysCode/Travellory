@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:travellory/models/achievements_model.dart';
 import 'package:travellory/models/friends_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:pedantic/pedantic.dart';
+import 'package:travellory/services/authentication/user_management.dart';
 import 'package:travellory/services/friends/friend_management.dart';
 import 'package:travellory/utils/logger.dart';
 
@@ -18,15 +20,18 @@ class FriendsProvider extends ChangeNotifier{
   bool isFetchingFriends = false;
   bool isFetchingFriendRequests = false;
   bool isFetchingSentFriendRequests = false;
+  bool isFetchingFriendsAchievements = false;
 
   List<FriendsModel> _friends;
   List<FriendsModel> _friendRequests;
   List<FriendsModel> _sentFriendRequests;
+  Achievements _friendsAchievements;
   UserModel _user;
 
   List<FriendsModel> get friends => _friends;
   List<FriendsModel> get friendRequests => _friendRequests;
   List<FriendsModel> get sentFriendRequests => _sentFriendRequests;
+  Achievements get friendsAchievements => _friendsAchievements;
   UserModel get user => _user;
 
   set user(UserModel user){
@@ -61,7 +66,6 @@ class FriendsProvider extends ChangeNotifier{
         // do nothing
     }
   }
-
 
   Future<void> _fetchFriends() async {
     isFetchingFriends = true;

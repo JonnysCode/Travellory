@@ -8,7 +8,7 @@ import 'package:travellory/widgets/bookings/view_bookings.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
 class ActivityView extends StatefulWidget {
-  static final route = '/view/activity';
+  static const route = '/view/activity';
 
   @override
   _ActivityViewState createState() => _ActivityViewState();
