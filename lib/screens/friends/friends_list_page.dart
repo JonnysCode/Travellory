@@ -26,6 +26,8 @@ class _FriendListPageState extends State<FriendListPage> {
       SocialActionType socialActionType, int index) async {
     // get loading tracking list according to social action type
     final List<bool> isLoading = _getLoadingList(socialActionType);
+    final FriendsProvider friendsProvider =
+    Provider.of<FriendsProvider>(context, listen: false);
 
     // mark the corresponding widget in the list as loading
     setState(() {
@@ -35,15 +37,13 @@ class _FriendListPageState extends State<FriendListPage> {
     bool isSuccessful;
     String messageToDisplay;
 
-    await FriendManagement().performSocialAction(
+    await friendsProvider.management.performSocialAction(
             uidSender, uidReceiver, socialActionType)
         .then((value) async {
       isSuccessful = true;
       messageToDisplay = _getMessageToDisplay(socialActionType, isSuccessful);
       _showSnackBar(messageToDisplay, isSuccessful);
 
-      final FriendsProvider friendsProvider =
-          Provider.of<FriendsProvider>(context, listen: false);
       await friendsProvider.update(socialActionType);
     }).catchError((error) {
       isSuccessful = false;

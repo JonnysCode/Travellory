@@ -26,6 +26,10 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
 
   void _sendFriendRequest(
       String uidSender, String uidReceiver, int index) async {
+
+    final FriendsProvider friendsProvider =
+    Provider.of<FriendsProvider>(context, listen: false);
+
     String messageToDisplay;
     bool isSuccessful;
 
@@ -33,13 +37,11 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       _isLoadingResult[index] = true;
     });
 
-    await FriendManagement().performSocialAction(
+    await friendsProvider.management.performSocialAction(
             uidSender, uidReceiver, SocialActionType.sendFriendRequest)
         .then((value) async {
       messageToDisplay = "Friend request sent";
       isSuccessful = true;
-      final FriendsProvider friendsProvider =
-          Provider.of<FriendsProvider>(context, listen: false);
       await friendsProvider.update(SocialActionType.sendFriendRequest);
     }).catchError((error) {
       messageToDisplay = "There was an error. Try again.";
@@ -54,6 +56,10 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
 
   void _withdrawFriendRequest(
       String uidSender, String uidReceiver, int index) async {
+
+    final FriendsProvider friendsProvider =
+    Provider.of<FriendsProvider>(context, listen: false);
+
     String messageToDisplay;
     bool isSuccessful;
 
@@ -61,13 +67,11 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       _isLoadingRequest[index] = true;
     });
 
-    await FriendManagement().performSocialAction(
+    await friendsProvider.management.performSocialAction(
             uidReceiver, uidSender, SocialActionType.declineFriendRequest)
         .then((value) async {
       messageToDisplay = "Friend request withdrawn";
       isSuccessful = true;
-      final FriendsProvider friendsProvider =
-          Provider.of<FriendsProvider>(context, listen: false);
       await friendsProvider.update(SocialActionType.declineFriendRequest);
     }).catchError((error) {
       messageToDisplay = "There was an error. Try again.";
@@ -148,7 +152,10 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       searchWord = search;
     });
 
-    return FriendManagement().searchByUsername(search);
+    final FriendsProvider friendsProvider =
+    Provider.of<FriendsProvider>(context, listen: false);
+
+    return friendsProvider.management.searchByUsername(search);
   }
 
   @override
