@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/friends_model.dart';
+import 'package:travellory/models/friend_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/screens/friends/friends_list_page.dart';
@@ -16,7 +16,7 @@ class MockAuth extends Mock implements AuthService {}
 void main() {
   Widget makeTestableWidget({Widget child}) {
     UserModel user = UserModel(uid: 'uidUser');
-    FriendsModel friend = FriendsModel('uidFriend', 'friendName', null, '');
+    FriendModel friend = FriendModel('uidFriend', 'friendName', null, '');
     FriendsProvider friendsProvider = MockFriendsProvider();
 
     when(friendsProvider.user).thenReturn(user);
