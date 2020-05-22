@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/shared/loading_logo.dart';
 import 'package:travellory/utils/logger.dart';
 import 'package:travellory/providers/auth_provider.dart';
@@ -18,7 +19,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -51,8 +52,7 @@ class _RegisterState extends State<Register> {
       }).catchError((e) {
         Navigator.pop(context);
         setState(() {
-          _error =
-              e.message ?? 'Something went wrong. Try again';
+          _error = e.message ?? 'Something went wrong. Try again';
         });
       });
     }
@@ -60,7 +60,7 @@ class _RegisterState extends State<Register> {
 
   Future _register() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
-    final user = await _auth
+    final UserModel user = await _auth
         .registerWithEmailAndPassword(_emailController.text,
             _passwordController.text, _nameController.text)
         .catchError((e) {
@@ -92,140 +92,133 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      body: AuthBackground(
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 140,
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        width: 130,
-                        height: 130,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color:
-                            Theme.of(context).primaryColor),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    child: Container(
-                      padding: EdgeInsets.only(
-                          bottom: 25, right: 40),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "REGI",
-                        style: TextStyle(
-                          fontSize: 44,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFF7EDEE),
+        backgroundColor: Theme.of(context).primaryColor,
+        body: AuthBackground(
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 140,
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          width: 130,
+                          height: 130,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Theme.of(context).primaryColor),
                         ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    child: Align(
-                      alignment: Alignment.center,
+                    Positioned(
                       child: Container(
-                        padding:
-                        EdgeInsets.only(top: 40, left: 28),
-                        width: 130,
+                        padding: EdgeInsets.only(bottom: 25, right: 40),
+                        alignment: Alignment.center,
                         child: Text(
-                          "STER",
+                          "REGI",
                           style: TextStyle(
-                            fontSize: 40,
+                            fontSize: 44,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFFF7EDEE),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    Positioned(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          padding: EdgeInsets.only(top: 40, left: 28),
+                          width: 130,
+                          child: Text(
+                            "STER",
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFFF7EDEE),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: 10,
-                      top: 40,
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(
+                        bottom: 10,
+                        top: 40,
+                      ),
+                      child: inputAuthentication(
+                          Icon(Icons.account_circle),
+                          "USERNAME",
+                          _isUsernameAvailable
+                              ? Theme.of(context).primaryColor
+                              : Colors.redAccent,
+                          _nameController,
+                          _nameFocus,
+                          ValidatorType.username,
+                          false,
+                          _errorUsername),
                     ),
-                    child: inputAuthentication(
-                        Icon(Icons.account_circle),
-                        "USERNAME",
-                        _isUsernameAvailable
-                            ? Theme.of(context).primaryColor
-                            : Colors.redAccent,
-                        _nameController,
-                        _nameFocus,
-                        ValidatorType.username,
-                        false,
-                        _errorUsername),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: 10,
-                    ),
-                    child: inputAuthentication(
-                        Icon(Icons.email),
-                        "EMAIL",
-                        Theme.of(context).primaryColor,
-                        _emailController,
-                        null,
-                        ValidatorType.email,
-                        false,
-                        null),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 20),
-                    child: inputAuthentication(
-                        Icon(Icons.lock),
-                        "PASSWORD",
-                        Theme.of(context).primaryColor,
-                        _passwordController,
-                        null,
-                        ValidatorType.password,
-                        true,
-                        _error),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: 20,
-                        right: 20,
-                        bottom: MediaQuery.of(context)
-                            .viewInsets
-                            .bottom),
-                    child: Container(
-                      height: 50,
-                      width:
-                      MediaQuery.of(context).size.width,
-                      child: filledButton(
-                          "REGISTER",
-                          Colors.white,
+                    Padding(
+                      padding: EdgeInsets.only(
+                        bottom: 10,
+                      ),
+                      child: inputAuthentication(
+                          Icon(Icons.email),
+                          "EMAIL",
                           Theme.of(context).primaryColor,
-                          Theme.of(context).primaryColor,
-                          Colors.white,
-                          _validateRegister),
+                          _emailController,
+                          null,
+                          ValidatorType.email,
+                          false,
+                          null),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: inputAuthentication(
+                          Icon(Icons.lock),
+                          "PASSWORD",
+                          Theme.of(context).primaryColor,
+                          _passwordController,
+                          null,
+                          ValidatorType.password,
+                          true,
+                          _error),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width,
+                        child: filledButton(
+                            "REGISTER",
+                            Colors.white,
+                            Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor,
+                            Colors.white,
+                            _validateRegister),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
-      )
-    );
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        ));
   }
 }

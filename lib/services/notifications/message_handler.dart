@@ -14,10 +14,10 @@ class MessageHandler {
     final FirebaseMessaging _fcm = FirebaseMessaging();
 
     // get the current user
-    FirebaseUser user = await AuthService().getCurrentUser();
+    final FirebaseUser user = await AuthService().getCurrentUser();
 
     // save the device token to the database
-    String fcmToken = await _fcm.getToken();
+    final String fcmToken = await _fcm.getToken();
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'token-saveDeviceToken',
     );
