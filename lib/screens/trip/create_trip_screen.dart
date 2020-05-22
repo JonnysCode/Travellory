@@ -116,6 +116,7 @@ class _CreateTripState extends State<CreateTrip> {
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                         child: DateFormField(
+                          isNewTrip: isNewModel,
                           initialValue: _tripModel.startDate,
                           key: _startDateFormFieldKey,
                           labelText: 'Start Date *',
@@ -127,6 +128,7 @@ class _CreateTripState extends State<CreateTrip> {
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                         child: DateFormField(
+                          isNewTrip: isNewModel,
                           initialValue: _tripModel.endDate,
                           labelText: 'End Date *',
                           icon: Icon(Icons.date_range),

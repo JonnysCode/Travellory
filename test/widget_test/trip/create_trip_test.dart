@@ -76,6 +76,7 @@ void main() {
 
     expect(find.text('Trip Details', skipOffstage: false), findsOneWidget);
     expect(find.text('General Information', skipOffstage: false), findsOneWidget);
+    expect(find.text('Start Date *', skipOffstage: false), findsOneWidget);
     expect(find.text('End Date *', skipOffstage: false), findsOneWidget);
     expect(find.text('Destination *', skipOffstage: false), findsOneWidget);
     expect(find.text('Trip Title *', skipOffstage: false), findsOneWidget);
@@ -88,5 +89,16 @@ void main() {
     await pumpTrip(tester);
 
     expect(find.byKey(Key('image_icon'), skipOffstage: false), findsNWidgets(11));
+  });
+
+  testWidgets('test if cancel button is pressed', (WidgetTester tester) async {
+    TripsProviderMock tripsProvider = TripsProviderMock();
+    await tester.pumpWidget(makeTestableWidget(tripsProvider));
+    await pumpTrip(tester);
+
+    expect(find.byKey(Key('BookingButton'), skipOffstage: false), findsOneWidget);
+    expect(find.text('CANCEL', skipOffstage: false), findsOneWidget);
+    await tester.tap(find.byKey(Key('BookingButton'), skipOffstage: false));
+    await tester.pump();
   });
 }
