@@ -7,7 +7,7 @@ import 'package:travellory/widgets/bookings/view_bookings.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
 
 class RentalCarView extends StatefulWidget {
-  static final route = '/view/rentalcar';
+  static const route = '/view/rentalcar';
 
   @override
   _RentalCarViewState createState() => _RentalCarViewState();

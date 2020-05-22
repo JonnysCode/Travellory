@@ -216,13 +216,13 @@ class _FriendListPageState extends State<FriendListPage> {
                                     friendsProvider.friendRequests[index];
                                 _loadingRequests.add(false);
                                 return friendsCard(
-                                  context,
-                                  friend,
-                                  _loadingRequests[index]
+                                  context: context,
+                                  friend: friend,
+                                  button: _loadingRequests[index]
                                       ? CircularProgressIndicator()
                                       : friendRequestButtons(
                                           friend.uid, user.uid, index),
-                                  10,
+                                  topPadding: 10,
                                 );
                               },
                             ),
@@ -274,13 +274,13 @@ class _FriendListPageState extends State<FriendListPage> {
                             final friend = friendsProvider.friends[index];
                             _loadingFriends.add(false);
                             return friendsCard(
-                              context,
-                              friend,
-                              _loadingFriends[index]
+                              context: context,
+                              friend: friend,
+                              button: _loadingFriends[index]
                                   ? CircularProgressIndicator()
                                   : removeFriendButton(
                                   friend.uid, user.uid, index),
-                              10,
+                              topPadding: 10,
                             );
                           },
                       ),

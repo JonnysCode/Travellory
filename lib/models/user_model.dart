@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:travellory/services/authentication/user_management.dart';
 
 class UserModel {
   UserModel({this.firebaseUser, uid, email, displayName, photoUrl, metadata})
@@ -8,6 +9,8 @@ class UserModel {
         this.photoUrl = firebaseUser?.photoUrl ?? photoUrl,
         this.metadata = firebaseUser?.metadata ?? metadata;
 
+
+
   FirebaseUser firebaseUser;
   final String uid;
   final String email;
@@ -15,3 +18,4 @@ class UserModel {
   final String photoUrl;
   final FirebaseUserMetadata metadata;
 }
+
