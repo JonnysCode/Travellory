@@ -12,7 +12,7 @@ import 'package:travellory/widgets/bookings/view_bookings.dart';
 class AchievementsView extends StatefulWidget {
   AchievementsView({Key key}) : super(key: key);
 
-  static final route = '/view/achievements';
+  static const route = '/view/achievements';
 
   @override
   _AchievementsViewState createState() => _AchievementsViewState();
