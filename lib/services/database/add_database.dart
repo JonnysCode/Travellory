@@ -57,7 +57,7 @@ class DatabaseAdder {
       log.i('caught generic exception');
       log.i(e);
     }
-    return Future<bool>.value(true);
+    return Future<bool>.value(false);
   }
 }
 
