@@ -56,11 +56,13 @@ void Function() onEditBooking(
     SingleTripProvider singleTripProvider, Model model, BuildContext context, String functionName) {
 
   return () async {
+    showLoadingDialog(context);
     if (model is AccommodationModel) {
       model = calculateNightsForAccommodation(model);
     }
 
     final bool edited = await singleTripProvider.editBooking(model, functionName);
+    Navigator.pop(context);
     if (edited) {
       showEditedBookingDialog(context, onEditSuccessfulText);
       log.i('onEditBooking was performed');
@@ -75,7 +77,9 @@ void Function() onEditTrip(TripsProvider trips, Model model,
     BuildContext context) {
 
   return () async {
+    showLoadingDialog(context);
     final bool edited = await trips.editTrip(model);
+    Navigator.pop(context);
     if (edited) {
       showEditedBookingDialog(context, onEditSuccessfulText);
       log.i('onEditBooking was performed');

@@ -8,6 +8,7 @@ import 'package:travellory/models/public_transport_model.dart';
 import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/notify_listener.dart';
+import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/services/database/edit_database.dart';
@@ -16,7 +17,7 @@ import 'package:travellory/services/database/get_database.dart';
 class SingleTripProvider {
   SingleTripProvider(TripModel trip, NotifyListener notifier){
     this.tripModel = trip;
-    this.notifier = notifier;
+    this._notifier = notifier;
 
     flights = <FlightModel>[];
     accommodations = <AccommodationModel>[];
@@ -30,7 +31,7 @@ class SingleTripProvider {
   final DatabaseDeleter _databaseDeleter = DatabaseDeleter();
   final DatabaseEditor _databaseEditor = DatabaseEditor();
 
-  NotifyListener notifier;
+  NotifyListener _notifier;
   TripModel tripModel;
   bool isFetching = false;
 
@@ -47,7 +48,13 @@ class SingleTripProvider {
 
   bool _bookingsInitiated = false;
 
-  // Fetches booking parallel and waits for them to finish
+  /// Initiates all bookings for a trip.
+  ///
+  /// If the bookings are not yet initiated, fights,
+  /// accommodations, activities, public transport
+  /// and rental cars get fetched from the db.
+  /// The [TripsProvider] gets notified after each
+  /// successful fetch.
   Future<void> initBookings() async {
     if(!_bookingsInitiated){
       _bookingsInitiated = true;
@@ -75,6 +82,7 @@ class SingleTripProvider {
     }
   }
 
+  /// Adds and fetches a booking from the db.
   Future<bool> addBooking(Model model, String functionName) async {
     final bool added = await _databaseAdder.addModel(model, functionName);
     if(added) {
@@ -83,6 +91,7 @@ class SingleTripProvider {
     return added;
   }
 
+  /// Deletes and fetches a booking from the db.
   Future<bool> deleteBooking(Model model, String functionName) async {
     final bool deleted = await _databaseDeleter.deleteModel(model, functionName);
     if(deleted) {
@@ -91,6 +100,7 @@ class SingleTripProvider {
     return deleted;
   }
 
+  /// Edits and fetches the bookings from the db.
   Future<bool> editBooking(Model model, String functionName) async {
     final bool edited = await _databaseEditor.editModel(model, functionName);
     if(edited) {
@@ -104,7 +114,7 @@ class SingleTripProvider {
     flights = await _databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getFlights);
     isFetchingFlights = false;
-    notifier.notify();
+    _notifier.notify();
   }
 
   Future<void> _fetchAccommodation() async {
@@ -112,7 +122,7 @@ class SingleTripProvider {
     accommodations = await _databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getAccommodations);
     isFetchingAccommodations = false;
-    notifier.notify();
+    _notifier.notify();
   }
 
   Future<void> _fetchActivities() async {
@@ -120,7 +130,7 @@ class SingleTripProvider {
     activities = await _databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getActivities);
     isFetchingActivities = false;
-    notifier.notify();
+    _notifier.notify();
   }
 
   Future<void> _fetchRentalCars() async {
@@ -128,7 +138,7 @@ class SingleTripProvider {
     rentalCars = await _databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getRentalCars);
     isFetchingRentalCars = false;
-    notifier.notify();
+    _notifier.notify();
   }
 
   Future<void> _fetchPublicTransportation() async {
@@ -136,6 +146,6 @@ class SingleTripProvider {
     publicTransports = await _databaseGetter.getEntriesFromDatabase(
         tripModel.uid, DatabaseGetter.getPublicTransportations);
     isFetchingPublicTransports = false;
-    notifier.notify();
+    _notifier.notify();
   }
 }

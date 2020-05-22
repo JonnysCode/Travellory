@@ -1,6 +1,7 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/providers/trips/temp_bookings_provider.dart';
+import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/widgets/forms/calculate_nights.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
+import 'package:pedantic/pedantic.dart';
 import '../../utils/logger.dart';
 
 final log = getLogger('DatabaseAdder');
@@ -62,11 +64,13 @@ class DatabaseAdder {
 Function() onSubmitBooking(SingleTripProvider singleTripProvider, Model model, String functionName,
     BuildContext context, alertText) {
   return () async {
+    showLoadingDialog(context);
     if (model is AccommodationModel) {
       model = calculateNightsForAccommodation(model);
     }
 
     final bool added = await singleTripProvider.addBooking(model, functionName);
+    Navigator.pop(context);
     if (added) {
       showSubmittedBookingDialog(context, alertText);
     } else {
@@ -79,7 +83,9 @@ Function() onSubmitBooking(SingleTripProvider singleTripProvider, Model model, S
 void Function() onSubmitTrip(
     TripsProvider tripsProvider, TripModel tripModel, BuildContext context, alertText) {
   return () async {
+    showLoadingDialog(context);
     final bool added = await tripsProvider.addTrip(tripModel);
+    Navigator.pop(context);
     if (added) {
       showSubmittedTripDialog(context, alertText);
     } else {
@@ -92,7 +98,9 @@ void Function() onSubmitTrip(
 Function() onSubmitTempAccommodation(TempBookingsProvider tempBookingsProvider,
     SingleTripProvider singleTripProvider, Model model, BuildContext context) {
   return () async {
+    showLoadingDialog(context);
     final bool added = await tempBookingsProvider.addAccommodationToTrip(model, singleTripProvider);
+    Navigator.pop(context);
     if (added) {
       showSubmittedTempBookingDialog(context);
     } else {
