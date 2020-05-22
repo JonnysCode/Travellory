@@ -31,18 +31,21 @@ void main() {
     FriendModel friend = FriendModel(uidFriend, friendName, null, '');
     FriendsProvider friendsProvider = MockFriendsProvider();
 
-    var completer = Completer<HttpsCallableResult>();
-    var future = completer.future;
-
+    // mock behavior of friendsProvider
     when(friendsProvider.user).thenReturn(user);
     when(friendsProvider.isFetchingFriends).thenReturn(false);
     when(friendsProvider.isFetchingFriendRequests).thenReturn(false);
     when(friendsProvider.friends).thenReturn([friend]);
     when(friendsProvider.friendRequests).thenReturn([friend]);
     when(friendsProvider.management).thenReturn(friendManagement);
+
+    // mock behavior of friendManagement
+    var completer = Completer<HttpsCallableResult>();
+    var future = completer.future;
     when(friendManagement.performSocialAction(any, any, any))
         .thenAnswer((_) => future);
 
+    // return testable widget
     return MultiProvider(providers: [
       ChangeNotifierProvider<FriendsProvider>.value(value: friendsProvider),
       StreamProvider<UserModel>.value(value: MockAuth().user),
@@ -103,41 +106,40 @@ void main() {
     await tester.tap(find.byKey(Key('accept_button')));
     await tester.pump();
 
-    // Verify that register was called once with the correct arguments
+    // Verify that accept friend request was called once with the correct arguments
     verify(friendManagement.performSocialAction(
             uidFriend, uidUser, SocialActionType.acceptFriendRequest))
         .called(1);
   });
 
   testWidgets('test if decline friend request called',
-          (WidgetTester tester) async {
-        FriendsPage page = FriendsPage();
+      (WidgetTester tester) async {
+    FriendsPage page = FriendsPage();
 
-        // Build our app and trigger a frame.
-        await tester.pumpWidget(makeTestableWidget(child: page));
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(makeTestableWidget(child: page));
 
-        await tester.tap(find.byKey(Key('decline_button')));
-        await tester.pump();
+    await tester.tap(find.byKey(Key('decline_button')));
+    await tester.pump();
 
-        // Verify that register was called once with the correct arguments
-        verify(friendManagement.performSocialAction(
+    // Verify that decline friend request was called once with the correct arguments
+    verify(friendManagement.performSocialAction(
             uidFriend, uidUser, SocialActionType.declineFriendRequest))
-            .called(1);
+        .called(1);
   });
 
-  testWidgets('test if remove friend called',
-          (WidgetTester tester) async {
-        FriendsPage page = FriendsPage();
+  testWidgets('test if remove friend called', (WidgetTester tester) async {
+    FriendsPage page = FriendsPage();
 
-        // Build our app and trigger a frame.
-        await tester.pumpWidget(makeTestableWidget(child: page));
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(makeTestableWidget(child: page));
 
-        await tester.tap(find.byKey(Key('remove_button')));
-        await tester.pump();
+    await tester.tap(find.byKey(Key('remove_button')));
+    await tester.pump();
 
-        // Verify that register was called once with the correct arguments
-        verify(friendManagement.performSocialAction(
+    // Verify that remove friend was called once with the correct arguments
+    verify(friendManagement.performSocialAction(
             uidFriend, uidUser, SocialActionType.removeFriend))
-            .called(1);
+        .called(1);
   });
 }
