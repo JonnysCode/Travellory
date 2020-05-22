@@ -33,7 +33,7 @@ class _FriendsProfileState extends State<FriendsProfile> {
       'Australia',
       'Antarctica'
     ];
-
+    
     final List<int> percentages = <int>[
       friendAchievements.worldPercentage,
       friendAchievements.europePercentage,
