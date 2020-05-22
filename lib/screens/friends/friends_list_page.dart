@@ -35,7 +35,7 @@ class _FriendListPageState extends State<FriendListPage> {
     bool isSuccessful;
     String messageToDisplay;
 
-    await FriendManagement.performSocialAction(
+    await FriendManagement().performSocialAction(
             uidSender, uidReceiver, socialActionType)
         .then((value) async {
       isSuccessful = true;

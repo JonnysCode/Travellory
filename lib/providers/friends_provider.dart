@@ -70,7 +70,7 @@ class FriendsProvider extends ChangeNotifier{
   Future<void> _fetchFriends() async {
     isFetchingFriends = true;
     try {
-      _friends = await FriendManagement.getFriends(_user.uid);
+      _friends = await FriendManagement().getFriends(_user.uid);
     } on PlatformException catch (error) {
       log.e(error.message);
     }
@@ -81,7 +81,7 @@ class FriendsProvider extends ChangeNotifier{
   Future<void> _fetchFriendRequests() async {
     isFetchingFriendRequests = true;
     try {
-      _friendRequests = await FriendManagement.getFriendRequests(_user.uid);
+      _friendRequests = await FriendManagement().getFriendRequests(_user.uid);
     } on PlatformException catch (error) {
         log.e(error.message);
     }
@@ -93,7 +93,7 @@ class FriendsProvider extends ChangeNotifier{
   Future<void> _fetchSentFriendRequests() async {
     isFetchingSentFriendRequests = true;
     try {
-      _sentFriendRequests = await FriendManagement.getSentFriendRequests(_user.uid);
+      _sentFriendRequests = await FriendManagement().getSentFriendRequests(_user.uid);
     } on PlatformException catch (error) {
       log.e(error.message);
     }
