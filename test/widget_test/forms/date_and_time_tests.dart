@@ -375,12 +375,12 @@ void main() {
 
     final GlobalKey<FormState> testKey = GlobalKey<FormState>();
     final GlobalKey<DateFormFieldState> testDateFieldOneKey = GlobalKey<DateFormFieldState>();
-    final String dateInTripValidationMessage = 'The chosen date is not in trip date range';
 
     final AccommodationModel testModel = AccommodationModel()
       ..type = 'hotel'
       ..name = 'Travelodge'
       ..checkinDate = '01-05-2020'
+      ..checkoutDate = '10-05-2020'
       ..address = "100 King's Cross Rd, London WC1X 9DT";
 
     TripModel tripModel = TripModel(
@@ -389,17 +389,6 @@ void main() {
         endDate: '05-05-2020',
         destination: 'London',
         imageNr: 3);
-
-    final DateFormField testDateOne = DateFormField(
-      key: testDateFieldOneKey,
-      initialValue: testModel.checkoutDate,
-      labelText: 'Test Check Out Date',
-      icon: Icon(Icons.date_range),
-      optional: false,
-      tripModel: tripModel,
-      model: testModel,
-      chosenDateString: (value) => testModel.checkoutDate = value,
-    );
 
     Widget makeTestableWidget(TripsProviderMock tripsProvider) {
       return ChangeNotifierProvider<TripsProvider>.value(
@@ -413,7 +402,16 @@ void main() {
                 child: Material(
                   child: Form(
                     key: testKey,
-                    child: testDateOne,
+                    child: DateFormField(
+                      key: testDateFieldOneKey,
+                      initialValue: testModel.checkoutDate,
+                      labelText: 'Test Check Out Date',
+                      icon: Icon(Icons.date_range),
+                      optional: false,
+                      tripModel: tripModel,
+                      model: testModel,
+                      chosenDateString: (value) => testModel.checkoutDate = value,
+                    ),
                   ),
                 ),
               ),
@@ -431,12 +429,8 @@ void main() {
     }
 
     Future<void> checkValidationFails() async {
-      await tester.tap(find.byType(TextFormField));
-      await enterDate('10-05-2020', testDateFieldOneKey, tester);
-      await tester.pump();
       bool result = validateForm();
       expect(result, isFalse);
-      expect(find.text(dateInTripValidationMessage, skipOffstage: false), findsOneWidget);
     }
 
     await checkValidationFails();
