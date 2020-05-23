@@ -49,7 +49,7 @@ class DatabaseEditor {
 }
 
 const String onEditSuccessfulText =
-    "You've just edited this entry. Your trip overview has been updated. " +
+    "You've just edited this entry. Your trip overview has been updated. "
         "However, it might take a moment to see the changes on your profile. ";
 
 void Function() onEditBooking(
