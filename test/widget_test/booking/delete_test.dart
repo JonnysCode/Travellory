@@ -96,33 +96,67 @@ void main() {
     expect(find.byKey(testKey), findsOneWidget);
   });
 
-  testWidgets('Test onDeleteBooking can be tapped and AddToDataBaseFailedDialog appears',
-      (WidgetTester tester) async {
-    final String alertText = 'TestOnDelete';
-    final Key testKey = Key('deleteButton');
+  testWidgets('Test showDeleteDialog exists', (WidgetTester tester) async {
+    final String alertText = 'Test';
+    final Key testKey = Key('ShowDeleteDialog');
+    TripsProviderMock tripsProvider = TripsProviderMock();
 
     // This functionName just serves as placeholder for this test
     final String functionName = DatabaseDeleter.deleteActivity;
 
-    TripsProviderMock tripsProvider = TripsProviderMock();
-
     when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
 
-    // Build our app and trigger a frame.
     await tester.pumpWidget(makeTestableWidget(tripsProvider, alertText, functionName));
 
     expect(find.byType(BookingButton), findsOneWidget);
     await tester.tap(find.byType(BookingButton));
     await tester.pump();
     expect(find.text(alertText), findsOneWidget);
-
-    // find 'Continue with Delete' Button and tap it
     expect(find.byKey(testKey), findsOneWidget);
-    await tester.tap(find.byKey(testKey));
-    await tester.pump();
+    await tester.tap(find.byType(BookingButton));
 
-    // finds add to database failed dialog
-    // this test cannot work yet
-//    expect(find.byKey(Key('AddToDataBaseFailedDialog'), skipOffstage: false), findsOneWidget);
   });
+
+  Widget makeAnotherTestableWidget(TripsProvider tripsProvider, String alertText, String functionName) {
+    return ChangeNotifierProvider<TripsProvider>.value(
+      value: tripsProvider,
+      child: MaterialApp(
+        home: Material(child: Builder(
+          builder: (BuildContext context) {
+            return Center(
+              child: BookingButton(
+                buttonTitle: 'DeleteButtonTest',
+                highlightColor: Theme.of(context).primaryColor,
+                fillColor: Theme.of(context).primaryColor,
+                onPressed: () {
+                  showDeletedBookingDialog(context, alertText);
+                },
+              ),
+            );
+          },
+        )),
+      ),
+    );
+  }
+
+  testWidgets('Test ShowDeletedBookingDialog appears',
+          (WidgetTester tester) async {
+        final String alertText = 'TestOnDelete';
+        final Key testKey = Key('ShowDeletedBookingDialog');
+
+        // This functionName just serves as placeholder for this test
+        final String functionName = DatabaseDeleter.deleteActivity;
+
+        TripsProviderMock tripsProvider = TripsProviderMock();
+
+        when(tripsProvider.selectedTrip).thenReturn(SingleTripProvider(tripModel, null));
+
+        await tester.pumpWidget(makeAnotherTestableWidget(tripsProvider, alertText, functionName));
+
+        expect(find.byType(BookingButton), findsOneWidget);
+        await tester.tap(find.byType(BookingButton));
+        await tester.pump();
+        expect(find.text(alertText), findsOneWidget);
+        expect(find.byKey(testKey), findsOneWidget);
+      });
 }
