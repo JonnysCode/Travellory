@@ -1,6 +1,5 @@
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +12,7 @@ import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
+import 'package:travellory/widgets/snack_bar_widget.dart';
 
 class SearchFriendsPage extends StatefulWidget {
   @override
@@ -51,7 +51,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     setState(() {
       _isLoadingResult[index] = false;
     });
-    _showSnackBar(messageToDisplay, isSuccessful);
+    showSnackBar(messageToDisplay, isSuccessful, context);
   }
 
   void _withdrawFriendRequest(
@@ -81,7 +81,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     setState(() {
       _isLoadingRequest[index] = false;
     });
-    _showSnackBar(messageToDisplay, isSuccessful);
+    showSnackBar(messageToDisplay, isSuccessful, context);
   }
 
   bool _isFriendOrHasFriendRequest(FriendModel friend) {
@@ -124,21 +124,6 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
         socialButton(Key('withdraw_button'), Icons.clear, Colors.red,
             () => _withdrawFriendRequest(uidSender, uidReceiver, index)),
       ],
-    );
-  }
-
-  Widget _showSnackBar(String messageToDisplay, bool isSuccessful) {
-    return SnackBar(
-      content: Flushbar(
-          flushbarStyle: FlushbarStyle.FLOATING,
-          title: isSuccessful ? 'Success' : 'Error',
-          message: messageToDisplay,
-          backgroundColor:
-              isSuccessful ? Theme.of(context).primaryColor : Colors.redAccent,
-          margin: EdgeInsets.all(8),
-          borderRadius: 12,
-          duration: Duration(seconds: 3))
-        ..show(context),
     );
   }
 
