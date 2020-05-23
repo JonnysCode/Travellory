@@ -85,7 +85,7 @@ class _FriendsProfileState extends State<FriendsProfile> {
                         left: 20,
                         bottom: MediaQuery.of(context).viewInsets.bottom
                       ),
-                      child: Text("This user hasn't any trips to show yet.")
+                      child: Text("This user doesn't have any trips to display yet.")
                     ),
                   ),
                   SizedBox(height: 20),
