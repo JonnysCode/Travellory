@@ -5,7 +5,7 @@ import 'package:travellory/models/friend_model.dart';
 import 'friends_profile_picture.dart';
 
 class FriendsProfileHeader extends StatefulWidget {
-  const FriendsProfileHeader({Key key, this.friend, double headerSize}) : super(key: key);
+  const FriendsProfileHeader({Key key, this.friend}) : super(key: key);
 
   final FriendModel friend;
   final double headerSize = 140;
