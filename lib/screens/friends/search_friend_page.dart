@@ -121,7 +121,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       String uidSender, String uidReceiver, int index) {
     return Wrap(
       children: <Widget>[
-        socialButton(Key('remove_button'), Icons.clear, Colors.red,
+        socialButton(Key('withdraw_button'), Icons.clear, Colors.red,
             () => _withdrawFriendRequest(uidSender, uidReceiver, index)),
       ],
     );
@@ -160,7 +160,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel user = Provider.of<UserModel>(context);
+    final UserModel user = Provider.of<FriendsProvider>(context).user;
 
     return SafeArea(
         key: Key('search_friends'),
