@@ -10,7 +10,7 @@ class FriendsProfile extends StatefulWidget {
     Key key,
   }) : super(key: key);
 
-  static final route = '/friends/friends_profile';
+  static const route = '/friends/friends_profile';
 
   @override
   _FriendsProfileState createState() => _FriendsProfileState();
@@ -22,28 +22,7 @@ class _FriendsProfileState extends State<FriendsProfile> {
     final List<Object> arguments = ModalRoute.of(context).settings.arguments;
     final FriendModel friend = arguments[0];
     final Achievements friendAchievements = arguments[1];
-
-    final  List<String> achievements = <String>[
-      'World',
-      'Europe',
-      'Asia',
-      'North America',
-      'South America',
-      'Africa',
-      'Australia',
-      'Antarctica'
-    ];
-
-    final List<int> percentages = <int>[
-      friendAchievements.worldPercentage,
-      friendAchievements.europePercentage,
-      friendAchievements.asiaPercentage,
-      friendAchievements.northAmericaPercentage,
-      friendAchievements.southAmericaPercentage,
-      friendAchievements.africaPercentage,
-      friendAchievements.australiaPercentage,
-      friendAchievements.antarcticaPercentage
-    ];
+    final List<int> percentages = friendAchievements.toList();
 
     return Scaffold(
       key: Key('friends_profile'),
@@ -85,7 +64,7 @@ class _FriendsProfileState extends State<FriendsProfile> {
                         left: 20,
                         bottom: MediaQuery.of(context).viewInsets.bottom
                       ),
-                      child: Text("Your friend hasn't created any trips yet.")
+                      child: Text("This user doesn't have any trips to display yet.")
                     ),
                   ),
                   SizedBox(height: 20),
@@ -112,7 +91,7 @@ class _FriendsProfileState extends State<FriendsProfile> {
                     child:
                     achievementsWidget(
                         context: context,
-                        entries: achievements,
+                        entries: Achievements.continents,
                         percentages: percentages
                     ),
                   ),

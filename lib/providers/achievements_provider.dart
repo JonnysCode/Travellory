@@ -6,6 +6,7 @@ import 'package:pedantic/pedantic.dart';
 import 'package:travellory/services/authentication/user_management.dart';
 import 'package:travellory/utils/logger.dart';
 
+/// This provider class will fetch the achievements of the user
 class AchievementsProvider extends ChangeNotifier{
   AchievementsProvider(){
     _achievements = Achievements();
@@ -34,7 +35,8 @@ class AchievementsProvider extends ChangeNotifier{
     await _fetchAchievements();
   }
 
-
+  /// fetches the achievements from the database and creates a model from the
+  /// returned data
   Future<void> _fetchAchievements() async {
     isFetchingAchievements = true;
     try {

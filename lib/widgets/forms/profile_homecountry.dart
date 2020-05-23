@@ -88,7 +88,7 @@ class _TextInputValueState extends State<ProfileHomeCountry> {
                 children: [
                   Container(
                       padding: EdgeInsets.all(0),
-                      constraints: BoxConstraints(minWidth: 20, maxWidth: 250),
+                      constraints: BoxConstraints(minWidth: 20, maxWidth: 200),
                       height: 40,
                       child: ListTile(
                         contentPadding: EdgeInsets.only(left: 0),

@@ -224,72 +224,79 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            Padding(
-              key: Key('sent_friend_requests'),
-              padding: EdgeInsets.only(
-                  top: 10,
-                  left: 30,
-                  right: 90,
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: Container(
-                height: 18,
-                width: MediaQuery.of(context).size.width,
-                child: Text(
-                  'Sent friend requests',
-                  style: TextStyle(fontSize: 18, color: Colors.grey),
-                ),
-              ),
-            ),
-            Divider(
-              thickness: 1,
-              indent: 25,
-              endIndent: 25,
-              color: Colors.grey,
-            ),
             Container(
-              constraints: BoxConstraints(minHeight: 50, maxHeight: 150),
-              child: Padding(
-                key: Key('sent_friend_requests_list'),
-                padding: EdgeInsets.only(
-                    left: 15,
-                    right: 20,
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: Scrollbar(
-                    child: Consumer<FriendsProvider>(
-                  builder: (_, friendsProvider, __) => friendsProvider
-                          .isFetchingSentFriendRequests
-                      ? LoadingHeart()
-                      : friendsProvider.sentFriendRequests.isEmpty
-                          ? Text('No sent friend requests')
-                          : ListView.separated(
-                              padding: EdgeInsets.only(
-                                bottom: 30,
+              color: Colors.white,
+              child: Column(children: [
+                SizedBox(height: 20),
+                Padding(
+                  key: Key('sent_friend_requests'),
+                  padding: EdgeInsets.only(
+                      top: 10,
+                      left: 30,
+                      right: 90,
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: Container(
+                    height: 18,
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(
+                      'Sent friend requests',
+                      style: TextStyle(fontSize: 18, color: Colors.grey
+                      ),
+                    ),
+                  ),
+                ),
+                Divider(
+                  thickness: 1,
+                  indent: 25,
+                  endIndent: 25,
+                  color: Colors.grey,
+                ),
+                Container(
+                  constraints: BoxConstraints(minHeight: 50, maxHeight: 300),
+                  child: Padding(
+                    key: Key('sent_friend_requests_list'),
+                    padding: EdgeInsets.only(
+                        left: 15,
+                        right: 20,
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Scrollbar(
+                        child: Consumer<FriendsProvider>(
+                          builder: (_, friendsProvider, __) => friendsProvider
+                              .isFetchingSentFriendRequests
+                              ? LoadingHeart()
+                              : friendsProvider.sentFriendRequests.isEmpty
+                              ? Text('No sent friend requests')
+                              : ListView.separated(
+                                  padding: EdgeInsets.only(
+                                    bottom: 30,
+                                  ),
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  separatorBuilder: (context, index) =>
+                                    const SizedBox(height: 12),
+                                  itemCount: friendsProvider.sentFriendRequests.length,
+                                  itemBuilder: (context, index) {
+                                    final friend =
+                                      friendsProvider.sentFriendRequests[index];
+                                    _isLoadingRequest.add(false);
+                                    return friendsCard(
+                                      context: context,
+                                      friend: friend,
+                                      button: _isLoadingRequest[index]
+                                          ? CircularProgressIndicator()
+                                          : withdrawFriendRequestButton(
+                                              friend.uid, user.uid, index),
+                                          topPadding: 10
+                                    );
+                                  },
                               ),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 12),
-                              itemCount:
-                                  friendsProvider.sentFriendRequests.length,
-                              itemBuilder: (context, index) {
-                                final friend =
-                                    friendsProvider.sentFriendRequests[index];
-                                _isLoadingRequest.add(false);
-                                return friendsCard(
-                                    context: context,
-                                    friend: friend,
-                                    button: _isLoadingRequest[index]
-                                        ? CircularProgressIndicator()
-                                        : withdrawFriendRequestButton(
-                                            friend.uid, user.uid, index),
-                                    topPadding: 10);
-                              },
-                            ),
-                )),
-              ),
-            ),
-            SizedBox(height: 50),
+                        )
+                    ),
+                  ),
+                ),
+                SizedBox(height: 50),
+              ])
+            )
           ],
         ));
   }
