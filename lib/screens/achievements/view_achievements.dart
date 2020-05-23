@@ -9,6 +9,7 @@ import 'package:travellory/widgets/achievements_widget.dart';
 import 'package:travellory/widgets/bookings/view_booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';
 
+/// The achievements view, which can be opened from the user profile page.
 class AchievementsView extends StatefulWidget {
   AchievementsView({Key key}) : super(key: key);
 
@@ -25,37 +26,18 @@ class _AchievementsViewState extends State<AchievementsView> {
   UserModel user;
   Achievements achievements;
 
-  final List<String> entries = <String>[
-    'World',
-    'Europe',
-    'Asia',
-    'North America',
-    'South America',
-    'Africa',
-    'Australia',
-    'Antarctica'
-  ];
-
   SingleChildScrollView achievementsViewPage() {
     achievements ??= Provider.of<AchievementsProvider>(context).achievements;
     log.d("worldpercentage: ${achievements.worldPercentage}");
-    final List<int> percentages = <int>[
-      achievements.worldPercentage,
-      achievements.europePercentage,
-      achievements.asiaPercentage,
-      achievements.northAmericaPercentage,
-      achievements.southAmericaPercentage,
-      achievements.africaPercentage,
-      achievements.australiaPercentage,
-      achievements.antarcticaPercentage
-    ];
+    final List<int> percentages = achievements.toList();
+
     return SingleChildScrollView(
       key: Key('AchievementsViewPage'),
       child: Column(children: [
         BookingHeader(headerTitle, bannerUrl),
         achievementsWidget(
             context: context,
-            entries: entries,
+            entries: Achievements.continents,
             percentages: percentages
         ),
       ]),
@@ -76,7 +58,7 @@ class _AchievementsViewState extends State<AchievementsView> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
           child: bookingView(
-            achievementsViewPage(),
+            achievementsViewPage(), /// creating achievements page
           ),
         ),
         exitViewPage(context),
