@@ -41,7 +41,7 @@ class ActivityState<T extends Activity> extends State<T> {
   }
 
   final String alertText =
-      "You've just submitted the booking information for your activity booking."
+      "You've just submitted the booking information for your activity booking. "
       "You can see all the information in the trip overview";
 
   final String cancelText = 'You are about to abort this booking entry. '
