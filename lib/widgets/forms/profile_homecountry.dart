@@ -30,14 +30,14 @@ class _TextInputValueState extends State<ProfileHomeCountry> {
       showHomeCountry = !showHomeCountry;
     });
 
-    UserManagement.setHomeCountry(widget.user.uid, newHomeCountry)
+    UserManagement().setHomeCountry(widget.user.uid, newHomeCountry)
     .catchError((error) {
       _showSnackBar('Setting home country failed', false);
     });
   }
 
   Future _fetchHomeCountry() async {
-    await UserManagement.getHomeCountry(widget.user.uid)
+    await UserManagement().getHomeCountry(widget.user.uid)
         .then((homeCountry) {
       if(mounted) {
         setState(() {
