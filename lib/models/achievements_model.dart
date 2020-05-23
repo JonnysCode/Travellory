@@ -1,5 +1,16 @@
 class Achievements {
 
+  static final List<String> continents = <String>[
+    'World',
+    'Europe',
+    'Asia',
+    'North America',
+    'South America',
+    'Africa',
+    'Australia',
+    'Antarctica'
+  ];
+
   Achievements():
         this.worldPercentage = 0,
         this.worldTotal = 0,
@@ -19,22 +30,22 @@ class Achievements {
         this.antarcticaTotal = 0;
 
   Achievements.fromData(achievements):
-        this.worldPercentage = achievements["worldPercentage"],
-        this.worldTotal = achievements["worldTotal"],
-        this.europePercentage = achievements["europePercentage"],
-        this.europeTotal = achievements["europeTotal"],
-        this.asiaPercentage = achievements["asiaPercentage"],
-        this.asiaTotal = achievements["asiaTotal"],
-        this.northAmericaPercentage = achievements["northAmericaPercentage"],
-        this.northAmericaTotal = achievements["northAmericaTotal"],
-        this.southAmericaPercentage = achievements["southAmericaPercentage"],
-        this.southAmericaTotal = achievements["southAmericaTotal"],
-        this.africaPercentage = achievements["africaPercentage"],
-        this.africaTotal = achievements["africaTotal"],
-        this.australiaPercentage = achievements["australiaPercentage"],
-        this.australiaTotal = achievements["australiaTotal"],
-        this.antarcticaPercentage = achievements["antarcticaPercentage"],
-        this.antarcticaTotal = achievements["antarcticaTotal"];
+        this.worldPercentage = achievements["worldPercentage"]?? 0,
+        this.worldTotal = achievements["worldTotal"]?? 0,
+        this.europePercentage = achievements["europePercentage"]?? 0,
+        this.europeTotal = achievements["europeTotal"]?? 0,
+        this.asiaPercentage = achievements["asiaPercentage"]?? 0,
+        this.asiaTotal = achievements["asiaTotal"]?? 0,
+        this.northAmericaPercentage = achievements["northAmericaPercentage"]?? 0,
+        this.northAmericaTotal = achievements["northAmericaTotal"]?? 0,
+        this.southAmericaPercentage = achievements["southAmericaPercentage"]?? 0,
+        this.southAmericaTotal = achievements["southAmericaTotal"]?? 0,
+        this.africaPercentage = achievements["africaPercentage"]?? 0,
+        this.africaTotal = achievements["africaTotal"]?? 0,
+        this.australiaPercentage = achievements["australiaPercentage"]?? 0,
+        this.australiaTotal = achievements["australiaTotal"]?? 0,
+        this.antarcticaPercentage = achievements["antarcticaPercentage"]?? 0,
+        this.antarcticaTotal = achievements["antarcticaTotal"]?? 0;
 
   final int worldPercentage;
   final int worldTotal;
@@ -52,6 +63,20 @@ class Achievements {
   final int australiaTotal;
   final int antarcticaPercentage;
   final int antarcticaTotal;
+
+  List<int> toList(){
+    final List<int> percentagesList = <int>[
+      this.worldPercentage,
+      this.europePercentage,
+      this.asiaPercentage,
+      this.northAmericaPercentage,
+      this.southAmericaPercentage,
+      this.africaPercentage,
+      this.australiaPercentage,
+      this.antarcticaPercentage
+    ];
+    return percentagesList;
+  }
 
 
 }
