@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/models/activity_model.dart';
-import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/bookings/accommodation.dart';
