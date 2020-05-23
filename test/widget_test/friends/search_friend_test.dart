@@ -33,7 +33,7 @@ void main() {
     UserModel user = UserModel(uid: uidUser);
     FriendModel friend = FriendModel(uidFriend, friendName, null, '');
     FriendModel search = FriendModel(uidSearch, searchName, null, '');
-    FriendModel sent = FriendModel(uidSent, sentName, null, '');
+    FriendModel sent = FriendModel(uidSent, sentName, 'pic.jpg', '');
     FriendsProvider friendsProvider = MockFriendsProvider();
 
     // mock behavior of friendsProvider
