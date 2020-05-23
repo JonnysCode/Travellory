@@ -27,8 +27,7 @@ void main() {
     );
   }
 
-  testWidgets('test profile page',
-      (WidgetTester tester) async {
+  testWidgets('test profile page', (WidgetTester tester) async {
     FriendsProfile page = FriendsProfile();
     FriendModel friend = FriendModel('uidFriend', 'friendName', null, '');
 
@@ -40,6 +39,39 @@ void main() {
     await tester.tap(find.byType(FlatButton));
     await tester.pumpAndSettle();
 
+    // expect page visible
     expect(find.byKey(Key('friends_profile')), findsOneWidget);
+  });
+
+  testWidgets('test if trips visible', (WidgetTester tester) async {
+    FriendsProfile page = FriendsProfile();
+    FriendModel friend = FriendModel('uidFriend', 'friendName', null, '');
+
+    final List<Object> args = [];
+    args.add(friend);
+    args.add(Achievements());
+
+    await pumpArgumentWidget(tester, args: args, child: page);
+    await tester.tap(find.byType(FlatButton));
+    await tester.pumpAndSettle();
+
+    // expect trips visible
+    expect(find.byKey(Key('friends_trips')), findsOneWidget);
+  });
+
+  testWidgets('test if achievements visible', (WidgetTester tester) async {
+    FriendsProfile page = FriendsProfile();
+    FriendModel friend = FriendModel('uidFriend', 'friendName', null, '');
+
+    final List<Object> args = [];
+    args.add(friend);
+    args.add(Achievements());
+
+    await pumpArgumentWidget(tester, args: args, child: page);
+    await tester.tap(find.byType(FlatButton));
+    await tester.pumpAndSettle();
+
+    // expect trips visible
+    expect(find.byKey(Key('friends_achievements')), findsOneWidget);
   });
 }
