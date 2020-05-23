@@ -68,7 +68,6 @@ void main() {
 
   testWidgets('test if profile page has three icons',
       (WidgetTester tester) async {
-    MockAuth mockAuth = MockAuth();
     ProfilePage page = ProfilePage();
 
     // Build our app and trigger a frame.
@@ -82,7 +81,6 @@ void main() {
 
   testWidgets('test if profile page has the two buttons: change-pw and logout',
           (WidgetTester tester) async {
-    MockAuth mockAuth = MockAuth();
     ProfilePage page = ProfilePage();
 
     // Build our app and trigger a frame.
