@@ -10,7 +10,7 @@ class FriendsProfile extends StatefulWidget {
     Key key,
   }) : super(key: key);
 
-  static final route = '/friends/friends_profile';
+  static const route = '/friends/friends_profile';
 
   @override
   _FriendsProfileState createState() => _FriendsProfileState();
@@ -64,7 +64,7 @@ class _FriendsProfileState extends State<FriendsProfile> {
                         left: 20,
                         bottom: MediaQuery.of(context).viewInsets.bottom
                       ),
-                      child: Text("Your friend hasn't created any trips yet.")
+                      child: Text("This user doesn't have any trips to display yet.")
                     ),
                   ),
                   SizedBox(height: 20),
