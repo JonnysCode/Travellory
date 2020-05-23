@@ -94,7 +94,7 @@ class AuthService implements BaseAuthService {
       await firebaseUser.reload();
       firebaseUser = await auth.currentUser();
 
-      await UserManagement.setUsername(firebaseUser);
+      await UserManagement().setUsername(firebaseUser);
 
       return _userFromFirebaseUser(firebaseUser);
     } on Exception catch (e) {

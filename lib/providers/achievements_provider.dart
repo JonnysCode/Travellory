@@ -38,7 +38,7 @@ class AchievementsProvider extends ChangeNotifier{
   Future<void> _fetchAchievements() async {
     isFetchingAchievements = true;
     try {
-      dynamic result = await UserManagement.getAchievements(_user.uid);
+      dynamic result = await UserManagement().getAchievements(_user.uid);
       _achievements = Achievements.fromData(result);
     } on PlatformException catch (error) {
       log.e(error.code+" "+error.message);
