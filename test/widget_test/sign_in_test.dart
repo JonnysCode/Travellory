@@ -15,7 +15,7 @@ void main() {
         auth: auth,
         child: MaterialApp(
           home: child,
-          routes: {'/loading': (BuildContext context) => LoadingHeart()},
+          routes: {'/loadingLogo': (BuildContext context) => LoadingHeart()},
         ));
   }
 

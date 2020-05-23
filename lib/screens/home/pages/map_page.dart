@@ -29,7 +29,9 @@ class _MapPageState extends State<MapPage> {
     super.initState();
 
     rootBundle.loadString('assets/g_map/map_style.json').then((string) {
-      _mapStyle = string;
+      if (this.mounted) {
+        _mapStyle = string;
+      }
     });
   }
 
@@ -40,19 +42,21 @@ class _MapPageState extends State<MapPage> {
         padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
         child: Container(
           key: Key('map_page'),
-          child: MapSample(),
+          child: GoogleMapWidget(),
         ),
       ),
     );
   }
 }
 
-class MapSample extends StatefulWidget {
+
+
+class GoogleMapWidget extends StatefulWidget {
   @override
-  State<MapSample> createState() => MapSampleState();
+  State<GoogleMapWidget> createState() => GoogleMapWidgetState();
 }
 
-class MapSampleState extends State<MapSample> {
+class GoogleMapWidgetState extends State<GoogleMapWidget> {
   final Completer<GoogleMapController> _controller = Completer();
   final GMapBorderLoader _gMapBorderLoader = GMapBorderLoader();
   final Map<String, Marker> _markers = {};
@@ -116,19 +120,24 @@ class MapSampleState extends State<MapSample> {
 
   Future<void> refreshMarkers(String activityType) async {
     await fetchMarkers(activityType);
-    setState(() {});
+    if (this.mounted){
+      setState(() {});
+    }
   }
 
   Future<void> onMapCreated() async {
-    await fetchMarkers("accommodations");
-    final _boundariesTemp = await _gMapBorderLoader.generateBorders(_userStates);
-
-    setState(() {
-      if (_boundariesTemp.isNotEmpty) {
-        _boundaries.clear();
-        _boundariesTemp.forEach(_boundaries.add);
+    if (this.mounted) {
+      await fetchMarkers("accommodations");
+      final _boundariesTemp = await _gMapBorderLoader.generateBorders(_userStates);
+      if (this.mounted) {
+        setState(() {
+          if (_boundariesTemp.isNotEmpty) {
+            _boundaries.clear();
+            _boundariesTemp.forEach(_boundaries.add);
+          }
+        });
       }
-    });
+    }
   }
 
   @override
