@@ -1,7 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:travellory/models/accommodation_model.dart';
 import 'package:travellory/providers/trips/temp_bookings_provider.dart';
-import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/utils/logger.dart';
 import 'package:travellory/models/abstract_model.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/widgets/forms/calculate_nights.dart';
 import 'package:travellory/widgets/forms/show_dialog.dart';
-import 'package:pedantic/pedantic.dart';
 import '../../utils/logger.dart';
 
 final log = getLogger('DatabaseAdder');
@@ -65,11 +63,12 @@ Function() onSubmitBooking(SingleTripProvider singleTripProvider, Model model, S
     BuildContext context, alertText) {
   return () async {
     showLoadingDialog(context);
-    if (model is AccommodationModel) {
-      model = calculateNightsForAccommodation(model);
+    Model submitModel = model;
+    if (submitModel is AccommodationModel) {
+      submitModel = calculateNightsForAccommodation(submitModel);
     }
 
-    final bool added = await singleTripProvider.addBooking(model, functionName);
+    final bool added = await singleTripProvider.addBooking(submitModel, functionName);
     Navigator.pop(context);
     if (added) {
       showSubmittedBookingDialog(context, alertText);
