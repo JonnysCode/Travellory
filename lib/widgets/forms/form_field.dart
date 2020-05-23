@@ -41,7 +41,7 @@ class TravelloryFormFieldState extends State<TravelloryFormField>
       controller = widget.controller != null ? widget.controller : TextEditingController()
         ..text = (widget.initialValue);
     } else {
-      controller = widget.controller != null ? widget.controller : TextEditingController();
+      controller = widget.controller == null ? TextEditingController() : widget.controller;
     }
   }
 

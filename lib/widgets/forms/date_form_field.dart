@@ -62,7 +62,7 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
   @override
   void initState() {
     super.initState();
-    controller = widget.controller != null ? widget.controller : TextEditingController();
+    controller = widget.controller == null ? TextEditingController() : widget.controller;
     setInitialDate();
   }
 
