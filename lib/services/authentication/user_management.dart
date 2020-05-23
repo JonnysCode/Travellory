@@ -13,22 +13,32 @@ class UserManagement {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'user-isUsernameAvailable',
     );
-    final dynamic result = await callable.call({'displayName': username});
+    final HttpsCallableResult result =
+        await callable.call({'displayName': username});
     return result.data['isAvailable'];
   }
-
-  static Future<HttpsCallableResult> setHometown(String uid, String hometown) {
+  
+  static Future<HttpsCallableResult> setHomeCountry(String uid, String homeCountry) {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
-      functionName: 'user-setHometown',
+      functionName: 'user-setHomeCountry',
     );
-    return callable.call({'uid': uid, 'hometown': hometown});
+    return callable.call({'uid': uid, 'homeCountry': homeCountry});
   }
 
-  static Future<String> getHometown(String uid) async {
+  static Future<String> getHomeCountry(String uid) async {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'user-getPublicUserInformation',
     );
-    final result = await callable.call({'uid': uid});
-    return result.data['hometown'];
+    final HttpsCallableResult result = await callable.call({'uid': uid});
+    return result.data['homeCountry'];
+  }
+
+  /// calls the user-getAchievements function and returns the JSON result
+  static Future<dynamic> getAchievements(String userUID) async {
+    final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+      functionName: 'user-getAchievements',
+    );
+    final dynamic result = await callable.call({'userUID': userUID});
+    return result.data;
   }
 }

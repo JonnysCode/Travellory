@@ -19,7 +19,7 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:travellory/widgets/bookings/bookings_get_buttons.dart';
 
 class RentalCar extends StatefulWidget {
-  static final route = '/booking/rentalcar';
+  static const route = '/booking/rentalcar';
 
   @override
   RentalCarState createState() => RentalCarState();

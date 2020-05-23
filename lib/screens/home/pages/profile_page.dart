@@ -6,16 +6,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/auth_provider.dart';
+import 'package:travellory/screens/achievements/view_achievements.dart';
 import 'package:travellory/screens/authenticate/password.dart';
-import 'package:travellory/screens/bookings/view_achievements.dart';
 import 'package:travellory/services/authentication/auth.dart';
-import 'package:travellory/services/storage.dart';
+import 'package:travellory/services/api/storage.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/utils/logger.dart';
-import 'package:travellory/widgets/forms/profile_hometown.dart';
+import 'package:travellory/widgets/forms/profile_homecountry.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -242,7 +242,7 @@ class UserInformation extends StatelessWidget {
               ),
             ]
           ),
-          ProfileHometown(user: user),
+          ProfileHomeCountry(user: user),
         ]
     );
   }

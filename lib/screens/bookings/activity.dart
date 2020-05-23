@@ -21,7 +21,7 @@ import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class Activity extends StatefulWidget {
-  static final route = '/booking/activity';
+  static const route = '/booking/activity';
 
   @override
   ActivityState createState() => ActivityState();

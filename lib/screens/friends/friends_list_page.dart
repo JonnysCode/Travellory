@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:travellory/models/friend_model.dart';
+import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/friends_provider.dart';
 import 'package:travellory/providers/screens/friends_page_provider.dart';
 import 'package:travellory/services/friends/friend_management.dart';
@@ -17,85 +19,88 @@ class FriendListPage extends StatefulWidget {
 }
 
 class _FriendListPageState extends State<FriendListPage> {
-  final _loadingRequests = [];
-  final _loadingFriends = [];
+  final List<bool> _isLoadingRequest = [];
+  final List<bool> _isLoadingFriend = [];
 
   void _performSocialAction(String uidSender, String uidReceiver,
-      SocialActionType type, int index) async {
-    final loading = _getLoadingList(type);
-    bool success;
-    String message;
+      SocialActionType socialActionType, int index) async {
+    // get loading tracking list according to social action type
+    final List<bool> isLoading = _getLoadingList(socialActionType);
 
+    // mark the corresponding widget in the list as loading
     setState(() {
-      loading[index] = true;
+      isLoading[index] = true;
     });
 
-    await FriendManagement.performSocialAction(uidSender, uidReceiver, type)
+    bool isSuccessful;
+    String messageToDisplay;
+
+    await FriendManagement().performSocialAction(
+            uidSender, uidReceiver, socialActionType)
         .then((value) async {
-      success = true;
-      message = _getMessage(type, success);
-      _showSnackBar(message, success);
+      isSuccessful = true;
+      messageToDisplay = _getMessageToDisplay(socialActionType, isSuccessful);
+      _showSnackBar(messageToDisplay, isSuccessful);
 
       final FriendsProvider friendsProvider =
           Provider.of<FriendsProvider>(context, listen: false);
-      await friendsProvider.update(type);
+      await friendsProvider.update(socialActionType);
     }).catchError((error) {
-      success = false;
-      message = _getMessage(type, success);
-      _showSnackBar(message, success);
+      isSuccessful = false;
+      messageToDisplay = _getMessageToDisplay(socialActionType, isSuccessful);
+      _showSnackBar(messageToDisplay, isSuccessful);
     });
 
+    // mark the corresponding widget in the list as not loading
     setState(() {
-      loading[index] = false;
+      isLoading[index] = false;
     });
   }
 
-  String _getMessage(SocialActionType type, bool success) {
-    String message;
-    switch (type) {
+  String _getMessageToDisplay(SocialActionType socialActionType, bool isSuccessful) {
+    String messageToDisplay;
+    switch (socialActionType) {
       case SocialActionType.acceptFriendRequest:
-        success
-            ? message = 'You got a new friend. Nice!'
-            : message = 'Failed to accept friend request. Try again.';
+        isSuccessful
+            ? messageToDisplay = 'You got a new friend. Nice!'
+            : messageToDisplay = 'Failed to accept friend request. Try again.';
         break;
       case SocialActionType.declineFriendRequest:
-        success
-            ? message = 'Declined friend request'
-            : message = 'Failed to decline friend request. Try again.';
+        isSuccessful
+            ? messageToDisplay = 'Declined friend request'
+            : messageToDisplay = 'Failed to decline friend request. Try again.';
         break;
       case SocialActionType.removeFriend:
-        success
-            ? message = 'Too bad for them.'
-            : message = 'Failed to remove friend. Try again.';
+        isSuccessful
+            ? messageToDisplay = 'Too bad for them.'
+            : messageToDisplay = 'Failed to remove friend. Try again.';
         break;
       default:
-        message = '';
+        messageToDisplay = '';
     }
-    return message;
+    return messageToDisplay;
   }
 
-  List _getLoadingList(SocialActionType type) {
-    switch (type) {
+  List<bool> _getLoadingList(SocialActionType socialActionType) {
+    switch (socialActionType) {
       case SocialActionType.declineFriendRequest:
       case SocialActionType.acceptFriendRequest:
-        return _loadingRequests;
-        break;
+        return _isLoadingRequest;
       case SocialActionType.removeFriend:
-        return _loadingFriends;
-        break;
+        return _isLoadingFriend;
       default:
         return null;
     }
   }
 
-  Widget _showSnackBar(String message, bool success) {
+  Widget _showSnackBar(String messageToDisplay, bool isSuccessful) {
     return SnackBar(
       content: Flushbar(
           flushbarStyle: FlushbarStyle.FLOATING,
-          title: success ? 'Success' : 'Error',
-          message: message,
+          title: isSuccessful ? 'Success' : 'Error',
+          message: messageToDisplay,
           backgroundColor:
-              success ? Theme.of(context).primaryColor : Colors.redAccent,
+              isSuccessful ? Theme.of(context).primaryColor : Colors.redAccent,
           margin: EdgeInsets.all(8),
           borderRadius: 12,
           duration: Duration(seconds: 3))
@@ -137,7 +142,7 @@ class _FriendListPageState extends State<FriendListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<FriendsProvider>(context).user;
+    final UserModel user = Provider.of<FriendsProvider>(context).user;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -191,17 +196,17 @@ class _FriendListPageState extends State<FriendListPage> {
                 left: 15,
                 right: 20,
                 bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: Scrollbar(
-                    child: Consumer<FriendsProvider>(
-                      builder: (_, friendsProvider, __) => friendsProvider.isFetchingFriendRequests
-                          ? LoadingHeart()
-                          : friendsProvider.friendRequests.isEmpty
+            child: Scrollbar(
+                child: Consumer<FriendsProvider>(
+              builder: (_, friendsProvider, __) =>
+                  friendsProvider.isFetchingFriendRequests
+                      ? LoadingHeart()
+                      : friendsProvider.friendRequests.isEmpty
                           ? Padding(
                               padding: EdgeInsets.only(
                                 top: 5,
                               ),
-                              child: Text('No pending friend requests')
-                            )
+                              child: Text('No pending friend requests'))
                           : ListView.separated(
                               padding: EdgeInsets.only(
                                 bottom: 30,
@@ -212,17 +217,17 @@ class _FriendListPageState extends State<FriendListPage> {
                                   const SizedBox(height: 12),
                               itemCount: friendsProvider.friendRequests.length,
                               itemBuilder: (context, index) {
-                                final friend =
+                                final FriendModel friend =
                                     friendsProvider.friendRequests[index];
-                                _loadingRequests.add(false);
+                                _isLoadingRequest.add(false);
                                 return friendsCard(
-                                  context,
-                                  friend,
-                                  _loadingRequests[index]
+                                  context: context,
+                                  friend: friend,
+                                  button: _isLoadingRequest[index]
                                       ? CircularProgressIndicator()
                                       : friendRequestButtons(
                                           friend.uid, user.uid, index),
-                                  10,
+                                  topPadding: 10,
                                 );
                               },
                             ),
@@ -271,16 +276,16 @@ class _FriendListPageState extends State<FriendListPage> {
                             const SizedBox(height: 12),
                           itemCount: friendsProvider.friends.length,
                           itemBuilder: (context, index) {
-                            final friend = friendsProvider.friends[index];
-                            _loadingFriends.add(false);
+                            final FriendModel friend = friendsProvider.friends[index];
+                            _isLoadingFriend.add(false);
                             return friendsCard(
-                              context,
-                              friend,
-                              _loadingFriends[index]
+                              context: context,
+                              friend: friend,
+                              button: _isLoadingFriend[index]
                                   ? CircularProgressIndicator()
                                   : removeFriendButton(
                                   friend.uid, user.uid, index),
-                              10,
+                              topPadding: 10,
                             );
                           },
                       ),

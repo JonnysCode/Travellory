@@ -10,7 +10,8 @@ import 'package:travellory/widgets/bookings/edit.dart';
 class TripsProviderMock extends Mock implements TripsProvider {}
 
 ModifyModelArguments passTestTripModel() {
-  final TripModel _newTripModel = TripModel();
+  final TripModel _newTripModel = TripModel()
+      ..imageNr = 1;
   return ModifyModelArguments(model: _newTripModel, isNewModel: true);
 }
 
@@ -21,7 +22,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/createtrip', arguments: passTestTripModel());
+        Navigator.pushNamed(context, CreateTrip.route, arguments: passTestTripModel());
       },
       child: Container(
         color: const Color(0xFFFFFF00),
@@ -75,6 +76,7 @@ void main() {
 
     expect(find.text('Trip Details', skipOffstage: false), findsOneWidget);
     expect(find.text('General Information', skipOffstage: false), findsOneWidget);
+    expect(find.text('Start Date *', skipOffstage: false), findsOneWidget);
     expect(find.text('End Date *', skipOffstage: false), findsOneWidget);
     expect(find.text('Destination *', skipOffstage: false), findsOneWidget);
     expect(find.text('Trip Title *', skipOffstage: false), findsOneWidget);
@@ -87,5 +89,16 @@ void main() {
     await pumpTrip(tester);
 
     expect(find.byKey(Key('image_icon'), skipOffstage: false), findsNWidgets(11));
+  });
+
+  testWidgets('test if cancel button is pressed', (WidgetTester tester) async {
+    TripsProviderMock tripsProvider = TripsProviderMock();
+    await tester.pumpWidget(makeTestableWidget(tripsProvider));
+    await pumpTrip(tester);
+
+    expect(find.byKey(Key('BookingButton'), skipOffstage: false), findsOneWidget);
+    expect(find.text('CANCEL', skipOffstage: false), findsOneWidget);
+    await tester.tap(find.byKey(Key('BookingButton'), skipOffstage: false));
+    await tester.pump();
   });
 }

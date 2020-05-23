@@ -1,5 +1,5 @@
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:travellory/models/friends_model.dart';
+import 'package:travellory/models/friend_model.dart';
 
 enum SocialActionType {
   sendFriendRequest,
@@ -10,84 +10,81 @@ enum SocialActionType {
 }
 
 class FriendManagement {
-  static Future<HttpsCallableResult> performSocialAction(
+  factory FriendManagement() {
+    return _instance;
+  }
+
+  FriendManagement._privateConstructor();
+
+  static final FriendManagement _instance =
+      FriendManagement._privateConstructor();
+
+  Future<HttpsCallableResult> performSocialAction(
       String uidSender, String uidReceiver, SocialActionType type) {
-    final functionName = _getFunctionName(type);
+    final String functionName = getFunctionName(type);
 
     return _callHttpsCallable(uidSender, uidReceiver, functionName);
   }
 
-  static Future<List<FriendsModel>> getFriends(String uid) async {
-    final result = await _callHttpsCallable(uid, null, 'friends-getFriends');
+  Future<List<FriendModel>> getFriends(String uid) async {
+    final HttpsCallableResult result =
+        await _callHttpsCallable(uid, null, 'friends-getFriends');
     return _generateFriendsListFromResult(result);
   }
 
-  static Future<List<FriendsModel>> getFriendRequests(String uid) async {
-    final result =
+  Future<List<FriendModel>> getFriendRequests(String uid) async {
+    final HttpsCallableResult result =
         await _callHttpsCallable(uid, null, 'friends-getFriendRequests');
     return _generateFriendRequestListFromResult(result);
   }
 
-  static Future<List<FriendsModel>> getSentFriendRequests(String uid) async {
-    final result =
-    await _callHttpsCallable(uid, null, 'friends-getSentFriendRequests');
+  Future<List<FriendModel>> getSentFriendRequests(String uid) async {
+    final HttpsCallableResult result =
+        await _callHttpsCallable(uid, null, 'friends-getSentFriendRequests');
     return _generateFriendsListFromResult(result);
   }
 
-
-  static Future<FriendsModel> getPublicUserInformation(String uid) async {
-    final result =
+  Future<FriendModel> getPublicUserInformation(String uid) async {
+    final HttpsCallableResult result =
         await _callHttpsCallable(uid, null, 'user-getPublicUserInformation');
-    final friend = FriendsModel(result.data['uid'],
-        result.data['displayName'], result.data['photoURL'], result.data['hometown']);
+    final FriendModel friend = FriendModel.fromData(result.data);
     return friend;
   }
 
-  static Future<List<FriendsModel>> searchByUsername(String displayName) async {
+  Future<List<FriendModel>> searchByUsername(String displayName) async {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'user-searchByUsername',
     );
-    final result = await callable.call({'displayName': displayName});
+    final HttpsCallableResult result =
+        await callable.call({'displayName': displayName});
     return _generateFriendsListFromResult(result);
   }
 
-  static Future<bool> areFriends(String uidSender, String uidReceiver) async {
-    final result =
-    await _callHttpsCallable(uidSender, uidReceiver, 'friends-areFriends');
-    return result.data['areFriends'];
-  }
-
-  static Future<bool> friendRequestExists(String uidSender, String uidReceiver) async {
-    final result =
-    await _callHttpsCallable(uidSender, uidReceiver, 'friends-friendRequestExists');
-    return result.data['friendRequestExists'];
-  }
-
-  static Future<List<FriendsModel>> _generateFriendsListFromResult(
+  Future<List<FriendModel>> _generateFriendsListFromResult(
       HttpsCallableResult result) async {
-    final List<FriendsModel> friendsList = [];
-    if(result.data != null) {
-      for (final uid in result.data) {
-        final friend = await getPublicUserInformation(uid);
+    final List<FriendModel> friendsList = [];
+    if (result.data != null) {
+      for (final String uid in result.data) {
+        final FriendModel friend = await getPublicUserInformation(uid);
         friendsList.add(friend);
       }
     }
     return friendsList;
   }
 
-  static Future<List<FriendsModel>> _generateFriendRequestListFromResult(
+  Future<List<FriendModel>> _generateFriendRequestListFromResult(
       HttpsCallableResult result) async {
-    final List<FriendsModel> friendsList = [];
-    if(result.data != null) {
-      for (final uid in result.data.keys) {
-        final friend = await getPublicUserInformation(uid);
+    final List<FriendModel> friendsList = [];
+    if (result.data != null) {
+      for (final String uid in result.data.keys) {
+        final FriendModel friend = await getPublicUserInformation(uid);
         friendsList.add(friend);
       }
     }
     return friendsList;
   }
 
-  static Future<HttpsCallableResult> _callHttpsCallable(
+  Future<HttpsCallableResult> _callHttpsCallable(
       String uidSender, String uidReceiver, String functionName) {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: functionName,
@@ -100,7 +97,7 @@ class FriendManagement {
     }
   }
 
-  static String _getFunctionName(SocialActionType type) {
+  String getFunctionName(SocialActionType type) {
     switch (type) {
       case SocialActionType.sendFriendRequest:
         return 'friends-sendFriendRequest';
