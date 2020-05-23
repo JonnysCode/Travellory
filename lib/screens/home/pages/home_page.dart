@@ -25,6 +25,7 @@ import 'package:travellory/utils/weather.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
+import 'package:travellory/widgets/bookings/new_booking_models.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -41,47 +42,6 @@ class _HomePage extends State<HomePage> {
     TripModel tripModel;
     if (trip != null) tripModel = trip.tripModel;
 
-    ModifyModelArguments _passPublicTransportModel() {
-      final PublicTransportModel publicTransportModel = PublicTransportModel();
-      if (tripModel != null) {
-        publicTransportModel.tripUID = tripModel.uid;
-      }
-      return ModifyModelArguments(
-          model: publicTransportModel, isNewModel: true);
-    }
-
-    ModifyModelArguments _passAccommodationModel() {
-      final AccommodationModel accommodationModel = AccommodationModel();
-      if (tripModel != null) {
-        accommodationModel.tripUID = tripModel.uid;
-      }
-      return ModifyModelArguments(model: accommodationModel, isNewModel: true);
-    }
-
-    ModifyModelArguments _passActivityModel() {
-      final ActivityModel activityModel = ActivityModel();
-      if (tripModel != null) {
-        activityModel.tripUID = tripModel.uid;
-      }
-      return ModifyModelArguments(model: activityModel, isNewModel: true);
-    }
-
-    ModifyModelArguments _passFlightModel() {
-      final FlightModel flightModel = FlightModel();
-      if (tripModel != null) {
-        flightModel.tripUID = tripModel.uid;
-      }
-      return ModifyModelArguments(model: flightModel, isNewModel: true);
-    }
-
-    ModifyModelArguments _passRentalCarModel() {
-      final RentalCarModel rentalCarModel = RentalCarModel();
-      if (tripModel != null) {
-        rentalCarModel.tripUID = tripModel.uid;
-      }
-      return ModifyModelArguments(model: rentalCarModel, isNewModel: true);
-    }
-
     final List<Dial> _dials = <Dial>[
       Dial(
           icon: FontAwesomeIcons.envelope,
@@ -95,7 +55,7 @@ class _HomePage extends State<HomePage> {
           onTab: () {
             tripsProvider.selectTrip(tripModel);
             Navigator.pushNamed(context, Activity.route,
-                arguments: _passActivityModel());
+                arguments: passActivityModel(tripModel));
           }),
       Dial(
           icon: FontAwesomeIcons.car,
@@ -103,7 +63,7 @@ class _HomePage extends State<HomePage> {
           onTab: () {
             tripsProvider.selectTrip(tripModel);
             Navigator.pushNamed(context, RentalCar.route,
-                arguments: _passRentalCarModel);
+                arguments: passRentalCarModel(tripModel));
           }),
       Dial(
           icon: FontAwesomeIcons.bus,
@@ -111,7 +71,7 @@ class _HomePage extends State<HomePage> {
           onTab: () {
             tripsProvider.selectTrip(tripModel);
             Navigator.pushNamed(context, PublicTransport.route,
-                arguments: _passPublicTransportModel());
+                arguments: passPublicTransportModel(tripModel));
           }),
       Dial(
           icon: FontAwesomeIcons.bed,
@@ -119,7 +79,7 @@ class _HomePage extends State<HomePage> {
           onTab: () {
             tripsProvider.selectTrip(tripModel);
             Navigator.pushNamed(context, Accommodation.route,
-                arguments: _passAccommodationModel());
+                arguments: passAccommodationModel(tripModel));
           }),
       Dial(
           icon: FontAwesomeIcons.plane,
@@ -127,7 +87,7 @@ class _HomePage extends State<HomePage> {
           onTab: () {
             tripsProvider.selectTrip(tripModel);
             Navigator.pushNamed(context, Flight.route,
-                arguments: _passFlightModel);
+                arguments: passFlightModel(tripModel));
           }),
     ];
 
