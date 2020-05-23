@@ -33,6 +33,7 @@ class UserManagement {
     return result.data['homeCountry'];
   }
 
+  /// calls the user-getAchievements function and returns the JSON result
   static Future<dynamic> getAchievements(String userUID) async {
     final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
       functionName: 'user-getAchievements',

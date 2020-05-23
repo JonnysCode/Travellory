@@ -22,28 +22,7 @@ class _FriendsProfileState extends State<FriendsProfile> {
     final List<Object> arguments = ModalRoute.of(context).settings.arguments;
     final FriendModel friend = arguments[0];
     final Achievements friendAchievements = arguments[1];
-
-    final  List<String> achievements = <String>[
-      'World',
-      'Europe',
-      'Asia',
-      'North America',
-      'South America',
-      'Africa',
-      'Australia',
-      'Antarctica'
-    ];
-    
-    final List<int> percentages = <int>[
-      friendAchievements.worldPercentage,
-      friendAchievements.europePercentage,
-      friendAchievements.asiaPercentage,
-      friendAchievements.northAmericaPercentage,
-      friendAchievements.southAmericaPercentage,
-      friendAchievements.africaPercentage,
-      friendAchievements.australiaPercentage,
-      friendAchievements.antarcticaPercentage
-    ];
+    final List<int> percentages = friendAchievements.toList();
 
     return Scaffold(
       key: Key('friends_profile'),
@@ -112,7 +91,7 @@ class _FriendsProfileState extends State<FriendsProfile> {
                     child:
                     achievementsWidget(
                         context: context,
-                        entries: achievements,
+                        entries: Achievements.continents,
                         percentages: percentages
                     ),
                   ),
