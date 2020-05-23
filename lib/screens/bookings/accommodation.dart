@@ -24,7 +24,6 @@ import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:travellory/widgets/buttons/submit_button.dart';
 
-
 class Accommodation extends StatefulWidget {
   static const route = '/booking/accommodation';
 
@@ -105,11 +104,11 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         context,
         singleTripProvider,
         accommodationModel,
-        isNewModel,
         DatabaseAdder.addAccommodation,
         DatabaseEditor.editAccommodation,
         alertText,
-        validateForm);
+        validateForm,
+        isNewModel: isNewModel);
   }
 
   @override
