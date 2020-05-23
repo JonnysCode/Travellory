@@ -11,9 +11,9 @@ import 'package:travellory/widgets/bookings/view_bookings.dart';
 
 /// The achievements view, which can be opened from the user profile page.
 class AchievementsView extends StatefulWidget {
-  AchievementsView({Key key}) : super(key: key);
+  const AchievementsView({Key key}) : super(key: key);
 
-  static final route = '/view/achievements';
+  static const route = '/view/achievements';
 
   @override
   _AchievementsViewState createState() => _AchievementsViewState();
@@ -28,7 +28,6 @@ class _AchievementsViewState extends State<AchievementsView> {
 
   SingleChildScrollView achievementsViewPage() {
     achievements ??= Provider.of<AchievementsProvider>(context).achievements;
-    log.d("worldpercentage: ${achievements.worldPercentage}");
     final List<int> percentages = achievements.toList();
 
     return SingleChildScrollView(
