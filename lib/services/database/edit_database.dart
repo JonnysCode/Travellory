@@ -49,7 +49,7 @@ class DatabaseEditor {
 }
 
 const String onEditSuccessfulText =
-    "You've just edited this entry. Your trip overview has been updated. " +
+    "You've just edited this entry. Your trip overview has been updated. "
         "However, it might take a moment to see the changes on your profile. ";
 
 void Function() onEditBooking(
@@ -57,11 +57,12 @@ void Function() onEditBooking(
 
   return () async {
     showLoadingDialog(context);
-    if (model is AccommodationModel) {
-      model = calculateNightsForAccommodation(model);
+    Model submitModel = model;
+    if (submitModel is AccommodationModel) {
+      submitModel = calculateNightsForAccommodation(submitModel);
     }
 
-    final bool edited = await singleTripProvider.editBooking(model, functionName);
+    final bool edited = await singleTripProvider.editBooking(submitModel, functionName);
     Navigator.pop(context);
     if (edited) {
       showEditedBookingDialog(context, onEditSuccessfulText);

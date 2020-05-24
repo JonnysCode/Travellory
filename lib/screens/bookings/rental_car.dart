@@ -215,11 +215,11 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                       context,
                       singleTripProvider,
                       _editRentalCarModel,
-                      isNewModel,
                       DatabaseAdder.addRentalCar,
                       DatabaseEditor.editRentalCar,
                       alertText,
-                      validateForm),
+                      validateForm,
+                      isNewModel: isNewModel),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 2, left: 15, right: 15),

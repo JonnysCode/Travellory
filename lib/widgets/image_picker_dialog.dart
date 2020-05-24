@@ -52,7 +52,7 @@ class ImagePickerDialog extends StatelessWidget {
     _controller.dispose();
   }
 
-  startTime() async {
+  Future startTime() async {
     final _duration = Duration(milliseconds: 200);
     return Timer(_duration, navigationPage);
   }
@@ -113,6 +113,4 @@ class ImagePickerDialog extends StatelessWidget {
           ),
         ));
   }
-
-
 }
