@@ -35,11 +35,11 @@ bool tripDateIsValid(String value, String labelText, BuildContext context) {
 
 /// Returns true if all booking dates begin on or after the new start trip date
 bool checkStartTrip(DateTime tripDate, SingleTripProvider singleTripProvider) {
-  bool accommodationIsValidated = checkStartDateAccommodations(tripDate, singleTripProvider);
-  bool activityIsValidated = checkStartDateActivities(tripDate, singleTripProvider);
-  bool rentalCarIsValidated = checkPickUpDateRentalCars(tripDate, singleTripProvider);
-  bool flightIsValidated = checkDepDateFlights(tripDate, singleTripProvider);
-  bool publicTransportIsValidated = checkDepDatePublicTransports(tripDate, singleTripProvider);
+  final bool accommodationIsValidated = checkStartDateAccommodations(tripDate, singleTripProvider);
+  final bool activityIsValidated = checkStartDateActivities(tripDate, singleTripProvider);
+  final bool rentalCarIsValidated = checkPickUpDateRentalCars(tripDate, singleTripProvider);
+  final bool flightIsValidated = checkDepDateFlights(tripDate, singleTripProvider);
+  final bool publicTransportIsValidated = checkDepDatePublicTransports(tripDate, singleTripProvider);
 
   if (accommodationIsValidated &&
       activityIsValidated &&
@@ -53,11 +53,11 @@ bool checkStartTrip(DateTime tripDate, SingleTripProvider singleTripProvider) {
 
 /// Returns true if all booking dates end on or before the new end trip date
 bool checkEndTrip(DateTime tripDate, SingleTripProvider singleTripProvider) {
-  bool accommodationIsValidated = checkEndDateAccommodations(tripDate, singleTripProvider);
-  bool activityIsValidated = checkEndDateActivities(tripDate, singleTripProvider);
-  bool rentalCarIsValidated = checkReturnDateRentalCars(tripDate, singleTripProvider);
-  bool flightIsValidated = checkArrDateFlights(tripDate, singleTripProvider);
-  bool publicTransportIsValidated = checkArrDatePublicTransports(tripDate, singleTripProvider);
+  final bool accommodationIsValidated = checkEndDateAccommodations(tripDate, singleTripProvider);
+  final bool activityIsValidated = checkEndDateActivities(tripDate, singleTripProvider);
+  final bool rentalCarIsValidated = checkReturnDateRentalCars(tripDate, singleTripProvider);
+  final bool flightIsValidated = checkArrDateFlights(tripDate, singleTripProvider);
+  final bool publicTransportIsValidated = checkArrDatePublicTransports(tripDate, singleTripProvider);
 
   if (accommodationIsValidated &&
       activityIsValidated &&
@@ -70,11 +70,11 @@ bool checkEndTrip(DateTime tripDate, SingleTripProvider singleTripProvider) {
 }
 
 bool checkStartDateAccommodations(DateTime tripDate, SingleTripProvider singleTripProvider) {
-  List<AccommodationModel> tripAccommodations = singleTripProvider.accommodations;
+  final List<AccommodationModel> tripAccommodations = singleTripProvider.accommodations;
   bool isValid = true;
 
   if (tripAccommodations.isNotEmpty) {
-    for (AccommodationModel model in tripAccommodations) {
+    for (final AccommodationModel model in tripAccommodations) {
       if (model.checkinDate != '' && model.checkinDate != null) {
         final DateTime checkinDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.checkinDate);
         if (tripDate.isAfter(checkinDate) && tripDate != checkinDate) {
@@ -87,11 +87,11 @@ bool checkStartDateAccommodations(DateTime tripDate, SingleTripProvider singleTr
 }
 
 bool checkEndDateAccommodations(DateTime tripDate, SingleTripProvider singleTripProvider) {
-  List<AccommodationModel> tripAccommodations = singleTripProvider.accommodations;
+  final List<AccommodationModel> tripAccommodations = singleTripProvider.accommodations;
   bool isValid = true;
 
   if (tripAccommodations.isNotEmpty) {
-    for (AccommodationModel model in tripAccommodations) {
+    for (final AccommodationModel model in tripAccommodations) {
       if (model.checkoutDate != '' && model.checkoutDate != null) {
         final DateTime checkoutDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.checkoutDate);
         if (tripDate.isBefore(checkoutDate) && tripDate != checkoutDate) {
@@ -104,15 +104,15 @@ bool checkEndDateAccommodations(DateTime tripDate, SingleTripProvider singleTrip
 }
 
 bool checkStartDateActivities(DateTime tripDate, SingleTripProvider singleTripProvider) {
-  List<ActivityModel> tripActivities = singleTripProvider.activities;
+  final List<ActivityModel> tripActivities = singleTripProvider.activities;
   bool isValid = true;
 
   if (tripActivities.isNotEmpty) {
-    for (ActivityModel model in tripActivities) {
+    for (final ActivityModel model in tripActivities) {
       if (model.startDate != '' && model.startDate != null) {
         final DateTime startDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.startDate);
         if (tripDate.isAfter(startDate) && tripDate != startDate) {
-          return false;
+          isValid = false;
         }
       }
     }
@@ -121,11 +121,11 @@ bool checkStartDateActivities(DateTime tripDate, SingleTripProvider singleTripPr
 }
 
 bool checkEndDateActivities(DateTime tripDate, SingleTripProvider singleTripProvider) {
-  List<ActivityModel> tripActivities = singleTripProvider.activities;
+  final List<ActivityModel> tripActivities = singleTripProvider.activities;
   bool isValid = true;
 
   if (tripActivities.isNotEmpty) {
-    for (ActivityModel model in tripActivities) {
+    for (final ActivityModel model in tripActivities) {
       if (model.endDate != '' && model.endDate != null) {
         final DateTime endDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.endDate);
         if (tripDate.isBefore(endDate) && tripDate != endDate) {
@@ -138,11 +138,11 @@ bool checkEndDateActivities(DateTime tripDate, SingleTripProvider singleTripProv
 }
 
 bool checkPickUpDateRentalCars(DateTime tripDate, SingleTripProvider singleTripProvider) {
-  List<RentalCarModel> tripRentalCars = singleTripProvider.rentalCars;
+  final List<RentalCarModel> tripRentalCars = singleTripProvider.rentalCars;
   bool isValid = true;
 
   if (tripRentalCars.isNotEmpty) {
-    for (RentalCarModel model in tripRentalCars) {
+    for (final RentalCarModel model in tripRentalCars) {
       if (model.pickupDate != '' && model.pickupDate != null) {
         final DateTime pickupDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.pickupDate);
         if (tripDate.isAfter(pickupDate) && tripDate != pickupDate) {
@@ -152,7 +152,7 @@ bool checkPickUpDateRentalCars(DateTime tripDate, SingleTripProvider singleTripP
       if (model.returnDate != '' && model.returnDate != null) {
         final DateTime returnDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.returnDate);
         if (tripDate.isBefore(returnDate) && tripDate != returnDate) {
-          return true;
+          isValid = true;
         }
       }
     }
@@ -161,11 +161,11 @@ bool checkPickUpDateRentalCars(DateTime tripDate, SingleTripProvider singleTripP
 }
 
 bool checkReturnDateRentalCars(DateTime tripDate, SingleTripProvider singleTripProvider) {
-  List<RentalCarModel> tripRentalCars = singleTripProvider.rentalCars;
+  final List<RentalCarModel> tripRentalCars = singleTripProvider.rentalCars;
   bool isValid = true;
 
   if (tripRentalCars.isNotEmpty) {
-    for (RentalCarModel model in tripRentalCars) {
+    for (final RentalCarModel model in tripRentalCars) {
       if (model.returnDate != '' && model.returnDate != null) {
         final DateTime returnDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.returnDate);
         if (tripDate.isBefore(returnDate) && tripDate != returnDate) {
@@ -178,11 +178,11 @@ bool checkReturnDateRentalCars(DateTime tripDate, SingleTripProvider singleTripP
 }
 
 bool checkDepDateFlights(DateTime tripDate, SingleTripProvider singleTripProvider) {
-  List<FlightModel> tripFlights = singleTripProvider.flights;
+  final List<FlightModel> tripFlights = singleTripProvider.flights;
   bool isValid = true;
 
   if (tripFlights.isNotEmpty) {
-    for (FlightModel model in tripFlights) {
+    for (final FlightModel model in tripFlights) {
       if (model.departureDate != '' && model.departureDate != null) {
         final DateTime departureDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.departureDate);
         if (tripDate.isAfter(departureDate) && tripDate != departureDate) {
@@ -195,11 +195,11 @@ bool checkDepDateFlights(DateTime tripDate, SingleTripProvider singleTripProvide
 }
 
 bool checkArrDateFlights(DateTime tripDate, SingleTripProvider singleTripProvider) {
-  List<FlightModel> tripFlights = singleTripProvider.flights;
+  final List<FlightModel> tripFlights = singleTripProvider.flights;
   bool isValid = true;
 
   if (tripFlights.isNotEmpty) {
-    for (FlightModel model in tripFlights) {
+    for (final FlightModel model in tripFlights) {
       if (model.arrivalDate != '' && model.arrivalDate != null) {
         final DateTime arrivalDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.arrivalDate);
         if (tripDate.isBefore(arrivalDate) && tripDate != arrivalDate) {
@@ -212,11 +212,11 @@ bool checkArrDateFlights(DateTime tripDate, SingleTripProvider singleTripProvide
 }
 
 bool checkDepDatePublicTransports(DateTime tripDate, SingleTripProvider singleTripProvider) {
-  List<PublicTransportModel> tripPublicTransports = singleTripProvider.publicTransports;
+  final List<PublicTransportModel> tripPublicTransports = singleTripProvider.publicTransports;
   bool isValid = true;
 
   if (tripPublicTransports.isNotEmpty) {
-    for (PublicTransportModel model in tripPublicTransports) {
+    for (final PublicTransportModel model in tripPublicTransports) {
       if (model.departureDate != '' && model.departureDate != null) {
         final DateTime departureDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.departureDate);
         if (tripDate.isAfter(departureDate) && tripDate != departureDate) {
@@ -229,11 +229,11 @@ bool checkDepDatePublicTransports(DateTime tripDate, SingleTripProvider singleTr
 }
 
 bool checkArrDatePublicTransports(DateTime tripDate, SingleTripProvider singleTripProvider) {
-  List<PublicTransportModel> tripPublicTransports = singleTripProvider.publicTransports;
+  final List<PublicTransportModel> tripPublicTransports = singleTripProvider.publicTransports;
   bool isValid = true;
 
   if (tripPublicTransports.isNotEmpty) {
-    for (PublicTransportModel model in tripPublicTransports) {
+    for (final PublicTransportModel model in tripPublicTransports) {
       if (model.arrivalDate != '' && model.arrivalDate != null) {
         final DateTime arrivalDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.arrivalDate);
         if (tripDate.isBefore(arrivalDate) && tripDate != arrivalDate) {
