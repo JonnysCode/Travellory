@@ -1,19 +1,21 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:travellory/models/achievements_model.dart';
 import 'package:travellory/models/friend_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:pedantic/pedantic.dart';
-import 'package:travellory/services/authentication/user_management.dart';
 import 'package:travellory/services/friends/friend_management.dart';
 import 'package:travellory/utils/logger.dart';
 
-class FriendsProvider extends ChangeNotifier{
-  FriendsProvider(){
+class FriendsProvider extends ChangeNotifier {
+  FriendsProvider({this.management}) {
     _friends = <FriendModel>[];
     _friendRequests = <FriendModel>[];
     _sentFriendRequests = <FriendModel>[];
   }
+
+  final FriendManagement management;
 
   final log = getLogger('FriendsProvider');
 
@@ -34,11 +36,11 @@ class FriendsProvider extends ChangeNotifier{
   Achievements get friendsAchievements => _friendsAchievements;
   UserModel get user => _user;
 
-  set user(UserModel user){
+  set user(UserModel user) {
     _user = user;
   }
 
-  void init(UserModel user){
+  void init(UserModel user) {
     _user = user;
     unawaited(_fetchFriends());
     unawaited(_fetchFriendRequests());
@@ -46,7 +48,7 @@ class FriendsProvider extends ChangeNotifier{
   }
 
   Future update(SocialActionType type) async {
-    switch(type) {
+    switch (type) {
       case SocialActionType.sendFriendRequest:
       case SocialActionType.declineFriendRequest:
         await _fetchFriendRequests();
@@ -63,14 +65,14 @@ class FriendsProvider extends ChangeNotifier{
         await _fetchFriendRequests();
         break;
       default:
-        // do nothing
+      // do nothing
     }
   }
 
   Future<void> _fetchFriends() async {
     isFetchingFriends = true;
     try {
-      _friends = await FriendManagement().getFriends(_user.uid);
+      _friends = await management.getFriends(_user.uid);
     } on PlatformException catch (error) {
       log.e(error.message);
     }
@@ -81,9 +83,15 @@ class FriendsProvider extends ChangeNotifier{
   Future<void> _fetchFriendRequests() async {
     isFetchingFriendRequests = true;
     try {
-      _friendRequests = await FriendManagement().getFriendRequests(_user.uid);
-    } on PlatformException catch (error) {
-        log.e(error.message);
+      _friendRequests = await management.getFriendRequests(_user.uid);
+    } on CloudFunctionsException catch (e) {
+      log.i('caught firebase functions exception');
+      log.e(e.code);
+      log.e(e.message);
+      log.e(e.details);
+    } on Exception catch (e) {
+      log.i('caught generic exception');
+      log.i(e);
     }
 
     isFetchingFriendRequests = false;
@@ -93,9 +101,15 @@ class FriendsProvider extends ChangeNotifier{
   Future<void> _fetchSentFriendRequests() async {
     isFetchingSentFriendRequests = true;
     try {
-      _sentFriendRequests = await FriendManagement().getSentFriendRequests(_user.uid);
-    } on PlatformException catch (error) {
-      log.e(error.message);
+      _sentFriendRequests = await management.getSentFriendRequests(_user.uid);
+    } on CloudFunctionsException catch (e) {
+      log.i('caught firebase functions exception');
+      log.e(e.code);
+      log.e(e.message);
+      log.e(e.details);
+    } on Exception catch (e) {
+      log.i('caught generic exception');
+      log.i(e);
     }
     isFetchingSentFriendRequests = false;
     notifyListeners();

@@ -12,6 +12,7 @@ import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
+import 'package:travellory/widgets/snack_bar_widget.dart';
 
 class FriendListPage extends StatefulWidget {
   @override
@@ -26,6 +27,8 @@ class _FriendListPageState extends State<FriendListPage> {
       SocialActionType socialActionType, int index) async {
     // get loading tracking list according to social action type
     final List<bool> isLoading = _getLoadingList(socialActionType);
+    final FriendsProvider friendsProvider =
+    Provider.of<FriendsProvider>(context, listen: false);
 
     // mark the corresponding widget in the list as loading
     setState(() {
@@ -35,20 +38,18 @@ class _FriendListPageState extends State<FriendListPage> {
     bool isSuccessful;
     String messageToDisplay;
 
-    await FriendManagement().performSocialAction(
+    await friendsProvider.management.performSocialAction(
             uidSender, uidReceiver, socialActionType)
         .then((value) async {
       isSuccessful = true;
       messageToDisplay = _getMessageToDisplay(socialActionType, isSuccessful);
-      _showSnackBar(messageToDisplay, isSuccessful);
+      showSnackBar(messageToDisplay, isSuccessful, context);
 
-      final FriendsProvider friendsProvider =
-          Provider.of<FriendsProvider>(context, listen: false);
       await friendsProvider.update(socialActionType);
     }).catchError((error) {
       isSuccessful = false;
       messageToDisplay = _getMessageToDisplay(socialActionType, isSuccessful);
-      _showSnackBar(messageToDisplay, isSuccessful);
+      showSnackBar(messageToDisplay, isSuccessful, context);
     });
 
     // mark the corresponding widget in the list as not loading
@@ -91,21 +92,6 @@ class _FriendListPageState extends State<FriendListPage> {
       default:
         return null;
     }
-  }
-
-  Widget _showSnackBar(String messageToDisplay, bool isSuccessful) {
-    return SnackBar(
-      content: Flushbar(
-          flushbarStyle: FlushbarStyle.FLOATING,
-          title: isSuccessful ? 'Success' : 'Error',
-          message: messageToDisplay,
-          backgroundColor:
-              isSuccessful ? Theme.of(context).primaryColor : Colors.redAccent,
-          margin: EdgeInsets.all(8),
-          borderRadius: 12,
-          duration: Duration(seconds: 3))
-        ..show(context),
-    );
   }
 
   Widget friendRequestButtons(String uidSender, String uidReceiver, int index) {
