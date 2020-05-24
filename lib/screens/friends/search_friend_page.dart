@@ -1,6 +1,5 @@
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +12,7 @@ import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/friends/friends_card_widget.dart';
+import 'package:travellory/widgets/snack_bar_widget.dart';
 
 class SearchFriendsPage extends StatefulWidget {
   @override
@@ -26,6 +26,10 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
 
   void _sendFriendRequest(
       String uidSender, String uidReceiver, int index) async {
+
+    final FriendsProvider friendsProvider =
+    Provider.of<FriendsProvider>(context, listen: false);
+
     String messageToDisplay;
     bool isSuccessful;
 
@@ -33,13 +37,11 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       _isLoadingResult[index] = true;
     });
 
-    await FriendManagement().performSocialAction(
+    await friendsProvider.management.performSocialAction(
             uidSender, uidReceiver, SocialActionType.sendFriendRequest)
         .then((value) async {
       messageToDisplay = "Friend request sent";
       isSuccessful = true;
-      final FriendsProvider friendsProvider =
-          Provider.of<FriendsProvider>(context, listen: false);
       await friendsProvider.update(SocialActionType.sendFriendRequest);
     }).catchError((error) {
       messageToDisplay = "There was an error. Try again.";
@@ -49,11 +51,15 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     setState(() {
       _isLoadingResult[index] = false;
     });
-    _showSnackBar(messageToDisplay, isSuccessful);
+    showSnackBar(messageToDisplay, isSuccessful, context);
   }
 
   void _withdrawFriendRequest(
       String uidSender, String uidReceiver, int index) async {
+
+    final FriendsProvider friendsProvider =
+    Provider.of<FriendsProvider>(context, listen: false);
+
     String messageToDisplay;
     bool isSuccessful;
 
@@ -61,13 +67,11 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       _isLoadingRequest[index] = true;
     });
 
-    await FriendManagement().performSocialAction(
+    await friendsProvider.management.performSocialAction(
             uidReceiver, uidSender, SocialActionType.declineFriendRequest)
         .then((value) async {
       messageToDisplay = "Friend request withdrawn";
       isSuccessful = true;
-      final FriendsProvider friendsProvider =
-          Provider.of<FriendsProvider>(context, listen: false);
       await friendsProvider.update(SocialActionType.declineFriendRequest);
     }).catchError((error) {
       messageToDisplay = "There was an error. Try again.";
@@ -77,7 +81,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     setState(() {
       _isLoadingRequest[index] = false;
     });
-    _showSnackBar(messageToDisplay, isSuccessful);
+    showSnackBar(messageToDisplay, isSuccessful, context);
   }
 
   bool _isFriendOrHasFriendRequest(FriendModel friend) {
@@ -117,24 +121,9 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       String uidSender, String uidReceiver, int index) {
     return Wrap(
       children: <Widget>[
-        socialButton(Key('remove_button'), Icons.clear, Colors.red,
+        socialButton(Key('withdraw_button'), Icons.clear, Colors.red,
             () => _withdrawFriendRequest(uidSender, uidReceiver, index)),
       ],
-    );
-  }
-
-  Widget _showSnackBar(String messageToDisplay, bool isSuccessful) {
-    return SnackBar(
-      content: Flushbar(
-          flushbarStyle: FlushbarStyle.FLOATING,
-          title: isSuccessful ? 'Success' : 'Error',
-          message: messageToDisplay,
-          backgroundColor:
-              isSuccessful ? Theme.of(context).primaryColor : Colors.redAccent,
-          margin: EdgeInsets.all(8),
-          borderRadius: 12,
-          duration: Duration(seconds: 3))
-        ..show(context),
     );
   }
 
@@ -148,12 +137,15 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
       searchWord = search;
     });
 
-    return FriendManagement().searchByUsername(search);
+    final FriendsProvider friendsProvider =
+    Provider.of<FriendsProvider>(context, listen: false);
+
+    return friendsProvider.management.searchByUsername(search);
   }
 
   @override
   Widget build(BuildContext context) {
-    final UserModel user = Provider.of<UserModel>(context);
+    final UserModel user = Provider.of<FriendsProvider>(context).user;
 
     return SafeArea(
         key: Key('search_friends'),

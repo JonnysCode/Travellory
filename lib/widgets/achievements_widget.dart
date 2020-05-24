@@ -11,7 +11,7 @@ Widget achievementsWidget({BookingHeader bookingHeader, @required BuildContext c
     for (int i = 0; i < entries.length; i++)
       Container(
         key: Key(entries[i]),
-        height: 81,
+        height: 86,
         child: Stack(children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),

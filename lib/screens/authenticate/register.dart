@@ -71,7 +71,7 @@ class _RegisterState extends State<Register> {
 
   void _checkUsernameAvailability() async {
     final isUsernameAvailable =
-        await UserManagement.isUsernameAvailable(_nameController.text);
+        await UserManagement().isUsernameAvailable(_nameController.text);
     setState(() {
       _isUsernameAvailable = isUsernameAvailable;
       _isUsernameAvailable

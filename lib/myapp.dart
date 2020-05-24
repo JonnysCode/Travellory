@@ -28,6 +28,7 @@ import 'package:travellory/screens/trip/trip_screen.dart';
 import 'package:travellory/screens/wrapper.dart';
 import 'package:travellory/services/authentication/auth.dart';
 import 'package:travellory/screens/friends/friends_profile.dart';
+import 'package:travellory/services/friends/friend_management.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/shared/loading_logo.dart';
 
@@ -41,7 +42,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<TripsProvider>(
               create: (context) => TripsProvider()),
           ChangeNotifierProvider<FriendsProvider>(
-              create: (context) => FriendsProvider()),
+              create: (context) =>
+                  FriendsProvider(management: FriendManagement())),
           ChangeNotifierProvider<AchievementsProvider>(
               create: (context) => AchievementsProvider()),
           StreamProvider<UserModel>.value(value: AuthService().user),
