@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/models/activity_model.dart';
-import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/models/rental_car_model.dart';
 import 'package:travellory/models/trip_model.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/bookings/accommodation.dart';
@@ -19,6 +14,7 @@ import 'package:travellory/screens/bookings/view_public_transport.dart';
 import 'package:travellory/screens/bookings/view_rental_car.dart';
 import 'package:travellory/shared/loading_heart.dart';
 import 'package:travellory/widgets/bookings/edit.dart';
+import 'package:travellory/widgets/bookings/new_booking_models.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/booking_cards/booking_card.dart';
 import 'package:travellory/widgets/trip/trip_header.dart';
@@ -31,8 +27,7 @@ class TripScreen extends StatelessWidget {
     final TripModel tripModel =
         Provider.of<TripsProvider>(context, listen: false).selectedTrip.tripModel;
 
-    Widget _subsection(
-        String title, String route, ModifyModelArguments Function() passedModelArguments) {
+    Widget _subsection(String title, String route, ModifyModelArguments passedModelArguments) {
       return Container(
         key: Key('SubSection'),
         height: 40,
@@ -62,8 +57,7 @@ class TripScreen extends StatelessWidget {
               top: 6,
               right: 0,
               child: GestureDetector(
-                onTap: () =>
-                    {Navigator.pushNamed(context, route, arguments: passedModelArguments())},
+                onTap: () => {Navigator.pushNamed(context, route, arguments: passedModelArguments)},
                 child: Container(
                   height: 28,
                   width: 28,
@@ -98,11 +92,7 @@ class TripScreen extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: _subsection('Flights', Flight.route, () {
-                          final FlightModel flightModel = FlightModel();
-                          flightModel.tripUID = tripModel.uid;
-                          return ModifyModelArguments(model: flightModel, isNewModel: true);
-                        }),
+                        child: _subsection('Flights', Flight.route, passFlightModel(tripModel)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -124,11 +114,8 @@ class TripScreen extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: _subsection('Accommodation', Accommodation.route, () {
-                          final AccommodationModel accommodationModel = AccommodationModel();
-                          accommodationModel.tripUID = tripModel.uid;
-                          return ModifyModelArguments(model: accommodationModel, isNewModel: true);
-                        }),
+                        child: _subsection('Accommodation', Accommodation.route,
+                            passAccommodationModel(tripModel)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -150,11 +137,8 @@ class TripScreen extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: _subsection('Activities', Activity.route, () {
-                          final ActivityModel activityModel = ActivityModel();
-                          activityModel.tripUID = tripModel.uid;
-                          return ModifyModelArguments(model: activityModel, isNewModel: true);
-                        }),
+                        child:
+                            _subsection('Activities', Activity.route, passActivityModel(tripModel)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -176,11 +160,8 @@ class TripScreen extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: _subsection('Car rental', RentalCar.route, () {
-                          final RentalCarModel rentalCarModel = RentalCarModel();
-                          rentalCarModel.tripUID = tripModel.uid;
-                          return ModifyModelArguments(model: rentalCarModel, isNewModel: true);
-                        }),
+                        child: _subsection(
+                            'Car rental', RentalCar.route, passRentalCarModel(tripModel)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -202,12 +183,8 @@ class TripScreen extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: _subsection('Transportation', PublicTransport.route, () {
-                          final PublicTransportModel publicTransportModel = PublicTransportModel();
-                          publicTransportModel.tripUID = tripModel.uid;
-                          return ModifyModelArguments(
-                              model: publicTransportModel, isNewModel: true);
-                        }),
+                        child: _subsection('Transportation', PublicTransport.route,
+                            passPublicTransportModel(tripModel)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),

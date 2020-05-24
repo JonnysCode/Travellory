@@ -7,9 +7,9 @@ AccommodationModel calculateNightsForAccommodation(AccommodationModel model) {
       model.checkinDate != null &&
       model.checkoutDate != '' &&
       model.checkoutDate != null) {
-    DateTime firstDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.checkinDate);
-    DateTime secondDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.checkoutDate);
-    String nights = secondDate.difference(firstDate).inDays.toString();
+    final DateTime firstDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.checkinDate);
+    final DateTime secondDate = DateFormat("dd-MM-yyyy", "en_US").parse(model.checkoutDate);
+    final String nights = secondDate.difference(firstDate).inDays.toString();
     model.nights = nights;
   }
   return model;

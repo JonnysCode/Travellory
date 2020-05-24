@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 import '../font_widgets.dart';
 
-Widget filledButton(String text, Color splashColor, Color highlightColor, Color fillColor,
-    Color textColor, void function()) {
+Widget filledButton(String text, Color splashColor, Color highlightColor,
+    Color fillColor, Color textColor, void function()) {
   return RaisedButton(
     key: Key('${text.toLowerCase().trim()}Button'),
     highlightElevation: 0.0,
@@ -14,12 +15,14 @@ Widget filledButton(String text, Color splashColor, Color highlightColor, Color 
     onPressed: () => function(),
     child: Text(
       text,
-      style: TextStyle(fontWeight: FontWeight.bold, color: textColor, fontSize: 20),
+      style: TextStyle(
+          fontWeight: FontWeight.bold, color: textColor, fontSize: 20),
     ),
   );
 }
 
-Widget alertButton(String text, Color fillColor, BuildContext context, void function()) {
+Widget alertButton(
+    String text, Color fillColor, BuildContext context, void function()) {
   return RaisedButton(
     key: Key('${text.toLowerCase().trim()}Button'),
     highlightElevation: 0.0,
@@ -31,7 +34,8 @@ Widget alertButton(String text, Color fillColor, BuildContext context, void func
     onPressed: () => function(),
     child: Text(
       text,
-      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 20),
+      style: TextStyle(
+          fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 20),
     ),
   );
 }
@@ -39,22 +43,22 @@ Widget alertButton(String text, Color fillColor, BuildContext context, void func
 Widget socialButton(Key key, IconData icon, Color color, void function()) {
   return Material(
       child: IconButton(
-        key: key,
-        padding: EdgeInsets.only(
-          top: 0,
-        ),
-        alignment: Alignment.topRight,
-        iconSize: 30,
-        icon: Icon(
-          icon,
-          color: color,
-        ),
-        onPressed: () => function(),
-      )
-  );
+    key: key,
+    padding: EdgeInsets.only(
+      top: 0,
+    ),
+    alignment: Alignment.topRight,
+    iconSize: 30,
+    icon: Icon(
+      icon,
+      color: color,
+    ),
+    onPressed: () => function(),
+  ));
 }
 
-Widget roundedButton(String buttonLabel, EdgeInsets margin, Color bgColor, Color textColor) {
+Widget roundedButton(
+    String buttonLabel, EdgeInsets margin, Color bgColor, Color textColor) {
   final loginBtn = Container(
     margin: margin,
     padding: EdgeInsets.all(15.0),
@@ -62,9 +66,9 @@ Widget roundedButton(String buttonLabel, EdgeInsets margin, Color bgColor, Color
     decoration: BoxDecoration(
       color: bgColor,
       borderRadius: BorderRadius.all(const Radius.circular(100.0)),
-      boxShadow: <BoxShadow>[
+      boxShadow: const <BoxShadow>[
         BoxShadow(
-          color: const Color(0xFF696969),
+          color: Color(0xFF696969),
           offset: Offset(1.0, 6.0),
           blurRadius: 0.001,
         ),

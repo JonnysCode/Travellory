@@ -24,7 +24,6 @@ import 'package:travellory/services/api/google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:travellory/widgets/buttons/submit_button.dart';
 
-
 class PublicTransport extends StatefulWidget {
   static const route = '/booking/publictransport';
 
@@ -53,8 +52,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
       "You've just submitted the booking information for your public transportation booking. "
       "You can see all the information in the trip overview";
 
-  final String cancelText =
-      'You are about to abort this booking entry. '
+  final String cancelText = 'You are about to abort this booking entry. '
       'Do you want to go back to the previous site and discard your changes?';
 
   Widget itemBuilder(BuildContext context, int index, Animation<double> animation) {
@@ -77,14 +75,15 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
   void _setSubmitButton(SingleTripProvider singleTripProvider, BuildContext context,
       PublicTransportModel publicTransportModel, bool isNewModel) {
     publicTransportList[publicTransportList.length - 3] = getSubmitButton(
-        context,
-        singleTripProvider,
-        publicTransportModel,
-        isNewModel,
-        DatabaseAdder.addPublicTransportation,
-        DatabaseEditor.editPublicTransportation,
-        alertText,
-        validateForm);
+      context,
+      singleTripProvider,
+      publicTransportModel,
+      DatabaseAdder.addPublicTransportation,
+      DatabaseEditor.editPublicTransportation,
+      alertText,
+      validateForm,
+      isNewModel: isNewModel,
+    );
   }
 
   Column _getPublicTransportContent(TripModel tripModel, SingleTripProvider singleTripProvider,

@@ -100,5 +100,4 @@ void main(){
     // Verify that the HomePage is present.
     expect(find.byKey(Key('home_schedule')), findsOneWidget);
   });
-
 }
