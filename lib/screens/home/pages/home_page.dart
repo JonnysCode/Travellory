@@ -169,8 +169,8 @@ class _HomePage extends State<HomePage> {
                           'assets/images/home/weather/011-few_clouds.png'),
                     )
                   else
-                    SizedBox(
-                      width: 180,
+                    Container(
+                      width: 160,
                       child: Weather(tripModel.destination, OpenWeatherAPI())
                     ),
                   if (tripModel == null) Expanded(
@@ -181,7 +181,7 @@ class _HomePage extends State<HomePage> {
                           SizedBox(
                               height: 30,
                               child: AutoSizeText(
-                                  'HiHallloooo ${cutUsername(user.displayName)}',
+                                  'Hi ${cutUsername(user.displayName)}',
                                   maxLines: 2,
                                   style: TextStyle(
                                     fontSize: 30.0,
@@ -192,52 +192,57 @@ class _HomePage extends State<HomePage> {
                   ) 
                   else 
                     Expanded(
-                      child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              if (timeTripStart < 0)
-                                Padding(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                if (timeTripStart < 0)
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: AutoSizeText('Hi ${cutUsername(user.displayName)}',
+                                        maxLines: 2,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 28,
+                                          fontFamily: 'FashionFetish',
+                                          fontWeight: FontWeight.w900,
+                                          height: 1.1,
+                                        )),
+                                  )
+                                else Padding(
                                   padding: const EdgeInsets.only(bottom: 10),
-                                  child: AutoSizeText('Hi ${cutUsername(user.displayName)}',
+                                  child: AutoSizeText('Get Ready ${cutUsername(user.displayName)}',
                                       maxLines: 2,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontSize: 28,
+                                        fontSize: 28.0,
                                         fontFamily: 'FashionFetish',
                                         fontWeight: FontWeight.w900,
-                                        height: 1.2
+                                        height: 1.1,
                                       )),
-                                )
-                              else Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: AutoSizeText('Get Ready ${cutUsername(user.displayName)}',
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                      fontSize: 30.0,
-                                      fontFamily: 'FashionFetish',
-                                      fontWeight: FontWeight.w900,
-                                    )),
-                              ),
-                              AutoSizeText(
-                                timeTripStart == 1
-                                    ? 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} day. Pack your bags now.'
-                                    : timeTripStart < 0
-                                    ? 'Add some activities and enjoy your trip!'
-                                    : timeTripStart == 0
-                                    ? 'Your trip to ${tripModel.destination} starts today. Let\'s go.'
-                                    : 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} days.',
-                                maxFontSize: 26,
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontFamily: 'FashionFetish',
-                                  fontWeight: FontWeight.w900,
-                                  height: 1.3,
-                                  color: Colors.black54
                                 ),
-                              ),
-                            ]),
+                                AutoSizeText(
+                                  timeTripStart == 1
+                                      ? 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} day. Pack your bags now.'
+                                      : timeTripStart < 0
+                                      ? 'Add some activities and enjoy your trip!'
+                                      : timeTripStart == 0
+                                      ? 'Your trip to ${tripModel.destination} starts today. Let\'s go.'
+                                      : 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} days.',
+                                  maxFontSize: 26,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'FashionFetish',
+                                    fontWeight: FontWeight.w900,
+                                    height: 1.3,
+                                    color: Colors.black54
+                                  ),
+                                ),
+                              ]),
+                      ),
                     ),
                 ],
               ),
