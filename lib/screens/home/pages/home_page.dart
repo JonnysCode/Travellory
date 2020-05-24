@@ -162,10 +162,13 @@ class _HomePage extends State<HomePage> {
               child: Row(
                 children: <Widget>[
                   if (tripModel == null || tripModel.destination.isEmpty)
-                    Image(
-                      height: 100,
-                      image: AssetImage(
-                          'assets/images/home/weather/011-few_clouds.png'),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30),
+                      child: Image(
+                        height: 100,
+                        image: AssetImage(
+                            'assets/images/home/weather/011-few_clouds.png'),
+                      ),
                     )
                   else
                     Container(
@@ -174,7 +177,7 @@ class _HomePage extends State<HomePage> {
                     ),
                   if (tripModel == null) Expanded(
                     child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           SizedBox(
@@ -182,6 +185,7 @@ class _HomePage extends State<HomePage> {
                               child: AutoSizeText(
                                   'Hi ${cutUsername(user.displayName)}',
                                   maxLines: 2,
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 30.0,
                                     fontFamily: 'FashionFetish',
@@ -263,7 +267,10 @@ class _HomePage extends State<HomePage> {
                   ),
                   child: trip == null
                       ? Center(
-                          child: Text('Create a trip first'),
+                          child: Text(
+                            'There are no upcoming trips!\nCreate a new one now.',
+                            textAlign: TextAlign.center,
+                          ),
                         )
                       : Stack(
                         children: <Widget>[
