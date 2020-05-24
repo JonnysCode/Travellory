@@ -34,12 +34,10 @@ class FlightState<T extends Flight> extends State<T> {
     return flightFormKey.currentState.validate();
   }
 
-  final String alertText =
-      "You've just submitted the booking information for your flight booking. "
+  final String alertText = "You've just submitted the booking information for your flight booking. "
       "You can see all the information in the trip overview";
 
-  final String cancelText =
-      'You are about to abort this booking entry. '
+  final String cancelText = 'You are about to abort this booking entry. '
       'Do you want to go back to the previous site and discard your changes?';
 
   Column _getFlightContent(BuildContext context, SingleTripProvider singleTripProvider,
@@ -208,8 +206,9 @@ class FlightState<T extends Flight> extends State<T> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: getSubmitButton(context, singleTripProvider, _editFlightModel, isNewModel,
-                      DatabaseAdder.addFlight, DatabaseEditor.editFlight, alertText, validateForm),
+                  child: getSubmitButton(context, singleTripProvider, _editFlightModel,
+                      DatabaseAdder.addFlight, DatabaseEditor.editFlight, alertText, validateForm,
+                      isNewModel: isNewModel),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
@@ -243,8 +242,8 @@ class FlightState<T extends Flight> extends State<T> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         color: Colors.white,
-        child:
-            _getFlightContent(context, singleTripProvider, tripModel, _flightModel, _arguments.isNewModel),
+        child: _getFlightContent(
+            context, singleTripProvider, tripModel, _flightModel, _arguments.isNewModel),
       ),
     );
   }

@@ -44,8 +44,7 @@ class ActivityState<T extends Activity> extends State<T> {
       "You've just submitted the booking information for your activity booking."
       "You can see all the information in the trip overview";
 
-  final String cancelText =
-      'You are about to abort this booking entry. '
+  final String cancelText = 'You are about to abort this booking entry. '
       'Do you want to go back to the previous site and discard your changes?';
 
   int _selectedIndex;
@@ -66,7 +65,7 @@ class ActivityState<T extends Activity> extends State<T> {
     _activityModel = _editActivityModel;
 
     // need to set selecetedIndex for editModel
-    if(!isNewModel) {
+    if (!isNewModel) {
       _selectedIndex = _editActivityModel.imageNr - 1;
     }
 
@@ -210,9 +209,15 @@ class ActivityState<T extends Activity> extends State<T> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: getSubmitButton(context, singleTripProvider, _editActivityModel,
-                      isNewModel, DatabaseAdder.addActivity, DatabaseEditor.editActivity,
-                      alertText, validateForm),
+                  child: getSubmitButton(
+                      context,
+                      singleTripProvider,
+                      _editActivityModel,
+                      DatabaseAdder.addActivity,
+                      DatabaseEditor.editActivity,
+                      alertText,
+                      validateForm,
+                      isNewModel: isNewModel),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
