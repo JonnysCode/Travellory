@@ -100,9 +100,9 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
   Future<void> onMapCreated() async {
     final UserModel _user = Provider.of<UserModel>(context, listen: false);
     try {
-      dynamic result = await UserManagement().getAchievements(_user.uid);
-      dynamic _visitedCountries = result["visitedCountries"];
-      for (var countries in _visitedCountries) {
+      final dynamic result = await UserManagement().getAchievements(_user.uid);
+      final dynamic _visitedCountries = result["visitedCountries"];
+      for (final countries in _visitedCountries) {
         log.i(countries.toString());
         if (!userStates.contains(countries.toString())) {
           userStates.add(countries.toString());
