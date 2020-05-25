@@ -28,7 +28,7 @@ class DatabaseAdder {
   static const String addActivity = 'activity-addActivity';
   static const String addFlight = 'flight-addFlight';
   static const String addPublicTransportation = 'publictransportation-addPublicTransportation';
-  static const String addRentalCar = 'rentaltar-addRentalCar';
+  static const String addRentalCar = 'rentalcar-addRentalCar';
 
   static int _count = 0;
 
