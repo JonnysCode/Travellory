@@ -24,11 +24,11 @@ class DatabaseAdder {
 
   static const int _maxCount = 50;
   static const String addTrip = 'trips-addTrip';
-  static const String addAccommodation = 'booking-addAccommodation';
+  static const String addAccommodation = 'accommodation-addAccommodation';
   static const String addActivity = 'activity-addActivity';
-  static const String addFlight = 'booking-addFlight';
-  static const String addPublicTransportation = 'booking-addPublicTransportation';
-  static const String addRentalCar = 'booking-addRentalCar';
+  static const String addFlight = 'flight-addFlight';
+  static const String addPublicTransportation = 'publictransportation-addPublicTransportation';
+  static const String addRentalCar = 'rentaltar-addRentalCar';
 
   static int _count = 0;
 

@@ -21,12 +21,12 @@ class DatabaseDeleter {
   static final DatabaseDeleter _instance = DatabaseDeleter._privateConstructor();
 
   static const deleteTrip = 'trips-deleteTrip';
-  static const deleteTempAccommodation = 'booking-deleteTempAccommodation';
+  static const deleteTempAccommodation = 'tempaccommodation-deleteTempAccommodation';
   static const deleteTripName = 'trips-deleteTrip';
-  static const deleteFlight = 'booking-deleteFlight';
-  static const deleteRentalCar = 'booking-deleteRentalCar';
-  static const deleteAccommodation = 'booking-deleteAccommodation';
-  static const deletePublicTransportation = 'booking-deletePublicTransportation';
+  static const deleteFlight = 'flight-deleteFlight';
+  static const deleteRentalCar = 'rentalcar-deleteRentalCar';
+  static const deleteAccommodation = 'accommodation-deleteAccommodation';
+  static const deletePublicTransportation = 'publictransportation-deletePublicTransportation';
   static const deleteActivity = 'activity-deleteActivity';
 
   Future<bool> deleteModel(Model model, String correspondingFunctionName) async {

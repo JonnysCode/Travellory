@@ -144,7 +144,7 @@ class SingleTripProvider {
   Future<void> _fetchPublicTransportation() async {
     isFetchingPublicTransports = true;
     publicTransports = await _databaseGetter.getEntriesFromDatabase(
-        tripModel.uid, DatabaseGetter.getPublicTransportations);
+        tripModel.uid, DatabaseGetter.getPublicTransportation);
     isFetchingPublicTransports = false;
     _notifier.notify();
   }
