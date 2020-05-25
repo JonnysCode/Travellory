@@ -18,12 +18,12 @@ class DatabaseGetter {
   static final DatabaseGetter _instance = DatabaseGetter._privateConstructor();
 
   static const String getTrips = 'trips-getTrips';
-  static const String getFlights = 'booking-getFlights';
-  static const String getAccommodations = 'booking-getAccommodations';
+  static const String getFlights = 'flight-getFlights';
+  static const String getAccommodations = 'accommodation-getAccommodations';
   static const String getActivities = 'activity-getActivities';
-  static const String getRentalCars = 'booking-getRentalCars';
-  static const String getPublicTransportations = 'booking-getPublicTransportations';
-  static const String getTempAccommodations = 'booking-getTempAccommodations';
+  static const String getRentalCars = 'rentalcar-getRentalCars';
+  static const String getPublicTransportation = 'publictransportation-getPublicTransportations';
+  static const String getTempAccommodations = 'tempaccommodation-getTempAccommodations';
 
   static const String _emptyResult = 'no-data';
   static const int _maxCount = 200;
@@ -84,7 +84,7 @@ class DatabaseGetter {
       case getRentalCars:
         entries = <RentalCarModel>[];
         break;
-      case getPublicTransportations:
+      case getPublicTransportation:
         entries = <PublicTransportModel>[];
         break;
       case getActivities:
@@ -112,7 +112,7 @@ class DatabaseGetter {
       case getRentalCars:
         entries = _createRentalCars(dbEntries);
         break;
-      case getPublicTransportations:
+      case getPublicTransportation:
         entries = _createPublicTransports(dbEntries);
         break;
       case getActivities:
