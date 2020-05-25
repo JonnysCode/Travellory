@@ -6,3 +6,8 @@ Master Branch:
 
 Dev Branch:
 [![Quality Gate Status](http://160.85.252.103:9000/api/project_badges/measure?project=psit4-travellory-dev&metric=alert_status)](http://160.85.252.103:9000/dashboard?id=psit4-travellory-dev)
+
+## Installation manual
+[step1]: https://github.zhaw.ch/raw/PSIT4-Travellory/psit4-travellory/installation_manual/installation_manual/PSIT4_installation_manual_v3_rev2-1.png "Step1"
+[step2]: https://github.zhaw.ch/raw/PSIT4-Travellory/psit4-travellory/installation_manual/installation_manual/PSIT4_installation_manual_v3_rev2-2.png "Step2"
+[step3]: https://github.zhaw.ch/raw/PSIT4-Travellory/psit4-travellory/installation_manual/installation_manual/PSIT4_installation_manual_v3_rev2-3.png "Step3"
