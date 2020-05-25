@@ -36,8 +36,7 @@ class _RegisterState extends State<ChangePassword> {
         Navigator.popUntil(context, ModalRoute.withName('/'));
         _showSnackBar();
       }).catchError((error) {
-        setState(
-            () => _changePwError = 'Password could not be changed. Try again.');
+        setState(() => _changePwError = 'Password could not be changed. Try again.');
         Navigator.pop(context);
       });
     }
@@ -105,36 +104,30 @@ class _RegisterState extends State<ChangePassword> {
                         _oldPasswordController,
                         null,
                         ValidatorType.password,
-                        true,
-                        _reauthError),
+                        _reauthError,
+                        obscure: true),
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 20),
                     child: inputAuthentication(
-                        Icon(FontAwesomeIcons.unlockAlt),
-                        "NEW PASSWORD",
-                        Theme.of(context).primaryColor,
-                        _passwordController,
-                        null,
-                        ValidatorType.password,
-                        true,
-                        _changePwError),
+                      Icon(FontAwesomeIcons.unlockAlt),
+                      "NEW PASSWORD",
+                      Theme.of(context).primaryColor,
+                      _passwordController,
+                      null,
+                      ValidatorType.password,
+                      _changePwError,
+                      obscure: true,
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: 20,
-                        right: 20,
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                        left: 20, right: 20, bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Container(
                       height: 50,
                       width: MediaQuery.of(context).size.width,
-                      child: filledButton(
-                          "SAVE",
-                          Colors.white,
-                          Theme.of(context).primaryColor,
-                          Theme.of(context).primaryColor,
-                          Colors.white,
-                          _validateAndChangePW),
+                      child: filledButton("SAVE", Colors.white, Theme.of(context).primaryColor,
+                          Theme.of(context).primaryColor, Colors.white, _validateAndChangePW),
                     ),
                   ),
                 ],

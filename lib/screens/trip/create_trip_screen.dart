@@ -24,7 +24,6 @@ class CreateTrip extends StatefulWidget {
 }
 
 class _CreateTripState extends State<CreateTrip> {
-
   final GlobalKey<DateFormFieldState> _startDateFormFieldKey = GlobalKey<DateFormFieldState>();
   final createTripFormKey = GlobalKey<FormState>();
   TextEditingController locationController = TextEditingController();
@@ -36,7 +35,8 @@ class _CreateTripState extends State<CreateTrip> {
   final String cancelText = 'You are about to abort this new trip entry. '
       'Do you want to go back to the previous site and discard your changes?';
 
-  final List<ImageProvider> _images = List.generate(11, (index) => AssetImage('assets/images/home/trip/trip_${(index + 1).toString()}.png'));
+  final List<ImageProvider> _images = List.generate(
+      11, (index) => AssetImage('assets/images/home/trip/trip_${(index + 1).toString()}.png'));
 
   TripModel _tripModel;
 
@@ -91,7 +91,8 @@ class _CreateTripState extends State<CreateTrip> {
                   child: Stack(
                     children: <Widget>[
                       Center(
-                          child: BookingSiteTitle('Create Trip', FontAwesomeIcons.suitcaseRolling)),
+                          child: BookingSiteTitle(
+                              siteTitle: 'Create Trip', icon: FontAwesomeIcons.suitcaseRolling)),
                       Positioned(
                         top: 0,
                         right: 0,
@@ -111,7 +112,7 @@ class _CreateTripState extends State<CreateTrip> {
                     child: ListView(children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: SectionTitle('Trip Details'),
+                        child: SectionTitle(sectionTitle: 'Trip Details'),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -147,9 +148,12 @@ class _CreateTripState extends State<CreateTrip> {
                           optional: false,
                           controller: locationController,
                           onTap: (locationController) async {
-                            final PlacesDetailsResponse detail = await GooglePlaces.openGooglePlacesSearch(context);
-                            final AddressComponent country = GooglePlaces.getCountryAddressComponent(detail);
-                            final String continent = await GooglePlaces.getContinentFromCountryCode(country.shortName);
+                            final PlacesDetailsResponse detail =
+                                await GooglePlaces.openGooglePlacesSearch(context);
+                            final AddressComponent country =
+                                GooglePlaces.getCountryAddressComponent(detail);
+                            final String continent =
+                                await GooglePlaces.getContinentFromCountryCode(country.shortName);
 
                             locationController.text = detail.result.formattedAddress;
                             _tripModel.destination = detail.result.formattedAddress;
@@ -162,7 +166,7 @@ class _CreateTripState extends State<CreateTrip> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                        child: SectionTitle('General Information'),
+                        child: SectionTitle(sectionTitle: 'General Information'),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -178,8 +182,8 @@ class _CreateTripState extends State<CreateTrip> {
                         padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                         child: ImageSelector(
                           images: _images,
-                          initialValue: _tripModel.imageNr-1,
-                          onChanged: (value) => _tripModel.imageNr = value+1,
+                          initialValue: _tripModel.imageNr - 1,
+                          onChanged: (value) => _tripModel.imageNr = value + 1,
                         ),
                       ),
                       SizedBox(

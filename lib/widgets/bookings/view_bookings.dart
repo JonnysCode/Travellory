@@ -23,9 +23,8 @@ Container bookingView(SingleChildScrollView child) {
 
 Container bottomBar(BuildContext context, Model model, String deleteFunctionName) {
   final String modelText = getDeleteTextBasedOn(model);
-  final String deleteAlertText = 'You are about to delete your ' +
-      modelText +
-      ' entry. Are you sure you want to continue? This action cannot be undone!';
+  final String deleteAlertText = 'You are about to delete your $modelText entry. '
+      'Are you sure you want to continue? This action cannot be undone!';
 
   return Container(
     key: Key('BottomBar'),

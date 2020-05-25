@@ -38,10 +38,17 @@ class TravelloryFormFieldState extends State<TravelloryFormField>
   void initState() {
     super.initState();
     if (widget.initialValue != null) {
-      controller = widget.controller != null ? widget.controller : TextEditingController()
-        ..text = (widget.initialValue);
+      if (widget.controller == null) {
+        controller = TextEditingController()..text = widget.initialValue;
+      } else {
+        controller = widget.controller;
+      }
     } else {
-      controller = widget.controller == null ? TextEditingController() : widget.controller;
+      if (widget.controller == null) {
+        controller = TextEditingController();
+      } else {
+        controller = widget.controller;
+      }
     }
   }
 
@@ -83,7 +90,7 @@ class TravelloryFormFieldState extends State<TravelloryFormField>
   }
 }
 
-void showAdditional(ListModel<Widget> list, bool show, Widget parent, Widget additionalField) {
+void showAdditional(ListModel<Widget> list, Widget parent, Widget additionalField, {bool show}) {
   if (show) {
     list.insert(list.indexOf(parent) + 1, additionalField);
   } else {
