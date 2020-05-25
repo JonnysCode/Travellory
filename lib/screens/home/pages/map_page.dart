@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -15,12 +14,13 @@ import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
 import 'package:travellory/screens/bookings/view_activity.dart';
 import 'package:travellory/services/authentication/user_management.dart';
-import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 import 'package:travellory/models/user_model.dart';
+import 'package:travellory/utils/logger.dart';
 
 String _mapStyle;
 final List<String> _userStates = List<String>();
+final log = getLogger('MapPage');
 
 class MapPage extends StatefulWidget {
   @override
@@ -52,8 +52,6 @@ class _MapPageState extends State<MapPage> {
     );
   }
 }
-
-
 
 class GoogleMapWidget extends StatefulWidget {
   @override
@@ -131,7 +129,7 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
       dynamic result = await UserManagement().getAchievements(_user.uid);
       dynamic _visitedCountries = result["visitedCountries"];
       for(var countries in _visitedCountries){
-        print(countries.toString());
+        log.i(countries.toString());
         if(!_userStates.contains(countries.toString())){
           _userStates.add(countries.toString());
         }
