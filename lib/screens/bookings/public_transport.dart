@@ -139,8 +139,8 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         types: publicTransportTypes,
         onChanged: (value) {
           _publicTransportModel.transportationType = value.name;
-          showAdditional(publicTransportList, value.name == 'Other', transportTypeDropdown,
-              typeSpecificationAdditional);
+          showAdditional(publicTransportList, transportTypeDropdown,
+              typeSpecificationAdditional, show: value.name == 'Other');
         },
         validatorText: 'Please enter the required information');
 
@@ -149,7 +149,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
       label: 'Did you book this public transport?',
       onChanged: (value) {
         _publicTransportModel.booked = value;
-        showAdditional(publicTransportList, value, bookingMadeCheckbox, bookingMadeAdditional);
+        showAdditional(publicTransportList, bookingMadeCheckbox, bookingMadeAdditional, show: value);
       },
     );
 
@@ -159,14 +159,14 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         onChanged: (value) {
           _publicTransportModel.seatReserved = value;
           showAdditional(
-              publicTransportList, value, seatReservedCheckbox, seatReservationAdditional);
+              publicTransportList, seatReservedCheckbox, seatReservationAdditional, show: value);
         });
 
     // don't put in build because it will be recreated on every build
     // with state changes this is not appreciated
     final List<Widget> shown = [
-      BookingSiteTitle('Public Transport', FontAwesomeIcons.train),
-      SectionTitle('Type of Transportation'),
+      BookingSiteTitle(siteTitle: 'Public Transport', icon: FontAwesomeIcons.train),
+      SectionTitle(sectionTitle: 'Type of Transportation'),
       transportTypeDropdown,
       TravelloryFormField(
           initialValue: _publicTransportModel.publicTransportCompany,
@@ -174,7 +174,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
           icon: Icon(FontAwesomeIcons.solidBuilding),
           optional: true,
           onChanged: (value) => _publicTransportModel.publicTransportCompany = value),
-      SectionTitle('Departure Information'),
+      SectionTitle(sectionTitle: 'Departure Information'),
       TravelloryFormField(
         initialValue: _publicTransportModel.departureLocation,
         labelText: 'Departure Location *',
@@ -207,7 +207,7 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         icon: Icon(FontAwesomeIcons.clock),
         chosenTimeString: (value) => _publicTransportModel.departureTime = value,
       ),
-      SectionTitle('Arrival Information'),
+      SectionTitle(sectionTitle: 'Arrival Information'),
       TravelloryFormField(
         initialValue: _publicTransportModel.arrivalLocation,
         labelText: 'Arrival Location *',
@@ -241,10 +241,10 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         optional: true,
         chosenTimeString: (value) => _publicTransportModel.arrivalTime = value,
       ),
-      SectionTitle('Booking Details'),
+      SectionTitle(sectionTitle: 'Booking Details'),
       bookingMadeCheckbox,
       seatReservedCheckbox,
-      SectionTitle('Notes'),
+      SectionTitle(sectionTitle: 'Notes'),
       TravelloryFormField(
         initialValue: _publicTransportModel.notes,
         labelText: 'Notes',

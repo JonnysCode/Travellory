@@ -80,11 +80,11 @@ class ActivityState<T extends Activity> extends State<T> {
               child: Column(children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: BookingSiteTitle('Activity', FontAwesomeIcons.fortAwesome),
+                  child: BookingSiteTitle(siteTitle: 'Activity', icon: FontAwesomeIcons.fortAwesome),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: SectionTitle('Category'),
+                  child: SectionTitle(sectionTitle: 'Category'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -103,7 +103,7 @@ class ActivityState<T extends Activity> extends State<T> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: SectionTitle('More Details'),
+                  child: SectionTitle(sectionTitle: 'More Details'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -125,7 +125,7 @@ class ActivityState<T extends Activity> extends State<T> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: SectionTitle('Schedule'),
+                  child: SectionTitle(sectionTitle: 'Schedule'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -195,7 +195,7 @@ class ActivityState<T extends Activity> extends State<T> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: SectionTitle('Notes'),
+                  child: SectionTitle(sectionTitle: 'Notes'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),

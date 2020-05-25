@@ -56,11 +56,11 @@ class RentalCarState<T extends RentalCar> extends State<T> {
               child: Column(children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: BookingSiteTitle('Rental Car', FontAwesomeIcons.car),
+                  child: BookingSiteTitle(siteTitle: 'Rental Car', icon: FontAwesomeIcons.car),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: SectionTitle('General Information'),
+                  child: SectionTitle(sectionTitle: 'General Information'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -82,7 +82,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: SectionTitle('Pick Up Information'),
+                  child: SectionTitle(sectionTitle: 'Pick Up Information'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -128,7 +128,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: SectionTitle('Return Information'),
+                  child: SectionTitle(sectionTitle: 'Return Information'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -175,7 +175,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: SectionTitle('Car Details'),
+                  child: SectionTitle(sectionTitle: 'Car Details'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -197,7 +197,7 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                  child: SectionTitle('Notes'),
+                  child: SectionTitle(sectionTitle: 'Notes'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
