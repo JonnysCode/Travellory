@@ -109,121 +109,105 @@ class _HomePage extends State<HomePage> {
     return SafeArea(
       child: Container(
         key: Key('home_page'),
-        child: Stack(
+        child: Column(
           children: <Widget>[
-           if (tripModel == null || tripModel.destination.isEmpty)
-                 Positioned(
-                    left: 30,
-                    top: 30,
-                    child: Image(
-                      height: 100,
-                      image: AssetImage(
-                          'assets/images/home/weather/011-few_clouds.png'),
+            Container(
+              height: 150,
+              child: Row(
+                children: <Widget>[
+                  if (tripModel == null || tripModel.destination.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30),
+                      child: Image(
+                        height: 100,
+                        image: AssetImage(
+                            'assets/images/home/weather/011-few_clouds.png'),
+                      ),
+                    )
+                  else
+                    Container(
+                      width: 160,
+                      child: Weather(tripModel.destination, OpenWeatherAPI())
                     ),
-                  )
-                else Weather(tripModel.destination, OpenWeatherAPI()),
-            tripModel == null
-                ? Positioned(
-                    top: 20,
-                    left: 170,
-                    right: 6,
+                  if (tripModel == null) Expanded(
                     child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           SizedBox(
-                              height: 35,
-                              child: Text('Hii',
+                              height: 30,
+                              child: AutoSizeText(
+                                  'Hi ${cutUsername(user.displayName)}',
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 30.0,
                                     fontFamily: 'FashionFetish',
                                     fontWeight: FontWeight.w900,
                                   ))),
-                          SizedBox(
-                              height: 30,
-                              child: AutoSizeText(
-                                cutUsername(user.displayName),
-                                style: TextStyle(
-                                  fontSize: 30.0,
-                                  fontFamily: 'FashionFetish',
-                                  fontWeight: FontWeight.w900,
-                                ),
-                                maxLines: 1,
-                              )),
-                          SizedBox(
-                            child: Text(
-                              'You have no trips, so plan or add a trip!',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  height: 1.2,
-                                  fontFamily: 'FashionFetish',
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black54),
-                            ),
-                          )
-                        ]))
-                : Positioned(
-                    top: 20,
-                    left: 170,
-                    right: 6,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                         if (timeTripStart < 0)
-                               SizedBox(
-                                  height: 35,
-                                  child: Text('Hii',
+                        ]),
+                  ) 
+                  else 
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                if (timeTripStart < 0)
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: AutoSizeText('Hi ${cutUsername(user.displayName)}',
+                                        maxLines: 2,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 28,
+                                          fontFamily: 'FashionFetish',
+                                          fontWeight: FontWeight.w900,
+                                          height: 1.1,
+                                        )),
+                                  )
+                                else Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: AutoSizeText('Get Ready ${cutUsername(user.displayName)}',
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontSize: 30.0,
+                                        fontSize: 28.0,
                                         fontFamily: 'FashionFetish',
                                         fontWeight: FontWeight.w900,
-                                      )))
-                              else SizedBox(
-                                  height: 35,
-                                  child: Text('Get Ready',
-                                      style: TextStyle(
-                                        fontSize: 30.0,
-                                        fontFamily: 'FashionFetish',
-                                        fontWeight: FontWeight.w900,
-                                      ))),
-                          SizedBox(
-                              height: 25,
-                              child: AutoSizeText(
-                                cutUsername(user.displayName),
-                                style: TextStyle(
-                                  fontSize: 30.0,
-                                  fontFamily: 'FashionFetish',
-                                  fontWeight: FontWeight.w900,
+                                        height: 1.1,
+                                      )),
                                 ),
-                                maxLines: 1,
-                              )),
-                          SizedBox(
-                            child: AutoSizeText(
-                              timeTripStart == 1
-                                  ? 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} day. Pack your bags now.'
-                                  : timeTripStart < 0
+                                AutoSizeText(
+                                  timeTripStart == 1
+                                      ? 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} day. Pack your bags now.'
+                                      : timeTripStart < 0
                                       ? 'Add some activities and enjoy your trip!'
                                       : timeTripStart == 0
-                                          ? 'Your trip to ${tripModel.destination} starts today. Let\'s go.'
-                                          : 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} days.',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  height: 1.2,
-                                  fontFamily: 'FashionFetish',
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black54),
-                              maxLines: 3,
-                            ),
-                          )
-                        ])),
-            Align(
-              alignment: Alignment.bottomCenter,
+                                      ? 'Your trip to ${tripModel.destination} starts today. Let\'s go.'
+                                      : 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} days.',
+                                  maxFontSize: 26,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'FashionFetish',
+                                    fontWeight: FontWeight.w900,
+                                    height: 1.3,
+                                    color: Colors.black54
+                                  ),
+                                ),
+                              ]),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6.0),
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius:
@@ -237,37 +221,43 @@ class _HomePage extends State<HomePage> {
                   ),
                   child: trip == null
                       ? Center(
-                          child: Text('Create a trip first'),
+                          child: Text(
+                            'There are no upcoming trips!\nCreate a new one now.',
+                            textAlign: TextAlign.center,
+                          ),
                         )
-                      : Column(
-                          children: <Widget>[
-                            FashionFetishText(
-                              text: trip.tripModel.name,
-                              size: 20,
-                              height: 1.6,
-                              fontWeight: FashionFontWeight.heavy,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 3),
-                              child: Container(
-                                height: 1,
-                                color: Colors.black12,
+                      : Stack(
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              FashionFetishText(
+                                text: trip.tripModel.name,
+                                size: 20,
+                                height: 1.6,
+                                fontWeight: FashionFontWeight.heavy,
                               ),
-                            ),
-                            Expanded(
-                              child: Schedule(
-                                key: Key('home_schedule'),
-                                trip: trip,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 3),
+                                child: Container(
+                                  height: 1,
+                                  color: Colors.black12,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
+                              Expanded(
+                                child: Schedule(
+                                  key: Key('home_schedule'),
+                                  trip: trip,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SpeedDialButton(key: Key('home_page_dial'), dials: _dials),
+                        ]
+                      ),
                 ),
               ),
             ),
-            if (trip != null)
-              SpeedDialButton(key: Key('home_page_dial'), dials: _dials),
           ],
         ),
       ),
