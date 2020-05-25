@@ -1,6 +1,4 @@
-
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,7 +21,6 @@ class GMapBorderLoader{
         strokeWidth: 2,
         visible: true,
         zIndex: 0,
-        //onTap: (){print("Tapped!");},
       ));
     }
   }
@@ -45,7 +42,6 @@ class GMapBorderLoader{
       strokeWidth: 2,
       visible: true,
       zIndex: 0,
-      //onTap: (){print("Tapped!");},
     ));
   }
 
