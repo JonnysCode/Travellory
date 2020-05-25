@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -13,7 +14,10 @@ import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/bookings/view_accommodation.dart';
 import 'package:travellory/screens/bookings/view_activity.dart';
+import 'package:travellory/services/authentication/user_management.dart';
+import 'package:travellory/services/database/add_database.dart';
 import 'package:travellory/utils/g_map/g_map_border_loader.dart';
+import 'package:travellory/models/user_model.dart';
 
 String _mapStyle;
 final List<String> _userStates = List<String>();
@@ -69,10 +73,6 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
     _markers.clear();
 
     for (final SingleTripProvider trip in trips) {
-      if(!_userStates.contains(trip.tripModel.country)){
-        _userStates.add(trip.tripModel.country);
-      }
-
       switch(activityType){
         case "accommodations": {
           final List<AccommodationModel> accommodations = trip.accommodations;
@@ -126,6 +126,21 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
   }
 
   Future<void> onMapCreated() async {
+    final UserModel _user = Provider.of<UserModel>(context, listen: false);
+    try {
+      dynamic result = await UserManagement().getAchievements(_user.uid);
+      dynamic _visitedCountries = result["visitedCountries"];
+      for(var countries in _visitedCountries){
+        print(countries.toString());
+        if(!_userStates.contains(countries.toString())){
+          _userStates.add(countries.toString());
+        }
+      }
+    } on Exception catch (error) {
+      log.e(error);
+    }
+
+
     if (this.mounted) {
       await fetchMarkers("accommodations");
       final _boundariesTemp = await _gMapBorderLoader.generateBorders(_userStates);
