@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:travellory/widgets/map/map_widget.dart';
 
+String mapStyle;
+
 class MapPage extends StatefulWidget {
   @override
   _MapPageState createState() => _MapPageState();
