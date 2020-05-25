@@ -18,9 +18,9 @@ import 'package:travellory/utils/g_map/g_map_border_loader.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/utils/logger.dart';
 
-String _mapStyle;
-final List<String> _userStates = List<String>();
 final log = getLogger('MapPage');
+final List<String> userStates = List<String>();
+String mapStyle;
 
 class MapPage extends StatefulWidget {
   @override
@@ -28,13 +28,14 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+
   @override
   void initState() {
     super.initState();
 
     rootBundle.loadString('assets/g_map/map_style.json').then((string) {
       if (this.mounted) {
-        _mapStyle = string;
+        mapStyle = string;
       }
     });
   }
@@ -130,8 +131,8 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
       dynamic _visitedCountries = result["visitedCountries"];
       for(var countries in _visitedCountries){
         log.i(countries.toString());
-        if(!_userStates.contains(countries.toString())){
-          _userStates.add(countries.toString());
+        if(!userStates.contains(countries.toString())){
+          userStates.add(countries.toString());
         }
       }
     } on Exception catch (error) {
@@ -141,7 +142,7 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
 
     if (this.mounted) {
       await fetchMarkers("accommodations");
-      final _boundariesTemp = await _gMapBorderLoader.generateBorders(_userStates);
+      final _boundariesTemp = await _gMapBorderLoader.generateBorders(userStates);
       if (this.mounted) {
         setState(() {
           if (_boundariesTemp.isNotEmpty) {
@@ -169,7 +170,7 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
             ),
           ].toSet(),
           onMapCreated: (GoogleMapController controller) {
-            controller.setMapStyle(_mapStyle);
+            controller.setMapStyle(mapStyle);
             onMapCreated();
             _controller.complete(controller);
           },
