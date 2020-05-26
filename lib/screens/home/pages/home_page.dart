@@ -13,10 +13,12 @@ import 'package:travellory/screens/bookings/activity.dart';
 import 'package:travellory/screens/bookings/flight.dart';
 import 'package:travellory/screens/bookings/public_transport.dart';
 import 'package:travellory/screens/bookings/rental_car.dart';
+import 'package:travellory/screens/trip/create_trip_screen.dart';
 import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
 import 'package:travellory/services/api/openWeatherAPI.dart';
 import 'package:travellory/utils/date_handler.dart';
 import 'package:travellory/utils/weather.dart';
+import 'package:travellory/widgets/bookings/edit.dart';
 import 'package:travellory/widgets/buttons/speed_dial_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/widgets/bookings/new_booking_models.dart';
@@ -36,7 +38,7 @@ class _HomePage extends State<HomePage> {
     TripModel tripModel;
     if (trip != null) tripModel = trip.tripModel;
 
-    final List<Dial> _dials = <Dial>[
+    final List<Dial> _addBookingDials = <Dial>[
       Dial(
           icon: FontAwesomeIcons.envelope,
           description: 'Manage forwarded bookings',
@@ -85,6 +87,17 @@ class _HomePage extends State<HomePage> {
           }),
     ];
 
+    final List<Dial> _addTripDials = <Dial>[
+      Dial(
+          icon: FontAwesomeIcons.suitcaseRolling,
+          description: 'Create a Trip',
+          onTab: () {
+            Navigator.pushNamed(context, CreateTrip.route,
+                arguments: ModifyModelArguments(
+                    model: TripModel(imageNr: 1), isNewModel: true));
+          }),
+    ];
+
     var now = DateTime(0);
     var timeTripStart = 0;
     var startDateFormatted = '';
@@ -128,51 +141,57 @@ class _HomePage extends State<HomePage> {
                         )
                       else
                         Container(
-                          width: 160,
-                          child: Weather(tripModel.destination, OpenWeatherAPI())
-                        ),
-                      if (tripModel == null) Expanded(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              SizedBox(
-                                  height: 30,
-                                  child: AutoSizeText(
-                                      'Hi ${cutUsername(user.displayName)}',
-                                      maxLines: 2,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 30.0,
-                                        fontFamily: 'FashionFetish',
-                                        fontWeight: FontWeight.w900,
-                                      ))),
-                            ]),
-                      )
+                            width: 160,
+                            child: Weather(
+                                tripModel.destination, OpenWeatherAPI())),
+                      if (tripModel == null)
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                SizedBox(
+                                    height: 30,
+                                    child: AutoSizeText(
+                                        'Hi ${cutUsername(user.displayName)}',
+                                        maxLines: 2,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 30.0,
+                                          fontFamily: 'FashionFetish',
+                                          fontWeight: FontWeight.w900,
+                                        ))),
+                              ]),
+                        )
                       else
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    if (timeTripStart < 0)
-                                      Padding(
-                                        padding: const EdgeInsets.only(bottom: 10),
-                                        child: AutoSizeText('Hi ${cutUsername(user.displayName)}',
-                                            maxLines: 2,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 28,
-                                              fontFamily: 'FashionFetish',
-                                              fontWeight: FontWeight.w900,
-                                              height: 1.1,
-                                            )),
-                                      )
-                                    else Padding(
-                                      padding: const EdgeInsets.only(bottom: 10),
-                                      child: AutoSizeText('Get Ready ${cutUsername(user.displayName)}',
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  if (timeTripStart < 0)
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: AutoSizeText(
+                                          'Hi ${cutUsername(user.displayName)}',
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 28,
+                                            fontFamily: 'FashionFetish',
+                                            fontWeight: FontWeight.w900,
+                                            height: 1.1,
+                                          )),
+                                    )
+                                  else
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: AutoSizeText(
+                                          'Get Ready ${cutUsername(user.displayName)}',
                                           maxLines: 2,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
@@ -182,25 +201,24 @@ class _HomePage extends State<HomePage> {
                                             height: 1.1,
                                           )),
                                     ),
-                                    AutoSizeText(
-                                      timeTripStart == 1
-                                          ? 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} day. Pack your bags now.'
-                                          : timeTripStart < 0
-                                          ? 'Add some activities and enjoy your trip!'
-                                          : timeTripStart == 0
-                                          ? 'Your trip to ${tripModel.destination} starts today. Let\'s go.'
-                                          : 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} days.',
-                                      maxFontSize: 26,
-                                      maxLines: 2,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                  AutoSizeText(
+                                    timeTripStart == 1
+                                        ? 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} day. Pack your bags now.'
+                                        : timeTripStart < 0
+                                            ? 'Add some activities and enjoy your trip!'
+                                            : timeTripStart == 0
+                                                ? 'Your trip to ${tripModel.destination} starts today. Let\'s go.'
+                                                : 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} days.',
+                                    maxFontSize: 26,
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
                                         fontFamily: 'FashionFetish',
                                         fontWeight: FontWeight.w900,
                                         height: 1.3,
-                                        color: Colors.black54
-                                      ),
-                                    ),
-                                  ]),
+                                        color: Colors.black54),
+                                  ),
+                                ]),
                           ),
                         ),
                     ],
@@ -229,37 +247,39 @@ class _HomePage extends State<HomePage> {
                               ),
                             )
                           : Column(
-                            children: <Widget>[
-                              FashionFetishText(
-                                text: trip.tripModel.name,
-                                size: 20,
-                                height: 1.6,
-                                fontWeight: FashionFontWeight.heavy,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 3),
-                                child: Container(
-                                  height: 1,
-                                  color: Colors.black12,
+                              children: <Widget>[
+                                FashionFetishText(
+                                  text: trip.tripModel.name,
+                                  size: 20,
+                                  height: 1.6,
+                                  fontWeight: FashionFontWeight.heavy,
                                 ),
-                              ),
-                              Expanded(
-                                child: Consumer<TripsProvider>(
-                                  builder: (_, trips, __) => Schedule(
-                                    key: UniqueKey(),
-                                    trip: trips.activeTrip,
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 3),
+                                  child: Container(
+                                    height: 1,
+                                    color: Colors.black12,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
+                                Expanded(
+                                  child: Consumer<TripsProvider>(
+                                    builder: (_, trips, __) => Schedule(
+                                      key: UniqueKey(),
+                                      trip: trips.activeTrip,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                     ),
                   ),
                 ),
               ],
             ),
-            SpeedDialButton(key: Key('home_page_dial'), dials: _dials),
+            SpeedDialButton(
+                key: Key('home_page_dial'),
+                dials: trip == null ? _addTripDials : _addBookingDials),
           ],
         ),
       ),
