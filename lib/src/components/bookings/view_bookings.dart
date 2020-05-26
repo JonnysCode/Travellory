@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/src/models/abstract_model.dart';
 import 'package:travellory/src/components/bookings/edit_bookings.dart';
 import 'package:travellory/src/components/buttons/booking_button.dart';
 import 'package:travellory/src/components/forms/dropdown.dart';
-import '../shared/font_widgets.dart';
+import 'package:travellory/src/models/abstract_model.dart';
 import '../dialogs/delete_dialogs.dart';
+import '../shared/font_widgets.dart';
 
 Container bookingView(SingleChildScrollView child) {
   return Container(
