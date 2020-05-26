@@ -136,7 +136,7 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
           target: LatLng(46.8076885, 7.1005233),
           zoom: 5,
         ),
-        gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+        gestureRecognizers: [
           Factory<OneSequenceGestureRecognizer>(
             () => EagerGestureRecognizer(),
           ),
