@@ -21,7 +21,7 @@ class DatabaseDeleter {
   static final DatabaseDeleter _instance = DatabaseDeleter._privateConstructor();
 
   static const deleteTrip = 'trips-deleteTrip';
-  static const deleteTempAccommodation = 'tempaccommodation-deleteTempAccommodation';
+  static const deleteTempAccommodation = 'accommodation-deleteTempAccommodation';
   static const deleteTripName = 'trips-deleteTrip';
   static const deleteFlight = 'flight-deleteFlight';
   static const deleteRentalCar = 'rentalcar-deleteRentalCar';
