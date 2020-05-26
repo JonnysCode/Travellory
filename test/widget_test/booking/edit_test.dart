@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/activity_model.dart';
-import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/trips/single_trip_provider.dart';
-import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/widgets/bookings/edit.dart';
-import 'package:travellory/widgets/buttons/booking_button.dart';
+import 'package:travellory/src/components/dialogs/show_dialog.dart';
+import 'package:travellory/src/models/activity_model.dart';
+import 'package:travellory/src/models/trip_model.dart';
+import 'package:travellory/src/providers/single_trip_provider.dart';
+import 'package:travellory/src/providers/trips_provider.dart';
+import 'package:travellory/src/components/buttons/booking_button.dart';
 
 final ActivityModel activityModel = ActivityModel()
   ..category = 'Historic'

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/screens/bookings/view_public_transport.dart';
+import 'package:travellory/src/models/public_transport_model.dart';
+import 'package:travellory/src/screens/public_transport/view_public_transport.dart';
 
 final PublicTransportModel model = PublicTransportModel()
   ..transportationType = 'Taxi'

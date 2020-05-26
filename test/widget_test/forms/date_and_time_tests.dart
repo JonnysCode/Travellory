@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/widgets/forms/date_form_field.dart';
-import 'package:travellory/widgets/forms/time_form_field.dart';
+import 'package:travellory/src/models/accommodation_model.dart';
+import 'package:travellory/src/models/rental_car_model.dart';
+import 'package:travellory/src/models/trip_model.dart';
+import 'package:travellory/src/providers/trips_provider.dart';
+import 'package:travellory/src/components/forms/date_form_field.dart';
+import 'package:travellory/src/components/forms/time_form_field.dart';
 
 class TripsProviderMock extends Mock implements TripsProvider {}
 

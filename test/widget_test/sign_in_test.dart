@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:travellory/providers/auth_provider.dart';
-
-import 'package:travellory/screens/authenticate/sign_in.dart';
-import 'package:travellory/services/authentication/auth.dart';
-import 'package:travellory/shared/loading_heart.dart';
+import 'package:travellory/src/providers/auth_provider.dart';
+import 'package:travellory/src/screens/authentication/sign_in.dart';
+import 'package:travellory/src/services/authentication/auth.dart';
+import 'package:travellory/src/components/animations/loading_heart.dart';
 
 class MockAuth extends Mock implements BaseAuthService {}
 

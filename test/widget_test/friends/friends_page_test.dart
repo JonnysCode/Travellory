@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/user_model.dart';
-import 'package:travellory/providers/friends_provider.dart';
-import 'package:travellory/screens/home/pages/friends_page.dart';
-import 'package:travellory/services/authentication/auth.dart';
+import 'package:travellory/src/models/user_model.dart';
+import 'package:travellory/src/providers/friends_provider.dart';
+import 'package:travellory/src/screens/main/friends_page.dart';
+import 'package:travellory/src/services/authentication/auth.dart';
 
 class MockAuth extends Mock implements BaseAuthService {}
 

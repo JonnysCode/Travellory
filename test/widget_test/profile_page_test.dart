@@ -6,9 +6,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/user_model.dart';
-import 'package:travellory/screens/home/pages/profile_page.dart';
-import 'package:travellory/services/authentication/auth.dart';
+import 'package:travellory/src/models/user_model.dart';
+import 'package:travellory/src/screens/main/profile_page.dart';
+import 'package:travellory/src/services/authentication/auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
 class MockAuth extends Mock implements BaseAuthService {}

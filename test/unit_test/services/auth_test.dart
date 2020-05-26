@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:travellory/services/authentication/auth.dart';
+import 'package:travellory/src/services/authentication/auth.dart';
 
 class MockAuth extends Mock implements FirebaseAuth {}
 class MockAuthResult extends Mock implements AuthResult {}

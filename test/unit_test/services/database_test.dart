@@ -1,10 +1,8 @@
-import 'package:cloud_functions/cloud_functions.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/services/database/add_database.dart';
-import 'package:travellory/services/database/delete_database.dart';
-import 'package:travellory/services/database/edit_database.dart';
+import 'package:travellory/src/models/public_transport_model.dart';
+import 'package:travellory/src/services/cloud/add_database.dart';
+import 'package:travellory/src/services/cloud/edit_database.dart';
+import 'package:travellory/src/services/cloud/delete_database.dart';
 
 final PublicTransportModel publicTransport = PublicTransportModel()
   ..transportationType = 'train'

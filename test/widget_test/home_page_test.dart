@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/models/activity_model.dart';
-import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/models/user_model.dart';
-import 'package:travellory/providers/trips/single_trip_provider.dart';
-import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/screens/home/pages/home_page.dart';
-import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
+import 'package:travellory/src/models/accommodation_model.dart';
+import 'package:travellory/src/models/activity_model.dart';
+import 'package:travellory/src/models/flight_model.dart';
+import 'package:travellory/src/models/public_transport_model.dart';
+import 'package:travellory/src/models/rental_car_model.dart';
+import 'package:travellory/src/models/trip_model.dart';
+import 'package:travellory/src/models/user_model.dart';
+import 'package:travellory/src/providers/single_trip_provider.dart';
+import 'package:travellory/src/providers/trips_provider.dart';
+import 'package:travellory/src/screens/main/home_page.dart';
+import 'package:travellory/src/screens/schedule/trip_schedule.dart';
 
 TripModel _tripModel = TripModel(
   name: 'name',

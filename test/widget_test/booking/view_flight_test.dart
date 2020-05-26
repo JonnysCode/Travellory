@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/screens/bookings/view_flight.dart';
+import 'package:travellory/src/models/flight_model.dart';
+import 'package:travellory/src/screens/flight/view_flight.dart';
 
 final FlightModel model = FlightModel()
   ..departureLocation = 'Zürich'

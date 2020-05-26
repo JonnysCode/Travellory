@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/providers/achievements_provider.dart';
-import 'package:travellory/screens/achievements/view_achievements.dart';
+import 'package:travellory/src/providers/achievements_provider.dart';
+import 'package:travellory/src/screens/achievements/view_achievements.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key key}) : super(key: key);

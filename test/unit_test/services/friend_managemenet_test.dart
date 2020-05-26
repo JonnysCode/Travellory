@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/services/friends/friend_management.dart';
+import 'package:travellory/src/services/cloud/friend_management.dart';
 
 void main() {
   MethodCall logMethodCall;

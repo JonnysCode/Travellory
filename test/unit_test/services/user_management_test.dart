@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/services/authentication/user_management.dart';
+import 'package:travellory/src/services/authentication/user_management.dart';
 
 void main() {
   MethodCall logMethodCall;

@@ -5,12 +5,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/friend_model.dart';
-import 'package:travellory/models/user_model.dart';
-import 'package:travellory/providers/friends_provider.dart';
-import 'package:travellory/screens/friends/search_friend_page.dart';
-import 'package:travellory/services/authentication/auth.dart';
-import 'package:travellory/services/friends/friend_management.dart';
+import 'package:travellory/src/models/friend_model.dart';
+import 'package:travellory/src/models/user_model.dart';
+import 'package:travellory/src/providers/friends_provider.dart';
+import 'package:travellory/src/screens/friends/search_friend_page.dart';
+import 'package:travellory/src/services/authentication/auth.dart';
+import 'package:travellory/src/services/cloud/friend_management.dart';
 
 class MockAuth extends Mock implements BaseAuthService {}
 

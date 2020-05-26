@@ -1,12 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/models/activity_model.dart';
-import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/widgets/bookings/edit.dart';
-import 'package:travellory/widgets/bookings/new_booking_models.dart';
+import 'package:travellory/src/models/accommodation_model.dart';
+import 'package:travellory/src/models/activity_model.dart';
+import 'package:travellory/src/models/flight_model.dart';
+import 'package:travellory/src/models/public_transport_model.dart';
+import 'package:travellory/src/models/rental_car_model.dart';
+import 'package:travellory/src/models/trip_model.dart';
+import 'package:travellory/src/components/bookings/new_booking_models.dart';
 
 void main() {
   TripModel tripModel = TripModel(

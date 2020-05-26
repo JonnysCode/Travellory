@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/trips/single_trip_provider.dart';
-import 'package:travellory/services/database/add_database.dart';
-import 'package:travellory/widgets/buttons/booking_button.dart';
-import 'package:travellory/widgets/forms/show_dialog.dart';
-import 'package:travellory/widgets/buttons/submit_button.dart';
+import 'package:travellory/src/components/dialogs/database_fail_dialog.dart';
+import 'package:travellory/src/components/dialogs/missing_information_dialog.dart';
+import 'package:travellory/src/models/rental_car_model.dart';
+import 'package:travellory/src/models/trip_model.dart';
+import 'package:travellory/src/providers/single_trip_provider.dart';
+import 'package:travellory/src/services/cloud/add_database.dart';
+import 'package:travellory/src/components/buttons/booking_button.dart';
+import 'package:travellory/src/components/dialogs/show_dialog.dart';
+import 'package:travellory/src/components/dialogs/cancel_dialog.dart';
+import 'package:travellory/src/components/buttons/submit_button.dart';
 
 void main() {
   testWidgets('Test submit button exists', (WidgetTester tester) async {
-    final testKey = Key('ShowSubmittedBookingDialog');
-
     // for testing purposes we will use a rental car model here
     final RentalCarModel testModel = RentalCarModel();
     final String alertText = 'Test';

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/models/activity_model.dart';
-import 'package:travellory/models/flight_model.dart';
-import 'package:travellory/models/public_transport_model.dart';
-import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/trips/single_trip_provider.dart';
-import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/screens/trip/trip_screen.dart';
-import 'package:travellory/widgets/booking_cards/booking_card.dart';
+import 'package:travellory/src/models/accommodation_model.dart';
+import 'package:travellory/src/models/activity_model.dart';
+import 'package:travellory/src/models/flight_model.dart';
+import 'package:travellory/src/models/public_transport_model.dart';
+import 'package:travellory/src/models/rental_car_model.dart';
+import 'package:travellory/src/models/trip_model.dart';
+import 'package:travellory/src/providers/single_trip_provider.dart';
+import 'package:travellory/src/providers/trips_provider.dart';
+import 'package:travellory/src/screens/trip/trip_screen.dart';
+import 'package:travellory/src/components/booking_cards/booking_card.dart';
 
 class TripsProviderMock extends Mock implements TripsProvider {}
 
