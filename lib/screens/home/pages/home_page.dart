@@ -31,11 +31,11 @@ class _HomePage extends State<HomePage> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
     final TripsProvider tripsProvider =
-        Provider.of<TripsProvider>(context);
+        Provider.of<TripsProvider>(context, listen: false);
     final SingleTripProvider trip = tripsProvider.activeTrip;
     TripModel tripModel;
     if (trip != null) tripModel = trip.tripModel;
-
+    
     final List<Dial> _dials = <Dial>[
       Dial(
           icon: FontAwesomeIcons.envelope,
@@ -245,9 +245,11 @@ class _HomePage extends State<HomePage> {
                                 ),
                               ),
                               Expanded(
-                                child: Schedule(
-                                  key: Key('home_schedule'),
-                                  trip: trip,
+                                child: Consumer<TripsProvider>(
+                                  builder: (_, trips, __) => Schedule(
+                                    key: UniqueKey(),
+                                    trip: trips.activeTrip,
+                                  ),
                                 ),
                               ),
                             ],
