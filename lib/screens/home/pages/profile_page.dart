@@ -101,7 +101,12 @@ class _ProfilePageState extends State<ProfilePage>
                     ),
                     SizedBox(height: 20),
                     Padding(
-                        padding: const EdgeInsets.all(20.0), child: UserInformation(user: user)),
+                      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
+                      child: SectionTitle(sectionTitle: 'User Information'),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+                        child: UserInformation(user: user)),
                     SizedBox(height: 10),
                     Padding(
                       key: Key('achievements'),
@@ -123,7 +128,6 @@ class _ProfilePageState extends State<ProfilePage>
                         }),
                       ),
                     ),
-                    SizedBox(height: 70),
                   ],
                 ),
               ),
@@ -198,10 +202,6 @@ class UserInformation extends StatelessWidget {
     return Container(
       key: Key('display_user'),
       child: Column(children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(top: 0.0, bottom: 15.0),
-          child: SectionTitle(sectionTitle: 'User Information'),
-        ),
         Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
