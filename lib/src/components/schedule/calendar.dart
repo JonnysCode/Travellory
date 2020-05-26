@@ -6,7 +6,7 @@ import 'package:syncfusion_flutter_core/core.dart';
 import 'package:travellory/src/components/schedule/meeting.dart';
 import 'package:travellory/src/models/trip_model.dart';
 import 'package:travellory/src/providers/trips_provider.dart';
-import 'package:travellory/src/utils/date_handler.dart';
+import 'package:travellory/src/components/shared/date_handler.dart';
 
 class Calendar extends StatefulWidget {
   @override

@@ -7,7 +7,7 @@ import 'package:travellory/src/models/trip_model.dart';
 import 'package:travellory/src/providers/trips_provider.dart';
 import 'package:travellory/src/screens/trip/trip_screen.dart';
 import 'package:travellory/src/services/cloud/delete_database.dart';
-import 'package:travellory/src/utils/date_handler.dart';
+import 'package:travellory/src/components/shared/date_handler.dart';
 import 'package:travellory/src/components/dialogs/delete_dialogs.dart';
 import 'package:travellory/src/components/buttons/option_button.dart';
 import 'package:travellory/src/components/shared/font_widgets.dart';

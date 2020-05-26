@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travellory/src/models/user_model.dart';
 import 'package:travellory/src/services/authentication/user_management.dart';
-import 'package:travellory/src/utils/logger.dart';
+import 'package:travellory/src/components/shared/logger.dart';
 
 abstract class BaseAuthService {
   Future signInAnonymously();

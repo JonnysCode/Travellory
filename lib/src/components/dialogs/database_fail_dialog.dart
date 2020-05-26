@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/src/components/buttons/buttons.dart';
 import 'package:travellory/src/components/shared/font_widgets.dart';
 
-void addToDataBaseFailedDialog(BuildContext context) {
+void dataBaseFailedDialog(BuildContext context) {
   const String errorMessage = "Seems like there's a connection problem. "
       "Please check your internet connection and try submitting again.";
 

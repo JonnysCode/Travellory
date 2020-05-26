@@ -132,7 +132,7 @@ void main() {
       return MaterialApp(home: Material(child: Builder(builder: (BuildContext context) {
         return Center(
           child: RaisedButton(
-            onPressed: () => addToDataBaseFailedDialog(context),
+            onPressed: () => dataBaseFailedDialog(context),
           ),
         );
       })));

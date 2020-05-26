@@ -7,7 +7,7 @@ import 'package:travellory/src/providers/trips_provider.dart';
 import 'package:travellory/src/screens/accommodation/view_accommodation.dart';
 import 'package:travellory/src/services/cloud/add_database.dart';
 import 'package:travellory/src/components/animations/loading_heart.dart';
-import 'package:travellory/src/utils/date_handler.dart';
+import 'package:travellory/src/components/shared/date_handler.dart';
 import 'package:travellory/src/components/booking_cards/booking_card.dart';
 import 'package:travellory/src/components/buttons/option_button.dart';
 

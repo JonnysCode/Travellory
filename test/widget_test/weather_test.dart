@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:travellory/src/services/api/open_weather.dart';
-import 'package:travellory/src/utils/weather.dart';
+import 'package:travellory/src/components/trip/weather.dart';
 
 class MockWeather extends Mock implements OpenWeatherAPI {}
 

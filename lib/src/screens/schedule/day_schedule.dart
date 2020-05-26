@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travellory/src/models/day_model.dart';
-import 'package:travellory/src/utils/date_handler.dart';
+import 'package:travellory/src/components/shared/date_handler.dart';
 import 'package:travellory/src/components/shared/font_widgets.dart';
 import 'package:travellory/src/components/schedule/day_circle.dart';
 import 'package:travellory/src/components/schedule_cards/schedule_card.dart';

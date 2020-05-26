@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/src/utils/date_handler.dart';
+import 'package:travellory/src/components/shared/date_handler.dart';
 
 void main(){
   test('yyyy-mm-dd String gets converted to a String (d)d mmm yyyy', () {

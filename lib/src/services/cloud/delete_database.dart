@@ -6,7 +6,7 @@ import 'package:travellory/src/providers/single_trip_provider.dart';
 import 'package:travellory/src/providers/trips_provider.dart';
 import 'package:travellory/src/models/abstract_model.dart';
 import 'package:travellory/src/models/trip_model.dart';
-import 'package:travellory/src/utils/logger.dart';
+import 'package:travellory/src/components/shared/logger.dart';
 import 'package:travellory/src/components/dialogs/delete_dialogs.dart';
 import 'package:travellory/src/components/dialogs/show_dialog.dart';
 
@@ -66,7 +66,7 @@ void Function() onDeleteBooking(Model model, BuildContext context, String functi
       showDeletedBookingDialog(context, alertText);
       log.i('onDeleteBooking was performed');
     } else {
-      addToDataBaseFailedDialog(context);
+      dataBaseFailedDialog(context);
       log.i('onDeleteBooking did not work');
     }
   };
@@ -85,7 +85,7 @@ void Function() onDeleteTrip(TripModel tripModel, BuildContext context) {
       showDeletedBookingDialog(context, alertText, hasBackButton: false);
       log.i('onDeleteBooking was performed');
     } else {
-      addToDataBaseFailedDialog(context);
+      dataBaseFailedDialog(context);
       log.i('onDeleteBooking did not work');
     }
   };

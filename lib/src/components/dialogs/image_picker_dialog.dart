@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:travellory/src/utils/image_picker_handler.dart';
+import 'package:travellory/src/components/shared/image_picker_handler.dart';
 import '../buttons/buttons.dart';
 
 // ignore: must_be_immutable

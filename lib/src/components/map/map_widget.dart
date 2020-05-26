@@ -16,7 +16,7 @@ import 'package:travellory/src/screens/main/map_page.dart';
 import 'package:travellory/src/services/authentication/user_management.dart';
 import 'package:travellory/src/services/api/g_map_border_loader.dart';
 import 'package:travellory/src/models/user_model.dart';
-import 'package:travellory/src/utils/logger.dart';
+import 'package:travellory/src/components/shared/logger.dart';
 
 final log = getLogger('MapPageWidget');
 final List<String> userStates = <String>[];

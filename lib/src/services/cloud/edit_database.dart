@@ -5,7 +5,7 @@ import 'package:travellory/src/providers/single_trip_provider.dart';
 import 'package:travellory/src/providers/trips_provider.dart';
 import 'package:travellory/src/models/abstract_model.dart';
 import 'package:travellory/src/models/accommodation_model.dart';
-import 'package:travellory/src/utils/logger.dart';
+import 'package:travellory/src/components/shared/logger.dart';
 import 'package:travellory/src/components/bookings/calculate_nights.dart';
 import 'package:travellory/src/components/dialogs/show_dialog.dart';
 
@@ -68,7 +68,7 @@ void Function() onEditBooking(
       showEditedBookingDialog(context, onEditSuccessfulText);
       log.i('onEditBooking was performed');
     } else {
-      addToDataBaseFailedDialog(context);
+      dataBaseFailedDialog(context);
       log.i('onEditBooking did not work');
     }
   };
@@ -85,7 +85,7 @@ void Function() onEditTrip(TripsProvider trips, Model model,
       showEditedBookingDialog(context, onEditSuccessfulText);
       log.i('onEditBooking was performed');
     } else {
-      addToDataBaseFailedDialog(context);
+      dataBaseFailedDialog(context);
       log.i('onEditBooking did not work');
     }
   };

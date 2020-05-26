@@ -6,7 +6,7 @@ import 'package:travellory/src/models/friend_model.dart';
 import 'package:travellory/src/models/user_model.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:travellory/src/services/cloud/friend_management.dart';
-import 'package:travellory/src/utils/logger.dart';
+import 'package:travellory/src/components/shared/logger.dart';
 
 class FriendsProvider extends ChangeNotifier {
   FriendsProvider({this.management}) {
