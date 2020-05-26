@@ -134,7 +134,7 @@ class _TripHeaderState extends State<TripHeader> {
             ),
           ),
           Positioned(
-            top: 125,
+            top: 95,
             left: 330,
             right: 10,
             child: IconButton(
