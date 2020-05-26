@@ -106,13 +106,13 @@ class _SpeedDialButtonState extends State<SpeedDialButton> with SingleTickerProv
               Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: Colors.white54,
+                  color: Colors.black38,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   dials[index].description,
                   style: TextStyle(
-                    color: Colors.black87,
+                    color: Colors.white70,
                   ),
                 ),
               ),
