@@ -31,7 +31,7 @@ class _HomePage extends State<HomePage> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
     final TripsProvider tripsProvider =
-        Provider.of<TripsProvider>(context, listen: false);
+        Provider.of<TripsProvider>(context);
     final SingleTripProvider trip = tripsProvider.activeTrip;
     TripModel tripModel;
     if (trip != null) tripModel = trip.tripModel;
@@ -109,126 +109,126 @@ class _HomePage extends State<HomePage> {
     return SafeArea(
       child: Container(
         key: Key('home_page'),
-        child: Column(
+        child: Stack(
           children: <Widget>[
-            Container(
-              height: 150,
-              child: Row(
-                children: <Widget>[
-                  if (tripModel == null || tripModel.destination.isEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30),
-                      child: Image(
-                        height: 100,
-                        image: AssetImage(
-                            'assets/images/home/weather/011-few_clouds.png'),
-                      ),
-                    )
-                  else
-                    Container(
-                      width: 160,
-                      child: Weather(tripModel.destination, OpenWeatherAPI())
-                    ),
-                  if (tripModel == null) Expanded(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          SizedBox(
-                              height: 30,
-                              child: AutoSizeText(
-                                  'Hi ${cutUsername(user.displayName)}',
-                                  maxLines: 2,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 30.0,
-                                    fontFamily: 'FashionFetish',
-                                    fontWeight: FontWeight.w900,
-                                  ))),
-                        ]),
-                  ) 
-                  else 
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+            Column(
+              children: <Widget>[
+                Container(
+                  height: 150,
+                  child: Row(
+                    children: <Widget>[
+                      if (tripModel == null || tripModel.destination.isEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30),
+                          child: Image(
+                            height: 100,
+                            image: AssetImage(
+                                'assets/images/home/weather/011-few_clouds.png'),
+                          ),
+                        )
+                      else
+                        Container(
+                          width: 160,
+                          child: Weather(tripModel.destination, OpenWeatherAPI())
+                        ),
+                      if (tripModel == null) Expanded(
                         child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                if (timeTripStart < 0)
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: AutoSizeText('Hi ${cutUsername(user.displayName)}',
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 28,
-                                          fontFamily: 'FashionFetish',
-                                          fontWeight: FontWeight.w900,
-                                          height: 1.1,
-                                        )),
-                                  )
-                                else Padding(
-                                  padding: const EdgeInsets.only(bottom: 10),
-                                  child: AutoSizeText('Get Ready ${cutUsername(user.displayName)}',
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SizedBox(
+                                  height: 30,
+                                  child: AutoSizeText(
+                                      'Hi ${cutUsername(user.displayName)}',
                                       maxLines: 2,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontSize: 28.0,
+                                        fontSize: 30.0,
                                         fontFamily: 'FashionFetish',
                                         fontWeight: FontWeight.w900,
-                                        height: 1.1,
-                                      )),
-                                ),
-                                AutoSizeText(
-                                  timeTripStart == 1
-                                      ? 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} day. Pack your bags now.'
-                                      : timeTripStart < 0
-                                      ? 'Add some activities and enjoy your trip!'
-                                      : timeTripStart == 0
-                                      ? 'Your trip to ${tripModel.destination} starts today. Let\'s go.'
-                                      : 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} days.',
-                                  maxFontSize: 26,
-                                  maxLines: 2,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: 'FashionFetish',
-                                    fontWeight: FontWeight.w900,
-                                    height: 1.3,
-                                    color: Colors.black54
-                                  ),
-                                ),
-                              ]),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(40.0)),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          blurRadius: 18,
-                          color: Colors.black.withOpacity(.2),
-                          offset: Offset(0.0, -6.0))
+                                      ))),
+                            ]),
+                      )
+                      else
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    if (timeTripStart < 0)
+                                      Padding(
+                                        padding: const EdgeInsets.only(bottom: 10),
+                                        child: AutoSizeText('Hi ${cutUsername(user.displayName)}',
+                                            maxLines: 2,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 28,
+                                              fontFamily: 'FashionFetish',
+                                              fontWeight: FontWeight.w900,
+                                              height: 1.1,
+                                            )),
+                                      )
+                                    else Padding(
+                                      padding: const EdgeInsets.only(bottom: 10),
+                                      child: AutoSizeText('Get Ready ${cutUsername(user.displayName)}',
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 28.0,
+                                            fontFamily: 'FashionFetish',
+                                            fontWeight: FontWeight.w900,
+                                            height: 1.1,
+                                          )),
+                                    ),
+                                    AutoSizeText(
+                                      timeTripStart == 1
+                                          ? 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} day. Pack your bags now.'
+                                          : timeTripStart < 0
+                                          ? 'Add some activities and enjoy your trip!'
+                                          : timeTripStart == 0
+                                          ? 'Your trip to ${tripModel.destination} starts today. Let\'s go.'
+                                          : 'Your trip to ${tripModel.destination} starts in ${timeTripStart.toString()} days.',
+                                      maxFontSize: 26,
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'FashionFetish',
+                                        fontWeight: FontWeight.w900,
+                                        height: 1.3,
+                                        color: Colors.black54
+                                      ),
+                                    ),
+                                  ]),
+                          ),
+                        ),
                     ],
                   ),
-                  child: trip == null
-                      ? Center(
-                          child: Text(
-                            'There are no upcoming trips!\nCreate a new one now.',
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : Stack(
-                        children: <Widget>[
-                          Column(
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(40.0)),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              blurRadius: 18,
+                              color: Colors.black.withOpacity(.2),
+                              offset: Offset(0.0, -6.0))
+                        ],
+                      ),
+                      child: trip == null
+                          ? Center(
+                              child: Text(
+                                'There are no upcoming trips!\nCreate a new one now.',
+                                textAlign: TextAlign.center,
+                              ),
+                            )
+                          : Column(
                             children: <Widget>[
                               FashionFetishText(
                                 text: trip.tripModel.name,
@@ -252,12 +252,12 @@ class _HomePage extends State<HomePage> {
                               ),
                             ],
                           ),
-                          SpeedDialButton(key: Key('home_page_dial'), dials: _dials),
-                        ]
-                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
+            SpeedDialButton(key: Key('home_page_dial'), dials: _dials),
           ],
         ),
       ),
