@@ -19,7 +19,7 @@ import 'package:travellory/models/user_model.dart';
 import 'package:travellory/utils/logger.dart';
 
 final log = getLogger('MapPageWidget');
-final List<String> userStates = List<String>();
+final List<String> userStates = <String>[];
 
 /// builds a user's personalised map page with individual trip infos and visited countries
 class GoogleMapWidget extends StatefulWidget {

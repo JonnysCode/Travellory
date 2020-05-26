@@ -174,7 +174,7 @@ Column displayExtraField(String toCompare, String comparison, IconData icon, Str
     ]);
   } else {
     return Column(children: [
-      Padding(padding: const EdgeInsets.only(top: 0, left: 0, right: 0)),
+      Padding(padding: EdgeInsets.only(top: 0, left: 0, right: 0)),
     ]);
   }
 }

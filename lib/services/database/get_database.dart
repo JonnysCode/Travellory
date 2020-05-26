@@ -23,7 +23,7 @@ class DatabaseGetter {
   static const String getActivities = 'activity-getActivities';
   static const String getRentalCars = 'rentalcar-getRentalCars';
   static const String getPublicTransportation = 'publictransportation-getPublicTransportations';
-  static const String getTempAccommodations = 'paccommodation-getTempAccommodations';
+  static const String getTempAccommodations = 'accommodation-getTempAccommodations';
 
   static const String _emptyResult = 'no-data';
   static const int _maxCount = 200;

@@ -72,7 +72,7 @@ class DateFormFieldState extends State<DateFormField> with AutomaticKeepAliveCli
 
   void setInitialDate() {
     if (widget.initialValue != null && widget.initialValue != '') {
-      controller..text = widget.initialValue;
+      controller.text = widget.initialValue;
       initialDate = DateFormat("dd-MM-yyyy", "en_US").parse(widget.initialValue);
       selectedDate = initialDate;
     }

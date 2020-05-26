@@ -51,7 +51,7 @@ class TimeFormFieldState extends State<TimeFormField> with AutomaticKeepAliveCli
   // to then make it possible to easily change it to timeOfDay
   TimeOfDay _getInitialTime() {
     if (widget.initialValue != '' && widget.initialValue != null) {
-      controller..text = widget.initialValue;
+      controller.text = widget.initialValue;
       initialTimeValue = DateFormat("H:mm", "en_US").parse(widget.initialValue);
       return initialTime = TimeOfDay(hour: initialTimeValue.hour, minute: initialTimeValue.minute);
     } else {
