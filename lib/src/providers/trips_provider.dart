@@ -8,7 +8,7 @@ import 'package:travellory/src/services/cloud/delete_database.dart';
 import 'package:travellory/src/services/cloud/edit_database.dart';
 import 'package:travellory/src/services/cloud/get_database.dart';
 import 'package:pedantic/pedantic.dart';
-import 'package:travellory/src/utils/date_handler.dart';
+import 'package:travellory/src/components/shared/date_handler.dart';
 
 class TripsProvider extends ChangeNotifier implements NotifyListener {
   TripsProvider() {

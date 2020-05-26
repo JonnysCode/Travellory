@@ -3,7 +3,7 @@ import 'package:travellory/src/models/user_model.dart';
 import 'package:travellory/src/providers/auth_provider.dart';
 import 'package:travellory/src/services/authentication/auth.dart';
 import 'package:travellory/src/components/animations/loading_logo.dart';
-import 'package:travellory/src/utils/input_validator.dart';
+import 'package:travellory/src/components/authentication/input_validator.dart';
 import 'package:travellory/src/components/authentication/auth_background.dart';
 import 'package:travellory/src/components/buttons/buttons.dart';
 import 'package:travellory/src/components/authentication/input_widgets.dart';

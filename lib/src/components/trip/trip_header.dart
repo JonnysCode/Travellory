@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/src/components/bookings/new_booking_models.dart';
 import 'package:travellory/src/models/trip_model.dart';
 import 'package:travellory/src/screens/trip/create_trip_screen.dart';
-import 'package:travellory/src/utils/date_handler.dart';
+import 'package:travellory/src/components/shared/date_handler.dart';
 import 'package:travellory/src/components/shared/font_widgets.dart';
 
 class TripHeader extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/src/utils/list_models.dart';
+import 'package:travellory/src/components/items/list_models.dart';
 
 class TravelloryFormField extends StatefulWidget {
   const TravelloryFormField(

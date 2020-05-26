@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travellory/src/utils/input_validator.dart';
+import 'package:travellory/src/components/authentication/input_validator.dart';
 
 Widget inputAuthentication(Icon icon, String hint, Color decorationColor, TextEditingController controller,
     FocusNode focusNode, validatorType, String errorText, {bool obscure}) {

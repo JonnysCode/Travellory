@@ -4,7 +4,7 @@ import 'package:travellory/src/models/achievements_model.dart';
 import 'package:travellory/src/models/user_model.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:travellory/src/services/authentication/user_management.dart';
-import 'package:travellory/src/utils/logger.dart';
+import 'package:travellory/src/components/shared/logger.dart';
 
 /// This provider class will fetch the achievements of the user
 class AchievementsProvider extends ChangeNotifier{

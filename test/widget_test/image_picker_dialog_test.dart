@@ -9,7 +9,7 @@ import 'package:travellory/src/models/user_model.dart';
 import 'package:travellory/src/providers/auth_provider.dart';
 import 'package:travellory/src/screens/main/profile_page.dart';
 import 'package:travellory/src/services/authentication/auth.dart';
-import 'package:travellory/src/utils/image_picker_handler.dart';
+import 'package:travellory/src/components/shared/image_picker_handler.dart';
 import 'package:travellory/src/components/buttons/buttons.dart';
 import 'package:travellory/src/components/shared/font_widgets.dart';
 import 'package:travellory/src/components/dialogs/image_picker_dialog.dart';

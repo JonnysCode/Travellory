@@ -6,7 +6,7 @@ import 'package:travellory/src/models/flight_model.dart';
 import 'package:travellory/src/models/public_transport_model.dart';
 import 'package:travellory/src/models/rental_car_model.dart';
 import 'package:travellory/src/models/trip_model.dart';
-import 'package:travellory/src/utils/logger.dart';
+import 'package:travellory/src/components/shared/logger.dart';
 
 class DatabaseGetter {
   factory DatabaseGetter() {

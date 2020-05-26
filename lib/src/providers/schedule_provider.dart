@@ -3,7 +3,7 @@ import 'package:travellory/src/models/day_model.dart';
 import 'package:travellory/src/models/schedule_entry.dart';
 import 'package:travellory/src/models/trip_model.dart';
 import 'package:travellory/src/providers/single_trip_provider.dart';
-import 'package:travellory/src/utils/date_handler.dart';
+import 'package:travellory/src/components/shared/date_handler.dart';
 
 /// Creates a schedule for a trip based on its bookings.
 ///

@@ -2,7 +2,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:travellory/src/components/dialogs/database_fail_dialog.dart';
 import 'package:travellory/src/models/accommodation_model.dart';
 import 'package:travellory/src/providers/temp_bookings_provider.dart';
-import 'package:travellory/src/utils/logger.dart';
+import 'package:travellory/src/components/shared/logger.dart';
 import 'package:travellory/src/models/abstract_model.dart';
 import 'package:flutter/material.dart';
 import 'package:travellory/src/models/trip_model.dart';
@@ -73,7 +73,7 @@ Function() onSubmitBooking(SingleTripProvider singleTripProvider, Model model, S
     if (added) {
       showSubmittedBookingDialog(context, alertText);
     } else {
-      addToDataBaseFailedDialog(context);
+      dataBaseFailedDialog(context);
       log.i('onSubmitBooking did not work');
     }
   };
@@ -88,7 +88,7 @@ void Function() onSubmitTrip(
     if (added) {
       showSubmittedTripDialog(context, alertText);
     } else {
-      addToDataBaseFailedDialog(context);
+      dataBaseFailedDialog(context);
       log.i('onSubmitTrip did not work');
     }
   };
@@ -103,7 +103,7 @@ Function() onSubmitTempAccommodation(TempBookingsProvider tempBookingsProvider,
     if (added) {
       showSubmittedTempBookingDialog(context);
     } else {
-      addToDataBaseFailedDialog(context);
+      dataBaseFailedDialog(context);
       log.i('onSubmitTempaccommodation did not work');
     }
   };

@@ -11,7 +11,7 @@ import 'package:travellory/src/screens/activity/activity.dart';
 import 'package:travellory/src/screens/public_transport/public_transport.dart';
 import 'package:travellory/src/screens/rental_car/rental_car.dart';
 import 'package:travellory/src/screens/flight/flight.dart';
-import 'package:travellory/src/utils/logger.dart';
+import 'package:travellory/src/components/shared/logger.dart';
 
 final log = getLogger('Edit');
 
