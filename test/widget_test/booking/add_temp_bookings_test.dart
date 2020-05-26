@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:travellory/models/user_model.dart';
-import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/screens/bookings/temp_bookings.dart';
+import 'package:travellory/src/models/user_model.dart';
+import 'package:travellory/src/providers/trips_provider.dart';
+import 'package:travellory/src/screens/temp_bookings/temp_bookings.dart';
 import 'package:provider/provider.dart';
 
 class TripsProviderMock extends Mock implements TripsProvider {}

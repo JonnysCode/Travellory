@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/models/user_model.dart';
-import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/screens/home/pages/calendar_page.dart';
+import 'package:travellory/src/providers/trips_provider.dart';
+import 'package:travellory/src/screens/main/calendar_page.dart';
 
 void main() {
   Widget makeTestableWidget({Widget body, TripsProvider tripsProvider}) {

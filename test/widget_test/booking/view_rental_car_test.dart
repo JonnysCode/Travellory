@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/screens/bookings/view_rental_car.dart';
+import 'package:travellory/src/models/rental_car_model.dart';
+import 'package:travellory/src/screens/rental_car/view_rental_car.dart';
 
 final RentalCarModel model = RentalCarModel()
   ..pickupLocation = 'London City'

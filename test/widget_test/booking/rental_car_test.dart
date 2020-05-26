@@ -3,12 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
-import 'package:travellory/models/rental_car_model.dart';
-import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/providers/trips/single_trip_provider.dart';
-import 'package:travellory/providers/trips/trips_provider.dart';
-import 'package:travellory/screens/bookings/rental_car.dart';
-import 'package:travellory/widgets/bookings/edit.dart';
+import 'package:travellory/src/models/rental_car_model.dart';
+import 'package:travellory/src/models/trip_model.dart';
+import 'package:travellory/src/providers/single_trip_provider.dart';
+import 'package:travellory/src/providers/trips_provider.dart';
+import 'package:travellory/src/screens/rental_car/rental_car.dart';
+import 'package:travellory/src/components/bookings/new_booking_models.dart';
 
 class TripsProviderMock extends Mock implements TripsProvider{}
 

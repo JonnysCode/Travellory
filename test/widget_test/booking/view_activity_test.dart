@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/models/activity_model.dart';
-import 'package:travellory/screens/bookings/view_activity.dart';
+import 'package:travellory/src/models/activity_model.dart';
+import 'package:travellory/src/screens/activity/view_activity.dart';
 
 final ActivityModel model = ActivityModel()
   ..category = 'Historic'

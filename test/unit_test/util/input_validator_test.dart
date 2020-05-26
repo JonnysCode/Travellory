@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/utils/input_validator.dart';
+import 'package:travellory/src/utils/input_validator.dart';
 
 void main() {
   test('empty email returns error string', () {

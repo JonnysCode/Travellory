@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/models/achievements_model.dart';
-import 'package:travellory/models/friend_model.dart';
-import 'package:travellory/screens/friends/friends_profile.dart';
+import 'package:travellory/src/models/achievements_model.dart';
+import 'package:travellory/src/models/friend_model.dart';
+import 'package:travellory/src/screens/friends/friends_profile.dart';
 
 void main() {
   Future<void> pumpArgumentWidget(

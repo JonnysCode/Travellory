@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/screens/home/pages/map_page.dart';
+import 'package:travellory/src/screens/main/map_page.dart';
 
 void main(){
   Widget makeTestableWidget({Widget child}){

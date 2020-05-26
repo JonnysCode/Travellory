@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/screens/bookings/view_accommodation.dart';
+import 'package:travellory/src/models/accommodation_model.dart';
+import 'package:travellory/src/screens/accommodation/view_accommodation.dart';
 
 final AccommodationModel model = AccommodationModel()
   ..type = 'hotel'

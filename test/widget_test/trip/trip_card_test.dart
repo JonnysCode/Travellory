@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/models/trip_model.dart';
-import 'package:travellory/widgets/trip/trip_card.dart';
+import 'package:travellory/src/models/trip_model.dart';
+import 'package:travellory/src/components/trip/trip_card.dart';
 
 TripModel _tripModel = TripModel(
   name: 'name',

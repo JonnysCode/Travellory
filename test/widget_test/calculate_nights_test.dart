@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/models/accommodation_model.dart';
-import 'package:travellory/widgets/forms/calculate_nights.dart';
+import 'package:travellory/src/models/accommodation_model.dart';
+import 'package:travellory/src/components/bookings/calculate_nights.dart';
 
 void main() {
   test('Calculate correct nights for Accommodation', () {
