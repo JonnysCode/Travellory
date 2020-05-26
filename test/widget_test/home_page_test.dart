@@ -12,6 +12,7 @@ import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/trips/single_trip_provider.dart';
 import 'package:travellory/providers/trips/trips_provider.dart';
 import 'package:travellory/screens/home/pages/home_page.dart';
+import 'package:travellory/screens/trip/schedule/trip_schedule.dart';
 
 TripModel _tripModel = TripModel(
   name: 'name',
@@ -98,6 +99,6 @@ void main(){
     await tester.pumpWidget(makeTestableWidget(child: page, tripsProvider: tripsProvider));
 
     // Verify that the HomePage is present.
-    expect(find.byKey(Key('home_schedule')), findsOneWidget);
+    expect(find.byType(Schedule), findsOneWidget);
   });
 }

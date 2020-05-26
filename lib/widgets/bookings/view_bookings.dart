@@ -23,9 +23,8 @@ Container bookingView(SingleChildScrollView child) {
 
 Container bottomBar(BuildContext context, Model model, String deleteFunctionName) {
   final String modelText = getDeleteTextBasedOn(model);
-  final String deleteAlertText = 'You are about to delete your ' +
-      modelText +
-      ' entry. Are you sure you want to continue? This action cannot be undone!';
+  final String deleteAlertText = 'You are about to delete your $modelText entry. '
+      'Are you sure you want to continue? This action cannot be undone!';
 
   return Container(
     key: Key('BottomBar'),
@@ -175,7 +174,7 @@ Column displayExtraField(String toCompare, String comparison, IconData icon, Str
     ]);
   } else {
     return Column(children: [
-      Padding(padding: const EdgeInsets.only(top: 0, left: 0, right: 0)),
+      const Padding(padding: EdgeInsets.only(top: 0, left: 0, right: 0)),
     ]);
   }
 }

@@ -44,7 +44,7 @@ class CheckboxFormFieldState extends State<CheckboxFormField> with AutomaticKeep
   }
 }
 
-CheckboxListTile displayCheckboxField(String text, bool checkboxValue) {
+CheckboxListTile displayCheckboxField(String text, {bool checkboxValue}) {
   if (checkboxValue) {
     return checkedView(text);
   } else {
@@ -66,7 +66,7 @@ CheckboxListTile notCheckedView(String text) {
     value: false,
     onChanged: null,
     title: FashionFetishText(
-        text: text + ' (not elected)',
+        text: '$text (not elected)',
         size: 15.0,
         fontWeight: FashionFontWeight.bold,
         color: Colors.black54),

@@ -1,4 +1,3 @@
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -43,13 +42,13 @@ class _FriendListPageState extends State<FriendListPage> {
         .then((value) async {
       isSuccessful = true;
       messageToDisplay = _getMessageToDisplay(socialActionType, isSuccessful);
-      showSnackBar(messageToDisplay, isSuccessful, context);
+      showSnackBar(messageToDisplay, context, isSuccessful: isSuccessful);
 
       await friendsProvider.update(socialActionType);
     }).catchError((error) {
       isSuccessful = false;
       messageToDisplay = _getMessageToDisplay(socialActionType, isSuccessful);
-      showSnackBar(messageToDisplay, isSuccessful, context);
+      showSnackBar(messageToDisplay, context, isSuccessful: isSuccessful);
     });
 
     // mark the corresponding widget in the list as not loading

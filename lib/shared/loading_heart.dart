@@ -6,7 +6,7 @@ class LoadingHeart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = ModalRoute.of(context).settings.arguments;
+    final Color color = ModalRoute.of(context).settings.arguments;
 
     return Container(
       color: color ?? Colors.white,
