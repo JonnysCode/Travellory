@@ -20,11 +20,11 @@ class DatabaseEditor {
 
   static final DatabaseEditor _instance = DatabaseEditor._privateConstructor();
 
-  static const String editAccommodation = 'booking-updateAccommodation';
+  static const String editAccommodation = 'accommodation-updateAccommodation';
   static const String editActivity = 'activity-updateActivity';
-  static const String editFlight = 'booking-updateFlight';
-  static const String editPublicTransportation = 'booking-updatePublicTransportation';
-  static const String editRentalCar = 'booking-updateRentalCar';
+  static const String editFlight = 'flight-updateFlight';
+  static const String editPublicTransportation = 'publictransportation-updatePublicTransportation';
+  static const String editRentalCar = 'rentalcar-updateRentalCar';
   static const String editTripName = 'trips-updateTrip';
 
   Future<bool> editModel(Model model, String correspondingFunctionName) async {

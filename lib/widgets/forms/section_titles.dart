@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-
 import '../font_widgets.dart';
 
 class SectionTitle extends StatelessWidget {
-  const SectionTitle(String sectionTitle) : sectionTitle = sectionTitle;
+  const SectionTitle(
+      {Key key, this.sectionTitle})
+      : super(key: key);
 
   final String sectionTitle;
 
@@ -38,11 +39,11 @@ class SectionTitle extends StatelessWidget {
 }
 
 class BookingSiteTitle extends StatelessWidget {
-  const BookingSiteTitle(String siteTitle, IconData icon)
-      : bookingSiteTitle = siteTitle,
-        this.icon = icon;
+  const BookingSiteTitle(
+  {Key key, this.siteTitle, this.icon})
+  : super(key:key);
 
-  final String bookingSiteTitle;
+  final String siteTitle;
   final IconData icon;
 
   @override
@@ -58,7 +59,7 @@ class BookingSiteTitle extends StatelessWidget {
         Container(
             padding: const EdgeInsets.all(8.0),
             child: FashionFetishText(
-              text: bookingSiteTitle,
+              text: siteTitle,
               size: 24,
               fontWeight: FashionFontWeight.heavy,
               height: 1.05,

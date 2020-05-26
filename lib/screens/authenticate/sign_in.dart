@@ -45,8 +45,7 @@ class _SignInState extends State<SignIn> {
   Future _signIn() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     final UserModel user = await _auth
-        .signInWithEmailAndPassword(
-            _emailController.text, _passwordController.text)
+        .signInWithEmailAndPassword(_emailController.text, _passwordController.text)
         .catchError((e) {
       return Future.error(e);
     });
@@ -116,36 +115,30 @@ class _SignInState extends State<SignIn> {
                         _emailController,
                         null,
                         ValidatorType.email,
-                        false,
-                        null),
+                        null,
+                        obscure: false),
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 20),
                     child: inputAuthentication(
-                        Icon(Icons.lock),
-                        "PASSWORD",
-                        Theme.of(context).primaryColor,
-                        _passwordController,
-                        null,
-                        ValidatorType.password,
-                        true,
-                        null),
+                      Icon(Icons.lock),
+                      "PASSWORD",
+                      Theme.of(context).primaryColor,
+                      _passwordController,
+                      null,
+                      ValidatorType.password,
+                      null,
+                      obscure: true,
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: 20,
-                        right: 20,
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                        left: 20, right: 20, bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Container(
                       height: 50,
                       width: MediaQuery.of(context).size.width,
-                      child: filledButton(
-                          "LOGIN",
-                          Colors.white,
-                          Theme.of(context).primaryColor,
-                          Theme.of(context).primaryColor,
-                          Colors.white,
-                          _validateSignIn),
+                      child: filledButton("LOGIN", Colors.white, Theme.of(context).primaryColor,
+                          Theme.of(context).primaryColor, Colors.white, _validateSignIn),
                     ),
                   ),
                 ],

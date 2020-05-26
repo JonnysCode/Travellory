@@ -16,6 +16,7 @@ import 'package:travellory/widgets/buttons/option_button.dart';
 import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/utils/logger.dart';
 import 'package:travellory/widgets/forms/profile_homecountry.dart';
+import 'package:travellory/widgets/forms/section_titles.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -37,8 +38,7 @@ class _ProfilePageState extends State<ProfilePage>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    imagePicker = ImagePickerHandler(this, _controller)
-      ..init();
+    imagePicker = ImagePickerHandler(this, _controller)..init();
   }
 
   @override
@@ -59,8 +59,7 @@ class _ProfilePageState extends State<ProfilePage>
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(40.0)),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
                   boxShadow: [
                     BoxShadow(
                         blurRadius: 20,
@@ -82,33 +81,31 @@ class _ProfilePageState extends State<ProfilePage>
                       child: Container(
                         height: 258.0,
                         width: 258.0,
+
                         /// profile picture with placeholder
                         child: CachedNetworkImage(
                           /// will check local cache first and download from firebase if necessary
-                          imageUrl:
-                              user.photoUrl ?? defaultUserProfilePicture,
+                          imageUrl: user.photoUrl ?? defaultUserProfilePicture,
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: imageProvider, fit: BoxFit.contain),
-                                border: Border.all(
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                                borderRadius: BorderRadius.all(
-                                    const Radius.circular(300.0))),
+                                image: DecorationImage(image: imageProvider, fit: BoxFit.contain),
+                                border:
+                                    Border.all(color: Theme.of(context).primaryColor, width: 2.0),
+                                borderRadius: BorderRadius.all(const Radius.circular(300.0))),
                           ),
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation(
-                                      Theme.of(context).primaryColor)),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
+                          placeholder: (context, url) => CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor)),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
                         ),
                       ),
                     ),
                     SizedBox(height: 20),
                     Padding(
-                        padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
+                      child: SectionTitle(sectionTitle: 'User Information'),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
                         child: UserInformation(user: user)),
                     SizedBox(height: 10),
                     Padding(
@@ -202,10 +199,10 @@ class UserInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        key: Key('display_user'),
-        children: [
-          Row(
+    return Container(
+      key: Key('display_user'),
+      child: Column(children: <Widget>[
+        Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -221,10 +218,9 @@ class UserInformation extends StatelessWidget {
                 fontWeight: FashionFontWeight.bold,
                 height: 1.1,
               ),
-            ]
-          ),
-          SizedBox(height: 8),
-          Row(
+            ]),
+        SizedBox(height: 8),
+        Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -240,10 +236,9 @@ class UserInformation extends StatelessWidget {
                 fontWeight: FashionFontWeight.bold,
                 height: 1.1,
               ),
-            ]
-          ),
-          ProfileHomeCountry(user: user),
-        ]
+            ]),
+        ProfileHomeCountry(user: user),
+      ]),
     );
   }
 }
