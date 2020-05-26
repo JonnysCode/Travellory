@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travellory/screens/authenticate/register.dart';
 import 'package:travellory/screens/authenticate/sign_in.dart';
 import 'package:travellory/widgets/auth_background.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../font_widgets.dart';
 
 Widget filledButton(String text, Color splashColor, Color highlightColor,
-    Color fillColor, Color textColor, void function()) {
+    Color fillColor, Color textColor, void Function() function) {
   return RaisedButton(
     key: Key('${text.toLowerCase().trim()}Button'),
     highlightElevation: 0.0,
@@ -22,7 +22,7 @@ Widget filledButton(String text, Color splashColor, Color highlightColor,
 }
 
 Widget alertButton(
-    String text, Color fillColor, BuildContext context, void function()) {
+    String text, Color fillColor, BuildContext context, void Function() function) {
   return RaisedButton(
     key: Key('${text.toLowerCase().trim()}Button'),
     highlightElevation: 0.0,
@@ -40,7 +40,7 @@ Widget alertButton(
   );
 }
 
-Widget socialButton(Key key, IconData icon, Color color, void function()) {
+Widget socialButton(Key key, IconData icon, Color color, void Function() function) {
   return Material(
       child: IconButton(
     key: key,

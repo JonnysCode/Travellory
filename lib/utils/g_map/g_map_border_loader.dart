@@ -52,7 +52,7 @@ class GMapBorderLoader{
 
     try {
       data = await rootBundle.loadString('assets/g_map/border_points/${stateName.toLowerCase()}.json');
-    }catch(_){
+    } on Exception catch(_){
       return polygons;
     }
 

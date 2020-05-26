@@ -2,7 +2,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 
 Widget showSnackBar(
-    String messageToDisplay, bool isSuccessful, BuildContext context) {
+    String messageToDisplay, BuildContext context, {bool isSuccessful}) {
   return SnackBar(
     content: Flushbar(
         flushbarStyle: FlushbarStyle.FLOATING,
