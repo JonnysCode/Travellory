@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:travellory/src/components/profile/achievements_widget.dart';
 import 'package:travellory/src/models/achievements_model.dart';
 import 'package:travellory/src/models/friend_model.dart';
-import 'package:travellory/src/components/profile/achievements_widget.dart';
-import '../../components/shared/font_widgets.dart';
 import '../../components/friends/friends_profile_header.dart';
+import '../../components/shared/font_widgets.dart';
 
 class FriendsProfile extends StatefulWidget {
   const FriendsProfile({
