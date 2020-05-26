@@ -13,10 +13,9 @@ import 'package:travellory/services/api/storage.dart';
 import 'package:travellory/utils/image_picker_handler.dart';
 import 'package:travellory/widgets/buttons/buttons.dart';
 import 'package:travellory/widgets/buttons/option_button.dart';
-import 'package:travellory/widgets/font_widgets.dart';
 import 'package:travellory/utils/logger.dart';
-import 'package:travellory/widgets/forms/profile_homecountry.dart';
 import 'package:travellory/widgets/forms/section_titles.dart';
+import 'package:travellory/widgets/profile/user_information.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -186,59 +185,5 @@ class _ProfilePageState extends State<ProfilePage>
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     await _auth.signOut();
     Navigator.popUntil(context, ModalRoute.withName('/'));
-  }
-}
-
-class UserInformation extends StatelessWidget {
-  const UserInformation({
-    Key key,
-    this.user,
-  }) : super(key: key);
-
-  final UserModel user;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      key: Key('display_user'),
-      child: Column(children: <Widget>[
-        Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                FontAwesomeIcons.user,
-                color: Theme.of(context).primaryColor,
-                size: 32,
-              ),
-              SizedBox(width: 10),
-              FashionFetishText(
-                text: user != null ? user.displayName : '',
-                size: 18,
-                fontWeight: FashionFontWeight.bold,
-                height: 1.1,
-              ),
-            ]),
-        SizedBox(height: 8),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                FontAwesomeIcons.envelope,
-                color: Theme.of(context).primaryColor,
-                size: 32,
-              ),
-              SizedBox(width: 10),
-              FashionFetishText(
-                text: user != null ? user.email : '',
-                size: 18,
-                fontWeight: FashionFontWeight.bold,
-                height: 1.1,
-              ),
-            ]),
-        ProfileHomeCountry(user: user),
-      ]),
-    );
   }
 }
