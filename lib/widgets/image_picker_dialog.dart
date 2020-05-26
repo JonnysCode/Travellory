@@ -5,6 +5,7 @@ import 'package:travellory/utils/image_picker_handler.dart';
 
 import 'buttons/buttons.dart';
 
+// ignore: must_be_immutable
 class ImagePickerDialog extends StatelessWidget {
   ImagePickerDialog(this._listener, this._controller);
 
