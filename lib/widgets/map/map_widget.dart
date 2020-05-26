@@ -19,7 +19,7 @@ import 'package:travellory/models/user_model.dart';
 import 'package:travellory/utils/logger.dart';
 
 final log = getLogger('MapPageWidget');
-final List<String> userStates = List<String>();
+final List<String> userStates = <String>[];
 
 /// builds a user's personalised map page with individual trip infos and visited countries
 class GoogleMapWidget extends StatefulWidget {
@@ -100,9 +100,9 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
   Future<void> onMapCreated() async {
     final UserModel _user = Provider.of<UserModel>(context, listen: false);
     try {
-      dynamic result = await UserManagement().getAchievements(_user.uid);
-      dynamic _visitedCountries = result["visitedCountries"];
-      for (var countries in _visitedCountries) {
+      final dynamic result = await UserManagement().getAchievements(_user.uid);
+      final dynamic _visitedCountries = result["visitedCountries"];
+      for (final countries in _visitedCountries) {
         log.i(countries.toString());
         if (!userStates.contains(countries.toString())) {
           userStates.add(countries.toString());
@@ -136,7 +136,7 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
           target: LatLng(46.8076885, 7.1005233),
           zoom: 5,
         ),
-        gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+        gestureRecognizers: [
           Factory<OneSequenceGestureRecognizer>(
             () => EagerGestureRecognizer(),
           ),

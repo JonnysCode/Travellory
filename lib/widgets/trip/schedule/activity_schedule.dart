@@ -72,7 +72,7 @@ class ActivitySchedule extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  '${activity.startTime}',
+                  activity.startTime,
                   style: TextStyle(
                     color: Colors.black38,
                   ),
@@ -86,7 +86,7 @@ class ActivitySchedule extends StatelessWidget {
                   ),
                 if (activity.endTime.isNotEmpty)
                   Text(
-                    '${activity.endTime}',
+                    activity.endTime,
                     style: TextStyle(
                       color: Colors.black38,
                     ),

@@ -127,7 +127,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
 
     hotelAdditional = Column(
       children: <Widget>[
-        SectionTitle('Further Hotel Details'),
+        SectionTitle(sectionTitle: 'Further Hotel Details'),
         TravelloryFormField(
             initialValue: _accommodationModel.name,
             labelText: 'Name',
@@ -181,20 +181,20 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         types: accommodationTypes,
         onChanged: (value) {
           _accommodationModel.type = value.name;
-          showAdditional(accommodationList, value.name == 'Airbnb', accommodationTypeDropdown,
-              airbnbAdditional);
-          showAdditional(
-              accommodationList, value.name == 'Hotel', accommodationTypeDropdown, hotelAdditional);
-          showAdditional(accommodationList, value.name == 'Other Accommodation',
-              accommodationTypeDropdown, otherAdditional);
+          showAdditional(accommodationList, accommodationTypeDropdown, airbnbAdditional,
+              show: value.name == 'Airbnb');
+          showAdditional(accommodationList, accommodationTypeDropdown, hotelAdditional,
+              show: value.name == 'Hotel');
+          showAdditional(accommodationList, accommodationTypeDropdown, otherAdditional,
+              show: value.name == 'Other Accommodation');
         },
         validatorText: 'Please enter the required information');
 
     final List<Widget> shown = [
-      BookingSiteTitle('Accommodation', FontAwesomeIcons.bed),
-      SectionTitle('Accommodation Type'),
+      BookingSiteTitle(siteTitle: 'Accommodation', icon: FontAwesomeIcons.bed),
+      SectionTitle(sectionTitle: 'Accommodation Type'),
       accommodationTypeDropdown,
-      SectionTitle('General Information'),
+      SectionTitle(sectionTitle: 'General Information'),
       TravelloryFormField(
           initialValue: _accommodationModel.confirmationNr,
           labelText: 'Confirmation Number',
@@ -217,7 +217,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         },
         onChanged: (value) => _accommodationModel.address = value,
       ),
-      SectionTitle('Check-In Details'),
+      SectionTitle(sectionTitle: 'Check-In Details'),
       DateFormField(
         initialValue: _accommodationModel.checkinDate,
         key: _checkinDateFormFieldKey,
@@ -236,7 +236,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         optional: true,
         chosenTimeString: (value) => _accommodationModel.checkinTime = value,
       ),
-      SectionTitle('Check-Out Details'),
+      SectionTitle(sectionTitle: 'Check-Out Details'),
       DateFormField(
         key: _checkoutDateFormFieldKey,
         initialValue: _accommodationModel.checkoutDate,
@@ -256,7 +256,7 @@ class AccommodationState<T extends Accommodation> extends State<T> {
         optional: true,
         chosenTimeString: (value) => _accommodationModel.checkoutTime = value,
       ),
-      SectionTitle('Notes'),
+      SectionTitle(sectionTitle: 'Notes'),
       TravelloryFormField(
         initialValue: _accommodationModel.notes,
         labelText: 'Notes',

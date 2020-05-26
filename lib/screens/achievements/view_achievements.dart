@@ -4,7 +4,6 @@ import 'package:travellory/models/achievements_model.dart';
 import 'package:travellory/models/flight_model.dart';
 import 'package:travellory/models/user_model.dart';
 import 'package:travellory/providers/achievements_provider.dart';
-import 'package:travellory/services/database/delete_database.dart';
 import 'package:travellory/widgets/achievements_widget.dart';
 import 'package:travellory/widgets/bookings/view_booking_header.dart';
 import 'package:travellory/widgets/bookings/view_bookings.dart';

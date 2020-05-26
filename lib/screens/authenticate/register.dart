@@ -61,8 +61,8 @@ class _RegisterState extends State<Register> {
   Future _register() async {
     final BaseAuthService _auth = AuthProvider.of(context).auth;
     final UserModel user = await _auth
-        .registerWithEmailAndPassword(_emailController.text,
-            _passwordController.text, _nameController.text)
+        .registerWithEmailAndPassword(
+            _emailController.text, _passwordController.text, _nameController.text)
         .catchError((e) {
       return Future.error(e);
     });
@@ -70,13 +70,10 @@ class _RegisterState extends State<Register> {
   }
 
   void _checkUsernameAvailability() async {
-    final isUsernameAvailable =
-        await UserManagement().isUsernameAvailable(_nameController.text);
+    final isUsernameAvailable = await UserManagement().isUsernameAvailable(_nameController.text);
     setState(() {
       _isUsernameAvailable = isUsernameAvailable;
-      _isUsernameAvailable
-          ? _errorUsername = null
-          : _errorUsername = 'Username is already used';
+      _isUsernameAvailable ? _errorUsername = null : _errorUsername = 'Username is already used';
     });
   }
 
@@ -108,8 +105,7 @@ class _RegisterState extends State<Register> {
                           width: 130,
                           height: 130,
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Theme.of(context).primaryColor),
+                              shape: BoxShape.circle, color: Theme.of(context).primaryColor),
                         ),
                       ),
                     ),
@@ -159,14 +155,12 @@ class _RegisterState extends State<Register> {
                       child: inputAuthentication(
                           Icon(Icons.account_circle),
                           "USERNAME",
-                          _isUsernameAvailable
-                              ? Theme.of(context).primaryColor
-                              : Colors.redAccent,
+                          _isUsernameAvailable ? Theme.of(context).primaryColor : Colors.redAccent,
                           _nameController,
                           _nameFocus,
                           ValidatorType.username,
-                          false,
-                          _errorUsername),
+                          _errorUsername,
+                          obscure: false),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
@@ -179,26 +173,25 @@ class _RegisterState extends State<Register> {
                           _emailController,
                           null,
                           ValidatorType.email,
-                          false,
-                          null),
+                          null,
+                          obscure: false),
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: inputAuthentication(
-                          Icon(Icons.lock),
-                          "PASSWORD",
-                          Theme.of(context).primaryColor,
-                          _passwordController,
-                          null,
-                          ValidatorType.password,
-                          true,
-                          _error),
+                        Icon(Icons.lock),
+                        "PASSWORD",
+                        Theme.of(context).primaryColor,
+                        _passwordController,
+                        null,
+                        ValidatorType.password,
+                        _error,
+                        obscure: true,
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                          left: 20, right: 20, bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: Container(
                         height: 50,
                         width: MediaQuery.of(context).size.width,

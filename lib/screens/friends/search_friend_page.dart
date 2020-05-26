@@ -51,7 +51,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     setState(() {
       _isLoadingResult[index] = false;
     });
-    showSnackBar(messageToDisplay, isSuccessful, context);
+    showSnackBar(messageToDisplay, context, isSuccessful: isSuccessful);
   }
 
   void _withdrawFriendRequest(
@@ -81,7 +81,7 @@ class _SearchFriendsPageState extends State<SearchFriendsPage> {
     setState(() {
       _isLoadingRequest[index] = false;
     });
-    showSnackBar(messageToDisplay, isSuccessful, context);
+    showSnackBar(messageToDisplay, context, isSuccessful: isSuccessful);
   }
 
   bool _isFriendOrHasFriendRequest(FriendModel friend) {
