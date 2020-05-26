@@ -35,7 +35,7 @@ class _HomePage extends State<HomePage> {
     final SingleTripProvider trip = tripsProvider.activeTrip;
     TripModel tripModel;
     if (trip != null) tripModel = trip.tripModel;
-    
+
     final List<Dial> _dials = <Dial>[
       Dial(
           icon: FontAwesomeIcons.envelope,
