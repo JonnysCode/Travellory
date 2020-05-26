@@ -12,7 +12,7 @@ Widget filledButton(String text, Color splashColor, Color highlightColor,
     elevation: 0.0,
     color: fillColor,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-    onPressed: () => function,
+    onPressed: () => function(),
     child: Text(
       text,
       style: TextStyle(
@@ -31,7 +31,7 @@ Widget alertButton(
     elevation: 0.0,
     color: fillColor,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-    onPressed: () => function,
+    onPressed: () => function(),
     child: Text(
       text,
       style: TextStyle(
@@ -53,7 +53,7 @@ Widget socialButton(Key key, IconData icon, Color color, void Function() functio
       icon,
       color: color,
     ),
-    onPressed: () => function,
+    onPressed: () => function(),
   ));
 }
 
