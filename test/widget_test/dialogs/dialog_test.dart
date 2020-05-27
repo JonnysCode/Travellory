@@ -127,7 +127,7 @@ void main() {
     expect(find.byKey(Key('MissingFormFieldInformationDialog')), findsOneWidget);
   });
 
-  testWidgets('Test addToDataBaseFailedDialog is created', (WidgetTester tester) async {
+  testWidgets('Test DataBaseFailedDialog is created', (WidgetTester tester) async {
     Widget makeTestableWidget() {
       return MaterialApp(home: Material(child: Builder(builder: (BuildContext context) {
         return Center(
@@ -144,6 +144,6 @@ void main() {
     expect(find.byType(RaisedButton), findsOneWidget);
     await tester.tap(find.byType(RaisedButton));
     await tester.pump();
-    expect(find.byKey(Key('AddToDataBaseFailedDialog')), findsOneWidget);
+    expect(find.byKey(Key('DataBaseFailedDialog')), findsOneWidget);
   });
 }

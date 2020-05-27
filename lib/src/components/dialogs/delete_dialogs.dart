@@ -10,6 +10,9 @@ import 'package:travellory/src/services/cloud/delete_database.dart';
 import 'package:travellory/src/components/buttons/buttons.dart';
 import '../shared/font_widgets.dart';
 
+/// this dialog is shown when a delete button has been pressed
+/// it gives the user the option to choose between continuing with the delete
+/// or to abort
 void showDeleteDialog(Model model, BuildContext context, String alertText, String functionName) {
   showDialog(
     context: context,
@@ -40,6 +43,7 @@ void showDeleteDialog(Model model, BuildContext context, String alertText, Strin
   );
 }
 
+/// this dialog is shown when a delete has successfully been executed
 void showDeletedBookingDialog(BuildContext context, String alertText, {hasBackButton = true}) {
   showDialog(
     context: context,
@@ -70,6 +74,8 @@ void showDeletedBookingDialog(BuildContext context, String alertText, {hasBackBu
   );
 }
 
+/// based on different booking models a personalized text should be displayed
+/// Returns the modeltext for each booking model type
 String getDeleteTextBasedOn(Model model) {
   String modelText;
   if (model is FlightModel) {
