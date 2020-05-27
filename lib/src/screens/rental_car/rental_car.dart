@@ -134,9 +134,9 @@ class RentalCarState<T extends RentalCar> extends State<T> {
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TravelloryFormField(
                       initialValue: _editRentalCarModel.returnLocation,
-                      labelText: 'Return Location',
+                      labelText: 'Return Location *',
                       icon: Icon(FontAwesomeIcons.mapMarkerAlt),
-                      optional: true,
+                      optional: false,
                       onTap: (controller) async {
                         final PlacesDetailsResponse detail =
                             await GooglePlaces.openGooglePlacesSearch(context,
