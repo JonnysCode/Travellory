@@ -1,7 +1,7 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'myapp.dart';
+import 'src/myapp.dart';
 
 void main(){
   // to connect to locally running functions
