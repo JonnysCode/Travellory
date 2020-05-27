@@ -97,9 +97,7 @@ void Function() onSubmitTrip(
 Function() onSubmitTempAccommodation(TempBookingsProvider tempBookingsProvider,
     SingleTripProvider singleTripProvider, Model model, BuildContext context) {
   return () async {
-    showLoadingDialog(context);
     final bool added = await tempBookingsProvider.addAccommodationToTrip(model, singleTripProvider);
-    Navigator.pop(context);
     if (added) {
       showSubmittedTempBookingDialog(context);
     } else {
