@@ -3,6 +3,7 @@ import 'package:travellory/src/components/animations/loading_heart.dart';
 import 'package:travellory/src/components/buttons/buttons.dart';
 import '../shared/font_widgets.dart';
 
+/// this dialog is shown when a booking has successfully been added to the database
 void showSubmittedBookingDialog(BuildContext context, String alertText) {
   showDialog(
     context: context,
@@ -31,6 +32,7 @@ void showSubmittedBookingDialog(BuildContext context, String alertText) {
   );
 }
 
+/// this dialog is shown when a trip has successfully been added to the database
 void showSubmittedTripDialog(BuildContext context, String alertText) {
   showDialog(
     context: context,
@@ -55,6 +57,7 @@ void showSubmittedTripDialog(BuildContext context, String alertText) {
   );
 }
 
+/// this dialog is shown when a temp booking has successfully been added to the database
 void showSubmittedTempBookingDialog(BuildContext context) {
   showDialog(
     context: context,
@@ -82,6 +85,7 @@ void showSubmittedTempBookingDialog(BuildContext context) {
   );
 }
 
+/// when database functions are being performed this dialog will be displayed
 void showLoadingDialog(BuildContext context) {
   showDialog(
     context: context,
@@ -102,6 +106,7 @@ void showLoadingDialog(BuildContext context) {
   );
 }
 
+/// this dialog is shown when a booking has successfully been edited in the database
 void showEditedBookingDialog(BuildContext context, String alertText) {
   showDialog(
     context: context,

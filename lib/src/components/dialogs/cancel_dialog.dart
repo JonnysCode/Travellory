@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:travellory/src/components/buttons/buttons.dart';
 import 'package:travellory/src/components/shared/font_widgets.dart';
 
+/// this dialog is shown when somebody presses a cancel button
+/// to make sure they want to continue with their action
+/// or give them the possibility to abort
 void cancellingDialog(BuildContext context, String cancelDialog) {
   showDialog(
     context: context,

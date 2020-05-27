@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travellory/src/components/buttons/buttons.dart';
 import 'package:travellory/src/components/shared/font_widgets.dart';
 
+/// if a form validation has failed, this dialog will be displayed
 void missingFormFieldInformationDialog(BuildContext context) {
   showDialog(
     context: context,
