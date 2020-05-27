@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/shared/lists_of_types.dart';
-import 'package:travellory/widgets/forms/dropdown.dart';
+import 'package:travellory/src/components/items/lists_of_types.dart';
+import 'package:travellory/src/components/forms/dropdown.dart';
 
 void main() {
 

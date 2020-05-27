@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travellory/utils/g_map/g_map_border_loader.dart';
+import 'package:travellory/src/services/api/g_map_border_loader.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() async{
