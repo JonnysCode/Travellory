@@ -144,10 +144,10 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
               show: value.name == 'Other');
           showAdditional(
               publicTransportList, transportTypeDropdown, doesSeatReservationExistAdditional,
-              show: (value.name == 'Other' ||
+              show: value.name == 'Other' ||
                   value.name == 'Rail' ||
                   value.name == 'Bus' ||
-                  value.name == 'Ferry'));
+                  value.name == 'Ferry');
         },
         validatorText: 'Please enter the required information');
 
