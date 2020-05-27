@@ -7,6 +7,7 @@ class LoadingLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: Key('LoadingLogo'),
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/login/gradient_bg.png'),
