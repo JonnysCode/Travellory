@@ -128,8 +128,8 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
 
     TravelloryDropdownField transportTypeDropdown;
     CheckboxFormField bookingMadeCheckbox;
-    CheckboxFormField seatReservedCheckbox;
 
+    Widget doesSeatReservationExistAdditional;
     Widget typeSpecificationAdditional;
     Widget bookingMadeAdditional;
     Widget seatReservationAdditional;
@@ -140,8 +140,14 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
         types: publicTransportTypes,
         onChanged: (value) {
           _publicTransportModel.transportationType = value.name;
-          showAdditional(publicTransportList, transportTypeDropdown,
-              typeSpecificationAdditional, show: value.name == 'Other');
+          showAdditional(publicTransportList, transportTypeDropdown, typeSpecificationAdditional,
+              show: value.name == 'Other');
+          showAdditional(
+              publicTransportList, transportTypeDropdown, doesSeatReservationExistAdditional,
+              show: (value.name == 'Other' ||
+                  value.name == 'Rail' ||
+                  value.name == 'Bus' ||
+                  value.name == 'Ferry'));
         },
         validatorText: 'Please enter the required information');
 
@@ -150,18 +156,10 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
       label: 'Did you book this public transport?',
       onChanged: (value) {
         _publicTransportModel.booked = value;
-        showAdditional(publicTransportList, bookingMadeCheckbox, bookingMadeAdditional, show: value);
+        showAdditional(publicTransportList, bookingMadeCheckbox, bookingMadeAdditional,
+            show: value);
       },
     );
-
-    seatReservedCheckbox = CheckboxFormField(
-        initialValue: _publicTransportModel.seatReserved,
-        label: 'Did you make a seat reservation?',
-        onChanged: (value) {
-          _publicTransportModel.seatReserved = value;
-          showAdditional(
-              publicTransportList, seatReservedCheckbox, seatReservationAdditional, show: value);
-        });
 
     // don't put in build because it will be recreated on every build
     // with state changes this is not appreciated
@@ -244,7 +242,6 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
       ),
       SectionTitle(sectionTitle: 'Booking Details'),
       bookingMadeCheckbox,
-      seatReservedCheckbox,
       SectionTitle(sectionTitle: 'Notes'),
       TravelloryFormField(
         initialValue: _publicTransportModel.notes,
@@ -264,6 +261,17 @@ class PublicTransportState<T extends PublicTransport> extends State<T> {
       initialItems: shown,
       removedItemBuilder: _removedItemBuilder,
     );
+
+    doesSeatReservationExistAdditional = Column(children: <Widget>[
+      CheckboxFormField(
+          initialValue: _publicTransportModel.seatReserved,
+          label: 'Did you make a seat reservation?',
+          onChanged: (value) {
+            _publicTransportModel.seatReserved = value;
+            showAdditional(publicTransportList, doesSeatReservationExistAdditional, seatReservationAdditional,
+                show: value);
+          }),
+    ]);
 
     typeSpecificationAdditional = Column(
       children: <Widget>[
