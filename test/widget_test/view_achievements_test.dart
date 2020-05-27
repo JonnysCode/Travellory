@@ -41,7 +41,6 @@ void main() {
     await tester.pump();
   }
 
-  // TODO(bertaben): fix test
   testWidgets('test if AchievementsView page is loaded',
       (WidgetTester tester) async {
     final testKey = Key('AchievementsView');

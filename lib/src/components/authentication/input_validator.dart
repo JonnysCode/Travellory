@@ -32,7 +32,6 @@ class InputValidator {
   }
 
   static String _validatePassword(String value) {
-    // Todo(?): make password validation more strict
     if (value.length < 6) {
       return 'Enter a password with at least 6 characters';
     }
