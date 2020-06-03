@@ -51,7 +51,7 @@ class GMapBorderLoader{
     final List<Polygon> polygons = <Polygon>[];
 
     try {
-      data = await rootBundle.loadString('assets/g_map/border_points/${stateName.toLowerCase()}.json');
+      data = await rootBundle.loadString('assets/g_map/border_points/${stateName.replaceAll(" ", "_").toLowerCase()}.json');
     } on Exception catch(_){
       return polygons;
     }
